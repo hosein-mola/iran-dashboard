@@ -167,7 +167,7 @@ export function Chart1() {
           >
             <SelectValue placeholder="Last 3 months" />
           </SelectTrigger>
-          <SelectContent className="rounded-none shadow-2xl shadow-blue-200">
+          <SelectContent className="shadow-primary/70 rounded-none shadow-2xl">
             <SelectItem value="90d" className="rounded-none text-right">
               ۳ ماه گذشته
             </SelectItem>
@@ -245,14 +245,14 @@ export function Chart1() {
               dataKey="mobile"
               type="natural"
               fill="url(#fillMobile)"
-              stroke="var(--color-mobile)"
+              stroke="var(--color-chart)"
               stackId="a"
             />
             <Area
               dataKey="desktop"
               type="natural"
               fill="url(#fillDesktop)"
-              stroke="var(--color-desktop)"
+              stroke="var(--color-chart)"
               stackId="a"
             />
             <ChartLegend content={<ChartLegendContent />} />

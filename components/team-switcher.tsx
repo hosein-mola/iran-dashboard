@@ -1,7 +1,7 @@
 'use client'
 
 import * as React from 'react'
-import { ChevronsUpDown, Plus } from 'lucide-react'
+import { ChevronsUpDown, LucideSettings } from 'lucide-react'
 
 import {
   DropdownMenu,
@@ -25,7 +25,7 @@ export function TeamSwitcher({
   teams: {
     name: string
     logo: React.ElementType
-    plan: string
+    isDefault: boolean
   }[]
 }) {
   const { isMobile } = useSidebar()
@@ -41,51 +41,55 @@ export function TeamSwitcher({
         <DropdownMenu modal={false}>
           <DropdownMenuTrigger asChild>
             <SidebarMenuButton
+              variant={'outline'}
               size="lg"
-              className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground h-12 cursor-pointer rounded-none border-b"
+              className="data-[state=open]:bg-accent data-[state=open]:text-sidebar-accent-foreground h-12 cursor-pointer rounded-none border-b"
             >
               <div className="flex aspect-square size-8 items-center justify-center">
                 <activeTeam.logo className="size-4" />
               </div>
               <div className="grid flex-1 text-right text-sm leading-tight">
-                <span className="text-md truncate font-medium">
+                <span className="text-md truncate font-bold">
                   {activeTeam.name}
                 </span>
                 <span className="truncate text-xs font-light">
-                  {activeTeam.plan}
+                  {activeTeam.isDefault ? 'پیشفرض' : 'فرعی'}
                 </span>
               </div>
               <ChevronsUpDown className="ml-auto" />
             </SidebarMenuButton>
           </DropdownMenuTrigger>
           <DropdownMenuContent
-            className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg"
+            className="shadow-primary/70 z-[100] w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded shadow-2xl"
             align="start"
             side={isMobile ? 'bottom' : 'right'}
             sideOffset={4}
+            alignOffset={1}
           >
             <DropdownMenuLabel className="text-muted-foreground text-xs">
-              Teams
+              نقش ها
             </DropdownMenuLabel>
-            {teams.map((team, index) => (
+            {teams.map((team) => (
               <DropdownMenuItem
                 key={team.name}
                 onClick={() => setActiveTeam(team)}
                 className="gap-2 p-2"
               >
                 <div className="flex size-6 items-center justify-center rounded-md border">
-                  <team.logo className="size-3.5 shrink-0" />
+                  <team.logo className="group-hover/team:text-accent-foreground size-3.5 shrink-0" />
                 </div>
                 {team.name}
-                <DropdownMenuShortcut>⌘{index + 1}</DropdownMenuShortcut>
+                {team.isDefault && (
+                  <DropdownMenuShortcut>پیشفرض</DropdownMenuShortcut>
+                )}
               </DropdownMenuItem>
             ))}
             <DropdownMenuSeparator />
             <DropdownMenuItem className="gap-2 p-2">
               <div className="flex size-6 items-center justify-center rounded-md border bg-transparent">
-                <Plus className="size-4" />
+                <LucideSettings className="group-hover/team:text-accent-foreground size-4" />
               </div>
-              <div className="text-muted-foreground font-medium">Add team</div>
+              تنظیمات نقش کاربر
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

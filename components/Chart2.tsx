@@ -1,7 +1,7 @@
 'use client'
 
 import { TrendingUp } from 'lucide-react'
-import { PolarAngleAxis, PolarGrid, Radar, RadarChart } from 'recharts'
+import { Label, PolarRadiusAxis, RadialBar, RadialBarChart } from 'recharts'
 
 import {
   Card,
@@ -17,57 +17,89 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from '@/components/ui/chart'
-const chartData = [
-  { month: 'January', desktop: 186 },
-  { month: 'February', desktop: 285 },
-  { month: 'March', desktop: 237 },
-  { month: 'April', desktop: 203 },
-  { month: 'May', desktop: 209 },
-  { month: 'June', desktop: 264 },
-]
+const chartData = [{ month: 'january', desktop: 1260, mobile: 570 }]
 
 const chartConfig = {
   desktop: {
     label: 'Desktop',
-    color: 'var(--chart-1)',
+    color: 'hsl(var(--chart-1))',
+  },
+  mobile: {
+    label: 'Mobile',
+    color: 'hsl(var(--chart-2))',
   },
 } satisfies ChartConfig
 
 export function Chart2() {
+  const totalVisitors = chartData[0].desktop + chartData[0].mobile
+
   return (
-    <Card className="rounded-none shadow-none">
-      <CardHeader className="items-center pb-4">
-        <CardTitle>Radar Chart - Grid Circle Filled</CardTitle>
-        <CardDescription>
-          Showing total visitors for the last 6 months
-        </CardDescription>
+    <Card className="flex flex-col shadow-none">
+      <CardHeader className="items-center pb-0">
+        <CardTitle>Radial Chart - Stacked</CardTitle>
+        <CardDescription>January - June 2024</CardDescription>
       </CardHeader>
-      <CardContent className="pb-0">
+      <CardContent className="flex flex-1 items-center pb-0">
         <ChartContainer
           config={chartConfig}
-          className="mx-auto aspect-square max-h-[250px] shadow-none"
+          className="mx-auto aspect-square w-full max-w-[250px]"
         >
-          <RadarChart data={chartData}>
+          <RadialBarChart
+            data={chartData}
+            endAngle={360}
+            innerRadius={100}
+            outerRadius={160}
+          >
             <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
-            <PolarGrid
-              className="fill-[var(--color-chart-1)] opacity-20"
-              gridType="circle"
-            />
-            <PolarAngleAxis dataKey="month" />
-            <Radar
+            <PolarRadiusAxis tick={false} tickLine={false} axisLine={false}>
+              <Label
+                content={({ viewBox }) => {
+                  if (viewBox && 'cx' in viewBox && 'cy' in viewBox) {
+                    return (
+                      <text x={viewBox.cx} y={viewBox.cy} textAnchor="middle">
+                        <tspan
+                          x={viewBox.cx}
+                          y={(viewBox.cy || 0) + 5}
+                          className="fill-foreground p-num text-2xl font-bold"
+                        >
+                          {totalVisitors.toLocaleString()}
+                        </tspan>
+                        <tspan
+                          x={viewBox.cx}
+                          y={(viewBox.cy || 0) + 25}
+                          className="fill-muted-foreground"
+                        >
+                          حجم
+                        </tspan>
+                      </text>
+                    )
+                  }
+                }}
+              />
+            </PolarRadiusAxis>
+            <RadialBar
               dataKey="desktop"
+              stackId="a"
+              cornerRadius={0}
               fill="var(--color-chart-1)"
-              fillOpacity={0.5}
+              className="stroke-transparent stroke-2"
             />
-          </RadarChart>
+            <RadialBar
+              dataKey="mobile"
+              fill="var(--color-chart-2)"
+              stackId="a"
+              cornerRadius={0}
+              className="stroke-transparent stroke-2"
+            />
+          </RadialBarChart>
         </ChartContainer>
       </CardContent>
       <CardFooter className="flex-col gap-2 text-sm">
         <div className="flex items-center gap-2 leading-none font-medium">
           Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
         </div>
-        <div className="text-muted-foreground flex items-center gap-2 leading-none">
-          January - June 2024
+        <div className="text-muted-foreground leading-none">
+          Showing total visitors for the last 6 months
         </div>
       </CardFooter>
     </Card>

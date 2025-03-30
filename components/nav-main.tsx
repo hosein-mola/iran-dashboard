@@ -20,6 +20,8 @@ import {
 import { cn } from '@/lib/utils'
 import { Button } from './ui/button'
 
+import { redirect } from 'next/navigation'
+
 interface NavItem {
   title: string
   url: string
@@ -45,23 +47,22 @@ function NavItemComponent({ item }: { item: NavItem }) {
   const [isOpen, setIsOpen] = useState(item.isActive || false)
 
   return (
-    <SidebarMenuItem>
+    <SidebarMenuItem className="p-1">
       <Collapsible
         open={isOpen}
         onOpenChange={setIsOpen}
-        className="group/collapsible w-full overflow-hidden"
+        className="group/collapsible bg-sidebar w-full overflow-hidden"
       >
         <CollapsibleTrigger asChild>
           <Button
             variant={item.isActive ? 'default' : 'ghost'}
             className={cn(
-              'group/abc dark:bg-sidebar dark:text-sidebar-foreground flex h-auto w-full cursor-pointer flex-row items-center justify-between rounded-[0] transition-colors dark:border-0 dark:border-b',
-              item.isActive && 'text-background bg-sidebar'
+              'flex h-auto w-full cursor-pointer flex-row items-center justify-between rounded-xl transition-colors'
             )}
           >
             <div className="flex flex-row items-center justify-center">
               {item.icon && (
-                <item.icon className="border-sidebar-accent group-hover/abc:border-accent-foreground size-6 rounded-full border-2 p-0.5" />
+                <item.icon className="size-6 rounded-full border-2 p-0.5" />
               )}
               <span className="mr-2 text-xs">{item.title}</span>
             </div>
@@ -88,7 +89,7 @@ function NavItemComponent({ item }: { item: NavItem }) {
               transition={{ duration: 0.2, ease: 'easeInOut' }}
               className="overflow-hidden"
             >
-              <SidebarMenuSub className="mx-0 translate-0 p-0">
+              <SidebarMenuSub className="mx-0 translate-0 p-1">
                 {item.items.map((subItem) => (
                   <SidebarMenuSubItem key={subItem.title}>
                     {subItem.items && subItem.items.length > 0 ? (
@@ -97,9 +98,12 @@ function NavItemComponent({ item }: { item: NavItem }) {
                       </SidebarMenuSub>
                     ) : (
                       <Button
+                        onClick={() => {
+                          redirect(subItem.url)
+                        }}
                         variant={'ghost'}
                         className={cn(
-                          'bg-sidebar hover:bg-muted-foreground/20 hover:text-foreground flex h-10 w-full cursor-pointer justify-start text-sm',
+                          'flex h-10 w-full cursor-pointer justify-start rounded-xl text-sm',
                           subItem.items && subItem.items.length > 0
                             ? 'mr-0'
                             : 'mr-0'

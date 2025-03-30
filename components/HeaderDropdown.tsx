@@ -6,12 +6,8 @@ import {
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuPortal,
   DropdownMenuSeparator,
   DropdownMenuShortcut,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 
@@ -27,12 +23,14 @@ export default function HeaderDropdown() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent
-        className="bg-background mt-3 ml-2 w-56 flex-row-reverse rounded border shadow-2xl"
+        className="bg-background shadow-primary/70 z-[100] mt-3 w-56 flex-row-reverse rounded border shadow-2xl"
         side="right"
         align="end"
-        sideOffset={4}
+        sideOffset={7}
       >
-        <DropdownMenuLabel>My Account</DropdownMenuLabel>
+        <DropdownMenuLabel dir="rtl" className="font-bold">
+          تنظیمات
+        </DropdownMenuLabel>
         <DropdownMenuGroup>
           <DropdownMenuItem
             variant="background"
@@ -43,29 +41,18 @@ export default function HeaderDropdown() {
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem>Team</DropdownMenuItem>
-          <DropdownMenuSub>
-            <DropdownMenuSubTrigger>Invite users</DropdownMenuSubTrigger>
-            <DropdownMenuPortal>
-              <DropdownMenuSubContent>
-                <DropdownMenuItem>Email</DropdownMenuItem>
-                <DropdownMenuItem>Message</DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>More...</DropdownMenuItem>
-              </DropdownMenuSubContent>
-            </DropdownMenuPortal>
-          </DropdownMenuSub>
+          <DropdownMenuItem>تغییر ماژول</DropdownMenuItem>
           <DropdownMenuItem>
-            New Team
+            امنیت
             <DropdownMenuShortcut>⌘+T</DropdownMenuShortcut>
           </DropdownMenuItem>
         </DropdownMenuGroup>
-        <DropdownMenuItem>GitHub</DropdownMenuItem>
-        <DropdownMenuItem>Support</DropdownMenuItem>
-        <DropdownMenuItem disabled>API</DropdownMenuItem>
+        <DropdownMenuItem>تنظیمات کاربر</DropdownMenuItem>
+        <DropdownMenuItem>پشتیبانی</DropdownMenuItem>
+        <DropdownMenuItem disabled>مستندات API</DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem>
-          Log out
+          خروج
           <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
         </DropdownMenuItem>
       </DropdownMenuContent>

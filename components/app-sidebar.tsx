@@ -2,16 +2,16 @@
 
 import * as React from 'react'
 import {
-  AudioWaveform,
   BookOpen,
   Bot,
-  Command,
-  Frame,
-  GalleryVerticalEnd,
-  Map,
-  PieChart,
+  LucideChartBarBig,
+  LucideTerminal,
+  LucideTextCursorInput,
+  LucideUserSearch,
   Settings2,
   User2,
+  UserRoundPenIcon,
+  UserSearchIcon,
 } from 'lucide-react'
 
 import { RiWaterFlashFill } from 'react-icons/ri'
@@ -25,6 +25,8 @@ import {
   SidebarFooter,
   SidebarHeader,
 } from '@/components/ui/sidebar'
+import { Button } from './ui/button'
+import { redirect } from 'next/navigation'
 
 // This is sample data.
 const data = {
@@ -36,18 +38,18 @@ const data = {
   teams: [
     {
       name: 'کاربر سد',
-      logo: GalleryVerticalEnd,
-      plan: 'نقش پیشفرض',
+      logo: UserRoundPenIcon,
+      isDefault: true,
     },
     {
-      name: 'Acme Corp.',
-      logo: AudioWaveform,
-      plan: 'Startup',
+      name: 'رئیس سد',
+      logo: UserSearchIcon,
+      isDefault: false,
     },
     {
-      name: 'Evil Corp.',
-      logo: Command,
-      plan: 'Free',
+      name: 'راهبر آب منطقه ای',
+      logo: LucideUserSearch,
+      isDefault: false,
     },
   ],
   navMain: [
@@ -55,19 +57,11 @@ const data = {
       title: 'کاربران',
       url: 'plauyground',
       icon: User2,
-      isActive: false,
+      isActive: true,
       items: [
         {
-          title: 'History',
-          url: '#',
-        },
-        {
-          title: 'Starred',
-          url: '#',
-        },
-        {
-          title: 'Settings',
-          url: '#',
+          title: 'افراد',
+          url: 'persons',
         },
       ],
     },
@@ -154,19 +148,19 @@ const data = {
   ],
   projects: [
     {
-      name: 'Design Engineering',
+      name: 'گزارش ساز',
       url: '#',
-      icon: Frame,
+      icon: LucideChartBarBig,
     },
     {
-      name: 'Sales & Marketing',
+      name: 'فرم ساز',
       url: '#',
-      icon: PieChart,
+      icon: LucideTextCursorInput,
     },
     {
-      name: 'Travel',
+      name: 'فرمول ‌ساز',
       url: '#',
-      icon: Map,
+      icon: LucideTerminal,
     },
   ],
 }
@@ -175,22 +169,28 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar
       variant="sidebar"
-      className="border-l"
+      className="bg-background border-l"
       collapsible="offcanvas"
       {...props}
     >
       <SidebarHeader className="bg-background border-border flex h-auto min-w-4 items-center justify-center gap-0">
-        <div className="border-border flex h-16 w-full flex-row items-center justify-start gap-1 border-b">
-          <RiWaterFlashFill className="text-sidebar-foreground mr-2 h-10 w-10" />
-          <span className="text-2xl font-bold">سد‌ایران</span>
-        </div>
+        <Button
+          variant={'ghost'}
+          onClick={() => {
+            redirect('/dashboard')
+          }}
+          className="gorup/site-name border-border flex h-16 w-full flex-row items-center justify-start gap-1 rounded-none border-b"
+        >
+          <RiWaterFlashFill className="group-hover/site-name:text-primary mr-2 size-8" />
+          <span className="text-2xl">سد‌ایران</span>
+        </Button>
         <TeamSwitcher teams={data.teams} />
       </SidebarHeader>
-      <SidebarContent>
+      <SidebarContent className="bg-background">
         <NavMain items={data.navMain} />
         <NavProjects projects={data.projects} />
       </SidebarContent>
-      <SidebarFooter>
+      <SidebarFooter className="bg-background">
         <NavUser user={data.user} />
       </SidebarFooter>
     </Sidebar>
