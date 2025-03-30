@@ -17,16 +17,16 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from '@/components/ui/chart'
-const chartData = [{ month: 'january', desktop: 1260, mobile: 570 }]
+const chartData = [{ month: 'january', desktop: 400, mobile: 40 }]
 
 const chartConfig = {
   desktop: {
     label: 'Desktop',
-    color: 'hsl(var(--chart-1))',
+    color: 'hsl(var(--chart-7))',
   },
   mobile: {
     label: 'Mobile',
-    color: 'hsl(var(--chart-2))',
+    color: 'hsl(var(--chart-6))',
   },
 } satisfies ChartConfig
 
@@ -34,10 +34,10 @@ export function Chart2() {
   const totalVisitors = chartData[0].desktop + chartData[0].mobile
 
   return (
-    <Card className="flex flex-col shadow-none">
+    <Card className="flex flex-col rounded-none shadow-none">
       <CardHeader className="items-center pb-0">
-        <CardTitle>Radial Chart - Stacked</CardTitle>
-        <CardDescription>January - June 2024</CardDescription>
+        <CardTitle>میزان پرشدگی</CardTitle>
+        <CardDescription>از مهر - آبان</CardDescription>
       </CardHeader>
       <CardContent className="flex flex-1 items-center pb-0">
         <ChartContainer
@@ -47,9 +47,19 @@ export function Chart2() {
           <RadialBarChart
             data={chartData}
             endAngle={360}
-            innerRadius={100}
-            outerRadius={160}
+            innerRadius={90}
+            outerRadius={140}
           >
+            <defs>
+              <linearGradient id="desktopGradient" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stopColor="var(--chart-7)" />
+                <stop offset="100%" stopColor="var(--chart-6)" />
+              </linearGradient>
+              <linearGradient id="mobileGradient" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stopColor="var(--color-rose-500)" />
+                <stop offset="100%" stopColor="var(--color-rose-400)" />
+              </linearGradient>
+            </defs>
             <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
             <PolarRadiusAxis tick={false} tickLine={false} axisLine={false}>
               <Label
@@ -81,12 +91,12 @@ export function Chart2() {
               dataKey="desktop"
               stackId="a"
               cornerRadius={0}
-              fill="var(--color-chart-1)"
+              fill="url(#desktopGradient)"
               className="stroke-transparent stroke-2"
             />
             <RadialBar
               dataKey="mobile"
-              fill="var(--color-chart-2)"
+              fill="url(#mobileGradient)"
               stackId="a"
               cornerRadius={0}
               className="stroke-transparent stroke-2"
@@ -96,10 +106,10 @@ export function Chart2() {
       </CardContent>
       <CardFooter className="flex-col gap-2 text-sm">
         <div className="flex items-center gap-2 leading-none font-medium">
-          Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
+          میزان نسبت به شاخص دیروز <TrendingUp className="h-4 w-4" />
         </div>
         <div className="text-muted-foreground leading-none">
-          Showing total visitors for the last 6 months
+          میزان پرشدگی نسبت به سال قبل
         </div>
       </CardFooter>
     </Card>

@@ -1,5 +1,5 @@
 'use client'
-import React from 'react'
+import React, { Fragment, useRef } from 'react'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,48 +14,63 @@ import {
 import { Button } from '@/components/ui/button'
 import ThemeChanger from './ThemeChanger'
 import { MenuIcon } from 'lucide-react'
+import { DrawerDemo } from './drawer'
+import { DrawerTrigger } from './ui/drawer'
 export default function HeaderDropdown() {
+  const changeModuleRef = useRef<HTMLButtonElement>(null)
+
   return (
-    <DropdownMenu modal={false}>
-      <DropdownMenuTrigger asChild>
-        <Button variant="default" className="cursor-pointer">
-          <MenuIcon />
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent
-        className="bg-background shadow-primary/70 z-[100] mt-3 w-56 flex-row-reverse rounded border shadow-2xl"
-        side="right"
-        align="end"
-        sideOffset={7}
-      >
-        <DropdownMenuLabel dir="rtl" className="font-bold">
-          تنظیمات
-        </DropdownMenuLabel>
-        <DropdownMenuGroup>
-          <DropdownMenuItem
-            variant="background"
-            onClick={(e) => e.preventDefault()}
-          >
-            <ThemeChanger />
-          </DropdownMenuItem>
-        </DropdownMenuGroup>
-        <DropdownMenuSeparator />
-        <DropdownMenuGroup>
-          <DropdownMenuItem>تغییر ماژول</DropdownMenuItem>
+    <Fragment>
+      <DrawerDemo>
+        <DrawerTrigger asChild className="hidden">
+          <Button ref={changeModuleRef} variant="outline">
+            Open Drawer
+          </Button>
+        </DrawerTrigger>
+      </DrawerDemo>
+      <DropdownMenu modal={false}>
+        <DropdownMenuTrigger asChild>
+          <Button variant="default" className="cursor-pointer">
+            <MenuIcon />
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent
+          className="bg-background shadow-primary/70 z-[100] mt-3 w-56 flex-row-reverse rounded border shadow-2xl"
+          side="right"
+          align="end"
+          sideOffset={7}
+        >
+          <DropdownMenuLabel dir="rtl" className="font-bold">
+            تنظیمات
+          </DropdownMenuLabel>
+          <DropdownMenuGroup>
+            <DropdownMenuItem
+              variant="background"
+              onClick={(e) => e.preventDefault()}
+            >
+              <ThemeChanger />
+            </DropdownMenuItem>
+          </DropdownMenuGroup>
+          <DropdownMenuSeparator />
+          <DropdownMenuGroup>
+            <DropdownMenuItem onClick={() => changeModuleRef.current?.click()}>
+              تغییر ماژول
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              امنیت
+              <DropdownMenuShortcut>⌘+T</DropdownMenuShortcut>
+            </DropdownMenuItem>
+          </DropdownMenuGroup>
+          <DropdownMenuItem>تنظیمات کاربر</DropdownMenuItem>
+          <DropdownMenuItem>پشتیبانی</DropdownMenuItem>
+          <DropdownMenuItem disabled>مستندات API</DropdownMenuItem>
+          <DropdownMenuSeparator />
           <DropdownMenuItem>
-            امنیت
-            <DropdownMenuShortcut>⌘+T</DropdownMenuShortcut>
+            خروج
+            <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
           </DropdownMenuItem>
-        </DropdownMenuGroup>
-        <DropdownMenuItem>تنظیمات کاربر</DropdownMenuItem>
-        <DropdownMenuItem>پشتیبانی</DropdownMenuItem>
-        <DropdownMenuItem disabled>مستندات API</DropdownMenuItem>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem>
-          خروج
-          <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </Fragment>
   )
 }

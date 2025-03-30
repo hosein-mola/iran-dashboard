@@ -36,6 +36,8 @@ const lightTheme = themeQuartz.withParams({
   // accent colors, changing these two values is sufficient.
   backgroundColor: 'oklch(1 0.012 258)',
   accentColor: 'oklch(0.16546762589928057 0.13333333333333336 258)',
+  borderColor:
+    'oklch(0.9447590760599487 0.026183672181971585 262.70494790451886)',
 })
 
 const darkTheme = themeQuartz.withPart(colorSchemeDarkBlue).withParams({
