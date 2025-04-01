@@ -51,6 +51,31 @@
 .ag-root {
   border-radius: 0;
 }
+.ag-cell,
+.ag-cell-value {
+  text-align: center;
+  justify-content: center;
+}
+.ag-pinned-right-sticky-bottom,
+.ag-pinned-left-sticky-bottom {
+  direction: ltr;
+}
+.ag-header-group-cell-label {
+  justify-content: center;
+}
+.ag-header-cell-label {
+  justify-content: center;
+}
+.ag-input-field-input {
+  text-align: center;
+}
+.ag-header-cell-comp-wrapper {
+  justify-content: center;
+}
+.ag-paging-panel {
+  direction: rtl;
+  flex-direction: row-reverse;
+}
 
 :root {
   --font-iranyekan: iranyekan;

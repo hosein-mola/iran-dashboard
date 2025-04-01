@@ -1,4 +1,4 @@
-import { Chart1 } from '@/components/Chart1'
+import { Chart1 } from '@/components/chart1'
 import { Chart2 } from '@/components/Chart2'
 import ScrollTable from '../persons/srcrolltable'
 import {
@@ -9,7 +9,8 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 
-export default function Page() {
+export default async function Page() {
+  // primise that resolve in 2 second
   return (
     <div className="flex h-full min-h-0 flex-col gap-2">
       <div className="bg-background hidden flex-[1] grid-cols-2 gap-2 rounded-2xl md:grid">

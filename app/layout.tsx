@@ -9,7 +9,7 @@ import { ThemeProvider } from 'next-themes'
 import HeaderDropdown from '@/components/HeaderDropdown'
 import { Button } from '@/components/ui/button'
 import { LucideCalendarArrowDown, LucideDam } from 'lucide-react'
-import Loader from '@/components/loader'
+import HolyLoader from 'holy-loader'
 
 export default function RootLayout({
   children,
@@ -17,9 +17,17 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" dir="rtl" suppressHydrationWarning>
+    <html lang="fa" dir="rtl" suppressHydrationWarning>
       <body className="flex min-h-screen flex-col">
-        <Loader />
+        <HolyLoader
+          color="oklch(0.16546762589928057 0.13333333333333336 258)"
+          height="0.8rem"
+          speed={1000}
+          easing="cubic-bezier(0.4, 0, 0.2, 1)"
+          boxShadow="0px 4px 6px rgba(0, 0, 0, 0.1)"
+          showSpinner
+          dir="rtl"
+        />
         <ThemeProvider attribute="class">
           <SidebarProvider>
             <AppSidebar side="right" variant="inset" />
@@ -56,7 +64,7 @@ export default function RootLayout({
               </main>
 
               {/* Footer */}
-              <footer className="bg-background text-muted-foreground flex h-12 w-full flex-shrink-0 items-center justify-center border-t text-xs">
+              <footer className="bg-background text-muted-foreground flex h-16 w-full flex-shrink-0 items-center justify-center border-t text-xs">
                 <span className="">توسعه در سازمان آب و برق خوستان</span>
                 <span className="">-</span>
                 <span className="">0.0.1</span>

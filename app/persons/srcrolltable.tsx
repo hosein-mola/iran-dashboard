@@ -16,8 +16,13 @@ import {
   CellStyleModule,
   ValidationModule,
   NumberFilterModule,
+  TooltipModule,
+  PaginationModule,
+  RowSelectionModule,
+  NumberEditorModule,
 } from 'ag-grid-community'
 import {
+  AdvancedFilterModule,
   ColumnMenuModule,
   ColumnsToolPanelModule,
   CellSelectionModule,
@@ -28,6 +33,14 @@ import {
   TextFilterModule,
   ExcelExportModule,
   PivotModule,
+  ClipboardModule,
+  RichSelectModule,
+  RowNumbersModule,
+  RangeSelectionModule,
+  RowGroupingPanelModule,
+  FindModule,
+  MultiFilterModule,
+  StatusBarModule,
 } from 'ag-grid-enterprise'
 
 const lightTheme = themeQuartz.withParams({
@@ -52,32 +65,46 @@ const localeText = AG_GRID_LOCALE_IR
 
 import { IOlympicData } from './interfaces'
 ModuleRegistry.registerModules([
+  FindModule,
+  AdvancedFilterModule,
   ClientSideRowModelModule,
   ColumnsToolPanelModule,
   ColumnMenuModule,
+  MultiFilterModule,
+  StatusBarModule,
+  PaginationModule,
+  ClipboardModule,
+  TooltipModule,
+  RowSelectionModule,
+  RowNumbersModule,
   ContextMenuModule,
   CellStyleModule,
   TextFilterModule,
+  RichSelectModule,
   NumberFilterModule,
   LocaleModule,
   IntegratedChartsModule.with(AgChartsEnterpriseModule),
   PivotModule,
   FiltersToolPanelModule,
   CellSelectionModule,
+  RangeSelectionModule,
+  NumberEditorModule,
   CsvExportModule,
   ExcelExportModule,
+  RowGroupingPanelModule,
   ValidationModule,
 ])
 import { useFetchJson } from './useFetchJson'
 import { useTheme } from 'next-themes'
-export const columnCentered = {
-  headerClass: 'text-center',
-  cellStyle: {
-    textAlign: 'center',
-    // Add the following if you are using .ag-header-cell-menu-button
-    // and column borders are set to none.
-    // marginLeft: '-16px'
-  },
+import { Switch } from '@/components/ui/switch'
+
+const ButtonRenderer = (params) => {
+  if (params.node.parent?.id !== 'ROOT_NODE_ID') return null
+  return (
+    <div dir="ltr" className="flex h-full w-full items-center justify-center">
+      <Switch className="cursor-pointer" />
+    </div>
+  )
 }
 
 const ScrollTable = () => {
@@ -87,15 +114,46 @@ const ScrollTable = () => {
   // @ts-nocheck
   const [columnDefs] = useState<(ColDef | ColGroupDef)[]>([
     {
-      field: 'country',
       enableRowGroup: true,
-      filter: 'agTextColumnFilter',
+      field: 'date',
+      valueFormatter: (params) => {
+        if (!params.value) return ''
+        // Parse the date from DD/MM/YYYY format
+        const [day, month, year] = params.value.split('/').map(Number)
+        const date = new Date(year, month - 1, day) // Month is 0-based in JS
+
+        return date.toLocaleString('fa-IR-u-ca-persian', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+        })
+      },
+    },
+    {
+      field: 'button',
+      headerName: 'تایید نهایی',
+      valueFormatter: '',
+      valueParser: '',
+      cellRenderer: ButtonRenderer,
       cellStyle: { textAlign: 'center' },
     },
     {
+      field: 'country',
+      enableRowGroup: true,
+      filter: 'agTextColumnFilter',
+      tooltipField: 'country',
+      headerTooltip: 'Tooltip for Athlete Column Header',
+
+      cellStyle: { textAlign: 'center' },
+    },
+    {
+      headerName: 'طلا',
       field: 'gold',
+      headerClass: 'text-center',
       aggFunc: 'sum',
-      pinned: 'left',
+      pinned: 'right',
+      width: '200',
+      cellStyle: { textAlign: 'center' },
       enableValue: true,
     },
     {
@@ -105,31 +163,24 @@ const ScrollTable = () => {
     },
     {
       field: 'age',
+      aggFunc: 'sum',
+      enableRowGroup: true,
+      editable: true,
       enableValue: true,
-      filter: 'agNumberColumnFilter',
       cellStyle: { textAlign: 'center' },
-      headerClass: 'text-center',
     },
     {
       field: 'year',
       enableValue: true,
       cellStyle: { textAlign: 'center' },
     },
+    {
+      headerName: 'Personal Info',
+      children: [{ field: 'athlete' }, { field: 'gold' }],
+    },
+    { field: 'total' },
+    { field: 'sport' },
   ])
-
-  const defaultColDef = useMemo<ColDef>(() => {
-    return {
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-    }
-  }, [])
-
-  const autoGroupColumnDef = useMemo<ColDef>(() => {
-    return {
-      minWidth: 200,
-    }
-  }, [])
 
   const { data, loading } = useFetchJson<IOlympicData>(
     'https://www.ag-grid.com/example-assets/olympic-winners.json'
@@ -137,21 +188,78 @@ const ScrollTable = () => {
 
   return (
     <div style={containerStyle}>
-      <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
-        <div style={gridStyle}>
+      <div
+        dir="ltr"
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          height: '100%',
+        }}
+      >
+        <div dir="ltr" style={gridStyle}>
           <AgGridReact<IOlympicData>
+            rowNumbers={{
+              headerComponent: () => <h1>ردیف</h1>,
+              width: 100,
+              resizable: true,
+              suppressCellSelectionIntegration: true,
+              valueFormatter: (params) => {
+                if (params.node?.sticky) {
+                  return ''
+                } else {
+                  return params.value
+                }
+              },
+            }}
             localeText={localeText}
             rowData={data}
             enableRtl={true}
+            singleClickEdit={true}
             loading={loading}
-            columnDefs={columnDefs}
-            defaultColDef={defaultColDef}
-            autoGroupColumnDef={autoGroupColumnDef}
-            sideBar={'columns'}
-            theme={themeState.theme === 'dark' ? darkTheme : lightTheme}
-            pivotMode={false}
+            onCellValueChanged={(a) => {
+              if (a.newValue == 11) {
+                alert('wrong')
+                const rowNode = a.node
+                rowNode.setDataValue(a.column.getColId(), a.oldValue)
+              }
+              return
+            }}
+            rowSelection={{
+              mode: 'singleRow',
+              headerCheckbox: false,
+              checkboxes: true,
+              checkboxLocation: 'selectionColumn',
+              hideDisabledCheckboxes: false,
+              copySelectedRows: true,
+            }}
+            statusBar={{
+              statusPanels: [
+                {
+                  statusPanel: 'agTotalAndFilteredRowCountComponent',
+                  align: 'left',
+                },
+                { statusPanel: 'agTotalRowCountComponent', align: 'left' },
+                { statusPanel: 'agFilteredRowCountComponent', align: 'left' },
+                { statusPanel: 'agSelectedRowCountComponent', align: 'left' },
+                { statusPanel: 'agAggregationComponent', align: 'left' },
+              ],
+            }}
+            rowGroupPanelShow={'never'}
+            grandTotalRow="bottom"
             cellSelection={true}
+            ensureDomOrder={true}
+            animateRows={true}
+            enableCellTextSelection={false}
+            onSelectionChanged={(row) => console.log(row)}
+            columnDefs={columnDefs}
+            sideBar={'columns'}
+            alwaysAggregateAtRootLevel={false}
+            pivotPanelShow={false}
+            pivotMode={false}
+            theme={themeState.theme === 'dark' ? darkTheme : lightTheme}
             enableCharts={true}
+            pagination={true}
+            paginationPageSize={20}
           />
         </div>
       </div>

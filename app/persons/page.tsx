@@ -1,7 +1,7 @@
 import React from 'react'
 import ScrollTable from './srcrolltable'
 
-async function page() {
+export default async function page() {
   return (
     <div className="flex h-full min-h-0 flex-col gap-2">
       <div className="bg-background border-border flex-1/5 rounded-2xl border"></div>
@@ -12,5 +12,3 @@ async function page() {
     </div>
   )
 }
-
-export default page

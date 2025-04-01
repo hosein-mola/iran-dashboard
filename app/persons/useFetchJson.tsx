@@ -10,11 +10,9 @@ export const useFetchJson = <T,>(url: string, limit?: number) => {
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true)
-
       // Note error handling is omitted here for brevity
       const response = await fetch(url)
       const json = await response.json()
-      console.log('🚀 ~ fetchData ~ json:', json)
       const data = limit ? json.slice(0, limit) : json
       setData(data)
       setLoading(false)
