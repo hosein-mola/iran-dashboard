@@ -2,10 +2,21 @@
 import React from 'react'
 import ScrollTable from './srcrolltable'
 import Filter from './filter'
-
+import PersianDate from 'persian-date'
+import { CalenderFormat } from '@/types/calender-type'
+export type OnSubmitParams = {
+  date: PersianDate
+  date2: PersianDate
+}
 export default function page() {
-  const onSubmit = ({ date, date2 }) => {
-    console.log({ date: date.format('LLLL'), date2: date2.format('LLLL') })
+  const onSubmit = ({ date, date2 }: OnSubmitParams) => {
+    console.log({
+      date: date
+        .toCalendar('gregorian')
+        .toLocale('en')
+        .format(CalenderFormat.ISO8601),
+      date2: date2.format('LLLL'),
+    })
   }
 
   return (

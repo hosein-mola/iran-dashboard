@@ -1,5 +1,4 @@
 'use client'
-
 import { cn } from '@/lib/utils'
 import { CalenderType } from '@/types/calender-type'
 import { motion } from 'framer-motion'
@@ -8,20 +7,28 @@ import {
   ArrowLeftCircleIcon,
   LucideRepeat1,
 } from 'lucide-react'
-import { useOnClickOutside } from 'usehooks-ts'
-
-import persianDate from 'persian-date'
+import PersianDate from 'persian-date'
 import { useEffect, useRef, useState } from 'react'
 
 // Main DatePicker component
-const DatePicker = ({ date, setDate, calender, close }) => {
+const DatePicker = ({
+  date,
+  setDate,
+  calender,
+  close,
+}: {
+  date: PersianDate
+  setDate: React.Dispatch<React.SetStateAction<PersianDate>>
+  calender: CalenderType
+  close: (date: PersianDate) => void
+}) => {
   const ref = useRef<HTMLDivElement>(null)
 
   const _calender =
     calender == CalenderType.FA ? CalenderType.FA : CalenderType.EN
 
   const [calanderState, setCalanderState] = useState(
-    new persianDate(date).toCalendar(_calender)
+    new PersianDate(date).toCalendar(_calender)
   )
 
   const daysInMonth = calanderState.daysInMonth()
@@ -29,7 +36,7 @@ const DatePicker = ({ date, setDate, calender, close }) => {
   const selectedMonth = calanderState.toArray()[1]
   const selectedDay = calanderState.toArray()[2]
 
-  const find = new persianDate([
+  const find = new PersianDate([
     calanderState.year(),
     calanderState.month(),
     1,
@@ -37,18 +44,12 @@ const DatePicker = ({ date, setDate, calender, close }) => {
 
   const offset = Number(find.format('d')) - 1
 
-  const [view, setView] = useState('day')
+  const [view, setView] = useState<'month' | 'year' | 'day'>('day')
 
   useEffect(() => {
-    const clone = new persianDate(calanderState)
+    const clone = new PersianDate(calanderState)
     setDate(clone)
   }, [setDate, calanderState])
-
-  const handleClickOutside = () => {
-    close(calanderState)
-  }
-
-  useOnClickOutside(ref as React.RefObject<HTMLElement>, handleClickOutside)
 
   const renderViewSelector = () => {
     const viewComponents = {
@@ -114,6 +115,13 @@ const DatePickerPanel = ({
   selectedDay,
   selectedMonth,
   selectedYear,
+}: {
+  calanderState: PersianDate
+  setCalanderState: React.Dispatch<React.SetStateAction<PersianDate>>
+  setView: React.Dispatch<React.SetStateAction<'month' | 'year' | 'day'>>
+  selectedDay: number
+  selectedMonth: number
+  selectedYear: number
 }) => {
   const next = () => {
     const update = calanderState.add('M', 1)
@@ -126,7 +134,7 @@ const DatePickerPanel = ({
   }
 
   const resetDate = () => {
-    setCalanderState(new persianDate())
+    setCalanderState(new PersianDate())
   }
 
   return (
@@ -197,7 +205,7 @@ const DatePickerPanel = ({
 }
 
 // Component to render days of the week
-const DaysOfWeek = ({ calanderState }) => {
+const DaysOfWeek = ({ calanderState }: { calanderState: PersianDate }) => {
   const renderWeekDays = () => {
     return calanderState.rangeName().weekdays.map((dayName: string) => {
       return (
@@ -231,6 +239,12 @@ const DayView = ({
   daysInMonth,
   offset,
   close,
+}: {
+  calanderState: PersianDate
+  setCalanderState: React.Dispatch<React.SetStateAction<PersianDate>>
+  daysInMonth: number
+  offset: number
+  close: (date: PersianDate) => void
 }) => {
   const renderOffsetStart = () => {
     return [...Array(offset).keys()].map((step) => {
@@ -250,7 +264,7 @@ const DayView = ({
     })
   }
   const selectDate = (day: number) => {
-    const newDate = new persianDate([
+    const newDate = new PersianDate([
       calanderState.year(),
       calanderState.month(),
       day + 1,
@@ -266,7 +280,7 @@ const DayView = ({
             onClick={() => selectDate(day)}
             className={cn(
               'hover:bg-accent hover:text-accent-foreground text-md flex h-8 w-8 cursor-pointer items-center justify-center rounded-xl font-bold select-none',
-              calanderState.date() == Number(day + 1) &&
+              Number(calanderState.date()) == Number(day + 1) &&
                 'bg-accent text-accent-foreground'
             )}
             key={'day' + day}
@@ -309,9 +323,17 @@ const DayView = ({
 }
 
 // Component to render the month view
-const MonthView = ({ calanderState, setCalanderState, setView }) => {
+const MonthView = ({
+  calanderState,
+  setCalanderState,
+  setView,
+}: {
+  calanderState: PersianDate
+  setCalanderState: React.Dispatch<React.SetStateAction<PersianDate>>
+  setView: React.Dispatch<React.SetStateAction<'month' | 'year' | 'day'>>
+}) => {
   const selectMonth = (month: number) => {
-    const newDate = new persianDate([
+    const newDate = new PersianDate([
       calanderState.toArray()[0],
       month,
       calanderState.toArray()[2],
@@ -321,9 +343,8 @@ const MonthView = ({ calanderState, setCalanderState, setView }) => {
   }
 
   const renderMonthName = () => {
-    return persianDate
-      .rangeName()
-      .months.map((monthName: string, index: number) => {
+    return PersianDate.rangeName().months.map(
+      (monthName: string, index: number) => {
         return (
           <motion.h1
             key={monthName}
@@ -338,7 +359,8 @@ const MonthView = ({ calanderState, setCalanderState, setView }) => {
             {monthName}
           </motion.h1>
         )
-      })
+      }
+    )
   }
   return (
     <div
@@ -352,9 +374,17 @@ const MonthView = ({ calanderState, setCalanderState, setView }) => {
 }
 
 // Component to render the year view
-const YearView = ({ calanderState, setCalanderState, setView }) => {
+const YearView = ({
+  calanderState,
+  setCalanderState,
+  setView,
+}: {
+  calanderState: PersianDate
+  setCalanderState: React.Dispatch<React.SetStateAction<PersianDate>>
+  setView: React.Dispatch<React.SetStateAction<'month' | 'year' | 'day'>>
+}) => {
   const selectYear = (year: number) => {
-    const newDate = new persianDate([
+    const newDate = new PersianDate([
       year,
       calanderState.toArray()[1],
       calanderState.toArray()[2],
@@ -366,7 +396,7 @@ const YearView = ({ calanderState, setCalanderState, setView }) => {
   const renderYearName = () => {
     return Array.from(
       { length: 70 },
-      (x, i) => new persianDate().toArray()[0] - i
+      (x, i) => new PersianDate().toArray()[0] - i
     ).map((year) => {
       return (
         <motion.div
