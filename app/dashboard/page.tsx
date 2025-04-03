@@ -1,6 +1,6 @@
 import { Chart1 } from '@/components/chart1'
 import { Chart2 } from '@/components/Chart2'
-import ScrollTable from '../persons/srcrolltable'
+// import ScrollTable from '../persons/srcrolltable'
 import {
   Card,
   CardContent,
@@ -8,6 +8,9 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
+import { Suspense } from 'react'
+import TableWrapper from '@/components/table-wraper'
+import { LoaderCircle } from 'lucide-react'
 
 export default async function Page() {
   // primise that resolve in 2 second
@@ -28,7 +31,15 @@ export default async function Page() {
             </div>
           </CardHeader>
           <CardContent className="bg-background h-full flex-1 rounded-2xl px-2">
-            <ScrollTable />
+            <Suspense
+              fallback={
+                <div className="flex h-full w-full items-center justify-center">
+                  <LoaderCircle className="size-28 animate-spin" />
+                </div>
+              }
+            >
+              <TableWrapper />
+            </Suspense>
           </CardContent>
         </Card>
       </div>

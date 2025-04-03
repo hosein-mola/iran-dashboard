@@ -212,7 +212,7 @@ const ScrollTable = () => {
               },
             }}
             localeText={localeText}
-            rowData={data}
+            rowData={data?.slice(100)}
             enableRtl={true}
             singleClickEdit={true}
             loading={loading}
