@@ -31,13 +31,14 @@ export default function DatePickerInput({
 
   return (
     <div>
-      <DropdownMenu defaultOpen={false} open={open} modal={false}>
+      <DropdownMenu
+        defaultOpen={false}
+        modal={false}
+        open={open}
+        onOpenChange={setOpen}
+      >
         <DropdownMenuTrigger asChild>
-          <Button
-            onClick={() => setOpen((prev) => !prev)}
-            className="cursor-pointer"
-            variant={'ghost'}
-          >
+          <Button className="cursor-pointer" variant={'ghost'}>
             <LucideCalendarArrowDown className="size-5" />
             {date.format('L')}
           </Button>

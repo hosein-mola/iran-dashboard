@@ -14,8 +14,6 @@ export default function Filter({
   const [date, setDate] = useState<PersianDate>(new PersianDate())
   const [date2, setDate2] = useState<PersianDate>(new PersianDate())
 
-  
-  
   return (
     <div className="flex items-center gap-2">
       <DatePickerInput

@@ -275,7 +275,13 @@ const DayView = ({
   const renderDays = () => {
     return [...Array(daysInMonth).keys()].map((day) => {
       return (
-        <div key={day} className="">
+        <motion.div
+          key={day}
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          transition={{ delay: 0.1, duration: 0.3 }}
+          className=""
+        >
           <h1
             onClick={() => selectDate(day)}
             className={cn(
@@ -287,7 +293,7 @@ const DayView = ({
           >
             {day + 1}
           </h1>
-        </div>
+        </motion.div>
       )
     })
   }
@@ -348,8 +354,8 @@ const MonthView = ({
         return (
           <motion.h1
             key={monthName}
-            initial={{ opacity: 0, x: 200 }}
-            animate={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: -50 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
             onClick={() => selectMonth(index + 1)}
             className={cn(
@@ -402,9 +408,9 @@ const YearView = ({
         <motion.div
           key={year}
           className=""
-          initial={{ opacity: 0, x: 200 }}
-          animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: 200 }}
+          initial={{ opacity: 0, y: -50 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -50 }}
           transition={{ duration: 0.3 }}
           onClick={() => selectYear(year)}
         >
