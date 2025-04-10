@@ -61,7 +61,7 @@ const data = {
       items: [
         {
           title: 'افراد',
-          url: 'persons',
+          url: '/dashboard/persons',
         },
       ],
     },

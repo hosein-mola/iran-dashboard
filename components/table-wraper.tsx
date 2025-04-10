@@ -1,4 +1,4 @@
-import ScrollTable from '@/app/persons/srcrolltable'
+import ScrollTable from '@/components/data-grid'
 import React from 'react'
 
 export default async function TableWrapper() {

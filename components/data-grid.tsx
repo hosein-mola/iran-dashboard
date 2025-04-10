@@ -63,7 +63,7 @@ const darkTheme = themeQuartz.withPart(colorSchemeDarkBlue).withParams({
 
 const localeText = AG_GRID_LOCALE_IR
 
-import { IOlympicData } from './interfaces'
+import { IOlympicData } from '../types/tablae-type'
 ModuleRegistry.registerModules([
   FindModule,
   AdvancedFilterModule,
@@ -94,7 +94,7 @@ ModuleRegistry.registerModules([
   RowGroupingPanelModule,
   ValidationModule,
 ])
-import { useFetchJson } from './useFetchJson'
+import { useFetchJson } from '../hooks/use-fetch-json'
 import { useTheme } from 'next-themes'
 import { Switch } from '@/components/ui/switch'
 
@@ -107,7 +107,7 @@ const ButtonRenderer = (params) => {
   )
 }
 
-const ScrollTable = () => {
+const DataGrid = () => {
   const containerStyle = useMemo(() => ({ width: '100%', height: '100%' }), [])
   const gridStyle = useMemo(() => ({ height: '100%', width: '100%' }), [])
   const themeState = useTheme()
@@ -267,4 +267,4 @@ const ScrollTable = () => {
   )
 }
 
-export default ScrollTable
+export default DataGrid

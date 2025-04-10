@@ -12,7 +12,7 @@ import {
 } from '@/components/ui/dropdown-menu'
 
 import { Button } from '@/components/ui/button'
-import ThemeChanger from './ThemeChanger'
+import ThemeChanger from './theme-changer'
 import { MenuIcon } from 'lucide-react'
 import { DrawerDemo } from './drawer'
 import { DrawerTrigger } from './ui/drawer'

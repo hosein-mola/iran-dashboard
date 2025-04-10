@@ -6,7 +6,7 @@ import {
   DropdownMenuTrigger,
 } from './ui/dropdown-menu'
 import { LucideCalendarArrowDown } from 'lucide-react'
-import DatePicker from './DatePicker'
+import DatePicker from './date-picker'
 import { Button } from './ui/button'
 import PersianDate from 'persian-date'
 import { CalenderType } from '@/types/calender-type'
