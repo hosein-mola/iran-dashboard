@@ -1,0 +1,37 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "prisma/client"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Form {
+  id             Int              @id @default(autoincrement())
+  userId         String
+  created_at     DateTime         @default(now())
+  updated_at     DateTime         @updatedAt
+  published      Boolean          @default(false)
+  name           String
+  description    String           @default("")
+  context        String           @default("[]")
+  visit          Int              @default(0)
+  submission     Int              @default(0)
+  sharedURL      String           @unique @default(uuid())
+  FormSubmission FormSubmission[]
+
+  @@unique([userId, name])
+}
+
+model FormSubmission {
+  id        Int     @id @default(autoincrement())
+  published Boolean @default(false)
+  formId    Int
+  form      Form    @relation(fields: [formId], references: [id])
+  content   String
+}
