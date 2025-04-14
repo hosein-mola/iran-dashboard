@@ -1,6 +1,5 @@
 'use client'
-
-import React, { useEffect, useRef, useState } from 'react'
+import { useRef } from 'react'
 import DesignerSidebar from './DesignerSidebar'
 import {
   DragStartEvent,
@@ -9,22 +8,15 @@ import {
   useDroppable,
 } from '@dnd-kit/core'
 import { cn } from '@/lib/utils'
-import { ElementType, FormElementInstance, FormElements } from './FormElement'
+import { FormElementInstance, FormElements } from './FormElement'
 import useDesigner from './hooks/useDesigner'
-import { ulid } from 'ulid'
-import { BiGrid, BiSolidTrash } from 'react-icons/bi'
-import { Button } from './ui/button'
 import DesignerPageList from './DesignerPageList'
 import { GoGrabber } from 'react-icons/go'
-import { useSortable } from '@dnd-kit/sortable'
-import { CSS } from '@dnd-kit/utilities'
 import { LuLocateFixed } from 'react-icons/lu'
-import { Separator } from '@radix-ui/react-separator'
 import { sidebarOverDesigner } from './actions/sidebarOverDesigner'
 import { elementOverPanel } from './actions/elementOverPanel'
 import { sidebarOverElement } from './actions/sidebarOverElement'
 import { elementOverElement } from './actions/elementOverElement'
-import { ContextType, DesignerContextType } from './context/DesignerContext'
 import { pageOverPage } from './actions/pageOverPage'
 import { sidebarOrElementOverPage } from './actions/sidebarOrElementOverPage'
 import { elementOverDesigner } from './actions/elementOverDesinger'
@@ -49,18 +41,8 @@ function Designer() {
     selectedPage,
     selectedElement,
     selectedElementParents,
-    setDraggedItem,
-    addElement,
     setSelectedElement,
-    removeElement,
-    updateParent,
-    updateSelectedParents,
-    swapElement,
-    setElements,
-    updateElement,
-    setSelectedPage,
     leftView,
-    setLeftView,
   } = useDesigner()
 
   const droppable = useDroppable({
@@ -77,9 +59,9 @@ function Designer() {
       sidebarOrElementOverPage(event, selectedPage, context)
     },
     onDragEnd: (event) => {
-      const { active, over } = event as any
+      const { active, over } = event
       if (!active || !over || !context) return
-      active.data.current = (activeRef?.current as any)?.data?.current
+      active.data.current = activeRef?.current?.data?.current
       sidebarOverDesigner(event, selectedPage, context)
       elementOverDesigner(event, selectedPage, context)
       sidebarOverElement(event, selectedPage, context)
@@ -89,7 +71,7 @@ function Designer() {
       activeRef.current = null
     },
     onDragStart: (event: DragStartEvent) => {
-      activeRef.current = event?.active as any
+      activeRef.current = event?.active
     },
   })
 
@@ -215,22 +197,14 @@ function Designer() {
 
 export function DesignerElementWrapper({
   element,
-  index,
   row,
 }: {
   element: FormElementInstance
   index: number
   row: boolean
 }) {
-  const {
-    elements,
-    selectedElement,
-    selectedElementParents,
-    updateSelectedParents,
-    removeElement,
-    setElements,
-    setSelectedElement,
-  } = useDesigner()
+  const { selectedElement, updateSelectedParents, setSelectedElement } =
+    useDesigner()
   const topHalf = useDroppable({
     id: element.id + '-top',
     data: {

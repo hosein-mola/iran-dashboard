@@ -42,25 +42,41 @@ import { BiRename } from 'react-icons/bi'
 import { useForm } from 'react-hook-form'
 import { ImSpinner } from 'react-icons/im'
 
-function FormBuilder(props: any) {
+interface FormBuilderProps {
+  form: {
+    formId: string
+    id: number
+    name: string
+    published: boolean
+    components: FormElementInstance[]
+    page: {
+      extraAttributes: string
+    }
+  }
+}
+
+function FormBuilder(props: FormBuilderProps) {
   const {
-    selectedElement,
     isReady,
     setIsReady,
-    selectedElementParents,
     leftView,
     setLeftView,
     setElements,
     setPages,
     setSelectedPage,
     setSelectedElement,
-    updateSelectedParents,
   } = useDesigner()
   const params = useParams()
-  const [form, setForm] = useState(props.form)
-  const { theme, setTheme } = useTheme()
+  const [form, setForm] = useState<{
+    formId: string
+    id: number
+    name: string
+    published: boolean
+    components: FormElementInstance[]
+    page: { extraAttributes: string }
+  } | null>(props.form)
+  const { theme } = useTheme()
   const [renameIsLoading, setRenameIsLoading] = useState(false)
-  const [done, setDone] = useState(false)
   const pointerSensor = useSensor(PointerSensor, {
     activationConstraint: {
       distance: 5,
@@ -88,15 +104,13 @@ function FormBuilder(props: any) {
       const _form = await GetFormById(Number(params.id))
       setForm(_form)
       setElements(
-        (_form as any).components.sort(
+        _form.components.sort(
           (a: FormElementInstance, b: FormElementInstance) => a.index - b.index
         )
       )
-      let pages: Array<PageType> = JSON.parse(
-        (_form as any).page.extraAttributes
-      )
+      const pages: Array<PageType> = JSON.parse(_form.page.extraAttributes)
       if (pages.length == 0 || pages == null) {
-        const initPage = { id: ulid(10), index: 1, name: 'Page-1' }
+        const initPage = { id: ulid(10), index: 1, name: 'صفحه-1' }
         setPages([initPage])
         setSelectedPage(initPage)
       } else {
@@ -127,27 +141,32 @@ function FormBuilder(props: any) {
     )
   }
 
-  const shareUrl = `/submit/${form.formId}`
-
   const renameSubmit = async (data: RenameFormType) => {
     setRenameIsLoading(true)
+    if (!form) {
+      toast({
+        title: 'خطا',
+        description: 'فرم یافت نشد',
+      })
+      return
+    }
     const renponse = await RenameForm(form.id, data.name)
     setRenameIsLoading(false)
     setForm(renponse)
   }
 
-  if (form.published) {
+  if (form && form.published) {
     return (
       <>
         <Confetti recycle={false} numberOfPieces={1000} />
         <div className="flex h-full w-full flex-col items-center justify-center">
           <div className="max-w-xl">
             <h1 className="text-primary mb-10 border-b pb-2 text-center text-4xl font-bold">
-              🎊🎊 Form Published 🎊🎊
+              🎊🎊 فرم منتشر شد 🎊🎊
             </h1>
-            <h2 className="text-2xl">Share this form</h2>
+            <h2 className="text-2xl">اشتراک‌گذاری این فرم</h2>
             <h3 className="text-muted-foreground border-b pb-10 text-xl">
-              Anyone with the link can view and submit the form
+              هر کسی با این لینک می‌تواند فرم را مشاهده و ارسال کند
             </h3>
             <div className="my-4 flex w-full flex-col items-center gap-2 border-b pb-4">
               <Input
@@ -160,24 +179,24 @@ function FormBuilder(props: any) {
                 onClick={() => {
                   navigator.clipboard.writeText(`${origin}/submit/${params.id}`)
                   toast({
-                    title: 'Copied!',
-                    description: 'Link copied to clipboard',
+                    title: 'کپی شد!',
+                    description: 'لینک در کلیپ‌بورد کپی شد',
                   })
                 }}
               >
-                Copy link
+                کپی لینک
               </Button>
             </div>
             <div className="flex justify-between">
               <Button variant={'link'} asChild>
                 <Link href={'/'} className="gap-2">
                   <BsArrowLeft />
-                  Go back home
+                  بازگشت به خانه
                 </Link>
               </Button>
               <Button variant={'link'} asChild>
                 <Link href={`/forms/${params.id}`} className="gap-2">
-                  Form details
+                  جزئیات فرم
                   <BsArrowRight />
                 </Link>
               </Button>
@@ -190,13 +209,13 @@ function FormBuilder(props: any) {
 
   return (
     <DndContext sensors={sensors} collisionDetection={pointerWithin}>
-      <main className="flex w-full flex-col">
+      <main className="flex w-full flex-1 flex-col overflow-hidden">
         <nav
           dir="rtl"
           className="border-border flex items-center justify-between gap-3 border-b p-4"
         >
           <div className="flex items-center gap-2">
-            {!form.published && (
+            {form && !form.published && (
               <>
                 <PublishFormButton id={form.id} />
                 <SaveFormButton id={form.id} />
@@ -206,13 +225,15 @@ function FormBuilder(props: any) {
           </div>
 
           <h2
-            dir="ltr"
+            dir="rtl"
             className="flex flex-row items-center gap-2 truncate font-medium"
           >
-            <span className="text-muted-foreground mr-2 font-bold">Name:</span>
+            <span className="text-muted-foreground ml-2 font-bold">
+              نام فرم:
+            </span>
             <Input
               {...renameForm.register('name')}
-              defaultValue={form.name}
+              defaultValue={form?.name || ''}
               disabled={renameIsLoading}
             />
             <Button
@@ -226,7 +247,7 @@ function FormBuilder(props: any) {
               ) : (
                 <BiRename className="h-5 w-5" />
               )}
-              {!renameIsLoading && 'Rename'}
+              {!renameIsLoading && 'تغییر نام'}
             </Button>
           </h2>
         </nav>
@@ -247,7 +268,7 @@ function FormBuilder(props: any) {
                 ) : (
                   <div className="border-primary h-2 w-2 rounded-full border"></div>
                 )}
-                <VscInsert title="pages" className="h-6 w-6 cursor-pointer" />
+                <VscInsert title="صفحات" className="h-6 w-6 cursor-pointer" />
               </div>
               <div
                 className="flex cursor-pointer flex-row items-center gap-2"
@@ -259,7 +280,7 @@ function FormBuilder(props: any) {
                   <div className="border-primary h-2 w-2 rounded-full border"></div>
                 )}
                 <VscListTree
-                  title="explorer"
+                  title="اکسپلورر"
                   className="h-6 w-6 cursor-pointer"
                 />
               </div>
@@ -270,7 +291,7 @@ function FormBuilder(props: any) {
                   <div className="border-primary h-2 w-2 rounded-full border"></div>
                 )}
                 <VscDatabase
-                  title="data-sources"
+                  title="منابع داده"
                   className="h-6 w-6 cursor-pointer"
                 />
               </div>
@@ -281,7 +302,7 @@ function FormBuilder(props: any) {
                   <div className="border-primary h-2 w-2 rounded-full border"></div>
                 )}
                 <VscHistory
-                  title="versions"
+                  title="نسخه‌ها"
                   className="h-6 w-6 cursor-pointer"
                 />
               </div>
@@ -291,10 +312,7 @@ function FormBuilder(props: any) {
                 ) : (
                   <div className="border-primary h-2 w-2 rounded-full border"></div>
                 )}
-                <VscJson
-                  title="expressions"
-                  className="h-6 w-6 cursor-pointer"
-                />
+                <VscJson title="عبارات" className="h-6 w-6 cursor-pointer" />
               </div>
               <div className="flex flex-row items-center gap-2">
                 {leftView == 'extension' ? (
@@ -303,7 +321,7 @@ function FormBuilder(props: any) {
                   <div className="border-primary h-2 w-2 rounded-full border"></div>
                 )}
                 <VscExtensions
-                  title="extensions"
+                  title="افزونه‌ها"
                   className="h-6 w-6 cursor-pointer"
                 />
               </div>

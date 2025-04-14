@@ -24,12 +24,12 @@ import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 export default function Home() {
   return (
-    <div className="container pt-4">
+    <div className="">
       <Suspense fallback={<StatsCards loading={true} />}>
         <CardStatsWrapper />
       </Suspense>
       <Separator className="pagebreak my-6" />
-      <h2 className="col-span-2 text-4xl font-bold">your forms</h2>
+      <h2 className="text-foreground col-span-2 text-4xl font-bold">فرم ها</h2>
       <Separator className="my-6" />
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
         <CreateFormButton />
@@ -58,37 +58,37 @@ interface StatsCardProps {
 function StatsCards(props: StatsCardProps) {
   const { data, loading } = props
   return (
-    <div className="xl:grid-col-4 grid w-full grid-cols-1 gap-4 pt-8 md:grid-cols-2 lg:grid-cols-4">
+    <div className="xl:grid-col-4 grid w-full grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
       <StatsCard
-        title={'total visits'}
+        title={'تعداد کل فرم ها'}
         value={data?.visits?.toLocaleString() || ''}
         icon={<LuView className={'text-blue-600'} />}
         loading={false}
-        helperText="all time from visists"
+        helperText="تعداد کل فرم ها"
         className={' '}
       />
       <StatsCard
-        title={'total total submissions'}
+        title={'تعدا کل داده های وارد شده'}
         value={data?.submissions?.toLocaleString() || ''}
         icon={<FaWpforms className={''} />}
         loading={false}
-        helperText="all time from sumissions"
+        helperText="تعداد کل داده های وارد شده"
         className={' '}
       />
       <StatsCard
-        title={'sumissions rate card'}
+        title={'تعداد کل داده های وارد شده برای امروز'}
         value={data?.submissionsRate?.toLocaleString() || ''}
         icon={<HiCursorClick className={'text-green-600'} />}
         loading={false}
-        helperText="all time from submissions rate"
+        helperText="تعداد کل داده های وارد شده برای امروز"
         className={' '}
       />
       <StatsCard
-        title={'bouncerRate rate card'}
+        title={'تعداد کل داده های وارد شده برای کل ماه جاری'}
         value={data?.bounceRate?.toLocaleString() || ''}
         icon={<TbArrowBounce className={'text-rose-600'} />}
         loading={false}
-        helperText="all time from bouncer rate rate"
+        helperText="تعداد کل داده های وارد شده برای کل ماه جاری"
         className={' '}
       />
     </div>
@@ -119,7 +119,7 @@ export function StatsCard({
         {icon}
       </CardHeader>
       <CardContent>
-        <div className="text-2xl font-bold">
+        <div className="text-5xl font-bold">
           {loading && (
             <Skeleton>
               <span className="opacity-0">0</span>
@@ -127,8 +127,10 @@ export function StatsCard({
           )}
           {!loading && value}
         </div>
-        <p className="text-muted-foreground pt-1 text-xl">{helperText}</p>
       </CardContent>
+      <CardFooter>
+        <p className="text-muted-foreground text-xl">{helperText}</p>
+      </CardFooter>
     </Card>
   )
 }
@@ -190,7 +192,7 @@ function FormCard({ form }: { form: Form }) {
             variant={'secondary'}
             className="text-md mt-2 w-full gap-4"
           >
-            <Link href={`/builder/${form.id}`}>
+            <Link href={`/studio/builder/${form.id}`}>
               Edit form <FaEdit />
             </Link>
           </Button>
