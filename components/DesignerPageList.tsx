@@ -51,9 +51,9 @@ function DesignerPageList() {
   return (
     <aside className="border-muted bg-background overflowx-y-auto flex h-full w-[300px] max-w-[300px] flex-grow flex-col items-center gap-2 border-l px-2">
       <div dir="ltr" className="flex h-full w-full flex-grow flex-col p-2">
-        <div className="flex flex-row items-center justify-between">
+        <div dir="rtl" className="flex flex-row items-center justify-between">
           <div className="text-foreground/70 flex h-8 items-center text-sm">
-            Pages
+            صفحات
           </div>
           <div className="flex h-5 w-full items-center justify-end">
             <BiPlus
@@ -69,7 +69,7 @@ function DesignerPageList() {
         </div>
         <Separator className="mt-2" />
         <SortableContext items={pages} strategy={verticalListSortingStrategy}>
-          <div className="pointer mt-4 flex h-full w-full flex-grow flex-col gap-2 overflow-x-hidden">
+          <div className="pointer mt-4 flex h-[40px] w-full flex-grow flex-col gap-2 overflow-auto overflow-x-hidden">
             {pages.map((page, index) => {
               return (
                 <ContextMenu key={page.id}>

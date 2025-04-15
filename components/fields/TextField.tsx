@@ -60,6 +60,7 @@ import { IoSave } from 'react-icons/io5'
 const type: ElementType = 'text'
 
 const extraAttributes = {
+  name: 'test',
   type: 'number',
   title: 'Text',
   id: '',
@@ -79,11 +80,10 @@ const extraAttributes = {
   normalizeZeros: true,
   lazy: false,
   disabled: false,
-  formula: '',
-  destination: '',
 }
 
 const propertiesSchema = z.object({
+  name: z.string(),
   title: z.string(),
   label: z.string().min(2).max(50),
   helperText: z.string().max(200),
@@ -102,8 +102,6 @@ const propertiesSchema = z.object({
   mask: z.string(),
   lazy: z.boolean(),
   disabled: z.boolean(),
-  formula: z.string(),
-  destination: z.string(),
 })
 
 export const TextFieldFormElement: FormElement = {
@@ -231,7 +229,7 @@ function PropertiesComponent({
   const form = useForm<propertiesFormSchemaType>({
     resolver: zodResolver(propertiesSchema),
     mode: 'all',
-    defaultValues: { ...element.extraAttributes },
+    defaultValues: { ...extraAttributes, ...element.extraAttributes },
   })
 
   const [formulaList, setFormulaList] = useState<
@@ -273,6 +271,8 @@ function PropertiesComponent({
       ' }') as string & { id: string; extraAttributes: string },
     components: elements.sort((a, b) => a.index - b.index),
   }
+
+  console.log('err', form.formState.errors)
 
   return (
     <Form {...form}>
@@ -428,7 +428,7 @@ function PropertiesComponent({
         </div>
         <FormField
           control={form.control}
-          name={'title'}
+          name={'name'}
           render={({ field }) => {
             return (
               <FormItem>

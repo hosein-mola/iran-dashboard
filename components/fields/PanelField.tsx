@@ -1,5 +1,5 @@
 'use client'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import {
   ElementType,
   FormElement,
@@ -65,6 +65,7 @@ const type: ElementType = 'panel'
 
 const extraAttributes = {
   id: '',
+  name: '',
   title: 'عنوان فیلد',
   state: [],
   cols: '2',
@@ -298,7 +299,10 @@ function PropertiesComponent({
 
   const form = useForm<propertiesFormSchemaType>({
     mode: 'all',
-    defaultValues: element != undefined ? element.extraAttributes : {},
+    defaultValues:
+      element != undefined
+        ? { ...extraAttributes, ...element.extraAttributes }
+        : {},
   })
 
   useEffect(() => {
@@ -368,11 +372,31 @@ function PropertiesComponent({
             <AccordionContent data-state={'open'}>
               <FormField
                 control={form.control}
-                name={'title'}
+                name={'name'}
                 render={({ field }) => {
                   return (
                     <FormItem>
                       <FormLabel>نام</FormLabel>
+                      <FormControl>
+                        <Input value={field.value} onChange={field.onChange} />
+                      </FormControl>
+                      <FormDescription dir="ltr">
+                        <span>{element?.id}</span>
+                        <span> {element?.parentId}</span>
+                      </FormDescription>
+                      <FormDescription></FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )
+                }}
+              />
+              <FormField
+                control={form.control}
+                name={'title'}
+                render={({ field }) => {
+                  return (
+                    <FormItem>
+                      <FormLabel>عنوان</FormLabel>
                       <FormControl>
                         <Input value={field.value} onChange={field.onChange} />
                       </FormControl>

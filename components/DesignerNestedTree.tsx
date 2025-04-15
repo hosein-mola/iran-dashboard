@@ -78,7 +78,7 @@ const TreeNode = ({
               {ancestor.type}
             </span>
             <span className="flex truncate">
-              {ancestor.extraAttributes?.title || 'Untitled'}
+              {ancestor.extraAttributes?.name || 'Untitled'}
             </span>
           </div>
           <div>
@@ -95,7 +95,7 @@ const TreeNode = ({
         dir="ltr"
         className="flex h-auto cursor-pointer flex-col justify-center px-4"
       >
-        {true && (ancestor?.children ?? []).length > 0 && (
+        {isOpen && (ancestor?.children ?? []).length > 0 && (
           <Explorer tree={ancestor.children ?? []} expande={expande} />
         )}
       </div>
