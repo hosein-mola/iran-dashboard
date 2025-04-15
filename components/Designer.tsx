@@ -8,7 +8,7 @@ import {
   useDroppable,
 } from '@dnd-kit/core'
 import { cn } from '@/lib/utils'
-import { FormElementInstance, FormElements } from './FormElement'
+import { FormElementInstance, FormElements } from '../types/element-type'
 import useDesigner from './hooks/useDesigner'
 import DesignerPageList from './DesignerPageList'
 import { GoGrabber } from 'react-icons/go'
@@ -21,9 +21,14 @@ import { pageOverPage } from './actions/pageOverPage'
 import { sidebarOrElementOverPage } from './actions/sidebarOrElementOverPage'
 import { elementOverDesigner } from './actions/elementOverDesinger'
 import DesignerNestedTree from './DesignerNestedTree'
+import { Tabs, TabsContent } from './ui/tabs'
+import { SidebarViewType } from './context/DesignerContext'
 
 function Designer() {
-  const activeRef = useRef(null)
+  const activeRef = useRef<{
+    data?: { current?: DragStartEvent['active']['data']['current'] }
+  } | null>(null)
+
   const red = [
     'bg-violet-900',
     'bg-violet-800',
@@ -43,6 +48,7 @@ function Designer() {
     selectedElementParents,
     setSelectedElement,
     leftView,
+    setLeftView,
   } = useDesigner()
 
   const droppable = useDroppable({
@@ -77,8 +83,26 @@ function Designer() {
 
   return (
     <div className="flex h-full w-full flex-grow">
-      {leftView == 'page' && <DesignerPageList />}
-      {leftView == 'tree' && <DesignerNestedTree />}
+      <Tabs
+        defaultValue="page"
+        value={leftView}
+        onValueChange={(value) => setLeftView(value as SidebarViewType)}
+      >
+        <TabsContent
+          value="page"
+          forceMount={true}
+          hidden={leftView !== 'page'}
+        >
+          <DesignerPageList />
+        </TabsContent>
+        <TabsContent
+          value="tree"
+          forceMount={true}
+          hidden={leftView !== 'tree'}
+        >
+          <DesignerNestedTree />
+        </TabsContent>
+      </Tabs>
       <div
         className="w-full pt-4 pb-8"
         onClick={() => selectedElement && setSelectedElement(null)}

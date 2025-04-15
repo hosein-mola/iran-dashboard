@@ -8,12 +8,12 @@ export function sidebarOrElementOverPage(
 ) {
   const { setSelectedPage, pages } = context
   const { over, active } = event
-  const isOverPage = over?.data?.current?.type == 'page'
   const pageId = over?.id
-  const isPanelDragged = active.data.current?.type == 'panel'
+  const isOverPageType = over?.data?.current?.type == 'page'
+  const isPageTypeDragged = active.data.current?.type == 'page'
   const overPage: PageType | undefined = pages.find((page) => page.id == pageId)
 
-  if (isOverPage && isPanelDragged && overPage !== undefined) {
+  if (isOverPageType && overPage !== undefined && isPageTypeDragged == false) {
     setSelectedPage(overPage)
   }
 }

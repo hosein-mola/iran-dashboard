@@ -1,19 +1,19 @@
 import React from 'react'
 import SidebarBtnElement from './SidebarBtnElement'
-import { FormElements } from './FormElement'
+import { FormElements } from '../types/element-type'
 import useDesigner from './hooks/useDesigner'
-import FormElementSidebar from './FormElementSidebar';
-import PropertiesFormSidebar from './PropertiesFormSidebar';
+import FormElementSidebar from './FormElementSidebar'
+import PropertiesFormSidebar from './PropertiesFormSidebar'
 
 function DesignerSidebar() {
-    const { selectedElement } = useDesigner();
+  const { selectedElement } = useDesigner()
 
-    return (
-        <aside className='w-[400px] max-w-[400px] flex flex-col flex-grow gap-2  border-l  px-4 bg-background h-full overflow-y-auto'>
-            {!selectedElement && <FormElementSidebar />}
-            {selectedElement && <PropertiesFormSidebar />}
-        </aside>
-    )
+  return (
+    <aside className="bg-background flex h-full w-[400px] max-w-[400px] flex-grow flex-col gap-2 overflow-y-auto border-l px-4">
+      {!selectedElement && <FormElementSidebar />}
+      {selectedElement && <PropertiesFormSidebar />}
+    </aside>
+  )
 }
 
 export default DesignerSidebar

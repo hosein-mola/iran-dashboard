@@ -1,7 +1,7 @@
 'use client'
 import { GetFormById, GetFormContentByUrl } from '@/actions/form'
 import { PageType } from '@/components/context/DesignerContext'
-import { FormElement, FormElementInstance } from '@/components/FormElement'
+import { FormElement, FormElementInstance } from '@/types/element-type'
 import FormSubmitComponent from '@/components/FormSubmitComponent'
 import React, { useEffect } from 'react'
 

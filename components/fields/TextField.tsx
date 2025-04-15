@@ -7,7 +7,7 @@ import {
   FormComponentType,
   FormElement,
   FormElementInstance,
-} from '../FormElement'
+} from '../../types/element-type'
 import { MdTextFields } from 'react-icons/md'
 import { Label } from '@radix-ui/react-label'
 import { Input } from '../ui/input'
@@ -276,7 +276,7 @@ function PropertiesComponent({
 
   return (
     <Form {...form}>
-      <form onInput={form.handleSubmit(applyChanges)} className="space-y-3">
+      <form onChange={form.handleSubmit(applyChanges)} className="space-y-3">
         <div className="flex h-12 w-full flex-wrap items-center">
           <AlertDialog>
             <AlertDialogTrigger asChild>
@@ -775,44 +775,6 @@ function PropertiesComponent({
                 )
               }}
             />
-            <FormField
-              control={form.control}
-              name={'formula'}
-              render={({ field }) => {
-                return (
-                  <FormItem>
-                    <FormLabel>formula</FormLabel>
-                    <FormControl>
-                      <Input
-                        dir="ltr"
-                        value={field.value}
-                        onChange={field.onChange}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )
-              }}
-            />
-            <FormField
-              control={form.control}
-              name={'destination'}
-              render={({ field }) => {
-                return (
-                  <FormItem>
-                    <FormLabel>destination</FormLabel>
-                    <FormControl>
-                      <Input
-                        dir="ltr"
-                        value={field.value}
-                        onChange={field.onChange}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )
-              }}
-            />
           </div>
         )}
       </form>
@@ -828,7 +790,7 @@ export const MaskInputGenerator = forwardRef((props: any, ref) => {
         key={element.extraAttributes.title}
         control={formController.control}
         name={element.extraAttributes.title}
-        render={({ field: { onChange, onBlur, value, ref } }) => (
+        render={({ field: { onChange, value } }) => (
           <IMaskInput
             autoFocus={false}
             inputRef={inputRef}

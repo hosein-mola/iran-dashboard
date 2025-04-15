@@ -6,7 +6,7 @@ import {
   FormElementInstance,
   FormElements,
   SubmitFunction,
-} from '../FormElement'
+} from '../../types/element-type'
 import { MdOutlinePublish, MdTextFields } from 'react-icons/md'
 import { Label } from '@radix-ui/react-label'
 import { Input } from '../ui/input'

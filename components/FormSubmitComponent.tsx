@@ -8,7 +8,7 @@ import React, {
   useState,
   useTransition,
 } from 'react'
-import { FormElementInstance, FormElements } from './FormElement'
+import { FormElementInstance, FormElements } from '../types/element-type'
 import { Button } from './ui/button'
 import { HiCursorClick } from 'react-icons/hi'
 import { toast } from './ui/use-toast'

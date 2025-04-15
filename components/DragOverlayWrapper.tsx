@@ -3,7 +3,7 @@ import { Active, DragOverlay, useDndMonitor } from '@dnd-kit/core'
 import { snapCenterToCursor } from '@dnd-kit/modifiers'
 import React, { useState } from 'react'
 import SidebarBtnElement from './SidebarBtnElement'
-import { ElementType, FormElements } from './FormElement'
+import { ElementType, FormElements } from '../types/element-type'
 import useDesigner from './hooks/useDesigner'
 import { cn } from '@/lib/utils'
 

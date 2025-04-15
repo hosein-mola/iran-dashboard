@@ -6,7 +6,7 @@ import {
   FormElementInstance,
   FormElements,
   SubmitFunction,
-} from '../FormElement'
+} from '../../types/element-type'
 import { Input } from '../ui/input'
 import { useForm, useWatch } from 'react-hook-form'
 import { VscLayoutSidebarRightOff } from 'react-icons/vsc'

@@ -49,7 +49,7 @@ function DesignerPageList() {
   })
 
   return (
-    <aside className="border-muted bg-background overflowx-y-auto flex h-full w-[400px] max-w-[400px] flex-grow flex-col items-center gap-2 border-l px-2">
+    <aside className="border-muted bg-background overflowx-y-auto flex h-full w-[300px] max-w-[300px] flex-grow flex-col items-center gap-2 border-l px-2">
       <div dir="ltr" className="flex h-full w-full flex-grow flex-col p-2">
         <div className="flex flex-row items-center justify-between">
           <div className="text-foreground/70 flex h-8 items-center text-sm">
@@ -97,27 +97,27 @@ function DesignerPageList() {
                   <ContextMenuContent className="divide-y">
                     <ContextMenuItem
                       onClick={() => newPage(page, index)}
-                      className="flex w-full cursor-pointer flex-row items-center justify-start gap-2 py-2"
+                      className="flex w-full cursor-pointer flex-row items-center justify-between gap-2 py-2"
                     >
                       <PlusCircledIcon className="h-4 w-4" />
-                      <span className="font-light">New Page</span>
+                      <span className="font-light">صفحه جدید</span>
                     </ContextMenuItem>
                     <ContextMenuItem
                       onClick={() => duplicatePage(page, index)}
-                      className="flex w-full cursor-pointer flex-row items-center justify-start gap-2 py-2"
+                      className="flex w-full cursor-pointer flex-row items-center justify-between gap-2 py-2"
                     >
                       <IoDuplicateOutline className="h-4 w-4" />
-                      <span className="font-light">Duplicate</span>
+                      <span className="font-light">تکرار</span>
                     </ContextMenuItem>
                     <ContextMenuItem
                       onClick={() => {
                         setDeleteData({ id: page.index, index })
                         setDeleteConfirm(true)
                       }}
-                      className="flex w-full cursor-pointer flex-row items-center justify-start gap-2 py-2"
+                      className="flex w-full cursor-pointer flex-row items-center justify-between gap-2 py-2"
                     >
                       <IoTrashBinOutline className="h-4 w-4" />
-                      <span className="font-light">Delete</span>
+                      <span className="font-light">حذف</span>
                     </ContextMenuItem>
                   </ContextMenuContent>
                 </ContextMenu>
