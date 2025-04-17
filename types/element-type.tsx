@@ -3,18 +3,19 @@ import { TextFieldFormElement } from '../components/fields/TextField'
 import { IconType } from 'react-icons/lib'
 import { PanelFieldElement } from '../components/fields/PanelField'
 import { FlexFieldElement } from '../components/fields/FlexField'
-import { FieldValues, UseFormReturn } from 'react-hook-form'
 
 export type ElementType = 'panel' | 'flex' | 'text'
 
 export type FormComponentType = {
   elementInstance: FormElementInstance
-  formController: UseFormReturn<FieldValues, object, undefined>
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  formController: any
   isInvalid?: boolean
   defaultValue?: string
 }
 
 export type FormComponentTypeProps = React.FC<FormComponentType>
+
 export type SubmitFunction = (
   element: FormElementInstance,
   value: string
@@ -25,7 +26,7 @@ export type FormElement = {
     index: number,
     parentId: string | null,
     page: string,
-    _extraAttributes: Record<string, string | number | boolean>
+    _extraAttributes: { [key: string]: string | null }
   ) => FormElementInstance
   type: ElementType
   designerBtnElement: {

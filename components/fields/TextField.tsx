@@ -12,7 +12,7 @@ import { MdTextFields } from 'react-icons/md'
 import { Label } from '@radix-ui/react-label'
 import { Input } from '../ui/input'
 import { z } from 'zod'
-import { Controller, useForm } from 'react-hook-form'
+import { Controller, useForm, UseFormReturn } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { IMaskInput } from 'react-imask'
 import { PlayIcon } from '@radix-ui/react-icons'
@@ -226,7 +226,7 @@ function PropertiesComponent({
 }) {
   const { updateElement, deleteElement, elements, pages } = useDesigner()
   const element = elementInstance as CustomInstance
-  const form = useForm<propertiesFormSchemaType>({
+  const form = useForm({
     resolver: zodResolver(propertiesSchema),
     mode: 'all',
     defaultValues: { ...extraAttributes, ...element.extraAttributes },
@@ -781,15 +781,25 @@ function PropertiesComponent({
     </Form>
   )
 }
-export const MaskInputGenerator = forwardRef((props: any, ref) => {
-  const { element, formController, inputRef, error } = props
+interface MaskInputGeneratorProps {
+  element: CustomInstance // Replace 'any' with the actual type if known
+  formController: UseFormReturn<propertiesFormSchemaType> // Replace 'any' with the actual type if known
+  inputRef?: React.Ref<HTMLInputElement> // Assuming inputRef is a reference to an HTML input element
+  error?: boolean // Assuming error is a string, adjust if needed
+}
 
+const MaskInputGenerator = forwardRef<
+  HTMLInputElement,
+  MaskInputGeneratorProps
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+>((props, ref) => {
+  const { element, formController, inputRef, error } = props
   if (element.extraAttributes.type === 'number') {
     return (
       <Controller
         key={element.extraAttributes.title}
         control={formController.control}
-        name={element.extraAttributes.title}
+        name={'name'}
         render={({ field: { onChange, value } }) => (
           <IMaskInput
             autoFocus={false}
@@ -818,7 +828,7 @@ export const MaskInputGenerator = forwardRef((props: any, ref) => {
             placeholder={element.extraAttributes.placeholder}
             placeholderChar={'#'}
             mapToRadix={['.', '-']}
-            onAccept={(value, mask) => {
+            onAccept={(value) => {
               if (value === undefined) {
                 console.warn('Value is undefined')
               }

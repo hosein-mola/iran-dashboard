@@ -65,7 +65,7 @@ const type: ElementType = 'panel'
 
 const extraAttributes = {
   id: '',
-  name: '',
+  name: 'test',
   title: 'عنوان فیلد',
   state: [],
   cols: '2',
@@ -85,7 +85,7 @@ export const PanelFieldElement: FormElement = {
     index: number,
     parentId: string | null,
     page: string,
-    _extraAttributes?: Record<string, any>
+    _extraAttributes?: Record<string, unknown>
   ) => {
     return {
       id,
@@ -297,19 +297,28 @@ function PropertiesComponent({
     (el) => el.id == elementInstance.id
   ) as CustomInstance
 
+  const mergedAttributes = {
+    ...extraAttributes,
+    ...Object.fromEntries(
+      Object.entries(element.extraAttributes || {}).filter(
+        ([key]: [string, unknown]) =>
+          !(key in extraAttributes) || extraAttributes[key] === null
+      )
+    ),
+  }
+
   const form = useForm<propertiesFormSchemaType>({
     mode: 'all',
-    defaultValues:
-      element != undefined
-        ? { ...extraAttributes, ...element.extraAttributes }
-        : {},
+    defaultValues: mergedAttributes,
   })
 
-  useEffect(() => {
-    if (element) {
-      form.reset(element.extraAttributes)
-    }
-  }, [form, element])
+  console.log('lets see', { ...element.extraAttributes })
+
+  // useEffect(() => {
+  //   if (element) {
+  //     form.reset(element.extraAttributes)
+  //   }
+  // }, [form, element])
 
   function applyChanges(values: any) {
     updateElement(element.id, {
