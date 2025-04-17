@@ -19,14 +19,16 @@ function SidebarBtnElement({ formElement }: { formElement: FormElement }) {
       ref={draggble.setNodeRef}
       variant={'outline'}
       className={cn(
-        'hover:ring-foreground flex h-[120px] w-full cursor-grab flex-col gap-2 hover:ring',
+        'hover:ring-foreground group/sidebar-button flex h-[120px] w-full cursor-grab flex-col gap-2 hover:ring',
         draggble.isDragging && 'ring-primary ring-2'
       )}
       {...draggble.listeners}
       {...draggble.attributes}
     >
-      <Icon className="text-primary h-8 w-8 cursor-grab" />
-      <p className="text-xs">{label}</p>
+      <Icon className="group-hover:/sidebar-button:text-background h-8 w-8 cursor-grab" />
+      <p className="group-hover:/sidebar-button:text-background text-xs">
+        {label}
+      </p>
     </Button>
   )
 }

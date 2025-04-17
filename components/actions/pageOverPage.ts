@@ -14,7 +14,8 @@ export function pageOverPage(
   if (
     active?.id !== over?.id &&
     over?.id !== undefined &&
-    active?.data?.current?.type == 'page'
+    active?.data?.current?.type == 'page' &&
+    over?.data?.current?.type == 'page'
   ) {
     setPages((pages: PageType[]) => {
       const oldIndex = pages.findIndex((item) => item.id === active.id)

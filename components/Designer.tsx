@@ -111,7 +111,7 @@ function Designer() {
           ref={droppable.setNodeRef}
           autoFocus={false}
           className={cn(
-            'bg-background item-center m-auto flex h-full max-w-[90%] flex-1 flex-grow flex-col justify-start overflow-y-auto rounded-xl shadow-2xl',
+            'bg-background item-center m-auto flex h-full max-w-[90%] flex-1 flex-grow flex-col justify-start overflow-y-auto rounded-xl shadow-xl shadow-blue-100 dark:shadow-2xl dark:shadow-black',
             droppable.isOver && 'ring-foreground ring-4'
           )}
         >
@@ -191,7 +191,7 @@ function Designer() {
           )}
           <div>
             {elements.length > 0 && (
-              <div className="flex w-full flex-col">
+              <div className="flex w-full flex-col p-1">
                 {elements
                   .filter((el) => el.page == selectedPage.id)
                   .filter((el) => el.parentId == null)

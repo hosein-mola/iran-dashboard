@@ -74,7 +74,15 @@ const TreeNode = ({
           className="flex flex-row items-center justify-between gap-4 overflow-clip border px-2 py-2"
         >
           <div className="flex flex-row justify-between gap-4">
-            <span className="bg-primary text-background rounded-md px-2 py-1 text-xs font-bold">
+            <span
+              className={`${
+                ancestor.type === 'panel'
+                  ? 'bg-purple-200 dark:bg-purple-800'
+                  : ancestor.type === 'text'
+                    ? 'bg-blue-200 dark:bg-blue-800'
+                    : 'bg-primary'
+              } text-foreground rounded-md px-2 py-1 text-xs font-bold`}
+            >
               {ancestor.type}
             </span>
             <span className="flex truncate">
@@ -93,7 +101,7 @@ const TreeNode = ({
       </div>
       <div
         dir="ltr"
-        className="flex h-auto cursor-pointer flex-col justify-center px-4"
+        className="flex h-auto cursor-pointer flex-col justify-center"
       >
         {isOpen && (ancestor?.children ?? []).length > 0 && (
           <Explorer tree={ancestor.children ?? []} expande={expande} />
@@ -118,7 +126,7 @@ const Explorer = ({
         <div
           key={item.id}
           dir="ltr"
-          className="flex h-auto cursor-pointer flex-col justify-center"
+          className="flex h-auto cursor-pointer flex-col justify-center pl-2"
         >
           {<TreeNode ancestor={item} expande={expande} />}
         </div>
