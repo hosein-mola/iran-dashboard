@@ -13,12 +13,22 @@ import {
 import { Separator } from '@/components/ui/separator'
 import { DamIcon, Layers3, WavesIcon } from 'lucide-react'
 import { redirect } from 'next/navigation'
+import { RiWaterFlashFill } from 'react-icons/ri'
 
 export default function app() {
   return (
     <div className="bg-background flex flex-1 flex-col">
       <header className="border-border bg-background sticky top-0 z-[10] hidden h-16 shrink-0 items-center justify-between border-b px-4 md:flex">
-        <Logo />
+        <Button
+          variant={'ghost'}
+          onClick={() => {
+            redirect('/dashboard')
+          }}
+          className="gorup/site-name border-border flex h-16 w-96 flex-row items-center justify-start gap-1 rounded-none border-b"
+        >
+          <RiWaterFlashFill className="group-hover/site-name:text-primary mr-2 size-8" />
+          <span className="text-2xl">سد‌ایران</span>
+        </Button>
         <HeaderDropdown />
       </header>
       <div className="gap- flex flex-1 flex-col items-center justify-center">
@@ -57,7 +67,9 @@ export default function app() {
                 <Layers3 />
                 <span>فرم ساز</span>
               </div>
-              <Button variant={'outline'}>ورود</Button>
+              <Button variant={'outline'} onClick={() => redirect('/studio')}>
+                ورود
+              </Button>
             </section>
           </CardContent>
           <Separator />

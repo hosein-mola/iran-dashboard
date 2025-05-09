@@ -1,5 +1,4 @@
 'use client'
-import React, { useEffect } from 'react'
 import {
   ElementType,
   FormElement,
@@ -7,12 +6,9 @@ import {
   FormElements,
   SubmitFunction,
 } from '../../types/element-type'
-import { MdOutlinePublish, MdTextFields } from 'react-icons/md'
-import { Label } from '@radix-ui/react-label'
 import { Input } from '../ui/input'
-import { boolean, z } from 'zod'
-import { useForm, useWatch } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
+import { z } from 'zod'
+import { useForm } from 'react-hook-form'
 import { VscLayoutSidebarRightOff } from 'react-icons/vsc'
 
 import {
@@ -24,13 +20,10 @@ import {
   FormLabel,
   FormMessage,
 } from '../ui/form'
-import { Switch } from '../ui/switch'
 import useDesigner from '../hooks/useDesigner'
 import { cn } from '@/lib/utils'
-import { LuHeading1 } from 'react-icons/lu'
-import { useDndMonitor, useDroppable } from '@dnd-kit/core'
-import Designer, { DesignerElementWrapper } from '../Designer'
-import { ulid } from 'ulid'
+import { useDroppable } from '@dnd-kit/core'
+import { DesignerElementWrapper } from '../Designer'
 import {
   Accordion,
   AccordionContent,
@@ -44,8 +37,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { PageType } from '../context/DesignerContext'
-import { TrashIcon } from '@radix-ui/react-icons'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -58,7 +49,6 @@ import {
   AlertDialogTrigger,
 } from '../ui/alert-dialog'
 import { Button } from '../ui/button'
-import { BiTrashAlt } from 'react-icons/bi'
 import { FaTrash } from 'react-icons/fa'
 
 const type: ElementType = 'panel'

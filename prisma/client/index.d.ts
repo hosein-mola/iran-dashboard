@@ -986,10 +986,12 @@ export namespace Prisma {
   export type FormMinAggregateOutputType = {
     id: number | null
     userId: string | null
-    created_at: Date | null
-    updated_at: Date | null
+    createdAt: Date | null
+    updatedAt: Date | null
     published: boolean | null
     name: string | null
+    page: string | null
+    components: string | null
     description: string | null
     context: string | null
     visit: number | null
@@ -1000,10 +1002,12 @@ export namespace Prisma {
   export type FormMaxAggregateOutputType = {
     id: number | null
     userId: string | null
-    created_at: Date | null
-    updated_at: Date | null
+    createdAt: Date | null
+    updatedAt: Date | null
     published: boolean | null
     name: string | null
+    page: string | null
+    components: string | null
     description: string | null
     context: string | null
     visit: number | null
@@ -1014,10 +1018,12 @@ export namespace Prisma {
   export type FormCountAggregateOutputType = {
     id: number
     userId: number
-    created_at: number
-    updated_at: number
+    createdAt: number
+    updatedAt: number
     published: number
     name: number
+    page: number
+    components: number
     description: number
     context: number
     visit: number
@@ -1042,10 +1048,12 @@ export namespace Prisma {
   export type FormMinAggregateInputType = {
     id?: true
     userId?: true
-    created_at?: true
-    updated_at?: true
+    createdAt?: true
+    updatedAt?: true
     published?: true
     name?: true
+    page?: true
+    components?: true
     description?: true
     context?: true
     visit?: true
@@ -1056,10 +1064,12 @@ export namespace Prisma {
   export type FormMaxAggregateInputType = {
     id?: true
     userId?: true
-    created_at?: true
-    updated_at?: true
+    createdAt?: true
+    updatedAt?: true
     published?: true
     name?: true
+    page?: true
+    components?: true
     description?: true
     context?: true
     visit?: true
@@ -1070,10 +1080,12 @@ export namespace Prisma {
   export type FormCountAggregateInputType = {
     id?: true
     userId?: true
-    created_at?: true
-    updated_at?: true
+    createdAt?: true
+    updatedAt?: true
     published?: true
     name?: true
+    page?: true
+    components?: true
     description?: true
     context?: true
     visit?: true
@@ -1171,10 +1183,12 @@ export namespace Prisma {
   export type FormGroupByOutputType = {
     id: number
     userId: string
-    created_at: Date
-    updated_at: Date
+    createdAt: Date
+    updatedAt: Date
     published: boolean
     name: string
+    page: string | null
+    components: string
     description: string
     context: string
     visit: number
@@ -1204,10 +1218,12 @@ export namespace Prisma {
   export type FormSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     userId?: boolean
-    created_at?: boolean
-    updated_at?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
     published?: boolean
     name?: boolean
+    page?: boolean
+    components?: boolean
     description?: boolean
     context?: boolean
     visit?: boolean
@@ -1220,10 +1236,12 @@ export namespace Prisma {
   export type FormSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     userId?: boolean
-    created_at?: boolean
-    updated_at?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
     published?: boolean
     name?: boolean
+    page?: boolean
+    components?: boolean
     description?: boolean
     context?: boolean
     visit?: boolean
@@ -1234,10 +1252,12 @@ export namespace Prisma {
   export type FormSelectScalar = {
     id?: boolean
     userId?: boolean
-    created_at?: boolean
-    updated_at?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
     published?: boolean
     name?: boolean
+    page?: boolean
+    components?: boolean
     description?: boolean
     context?: boolean
     visit?: boolean
@@ -1259,10 +1279,12 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: number
       userId: string
-      created_at: Date
-      updated_at: Date
+      createdAt: Date
+      updatedAt: Date
       published: boolean
       name: string
+      page: string | null
+      components: string
       description: string
       context: string
       visit: number
@@ -1664,10 +1686,12 @@ export namespace Prisma {
   interface FormFieldRefs {
     readonly id: FieldRef<"Form", 'Int'>
     readonly userId: FieldRef<"Form", 'String'>
-    readonly created_at: FieldRef<"Form", 'DateTime'>
-    readonly updated_at: FieldRef<"Form", 'DateTime'>
+    readonly createdAt: FieldRef<"Form", 'DateTime'>
+    readonly updatedAt: FieldRef<"Form", 'DateTime'>
     readonly published: FieldRef<"Form", 'Boolean'>
     readonly name: FieldRef<"Form", 'String'>
+    readonly page: FieldRef<"Form", 'String'>
+    readonly components: FieldRef<"Form", 'String'>
     readonly description: FieldRef<"Form", 'String'>
     readonly context: FieldRef<"Form", 'String'>
     readonly visit: FieldRef<"Form", 'Int'>
@@ -2994,10 +3018,12 @@ export namespace Prisma {
   export const FormScalarFieldEnum: {
     id: 'id',
     userId: 'userId',
-    created_at: 'created_at',
-    updated_at: 'updated_at',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
     published: 'published',
     name: 'name',
+    page: 'page',
+    components: 'components',
     description: 'description',
     context: 'context',
     visit: 'visit',
@@ -3024,6 +3050,14 @@ export namespace Prisma {
   };
 
   export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+  export const NullsOrder: {
+    first: 'first',
+    last: 'last'
+  };
+
+  export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 
 
   /**
@@ -3075,10 +3109,12 @@ export namespace Prisma {
     NOT?: FormWhereInput | FormWhereInput[]
     id?: IntFilter<"Form"> | number
     userId?: StringFilter<"Form"> | string
-    created_at?: DateTimeFilter<"Form"> | Date | string
-    updated_at?: DateTimeFilter<"Form"> | Date | string
+    createdAt?: DateTimeFilter<"Form"> | Date | string
+    updatedAt?: DateTimeFilter<"Form"> | Date | string
     published?: BoolFilter<"Form"> | boolean
     name?: StringFilter<"Form"> | string
+    page?: StringNullableFilter<"Form"> | string | null
+    components?: StringFilter<"Form"> | string
     description?: StringFilter<"Form"> | string
     context?: StringFilter<"Form"> | string
     visit?: IntFilter<"Form"> | number
@@ -3090,10 +3126,12 @@ export namespace Prisma {
   export type FormOrderByWithRelationInput = {
     id?: SortOrder
     userId?: SortOrder
-    created_at?: SortOrder
-    updated_at?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
     published?: SortOrder
     name?: SortOrder
+    page?: SortOrderInput | SortOrder
+    components?: SortOrder
     description?: SortOrder
     context?: SortOrder
     visit?: SortOrder
@@ -3110,10 +3148,12 @@ export namespace Prisma {
     OR?: FormWhereInput[]
     NOT?: FormWhereInput | FormWhereInput[]
     userId?: StringFilter<"Form"> | string
-    created_at?: DateTimeFilter<"Form"> | Date | string
-    updated_at?: DateTimeFilter<"Form"> | Date | string
+    createdAt?: DateTimeFilter<"Form"> | Date | string
+    updatedAt?: DateTimeFilter<"Form"> | Date | string
     published?: BoolFilter<"Form"> | boolean
     name?: StringFilter<"Form"> | string
+    page?: StringNullableFilter<"Form"> | string | null
+    components?: StringFilter<"Form"> | string
     description?: StringFilter<"Form"> | string
     context?: StringFilter<"Form"> | string
     visit?: IntFilter<"Form"> | number
@@ -3124,10 +3164,12 @@ export namespace Prisma {
   export type FormOrderByWithAggregationInput = {
     id?: SortOrder
     userId?: SortOrder
-    created_at?: SortOrder
-    updated_at?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
     published?: SortOrder
     name?: SortOrder
+    page?: SortOrderInput | SortOrder
+    components?: SortOrder
     description?: SortOrder
     context?: SortOrder
     visit?: SortOrder
@@ -3146,10 +3188,12 @@ export namespace Prisma {
     NOT?: FormScalarWhereWithAggregatesInput | FormScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"Form"> | number
     userId?: StringWithAggregatesFilter<"Form"> | string
-    created_at?: DateTimeWithAggregatesFilter<"Form"> | Date | string
-    updated_at?: DateTimeWithAggregatesFilter<"Form"> | Date | string
+    createdAt?: DateTimeWithAggregatesFilter<"Form"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Form"> | Date | string
     published?: BoolWithAggregatesFilter<"Form"> | boolean
     name?: StringWithAggregatesFilter<"Form"> | string
+    page?: StringNullableWithAggregatesFilter<"Form"> | string | null
+    components?: StringWithAggregatesFilter<"Form"> | string
     description?: StringWithAggregatesFilter<"Form"> | string
     context?: StringWithAggregatesFilter<"Form"> | string
     visit?: IntWithAggregatesFilter<"Form"> | number
@@ -3211,10 +3255,12 @@ export namespace Prisma {
 
   export type FormCreateInput = {
     userId: string
-    created_at?: Date | string
-    updated_at?: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
     published?: boolean
     name: string
+    page?: string | null
+    components?: string
     description?: string
     context?: string
     visit?: number
@@ -3226,10 +3272,12 @@ export namespace Prisma {
   export type FormUncheckedCreateInput = {
     id?: number
     userId: string
-    created_at?: Date | string
-    updated_at?: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
     published?: boolean
     name: string
+    page?: string | null
+    components?: string
     description?: string
     context?: string
     visit?: number
@@ -3240,10 +3288,12 @@ export namespace Prisma {
 
   export type FormUpdateInput = {
     userId?: StringFieldUpdateOperationsInput | string
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     published?: BoolFieldUpdateOperationsInput | boolean
     name?: StringFieldUpdateOperationsInput | string
+    page?: NullableStringFieldUpdateOperationsInput | string | null
+    components?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     context?: StringFieldUpdateOperationsInput | string
     visit?: IntFieldUpdateOperationsInput | number
@@ -3255,10 +3305,12 @@ export namespace Prisma {
   export type FormUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     userId?: StringFieldUpdateOperationsInput | string
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     published?: BoolFieldUpdateOperationsInput | boolean
     name?: StringFieldUpdateOperationsInput | string
+    page?: NullableStringFieldUpdateOperationsInput | string | null
+    components?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     context?: StringFieldUpdateOperationsInput | string
     visit?: IntFieldUpdateOperationsInput | number
@@ -3270,10 +3322,12 @@ export namespace Prisma {
   export type FormCreateManyInput = {
     id?: number
     userId: string
-    created_at?: Date | string
-    updated_at?: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
     published?: boolean
     name: string
+    page?: string | null
+    components?: string
     description?: string
     context?: string
     visit?: number
@@ -3283,10 +3337,12 @@ export namespace Prisma {
 
   export type FormUpdateManyMutationInput = {
     userId?: StringFieldUpdateOperationsInput | string
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     published?: BoolFieldUpdateOperationsInput | boolean
     name?: StringFieldUpdateOperationsInput | string
+    page?: NullableStringFieldUpdateOperationsInput | string | null
+    components?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     context?: StringFieldUpdateOperationsInput | string
     visit?: IntFieldUpdateOperationsInput | number
@@ -3297,10 +3353,12 @@ export namespace Prisma {
   export type FormUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     userId?: StringFieldUpdateOperationsInput | string
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     published?: BoolFieldUpdateOperationsInput | boolean
     name?: StringFieldUpdateOperationsInput | string
+    page?: NullableStringFieldUpdateOperationsInput | string | null
+    components?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     context?: StringFieldUpdateOperationsInput | string
     visit?: IntFieldUpdateOperationsInput | number
@@ -3394,10 +3452,29 @@ export namespace Prisma {
     not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
+  export type StringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | null
+    notIn?: string[] | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
   export type FormSubmissionListRelationFilter = {
     every?: FormSubmissionWhereInput
     some?: FormSubmissionWhereInput
     none?: FormSubmissionWhereInput
+  }
+
+  export type SortOrderInput = {
+    sort: SortOrder
+    nulls?: NullsOrder
   }
 
   export type FormSubmissionOrderByRelationAggregateInput = {
@@ -3412,10 +3489,12 @@ export namespace Prisma {
   export type FormCountOrderByAggregateInput = {
     id?: SortOrder
     userId?: SortOrder
-    created_at?: SortOrder
-    updated_at?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
     published?: SortOrder
     name?: SortOrder
+    page?: SortOrder
+    components?: SortOrder
     description?: SortOrder
     context?: SortOrder
     visit?: SortOrder
@@ -3432,10 +3511,12 @@ export namespace Prisma {
   export type FormMaxOrderByAggregateInput = {
     id?: SortOrder
     userId?: SortOrder
-    created_at?: SortOrder
-    updated_at?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
     published?: SortOrder
     name?: SortOrder
+    page?: SortOrder
+    components?: SortOrder
     description?: SortOrder
     context?: SortOrder
     visit?: SortOrder
@@ -3446,10 +3527,12 @@ export namespace Prisma {
   export type FormMinOrderByAggregateInput = {
     id?: SortOrder
     userId?: SortOrder
-    created_at?: SortOrder
-    updated_at?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
     published?: SortOrder
     name?: SortOrder
+    page?: SortOrder
+    components?: SortOrder
     description?: SortOrder
     context?: SortOrder
     visit?: SortOrder
@@ -3518,6 +3601,23 @@ export namespace Prisma {
     _max?: NestedBoolFilter<$PrismaModel>
   }
 
+  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | null
+    notIn?: string[] | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
   export type FormScalarRelationFilter = {
     is?: FormWhereInput
     isNot?: FormWhereInput
@@ -3578,6 +3678,10 @@ export namespace Prisma {
 
   export type BoolFieldUpdateOperationsInput = {
     set?: boolean
+  }
+
+  export type NullableStringFieldUpdateOperationsInput = {
+    set?: string | null
   }
 
   export type IntFieldUpdateOperationsInput = {
@@ -3671,6 +3775,20 @@ export namespace Prisma {
     not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
+  export type NestedStringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | null
+    notIn?: string[] | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
   export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[]
@@ -3737,6 +3855,34 @@ export namespace Prisma {
     _max?: NestedBoolFilter<$PrismaModel>
   }
 
+  export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | null
+    notIn?: string[] | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
+  export type NestedIntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
   export type FormSubmissionCreateWithoutFormInput = {
     published?: boolean
     content: string
@@ -3785,10 +3931,12 @@ export namespace Prisma {
 
   export type FormCreateWithoutFormSubmissionInput = {
     userId: string
-    created_at?: Date | string
-    updated_at?: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
     published?: boolean
     name: string
+    page?: string | null
+    components?: string
     description?: string
     context?: string
     visit?: number
@@ -3799,10 +3947,12 @@ export namespace Prisma {
   export type FormUncheckedCreateWithoutFormSubmissionInput = {
     id?: number
     userId: string
-    created_at?: Date | string
-    updated_at?: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
     published?: boolean
     name: string
+    page?: string | null
+    components?: string
     description?: string
     context?: string
     visit?: number
@@ -3828,10 +3978,12 @@ export namespace Prisma {
 
   export type FormUpdateWithoutFormSubmissionInput = {
     userId?: StringFieldUpdateOperationsInput | string
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     published?: BoolFieldUpdateOperationsInput | boolean
     name?: StringFieldUpdateOperationsInput | string
+    page?: NullableStringFieldUpdateOperationsInput | string | null
+    components?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     context?: StringFieldUpdateOperationsInput | string
     visit?: IntFieldUpdateOperationsInput | number
@@ -3842,10 +3994,12 @@ export namespace Prisma {
   export type FormUncheckedUpdateWithoutFormSubmissionInput = {
     id?: IntFieldUpdateOperationsInput | number
     userId?: StringFieldUpdateOperationsInput | string
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     published?: BoolFieldUpdateOperationsInput | boolean
     name?: StringFieldUpdateOperationsInput | string
+    page?: NullableStringFieldUpdateOperationsInput | string | null
+    components?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     context?: StringFieldUpdateOperationsInput | string
     visit?: IntFieldUpdateOperationsInput | number

@@ -41,6 +41,7 @@ import { PageType } from './context/DesignerContext'
 import { BiRename } from 'react-icons/bi'
 import { useForm } from 'react-hook-form'
 import { ImSpinner } from 'react-icons/im'
+import page from '@/app/modules/persons/page'
 
 interface FormBuilderProps {
   form: {
@@ -102,15 +103,18 @@ function FormBuilder(props: FormBuilderProps) {
     setIsReady(false)
     const req = async () => {
       const _form = await GetFormById(Number(params.id))
+      console.log('🚀 ~ req ~ _form:', _form)
       setForm(_form)
       setElements(
         _form.components.sort(
           (a: FormElementInstance, b: FormElementInstance) => a.index - b.index
         )
       )
-      const pages: Array<PageType> = JSON.parse(_form.page.extraAttributes)
-      if (pages.length == 0 || pages == null) {
-        const initPage = { id: ulid(10), index: 1, name: 'صفحه-1' }
+
+      const pages: Array<PageType> = _form?.page
+      console.log('xxx', pages)
+      if (pages == null || pages.length == 0) {
+        const initPage = { id: ulid(10), index: 1, name: 'page-1' }
         setPages([initPage])
         setSelectedPage(initPage)
       } else {

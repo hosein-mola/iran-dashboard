@@ -5,6 +5,7 @@ import { FormElementInstance } from '../types/element-type'
 import api from '@/api/apiConfig'
 import prisma from '@/lib/prisma'
 import { formSchemaType } from '@/schemas/form'
+import { Form } from '@/prisma/client'
 
 export async function GetFormStats() {
   const data = await api.v1.get('/forms/stats')
@@ -25,34 +26,79 @@ export async function CreateForm(data: formSchemaType) {
     name: data.name,
     description: data.description,
   }
-  const response = await api.v1.post('/forms', { ...model })
-  return response.data.collection.id
+
+  try {
+    // Create a new Form in the database
+    const newForm = await prisma.form.create({
+      data: {
+        userId: '1', // Required field (replace with user-specific input)
+        name: model.name,
+        description: model.description,
+        context: '[]', // Default value from schema
+      },
+    })
+
+    console.log('Form Created:', newForm)
+    return newForm.id
+  } catch (error) {
+    console.error('Error creating form:', error)
+  } finally {
+    await prisma.$disconnect()
+  }
 }
 
 export async function GetForms() {
-  const response = await api.v1.get('/forms')
-  const { collection } = response.data
-  return collection.forms
+  try {
+    const forms: Form[] | undefined = await prisma.form.findMany() // Fetch all records from the `Form` table
+    return forms
+  } catch (error) {
+    console.error('Error fetching forms:', error)
+  } finally {
+    await prisma.$disconnect() // Disconnect Prisma client
+  }
 }
 
 export async function GetFormById(id: number) {
   try {
+    const form = await prisma.form.findFirst({
+      where: {
+        id: id,
+      },
+    })
+
+    if (form) {
+      form.components = form?.components ? JSON.parse(form?.components) : []
+      form.page = form?.page ? JSON.parse(form?.page) : []
+    }
+
+    return form
     const response = await api.v1.get(`/forms/${id}`)
     const { collection } = response.data
+    console.log('🚀 ~ GetFormById ~ response:', response.data)
     return collection.form
   } catch (error) {}
 }
 
 export async function UpdateFormContent(
   id: number,
-  componenets: FormElementInstance[],
+  components: FormElementInstance[], // Corrected spelling of 'components'
   pages: Array<PageType>
 ) {
-  const response = await api.v1.put(
-    `/forms/${String(id)}`,
-    { componenets: componenets, pages: pages },
-    { method: 'PUT' }
-  )
+  try {
+    const updatedForm = await prisma.form.update({
+      where: { id: id },
+      data: {
+        components: JSON.stringify(components), // Stringify components before updating
+        page: JSON.stringify(pages), // Stringify pages before updating
+        updatedAt: new Date(), // Optional: Update the timestamp
+      },
+    })
+
+    return updatedForm
+  } catch (error) {
+    console.error('Error updating form:', error)
+    throw new Error('Failed to update form')
+  }
 }
 
 export async function PublishForm(formId: number) {

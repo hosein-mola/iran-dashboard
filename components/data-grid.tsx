@@ -28,6 +28,7 @@ import {
   CellSelectionModule,
   IntegratedChartsModule,
   ContextMenuModule,
+  PinnedRowModule,
   FiltersToolPanelModule,
   CsvExportModule,
   TextFilterModule,
@@ -70,6 +71,7 @@ ModuleRegistry.registerModules([
   ClientSideRowModelModule,
   ColumnsToolPanelModule,
   ColumnMenuModule,
+  PinnedRowModule,
   MultiFilterModule,
   StatusBarModule,
   PaginationModule,
@@ -121,7 +123,6 @@ const DataGrid = () => {
         // Parse the date from DD/MM/YYYY format
         const [day, month, year] = params.value.split('/').map(Number)
         const date = new Date(year, month - 1, day) // Month is 0-based in JS
-
         return date.toLocaleString('fa-IR-u-ca-persian', {
           year: 'numeric',
           month: 'long',
@@ -133,6 +134,7 @@ const DataGrid = () => {
       field: 'button',
       headerName: 'تایید نهایی',
       valueFormatter: '',
+      width: 100,
       valueParser: '',
       cellRenderer: ButtonRenderer,
       cellStyle: { textAlign: 'center' },
@@ -150,9 +152,12 @@ const DataGrid = () => {
       headerName: 'طلا',
       field: 'gold',
       headerClass: 'text-center',
-      aggFunc: 'sum',
+      width: 100,
       pinned: 'right',
       width: '200',
+      valueGetter: (params) => {
+        return params.data.gold + 'test'
+      },
       cellStyle: { textAlign: 'center' },
       enableValue: true,
     },
@@ -164,6 +169,7 @@ const DataGrid = () => {
     {
       field: 'age',
       aggFunc: 'sum',
+      width: 100,
       enableRowGroup: true,
       editable: true,
       enableValue: true,
@@ -173,10 +179,7 @@ const DataGrid = () => {
       field: 'year',
       enableValue: true,
       cellStyle: { textAlign: 'center' },
-    },
-    {
-      headerName: 'Personal Info',
-      children: [{ field: 'athlete' }, { field: 'gold' }],
+      width: 100,
     },
     { field: 'total' },
     { field: 'sport' },
@@ -185,6 +188,34 @@ const DataGrid = () => {
   const { data, loading } = useFetchJson<IOlympicData>(
     'https://www.ag-grid.com/example-assets/olympic-winners.json'
   )
+
+  interface RowData {
+    gold: string | number
+  }
+
+  const pinnedBottomRowData = useMemo<RowData[]>(() => {
+    if (
+      loading ||
+      !data ||
+      !data.every(
+        (item) => typeof item.gold === 'number' || item.gold === undefined
+      )
+    ) {
+      return []
+    }
+
+    const totalGold = data.reduce(
+      (sum, item) => sum + (item.gold || 0) + 0.1,
+      0
+    )
+
+    return [
+      {
+        sport: `test`,
+        gold: `${totalGold.toFixed(2)} test`,
+      },
+    ]
+  }, [data, loading])
 
   return (
     <div style={containerStyle}>
@@ -232,20 +263,7 @@ const DataGrid = () => {
               hideDisabledCheckboxes: false,
               copySelectedRows: true,
             }}
-            statusBar={{
-              statusPanels: [
-                {
-                  statusPanel: 'agTotalAndFilteredRowCountComponent',
-                  align: 'left',
-                },
-                { statusPanel: 'agTotalRowCountComponent', align: 'left' },
-                { statusPanel: 'agFilteredRowCountComponent', align: 'left' },
-                { statusPanel: 'agSelectedRowCountComponent', align: 'left' },
-                { statusPanel: 'agAggregationComponent', align: 'left' },
-              ],
-            }}
             rowGroupPanelShow={'never'}
-            grandTotalRow="bottom"
             cellSelection={true}
             ensureDomOrder={true}
             animateRows={true}
@@ -255,6 +273,7 @@ const DataGrid = () => {
             sideBar={'columns'}
             alwaysAggregateAtRootLevel={false}
             pivotPanelShow={false}
+            pinnedBottomRowData={pinnedBottomRowData}
             pivotMode={false}
             theme={themeState.theme === 'dark' ? darkTheme : lightTheme}
             enableCharts={true}

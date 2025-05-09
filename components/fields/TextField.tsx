@@ -228,7 +228,7 @@ function PropertiesComponent({
   const element = elementInstance as CustomInstance
   const form = useForm({
     resolver: zodResolver(propertiesSchema),
-    mode: 'all',
+    mode: 'onBlur',
     defaultValues: { ...extraAttributes, ...element.extraAttributes },
   })
 
@@ -276,7 +276,7 @@ function PropertiesComponent({
 
   return (
     <Form {...form}>
-      <form onChange={form.handleSubmit(applyChanges)} className="space-y-3">
+      <form onBlur={form.handleSubmit(applyChanges)} className="space-y-3">
         <div className="flex h-12 w-full flex-wrap items-center">
           <AlertDialog>
             <AlertDialogTrigger asChild>
@@ -828,7 +828,7 @@ const MaskInputGenerator = forwardRef<
             placeholder={element.extraAttributes.placeholder}
             placeholderChar={'#'}
             mapToRadix={['.', '-']}
-            onAccept={(value) => {
+            onBlur={(value) => {
               if (value === undefined) {
                 console.warn('Value is undefined')
               }

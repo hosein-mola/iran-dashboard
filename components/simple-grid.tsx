@@ -82,7 +82,7 @@ ModuleRegistry.registerModules([
 
 // Generate Fake Persian Data
 const generateFakeData = (count: number) => {
-  const formTypes = ['فرم ورود', 'فرم ثبت‌نام', 'فرم تماس', 'فرم نظرسنجی']
+  const formTypes = ['ساعتلی', 'روزانه', 'دوره ای']
   const titles = ['درخواست عضویت', 'فرم بازخورد', 'تماس با ما', 'سفارش جدید']
   const descriptions = [
     'این فرم برای ورود کاربران است.',

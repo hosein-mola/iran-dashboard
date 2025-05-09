@@ -17,11 +17,12 @@ import { BiRightArrowAlt } from 'react-icons/bi'
 import { FaEdit } from 'react-icons/fa'
 import { Separator } from '@/components/ui/separator'
 import CreateFormButton from '@/components/CreateFormButton'
-import { Form } from '@prisma/client'
 import { Badge } from '@/components/ui/badge'
 import { formatDistance } from 'date-fns'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
+import { Form } from '@/prisma/client'
+
 export default function Home() {
   return (
     <div className="">
@@ -56,7 +57,7 @@ interface StatsCardProps {
 }
 
 function StatsCards(props: StatsCardProps) {
-  const { data, loading } = props
+  const { data } = props
   return (
     <div className="xl:grid-col-4 grid w-full grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
       <StatsCard
@@ -143,9 +144,10 @@ async function FormCards() {
   const forms = await GetForms()
   return (
     <>
-      {forms.map((form: Form) => {
-        return <FormCard key={form.id} form={form} />
-      })}
+      {forms &&
+        forms.map((form: Form) => {
+          return <FormCard key={form.id} form={form} />
+        })}
     </>
   )
 }
@@ -162,7 +164,7 @@ function FormCard({ form }: { form: Form }) {
           )}
         </CardTitle>
         <CardDescription className="text-muted-foreground flex items-center justify-between text-sm">
-          {formatDistance(form.created_at, new Date(), {
+          {formatDistance(form.createdAt, new Date(), {
             addSuffix: true,
           })}
           {Boolean(form.published) && (

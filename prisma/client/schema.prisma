@@ -3,7 +3,7 @@
 
 generator client {
   provider = "prisma-client-js"
-  output   = "prisma/client"
+  output   = "client"
 }
 
 datasource db {
@@ -14,10 +14,12 @@ datasource db {
 model Form {
   id             Int              @id @default(autoincrement())
   userId         String
-  created_at     DateTime         @default(now())
-  updated_at     DateTime         @updatedAt
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
   published      Boolean          @default(false)
   name           String
+  page           String?
+  components     String           @default("[]")
   description    String           @default("")
   context        String           @default("[]")
   visit          Int              @default(0)

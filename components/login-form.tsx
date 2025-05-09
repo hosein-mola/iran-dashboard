@@ -26,7 +26,7 @@ export function LoginForm({
     })
 
     if (response.ok) {
-      redirect('/dashboard')
+      redirect('/modules')
     } else {
       // Handle errors
     }
