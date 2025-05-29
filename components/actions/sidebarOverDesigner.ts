@@ -1,11 +1,9 @@
-import { Active, DragEndEvent, Over } from '@dnd-kit/core'
+import {  DragEndEvent} from '@dnd-kit/core'
 import { ulid } from 'ulid'
 import {
   ElementType,
-  FormElementInstance,
   FormElements,
 } from '@/types/element-type'
-import useDesigner from '../hooks/useDesigner'
 import { ContextType, PageType } from '../context/DesignerContext'
 
 export function sidebarOverDesigner(
@@ -13,10 +11,10 @@ export function sidebarOverDesigner(
   selectedPage: PageType | undefined,
   context: ContextType
 ) {
-  const { elements, addElement, removeElement } = context
+  const { elements, addElement } = context
   const { active, over } = event
-  const overType = over?.data?.current?.type
-  const overId = over?.data?.current?.id
+  // const overType = over?.data?.current?.type
+  // const overId = over?.data?.current?.id
   const isDroppingOverDesignerArea = over?.data?.current?.isDesignerDropArea
   const isDesignerBtnElement = active?.data?.current?.isDesignerBtnElement
   const droppingSidebarButtonOverDesignerArea =

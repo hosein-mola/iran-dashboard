@@ -37,6 +37,7 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { z } from 'zod'
+import { DesignerElementWrapper } from '../Designer'
 
 const type: ElementType = 'flex'
 
@@ -67,7 +68,7 @@ export const FlexFieldElement: FormElement = {
     index: number,
     parentId: string | null,
     page: string,
-    _extraAttributes?: Record<string, any>
+    _extraAttributes?: any
   ) => {
     return {
       id,
@@ -122,11 +123,11 @@ function DesignerComponent({
       className={cn('flex')}
       style={{
         ...elementInstance.extraAttributes,
-        gap: elementInstance.extraAttributes['gap'] + 'rem',
+        gap: elementInstance.extraAttributes['gap'] ??  + 'rem',
         minHeight: elementInstance.extraAttributes['minHeight'] + 'rem',
         padding:
-          elementInstance.extraAttributes['padding'] +
-          elementInstance.extraAttributes['paddingUnit'],
+          elementInstance?.extraAttributes['padding'] +
+          elementInstance?.extraAttributes['paddingUnit'],
       }}
     >
       {elements

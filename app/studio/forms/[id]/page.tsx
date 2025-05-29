@@ -1,6 +1,5 @@
 'use client'
 import { GetFormById, GetFormWithSubmissions } from '@/actions/form'
-import FormBuilder from '@/components/FormBuilder'
 import FormLinkShare from '@/components/FormLinkShare'
 import VisitBtn from '@/components/VisitBtn'
 import React, { ReactNode } from 'react'
@@ -8,8 +7,7 @@ import { FaWpforms } from 'react-icons/fa'
 import { HiCursorClick } from 'react-icons/hi'
 import { LuView } from 'react-icons/lu'
 import { TbArrowBounce } from 'react-icons/tb'
-import { StatsCard } from '../../page'
-import { ElementType, FormElementInstance } from '@/types/element-type'
+import { ElementType } from '@/types/element-type'
 import {
   Table,
   TableBody,
@@ -18,8 +16,8 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import { ulid } from 'ulid'
 import { randomUUID } from 'crypto'
+import { StatsCard } from '../../StatsCard'
 
 async function FormDetailPage(props: { params: Promise<{ id: number }> }) {
   const params = await props.params
@@ -94,9 +92,6 @@ async function FormDetailPage(props: { params: Promise<{ id: number }> }) {
 
 export default FormDetailPage
 
-type Row = { [key: string]: string } & {
-  submittedAt: Date
-}
 
 async function SubmissionsTable({ id }: { id: number }) {
   const form = await GetFormWithSubmissions(id)
@@ -106,7 +101,6 @@ async function SubmissionsTable({ id }: { id: number }) {
     throw new Error('form not found')
   }
 
-  const formElements = form?.submissions as FormElementInstance[]
 
   const columns: any[] = []
 

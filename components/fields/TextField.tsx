@@ -791,7 +791,6 @@ interface MaskInputGeneratorProps {
 const MaskInputGenerator = forwardRef<
   HTMLInputElement,
   MaskInputGeneratorProps
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
 >((props, ref) => {
   const { element, formController, inputRef, error } = props
   if (element.extraAttributes.type === 'number') {

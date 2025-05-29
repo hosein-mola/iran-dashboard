@@ -33,20 +33,4 @@ function SidebarBtnElement({ formElement }: { formElement: FormElement }) {
   )
 }
 
-function SidebarBtnElementOverlay({
-  formElement,
-}: {
-  formElement: FormElement
-}) {
-  const { label, icon: Icon } = formElement.designerBtnElement
-  return (
-    <Button
-      variant={'outline'}
-      className={'flex h-[120px] w-[120px] cursor-grab flex-col gap-2'}
-    >
-      <Icon className="text-primary h-8 w-8 cursor-grab" />
-      <p className="text-xs">{label}</p>
-    </Button>
-  )
-}
 export default SidebarBtnElement

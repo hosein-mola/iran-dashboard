@@ -26,7 +26,7 @@ export type FormElement = {
     index: number,
     parentId: string | null,
     page: string,
-    _extraAttributes: { [key: string]: string | null }
+    _extraAttributes: any | null
   ) => FormElementInstance
   type: ElementType
   designerBtnElement: {
@@ -49,7 +49,7 @@ export type FormElementInstance = {
   type: ElementType
   parentId: string | null
   page: string
-  extraAttributes: Record<string, string | number | boolean>
+  extraAttributes: any
 }
 
 type FormElementsType = {

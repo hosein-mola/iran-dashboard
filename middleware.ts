@@ -18,8 +18,9 @@ export default async function middleware(req: NextRequest) {
 
   // 3. Decrypt the session from the cookie
   const cookie = (await cookies()).get('session')?.value
+  console.log(cookie);
   const session = cookie ? JSON.parse(cookie) : null
-
+  console.log(session);
   // 4. Redirect to /login if the user is not authenticated
   if (isProtectedRoute && !session?.token) {
     return NextResponse.redirect(new URL('/login', req.nextUrl))

@@ -1,11 +1,9 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-nocheck
 'use client'
 import React, { useMemo, useState } from 'react'
 import { AgGridReact } from 'ag-grid-react'
 import { AgChartsEnterpriseModule } from 'ag-charts-enterprise'
 import { AG_GRID_LOCALE_IR } from '@ag-grid-community/locale'
-import { themeQuartz } from 'ag-grid-community'
+import { ColGroupDef, themeQuartz } from 'ag-grid-community'
 import { colorSchemeDarkBlue } from 'ag-grid-community'
 
 import {
@@ -154,7 +152,6 @@ const DataGrid = () => {
       headerClass: 'text-center',
       width: 100,
       pinned: 'right',
-      width: '200',
       valueGetter: (params) => {
         return params.data.gold + 'test'
       },
@@ -235,7 +232,7 @@ const DataGrid = () => {
               resizable: true,
               suppressCellSelectionIntegration: true,
               valueFormatter: (params) => {
-                if (params.node?.sticky) {
+                if ((params.node as any)?.sticky) {
                   return ''
                 } else {
                   return params.value
@@ -257,7 +254,6 @@ const DataGrid = () => {
             }}
             rowSelection={{
               mode: 'singleRow',
-              headerCheckbox: false,
               checkboxes: true,
               checkboxLocation: 'selectionColumn',
               hideDisabledCheckboxes: false,
@@ -272,7 +268,7 @@ const DataGrid = () => {
             columnDefs={columnDefs}
             sideBar={'columns'}
             alwaysAggregateAtRootLevel={false}
-            pivotPanelShow={false}
+            pivotPanelShow={"never"}
             pinnedBottomRowData={pinnedBottomRowData}
             pivotMode={false}
             theme={themeState.theme === 'dark' ? darkTheme : lightTheme}

@@ -9,7 +9,7 @@ import {
   useState,
 } from 'react'
 import { ulid } from 'ulid'
-import { FormElementInstance, FormElements } from '../../types/element-type'
+import { ElementType, FormElementInstance, FormElements } from '../../types/element-type'
 import { reIndexed } from '../actions/elementOverElement'
 import { getChildNodes } from '@/lib/tree'
 
@@ -156,13 +156,25 @@ export default function DesignerContextProvider({
       return newElement
     })
   }
+
+
+  interface ParentType {
+    id: string;
+    index: number;
+    type: ElementType;
+    parentId: string | null;
+    page: string;
+    extraAttributes: Record<string, string | number | boolean>;
+    level: number;
+  }
+  
   function findParentsRecursiveWithLevel(
     node: FormElementInstance,
     array: FormElementInstance[],
     level: number
   ): FormElementInstance[] {
     const parent = array.find((obj) => obj.id === node.parentId)
-    const parents = []
+    const parents: any = []
 
     // If parent is found, recursively find its parent
     if (parent) {

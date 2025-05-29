@@ -1,11 +1,9 @@
-import { Active, DragEndEvent, Over } from '@dnd-kit/core'
+import {  DragEndEvent } from '@dnd-kit/core'
 import { ulid } from 'ulid'
 import {
   ElementType,
-  FormElementInstance,
   FormElements,
 } from '@/types/element-type'
-import useDesigner from '../hooks/useDesigner'
 import { ContextType, PageType } from '../context/DesignerContext'
 
 export function sidebarOverElement(
@@ -13,7 +11,7 @@ export function sidebarOverElement(
   selectedPage: PageType,
   context: ContextType
 ) {
-  const { elements, addElement, removeElement } = context
+  const { elements, addElement } = context
   const { active, over } = event
 
   const isDroppingOverDesignerElementTopHalf =
@@ -28,10 +26,10 @@ export function sidebarOverElement(
     isDesignerBtnElement && isDroppingOverDesignerElement
   if (elements == undefined) return
   if (droppingSidebarButtonOverDesingerElement) {
-    const overType = over?.data?.current?.type
+    // const overType = over?.data?.current?.type
     const overId = over?.data?.current?.id
     const type = active?.data?.current?.type
-    const overIndex = over?.data?.current?.index
+    // const overIndex = over?.data?.current?.index
     const overElementIndex = elements?.findIndex((el) => el.id == overId)
     if (overElementIndex === -1) {
       throw new Error('Element not found')

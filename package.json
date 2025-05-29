@@ -6,7 +6,8 @@
     "dev": "next dev --turbopack -p 3000",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "pm2": "pm2 start pm2.json"
   },
   "dependencies": {
     "@ag-grid-community/locale": "~33.2.1",
@@ -53,7 +54,7 @@
     "mathjs": "^13.1.1",
     "monaco-editor": "^0.52.2",
     "nanoid": "^3.3.4",
-    "next": "^15.3.1-canary.14",
+    "next": "^15.4.0-canary.47",
     "next-persian-fonts": "^1.0.0",
     "next-themes": "^0.4.6",
     "nextjs-toploader": "^3.8.16",

@@ -38,7 +38,7 @@ function FormSubmitComponent({
   })
   const theme = useTheme()
 
-  const submitForm = async (data: FormElementInstance) => {}
+  const submitForm = async (data: any,itemTwo: any) => {}
 
   const change = (data: any, event: any) => {
     const id = event.target.dataset.id

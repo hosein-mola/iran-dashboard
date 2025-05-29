@@ -1,6 +1,5 @@
 'use client'
 import HeaderDropdown from '@/components/header-dropdown'
-import Logo from '@/components/logo'
 import { Button } from '@/components/ui/button'
 import {
   Card,

@@ -1,4 +1,9 @@
-import { GetFormStats, GetForms } from '@/actions/form'
+// app/studio/page.tsx (or wherever your page is)
+
+import { Suspense, ReactNode } from 'react'
+import Link from 'next/link'
+import { formatDistance } from 'date-fns'
+
 import {
   Card,
   CardContent,
@@ -8,27 +13,71 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 import { Skeleton } from '@/components/ui/skeleton'
-import { ReactNode, Suspense } from 'react'
-import { LuView } from 'react-icons/lu'
-import { FaWpforms } from 'react-icons/fa'
-import { HiCursorClick } from 'react-icons/hi'
-import { TbArrowBounce } from 'react-icons/tb'
-import { BiRightArrowAlt } from 'react-icons/bi'
-import { FaEdit } from 'react-icons/fa'
 import { Separator } from '@/components/ui/separator'
 import CreateFormButton from '@/components/CreateFormButton'
 import { Badge } from '@/components/ui/badge'
-import { formatDistance } from 'date-fns'
 import { Button } from '@/components/ui/button'
-import Link from 'next/link'
+
+import { LuView } from 'react-icons/lu'
+import { FaWpforms, FaEdit } from 'react-icons/fa'
+import { HiCursorClick } from 'react-icons/hi'
+import { TbArrowBounce } from 'react-icons/tb'
+import { BiRightArrowAlt } from 'react-icons/bi'
+
 import { Form } from '@/prisma/client'
+import { StatsCard } from './StatsCard'
+
+// Hardcoded forms data (for demonstration)
+const forms: Form[] = [
+  {
+    id: 1,
+    name: 'فرم نمونه 1',
+    published: true,
+    createdAt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 2),
+    visit: 120,
+    submission: 35,
+    description: 'توضیحات فرم نمونه 1',
+    userId: '',
+    updatedAt: new Date(),
+    page: null,
+    components: '',
+    context: '',
+    sharedURL: ''
+  },
+  {
+    id: 2,
+    name: 'فرم نمونه 2',
+    published: false,
+    createdAt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 10),
+    visit: 50,
+    submission: 10,
+    description: '',
+    userId: '',
+    updatedAt: new Date(),
+    page: null,
+    components: '',
+    context: '',
+    sharedURL: ''
+  },
+]
+
+// Hardcoded stats data
+const stats = {
+  forms: 12,
+  visits: 1234,
+  submissions: 4321,
+  submissionsRate: 123,
+  bounceRate: 345,
+}
 
 export default function Home() {
   return (
     <div className="">
       <Suspense fallback={<StatsCards loading={true} />}>
-        <CardStatsWrapper />
+        {/* No longer async fetching, use hardcoded stats */}
+        <StatsCards loading={false} data={stats} />
       </Suspense>
+
       <Separator className="pagebreak my-6" />
       <h2 className="text-foreground col-span-2 text-4xl font-bold">فرم ها</h2>
       <Separator className="my-6" />
@@ -39,115 +88,76 @@ export default function Home() {
             <FormCardSkeleton key={el} />
           ))}
         >
-          <FormCards />
+          <FormCards forms={forms} />
         </Suspense>
       </div>
     </div>
   )
 }
 
-async function CardStatsWrapper() {
-  const stats = await GetFormStats()
-  return <StatsCards loading={false} data={stats} />
-}
-
 interface StatsCardProps {
-  data?: Awaited<ReturnType<typeof GetFormStats>>
+  data?: {
+    forms: number
+    visits: number
+    submissions: number
+    submissionsRate: number
+    bounceRate: number
+  }
   loading: boolean
 }
 
 function StatsCards(props: StatsCardProps) {
-  const { data } = props
+  const { data, loading } = props
   return (
     <div className="xl:grid-col-4 grid w-full grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
       <StatsCard
         title={'تعداد کل فرم ها'}
-        value={data?.visits?.toLocaleString() || ''}
-        icon={<LuView className={'text-blue-600'} />}
-        loading={false}
-        helperText="تعداد کل فرم ها"
-        className={' '}
+        value={loading ? '' : data?.forms?.toLocaleString() || '0'}
+        icon={<FaWpforms className={'text-blue-600'} />}
+        loading={loading}
+        helperText="تعداد فرم‌هایی که ساخته‌اید"
+        className={''}
       />
       <StatsCard
-        title={'تعدا کل داده های وارد شده'}
-        value={data?.submissions?.toLocaleString() || ''}
-        icon={<FaWpforms className={''} />}
-        loading={false}
-        helperText="تعداد کل داده های وارد شده"
-        className={' '}
+        title={'تعداد کل داده‌های وارد شده'}
+        value={loading ? '' : data?.submissions?.toLocaleString() || '0'}
+        icon={<LuView className={'text-muted-foreground'} />}
+        loading={loading}
+        helperText="جمع کل سابمیشن‌ها"
+        className={''}
       />
       <StatsCard
-        title={'تعداد کل داده های وارد شده برای امروز'}
-        value={data?.submissionsRate?.toLocaleString() || ''}
+        title={'داده‌های امروز'}
+        value={loading ? '' : data?.submissionsRate?.toLocaleString() || '0'}
         icon={<HiCursorClick className={'text-green-600'} />}
-        loading={false}
-        helperText="تعداد کل داده های وارد شده برای امروز"
-        className={' '}
+        loading={loading}
+        helperText="تعداد سابمیشن‌های امروز"
+        className={''}
       />
       <StatsCard
-        title={'تعداد کل داده های وارد شده برای کل ماه جاری'}
-        value={data?.bounceRate?.toLocaleString() || ''}
+        title={'داده‌های ماه جاری'}
+        value={loading ? '' : data?.bounceRate?.toLocaleString() || '0'}
         icon={<TbArrowBounce className={'text-rose-600'} />}
-        loading={false}
-        helperText="تعداد کل داده های وارد شده برای کل ماه جاری"
-        className={' '}
+        loading={loading}
+        helperText="تعداد سابمیشن‌های این ماه"
+        className={''}
       />
     </div>
   )
 }
 
-export function StatsCard({
-  title,
-  value,
-  icon,
-  helperText,
-  loading,
-  className,
-}: {
-  title: string
-  value: string
-  icon: ReactNode
-  helperText: string
-  loading: boolean
-  className: string
-}) {
-  return (
-    <Card className={className}>
-      <CardHeader className="flex flex-row items-center justify-between pb-2">
-        <CardTitle className="text-muted-foreground text-sm font-medium">
-          {title}
-        </CardTitle>
-        {icon}
-      </CardHeader>
-      <CardContent>
-        <div className="text-5xl font-bold">
-          {loading && (
-            <Skeleton>
-              <span className="opacity-0">0</span>
-            </Skeleton>
-          )}
-          {!loading && value}
-        </div>
-      </CardContent>
-      <CardFooter>
-        <p className="text-muted-foreground text-xl">{helperText}</p>
-      </CardFooter>
-    </Card>
-  )
-}
+
 
 function FormCardSkeleton() {
   return <Skeleton className="border-primary/20 h-[190px] w-full border-2" />
 }
 
-async function FormCards() {
-  const forms = await GetForms()
+function FormCards({ forms }: { forms: Form[] }) {
   return (
     <>
-      {forms &&
-        forms.map((form: Form) => {
-          return <FormCard key={form.id} form={form} />
-        })}
+      {forms.map((form: Form) => (
+        <FormCard key={form.id} form={form} />
+      ))}
     </>
   )
 }
@@ -158,16 +168,15 @@ function FormCard({ form }: { form: Form }) {
       <CardHeader>
         <CardTitle className="flex items-center justify-between gap-2">
           <span className="truncate font-bold">{form.name}</span>
-          {Boolean(form.published) && <Badge>Published</Badge>}
-          {!Boolean(form.published) && (
+          {form.published ? (
+            <Badge>Published</Badge>
+          ) : (
             <Badge variant={'destructive'}>Draft</Badge>
           )}
         </CardTitle>
         <CardDescription className="text-muted-foreground flex items-center justify-between text-sm">
-          {formatDistance(form.createdAt, new Date(), {
-            addSuffix: true,
-          })}
-          {Boolean(form.published) && (
+          {formatDistance(form.createdAt, new Date(), { addSuffix: true })}
+          {form.published && (
             <span className="flex items-center gap-2">
               <LuView className="text-muted-foreground" />
               <span>{form.visit.toLocaleString()}</span>
@@ -181,14 +190,13 @@ function FormCard({ form }: { form: Form }) {
         {form.description || 'No description'}
       </CardContent>
       <CardFooter>
-        {Boolean(form.published) && (
+        {form.published ? (
           <Button asChild className="text-md mt-2 w-full gap-4">
             <Link href={`/forms/${form.id}`}>
               View submissions <BiRightArrowAlt />
             </Link>
           </Button>
-        )}
-        {!Boolean(form.published) && (
+        ) : (
           <Button
             asChild
             variant={'secondary'}

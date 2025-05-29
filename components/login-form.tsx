@@ -16,19 +16,21 @@ export function LoginForm({
     event.preventDefault()
 
     const formData = new FormData(event.currentTarget)
-    const email = formData.get('username')
+    const username = formData.get('username')
     const password = formData.get('password')
 
     const response = await fetch('/api/auth', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify({ username, password }),
+      // IMPORTANT: credentials:'include' if your API uses httpOnly cookies!
+      credentials: 'include',
     })
 
     if (response.ok) {
       redirect('/modules')
     } else {
-      // Handle errors
+      // Handle errors (show a toast, etc)
     }
   }
 
@@ -48,9 +50,10 @@ export function LoginForm({
                 </p>
               </div>
               <div className="grid gap-3">
-                <Label htmlFor="email">نام کاربری</Label>
+                <Label htmlFor="username">نام کاربری</Label>
                 <Input
                   id="username"
+                  name="username"      // Name required for FormData!
                   type="text"
                   placeholder="m@example.com"
                   required
@@ -66,7 +69,12 @@ export function LoginForm({
                     رمز عبور خود را فراموش کردید ؟
                   </a>
                 </div>
-                <Input id="password" type="password" required />
+                <Input
+                  id="password"
+                  name="password"      // Name required for FormData!
+                  type="password"
+                  required
+                />
               </div>
               <Button type="submit" className="w-full">
                 ورود به سامانه
@@ -99,13 +107,7 @@ export function LoginForm({
             </div>
           </form>
           <div className="from-primary to-accent relative hidden bg-gradient-to-b md:block">
-            {/* <Image
-              src="/images/1.jpg"
-              alt="Image"
-              width={500}
-              height={500}
-              className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
-            /> */}
+            {/* Image block, uncomment if you wish */}
           </div>
         </CardContent>
       </Card>

@@ -14,7 +14,6 @@ import {
 import {
     Form,
     FormControl,
-    FormDescription,
     FormField,
     FormItem,
     FormLabel,
@@ -24,7 +23,6 @@ import { BsFileEarmarkPlus } from 'react-icons/bs';
 import { ImSpinner } from 'react-icons/im';
 import { Button } from './ui/button';
 import { zodResolver } from '@hookform/resolvers/zod';
-import * as z from 'zod';
 import { useForm } from 'react-hook-form';
 import { Input } from './ui/input';
 import { Textarea } from './ui/textarea';
@@ -63,6 +61,7 @@ function CreateFormButton() {
                 description: 'There was a problem with your request.',
                 action: <ToastAction altText="Try again">Try again</ToastAction>
             })
+            console.log(error);
         }
     }
 

@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useContext } from 'react'
+import { useContext } from 'react'
 import { DesignerContext } from '../context/DesignerContext'
 
 function useDesigner() {

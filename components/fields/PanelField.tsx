@@ -109,7 +109,7 @@ function DesignerComponent({
 }: {
   elementInstance: FormElementInstance
 }) {
-  const { addElement, selectedElement, setSelectedElement, elements } =
+  const { elements } =
     useDesigner()
   const droppble = useDroppable({
     id: elementInstance.id + '-panel',
@@ -121,7 +121,6 @@ function DesignerComponent({
     },
   })
 
-  const cols = 3
   const element = elementInstance as CustomInstance
   return (
     <div
@@ -174,7 +173,7 @@ function DesignerComponent({
                 String(element.extraAttributes.span) == '11' && 'col-span-11',
                 String(element.extraAttributes.span) == '12' && 'col-span-12',
                 String(element.extraAttributes.span) == 'full' &&
-                  'col-span-full'
+                'col-span-full'
               )}
               key={element.id}
             >
@@ -239,7 +238,7 @@ function FormComponent({
             (a: FormElementInstance, b: FormElementInstance) =>
               a.index - b.index
           )
-          .map((element: FormElementInstance, index: number) => {
+          .map((element: FormElementInstance) => {
             const FormComponent = FormElements[element.type].formComponent
             return (
               <div
@@ -258,7 +257,7 @@ function FormComponent({
                   String(element.extraAttributes.span) == '11' && 'col-span-11',
                   String(element.extraAttributes.span) == '12' && 'col-span-12',
                   String(element.extraAttributes.span) == 'full' &&
-                    'col-span-full'
+                  'col-span-full'
                 )}
                 key={element.id}
               >
@@ -287,7 +286,7 @@ function PropertiesComponent({
     (el) => el.id == elementInstance.id
   ) as CustomInstance
 
-  const mergedAttributes = {
+  const mergedAttributes: any = {
     ...extraAttributes,
     ...Object.fromEntries(
       Object.entries(element.extraAttributes || {}).filter(

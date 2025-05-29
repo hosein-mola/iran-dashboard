@@ -41,7 +41,6 @@ import { PageType } from './context/DesignerContext'
 import { BiRename } from 'react-icons/bi'
 import { useForm } from 'react-hook-form'
 import { ImSpinner } from 'react-icons/im'
-import page from '@/app/modules/persons/page'
 
 interface FormBuilderProps {
   form: {

@@ -1,9 +1,8 @@
 'use client'
-import { GetFormById, GetFormContentByUrl } from '@/actions/form'
-import { PageType } from '@/components/context/DesignerContext'
-import { FormElement, FormElementInstance } from '@/types/element-type'
+import { GetFormById } from '@/actions/form'
+import {  FormElementInstance } from '@/types/element-type'
 import FormSubmitComponent from '@/components/FormSubmitComponent'
-import React, { useEffect } from 'react'
+import React from 'react'
 
 async function SubmitPage(props: {
   params: Promise<{
