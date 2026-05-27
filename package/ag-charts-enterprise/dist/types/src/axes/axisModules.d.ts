@@ -1,0 +1,12 @@
+import { type AxisModuleDefinition, type OptionsDefs } from 'ag-charts-core';
+import type { AgAngleCategoryAxisOptions, AgAngleNumberAxisOptions, AgOrdinalTimeAxisOptions, AgRadiusCategoryAxisOptions, AgRadiusNumberAxisOptions } from 'ag-charts-types';
+export declare const ordinalTimeAxisOptionsDefs: OptionsDefs<AgOrdinalTimeAxisOptions>;
+export declare const angleNumberAxisOptionsDefs: OptionsDefs<AgAngleNumberAxisOptions>;
+export declare const angleCategoryAxisOptionsDefs: OptionsDefs<AgAngleCategoryAxisOptions>;
+export declare const radiusNumberAxisOptionsDefs: OptionsDefs<AgRadiusNumberAxisOptions>;
+export declare const radiusCategoryAxisOptionsDefs: OptionsDefs<AgRadiusCategoryAxisOptions>;
+export declare const OrdinalTimeAxisModule: AxisModuleDefinition<AgOrdinalTimeAxisOptions>;
+export declare const AngleNumberAxisModule: AxisModuleDefinition<AgAngleNumberAxisOptions>;
+export declare const AngleCategoryAxisModule: AxisModuleDefinition<AgAngleCategoryAxisOptions>;
+export declare const RadiusNumberAxisModule: AxisModuleDefinition<AgRadiusNumberAxisOptions>;
+export declare const RadiusCategoryAxisModule: AxisModuleDefinition<AgRadiusCategoryAxisOptions>;
