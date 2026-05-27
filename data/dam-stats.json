@@ -1,0 +1,14 @@
+[
+  { "dam": "کارون ۳", "river": "کارون", "province": "خوزستان", "level": 245, "volume": 1250, "inflow": 210, "outflow": 185, "status": "عادی", "updatedAt": "2024-07-12T08:00:00Z" },
+  { "dam": "گتوند", "river": "کارون", "province": "خوزستان", "level": 190, "volume": 980, "inflow": 160, "outflow": 150, "status": "عادی", "updatedAt": "2024-07-12T08:00:00Z" },
+  { "dam": "دز", "river": "دز", "province": "خوزستان", "level": 320, "volume": 1430, "inflow": 240, "outflow": 200, "status": "نیاز به بررسی", "updatedAt": "2024-07-12T08:00:00Z" },
+  { "dam": "کرخه", "river": "کرخه", "province": "خوزستان", "level": 205, "volume": 1105, "inflow": 175, "outflow": 140, "status": "عادی", "updatedAt": "2024-07-12T08:00:00Z" },
+  { "dam": "لار", "river": "لار", "province": "تهران", "level": 158, "volume": 430, "inflow": 65, "outflow": 55, "status": "محدودیت", "updatedAt": "2024-07-12T08:00:00Z" },
+  { "dam": "زاینده‌رود", "river": "زاینده‌رود", "province": "اصفهان", "level": 145, "volume": 520, "inflow": 72, "outflow": 68, "status": "عادی", "updatedAt": "2024-07-12T08:00:00Z" },
+  { "dam": "طالقان", "river": "شاهرود", "province": "البرز", "level": 134, "volume": 410, "inflow": 58, "outflow": 52, "status": "محدودیت", "updatedAt": "2024-07-12T08:00:00Z" },
+  { "dam": "سیوند", "river": "پلوار", "province": "فارس", "level": 120, "volume": 370, "inflow": 44, "outflow": 38, "status": "عادی", "updatedAt": "2024-07-12T08:00:00Z" },
+  { "dam": "بیتوش", "river": "سیروان", "province": "کرمانشاه", "level": 176, "volume": 650, "inflow": 92, "outflow": 80, "status": "نیاز به بررسی", "updatedAt": "2024-07-12T08:00:00Z" },
+  { "dam": "سد شهید رجایی", "river": "تجن", "province": "مازندران", "level": 162, "volume": 480, "inflow": 71, "outflow": 64, "status": "عادی", "updatedAt": "2024-07-12T08:00:00Z" },
+  { "dam": "سیمره", "river": "سیمره", "province": "ایلام", "level": 188, "volume": 870, "inflow": 130, "outflow": 120, "status": "عادی", "updatedAt": "2024-07-12T08:00:00Z" },
+  { "dam": "گاوخونی", "river": "زاینده‌رود", "province": "اصفهان", "level": 90, "volume": 220, "inflow": 26, "outflow": 24, "status": "کمبود ورودی", "updatedAt": "2024-07-12T08:00:00Z" }
+]

@@ -30,7 +30,7 @@ export default async function Page() {
               </CardDescription>
             </div>
           </CardHeader>
-          <CardContent className="bg-background h-full flex-1 rounded-2xl px-2">
+          <CardContent className="bg-background h-full min-h-[60vh] flex-1 rounded-2xl px-2">
             <Suspense
               fallback={
                 <div className="flex h-full w-full items-center justify-center">

@@ -1,5 +1,5 @@
 'use client'
-import React, { useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { AgGridReact } from 'ag-grid-react'
 import { AgChartsEnterpriseModule } from 'ag-charts-enterprise'
 import { AG_GRID_LOCALE_IR } from '@ag-grid-community/locale'
@@ -68,7 +68,17 @@ const woodTheme = themeQuartz.withParams({
 
 const localeText = AG_GRID_LOCALE_IR
 
-import { IOlympicData } from '../types/tablae-type'
+type DamRow = {
+  dam: string
+  river: string
+  province: string
+  level: number
+  volume: number
+  inflow: number
+  outflow: number
+  status: string
+  updatedAt: string
+}
 ModuleRegistry.registerModules([
   FindModule,
   AdvancedFilterModule,
@@ -100,7 +110,6 @@ ModuleRegistry.registerModules([
   RowGroupingPanelModule,
   ValidationModule,
 ])
-import { useFetchJson } from '../hooks/use-fetch-json'
 import { useTheme } from './providers/ThemeProvider'
 import { Switch } from '@/components/ui/switch'
 
@@ -120,105 +129,100 @@ const DataGrid = () => {
   // @ts-nocheck
   const [columnDefs] = useState<(ColDef | ColGroupDef)[]>([
     {
-      enableRowGroup: true,
-      field: 'date',
-      valueFormatter: (params) => {
-        if (!params.value) return ''
-        // Parse the date from DD/MM/YYYY format
-        const [day, month, year] = params.value.split('/').map(Number)
-        const date = new Date(year, month - 1, day) // Month is 0-based in JS
-        return date.toLocaleString('fa-IR-u-ca-persian', {
-          year: 'numeric',
-          month: 'long',
-          day: 'numeric',
-        })
-      },
+      headerName: 'مشخصات سد',
+      marryChildren: true,
+      children: [
+        { field: 'dam', headerName: 'نام سد', filter: 'agTextColumnFilter' },
+        { field: 'river', headerName: 'حوضه آبریز', filter: 'agTextColumnFilter' },
+        { field: 'province', headerName: 'استان', filter: 'agTextColumnFilter' },
+      ],
     },
     {
-      field: 'button',
-      headerName: 'تایید نهایی',
-      valueFormatter: '',
-      width: 100,
-      valueParser: '',
+      headerName: 'تراز و حجم',
+      children: [
+        {
+          field: 'level',
+          headerName: 'تراز (متر)',
+          valueFormatter: (p) => (p.value ? `${p.value.toLocaleString('fa-IR')}` : ''),
+          type: 'numericColumn',
+        },
+        {
+          field: 'volume',
+          headerName: 'حجم مخزن (MCM)',
+          valueFormatter: (p) => (p.value ? `${p.value.toLocaleString('fa-IR')}` : ''),
+          type: 'numericColumn',
+        },
+      ],
+    },
+    {
+      headerName: 'ورودی / خروجی',
+      children: [
+        {
+          field: 'inflow',
+          headerName: 'ورودی (m³/s)',
+          valueFormatter: (p) => (p.value ? `${p.value.toLocaleString('fa-IR')}` : ''),
+        },
+        {
+          field: 'outflow',
+          headerName: 'خروجی (m³/s)',
+          valueFormatter: (p) => (p.value ? `${p.value.toLocaleString('fa-IR')}` : ''),
+        },
+      ],
+    },
+    {
+      field: 'status',
+      headerName: 'وضعیت بهره‌برداری',
+      cellStyle: { textAlign: 'center' },
+    },
+    {
+      field: 'updatedAt',
+      headerName: 'به‌روزرسانی',
+      valueFormatter: (p) =>
+        p.value
+          ? new Date(p.value).toLocaleString('fa-IR', { year: 'numeric', month: 'short', day: 'numeric' })
+          : '',
+    },
+    {
+      headerName: 'عملیات',
+      field: 'actions',
       cellRenderer: ButtonRenderer,
-      cellStyle: { textAlign: 'center' },
+      width: 120,
+      sortable: false,
+      filter: false,
     },
-    {
-      field: 'country',
-      enableRowGroup: true,
-      filter: 'agTextColumnFilter',
-      tooltipField: 'country',
-      headerTooltip: 'Tooltip for Athlete Column Header',
-
-      cellStyle: { textAlign: 'center' },
-    },
-    {
-      headerName: 'طلا',
-      field: 'gold',
-      headerClass: 'text-center',
-      width: 100,
-      pinned: 'right',
-      valueGetter: (params) => {
-        return params.data.gold + 'test'
-      },
-      cellStyle: { textAlign: 'center' },
-      enableValue: true,
-    },
-    {
-      field: 'sport',
-      enableRowGroup: true,
-      cellStyle: { textAlign: 'center' },
-    },
-    {
-      field: 'age',
-      aggFunc: 'sum',
-      width: 100,
-      enableRowGroup: true,
-      editable: true,
-      enableValue: true,
-      cellStyle: { textAlign: 'center' },
-    },
-    {
-      field: 'year',
-      enableValue: true,
-      cellStyle: { textAlign: 'center' },
-      width: 100,
-    },
-    { field: 'total' },
-    { field: 'sport' },
   ])
 
-  const { data, loading } = useFetchJson<IOlympicData>(
-    'https://www.ag-grid.com/example-assets/olympic-winners.json'
-  )
+  const [data, setData] = useState<DamRow[]>([])
+  const [loading, setLoading] = useState(true)
 
-  interface RowData {
-    gold: string | number
-  }
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      import('../data/dam-stats.json').then((module) => {
+        setData(module.default as DamRow[])
+      })
+      setLoading(false)
+    }, 600)
+    return () => clearTimeout(timer)
+  }, [])
+
+  interface RowData extends Partial<DamRow> {}
 
   const pinnedBottomRowData = useMemo<RowData[]>(() => {
-    if (
-      loading ||
-      !data ||
-      !data.every(
-        (item) => typeof item.gold === 'number' || item.gold === undefined
-      )
-    ) {
-      return []
-    }
-
-    const totalGold = data.reduce(
-      (sum, item) => sum + (item.gold || 0) + 0.1,
-      0
-    )
-
+    if (!data || !data.length) return []
+    const totalVolume = data.reduce((sum, item) => sum + Number(item.volume || 0), 0)
+    const totalInflow = data.reduce((sum, item) => sum + Number(item.inflow || 0), 0)
+    const totalOutflow = data.reduce((sum, item) => sum + Number(item.outflow || 0), 0)
     return [
       {
-        sport: `test`,
-        gold: `${totalGold.toFixed(2)} test`,
+        dam: 'جمع',
+        volume: totalVolume,
+        inflow: totalInflow,
+        outflow: totalOutflow,
+        status: '—',
+        updatedAt: '',
       },
     ]
-  }, [data, loading])
+  }, [data])
 
   return (
     <div style={containerStyle}>
@@ -231,7 +235,7 @@ const DataGrid = () => {
         }}
       >
         <div dir="ltr" style={gridStyle}>
-          <AgGridReact<IOlympicData>
+          <AgGridReact<DamRow>
             rowNumbers={{
               headerComponent: () => <h1>ردیف</h1>,
               width: 100,
@@ -246,7 +250,7 @@ const DataGrid = () => {
               },
             }}
             localeText={localeText}
-            rowData={data?.slice(100)}
+            rowData={data}
             enableRtl={true}
             singleClickEdit={true}
             loading={loading}

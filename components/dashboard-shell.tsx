@@ -14,11 +14,12 @@ interface DashboardShellProps {
 }
 
 export function DashboardShell({ children }: DashboardShellProps) {
-  const { resolvedTheme } = useTheme()
-  const loaderColor = useMemo(
-    () => (resolvedTheme === 'dark' || resolvedTheme === 'wood' ? '#facc15' /* yellow */ : '#ef4444' /* red */),
-    [resolvedTheme]
-  )
+  const { resolvedTheme, theme } = useTheme()
+  const loaderColor = useMemo(() => {
+    const isWood = theme === 'wood'
+    if (resolvedTheme === 'dark' || isWood) return '#facc15' // yellow for dark/wood
+    return 'hsl(var(--primary))' // primary color for light/system
+  }, [resolvedTheme, theme])
 
   return (
     <Fragment>

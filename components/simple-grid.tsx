@@ -1,5 +1,5 @@
 'use client'
-import React, { useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { AgGridReact } from 'ag-grid-react'
 import { AG_GRID_LOCALE_IR } from '@ag-grid-community/locale'
 import { themeQuartz } from 'ag-grid-community'
@@ -93,22 +93,21 @@ ModuleRegistry.registerModules([
   ValidationModule,
 ])
 
-// Generate Fake Persian Data
+// Generate Fake Persian Dam Data
 const generateFakeData = (count: number) => {
-  const formTypes = ['ساعتلی', 'روزانه', 'دوره ای']
-  const titles = ['درخواست عضویت', 'فرم بازخورد', 'تماس با ما', 'سفارش جدید']
-  const descriptions = [
-    'این فرم برای ورود کاربران است.',
-    'لطفاً بازخورد خود را وارد کنید.',
-    'جهت ارتباط با پشتیبانی استفاده می‌شود.',
-    'برای ثبت سفارش کالا.',
-  ]
+  const dams = ['کارون ۳', 'کرخه', 'دز', 'گتوند', 'زاینده‌رود', 'لار', 'طالقان', 'سیمره']
+  const provinces = ['خوزستان', 'اصفهان', 'تهران', 'البرز', 'ایلام', 'فارس']
+  const basins = ['کارون', 'کرخه', 'زاینده‌رود', 'لار', 'سیروان']
+  const statuses = ['عادی', 'محدودیت', 'کمبود ورودی', 'نیاز به بررسی']
 
   return Array.from({ length: count }, (_, i) => ({
-    formTitle: titles[i % titles.length],
-    description: descriptions[i % descriptions.length],
-    formType: formTypes[i % formTypes.length],
-    creationDate: new Date(Date.now() - i * 86400000).toLocaleString('fa-IR'),
+    damName: dams[i % dams.length],
+    province: provinces[i % provinces.length],
+    basin: basins[i % basins.length],
+    status: statuses[i % statuses.length],
+    inflow: Math.floor(50 + Math.random() * 200),
+    outflow: Math.floor(40 + Math.random() * 180),
+    updatedAt: new Date(Date.now() - i * 3600 * 1000).toLocaleString('fa-IR'),
   }))
 }
 
@@ -118,31 +117,51 @@ const SimpleGrid = () => {
   const gridStyle = useMemo(() => ({ height: '100%', width: '100%' }), [])
   const themeState = useTheme()
 
-  const [rowData] = useState(generateFakeData(50))
+  const [rowData, setRowData] = useState(generateFakeData(0))
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setRowData(generateFakeData(50))
+      setLoading(false)
+    }, 600)
+    return () => clearTimeout(timer)
+  }, [])
 
   const [columnDefs] = useState<ColDef[]>([
-    { field: 'formTitle', headerName: 'عنوان فرم' },
-    { field: 'description', headerName: 'توضیحات' },
-    { field: 'formType', headerName: 'نوع فرم' },
-    { field: 'creationDate', headerName: 'تاریخ ایجاد' },
-      {
-        headerName: 'عملیات',
-        field: 'actions',
-        cellRenderer: () => {
-          return (
-            <Button
-              onClick={() => router.push('/dashboard/resources/dashboard')}
-              variant="outline"
-              className="px-3 py-1 text-xs"
-            >
-              ورود به داشبورد
-            </Button>
-          )
-        },
-        width: 120,
-        sortable: false,
-        filter: false,
+    { field: 'damName', headerName: 'نام سد' },
+    { field: 'province', headerName: 'استان' },
+    { field: 'basin', headerName: 'حوضه' },
+    { field: 'status', headerName: 'وضعیت' },
+    {
+      field: 'inflow',
+      headerName: 'ورودی (m³/s)',
+      valueFormatter: (p) => (p.value ? p.value.toLocaleString('fa-IR') : ''),
+    },
+    {
+      field: 'outflow',
+      headerName: 'خروجی (m³/s)',
+      valueFormatter: (p) => (p.value ? p.value.toLocaleString('fa-IR') : ''),
+    },
+    { field: 'updatedAt', headerName: 'به‌روزرسانی' },
+    {
+      headerName: 'عملیات',
+      field: 'actions',
+      cellRenderer: () => {
+        return (
+          <Button
+            onClick={() => router.push('/dashboard/resources/dashboard')}
+            variant="outline"
+            className="px-3 py-1 text-xs"
+          >
+            مشاهده داشبورد
+          </Button>
+        )
       },
+      width: 140,
+      sortable: false,
+      filter: false,
+    },
   ])
 
   return (
@@ -165,6 +184,7 @@ const SimpleGrid = () => {
             paginationPageSize={20}
             rowSelection="multiple"
             animateRows={true}
+            loading={loading}
           />
         </div>
       </div>
