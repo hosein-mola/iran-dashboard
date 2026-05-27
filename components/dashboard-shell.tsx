@@ -2,6 +2,7 @@
 
 import { Fragment, ReactNode } from 'react'
 
+import Breadcrumbs from '@/components/breadcrumbs'
 import { AppSidebar } from '@/components/app-sidebar'
 import HeaderDropdown from '@/components/header-dropdown'
 import { Button } from '@/components/ui/button'
@@ -33,10 +34,13 @@ export function DashboardShell({ children }: DashboardShellProps) {
         <AppSidebar side="right" variant="inset" />
         <SidebarInset className="flex flex-1 flex-col">
           <header className="border-border bg-background sticky top-0 z-[10] hidden h-16 shrink-0 items-center justify-between border-b px-4 md:flex">
-            <SidebarTrigger className="border-border hover:bg-accent rotate-180 cursor-pointer border" />
+            <div className="flex items-center gap-3">
+              <SidebarTrigger className="border-border hover:bg-accent rotate-180 cursor-pointer border" />
+              <Breadcrumbs className="hidden max-w-[60vw] min-w-0 flex-1 md:flex" />
+            </div>
             <HeaderDropdown />
           </header>
-          <div className="bg-background sticky top-16 z-[10] hidden min-h-12 w-full items-center gap-2 border-b px-4 md:flex">
+          {/* <div className="bg-background sticky top-16 z-[10] hidden min-h-12 w-full items-center gap-2 border-b px-4 md:flex">
             <Button className="cursor-pointer" variant={'ghost'}>
               <LucideDam className="size-5" />
               <span className="">انتخاب سد</span>
@@ -49,10 +53,13 @@ export function DashboardShell({ children }: DashboardShellProps) {
               <LucideCalendarArrowDown className="size-5" />
               <span className="">تاریخ پایان</span>
             </Button>
-          </div>
+          </div> */}
           <main className="bg-sidebar flex-grow overflow-y-auto p-2">
             <header className="border-border bg-background z-[99] flex h-16 shrink-0 items-center justify-between border-b px-4 md:hidden">
-              <SidebarTrigger className="border-border hover:bg-accent rotate-180 cursor-pointer border" />
+              <div className="flex items-center gap-2">
+                <SidebarTrigger className="border-border hover:bg-accent rotate-180 cursor-pointer border" />
+                <Breadcrumbs className="flex-1 text-[0.6rem]" />
+              </div>
               <HeaderDropdown />
             </header>
             {children}
