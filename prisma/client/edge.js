@@ -136,7 +136,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "C:\\Users\\hodev\\Documents\\GitHub\\iran-dashboard\\prisma\\client",
+      "value": "/home/hodev-gnu/Projects/iran-dashboard/prisma/client",
       "fromEnvVar": null
     },
     "config": {
@@ -145,12 +145,12 @@ const config = {
     "binaryTargets": [
       {
         "fromEnvVar": null,
-        "value": "windows",
+        "value": "debian-openssl-3.0.x",
         "native": true
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "C:\\Users\\hodev\\Documents\\GitHub\\iran-dashboard\\prisma\\schema.prisma",
+    "sourceFilePath": "/home/hodev-gnu/Projects/iran-dashboard/prisma/schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
@@ -163,7 +163,7 @@ const config = {
     "db"
   ],
   "activeProvider": "sqlite",
-  "postinstall": false,
+  "postinstall": true,
   "inlineDatasources": {
     "db": {
       "url": {

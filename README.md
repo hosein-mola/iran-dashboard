@@ -12,6 +12,8 @@ yarn dev
 pnpm dev
 # or
 bun dev
+pm2 delete website
+pm2 start app.js --name "website"
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.

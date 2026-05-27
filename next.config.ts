@@ -4,11 +4,7 @@ const nextConfig: NextConfig = {
   /* config options here */
   reactStrictMode: true,
   experimental: {
-    nodeMiddleware: true,
-    viewTransition: true,
-  },
-  eslint: {
-    // ignoreDuringBuilds: true,
+    viewTransition: false,
   },
   typescript: {
     // ignoreBuildErrors: true,
