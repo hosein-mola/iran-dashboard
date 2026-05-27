@@ -1,20 +1,23 @@
+'use client'
+
+import { Fragment, ReactNode } from 'react'
+
 import { AppSidebar } from '@/components/app-sidebar'
-import {
-  SidebarProvider,
-  SidebarInset,
-  SidebarTrigger,
-} from '@/components/ui/sidebar'
 import HeaderDropdown from '@/components/header-dropdown'
 import { Button } from '@/components/ui/button'
+import {
+  SidebarInset,
+  SidebarProvider,
+  SidebarTrigger,
+} from '@/components/ui/sidebar'
 import { LucideCalendarArrowDown, LucideDam } from 'lucide-react'
 import HolyLoader from 'holy-loader'
-import { Fragment } from 'react'
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode
-}>) {
+interface DashboardShellProps {
+  children: ReactNode
+}
+
+export function DashboardShell({ children }: DashboardShellProps) {
   return (
     <Fragment>
       <HolyLoader
@@ -29,12 +32,10 @@ export default function RootLayout({
       <SidebarProvider>
         <AppSidebar side="right" variant="inset" />
         <SidebarInset className="flex flex-1 flex-col">
-          {/* Header Section */}
           <header className="border-border bg-background sticky top-0 z-[10] hidden h-16 shrink-0 items-center justify-between border-b px-4 md:flex">
             <SidebarTrigger className="border-border hover:bg-accent rotate-180 cursor-pointer border" />
             <HeaderDropdown />
           </header>
-          {/* Filter Section */}
           <div className="bg-background sticky top-16 z-[10] hidden min-h-12 w-full items-center gap-2 border-b px-4 md:flex">
             <Button className="cursor-pointer" variant={'ghost'}>
               <LucideDam className="size-5" />
@@ -49,7 +50,6 @@ export default function RootLayout({
               <span className="">تاریخ پایان</span>
             </Button>
           </div>
-          {/* Scrollable Content */}
           <main className="bg-sidebar flex-grow overflow-y-auto p-2">
             <header className="border-border bg-background z-[99] flex h-16 shrink-0 items-center justify-between border-b px-4 md:hidden">
               <SidebarTrigger className="border-border hover:bg-accent rotate-180 cursor-pointer border" />
@@ -57,7 +57,6 @@ export default function RootLayout({
             </header>
             {children}
           </main>
-          {/* Footer */}
           <footer className="bg-background text-muted-foreground flex h-16 w-full flex-shrink-0 items-center justify-center border-t text-xs">
             <span className="">توسعه در سازمان آب و برق خوستان</span>
             <span className="">-</span>

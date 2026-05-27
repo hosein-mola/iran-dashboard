@@ -1,4 +1,4 @@
-// app/studio/page.tsx (or wherever your page is)
+// app/(modules)/form-builder/page.tsx (or wherever your page is)
 
 import { Suspense, ReactNode } from 'react'
 import Link from 'next/link'
@@ -202,7 +202,7 @@ function FormCard({ form }: { form: Form }) {
             variant={'secondary'}
             className="text-md mt-2 w-full gap-4"
           >
-            <Link href={`/studio/builder/${form.id}`}>
+            <Link href={`/form-builder/builder/${form.id}`}>
               Edit form <FaEdit />
             </Link>
           </Button>

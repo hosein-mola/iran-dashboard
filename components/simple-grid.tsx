@@ -112,24 +112,24 @@ const SimpleGrid = () => {
     { field: 'description', headerName: 'توضیحات' },
     { field: 'formType', headerName: 'نوع فرم' },
     { field: 'creationDate', headerName: 'تاریخ ایجاد' },
-    {
-      headerName: 'عملیات',
-      field: 'actions',
-      cellRenderer: () => {
-        return (
-          <Button
-            onClick={() => router.push('/modules/resources/dashboard')}
-            variant="outline"
-            className="px-3 py-1 text-xs"
-          >
-            ورود به داشبورد
-          </Button>
-        )
+      {
+        headerName: 'عملیات',
+        field: 'actions',
+        cellRenderer: () => {
+          return (
+            <Button
+              onClick={() => router.push('/dashboard/resources/dashboard')}
+              variant="outline"
+              className="px-3 py-1 text-xs"
+            >
+              ورود به داشبورد
+            </Button>
+          )
+        },
+        width: 120,
+        sortable: false,
+        filter: false,
       },
-      width: 120,
-      sortable: false,
-      filter: false,
-    },
   ])
 
   return (

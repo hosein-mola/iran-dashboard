@@ -1,8 +1,16 @@
 'use client'
-
 import * as React from 'react'
-import { Minus, Plus } from 'lucide-react'
-import { Bar, BarChart, ResponsiveContainer } from 'recharts'
+import {
+  BoxIcon,
+  BrainIcon,
+  FormInputIcon,
+  ShieldCheckIcon,
+  CodeSquareIcon,
+  ChartBarBig,
+  FolderDot,
+} from 'lucide-react'
+import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 
 import { Button } from '@/components/ui/button'
 import {
@@ -15,115 +23,50 @@ import {
   DrawerTitle,
 } from '@/components/ui/drawer'
 
-const data = [
-  {
-    goal: 400,
-  },
-  {
-    goal: 300,
-  },
-  {
-    goal: 200,
-  },
-  {
-    goal: 300,
-  },
-  {
-    goal: 200,
-  },
-  {
-    goal: 278,
-  },
-  {
-    goal: 189,
-  },
-  {
-    goal: 239,
-  },
-  {
-    goal: 300,
-  },
-  {
-    goal: 200,
-  },
-  {
-    goal: 278,
-  },
-  {
-    goal: 189,
-  },
-  {
-    goal: 349,
-  },
-]
+export function DrawerDemo({ children }: { children: React.ReactNode }) {
+  const router = useRouter()
 
-export function DrawerDemo({ children }: { children: React.JSX.Element }) {
-  const [goal, setGoal] = React.useState(350)
-
-  function onClick(adjustment: number) {
-    setGoal(Math.max(200, Math.min(400, goal + adjustment)))
-  }
+  const modules = [
+    {
+      icon: ShieldCheckIcon,
+      label: 'کاربران و دسترسی',
+      href: '/dashboard/persons',
+    },
+    { icon: FormInputIcon, label: 'فرمساز', href: '/form-builder' },
+    { icon: BrainIcon, label: 'هوش مصنوعی', href: '/ai' },
+    { icon: CodeSquareIcon, label: 'کد و فرایند', href: '/code' },
+    { icon: ChartBarBig, label: 'گزارش', href: '/reports' },
+    { icon: BoxIcon, label: 'لاگ', href: '/logs' },
+    { icon: FolderDot, label: 'مدیریت فایل', href: '/files' },
+  ]
 
   return (
     <Drawer direction="top">
       {children}
-      <DrawerContent className="z-[9999]">
-        <div className="mx-auto w-full max-w-sm">
+      <DrawerContent className="z-[9999] h-auto" dir="rtl">
+        <div className="mx-auto w-full">
           <DrawerHeader>
-            <DrawerTitle>Move Goal</DrawerTitle>
-            <DrawerDescription>Set your daily activity goal.</DrawerDescription>
+            <DrawerTitle>انتخابگر ماژول</DrawerTitle>
+            <DrawerDescription>ماژول مورد نظر را انتخاب کنید</DrawerDescription>
           </DrawerHeader>
-          <div className="p-4 pb-0">
-            <div className="flex items-center justify-center space-x-2">
-              <Button
-                variant="outline"
-                size="icon"
-                className="h-8 w-8 shrink-0 rounded-full"
-                onClick={() => onClick(-10)}
-                disabled={goal <= 200}
-              >
-                <Minus />
-                <span className="sr-only">Decrease</span>
-              </Button>
-              <div className="flex-1 text-center">
-                <div className="text-7xl font-bold tracking-tighter">
-                  {goal}
-                </div>
-                <div className="text-muted-foreground text-[0.70rem] uppercase">
-                  Calories/day
-                </div>
-              </div>
-              <Button
-                variant="outline"
-                size="icon"
-                className="h-8 w-8 shrink-0 rounded-full"
-                onClick={() => onClick(10)}
-                disabled={goal >= 400}
-              >
-                <Plus />
-                <span className="sr-only">Increase</span>
-              </Button>
-            </div>
-            <div className="mt-3 h-[120px]">
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={data}>
-                  <Bar
-                    dataKey="goal"
-                    style={
-                      {
-                        fill: 'hsl(var(--foreground))',
-                        opacity: 0.9,
-                      } as React.CSSProperties
-                    }
-                  />
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
+          <div className="border-border flex flex-wrap justify-center gap-8 border p-4">
+            {modules.map((module) => (
+              <DrawerClose key={module.href} asChild>
+                <Link
+                  href={module.href}
+                  className="border-border hover:bg-accent hover:text-accent-foreground flex h-48 w-40 flex-col items-center justify-between rounded-2xl border p-4"
+                >
+                  <module.icon className="size-28" />
+                  <span className="text-center">{module.label}</span>
+                </Link>
+              </DrawerClose>
+            ))}
           </div>
-          <DrawerFooter>
-            <Button>Submit</Button>
+          <DrawerFooter className="border-border my-2 flex items-center border">
             <DrawerClose asChild>
-              <Button variant="outline">Cancel</Button>
+              <Button size="default" variant="ghost" className="h-full w-40">
+                بستن
+              </Button>
             </DrawerClose>
           </DrawerFooter>
         </div>

@@ -1,7 +1,7 @@
 'use client'
 import React from 'react'
-import ScrollTable from '../../../components/data-grid'
-import Filter from '../../../components/persons/person-filter'
+import ScrollTable from '@/components/data-grid'
+import Filter from '@/components/persons/person-filter'
 import PersianDate from 'persian-date'
 import { CalenderFormat } from '@/types/calender-type'
 export type OnSubmitParams = {
