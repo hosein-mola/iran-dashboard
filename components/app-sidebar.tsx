@@ -62,28 +62,28 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar
       variant="sidebar"
-      className="bg-background border-l"
+      className="bg-background text-foreground border-l"
       collapsible="offcanvas"
       {...props}
     >
-      <SidebarHeader className="bg-background border-border flex h-auto min-w-4 items-center justify-center gap-0">
+      <SidebarHeader className="flex h-auto min-w-4 items-center justify-center gap-0 border-b border-border bg-background">
         <Button
           variant={'ghost'}
           onClick={() => {
             redirect(moduleHome)
           }}
-          className="gorup/site-name border-border flex h-16 w-full flex-row items-center justify-start gap-1 rounded-none border-b"
+          className="gorup/site-name border-border flex h-16 w-full flex-row items-center justify-start gap-2 rounded-none border-b hover:bg-accent hover:text-accent-foreground"
         >
-          <RiWaterFlashFill className="group-hover/site-name:text-primary mr-2 size-8" />
-          <span className="text-2xl">سد‌ایران</span>
+          <RiWaterFlashFill className="mr-1 size-7 text-primary" />
+          <span className="text-2xl font-semibold text-foreground">سد‌ایران</span>
         </Button>
         <TeamSwitcher teams={teams} />
       </SidebarHeader>
-      <SidebarContent className="bg-background">
-        <NavMain items={navMain} />
+      <SidebarContent className="bg-background text-foreground flex flex-col gap-2">
         <NavProjects projects={projects} />
+        <NavMain items={navMain} />
       </SidebarContent>
-      <SidebarFooter className="bg-background">
+      <SidebarFooter className="bg-background text-foreground">
         <NavUser user={user} />
       </SidebarFooter>
     </Sidebar>

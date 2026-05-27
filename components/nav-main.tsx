@@ -102,10 +102,10 @@ function NavItemComponent({
           <Button
             variant={isActive ? 'default' : 'ghost'}
             className={cn(
-              'flex h-auto w-full cursor-pointer flex-row items-center justify-between rounded-xl transition-colors',
+              'flex h-10 w-full cursor-pointer flex-row items-center justify-between rounded-xl transition-colors',
               isActive
                 ? 'bg-accent text-accent-foreground shadow-sm'
-                : 'text-foreground hover:bg-muted/70'
+                : 'text-foreground hover:bg-accent hover:text-accent-foreground'
             )}
           >
             <div className="flex flex-row items-center justify-center">
@@ -156,10 +156,10 @@ function NavItemComponent({
                           }}
                           variant={subIsActive ? 'default' : 'ghost'}
                           className={cn(
-                            'flex h-10 w-full cursor-pointer justify-start rounded-xl text-sm',
+                            'flex h-10 w-full cursor-pointer justify-start rounded-xl text-sm transition-colors',
                             subIsActive
                               ? 'bg-accent text-accent-foreground shadow-sm'
-                              : 'text-foreground hover:bg-muted/70'
+                              : 'text-foreground hover:bg-accent hover:text-accent-foreground'
                           )}
                         >
                           {subItem.title}

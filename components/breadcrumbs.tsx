@@ -6,11 +6,13 @@ import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
 import { moduleMenuConfig } from '@/components/module-menu'
 
+const homePath = '/modules'
+
 const breadcrumbMatchers: Array<{
   test: (path: string) => boolean
   label: string
 }> = [
-  { test: (path) => path === '/', label: 'خانه' },
+  { test: (path) => path === homePath, label: 'خانه' },
   { test: (path) => path === '/dashboard/persons', label: 'افراد' },
   { test: (path) => path === '/dashboard/resources', label: 'منابع' },
   {
@@ -22,11 +24,15 @@ const breadcrumbMatchers: Array<{
   { test: (path) => path.startsWith('/form-builder/forms'), label: 'فرم‌ها' },
   { test: (path) => path.startsWith('/form-builder/submit'), label: 'ارسال فرم' },
   { test: (path) => path === '/ai', label: 'هوش مصنوعی' },
-  { test: (path) => path === '/code', label: 'کد و فرایند' },
+  { test: (path) => path === '/process', label: 'فرایند' },
   { test: (path) => path === '/reports', label: 'گزارش‌ها' },
   { test: (path) => path === '/reports/summary', label: 'خلاصه گزارش' },
   { test: (path) => path === '/logs', label: 'لاگ‌ها' },
   { test: (path) => path === '/files', label: 'فایل‌ها' },
+  { test: (path) => path === '/user-dashboard', label: 'داشبورد کاربر' },
+  { test: (path) => path === '/user-dashboard/resources', label: 'منابع کاربر' },
+  { test: (path) => path === '/user-dashboard/usage', label: 'مصارف کاربر' },
+  { test: (path) => path === '/security', label: 'امنیت و کاربران' },
 ]
 
 const formatLabel = (path: string) => {
@@ -62,9 +68,12 @@ export default function Breadcrumbs({ className }: { className?: string }) {
     .split('/')
     .filter(Boolean)
 
-  const paths = ['/', moduleBase, ...segmentsAfterBase.map((_, index) => `${moduleBase}/${segmentsAfterBase.slice(0, index + 1).join('/')}`)]
-    .filter((value, index, array) => array.indexOf(value) === index)
-    .filter(Boolean)
+  const prefixPaths = moduleBase === homePath ? [] : [moduleBase]
+  const nestedPaths = segmentsAfterBase.map(
+    (_, index) => `${moduleBase}/${segmentsAfterBase.slice(0, index + 1).join('/')}`
+  )
+  const paths = [homePath, ...prefixPaths, ...nestedPaths]
+    .filter((value, index, array) => Boolean(value) && array.indexOf(value) === index)
 
   if (paths.length <= 1) {
     return null

@@ -165,6 +165,49 @@
   --sidebar-border: oklch(40% 0 0);
   --sidebar-ring: oklch(30% 0 0);
 }
+
+.wood {
+  --background: #1f1812;
+  --foreground: #f4ecdf;
+  --card: #261d15;
+  --card-foreground: #f4ecdf;
+  --popover: #2b2119;
+  --popover-foreground: #f4ecdf;
+  --primary: #9b7f58;
+  --primary-foreground: #fbf5ec;
+  --secondary: #433427;
+  --secondary-foreground: #f4ecdf;
+  --muted: #2d231b;
+  --muted-foreground: #d6c7b8;
+  --accent: #c1a47d;
+  --accent-foreground: #1f1812;
+  --destructive: #4c2f26;
+  --destructive-foreground: #fbece6;
+  --border: #352a21;
+  --input: #352a21;
+  --ring: #c1a47d;
+  --sidebar-background: #221a13;
+  --sidebar-foreground: #f4ecdf;
+  --sidebar-primary: #9b7f58;
+  --sidebar-primary-foreground: #1f1812;
+  --sidebar-accent: #c1a47d;
+  --sidebar-accent-foreground: #1f1812;
+  --sidebar-border: #352a21;
+  --sidebar-ring: #c1a47d;
+  --chart-1: #ffb347; /* bright orange */
+  --chart-2: #ff9240; /* vivid orange */
+  --chart-3: #ffd8a0; /* light orange */
+  --chart-4: #ff7a1a; /* punchy accent */
+  --chart-5: #ffe8c7; /* pale orange */
+  --chart-6: #ffa14a;
+  --chart-7: #ffb86b;
+  --ag-foreground: #f4ecdf;
+  --ag-background: #1f1812;
+  --ag-header-foreground: #f4ecdf;
+  --ag-header-background: #2b2119;
+  --ag-odd-row-background: #231b14;
+  --ag-border-color: #352a21;
+}
 @layer base {
   @font-face {
     font-family: iranyekan;

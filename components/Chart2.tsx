@@ -56,8 +56,8 @@ export function Chart2() {
                 <stop offset="100%" stopColor="var(--chart-6)" />
               </linearGradient>
               <linearGradient id="mobileGradient" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0%" stopColor="var(--color-rose-500)" />
-                <stop offset="100%" stopColor="var(--color-rose-400)" />
+                <stop offset="0%" stopColor="var(--chart-2)" />
+                <stop offset="100%" stopColor="var(--chart-3)" />
               </linearGradient>
             </defs>
             <ChartTooltip cursor={false} content={<ChartTooltipContent />} />

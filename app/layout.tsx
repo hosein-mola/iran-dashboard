@@ -1,5 +1,5 @@
 import './globals.css'
-import { ThemeProvider } from 'next-themes'
+import { Providers } from './providers'
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -8,7 +8,7 @@ export default function RootLayout({
   return (
     <html lang="fa" dir="rtl" suppressHydrationWarning>
       <body className="flex min-h-screen flex-col">
-        <ThemeProvider attribute="class">{children}</ThemeProvider>
+        <Providers>{children}</Providers>
       </body>
     </html>
   )

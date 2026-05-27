@@ -4,7 +4,7 @@ import { AgGridReact } from 'ag-grid-react'
 import { AG_GRID_LOCALE_IR } from '@ag-grid-community/locale'
 import { themeQuartz } from 'ag-grid-community'
 import { colorSchemeDarkBlue } from 'ag-grid-community'
-import { useTheme } from 'next-themes'
+import { useTheme } from './providers/ThemeProvider'
 
 import {
   ClientSideRowModelModule,
@@ -50,6 +50,19 @@ const lightTheme = themeQuartz.withParams({
 const darkTheme = themeQuartz.withPart(colorSchemeDarkBlue).withParams({
   backgroundColor: '#000000',
   accentColor: 'oklch(0.414 0.121 273.2)',
+})
+
+const woodTheme = themeQuartz.withParams({
+  backgroundColor: '#1f1812',
+  foregroundColor: '#f4ecdf',
+  headerBackgroundColor: '#2b2119',
+  headerForegroundColor: '#f4ecdf',
+  oddRowBackgroundColor: '#231b14',
+  headerCellHoverBackgroundColor: '#352a21',
+  rowHoverColor: '#352a21',
+  accentColor: '#c1a47d',
+  borderColor: '#352a21',
+  rowBorder: '#352a21',
 })
 
 // Register modules
@@ -141,7 +154,13 @@ const SimpleGrid = () => {
             rowData={rowData}
             enableRtl={true}
             columnDefs={columnDefs}
-            theme={themeState.theme === 'dark' ? darkTheme : lightTheme}
+            theme={
+              themeState.theme === 'dark'
+                ? darkTheme
+                : themeState.theme === 'wood'
+                  ? woodTheme
+                  : lightTheme
+            }
             pagination={true}
             paginationPageSize={20}
             rowSelection="multiple"

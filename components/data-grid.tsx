@@ -43,21 +43,27 @@ import {
 } from 'ag-grid-enterprise'
 
 const lightTheme = themeQuartz.withParams({
-  // We prefer red to blue. Because the built in color schemes
-  // derive all colors from foreground, background and
-  // accent colors, changing these two values is sufficient.
   backgroundColor: 'oklch(1 0.012 258)',
   accentColor: 'oklch(0.16546762589928057 0.13333333333333336 258)',
-  borderColor:
-    'oklch(0.9447590760599487 0.026183672181971585 262.70494790451886)',
+  borderColor: 'oklch(0.9447590760599487 0.026183672181971585 262.70494790451886)',
 })
 
 const darkTheme = themeQuartz.withPart(colorSchemeDarkBlue).withParams({
-  // We prefer red to blue. Because the built in color schemes
-  // derive all colors from foreground, background and
-  // accent colors, changing these two values is sufficient.
   backgroundColor: '#000000',
   accentColor: 'oklch(0.414 0.121 273.2)',
+})
+
+const woodTheme = themeQuartz.withParams({
+  backgroundColor: '#1f1812',
+  foregroundColor: '#f4ecdf',
+  headerBackgroundColor: '#2b2119',
+  headerForegroundColor: '#f4ecdf',
+  oddRowBackgroundColor: '#231b14',
+  headerCellHoverBackgroundColor: '#352a21',
+  rowHoverColor: '#352a21',
+  accentColor: '#c1a47d',
+  borderColor: '#352a21',
+  rowBorder: '#352a21',
 })
 
 const localeText = AG_GRID_LOCALE_IR
@@ -95,7 +101,7 @@ ModuleRegistry.registerModules([
   ValidationModule,
 ])
 import { useFetchJson } from '../hooks/use-fetch-json'
-import { useTheme } from 'next-themes'
+import { useTheme } from './providers/ThemeProvider'
 import { Switch } from '@/components/ui/switch'
 
 const ButtonRenderer = (params) => {
@@ -271,7 +277,13 @@ const DataGrid = () => {
             pivotPanelShow={"never"}
             pinnedBottomRowData={pinnedBottomRowData}
             pivotMode={false}
-            theme={themeState.theme === 'dark' ? darkTheme : lightTheme}
+            theme={
+              themeState.theme === 'dark'
+                ? darkTheme
+                : themeState.theme === 'wood'
+                  ? woodTheme
+                  : lightTheme
+            }
             enableCharts={true}
             pagination={true}
             paginationPageSize={20}

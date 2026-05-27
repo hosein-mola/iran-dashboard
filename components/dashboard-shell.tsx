@@ -1,17 +1,12 @@
 'use client'
 
-import { Fragment, ReactNode } from 'react'
+import { Fragment, ReactNode, useMemo } from 'react'
 
 import Breadcrumbs from '@/components/breadcrumbs'
 import { AppSidebar } from '@/components/app-sidebar'
 import HeaderDropdown from '@/components/header-dropdown'
-import { Button } from '@/components/ui/button'
-import {
-  SidebarInset,
-  SidebarProvider,
-  SidebarTrigger,
-} from '@/components/ui/sidebar'
-import { LucideCalendarArrowDown, LucideDam } from 'lucide-react'
+import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar'
+import { useTheme } from './providers/ThemeProvider'
 import HolyLoader from 'holy-loader'
 
 interface DashboardShellProps {
@@ -19,10 +14,16 @@ interface DashboardShellProps {
 }
 
 export function DashboardShell({ children }: DashboardShellProps) {
+  const { resolvedTheme } = useTheme()
+  const loaderColor = useMemo(
+    () => (resolvedTheme === 'dark' || resolvedTheme === 'wood' ? '#facc15' /* yellow */ : '#ef4444' /* red */),
+    [resolvedTheme]
+  )
+
   return (
     <Fragment>
       <HolyLoader
-        color="oklch(0.16546762589928057 0.13333333333333336 258)"
+        color={loaderColor}
         height="0.8rem"
         speed={1000}
         easing="cubic-bezier(0.4, 0, 0.2, 1)"

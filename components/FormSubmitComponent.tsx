@@ -8,7 +8,7 @@ import useDesigner from './hooks/useDesigner'
 import { TbBrandSublimeText } from 'react-icons/tb'
 import { useForm } from 'react-hook-form'
 import Confetti from 'react-confetti'
-import { useTheme } from 'next-themes'
+import { useTheme } from './providers/ThemeProvider'
 import { cn } from '@/lib/utils'
 
 function FormSubmitComponent({

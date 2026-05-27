@@ -43,7 +43,7 @@ export function TeamSwitcher({
             <SidebarMenuButton
               variant={'outline'}
               size="lg"
-              className="data-[state=open]:bg-accent data-[state=open]:text-sidebar-accent-foreground h-12 cursor-pointer rounded-none border-b"
+              className="data-[state=open]:bg-accent data-[state=open]:text-sidebar-accent-foreground h-12 cursor-pointer rounded-none shadow-none"
             >
               <div className="flex aspect-square size-8 items-center justify-center">
                 <activeTeam.logo className="size-4" />
@@ -75,7 +75,7 @@ export function TeamSwitcher({
                 onClick={() => setActiveTeam(team)}
                 className="gap-2 p-2"
               >
-                <div className="flex size-6 items-center justify-center rounded-md border">
+                <div className="flex size-6 items-center justify-center rounded-md">
                   <team.logo className="group-hover/team:text-accent-foreground size-3.5 shrink-0" />
                 </div>
                 {team.name}

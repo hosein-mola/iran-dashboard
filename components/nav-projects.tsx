@@ -2,31 +2,17 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import {
-  Folder,
-  Forward,
-  MoreHorizontal,
-  Trash2,
-  type LucideIcon,
-} from 'lucide-react'
+import { type LucideIcon } from 'lucide-react'
 
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
 import {
   SidebarGroup,
   SidebarGroupLabel,
   SidebarMenu,
-  SidebarMenuAction,
   SidebarMenuButton,
   SidebarMenuItem,
-  useSidebar,
 } from '@/components/ui/sidebar'
 import { cn } from '@/lib/utils'
+import { moduleList } from '@/components/module-list'
 
 export function NavProjects({
   projects,
@@ -37,58 +23,35 @@ export function NavProjects({
     icon: LucideIcon
   }[]
 }) {
-  const { isMobile } = useSidebar()
   const pathname = usePathname() || '/'
+  const shortcuts = moduleList.map((mod) => ({
+    label: mod.label,
+    href: mod.href,
+    Icon: mod.icon,
+  }))
 
   return (
     <SidebarGroup className="group-data-[collapsible=icon]:hidden">
-      <SidebarGroupLabel>ماژول ها</SidebarGroupLabel>
+      <SidebarGroupLabel>میانبر ها</SidebarGroupLabel>
       <SidebarMenu>
-        {projects.map((item) => {
-          const isActive = pathname === item.url || pathname.startsWith(`${item.url}/`)
+        {shortcuts.map(({ href, label, Icon }) => {
+          const isActive = pathname === href || pathname.startsWith(`${href}/`)
           return (
-            <SidebarMenuItem key={item.name}>
+            <SidebarMenuItem key={href}>
               <SidebarMenuButton asChild>
                 <Link
-                  href={item.url}
+                  href={href}
                   className={cn(
-                    'flex items-center gap-2 rounded-xl px-3 py-2 text-sm font-medium transition-colors',
+                    'flex h-10 items-center gap-2 rounded-xl px-3 py-2 text-sm font-medium transition-colors',
                     isActive
                       ? 'bg-accent text-accent-foreground'
-                      : 'text-foreground hover:bg-muted/70'
+                      : 'text-foreground hover:bg-accent hover:text-accent-foreground'
                   )}
                 >
-                  <item.icon />
-                  <span>{item.name}</span>
+                  <Icon className="size-4 text-muted-foreground" />
+                  <span>{label}</span>
                 </Link>
               </SidebarMenuButton>
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <SidebarMenuAction showOnHover>
-                    <MoreHorizontal />
-                    <span className="sr-only">More</span>
-                  </SidebarMenuAction>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent
-                  className="w-48 rounded-lg"
-                  side={isMobile ? 'bottom' : 'right'}
-                  align={isMobile ? 'end' : 'start'}
-                >
-                  <DropdownMenuItem>
-                    <Folder className="text-muted-foreground" />
-                    <span>گزارش ساز</span>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem>
-                    <Forward className="text-muted-foreground" />
-                    <span>فرم ساز</span>
-                  </DropdownMenuItem>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem>
-                    <Trash2 className="text-muted-foreground" />
-                    <span>فرمول ساز</span>
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
             </SidebarMenuItem>
           )
         })}

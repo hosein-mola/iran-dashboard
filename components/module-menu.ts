@@ -27,6 +27,12 @@ export interface ModuleMenuConfig {
 
 export const moduleMenuConfig: ModuleMenuConfig[] = [
   {
+    base: '/modules',
+    label: 'درگاه ماژول‌ها',
+    navMain: [],
+    projects: [],
+  },
+  {
     base: '/dashboard',
     label: 'ماژول سیستم',
     navMain: [
@@ -39,16 +45,6 @@ export const moduleMenuConfig: ModuleMenuConfig[] = [
         title: 'منابع',
         url: '/dashboard/resources',
         icon: ShieldCheckIcon,
-        items: [
-          {
-            title: 'نمایش کلی منابع',
-            url: '/dashboard/resources',
-          },
-          {
-            title: 'داشبورد منابع',
-            url: '/dashboard/resources/dashboard',
-          },
-        ],
       },
     ],
     projects: [
@@ -77,23 +73,6 @@ export const moduleMenuConfig: ModuleMenuConfig[] = [
         title: 'استودیو فرم',
         url: '/form-builder',
         icon: FormInputIcon,
-      },
-      {
-        title: 'فرم‌ها',
-        items: [
-          {
-            title: 'ایجاد و ویرایش',
-            url: '/form-builder/builder',
-          },
-          {
-            title: 'لیست فرم‌ها',
-            url: '/form-builder/forms',
-          },
-          {
-            title: 'سبد ارسال',
-            url: '/form-builder/submit',
-          },
-        ],
       },
     ],
     projects: [
@@ -128,12 +107,12 @@ export const moduleMenuConfig: ModuleMenuConfig[] = [
     ],
   },
   {
-    base: '/code',
-    label: 'کد و فرایند',
+    base: '/process',
+    label: 'فرایند',
     navMain: [
       {
         title: 'جریان های فرایندی',
-        url: '/code',
+        url: '/process',
         icon: CodeSquareIcon,
       },
     ],
@@ -153,10 +132,6 @@ export const moduleMenuConfig: ModuleMenuConfig[] = [
         title: 'داشبورد گزارش ها',
         url: '/reports',
         icon: ChartBarBig,
-      },
-      {
-        title: 'خلاصه گزارش',
-        url: '/reports/summary',
       },
     ],
     projects: [
@@ -200,6 +175,24 @@ export const moduleMenuConfig: ModuleMenuConfig[] = [
         name: 'داشبورد',
         url: '/dashboard',
         icon: BoxIcon,
+      },
+    ],
+  },
+  {
+    base: '/security',
+    label: 'امنیت و کاربران',
+    navMain: [
+      {
+        title: 'کاربران و دسترسی',
+        url: '/security',
+        icon: ShieldCheckIcon,
+      },
+    ],
+    projects: [
+      {
+        name: 'پروفایل‌ها',
+        url: '/dashboard/persons',
+        icon: User2,
       },
     ],
   },

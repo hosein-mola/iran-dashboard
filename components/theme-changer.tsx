@@ -1,8 +1,8 @@
 'use client'
-import { useTheme } from 'next-themes'
+import { useTheme } from './providers/ThemeProvider'
 import { useEffect, useState } from 'react'
 import { Tabs, TabsList, TabsTrigger } from './ui/tabs'
-import { SunIcon, MoonIcon, ComputerIcon } from 'lucide-react'
+import { SunIcon, MoonIcon, ComputerIcon, TreePine } from 'lucide-react'
 
 const ThemeChanger = () => {
   const { theme, setTheme } = useTheme()
@@ -33,6 +33,13 @@ const ThemeChanger = () => {
           onClick={() => setTheme('dark')}
         >
           <MoonIcon className="h-[1.2rem] w-[1.2rem] text-blue-700" />
+        </TabsTrigger>
+        <TabsTrigger
+          className={'cursor-pointer'}
+          value={'wood'}
+          onClick={() => setTheme('wood')}
+        >
+          <TreePine className="h-[1.2rem] w-[1.2rem] text-amber-700" />
         </TabsTrigger>
         <TabsTrigger
           className={'cursor-pointer'}
