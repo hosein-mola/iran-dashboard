@@ -38,7 +38,7 @@ function FormSubmitComponent({
   })
   const theme = useTheme()
 
-  const submitForm = async (data: any,itemTwo: any) => {}
+  const submitForm = async (data: any, itemTwo: any) => {}
 
   const change = (data: any, event: any) => {
     const id = event.target.dataset.id
@@ -71,7 +71,7 @@ function FormSubmitComponent({
       className={cn(
         'flex h-full w-full items-start border',
         `nord:bg-red-500 bg-[url(/paper.svg)] dark:bg-[url(/paper-dark.svg)]`,
-        theme.theme == 'nord' && 'bg-[url(/paper-dark.svg)]'
+        theme.theme == 'wood' && 'bg-[url(/paper-dark.svg)]'
       )}
     >
       <div

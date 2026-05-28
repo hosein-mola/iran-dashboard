@@ -45,7 +45,8 @@ import {
 const lightTheme = themeQuartz.withParams({
   backgroundColor: 'oklch(1 0.012 258)',
   accentColor: 'oklch(0.16546762589928057 0.13333333333333336 258)',
-  borderColor: 'oklch(0.9447590760599487 0.026183672181971585 262.70494790451886)',
+  borderColor:
+    'oklch(0.9447590760599487 0.026183672181971585 262.70494790451886)',
 })
 
 const darkTheme = themeQuartz.withPart(colorSchemeDarkBlue).withParams({
@@ -57,7 +58,6 @@ const woodTheme = themeQuartz.withParams({
   backgroundColor: '#1f1812',
   foregroundColor: '#f4ecdf',
   headerBackgroundColor: '#2b2119',
-  headerForegroundColor: '#f4ecdf',
   oddRowBackgroundColor: '#231b14',
   headerCellHoverBackgroundColor: '#352a21',
   rowHoverColor: '#352a21',
@@ -133,8 +133,16 @@ const DataGrid = () => {
       marryChildren: true,
       children: [
         { field: 'dam', headerName: 'نام سد', filter: 'agTextColumnFilter' },
-        { field: 'river', headerName: 'حوضه آبریز', filter: 'agTextColumnFilter' },
-        { field: 'province', headerName: 'استان', filter: 'agTextColumnFilter' },
+        {
+          field: 'river',
+          headerName: 'حوضه آبریز',
+          filter: 'agTextColumnFilter',
+        },
+        {
+          field: 'province',
+          headerName: 'استان',
+          filter: 'agTextColumnFilter',
+        },
       ],
     },
     {
@@ -143,13 +151,15 @@ const DataGrid = () => {
         {
           field: 'level',
           headerName: 'تراز (متر)',
-          valueFormatter: (p) => (p.value ? `${p.value.toLocaleString('fa-IR')}` : ''),
+          valueFormatter: (p) =>
+            p.value ? `${p.value.toLocaleString('fa-IR')}` : '',
           type: 'numericColumn',
         },
         {
           field: 'volume',
           headerName: 'حجم مخزن (MCM)',
-          valueFormatter: (p) => (p.value ? `${p.value.toLocaleString('fa-IR')}` : ''),
+          valueFormatter: (p) =>
+            p.value ? `${p.value.toLocaleString('fa-IR')}` : '',
           type: 'numericColumn',
         },
       ],
@@ -160,12 +170,14 @@ const DataGrid = () => {
         {
           field: 'inflow',
           headerName: 'ورودی (m³/s)',
-          valueFormatter: (p) => (p.value ? `${p.value.toLocaleString('fa-IR')}` : ''),
+          valueFormatter: (p) =>
+            p.value ? `${p.value.toLocaleString('fa-IR')}` : '',
         },
         {
           field: 'outflow',
           headerName: 'خروجی (m³/s)',
-          valueFormatter: (p) => (p.value ? `${p.value.toLocaleString('fa-IR')}` : ''),
+          valueFormatter: (p) =>
+            p.value ? `${p.value.toLocaleString('fa-IR')}` : '',
         },
       ],
     },
@@ -179,7 +191,11 @@ const DataGrid = () => {
       headerName: 'به‌روزرسانی',
       valueFormatter: (p) =>
         p.value
-          ? new Date(p.value).toLocaleString('fa-IR', { year: 'numeric', month: 'short', day: 'numeric' })
+          ? new Date(p.value).toLocaleString('fa-IR', {
+              year: 'numeric',
+              month: 'short',
+              day: 'numeric',
+            })
           : '',
     },
     {
@@ -209,9 +225,18 @@ const DataGrid = () => {
 
   const pinnedBottomRowData = useMemo<RowData[]>(() => {
     if (!data || !data.length) return []
-    const totalVolume = data.reduce((sum, item) => sum + Number(item.volume || 0), 0)
-    const totalInflow = data.reduce((sum, item) => sum + Number(item.inflow || 0), 0)
-    const totalOutflow = data.reduce((sum, item) => sum + Number(item.outflow || 0), 0)
+    const totalVolume = data.reduce(
+      (sum, item) => sum + Number(item.volume || 0),
+      0
+    )
+    const totalInflow = data.reduce(
+      (sum, item) => sum + Number(item.inflow || 0),
+      0
+    )
+    const totalOutflow = data.reduce(
+      (sum, item) => sum + Number(item.outflow || 0),
+      0
+    )
     return [
       {
         dam: 'جمع',
@@ -278,7 +303,7 @@ const DataGrid = () => {
             columnDefs={columnDefs}
             sideBar={'columns'}
             alwaysAggregateAtRootLevel={false}
-            pivotPanelShow={"never"}
+            pivotPanelShow={'never'}
             pinnedBottomRowData={pinnedBottomRowData}
             pivotMode={false}
             theme={

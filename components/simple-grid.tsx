@@ -56,7 +56,6 @@ const woodTheme = themeQuartz.withParams({
   backgroundColor: '#1f1812',
   foregroundColor: '#f4ecdf',
   headerBackgroundColor: '#2b2119',
-  headerForegroundColor: '#f4ecdf',
   oddRowBackgroundColor: '#231b14',
   headerCellHoverBackgroundColor: '#352a21',
   rowHoverColor: '#352a21',
@@ -95,7 +94,16 @@ ModuleRegistry.registerModules([
 
 // Generate Fake Persian Dam Data
 const generateFakeData = (count: number) => {
-  const dams = ['کارون ۳', 'کرخه', 'دز', 'گتوند', 'زاینده‌رود', 'لار', 'طالقان', 'سیمره']
+  const dams = [
+    'کارون ۳',
+    'کرخه',
+    'دز',
+    'گتوند',
+    'زاینده‌رود',
+    'لار',
+    'طالقان',
+    'سیمره',
+  ]
   const provinces = ['خوزستان', 'اصفهان', 'تهران', 'البرز', 'ایلام', 'فارس']
   const basins = ['کارون', 'کرخه', 'زاینده‌رود', 'لار', 'سیروان']
   const statuses = ['عادی', 'محدودیت', 'کمبود ورودی', 'نیاز به بررسی']

@@ -257,7 +257,7 @@ function FormBuilder(props: FormBuilderProps) {
         <div
           className={twMerge(
             `bg-muted nord:bg-red-500 relative flex h-[200px] w-full flex-grow items-center justify-center overflow-y-hidden bg-[url(/paper.svg)] dark:bg-[url(/paper-dark.svg)]`,
-            theme == 'nord' && 'bg-[url(/paper-dark.svg)]'
+            theme == 'wood' && 'bg-[url(/paper-dark.svg)]'
           )}
         >
           <div className="bg-background flex h-full w-16 flex-grow flex-col items-center justify-between gap-10 border-r p-4">
