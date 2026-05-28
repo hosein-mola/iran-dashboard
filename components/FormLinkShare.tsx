@@ -9,7 +9,7 @@ import { useOrigin } from '@/lib/utils';
 function FormLinkShare({ formId }: { formId: string }) {
     const [mounted, setMounted] = useState(false);
     const origin = useOrigin();
-    const shareUrl = `${origin}/submit/${formId}`;
+    const shareUrl = `${origin}/form-builder/submit/${formId}`;
     useEffect(() => {
         setMounted(true);
     }, [mounted])

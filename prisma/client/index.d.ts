@@ -23,10 +23,55 @@ export type Form = $Result.DefaultSelection<Prisma.$FormPayload>
  * 
  */
 export type FormSubmission = $Result.DefaultSelection<Prisma.$FormSubmissionPayload>
+/**
+ * Model FormVersion
+ * 
+ */
+export type FormVersion = $Result.DefaultSelection<Prisma.$FormVersionPayload>
+/**
+ * Model FormSubmissionValue
+ * 
+ */
+export type FormSubmissionValue = $Result.DefaultSelection<Prisma.$FormSubmissionValuePayload>
+/**
+ * Model FormEvent
+ * 
+ */
+export type FormEvent = $Result.DefaultSelection<Prisma.$FormEventPayload>
+/**
+ * Model FormAssignment
+ * 
+ */
+export type FormAssignment = $Result.DefaultSelection<Prisma.$FormAssignmentPayload>
+/**
+ * Model Submodule
+ * 
+ */
+export type Submodule = $Result.DefaultSelection<Prisma.$SubmodulePayload>
+/**
+ * Model FormTemplate
+ * 
+ */
+export type FormTemplate = $Result.DefaultSelection<Prisma.$FormTemplatePayload>
+/**
+ * Model FormTemplateVersion
+ * 
+ */
+export type FormTemplateVersion = $Result.DefaultSelection<Prisma.$FormTemplateVersionPayload>
+/**
+ * Model Role
+ * 
+ */
+export type Role = $Result.DefaultSelection<Prisma.$RolePayload>
+/**
+ * Model AppUser
+ * 
+ */
+export type AppUser = $Result.DefaultSelection<Prisma.$AppUserPayload>
 
 /**
  * ##  Prisma Client ʲˢ
- * 
+ *
  * Type-safe database client for TypeScript & Node.js
  * @example
  * ```
@@ -35,19 +80,19 @@ export type FormSubmission = $Result.DefaultSelection<Prisma.$FormSubmissionPayl
  * const forms = await prisma.form.findMany()
  * ```
  *
- * 
+ *
  * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client).
  */
 export class PrismaClient<
   ClientOptions extends Prisma.PrismaClientOptions = Prisma.PrismaClientOptions,
-  U = 'log' extends keyof ClientOptions ? ClientOptions['log'] extends Array<Prisma.LogLevel | Prisma.LogDefinition> ? Prisma.GetEvents<ClientOptions['log']> : never : never,
+  const U = 'log' extends keyof ClientOptions ? ClientOptions['log'] extends Array<Prisma.LogLevel | Prisma.LogDefinition> ? Prisma.GetEvents<ClientOptions['log']> : never : never,
   ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs
 > {
   [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['other'] }
 
     /**
    * ##  Prisma Client ʲˢ
-   * 
+   *
    * Type-safe database client for TypeScript & Node.js
    * @example
    * ```
@@ -56,12 +101,12 @@ export class PrismaClient<
    * const forms = await prisma.form.findMany()
    * ```
    *
-   * 
+   *
    * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client).
    */
 
   constructor(optionsArg ?: Prisma.Subset<ClientOptions, Prisma.PrismaClientOptions>);
-  $on<V extends U>(eventType: V, callback: (event: V extends 'query' ? Prisma.QueryEvent : Prisma.LogEvent) => void): void;
+  $on<V extends U>(eventType: V, callback: (event: V extends 'query' ? Prisma.QueryEvent : Prisma.LogEvent) => void): PrismaClient;
 
   /**
    * Connect with the database
@@ -73,20 +118,13 @@ export class PrismaClient<
    */
   $disconnect(): $Utils.JsPromise<void>;
 
-  /**
-   * Add a middleware
-   * @deprecated since 4.16.0. For new code, prefer client extensions instead.
-   * @see https://pris.ly/d/extensions
-   */
-  $use(cb: Prisma.Middleware): void
-
 /**
    * Executes a prepared raw query and returns the number of affected rows.
    * @example
    * ```
    * const result = await prisma.$executeRaw`UPDATE User SET cool = ${true} WHERE email = ${'user@email.com'};`
    * ```
-   * 
+   *
    * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/raw-database-access).
    */
   $executeRaw<T = unknown>(query: TemplateStringsArray | Prisma.Sql, ...values: any[]): Prisma.PrismaPromise<number>;
@@ -98,7 +136,7 @@ export class PrismaClient<
    * ```
    * const result = await prisma.$executeRawUnsafe('UPDATE User SET cool = $1 WHERE email = $2 ;', true, 'user@email.com')
    * ```
-   * 
+   *
    * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/raw-database-access).
    */
   $executeRawUnsafe<T = unknown>(query: string, ...values: any[]): Prisma.PrismaPromise<number>;
@@ -109,7 +147,7 @@ export class PrismaClient<
    * ```
    * const result = await prisma.$queryRaw`SELECT * FROM User WHERE id = ${1} OR email = ${'user@email.com'};`
    * ```
-   * 
+   *
    * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/raw-database-access).
    */
   $queryRaw<T = unknown>(query: TemplateStringsArray | Prisma.Sql, ...values: any[]): Prisma.PrismaPromise<T>;
@@ -121,7 +159,7 @@ export class PrismaClient<
    * ```
    * const result = await prisma.$queryRawUnsafe('SELECT * FROM User WHERE id = $1 OR email = $2;', 1, 'user@email.com')
    * ```
-   * 
+   *
    * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/raw-database-access).
    */
   $queryRawUnsafe<T = unknown>(query: string, ...values: any[]): Prisma.PrismaPromise<T>;
@@ -145,7 +183,9 @@ export class PrismaClient<
   $transaction<R>(fn: (prisma: Omit<PrismaClient, runtime.ITXClientDenyList>) => $Utils.JsPromise<R>, options?: { maxWait?: number, timeout?: number, isolationLevel?: Prisma.TransactionIsolationLevel }): $Utils.JsPromise<R>
 
 
-  $extends: $Extensions.ExtendsHook<"extends", Prisma.TypeMapCb, ExtArgs>
+  $extends: $Extensions.ExtendsHook<"extends", Prisma.TypeMapCb<ClientOptions>, ExtArgs, $Utils.Call<Prisma.TypeMapCb<ClientOptions>, {
+    extArgs: ExtArgs
+  }>>
 
       /**
    * `prisma.form`: Exposes CRUD operations for the **Form** model.
@@ -155,7 +195,7 @@ export class PrismaClient<
     * const forms = await prisma.form.findMany()
     * ```
     */
-  get form(): Prisma.FormDelegate<ExtArgs>;
+  get form(): Prisma.FormDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.formSubmission`: Exposes CRUD operations for the **FormSubmission** model.
@@ -165,7 +205,97 @@ export class PrismaClient<
     * const formSubmissions = await prisma.formSubmission.findMany()
     * ```
     */
-  get formSubmission(): Prisma.FormSubmissionDelegate<ExtArgs>;
+  get formSubmission(): Prisma.FormSubmissionDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.formVersion`: Exposes CRUD operations for the **FormVersion** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more FormVersions
+    * const formVersions = await prisma.formVersion.findMany()
+    * ```
+    */
+  get formVersion(): Prisma.FormVersionDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.formSubmissionValue`: Exposes CRUD operations for the **FormSubmissionValue** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more FormSubmissionValues
+    * const formSubmissionValues = await prisma.formSubmissionValue.findMany()
+    * ```
+    */
+  get formSubmissionValue(): Prisma.FormSubmissionValueDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.formEvent`: Exposes CRUD operations for the **FormEvent** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more FormEvents
+    * const formEvents = await prisma.formEvent.findMany()
+    * ```
+    */
+  get formEvent(): Prisma.FormEventDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.formAssignment`: Exposes CRUD operations for the **FormAssignment** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more FormAssignments
+    * const formAssignments = await prisma.formAssignment.findMany()
+    * ```
+    */
+  get formAssignment(): Prisma.FormAssignmentDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.submodule`: Exposes CRUD operations for the **Submodule** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Submodules
+    * const submodules = await prisma.submodule.findMany()
+    * ```
+    */
+  get submodule(): Prisma.SubmoduleDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.formTemplate`: Exposes CRUD operations for the **FormTemplate** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more FormTemplates
+    * const formTemplates = await prisma.formTemplate.findMany()
+    * ```
+    */
+  get formTemplate(): Prisma.FormTemplateDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.formTemplateVersion`: Exposes CRUD operations for the **FormTemplateVersion** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more FormTemplateVersions
+    * const formTemplateVersions = await prisma.formTemplateVersion.findMany()
+    * ```
+    */
+  get formTemplateVersion(): Prisma.FormTemplateVersionDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.role`: Exposes CRUD operations for the **Role** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Roles
+    * const roles = await prisma.role.findMany()
+    * ```
+    */
+  get role(): Prisma.RoleDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.appUser`: Exposes CRUD operations for the **AppUser** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more AppUsers
+    * const appUsers = await prisma.appUser.findMany()
+    * ```
+    */
+  get appUser(): Prisma.AppUserDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -186,7 +316,6 @@ export namespace Prisma {
   export import PrismaClientRustPanicError = runtime.PrismaClientRustPanicError
   export import PrismaClientInitializationError = runtime.PrismaClientInitializationError
   export import PrismaClientValidationError = runtime.PrismaClientValidationError
-  export import NotFoundError = runtime.NotFoundError
 
   /**
    * Re-export of sql-template-tag
@@ -207,7 +336,7 @@ export namespace Prisma {
   export type DecimalJsLike = runtime.DecimalJsLike
 
   /**
-   * Metrics 
+   * Metrics
    */
   export type Metrics = runtime.Metrics
   export type Metric<T> = runtime.Metric<T>
@@ -225,20 +354,21 @@ export namespace Prisma {
   export import Exact = $Public.Exact
 
   /**
-   * Prisma Client JS version: 5.22.0
-   * Query Engine version: 173f8d54f8d52e692c7e27e72a88314ec7aeff60
+   * Prisma Client JS version: 6.19.3
+   * Query Engine version: c2990dca591cba766e3b7ef5d9e8a84796e47ab7
    */
   export type PrismaVersion = {
     client: string
   }
 
-  export const prismaVersion: PrismaVersion 
+  export const prismaVersion: PrismaVersion
 
   /**
    * Utility Types
    */
 
 
+  export import Bytes = runtime.Bytes
   export import JsonObject = runtime.JsonObject
   export import JsonArray = runtime.JsonArray
   export import JsonValue = runtime.JsonValue
@@ -248,15 +378,15 @@ export namespace Prisma {
 
   /**
    * Types of the values used to represent different kinds of `null` values when working with JSON fields.
-   * 
+   *
    * @see https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields#filtering-on-a-json-field
    */
   namespace NullTypes {
     /**
     * Type of `Prisma.DbNull`.
-    * 
+    *
     * You cannot use other instances of this class. Please use the `Prisma.DbNull` value.
-    * 
+    *
     * @see https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields#filtering-on-a-json-field
     */
     class DbNull {
@@ -266,9 +396,9 @@ export namespace Prisma {
 
     /**
     * Type of `Prisma.JsonNull`.
-    * 
+    *
     * You cannot use other instances of this class. Please use the `Prisma.JsonNull` value.
-    * 
+    *
     * @see https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields#filtering-on-a-json-field
     */
     class JsonNull {
@@ -278,9 +408,9 @@ export namespace Prisma {
 
     /**
     * Type of `Prisma.AnyNull`.
-    * 
+    *
     * You cannot use other instances of this class. Please use the `Prisma.AnyNull` value.
-    * 
+    *
     * @see https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields#filtering-on-a-json-field
     */
     class AnyNull {
@@ -291,21 +421,21 @@ export namespace Prisma {
 
   /**
    * Helper for filtering JSON entries that have `null` on the database (empty on the db)
-   * 
+   *
    * @see https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields#filtering-on-a-json-field
    */
   export const DbNull: NullTypes.DbNull
 
   /**
    * Helper for filtering JSON entries that have JSON `null` values (not empty on the db)
-   * 
+   *
    * @see https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields#filtering-on-a-json-field
    */
   export const JsonNull: NullTypes.JsonNull
 
   /**
    * Helper for filtering JSON entries that are `Prisma.DbNull` or `Prisma.JsonNull`
-   * 
+   *
    * @see https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields#filtering-on-a-json-field
    */
   export const AnyNull: NullTypes.AnyNull
@@ -493,7 +623,7 @@ export namespace Prisma {
   type AtLeast<O extends object, K extends string> = NoExpand<
     O extends unknown
     ? | (K extends keyof O ? { [P in K]: O[P] } & O : O)
-      | {[P in keyof O as P extends K ? K : never]-?: O[P]} & O
+      | {[P in keyof O as P extends K ? P : never]-?: O[P]} & O
     : never>;
 
   type _Strict<U, _U = U> = U extends unknown ? U & OptionalFlat<_Record<Exclude<Keys<_U>, keyof U>, never>> : never;
@@ -608,7 +738,16 @@ export namespace Prisma {
 
   export const ModelName: {
     Form: 'Form',
-    FormSubmission: 'FormSubmission'
+    FormSubmission: 'FormSubmission',
+    FormVersion: 'FormVersion',
+    FormSubmissionValue: 'FormSubmissionValue',
+    FormEvent: 'FormEvent',
+    FormAssignment: 'FormAssignment',
+    Submodule: 'Submodule',
+    FormTemplate: 'FormTemplate',
+    FormTemplateVersion: 'FormTemplateVersion',
+    Role: 'Role',
+    AppUser: 'AppUser'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -618,13 +757,16 @@ export namespace Prisma {
     db?: Datasource
   }
 
-  interface TypeMapCb extends $Utils.Fn<{extArgs: $Extensions.InternalArgs, clientOptions: PrismaClientOptions }, $Utils.Record<string, any>> {
-    returns: Prisma.TypeMap<this['params']['extArgs'], this['params']['clientOptions']>
+  interface TypeMapCb<ClientOptions = {}> extends $Utils.Fn<{extArgs: $Extensions.InternalArgs }, $Utils.Record<string, any>> {
+    returns: Prisma.TypeMap<this['params']['extArgs'], ClientOptions extends { omit: infer OmitOptions } ? OmitOptions : {}>
   }
 
-  export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> = {
+  export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> = {
+    globalOmitOptions: {
+      omit: GlobalOmitOptions
+    }
     meta: {
-      modelProps: "form" | "formSubmission"
+      modelProps: "form" | "formSubmission" | "formVersion" | "formSubmissionValue" | "formEvent" | "formAssignment" | "submodule" | "formTemplate" | "formTemplateVersion" | "role" | "appUser"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -679,6 +821,10 @@ export namespace Prisma {
           updateMany: {
             args: Prisma.FormUpdateManyArgs<ExtArgs>
             result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.FormUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FormPayload>[]
           }
           upsert: {
             args: Prisma.FormUpsertArgs<ExtArgs>
@@ -750,6 +896,10 @@ export namespace Prisma {
             args: Prisma.FormSubmissionUpdateManyArgs<ExtArgs>
             result: BatchPayload
           }
+          updateManyAndReturn: {
+            args: Prisma.FormSubmissionUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FormSubmissionPayload>[]
+          }
           upsert: {
             args: Prisma.FormSubmissionUpsertArgs<ExtArgs>
             result: $Utils.PayloadToResult<Prisma.$FormSubmissionPayload>
@@ -765,6 +915,672 @@ export namespace Prisma {
           count: {
             args: Prisma.FormSubmissionCountArgs<ExtArgs>
             result: $Utils.Optional<FormSubmissionCountAggregateOutputType> | number
+          }
+        }
+      }
+      FormVersion: {
+        payload: Prisma.$FormVersionPayload<ExtArgs>
+        fields: Prisma.FormVersionFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.FormVersionFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FormVersionPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.FormVersionFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FormVersionPayload>
+          }
+          findFirst: {
+            args: Prisma.FormVersionFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FormVersionPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.FormVersionFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FormVersionPayload>
+          }
+          findMany: {
+            args: Prisma.FormVersionFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FormVersionPayload>[]
+          }
+          create: {
+            args: Prisma.FormVersionCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FormVersionPayload>
+          }
+          createMany: {
+            args: Prisma.FormVersionCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.FormVersionCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FormVersionPayload>[]
+          }
+          delete: {
+            args: Prisma.FormVersionDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FormVersionPayload>
+          }
+          update: {
+            args: Prisma.FormVersionUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FormVersionPayload>
+          }
+          deleteMany: {
+            args: Prisma.FormVersionDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.FormVersionUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.FormVersionUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FormVersionPayload>[]
+          }
+          upsert: {
+            args: Prisma.FormVersionUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FormVersionPayload>
+          }
+          aggregate: {
+            args: Prisma.FormVersionAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateFormVersion>
+          }
+          groupBy: {
+            args: Prisma.FormVersionGroupByArgs<ExtArgs>
+            result: $Utils.Optional<FormVersionGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.FormVersionCountArgs<ExtArgs>
+            result: $Utils.Optional<FormVersionCountAggregateOutputType> | number
+          }
+        }
+      }
+      FormSubmissionValue: {
+        payload: Prisma.$FormSubmissionValuePayload<ExtArgs>
+        fields: Prisma.FormSubmissionValueFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.FormSubmissionValueFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FormSubmissionValuePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.FormSubmissionValueFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FormSubmissionValuePayload>
+          }
+          findFirst: {
+            args: Prisma.FormSubmissionValueFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FormSubmissionValuePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.FormSubmissionValueFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FormSubmissionValuePayload>
+          }
+          findMany: {
+            args: Prisma.FormSubmissionValueFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FormSubmissionValuePayload>[]
+          }
+          create: {
+            args: Prisma.FormSubmissionValueCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FormSubmissionValuePayload>
+          }
+          createMany: {
+            args: Prisma.FormSubmissionValueCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.FormSubmissionValueCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FormSubmissionValuePayload>[]
+          }
+          delete: {
+            args: Prisma.FormSubmissionValueDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FormSubmissionValuePayload>
+          }
+          update: {
+            args: Prisma.FormSubmissionValueUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FormSubmissionValuePayload>
+          }
+          deleteMany: {
+            args: Prisma.FormSubmissionValueDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.FormSubmissionValueUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.FormSubmissionValueUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FormSubmissionValuePayload>[]
+          }
+          upsert: {
+            args: Prisma.FormSubmissionValueUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FormSubmissionValuePayload>
+          }
+          aggregate: {
+            args: Prisma.FormSubmissionValueAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateFormSubmissionValue>
+          }
+          groupBy: {
+            args: Prisma.FormSubmissionValueGroupByArgs<ExtArgs>
+            result: $Utils.Optional<FormSubmissionValueGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.FormSubmissionValueCountArgs<ExtArgs>
+            result: $Utils.Optional<FormSubmissionValueCountAggregateOutputType> | number
+          }
+        }
+      }
+      FormEvent: {
+        payload: Prisma.$FormEventPayload<ExtArgs>
+        fields: Prisma.FormEventFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.FormEventFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FormEventPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.FormEventFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FormEventPayload>
+          }
+          findFirst: {
+            args: Prisma.FormEventFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FormEventPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.FormEventFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FormEventPayload>
+          }
+          findMany: {
+            args: Prisma.FormEventFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FormEventPayload>[]
+          }
+          create: {
+            args: Prisma.FormEventCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FormEventPayload>
+          }
+          createMany: {
+            args: Prisma.FormEventCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.FormEventCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FormEventPayload>[]
+          }
+          delete: {
+            args: Prisma.FormEventDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FormEventPayload>
+          }
+          update: {
+            args: Prisma.FormEventUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FormEventPayload>
+          }
+          deleteMany: {
+            args: Prisma.FormEventDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.FormEventUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.FormEventUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FormEventPayload>[]
+          }
+          upsert: {
+            args: Prisma.FormEventUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FormEventPayload>
+          }
+          aggregate: {
+            args: Prisma.FormEventAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateFormEvent>
+          }
+          groupBy: {
+            args: Prisma.FormEventGroupByArgs<ExtArgs>
+            result: $Utils.Optional<FormEventGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.FormEventCountArgs<ExtArgs>
+            result: $Utils.Optional<FormEventCountAggregateOutputType> | number
+          }
+        }
+      }
+      FormAssignment: {
+        payload: Prisma.$FormAssignmentPayload<ExtArgs>
+        fields: Prisma.FormAssignmentFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.FormAssignmentFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FormAssignmentPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.FormAssignmentFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FormAssignmentPayload>
+          }
+          findFirst: {
+            args: Prisma.FormAssignmentFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FormAssignmentPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.FormAssignmentFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FormAssignmentPayload>
+          }
+          findMany: {
+            args: Prisma.FormAssignmentFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FormAssignmentPayload>[]
+          }
+          create: {
+            args: Prisma.FormAssignmentCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FormAssignmentPayload>
+          }
+          createMany: {
+            args: Prisma.FormAssignmentCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.FormAssignmentCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FormAssignmentPayload>[]
+          }
+          delete: {
+            args: Prisma.FormAssignmentDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FormAssignmentPayload>
+          }
+          update: {
+            args: Prisma.FormAssignmentUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FormAssignmentPayload>
+          }
+          deleteMany: {
+            args: Prisma.FormAssignmentDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.FormAssignmentUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.FormAssignmentUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FormAssignmentPayload>[]
+          }
+          upsert: {
+            args: Prisma.FormAssignmentUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FormAssignmentPayload>
+          }
+          aggregate: {
+            args: Prisma.FormAssignmentAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateFormAssignment>
+          }
+          groupBy: {
+            args: Prisma.FormAssignmentGroupByArgs<ExtArgs>
+            result: $Utils.Optional<FormAssignmentGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.FormAssignmentCountArgs<ExtArgs>
+            result: $Utils.Optional<FormAssignmentCountAggregateOutputType> | number
+          }
+        }
+      }
+      Submodule: {
+        payload: Prisma.$SubmodulePayload<ExtArgs>
+        fields: Prisma.SubmoduleFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.SubmoduleFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubmodulePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.SubmoduleFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubmodulePayload>
+          }
+          findFirst: {
+            args: Prisma.SubmoduleFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubmodulePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.SubmoduleFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubmodulePayload>
+          }
+          findMany: {
+            args: Prisma.SubmoduleFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubmodulePayload>[]
+          }
+          create: {
+            args: Prisma.SubmoduleCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubmodulePayload>
+          }
+          createMany: {
+            args: Prisma.SubmoduleCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.SubmoduleCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubmodulePayload>[]
+          }
+          delete: {
+            args: Prisma.SubmoduleDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubmodulePayload>
+          }
+          update: {
+            args: Prisma.SubmoduleUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubmodulePayload>
+          }
+          deleteMany: {
+            args: Prisma.SubmoduleDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.SubmoduleUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.SubmoduleUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubmodulePayload>[]
+          }
+          upsert: {
+            args: Prisma.SubmoduleUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubmodulePayload>
+          }
+          aggregate: {
+            args: Prisma.SubmoduleAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateSubmodule>
+          }
+          groupBy: {
+            args: Prisma.SubmoduleGroupByArgs<ExtArgs>
+            result: $Utils.Optional<SubmoduleGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.SubmoduleCountArgs<ExtArgs>
+            result: $Utils.Optional<SubmoduleCountAggregateOutputType> | number
+          }
+        }
+      }
+      FormTemplate: {
+        payload: Prisma.$FormTemplatePayload<ExtArgs>
+        fields: Prisma.FormTemplateFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.FormTemplateFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FormTemplatePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.FormTemplateFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FormTemplatePayload>
+          }
+          findFirst: {
+            args: Prisma.FormTemplateFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FormTemplatePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.FormTemplateFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FormTemplatePayload>
+          }
+          findMany: {
+            args: Prisma.FormTemplateFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FormTemplatePayload>[]
+          }
+          create: {
+            args: Prisma.FormTemplateCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FormTemplatePayload>
+          }
+          createMany: {
+            args: Prisma.FormTemplateCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.FormTemplateCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FormTemplatePayload>[]
+          }
+          delete: {
+            args: Prisma.FormTemplateDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FormTemplatePayload>
+          }
+          update: {
+            args: Prisma.FormTemplateUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FormTemplatePayload>
+          }
+          deleteMany: {
+            args: Prisma.FormTemplateDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.FormTemplateUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.FormTemplateUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FormTemplatePayload>[]
+          }
+          upsert: {
+            args: Prisma.FormTemplateUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FormTemplatePayload>
+          }
+          aggregate: {
+            args: Prisma.FormTemplateAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateFormTemplate>
+          }
+          groupBy: {
+            args: Prisma.FormTemplateGroupByArgs<ExtArgs>
+            result: $Utils.Optional<FormTemplateGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.FormTemplateCountArgs<ExtArgs>
+            result: $Utils.Optional<FormTemplateCountAggregateOutputType> | number
+          }
+        }
+      }
+      FormTemplateVersion: {
+        payload: Prisma.$FormTemplateVersionPayload<ExtArgs>
+        fields: Prisma.FormTemplateVersionFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.FormTemplateVersionFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FormTemplateVersionPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.FormTemplateVersionFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FormTemplateVersionPayload>
+          }
+          findFirst: {
+            args: Prisma.FormTemplateVersionFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FormTemplateVersionPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.FormTemplateVersionFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FormTemplateVersionPayload>
+          }
+          findMany: {
+            args: Prisma.FormTemplateVersionFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FormTemplateVersionPayload>[]
+          }
+          create: {
+            args: Prisma.FormTemplateVersionCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FormTemplateVersionPayload>
+          }
+          createMany: {
+            args: Prisma.FormTemplateVersionCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.FormTemplateVersionCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FormTemplateVersionPayload>[]
+          }
+          delete: {
+            args: Prisma.FormTemplateVersionDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FormTemplateVersionPayload>
+          }
+          update: {
+            args: Prisma.FormTemplateVersionUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FormTemplateVersionPayload>
+          }
+          deleteMany: {
+            args: Prisma.FormTemplateVersionDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.FormTemplateVersionUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.FormTemplateVersionUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FormTemplateVersionPayload>[]
+          }
+          upsert: {
+            args: Prisma.FormTemplateVersionUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FormTemplateVersionPayload>
+          }
+          aggregate: {
+            args: Prisma.FormTemplateVersionAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateFormTemplateVersion>
+          }
+          groupBy: {
+            args: Prisma.FormTemplateVersionGroupByArgs<ExtArgs>
+            result: $Utils.Optional<FormTemplateVersionGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.FormTemplateVersionCountArgs<ExtArgs>
+            result: $Utils.Optional<FormTemplateVersionCountAggregateOutputType> | number
+          }
+        }
+      }
+      Role: {
+        payload: Prisma.$RolePayload<ExtArgs>
+        fields: Prisma.RoleFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.RoleFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RolePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.RoleFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RolePayload>
+          }
+          findFirst: {
+            args: Prisma.RoleFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RolePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.RoleFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RolePayload>
+          }
+          findMany: {
+            args: Prisma.RoleFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RolePayload>[]
+          }
+          create: {
+            args: Prisma.RoleCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RolePayload>
+          }
+          createMany: {
+            args: Prisma.RoleCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.RoleCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RolePayload>[]
+          }
+          delete: {
+            args: Prisma.RoleDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RolePayload>
+          }
+          update: {
+            args: Prisma.RoleUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RolePayload>
+          }
+          deleteMany: {
+            args: Prisma.RoleDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.RoleUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.RoleUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RolePayload>[]
+          }
+          upsert: {
+            args: Prisma.RoleUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RolePayload>
+          }
+          aggregate: {
+            args: Prisma.RoleAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateRole>
+          }
+          groupBy: {
+            args: Prisma.RoleGroupByArgs<ExtArgs>
+            result: $Utils.Optional<RoleGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.RoleCountArgs<ExtArgs>
+            result: $Utils.Optional<RoleCountAggregateOutputType> | number
+          }
+        }
+      }
+      AppUser: {
+        payload: Prisma.$AppUserPayload<ExtArgs>
+        fields: Prisma.AppUserFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.AppUserFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AppUserPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.AppUserFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AppUserPayload>
+          }
+          findFirst: {
+            args: Prisma.AppUserFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AppUserPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.AppUserFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AppUserPayload>
+          }
+          findMany: {
+            args: Prisma.AppUserFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AppUserPayload>[]
+          }
+          create: {
+            args: Prisma.AppUserCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AppUserPayload>
+          }
+          createMany: {
+            args: Prisma.AppUserCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.AppUserCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AppUserPayload>[]
+          }
+          delete: {
+            args: Prisma.AppUserDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AppUserPayload>
+          }
+          update: {
+            args: Prisma.AppUserUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AppUserPayload>
+          }
+          deleteMany: {
+            args: Prisma.AppUserDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.AppUserUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.AppUserUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AppUserPayload>[]
+          }
+          upsert: {
+            args: Prisma.AppUserUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AppUserPayload>
+          }
+          aggregate: {
+            args: Prisma.AppUserAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateAppUser>
+          }
+          groupBy: {
+            args: Prisma.AppUserGroupByArgs<ExtArgs>
+            result: $Utils.Optional<AppUserGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.AppUserCountArgs<ExtArgs>
+            result: $Utils.Optional<AppUserCountAggregateOutputType> | number
           }
         }
       }
@@ -811,16 +1627,24 @@ export namespace Prisma {
     /**
      * @example
      * ```
-     * // Defaults to stdout
+     * // Shorthand for `emit: 'stdout'`
      * log: ['query', 'info', 'warn', 'error']
      * 
-     * // Emit as events
+     * // Emit as events only
      * log: [
-     *   { emit: 'stdout', level: 'query' },
-     *   { emit: 'stdout', level: 'info' },
-     *   { emit: 'stdout', level: 'warn' }
-     *   { emit: 'stdout', level: 'error' }
+     *   { emit: 'event', level: 'query' },
+     *   { emit: 'event', level: 'info' },
+     *   { emit: 'event', level: 'warn' }
+     *   { emit: 'event', level: 'error' }
      * ]
+     * 
+     * / Emit as events and log to stdout
+     * og: [
+     *  { emit: 'stdout', level: 'query' },
+     *  { emit: 'stdout', level: 'info' },
+     *  { emit: 'stdout', level: 'warn' }
+     *  { emit: 'stdout', level: 'error' }
+     * 
      * ```
      * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/logging#the-log-option).
      */
@@ -835,8 +1659,39 @@ export namespace Prisma {
       timeout?: number
       isolationLevel?: Prisma.TransactionIsolationLevel
     }
+    /**
+     * Instance of a Driver Adapter, e.g., like one provided by `@prisma/adapter-planetscale`
+     */
+    adapter?: runtime.SqlDriverAdapterFactory | null
+    /**
+     * Global configuration for omitting model fields by default.
+     * 
+     * @example
+     * ```
+     * const prisma = new PrismaClient({
+     *   omit: {
+     *     user: {
+     *       password: true
+     *     }
+     *   }
+     * })
+     * ```
+     */
+    omit?: Prisma.GlobalOmitConfig
   }
-
+  export type GlobalOmitConfig = {
+    form?: FormOmit
+    formSubmission?: FormSubmissionOmit
+    formVersion?: FormVersionOmit
+    formSubmissionValue?: FormSubmissionValueOmit
+    formEvent?: FormEventOmit
+    formAssignment?: FormAssignmentOmit
+    submodule?: SubmoduleOmit
+    formTemplate?: FormTemplateOmit
+    formTemplateVersion?: FormTemplateVersionOmit
+    role?: RoleOmit
+    appUser?: AppUserOmit
+  }
 
   /* Types for Logging */
   export type LogLevel = 'info' | 'query' | 'warn' | 'error'
@@ -845,10 +1700,15 @@ export namespace Prisma {
     emit: 'stdout' | 'event'
   }
 
-  export type GetLogType<T extends LogLevel | LogDefinition> = T extends LogDefinition ? T['emit'] extends 'event' ? T['level'] : never : never
-  export type GetEvents<T extends any> = T extends Array<LogLevel | LogDefinition> ?
-    GetLogType<T[0]> | GetLogType<T[1]> | GetLogType<T[2]> | GetLogType<T[3]>
-    : never
+  export type CheckIsLogLevel<T> = T extends LogLevel ? T : never;
+
+  export type GetLogType<T> = CheckIsLogLevel<
+    T extends LogDefinition ? T['level'] : T
+  >;
+
+  export type GetEvents<T extends any[]> = T extends Array<LogLevel | LogDefinition>
+    ? GetLogType<T[number]>
+    : never;
 
   export type QueryEvent = {
     timestamp: Date
@@ -877,6 +1737,7 @@ export namespace Prisma {
     | 'createManyAndReturn'
     | 'update'
     | 'updateMany'
+    | 'updateManyAndReturn'
     | 'upsert'
     | 'delete'
     | 'deleteMany'
@@ -887,25 +1748,6 @@ export namespace Prisma {
     | 'runCommandRaw'
     | 'findRaw'
     | 'groupBy'
-
-  /**
-   * These options are being passed into the middleware as "params"
-   */
-  export type MiddlewareParams = {
-    model?: ModelName
-    action: PrismaAction
-    args: any
-    dataPath: string[]
-    runInTransaction: boolean
-  }
-
-  /**
-   * The `T` type makes sure, that the `return proceed` is not forgotten in the middleware implementation
-   */
-  export type Middleware<T = any> = (
-    params: MiddlewareParams,
-    next: (params: MiddlewareParams) => $Utils.JsPromise<T>,
-  ) => $Utils.JsPromise<T>
 
   // tested in getLogLevel.test.ts
   export function getLogLevel(log: Array<LogLevel | LogDefinition>): LogLevel | undefined;
@@ -929,11 +1771,19 @@ export namespace Prisma {
    */
 
   export type FormCountOutputType = {
-    FormSubmission: number
+    submissions: number
+    submissionValues: number
+    versions: number
+    assignments: number
+    eventRules: number
   }
 
   export type FormCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    FormSubmission?: boolean | FormCountOutputTypeCountFormSubmissionArgs
+    submissions?: boolean | FormCountOutputTypeCountSubmissionsArgs
+    submissionValues?: boolean | FormCountOutputTypeCountSubmissionValuesArgs
+    versions?: boolean | FormCountOutputTypeCountVersionsArgs
+    assignments?: boolean | FormCountOutputTypeCountAssignmentsArgs
+    eventRules?: boolean | FormCountOutputTypeCountEventRulesArgs
   }
 
   // Custom InputTypes
@@ -950,7 +1800,253 @@ export namespace Prisma {
   /**
    * FormCountOutputType without action
    */
-  export type FormCountOutputTypeCountFormSubmissionArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type FormCountOutputTypeCountSubmissionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: FormSubmissionWhereInput
+  }
+
+  /**
+   * FormCountOutputType without action
+   */
+  export type FormCountOutputTypeCountSubmissionValuesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: FormSubmissionValueWhereInput
+  }
+
+  /**
+   * FormCountOutputType without action
+   */
+  export type FormCountOutputTypeCountVersionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: FormVersionWhereInput
+  }
+
+  /**
+   * FormCountOutputType without action
+   */
+  export type FormCountOutputTypeCountAssignmentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: FormAssignmentWhereInput
+  }
+
+  /**
+   * FormCountOutputType without action
+   */
+  export type FormCountOutputTypeCountEventRulesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: FormEventWhereInput
+  }
+
+
+  /**
+   * Count Type FormSubmissionCountOutputType
+   */
+
+  export type FormSubmissionCountOutputType = {
+    values: number
+  }
+
+  export type FormSubmissionCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    values?: boolean | FormSubmissionCountOutputTypeCountValuesArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * FormSubmissionCountOutputType without action
+   */
+  export type FormSubmissionCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FormSubmissionCountOutputType
+     */
+    select?: FormSubmissionCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * FormSubmissionCountOutputType without action
+   */
+  export type FormSubmissionCountOutputTypeCountValuesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: FormSubmissionValueWhereInput
+  }
+
+
+  /**
+   * Count Type FormVersionCountOutputType
+   */
+
+  export type FormVersionCountOutputType = {
+    submissions: number
+    submissionValues: number
+  }
+
+  export type FormVersionCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    submissions?: boolean | FormVersionCountOutputTypeCountSubmissionsArgs
+    submissionValues?: boolean | FormVersionCountOutputTypeCountSubmissionValuesArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * FormVersionCountOutputType without action
+   */
+  export type FormVersionCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FormVersionCountOutputType
+     */
+    select?: FormVersionCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * FormVersionCountOutputType without action
+   */
+  export type FormVersionCountOutputTypeCountSubmissionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: FormSubmissionWhereInput
+  }
+
+  /**
+   * FormVersionCountOutputType without action
+   */
+  export type FormVersionCountOutputTypeCountSubmissionValuesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: FormSubmissionValueWhereInput
+  }
+
+
+  /**
+   * Count Type SubmoduleCountOutputType
+   */
+
+  export type SubmoduleCountOutputType = {
+    forms: number
+    assignments: number
+    submissions: number
+  }
+
+  export type SubmoduleCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    forms?: boolean | SubmoduleCountOutputTypeCountFormsArgs
+    assignments?: boolean | SubmoduleCountOutputTypeCountAssignmentsArgs
+    submissions?: boolean | SubmoduleCountOutputTypeCountSubmissionsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * SubmoduleCountOutputType without action
+   */
+  export type SubmoduleCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SubmoduleCountOutputType
+     */
+    select?: SubmoduleCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * SubmoduleCountOutputType without action
+   */
+  export type SubmoduleCountOutputTypeCountFormsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: FormWhereInput
+  }
+
+  /**
+   * SubmoduleCountOutputType without action
+   */
+  export type SubmoduleCountOutputTypeCountAssignmentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: FormAssignmentWhereInput
+  }
+
+  /**
+   * SubmoduleCountOutputType without action
+   */
+  export type SubmoduleCountOutputTypeCountSubmissionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: FormSubmissionWhereInput
+  }
+
+
+  /**
+   * Count Type FormTemplateCountOutputType
+   */
+
+  export type FormTemplateCountOutputType = {
+    forms: number
+    versions: number
+  }
+
+  export type FormTemplateCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    forms?: boolean | FormTemplateCountOutputTypeCountFormsArgs
+    versions?: boolean | FormTemplateCountOutputTypeCountVersionsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * FormTemplateCountOutputType without action
+   */
+  export type FormTemplateCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FormTemplateCountOutputType
+     */
+    select?: FormTemplateCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * FormTemplateCountOutputType without action
+   */
+  export type FormTemplateCountOutputTypeCountFormsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: FormWhereInput
+  }
+
+  /**
+   * FormTemplateCountOutputType without action
+   */
+  export type FormTemplateCountOutputTypeCountVersionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: FormTemplateVersionWhereInput
+  }
+
+
+  /**
+   * Count Type RoleCountOutputType
+   */
+
+  export type RoleCountOutputType = {
+    users: number
+    forms: number
+    assignments: number
+    submissions: number
+  }
+
+  export type RoleCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    users?: boolean | RoleCountOutputTypeCountUsersArgs
+    forms?: boolean | RoleCountOutputTypeCountFormsArgs
+    assignments?: boolean | RoleCountOutputTypeCountAssignmentsArgs
+    submissions?: boolean | RoleCountOutputTypeCountSubmissionsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * RoleCountOutputType without action
+   */
+  export type RoleCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RoleCountOutputType
+     */
+    select?: RoleCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * RoleCountOutputType without action
+   */
+  export type RoleCountOutputTypeCountUsersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AppUserWhereInput
+  }
+
+  /**
+   * RoleCountOutputType without action
+   */
+  export type RoleCountOutputTypeCountFormsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: FormWhereInput
+  }
+
+  /**
+   * RoleCountOutputType without action
+   */
+  export type RoleCountOutputTypeCountAssignmentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: FormAssignmentWhereInput
+  }
+
+  /**
+   * RoleCountOutputType without action
+   */
+  export type RoleCountOutputTypeCountSubmissionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: FormSubmissionWhereInput
   }
 
@@ -975,12 +2071,24 @@ export namespace Prisma {
     id: number | null
     visit: number | null
     submission: number | null
+    currentVersion: number | null
+    scheduleInterval: number | null
+    roleId: number | null
+    submoduleId: number | null
+    templateId: number | null
+    templateVersion: number | null
   }
 
   export type FormSumAggregateOutputType = {
     id: number | null
     visit: number | null
     submission: number | null
+    currentVersion: number | null
+    scheduleInterval: number | null
+    roleId: number | null
+    submoduleId: number | null
+    templateId: number | null
+    templateVersion: number | null
   }
 
   export type FormMinAggregateOutputType = {
@@ -997,6 +2105,16 @@ export namespace Prisma {
     visit: number | null
     submission: number | null
     sharedURL: string | null
+    currentVersion: number | null
+    eventConfig: string | null
+    scheduleType: string | null
+    scheduleInterval: number | null
+    scheduleConfig: string | null
+    assignedUserId: string | null
+    roleId: number | null
+    submoduleId: number | null
+    templateId: number | null
+    templateVersion: number | null
   }
 
   export type FormMaxAggregateOutputType = {
@@ -1013,6 +2131,16 @@ export namespace Prisma {
     visit: number | null
     submission: number | null
     sharedURL: string | null
+    currentVersion: number | null
+    eventConfig: string | null
+    scheduleType: string | null
+    scheduleInterval: number | null
+    scheduleConfig: string | null
+    assignedUserId: string | null
+    roleId: number | null
+    submoduleId: number | null
+    templateId: number | null
+    templateVersion: number | null
   }
 
   export type FormCountAggregateOutputType = {
@@ -1029,6 +2157,16 @@ export namespace Prisma {
     visit: number
     submission: number
     sharedURL: number
+    currentVersion: number
+    eventConfig: number
+    scheduleType: number
+    scheduleInterval: number
+    scheduleConfig: number
+    assignedUserId: number
+    roleId: number
+    submoduleId: number
+    templateId: number
+    templateVersion: number
     _all: number
   }
 
@@ -1037,12 +2175,24 @@ export namespace Prisma {
     id?: true
     visit?: true
     submission?: true
+    currentVersion?: true
+    scheduleInterval?: true
+    roleId?: true
+    submoduleId?: true
+    templateId?: true
+    templateVersion?: true
   }
 
   export type FormSumAggregateInputType = {
     id?: true
     visit?: true
     submission?: true
+    currentVersion?: true
+    scheduleInterval?: true
+    roleId?: true
+    submoduleId?: true
+    templateId?: true
+    templateVersion?: true
   }
 
   export type FormMinAggregateInputType = {
@@ -1059,6 +2209,16 @@ export namespace Prisma {
     visit?: true
     submission?: true
     sharedURL?: true
+    currentVersion?: true
+    eventConfig?: true
+    scheduleType?: true
+    scheduleInterval?: true
+    scheduleConfig?: true
+    assignedUserId?: true
+    roleId?: true
+    submoduleId?: true
+    templateId?: true
+    templateVersion?: true
   }
 
   export type FormMaxAggregateInputType = {
@@ -1075,6 +2235,16 @@ export namespace Prisma {
     visit?: true
     submission?: true
     sharedURL?: true
+    currentVersion?: true
+    eventConfig?: true
+    scheduleType?: true
+    scheduleInterval?: true
+    scheduleConfig?: true
+    assignedUserId?: true
+    roleId?: true
+    submoduleId?: true
+    templateId?: true
+    templateVersion?: true
   }
 
   export type FormCountAggregateInputType = {
@@ -1091,6 +2261,16 @@ export namespace Prisma {
     visit?: true
     submission?: true
     sharedURL?: true
+    currentVersion?: true
+    eventConfig?: true
+    scheduleType?: true
+    scheduleInterval?: true
+    scheduleConfig?: true
+    assignedUserId?: true
+    roleId?: true
+    submoduleId?: true
+    templateId?: true
+    templateVersion?: true
     _all?: true
   }
 
@@ -1194,6 +2374,16 @@ export namespace Prisma {
     visit: number
     submission: number
     sharedURL: string
+    currentVersion: number
+    eventConfig: string
+    scheduleType: string
+    scheduleInterval: number
+    scheduleConfig: string
+    assignedUserId: string | null
+    roleId: number | null
+    submoduleId: number | null
+    templateId: number | null
+    templateVersion: number | null
     _count: FormCountAggregateOutputType | null
     _avg: FormAvgAggregateOutputType | null
     _sum: FormSumAggregateOutputType | null
@@ -1229,7 +2419,24 @@ export namespace Prisma {
     visit?: boolean
     submission?: boolean
     sharedURL?: boolean
-    FormSubmission?: boolean | Form$FormSubmissionArgs<ExtArgs>
+    currentVersion?: boolean
+    eventConfig?: boolean
+    scheduleType?: boolean
+    scheduleInterval?: boolean
+    scheduleConfig?: boolean
+    assignedUserId?: boolean
+    roleId?: boolean
+    submoduleId?: boolean
+    templateId?: boolean
+    templateVersion?: boolean
+    role?: boolean | Form$roleArgs<ExtArgs>
+    submodule?: boolean | Form$submoduleArgs<ExtArgs>
+    template?: boolean | Form$templateArgs<ExtArgs>
+    submissions?: boolean | Form$submissionsArgs<ExtArgs>
+    submissionValues?: boolean | Form$submissionValuesArgs<ExtArgs>
+    versions?: boolean | Form$versionsArgs<ExtArgs>
+    assignments?: boolean | Form$assignmentsArgs<ExtArgs>
+    eventRules?: boolean | Form$eventRulesArgs<ExtArgs>
     _count?: boolean | FormCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["form"]>
 
@@ -1247,6 +2454,48 @@ export namespace Prisma {
     visit?: boolean
     submission?: boolean
     sharedURL?: boolean
+    currentVersion?: boolean
+    eventConfig?: boolean
+    scheduleType?: boolean
+    scheduleInterval?: boolean
+    scheduleConfig?: boolean
+    assignedUserId?: boolean
+    roleId?: boolean
+    submoduleId?: boolean
+    templateId?: boolean
+    templateVersion?: boolean
+    role?: boolean | Form$roleArgs<ExtArgs>
+    submodule?: boolean | Form$submoduleArgs<ExtArgs>
+    template?: boolean | Form$templateArgs<ExtArgs>
+  }, ExtArgs["result"]["form"]>
+
+  export type FormSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    published?: boolean
+    name?: boolean
+    page?: boolean
+    components?: boolean
+    description?: boolean
+    context?: boolean
+    visit?: boolean
+    submission?: boolean
+    sharedURL?: boolean
+    currentVersion?: boolean
+    eventConfig?: boolean
+    scheduleType?: boolean
+    scheduleInterval?: boolean
+    scheduleConfig?: boolean
+    assignedUserId?: boolean
+    roleId?: boolean
+    submoduleId?: boolean
+    templateId?: boolean
+    templateVersion?: boolean
+    role?: boolean | Form$roleArgs<ExtArgs>
+    submodule?: boolean | Form$submoduleArgs<ExtArgs>
+    template?: boolean | Form$templateArgs<ExtArgs>
   }, ExtArgs["result"]["form"]>
 
   export type FormSelectScalar = {
@@ -1263,18 +2512,52 @@ export namespace Prisma {
     visit?: boolean
     submission?: boolean
     sharedURL?: boolean
+    currentVersion?: boolean
+    eventConfig?: boolean
+    scheduleType?: boolean
+    scheduleInterval?: boolean
+    scheduleConfig?: boolean
+    assignedUserId?: boolean
+    roleId?: boolean
+    submoduleId?: boolean
+    templateId?: boolean
+    templateVersion?: boolean
   }
 
+  export type FormOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "createdAt" | "updatedAt" | "published" | "name" | "page" | "components" | "description" | "context" | "visit" | "submission" | "sharedURL" | "currentVersion" | "eventConfig" | "scheduleType" | "scheduleInterval" | "scheduleConfig" | "assignedUserId" | "roleId" | "submoduleId" | "templateId" | "templateVersion", ExtArgs["result"]["form"]>
   export type FormInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    FormSubmission?: boolean | Form$FormSubmissionArgs<ExtArgs>
+    role?: boolean | Form$roleArgs<ExtArgs>
+    submodule?: boolean | Form$submoduleArgs<ExtArgs>
+    template?: boolean | Form$templateArgs<ExtArgs>
+    submissions?: boolean | Form$submissionsArgs<ExtArgs>
+    submissionValues?: boolean | Form$submissionValuesArgs<ExtArgs>
+    versions?: boolean | Form$versionsArgs<ExtArgs>
+    assignments?: boolean | Form$assignmentsArgs<ExtArgs>
+    eventRules?: boolean | Form$eventRulesArgs<ExtArgs>
     _count?: boolean | FormCountOutputTypeDefaultArgs<ExtArgs>
   }
-  export type FormIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type FormIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    role?: boolean | Form$roleArgs<ExtArgs>
+    submodule?: boolean | Form$submoduleArgs<ExtArgs>
+    template?: boolean | Form$templateArgs<ExtArgs>
+  }
+  export type FormIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    role?: boolean | Form$roleArgs<ExtArgs>
+    submodule?: boolean | Form$submoduleArgs<ExtArgs>
+    template?: boolean | Form$templateArgs<ExtArgs>
+  }
 
   export type $FormPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Form"
     objects: {
-      FormSubmission: Prisma.$FormSubmissionPayload<ExtArgs>[]
+      role: Prisma.$RolePayload<ExtArgs> | null
+      submodule: Prisma.$SubmodulePayload<ExtArgs> | null
+      template: Prisma.$FormTemplatePayload<ExtArgs> | null
+      submissions: Prisma.$FormSubmissionPayload<ExtArgs>[]
+      submissionValues: Prisma.$FormSubmissionValuePayload<ExtArgs>[]
+      versions: Prisma.$FormVersionPayload<ExtArgs>[]
+      assignments: Prisma.$FormAssignmentPayload<ExtArgs>[]
+      eventRules: Prisma.$FormEventPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -1290,18 +2573,28 @@ export namespace Prisma {
       visit: number
       submission: number
       sharedURL: string
+      currentVersion: number
+      eventConfig: string
+      scheduleType: string
+      scheduleInterval: number
+      scheduleConfig: string
+      assignedUserId: string | null
+      roleId: number | null
+      submoduleId: number | null
+      templateId: number | null
+      templateVersion: number | null
     }, ExtArgs["result"]["form"]>
     composites: {}
   }
 
   type FormGetPayload<S extends boolean | null | undefined | FormDefaultArgs> = $Result.GetResult<Prisma.$FormPayload, S>
 
-  type FormCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
-    Omit<FormFindManyArgs, 'select' | 'include' | 'distinct'> & {
+  type FormCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<FormFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
       select?: FormCountAggregateInputType | true
     }
 
-  export interface FormDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+  export interface FormDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
     [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Form'], meta: { name: 'Form' } }
     /**
      * Find zero or one Form that matches the filter.
@@ -1314,10 +2607,10 @@ export namespace Prisma {
      *   }
      * })
      */
-    findUnique<T extends FormFindUniqueArgs>(args: SelectSubset<T, FormFindUniqueArgs<ExtArgs>>): Prisma__FormClient<$Result.GetResult<Prisma.$FormPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+    findUnique<T extends FormFindUniqueArgs>(args: SelectSubset<T, FormFindUniqueArgs<ExtArgs>>): Prisma__FormClient<$Result.GetResult<Prisma.$FormPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one Form that matches the filter or throw an error with `error.code='P2025'` 
+     * Find one Form that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
      * @param {FormFindUniqueOrThrowArgs} args - Arguments to find a Form
      * @example
@@ -1328,7 +2621,7 @@ export namespace Prisma {
      *   }
      * })
      */
-    findUniqueOrThrow<T extends FormFindUniqueOrThrowArgs>(args: SelectSubset<T, FormFindUniqueOrThrowArgs<ExtArgs>>): Prisma__FormClient<$Result.GetResult<Prisma.$FormPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+    findUniqueOrThrow<T extends FormFindUniqueOrThrowArgs>(args: SelectSubset<T, FormFindUniqueOrThrowArgs<ExtArgs>>): Prisma__FormClient<$Result.GetResult<Prisma.$FormPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Find the first Form that matches the filter.
@@ -1343,7 +2636,7 @@ export namespace Prisma {
      *   }
      * })
      */
-    findFirst<T extends FormFindFirstArgs>(args?: SelectSubset<T, FormFindFirstArgs<ExtArgs>>): Prisma__FormClient<$Result.GetResult<Prisma.$FormPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+    findFirst<T extends FormFindFirstArgs>(args?: SelectSubset<T, FormFindFirstArgs<ExtArgs>>): Prisma__FormClient<$Result.GetResult<Prisma.$FormPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
      * Find the first Form that matches the filter or
@@ -1359,7 +2652,7 @@ export namespace Prisma {
      *   }
      * })
      */
-    findFirstOrThrow<T extends FormFindFirstOrThrowArgs>(args?: SelectSubset<T, FormFindFirstOrThrowArgs<ExtArgs>>): Prisma__FormClient<$Result.GetResult<Prisma.$FormPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+    findFirstOrThrow<T extends FormFindFirstOrThrowArgs>(args?: SelectSubset<T, FormFindFirstOrThrowArgs<ExtArgs>>): Prisma__FormClient<$Result.GetResult<Prisma.$FormPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Find zero or more Forms that matches the filter.
@@ -1377,7 +2670,7 @@ export namespace Prisma {
      * const formWithIdOnly = await prisma.form.findMany({ select: { id: true } })
      * 
      */
-    findMany<T extends FormFindManyArgs>(args?: SelectSubset<T, FormFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FormPayload<ExtArgs>, T, "findMany">>
+    findMany<T extends FormFindManyArgs>(args?: SelectSubset<T, FormFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FormPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
 
     /**
      * Create a Form.
@@ -1391,7 +2684,7 @@ export namespace Prisma {
      * })
      * 
      */
-    create<T extends FormCreateArgs>(args: SelectSubset<T, FormCreateArgs<ExtArgs>>): Prisma__FormClient<$Result.GetResult<Prisma.$FormPayload<ExtArgs>, T, "create">, never, ExtArgs>
+    create<T extends FormCreateArgs>(args: SelectSubset<T, FormCreateArgs<ExtArgs>>): Prisma__FormClient<$Result.GetResult<Prisma.$FormPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Create many Forms.
@@ -1419,7 +2712,7 @@ export namespace Prisma {
      * })
      * 
      * // Create many Forms and only return the `id`
-     * const formWithIdOnly = await prisma.form.createManyAndReturn({ 
+     * const formWithIdOnly = await prisma.form.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -1429,7 +2722,7 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    createManyAndReturn<T extends FormCreateManyAndReturnArgs>(args?: SelectSubset<T, FormCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FormPayload<ExtArgs>, T, "createManyAndReturn">>
+    createManyAndReturn<T extends FormCreateManyAndReturnArgs>(args?: SelectSubset<T, FormCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FormPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
 
     /**
      * Delete a Form.
@@ -1443,7 +2736,7 @@ export namespace Prisma {
      * })
      * 
      */
-    delete<T extends FormDeleteArgs>(args: SelectSubset<T, FormDeleteArgs<ExtArgs>>): Prisma__FormClient<$Result.GetResult<Prisma.$FormPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+    delete<T extends FormDeleteArgs>(args: SelectSubset<T, FormDeleteArgs<ExtArgs>>): Prisma__FormClient<$Result.GetResult<Prisma.$FormPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Update one Form.
@@ -1460,7 +2753,7 @@ export namespace Prisma {
      * })
      * 
      */
-    update<T extends FormUpdateArgs>(args: SelectSubset<T, FormUpdateArgs<ExtArgs>>): Prisma__FormClient<$Result.GetResult<Prisma.$FormPayload<ExtArgs>, T, "update">, never, ExtArgs>
+    update<T extends FormUpdateArgs>(args: SelectSubset<T, FormUpdateArgs<ExtArgs>>): Prisma__FormClient<$Result.GetResult<Prisma.$FormPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Delete zero or more Forms.
@@ -1496,6 +2789,36 @@ export namespace Prisma {
     updateMany<T extends FormUpdateManyArgs>(args: SelectSubset<T, FormUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
+     * Update zero or more Forms and returns the data updated in the database.
+     * @param {FormUpdateManyAndReturnArgs} args - Arguments to update many Forms.
+     * @example
+     * // Update many Forms
+     * const form = await prisma.form.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Forms and only return the `id`
+     * const formWithIdOnly = await prisma.form.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends FormUpdateManyAndReturnArgs>(args: SelectSubset<T, FormUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FormPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
      * Create or update one Form.
      * @param {FormUpsertArgs} args - Arguments to update or create a Form.
      * @example
@@ -1512,7 +2835,7 @@ export namespace Prisma {
      *   }
      * })
      */
-    upsert<T extends FormUpsertArgs>(args: SelectSubset<T, FormUpsertArgs<ExtArgs>>): Prisma__FormClient<$Result.GetResult<Prisma.$FormPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+    upsert<T extends FormUpsertArgs>(args: SelectSubset<T, FormUpsertArgs<ExtArgs>>): Prisma__FormClient<$Result.GetResult<Prisma.$FormPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
 
     /**
@@ -1652,9 +2975,16 @@ export namespace Prisma {
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export interface Prisma__FormClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+  export interface Prisma__FormClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    FormSubmission<T extends Form$FormSubmissionArgs<ExtArgs> = {}>(args?: Subset<T, Form$FormSubmissionArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FormSubmissionPayload<ExtArgs>, T, "findMany"> | Null>
+    role<T extends Form$roleArgs<ExtArgs> = {}>(args?: Subset<T, Form$roleArgs<ExtArgs>>): Prisma__RoleClient<$Result.GetResult<Prisma.$RolePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    submodule<T extends Form$submoduleArgs<ExtArgs> = {}>(args?: Subset<T, Form$submoduleArgs<ExtArgs>>): Prisma__SubmoduleClient<$Result.GetResult<Prisma.$SubmodulePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    template<T extends Form$templateArgs<ExtArgs> = {}>(args?: Subset<T, Form$templateArgs<ExtArgs>>): Prisma__FormTemplateClient<$Result.GetResult<Prisma.$FormTemplatePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    submissions<T extends Form$submissionsArgs<ExtArgs> = {}>(args?: Subset<T, Form$submissionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FormSubmissionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    submissionValues<T extends Form$submissionValuesArgs<ExtArgs> = {}>(args?: Subset<T, Form$submissionValuesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FormSubmissionValuePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    versions<T extends Form$versionsArgs<ExtArgs> = {}>(args?: Subset<T, Form$versionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FormVersionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    assignments<T extends Form$assignmentsArgs<ExtArgs> = {}>(args?: Subset<T, Form$assignmentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FormAssignmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    eventRules<T extends Form$eventRulesArgs<ExtArgs> = {}>(args?: Subset<T, Form$eventRulesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FormEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1682,7 +3012,7 @@ export namespace Prisma {
 
   /**
    * Fields of the Form model
-   */ 
+   */
   interface FormFieldRefs {
     readonly id: FieldRef<"Form", 'Int'>
     readonly userId: FieldRef<"Form", 'String'>
@@ -1697,6 +3027,16 @@ export namespace Prisma {
     readonly visit: FieldRef<"Form", 'Int'>
     readonly submission: FieldRef<"Form", 'Int'>
     readonly sharedURL: FieldRef<"Form", 'String'>
+    readonly currentVersion: FieldRef<"Form", 'Int'>
+    readonly eventConfig: FieldRef<"Form", 'String'>
+    readonly scheduleType: FieldRef<"Form", 'String'>
+    readonly scheduleInterval: FieldRef<"Form", 'Int'>
+    readonly scheduleConfig: FieldRef<"Form", 'String'>
+    readonly assignedUserId: FieldRef<"Form", 'String'>
+    readonly roleId: FieldRef<"Form", 'Int'>
+    readonly submoduleId: FieldRef<"Form", 'Int'>
+    readonly templateId: FieldRef<"Form", 'Int'>
+    readonly templateVersion: FieldRef<"Form", 'Int'>
   }
     
 
@@ -1709,6 +3049,10 @@ export namespace Prisma {
      * Select specific fields to fetch from the Form
      */
     select?: FormSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Form
+     */
+    omit?: FormOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
@@ -1728,6 +3072,10 @@ export namespace Prisma {
      */
     select?: FormSelect<ExtArgs> | null
     /**
+     * Omit specific fields from the Form
+     */
+    omit?: FormOmit<ExtArgs> | null
+    /**
      * Choose, which related nodes to fetch as well
      */
     include?: FormInclude<ExtArgs> | null
@@ -1745,6 +3093,10 @@ export namespace Prisma {
      * Select specific fields to fetch from the Form
      */
     select?: FormSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Form
+     */
+    omit?: FormOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
@@ -1794,6 +3146,10 @@ export namespace Prisma {
      */
     select?: FormSelect<ExtArgs> | null
     /**
+     * Omit specific fields from the Form
+     */
+    omit?: FormOmit<ExtArgs> | null
+    /**
      * Choose, which related nodes to fetch as well
      */
     include?: FormInclude<ExtArgs> | null
@@ -1842,6 +3198,10 @@ export namespace Prisma {
      */
     select?: FormSelect<ExtArgs> | null
     /**
+     * Omit specific fields from the Form
+     */
+    omit?: FormOmit<ExtArgs> | null
+    /**
      * Choose, which related nodes to fetch as well
      */
     include?: FormInclude<ExtArgs> | null
@@ -1885,6 +3245,10 @@ export namespace Prisma {
      */
     select?: FormSelect<ExtArgs> | null
     /**
+     * Omit specific fields from the Form
+     */
+    omit?: FormOmit<ExtArgs> | null
+    /**
      * Choose, which related nodes to fetch as well
      */
     include?: FormInclude<ExtArgs> | null
@@ -1913,9 +3277,17 @@ export namespace Prisma {
      */
     select?: FormSelectCreateManyAndReturn<ExtArgs> | null
     /**
+     * Omit specific fields from the Form
+     */
+    omit?: FormOmit<ExtArgs> | null
+    /**
      * The data used to create many Forms.
      */
     data: FormCreateManyInput | FormCreateManyInput[]
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FormIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -1926,6 +3298,10 @@ export namespace Prisma {
      * Select specific fields to fetch from the Form
      */
     select?: FormSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Form
+     */
+    omit?: FormOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
@@ -1952,7 +3328,40 @@ export namespace Prisma {
      * Filter which Forms to update
      */
     where?: FormWhereInput
+    /**
+     * Limit how many Forms to update.
+     */
     limit?: number
+  }
+
+  /**
+   * Form updateManyAndReturn
+   */
+  export type FormUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Form
+     */
+    select?: FormSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Form
+     */
+    omit?: FormOmit<ExtArgs> | null
+    /**
+     * The data used to update Forms.
+     */
+    data: XOR<FormUpdateManyMutationInput, FormUncheckedUpdateManyInput>
+    /**
+     * Filter which Forms to update
+     */
+    where?: FormWhereInput
+    /**
+     * Limit how many Forms to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FormIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -1963,6 +3372,10 @@ export namespace Prisma {
      * Select specific fields to fetch from the Form
      */
     select?: FormSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Form
+     */
+    omit?: FormOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
@@ -1990,6 +3403,10 @@ export namespace Prisma {
      */
     select?: FormSelect<ExtArgs> | null
     /**
+     * Omit specific fields from the Form
+     */
+    omit?: FormOmit<ExtArgs> | null
+    /**
      * Choose, which related nodes to fetch as well
      */
     include?: FormInclude<ExtArgs> | null
@@ -2007,17 +3424,81 @@ export namespace Prisma {
      * Filter which Forms to delete
      */
     where?: FormWhereInput
+    /**
+     * Limit how many Forms to delete.
+     */
     limit?: number
   }
 
   /**
-   * Form.FormSubmission
+   * Form.role
    */
-  export type Form$FormSubmissionArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Form$roleArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Role
+     */
+    select?: RoleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Role
+     */
+    omit?: RoleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RoleInclude<ExtArgs> | null
+    where?: RoleWhereInput
+  }
+
+  /**
+   * Form.submodule
+   */
+  export type Form$submoduleArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Submodule
+     */
+    select?: SubmoduleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Submodule
+     */
+    omit?: SubmoduleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubmoduleInclude<ExtArgs> | null
+    where?: SubmoduleWhereInput
+  }
+
+  /**
+   * Form.template
+   */
+  export type Form$templateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FormTemplate
+     */
+    select?: FormTemplateSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FormTemplate
+     */
+    omit?: FormTemplateOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FormTemplateInclude<ExtArgs> | null
+    where?: FormTemplateWhereInput
+  }
+
+  /**
+   * Form.submissions
+   */
+  export type Form$submissionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the FormSubmission
      */
     select?: FormSubmissionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FormSubmission
+     */
+    omit?: FormSubmissionOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
@@ -2031,6 +3512,102 @@ export namespace Prisma {
   }
 
   /**
+   * Form.submissionValues
+   */
+  export type Form$submissionValuesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FormSubmissionValue
+     */
+    select?: FormSubmissionValueSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FormSubmissionValue
+     */
+    omit?: FormSubmissionValueOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FormSubmissionValueInclude<ExtArgs> | null
+    where?: FormSubmissionValueWhereInput
+    orderBy?: FormSubmissionValueOrderByWithRelationInput | FormSubmissionValueOrderByWithRelationInput[]
+    cursor?: FormSubmissionValueWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: FormSubmissionValueScalarFieldEnum | FormSubmissionValueScalarFieldEnum[]
+  }
+
+  /**
+   * Form.versions
+   */
+  export type Form$versionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FormVersion
+     */
+    select?: FormVersionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FormVersion
+     */
+    omit?: FormVersionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FormVersionInclude<ExtArgs> | null
+    where?: FormVersionWhereInput
+    orderBy?: FormVersionOrderByWithRelationInput | FormVersionOrderByWithRelationInput[]
+    cursor?: FormVersionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: FormVersionScalarFieldEnum | FormVersionScalarFieldEnum[]
+  }
+
+  /**
+   * Form.assignments
+   */
+  export type Form$assignmentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FormAssignment
+     */
+    select?: FormAssignmentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FormAssignment
+     */
+    omit?: FormAssignmentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FormAssignmentInclude<ExtArgs> | null
+    where?: FormAssignmentWhereInput
+    orderBy?: FormAssignmentOrderByWithRelationInput | FormAssignmentOrderByWithRelationInput[]
+    cursor?: FormAssignmentWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: FormAssignmentScalarFieldEnum | FormAssignmentScalarFieldEnum[]
+  }
+
+  /**
+   * Form.eventRules
+   */
+  export type Form$eventRulesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FormEvent
+     */
+    select?: FormEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FormEvent
+     */
+    omit?: FormEventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FormEventInclude<ExtArgs> | null
+    where?: FormEventWhereInput
+    orderBy?: FormEventOrderByWithRelationInput | FormEventOrderByWithRelationInput[]
+    cursor?: FormEventWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: FormEventScalarFieldEnum | FormEventScalarFieldEnum[]
+  }
+
+  /**
    * Form without action
    */
   export type FormDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2038,6 +3615,10 @@ export namespace Prisma {
      * Select specific fields to fetch from the Form
      */
     select?: FormSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Form
+     */
+    omit?: FormOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
@@ -2060,32 +3641,61 @@ export namespace Prisma {
   export type FormSubmissionAvgAggregateOutputType = {
     id: number | null
     formId: number | null
+    formVersionId: number | null
+    version: number | null
+    roleId: number | null
+    submoduleId: number | null
   }
 
   export type FormSubmissionSumAggregateOutputType = {
     id: number | null
     formId: number | null
+    formVersionId: number | null
+    version: number | null
+    roleId: number | null
+    submoduleId: number | null
   }
 
   export type FormSubmissionMinAggregateOutputType = {
     id: number | null
     published: boolean | null
     formId: number | null
+    formVersionId: number | null
+    version: number | null
+    userId: string | null
+    roleId: number | null
+    submoduleId: number | null
     content: string | null
+    computedContent: string | null
+    submittedAt: Date | null
   }
 
   export type FormSubmissionMaxAggregateOutputType = {
     id: number | null
     published: boolean | null
     formId: number | null
+    formVersionId: number | null
+    version: number | null
+    userId: string | null
+    roleId: number | null
+    submoduleId: number | null
     content: string | null
+    computedContent: string | null
+    submittedAt: Date | null
   }
 
   export type FormSubmissionCountAggregateOutputType = {
     id: number
     published: number
     formId: number
+    formVersionId: number
+    version: number
+    userId: number
+    roleId: number
+    submoduleId: number
     content: number
+    computedContent: number
+    submittedAt: number
     _all: number
   }
 
@@ -2093,32 +3703,61 @@ export namespace Prisma {
   export type FormSubmissionAvgAggregateInputType = {
     id?: true
     formId?: true
+    formVersionId?: true
+    version?: true
+    roleId?: true
+    submoduleId?: true
   }
 
   export type FormSubmissionSumAggregateInputType = {
     id?: true
     formId?: true
+    formVersionId?: true
+    version?: true
+    roleId?: true
+    submoduleId?: true
   }
 
   export type FormSubmissionMinAggregateInputType = {
     id?: true
     published?: true
     formId?: true
+    formVersionId?: true
+    version?: true
+    userId?: true
+    roleId?: true
+    submoduleId?: true
     content?: true
+    computedContent?: true
+    submittedAt?: true
   }
 
   export type FormSubmissionMaxAggregateInputType = {
     id?: true
     published?: true
     formId?: true
+    formVersionId?: true
+    version?: true
+    userId?: true
+    roleId?: true
+    submoduleId?: true
     content?: true
+    computedContent?: true
+    submittedAt?: true
   }
 
   export type FormSubmissionCountAggregateInputType = {
     id?: true
     published?: true
     formId?: true
+    formVersionId?: true
+    version?: true
+    userId?: true
+    roleId?: true
+    submoduleId?: true
     content?: true
+    computedContent?: true
+    submittedAt?: true
     _all?: true
   }
 
@@ -2212,7 +3851,14 @@ export namespace Prisma {
     id: number
     published: boolean
     formId: number
+    formVersionId: number | null
+    version: number
+    userId: string | null
+    roleId: number | null
+    submoduleId: number | null
     content: string
+    computedContent: string
+    submittedAt: Date
     _count: FormSubmissionCountAggregateOutputType | null
     _avg: FormSubmissionAvgAggregateOutputType | null
     _sum: FormSubmissionSumAggregateOutputType | null
@@ -2238,54 +3884,127 @@ export namespace Prisma {
     id?: boolean
     published?: boolean
     formId?: boolean
+    formVersionId?: boolean
+    version?: boolean
+    userId?: boolean
+    roleId?: boolean
+    submoduleId?: boolean
     content?: boolean
+    computedContent?: boolean
+    submittedAt?: boolean
     form?: boolean | FormDefaultArgs<ExtArgs>
+    formVersion?: boolean | FormSubmission$formVersionArgs<ExtArgs>
+    role?: boolean | FormSubmission$roleArgs<ExtArgs>
+    submodule?: boolean | FormSubmission$submoduleArgs<ExtArgs>
+    values?: boolean | FormSubmission$valuesArgs<ExtArgs>
+    _count?: boolean | FormSubmissionCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["formSubmission"]>
 
   export type FormSubmissionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     published?: boolean
     formId?: boolean
+    formVersionId?: boolean
+    version?: boolean
+    userId?: boolean
+    roleId?: boolean
+    submoduleId?: boolean
     content?: boolean
+    computedContent?: boolean
+    submittedAt?: boolean
     form?: boolean | FormDefaultArgs<ExtArgs>
+    formVersion?: boolean | FormSubmission$formVersionArgs<ExtArgs>
+    role?: boolean | FormSubmission$roleArgs<ExtArgs>
+    submodule?: boolean | FormSubmission$submoduleArgs<ExtArgs>
+  }, ExtArgs["result"]["formSubmission"]>
+
+  export type FormSubmissionSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    published?: boolean
+    formId?: boolean
+    formVersionId?: boolean
+    version?: boolean
+    userId?: boolean
+    roleId?: boolean
+    submoduleId?: boolean
+    content?: boolean
+    computedContent?: boolean
+    submittedAt?: boolean
+    form?: boolean | FormDefaultArgs<ExtArgs>
+    formVersion?: boolean | FormSubmission$formVersionArgs<ExtArgs>
+    role?: boolean | FormSubmission$roleArgs<ExtArgs>
+    submodule?: boolean | FormSubmission$submoduleArgs<ExtArgs>
   }, ExtArgs["result"]["formSubmission"]>
 
   export type FormSubmissionSelectScalar = {
     id?: boolean
     published?: boolean
     formId?: boolean
+    formVersionId?: boolean
+    version?: boolean
+    userId?: boolean
+    roleId?: boolean
+    submoduleId?: boolean
     content?: boolean
+    computedContent?: boolean
+    submittedAt?: boolean
   }
 
+  export type FormSubmissionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "published" | "formId" | "formVersionId" | "version" | "userId" | "roleId" | "submoduleId" | "content" | "computedContent" | "submittedAt", ExtArgs["result"]["formSubmission"]>
   export type FormSubmissionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     form?: boolean | FormDefaultArgs<ExtArgs>
+    formVersion?: boolean | FormSubmission$formVersionArgs<ExtArgs>
+    role?: boolean | FormSubmission$roleArgs<ExtArgs>
+    submodule?: boolean | FormSubmission$submoduleArgs<ExtArgs>
+    values?: boolean | FormSubmission$valuesArgs<ExtArgs>
+    _count?: boolean | FormSubmissionCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type FormSubmissionIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     form?: boolean | FormDefaultArgs<ExtArgs>
+    formVersion?: boolean | FormSubmission$formVersionArgs<ExtArgs>
+    role?: boolean | FormSubmission$roleArgs<ExtArgs>
+    submodule?: boolean | FormSubmission$submoduleArgs<ExtArgs>
+  }
+  export type FormSubmissionIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    form?: boolean | FormDefaultArgs<ExtArgs>
+    formVersion?: boolean | FormSubmission$formVersionArgs<ExtArgs>
+    role?: boolean | FormSubmission$roleArgs<ExtArgs>
+    submodule?: boolean | FormSubmission$submoduleArgs<ExtArgs>
   }
 
   export type $FormSubmissionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "FormSubmission"
     objects: {
       form: Prisma.$FormPayload<ExtArgs>
+      formVersion: Prisma.$FormVersionPayload<ExtArgs> | null
+      role: Prisma.$RolePayload<ExtArgs> | null
+      submodule: Prisma.$SubmodulePayload<ExtArgs> | null
+      values: Prisma.$FormSubmissionValuePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
       published: boolean
       formId: number
+      formVersionId: number | null
+      version: number
+      userId: string | null
+      roleId: number | null
+      submoduleId: number | null
       content: string
+      computedContent: string
+      submittedAt: Date
     }, ExtArgs["result"]["formSubmission"]>
     composites: {}
   }
 
   type FormSubmissionGetPayload<S extends boolean | null | undefined | FormSubmissionDefaultArgs> = $Result.GetResult<Prisma.$FormSubmissionPayload, S>
 
-  type FormSubmissionCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
-    Omit<FormSubmissionFindManyArgs, 'select' | 'include' | 'distinct'> & {
+  type FormSubmissionCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<FormSubmissionFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
       select?: FormSubmissionCountAggregateInputType | true
     }
 
-  export interface FormSubmissionDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+  export interface FormSubmissionDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
     [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['FormSubmission'], meta: { name: 'FormSubmission' } }
     /**
      * Find zero or one FormSubmission that matches the filter.
@@ -2298,10 +4017,10 @@ export namespace Prisma {
      *   }
      * })
      */
-    findUnique<T extends FormSubmissionFindUniqueArgs>(args: SelectSubset<T, FormSubmissionFindUniqueArgs<ExtArgs>>): Prisma__FormSubmissionClient<$Result.GetResult<Prisma.$FormSubmissionPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+    findUnique<T extends FormSubmissionFindUniqueArgs>(args: SelectSubset<T, FormSubmissionFindUniqueArgs<ExtArgs>>): Prisma__FormSubmissionClient<$Result.GetResult<Prisma.$FormSubmissionPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one FormSubmission that matches the filter or throw an error with `error.code='P2025'` 
+     * Find one FormSubmission that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
      * @param {FormSubmissionFindUniqueOrThrowArgs} args - Arguments to find a FormSubmission
      * @example
@@ -2312,7 +4031,7 @@ export namespace Prisma {
      *   }
      * })
      */
-    findUniqueOrThrow<T extends FormSubmissionFindUniqueOrThrowArgs>(args: SelectSubset<T, FormSubmissionFindUniqueOrThrowArgs<ExtArgs>>): Prisma__FormSubmissionClient<$Result.GetResult<Prisma.$FormSubmissionPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+    findUniqueOrThrow<T extends FormSubmissionFindUniqueOrThrowArgs>(args: SelectSubset<T, FormSubmissionFindUniqueOrThrowArgs<ExtArgs>>): Prisma__FormSubmissionClient<$Result.GetResult<Prisma.$FormSubmissionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Find the first FormSubmission that matches the filter.
@@ -2327,7 +4046,7 @@ export namespace Prisma {
      *   }
      * })
      */
-    findFirst<T extends FormSubmissionFindFirstArgs>(args?: SelectSubset<T, FormSubmissionFindFirstArgs<ExtArgs>>): Prisma__FormSubmissionClient<$Result.GetResult<Prisma.$FormSubmissionPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+    findFirst<T extends FormSubmissionFindFirstArgs>(args?: SelectSubset<T, FormSubmissionFindFirstArgs<ExtArgs>>): Prisma__FormSubmissionClient<$Result.GetResult<Prisma.$FormSubmissionPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
      * Find the first FormSubmission that matches the filter or
@@ -2343,7 +4062,7 @@ export namespace Prisma {
      *   }
      * })
      */
-    findFirstOrThrow<T extends FormSubmissionFindFirstOrThrowArgs>(args?: SelectSubset<T, FormSubmissionFindFirstOrThrowArgs<ExtArgs>>): Prisma__FormSubmissionClient<$Result.GetResult<Prisma.$FormSubmissionPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+    findFirstOrThrow<T extends FormSubmissionFindFirstOrThrowArgs>(args?: SelectSubset<T, FormSubmissionFindFirstOrThrowArgs<ExtArgs>>): Prisma__FormSubmissionClient<$Result.GetResult<Prisma.$FormSubmissionPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Find zero or more FormSubmissions that matches the filter.
@@ -2361,7 +4080,7 @@ export namespace Prisma {
      * const formSubmissionWithIdOnly = await prisma.formSubmission.findMany({ select: { id: true } })
      * 
      */
-    findMany<T extends FormSubmissionFindManyArgs>(args?: SelectSubset<T, FormSubmissionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FormSubmissionPayload<ExtArgs>, T, "findMany">>
+    findMany<T extends FormSubmissionFindManyArgs>(args?: SelectSubset<T, FormSubmissionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FormSubmissionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
 
     /**
      * Create a FormSubmission.
@@ -2375,7 +4094,7 @@ export namespace Prisma {
      * })
      * 
      */
-    create<T extends FormSubmissionCreateArgs>(args: SelectSubset<T, FormSubmissionCreateArgs<ExtArgs>>): Prisma__FormSubmissionClient<$Result.GetResult<Prisma.$FormSubmissionPayload<ExtArgs>, T, "create">, never, ExtArgs>
+    create<T extends FormSubmissionCreateArgs>(args: SelectSubset<T, FormSubmissionCreateArgs<ExtArgs>>): Prisma__FormSubmissionClient<$Result.GetResult<Prisma.$FormSubmissionPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Create many FormSubmissions.
@@ -2403,7 +4122,7 @@ export namespace Prisma {
      * })
      * 
      * // Create many FormSubmissions and only return the `id`
-     * const formSubmissionWithIdOnly = await prisma.formSubmission.createManyAndReturn({ 
+     * const formSubmissionWithIdOnly = await prisma.formSubmission.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -2413,7 +4132,7 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    createManyAndReturn<T extends FormSubmissionCreateManyAndReturnArgs>(args?: SelectSubset<T, FormSubmissionCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FormSubmissionPayload<ExtArgs>, T, "createManyAndReturn">>
+    createManyAndReturn<T extends FormSubmissionCreateManyAndReturnArgs>(args?: SelectSubset<T, FormSubmissionCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FormSubmissionPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
 
     /**
      * Delete a FormSubmission.
@@ -2427,7 +4146,7 @@ export namespace Prisma {
      * })
      * 
      */
-    delete<T extends FormSubmissionDeleteArgs>(args: SelectSubset<T, FormSubmissionDeleteArgs<ExtArgs>>): Prisma__FormSubmissionClient<$Result.GetResult<Prisma.$FormSubmissionPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+    delete<T extends FormSubmissionDeleteArgs>(args: SelectSubset<T, FormSubmissionDeleteArgs<ExtArgs>>): Prisma__FormSubmissionClient<$Result.GetResult<Prisma.$FormSubmissionPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Update one FormSubmission.
@@ -2444,7 +4163,7 @@ export namespace Prisma {
      * })
      * 
      */
-    update<T extends FormSubmissionUpdateArgs>(args: SelectSubset<T, FormSubmissionUpdateArgs<ExtArgs>>): Prisma__FormSubmissionClient<$Result.GetResult<Prisma.$FormSubmissionPayload<ExtArgs>, T, "update">, never, ExtArgs>
+    update<T extends FormSubmissionUpdateArgs>(args: SelectSubset<T, FormSubmissionUpdateArgs<ExtArgs>>): Prisma__FormSubmissionClient<$Result.GetResult<Prisma.$FormSubmissionPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Delete zero or more FormSubmissions.
@@ -2480,6 +4199,36 @@ export namespace Prisma {
     updateMany<T extends FormSubmissionUpdateManyArgs>(args: SelectSubset<T, FormSubmissionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
+     * Update zero or more FormSubmissions and returns the data updated in the database.
+     * @param {FormSubmissionUpdateManyAndReturnArgs} args - Arguments to update many FormSubmissions.
+     * @example
+     * // Update many FormSubmissions
+     * const formSubmission = await prisma.formSubmission.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more FormSubmissions and only return the `id`
+     * const formSubmissionWithIdOnly = await prisma.formSubmission.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends FormSubmissionUpdateManyAndReturnArgs>(args: SelectSubset<T, FormSubmissionUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FormSubmissionPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
      * Create or update one FormSubmission.
      * @param {FormSubmissionUpsertArgs} args - Arguments to update or create a FormSubmission.
      * @example
@@ -2496,7 +4245,7 @@ export namespace Prisma {
      *   }
      * })
      */
-    upsert<T extends FormSubmissionUpsertArgs>(args: SelectSubset<T, FormSubmissionUpsertArgs<ExtArgs>>): Prisma__FormSubmissionClient<$Result.GetResult<Prisma.$FormSubmissionPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+    upsert<T extends FormSubmissionUpsertArgs>(args: SelectSubset<T, FormSubmissionUpsertArgs<ExtArgs>>): Prisma__FormSubmissionClient<$Result.GetResult<Prisma.$FormSubmissionPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
 
     /**
@@ -2636,9 +4385,13 @@ export namespace Prisma {
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export interface Prisma__FormSubmissionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+  export interface Prisma__FormSubmissionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    form<T extends FormDefaultArgs<ExtArgs> = {}>(args?: Subset<T, FormDefaultArgs<ExtArgs>>): Prisma__FormClient<$Result.GetResult<Prisma.$FormPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    form<T extends FormDefaultArgs<ExtArgs> = {}>(args?: Subset<T, FormDefaultArgs<ExtArgs>>): Prisma__FormClient<$Result.GetResult<Prisma.$FormPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    formVersion<T extends FormSubmission$formVersionArgs<ExtArgs> = {}>(args?: Subset<T, FormSubmission$formVersionArgs<ExtArgs>>): Prisma__FormVersionClient<$Result.GetResult<Prisma.$FormVersionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    role<T extends FormSubmission$roleArgs<ExtArgs> = {}>(args?: Subset<T, FormSubmission$roleArgs<ExtArgs>>): Prisma__RoleClient<$Result.GetResult<Prisma.$RolePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    submodule<T extends FormSubmission$submoduleArgs<ExtArgs> = {}>(args?: Subset<T, FormSubmission$submoduleArgs<ExtArgs>>): Prisma__SubmoduleClient<$Result.GetResult<Prisma.$SubmodulePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    values<T extends FormSubmission$valuesArgs<ExtArgs> = {}>(args?: Subset<T, FormSubmission$valuesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FormSubmissionValuePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2666,12 +4419,19 @@ export namespace Prisma {
 
   /**
    * Fields of the FormSubmission model
-   */ 
+   */
   interface FormSubmissionFieldRefs {
     readonly id: FieldRef<"FormSubmission", 'Int'>
     readonly published: FieldRef<"FormSubmission", 'Boolean'>
     readonly formId: FieldRef<"FormSubmission", 'Int'>
+    readonly formVersionId: FieldRef<"FormSubmission", 'Int'>
+    readonly version: FieldRef<"FormSubmission", 'Int'>
+    readonly userId: FieldRef<"FormSubmission", 'String'>
+    readonly roleId: FieldRef<"FormSubmission", 'Int'>
+    readonly submoduleId: FieldRef<"FormSubmission", 'Int'>
     readonly content: FieldRef<"FormSubmission", 'String'>
+    readonly computedContent: FieldRef<"FormSubmission", 'String'>
+    readonly submittedAt: FieldRef<"FormSubmission", 'DateTime'>
   }
     
 
@@ -2684,6 +4444,10 @@ export namespace Prisma {
      * Select specific fields to fetch from the FormSubmission
      */
     select?: FormSubmissionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FormSubmission
+     */
+    omit?: FormSubmissionOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
@@ -2703,6 +4467,10 @@ export namespace Prisma {
      */
     select?: FormSubmissionSelect<ExtArgs> | null
     /**
+     * Omit specific fields from the FormSubmission
+     */
+    omit?: FormSubmissionOmit<ExtArgs> | null
+    /**
      * Choose, which related nodes to fetch as well
      */
     include?: FormSubmissionInclude<ExtArgs> | null
@@ -2720,6 +4488,10 @@ export namespace Prisma {
      * Select specific fields to fetch from the FormSubmission
      */
     select?: FormSubmissionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FormSubmission
+     */
+    omit?: FormSubmissionOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
@@ -2769,6 +4541,10 @@ export namespace Prisma {
      */
     select?: FormSubmissionSelect<ExtArgs> | null
     /**
+     * Omit specific fields from the FormSubmission
+     */
+    omit?: FormSubmissionOmit<ExtArgs> | null
+    /**
      * Choose, which related nodes to fetch as well
      */
     include?: FormSubmissionInclude<ExtArgs> | null
@@ -2817,6 +4593,10 @@ export namespace Prisma {
      */
     select?: FormSubmissionSelect<ExtArgs> | null
     /**
+     * Omit specific fields from the FormSubmission
+     */
+    omit?: FormSubmissionOmit<ExtArgs> | null
+    /**
      * Choose, which related nodes to fetch as well
      */
     include?: FormSubmissionInclude<ExtArgs> | null
@@ -2860,6 +4640,10 @@ export namespace Prisma {
      */
     select?: FormSubmissionSelect<ExtArgs> | null
     /**
+     * Omit specific fields from the FormSubmission
+     */
+    omit?: FormSubmissionOmit<ExtArgs> | null
+    /**
      * Choose, which related nodes to fetch as well
      */
     include?: FormSubmissionInclude<ExtArgs> | null
@@ -2888,6 +4672,10 @@ export namespace Prisma {
      */
     select?: FormSubmissionSelectCreateManyAndReturn<ExtArgs> | null
     /**
+     * Omit specific fields from the FormSubmission
+     */
+    omit?: FormSubmissionOmit<ExtArgs> | null
+    /**
      * The data used to create many FormSubmissions.
      */
     data: FormSubmissionCreateManyInput | FormSubmissionCreateManyInput[]
@@ -2905,6 +4693,10 @@ export namespace Prisma {
      * Select specific fields to fetch from the FormSubmission
      */
     select?: FormSubmissionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FormSubmission
+     */
+    omit?: FormSubmissionOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
@@ -2931,7 +4723,40 @@ export namespace Prisma {
      * Filter which FormSubmissions to update
      */
     where?: FormSubmissionWhereInput
+    /**
+     * Limit how many FormSubmissions to update.
+     */
     limit?: number
+  }
+
+  /**
+   * FormSubmission updateManyAndReturn
+   */
+  export type FormSubmissionUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FormSubmission
+     */
+    select?: FormSubmissionSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the FormSubmission
+     */
+    omit?: FormSubmissionOmit<ExtArgs> | null
+    /**
+     * The data used to update FormSubmissions.
+     */
+    data: XOR<FormSubmissionUpdateManyMutationInput, FormSubmissionUncheckedUpdateManyInput>
+    /**
+     * Filter which FormSubmissions to update
+     */
+    where?: FormSubmissionWhereInput
+    /**
+     * Limit how many FormSubmissions to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FormSubmissionIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -2942,6 +4767,10 @@ export namespace Prisma {
      * Select specific fields to fetch from the FormSubmission
      */
     select?: FormSubmissionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FormSubmission
+     */
+    omit?: FormSubmissionOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
@@ -2969,6 +4798,10 @@ export namespace Prisma {
      */
     select?: FormSubmissionSelect<ExtArgs> | null
     /**
+     * Omit specific fields from the FormSubmission
+     */
+    omit?: FormSubmissionOmit<ExtArgs> | null
+    /**
      * Choose, which related nodes to fetch as well
      */
     include?: FormSubmissionInclude<ExtArgs> | null
@@ -2986,7 +4819,91 @@ export namespace Prisma {
      * Filter which FormSubmissions to delete
      */
     where?: FormSubmissionWhereInput
+    /**
+     * Limit how many FormSubmissions to delete.
+     */
     limit?: number
+  }
+
+  /**
+   * FormSubmission.formVersion
+   */
+  export type FormSubmission$formVersionArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FormVersion
+     */
+    select?: FormVersionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FormVersion
+     */
+    omit?: FormVersionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FormVersionInclude<ExtArgs> | null
+    where?: FormVersionWhereInput
+  }
+
+  /**
+   * FormSubmission.role
+   */
+  export type FormSubmission$roleArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Role
+     */
+    select?: RoleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Role
+     */
+    omit?: RoleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RoleInclude<ExtArgs> | null
+    where?: RoleWhereInput
+  }
+
+  /**
+   * FormSubmission.submodule
+   */
+  export type FormSubmission$submoduleArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Submodule
+     */
+    select?: SubmoduleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Submodule
+     */
+    omit?: SubmoduleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubmoduleInclude<ExtArgs> | null
+    where?: SubmoduleWhereInput
+  }
+
+  /**
+   * FormSubmission.values
+   */
+  export type FormSubmission$valuesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FormSubmissionValue
+     */
+    select?: FormSubmissionValueSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FormSubmissionValue
+     */
+    omit?: FormSubmissionValueOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FormSubmissionValueInclude<ExtArgs> | null
+    where?: FormSubmissionValueWhereInput
+    orderBy?: FormSubmissionValueOrderByWithRelationInput | FormSubmissionValueOrderByWithRelationInput[]
+    cursor?: FormSubmissionValueWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: FormSubmissionValueScalarFieldEnum | FormSubmissionValueScalarFieldEnum[]
   }
 
   /**
@@ -2998,9 +4915,10996 @@ export namespace Prisma {
      */
     select?: FormSubmissionSelect<ExtArgs> | null
     /**
+     * Omit specific fields from the FormSubmission
+     */
+    omit?: FormSubmissionOmit<ExtArgs> | null
+    /**
      * Choose, which related nodes to fetch as well
      */
     include?: FormSubmissionInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model FormVersion
+   */
+
+  export type AggregateFormVersion = {
+    _count: FormVersionCountAggregateOutputType | null
+    _avg: FormVersionAvgAggregateOutputType | null
+    _sum: FormVersionSumAggregateOutputType | null
+    _min: FormVersionMinAggregateOutputType | null
+    _max: FormVersionMaxAggregateOutputType | null
+  }
+
+  export type FormVersionAvgAggregateOutputType = {
+    id: number | null
+    formId: number | null
+    version: number | null
+    scheduleInterval: number | null
+  }
+
+  export type FormVersionSumAggregateOutputType = {
+    id: number | null
+    formId: number | null
+    version: number | null
+    scheduleInterval: number | null
+  }
+
+  export type FormVersionMinAggregateOutputType = {
+    id: number | null
+    formId: number | null
+    version: number | null
+    name: string | null
+    description: string | null
+    page: string | null
+    components: string | null
+    context: string | null
+    eventConfig: string | null
+    scheduleType: string | null
+    scheduleInterval: number | null
+    scheduleConfig: string | null
+    published: boolean | null
+    createdAt: Date | null
+  }
+
+  export type FormVersionMaxAggregateOutputType = {
+    id: number | null
+    formId: number | null
+    version: number | null
+    name: string | null
+    description: string | null
+    page: string | null
+    components: string | null
+    context: string | null
+    eventConfig: string | null
+    scheduleType: string | null
+    scheduleInterval: number | null
+    scheduleConfig: string | null
+    published: boolean | null
+    createdAt: Date | null
+  }
+
+  export type FormVersionCountAggregateOutputType = {
+    id: number
+    formId: number
+    version: number
+    name: number
+    description: number
+    page: number
+    components: number
+    context: number
+    eventConfig: number
+    scheduleType: number
+    scheduleInterval: number
+    scheduleConfig: number
+    published: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type FormVersionAvgAggregateInputType = {
+    id?: true
+    formId?: true
+    version?: true
+    scheduleInterval?: true
+  }
+
+  export type FormVersionSumAggregateInputType = {
+    id?: true
+    formId?: true
+    version?: true
+    scheduleInterval?: true
+  }
+
+  export type FormVersionMinAggregateInputType = {
+    id?: true
+    formId?: true
+    version?: true
+    name?: true
+    description?: true
+    page?: true
+    components?: true
+    context?: true
+    eventConfig?: true
+    scheduleType?: true
+    scheduleInterval?: true
+    scheduleConfig?: true
+    published?: true
+    createdAt?: true
+  }
+
+  export type FormVersionMaxAggregateInputType = {
+    id?: true
+    formId?: true
+    version?: true
+    name?: true
+    description?: true
+    page?: true
+    components?: true
+    context?: true
+    eventConfig?: true
+    scheduleType?: true
+    scheduleInterval?: true
+    scheduleConfig?: true
+    published?: true
+    createdAt?: true
+  }
+
+  export type FormVersionCountAggregateInputType = {
+    id?: true
+    formId?: true
+    version?: true
+    name?: true
+    description?: true
+    page?: true
+    components?: true
+    context?: true
+    eventConfig?: true
+    scheduleType?: true
+    scheduleInterval?: true
+    scheduleConfig?: true
+    published?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type FormVersionAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which FormVersion to aggregate.
+     */
+    where?: FormVersionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FormVersions to fetch.
+     */
+    orderBy?: FormVersionOrderByWithRelationInput | FormVersionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: FormVersionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FormVersions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FormVersions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned FormVersions
+    **/
+    _count?: true | FormVersionCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: FormVersionAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: FormVersionSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: FormVersionMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: FormVersionMaxAggregateInputType
+  }
+
+  export type GetFormVersionAggregateType<T extends FormVersionAggregateArgs> = {
+        [P in keyof T & keyof AggregateFormVersion]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateFormVersion[P]>
+      : GetScalarType<T[P], AggregateFormVersion[P]>
+  }
+
+
+
+
+  export type FormVersionGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: FormVersionWhereInput
+    orderBy?: FormVersionOrderByWithAggregationInput | FormVersionOrderByWithAggregationInput[]
+    by: FormVersionScalarFieldEnum[] | FormVersionScalarFieldEnum
+    having?: FormVersionScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: FormVersionCountAggregateInputType | true
+    _avg?: FormVersionAvgAggregateInputType
+    _sum?: FormVersionSumAggregateInputType
+    _min?: FormVersionMinAggregateInputType
+    _max?: FormVersionMaxAggregateInputType
+  }
+
+  export type FormVersionGroupByOutputType = {
+    id: number
+    formId: number
+    version: number
+    name: string
+    description: string
+    page: string | null
+    components: string
+    context: string
+    eventConfig: string
+    scheduleType: string
+    scheduleInterval: number
+    scheduleConfig: string
+    published: boolean
+    createdAt: Date
+    _count: FormVersionCountAggregateOutputType | null
+    _avg: FormVersionAvgAggregateOutputType | null
+    _sum: FormVersionSumAggregateOutputType | null
+    _min: FormVersionMinAggregateOutputType | null
+    _max: FormVersionMaxAggregateOutputType | null
+  }
+
+  type GetFormVersionGroupByPayload<T extends FormVersionGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<FormVersionGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof FormVersionGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], FormVersionGroupByOutputType[P]>
+            : GetScalarType<T[P], FormVersionGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type FormVersionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    formId?: boolean
+    version?: boolean
+    name?: boolean
+    description?: boolean
+    page?: boolean
+    components?: boolean
+    context?: boolean
+    eventConfig?: boolean
+    scheduleType?: boolean
+    scheduleInterval?: boolean
+    scheduleConfig?: boolean
+    published?: boolean
+    createdAt?: boolean
+    form?: boolean | FormDefaultArgs<ExtArgs>
+    submissions?: boolean | FormVersion$submissionsArgs<ExtArgs>
+    submissionValues?: boolean | FormVersion$submissionValuesArgs<ExtArgs>
+    _count?: boolean | FormVersionCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["formVersion"]>
+
+  export type FormVersionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    formId?: boolean
+    version?: boolean
+    name?: boolean
+    description?: boolean
+    page?: boolean
+    components?: boolean
+    context?: boolean
+    eventConfig?: boolean
+    scheduleType?: boolean
+    scheduleInterval?: boolean
+    scheduleConfig?: boolean
+    published?: boolean
+    createdAt?: boolean
+    form?: boolean | FormDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["formVersion"]>
+
+  export type FormVersionSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    formId?: boolean
+    version?: boolean
+    name?: boolean
+    description?: boolean
+    page?: boolean
+    components?: boolean
+    context?: boolean
+    eventConfig?: boolean
+    scheduleType?: boolean
+    scheduleInterval?: boolean
+    scheduleConfig?: boolean
+    published?: boolean
+    createdAt?: boolean
+    form?: boolean | FormDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["formVersion"]>
+
+  export type FormVersionSelectScalar = {
+    id?: boolean
+    formId?: boolean
+    version?: boolean
+    name?: boolean
+    description?: boolean
+    page?: boolean
+    components?: boolean
+    context?: boolean
+    eventConfig?: boolean
+    scheduleType?: boolean
+    scheduleInterval?: boolean
+    scheduleConfig?: boolean
+    published?: boolean
+    createdAt?: boolean
+  }
+
+  export type FormVersionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "formId" | "version" | "name" | "description" | "page" | "components" | "context" | "eventConfig" | "scheduleType" | "scheduleInterval" | "scheduleConfig" | "published" | "createdAt", ExtArgs["result"]["formVersion"]>
+  export type FormVersionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    form?: boolean | FormDefaultArgs<ExtArgs>
+    submissions?: boolean | FormVersion$submissionsArgs<ExtArgs>
+    submissionValues?: boolean | FormVersion$submissionValuesArgs<ExtArgs>
+    _count?: boolean | FormVersionCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type FormVersionIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    form?: boolean | FormDefaultArgs<ExtArgs>
+  }
+  export type FormVersionIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    form?: boolean | FormDefaultArgs<ExtArgs>
+  }
+
+  export type $FormVersionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "FormVersion"
+    objects: {
+      form: Prisma.$FormPayload<ExtArgs>
+      submissions: Prisma.$FormSubmissionPayload<ExtArgs>[]
+      submissionValues: Prisma.$FormSubmissionValuePayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      formId: number
+      version: number
+      name: string
+      description: string
+      page: string | null
+      components: string
+      context: string
+      eventConfig: string
+      scheduleType: string
+      scheduleInterval: number
+      scheduleConfig: string
+      published: boolean
+      createdAt: Date
+    }, ExtArgs["result"]["formVersion"]>
+    composites: {}
+  }
+
+  type FormVersionGetPayload<S extends boolean | null | undefined | FormVersionDefaultArgs> = $Result.GetResult<Prisma.$FormVersionPayload, S>
+
+  type FormVersionCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<FormVersionFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: FormVersionCountAggregateInputType | true
+    }
+
+  export interface FormVersionDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['FormVersion'], meta: { name: 'FormVersion' } }
+    /**
+     * Find zero or one FormVersion that matches the filter.
+     * @param {FormVersionFindUniqueArgs} args - Arguments to find a FormVersion
+     * @example
+     * // Get one FormVersion
+     * const formVersion = await prisma.formVersion.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends FormVersionFindUniqueArgs>(args: SelectSubset<T, FormVersionFindUniqueArgs<ExtArgs>>): Prisma__FormVersionClient<$Result.GetResult<Prisma.$FormVersionPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one FormVersion that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {FormVersionFindUniqueOrThrowArgs} args - Arguments to find a FormVersion
+     * @example
+     * // Get one FormVersion
+     * const formVersion = await prisma.formVersion.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends FormVersionFindUniqueOrThrowArgs>(args: SelectSubset<T, FormVersionFindUniqueOrThrowArgs<ExtArgs>>): Prisma__FormVersionClient<$Result.GetResult<Prisma.$FormVersionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first FormVersion that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FormVersionFindFirstArgs} args - Arguments to find a FormVersion
+     * @example
+     * // Get one FormVersion
+     * const formVersion = await prisma.formVersion.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends FormVersionFindFirstArgs>(args?: SelectSubset<T, FormVersionFindFirstArgs<ExtArgs>>): Prisma__FormVersionClient<$Result.GetResult<Prisma.$FormVersionPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first FormVersion that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FormVersionFindFirstOrThrowArgs} args - Arguments to find a FormVersion
+     * @example
+     * // Get one FormVersion
+     * const formVersion = await prisma.formVersion.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends FormVersionFindFirstOrThrowArgs>(args?: SelectSubset<T, FormVersionFindFirstOrThrowArgs<ExtArgs>>): Prisma__FormVersionClient<$Result.GetResult<Prisma.$FormVersionPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more FormVersions that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FormVersionFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all FormVersions
+     * const formVersions = await prisma.formVersion.findMany()
+     * 
+     * // Get first 10 FormVersions
+     * const formVersions = await prisma.formVersion.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const formVersionWithIdOnly = await prisma.formVersion.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends FormVersionFindManyArgs>(args?: SelectSubset<T, FormVersionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FormVersionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a FormVersion.
+     * @param {FormVersionCreateArgs} args - Arguments to create a FormVersion.
+     * @example
+     * // Create one FormVersion
+     * const FormVersion = await prisma.formVersion.create({
+     *   data: {
+     *     // ... data to create a FormVersion
+     *   }
+     * })
+     * 
+     */
+    create<T extends FormVersionCreateArgs>(args: SelectSubset<T, FormVersionCreateArgs<ExtArgs>>): Prisma__FormVersionClient<$Result.GetResult<Prisma.$FormVersionPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many FormVersions.
+     * @param {FormVersionCreateManyArgs} args - Arguments to create many FormVersions.
+     * @example
+     * // Create many FormVersions
+     * const formVersion = await prisma.formVersion.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends FormVersionCreateManyArgs>(args?: SelectSubset<T, FormVersionCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many FormVersions and returns the data saved in the database.
+     * @param {FormVersionCreateManyAndReturnArgs} args - Arguments to create many FormVersions.
+     * @example
+     * // Create many FormVersions
+     * const formVersion = await prisma.formVersion.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many FormVersions and only return the `id`
+     * const formVersionWithIdOnly = await prisma.formVersion.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends FormVersionCreateManyAndReturnArgs>(args?: SelectSubset<T, FormVersionCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FormVersionPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a FormVersion.
+     * @param {FormVersionDeleteArgs} args - Arguments to delete one FormVersion.
+     * @example
+     * // Delete one FormVersion
+     * const FormVersion = await prisma.formVersion.delete({
+     *   where: {
+     *     // ... filter to delete one FormVersion
+     *   }
+     * })
+     * 
+     */
+    delete<T extends FormVersionDeleteArgs>(args: SelectSubset<T, FormVersionDeleteArgs<ExtArgs>>): Prisma__FormVersionClient<$Result.GetResult<Prisma.$FormVersionPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one FormVersion.
+     * @param {FormVersionUpdateArgs} args - Arguments to update one FormVersion.
+     * @example
+     * // Update one FormVersion
+     * const formVersion = await prisma.formVersion.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends FormVersionUpdateArgs>(args: SelectSubset<T, FormVersionUpdateArgs<ExtArgs>>): Prisma__FormVersionClient<$Result.GetResult<Prisma.$FormVersionPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more FormVersions.
+     * @param {FormVersionDeleteManyArgs} args - Arguments to filter FormVersions to delete.
+     * @example
+     * // Delete a few FormVersions
+     * const { count } = await prisma.formVersion.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends FormVersionDeleteManyArgs>(args?: SelectSubset<T, FormVersionDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more FormVersions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FormVersionUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many FormVersions
+     * const formVersion = await prisma.formVersion.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends FormVersionUpdateManyArgs>(args: SelectSubset<T, FormVersionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more FormVersions and returns the data updated in the database.
+     * @param {FormVersionUpdateManyAndReturnArgs} args - Arguments to update many FormVersions.
+     * @example
+     * // Update many FormVersions
+     * const formVersion = await prisma.formVersion.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more FormVersions and only return the `id`
+     * const formVersionWithIdOnly = await prisma.formVersion.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends FormVersionUpdateManyAndReturnArgs>(args: SelectSubset<T, FormVersionUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FormVersionPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one FormVersion.
+     * @param {FormVersionUpsertArgs} args - Arguments to update or create a FormVersion.
+     * @example
+     * // Update or create a FormVersion
+     * const formVersion = await prisma.formVersion.upsert({
+     *   create: {
+     *     // ... data to create a FormVersion
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the FormVersion we want to update
+     *   }
+     * })
+     */
+    upsert<T extends FormVersionUpsertArgs>(args: SelectSubset<T, FormVersionUpsertArgs<ExtArgs>>): Prisma__FormVersionClient<$Result.GetResult<Prisma.$FormVersionPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of FormVersions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FormVersionCountArgs} args - Arguments to filter FormVersions to count.
+     * @example
+     * // Count the number of FormVersions
+     * const count = await prisma.formVersion.count({
+     *   where: {
+     *     // ... the filter for the FormVersions we want to count
+     *   }
+     * })
+    **/
+    count<T extends FormVersionCountArgs>(
+      args?: Subset<T, FormVersionCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], FormVersionCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a FormVersion.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FormVersionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends FormVersionAggregateArgs>(args: Subset<T, FormVersionAggregateArgs>): Prisma.PrismaPromise<GetFormVersionAggregateType<T>>
+
+    /**
+     * Group by FormVersion.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FormVersionGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends FormVersionGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: FormVersionGroupByArgs['orderBy'] }
+        : { orderBy?: FormVersionGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, FormVersionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetFormVersionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the FormVersion model
+   */
+  readonly fields: FormVersionFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for FormVersion.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__FormVersionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    form<T extends FormDefaultArgs<ExtArgs> = {}>(args?: Subset<T, FormDefaultArgs<ExtArgs>>): Prisma__FormClient<$Result.GetResult<Prisma.$FormPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    submissions<T extends FormVersion$submissionsArgs<ExtArgs> = {}>(args?: Subset<T, FormVersion$submissionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FormSubmissionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    submissionValues<T extends FormVersion$submissionValuesArgs<ExtArgs> = {}>(args?: Subset<T, FormVersion$submissionValuesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FormSubmissionValuePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the FormVersion model
+   */
+  interface FormVersionFieldRefs {
+    readonly id: FieldRef<"FormVersion", 'Int'>
+    readonly formId: FieldRef<"FormVersion", 'Int'>
+    readonly version: FieldRef<"FormVersion", 'Int'>
+    readonly name: FieldRef<"FormVersion", 'String'>
+    readonly description: FieldRef<"FormVersion", 'String'>
+    readonly page: FieldRef<"FormVersion", 'String'>
+    readonly components: FieldRef<"FormVersion", 'String'>
+    readonly context: FieldRef<"FormVersion", 'String'>
+    readonly eventConfig: FieldRef<"FormVersion", 'String'>
+    readonly scheduleType: FieldRef<"FormVersion", 'String'>
+    readonly scheduleInterval: FieldRef<"FormVersion", 'Int'>
+    readonly scheduleConfig: FieldRef<"FormVersion", 'String'>
+    readonly published: FieldRef<"FormVersion", 'Boolean'>
+    readonly createdAt: FieldRef<"FormVersion", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * FormVersion findUnique
+   */
+  export type FormVersionFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FormVersion
+     */
+    select?: FormVersionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FormVersion
+     */
+    omit?: FormVersionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FormVersionInclude<ExtArgs> | null
+    /**
+     * Filter, which FormVersion to fetch.
+     */
+    where: FormVersionWhereUniqueInput
+  }
+
+  /**
+   * FormVersion findUniqueOrThrow
+   */
+  export type FormVersionFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FormVersion
+     */
+    select?: FormVersionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FormVersion
+     */
+    omit?: FormVersionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FormVersionInclude<ExtArgs> | null
+    /**
+     * Filter, which FormVersion to fetch.
+     */
+    where: FormVersionWhereUniqueInput
+  }
+
+  /**
+   * FormVersion findFirst
+   */
+  export type FormVersionFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FormVersion
+     */
+    select?: FormVersionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FormVersion
+     */
+    omit?: FormVersionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FormVersionInclude<ExtArgs> | null
+    /**
+     * Filter, which FormVersion to fetch.
+     */
+    where?: FormVersionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FormVersions to fetch.
+     */
+    orderBy?: FormVersionOrderByWithRelationInput | FormVersionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for FormVersions.
+     */
+    cursor?: FormVersionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FormVersions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FormVersions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of FormVersions.
+     */
+    distinct?: FormVersionScalarFieldEnum | FormVersionScalarFieldEnum[]
+  }
+
+  /**
+   * FormVersion findFirstOrThrow
+   */
+  export type FormVersionFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FormVersion
+     */
+    select?: FormVersionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FormVersion
+     */
+    omit?: FormVersionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FormVersionInclude<ExtArgs> | null
+    /**
+     * Filter, which FormVersion to fetch.
+     */
+    where?: FormVersionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FormVersions to fetch.
+     */
+    orderBy?: FormVersionOrderByWithRelationInput | FormVersionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for FormVersions.
+     */
+    cursor?: FormVersionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FormVersions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FormVersions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of FormVersions.
+     */
+    distinct?: FormVersionScalarFieldEnum | FormVersionScalarFieldEnum[]
+  }
+
+  /**
+   * FormVersion findMany
+   */
+  export type FormVersionFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FormVersion
+     */
+    select?: FormVersionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FormVersion
+     */
+    omit?: FormVersionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FormVersionInclude<ExtArgs> | null
+    /**
+     * Filter, which FormVersions to fetch.
+     */
+    where?: FormVersionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FormVersions to fetch.
+     */
+    orderBy?: FormVersionOrderByWithRelationInput | FormVersionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing FormVersions.
+     */
+    cursor?: FormVersionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FormVersions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FormVersions.
+     */
+    skip?: number
+    distinct?: FormVersionScalarFieldEnum | FormVersionScalarFieldEnum[]
+  }
+
+  /**
+   * FormVersion create
+   */
+  export type FormVersionCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FormVersion
+     */
+    select?: FormVersionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FormVersion
+     */
+    omit?: FormVersionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FormVersionInclude<ExtArgs> | null
+    /**
+     * The data needed to create a FormVersion.
+     */
+    data: XOR<FormVersionCreateInput, FormVersionUncheckedCreateInput>
+  }
+
+  /**
+   * FormVersion createMany
+   */
+  export type FormVersionCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many FormVersions.
+     */
+    data: FormVersionCreateManyInput | FormVersionCreateManyInput[]
+  }
+
+  /**
+   * FormVersion createManyAndReturn
+   */
+  export type FormVersionCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FormVersion
+     */
+    select?: FormVersionSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the FormVersion
+     */
+    omit?: FormVersionOmit<ExtArgs> | null
+    /**
+     * The data used to create many FormVersions.
+     */
+    data: FormVersionCreateManyInput | FormVersionCreateManyInput[]
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FormVersionIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * FormVersion update
+   */
+  export type FormVersionUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FormVersion
+     */
+    select?: FormVersionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FormVersion
+     */
+    omit?: FormVersionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FormVersionInclude<ExtArgs> | null
+    /**
+     * The data needed to update a FormVersion.
+     */
+    data: XOR<FormVersionUpdateInput, FormVersionUncheckedUpdateInput>
+    /**
+     * Choose, which FormVersion to update.
+     */
+    where: FormVersionWhereUniqueInput
+  }
+
+  /**
+   * FormVersion updateMany
+   */
+  export type FormVersionUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update FormVersions.
+     */
+    data: XOR<FormVersionUpdateManyMutationInput, FormVersionUncheckedUpdateManyInput>
+    /**
+     * Filter which FormVersions to update
+     */
+    where?: FormVersionWhereInput
+    /**
+     * Limit how many FormVersions to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * FormVersion updateManyAndReturn
+   */
+  export type FormVersionUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FormVersion
+     */
+    select?: FormVersionSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the FormVersion
+     */
+    omit?: FormVersionOmit<ExtArgs> | null
+    /**
+     * The data used to update FormVersions.
+     */
+    data: XOR<FormVersionUpdateManyMutationInput, FormVersionUncheckedUpdateManyInput>
+    /**
+     * Filter which FormVersions to update
+     */
+    where?: FormVersionWhereInput
+    /**
+     * Limit how many FormVersions to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FormVersionIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * FormVersion upsert
+   */
+  export type FormVersionUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FormVersion
+     */
+    select?: FormVersionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FormVersion
+     */
+    omit?: FormVersionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FormVersionInclude<ExtArgs> | null
+    /**
+     * The filter to search for the FormVersion to update in case it exists.
+     */
+    where: FormVersionWhereUniqueInput
+    /**
+     * In case the FormVersion found by the `where` argument doesn't exist, create a new FormVersion with this data.
+     */
+    create: XOR<FormVersionCreateInput, FormVersionUncheckedCreateInput>
+    /**
+     * In case the FormVersion was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<FormVersionUpdateInput, FormVersionUncheckedUpdateInput>
+  }
+
+  /**
+   * FormVersion delete
+   */
+  export type FormVersionDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FormVersion
+     */
+    select?: FormVersionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FormVersion
+     */
+    omit?: FormVersionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FormVersionInclude<ExtArgs> | null
+    /**
+     * Filter which FormVersion to delete.
+     */
+    where: FormVersionWhereUniqueInput
+  }
+
+  /**
+   * FormVersion deleteMany
+   */
+  export type FormVersionDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which FormVersions to delete
+     */
+    where?: FormVersionWhereInput
+    /**
+     * Limit how many FormVersions to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * FormVersion.submissions
+   */
+  export type FormVersion$submissionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FormSubmission
+     */
+    select?: FormSubmissionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FormSubmission
+     */
+    omit?: FormSubmissionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FormSubmissionInclude<ExtArgs> | null
+    where?: FormSubmissionWhereInput
+    orderBy?: FormSubmissionOrderByWithRelationInput | FormSubmissionOrderByWithRelationInput[]
+    cursor?: FormSubmissionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: FormSubmissionScalarFieldEnum | FormSubmissionScalarFieldEnum[]
+  }
+
+  /**
+   * FormVersion.submissionValues
+   */
+  export type FormVersion$submissionValuesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FormSubmissionValue
+     */
+    select?: FormSubmissionValueSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FormSubmissionValue
+     */
+    omit?: FormSubmissionValueOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FormSubmissionValueInclude<ExtArgs> | null
+    where?: FormSubmissionValueWhereInput
+    orderBy?: FormSubmissionValueOrderByWithRelationInput | FormSubmissionValueOrderByWithRelationInput[]
+    cursor?: FormSubmissionValueWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: FormSubmissionValueScalarFieldEnum | FormSubmissionValueScalarFieldEnum[]
+  }
+
+  /**
+   * FormVersion without action
+   */
+  export type FormVersionDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FormVersion
+     */
+    select?: FormVersionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FormVersion
+     */
+    omit?: FormVersionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FormVersionInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model FormSubmissionValue
+   */
+
+  export type AggregateFormSubmissionValue = {
+    _count: FormSubmissionValueCountAggregateOutputType | null
+    _avg: FormSubmissionValueAvgAggregateOutputType | null
+    _sum: FormSubmissionValueSumAggregateOutputType | null
+    _min: FormSubmissionValueMinAggregateOutputType | null
+    _max: FormSubmissionValueMaxAggregateOutputType | null
+  }
+
+  export type FormSubmissionValueAvgAggregateOutputType = {
+    id: number | null
+    submissionId: number | null
+    formId: number | null
+    formVersionId: number | null
+    numberValue: number | null
+  }
+
+  export type FormSubmissionValueSumAggregateOutputType = {
+    id: number | null
+    submissionId: number | null
+    formId: number | null
+    formVersionId: number | null
+    numberValue: number | null
+  }
+
+  export type FormSubmissionValueMinAggregateOutputType = {
+    id: number | null
+    submissionId: number | null
+    formId: number | null
+    formVersionId: number | null
+    fieldKey: string | null
+    fieldLabel: string | null
+    elementId: string | null
+    pageId: string | null
+    parentId: string | null
+    valueType: string | null
+    stringValue: string | null
+    numberValue: number | null
+    booleanValue: boolean | null
+    dateValue: Date | null
+    jsonValue: string | null
+    rawValue: string | null
+    createdAt: Date | null
+  }
+
+  export type FormSubmissionValueMaxAggregateOutputType = {
+    id: number | null
+    submissionId: number | null
+    formId: number | null
+    formVersionId: number | null
+    fieldKey: string | null
+    fieldLabel: string | null
+    elementId: string | null
+    pageId: string | null
+    parentId: string | null
+    valueType: string | null
+    stringValue: string | null
+    numberValue: number | null
+    booleanValue: boolean | null
+    dateValue: Date | null
+    jsonValue: string | null
+    rawValue: string | null
+    createdAt: Date | null
+  }
+
+  export type FormSubmissionValueCountAggregateOutputType = {
+    id: number
+    submissionId: number
+    formId: number
+    formVersionId: number
+    fieldKey: number
+    fieldLabel: number
+    elementId: number
+    pageId: number
+    parentId: number
+    valueType: number
+    stringValue: number
+    numberValue: number
+    booleanValue: number
+    dateValue: number
+    jsonValue: number
+    rawValue: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type FormSubmissionValueAvgAggregateInputType = {
+    id?: true
+    submissionId?: true
+    formId?: true
+    formVersionId?: true
+    numberValue?: true
+  }
+
+  export type FormSubmissionValueSumAggregateInputType = {
+    id?: true
+    submissionId?: true
+    formId?: true
+    formVersionId?: true
+    numberValue?: true
+  }
+
+  export type FormSubmissionValueMinAggregateInputType = {
+    id?: true
+    submissionId?: true
+    formId?: true
+    formVersionId?: true
+    fieldKey?: true
+    fieldLabel?: true
+    elementId?: true
+    pageId?: true
+    parentId?: true
+    valueType?: true
+    stringValue?: true
+    numberValue?: true
+    booleanValue?: true
+    dateValue?: true
+    jsonValue?: true
+    rawValue?: true
+    createdAt?: true
+  }
+
+  export type FormSubmissionValueMaxAggregateInputType = {
+    id?: true
+    submissionId?: true
+    formId?: true
+    formVersionId?: true
+    fieldKey?: true
+    fieldLabel?: true
+    elementId?: true
+    pageId?: true
+    parentId?: true
+    valueType?: true
+    stringValue?: true
+    numberValue?: true
+    booleanValue?: true
+    dateValue?: true
+    jsonValue?: true
+    rawValue?: true
+    createdAt?: true
+  }
+
+  export type FormSubmissionValueCountAggregateInputType = {
+    id?: true
+    submissionId?: true
+    formId?: true
+    formVersionId?: true
+    fieldKey?: true
+    fieldLabel?: true
+    elementId?: true
+    pageId?: true
+    parentId?: true
+    valueType?: true
+    stringValue?: true
+    numberValue?: true
+    booleanValue?: true
+    dateValue?: true
+    jsonValue?: true
+    rawValue?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type FormSubmissionValueAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which FormSubmissionValue to aggregate.
+     */
+    where?: FormSubmissionValueWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FormSubmissionValues to fetch.
+     */
+    orderBy?: FormSubmissionValueOrderByWithRelationInput | FormSubmissionValueOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: FormSubmissionValueWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FormSubmissionValues from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FormSubmissionValues.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned FormSubmissionValues
+    **/
+    _count?: true | FormSubmissionValueCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: FormSubmissionValueAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: FormSubmissionValueSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: FormSubmissionValueMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: FormSubmissionValueMaxAggregateInputType
+  }
+
+  export type GetFormSubmissionValueAggregateType<T extends FormSubmissionValueAggregateArgs> = {
+        [P in keyof T & keyof AggregateFormSubmissionValue]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateFormSubmissionValue[P]>
+      : GetScalarType<T[P], AggregateFormSubmissionValue[P]>
+  }
+
+
+
+
+  export type FormSubmissionValueGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: FormSubmissionValueWhereInput
+    orderBy?: FormSubmissionValueOrderByWithAggregationInput | FormSubmissionValueOrderByWithAggregationInput[]
+    by: FormSubmissionValueScalarFieldEnum[] | FormSubmissionValueScalarFieldEnum
+    having?: FormSubmissionValueScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: FormSubmissionValueCountAggregateInputType | true
+    _avg?: FormSubmissionValueAvgAggregateInputType
+    _sum?: FormSubmissionValueSumAggregateInputType
+    _min?: FormSubmissionValueMinAggregateInputType
+    _max?: FormSubmissionValueMaxAggregateInputType
+  }
+
+  export type FormSubmissionValueGroupByOutputType = {
+    id: number
+    submissionId: number
+    formId: number
+    formVersionId: number | null
+    fieldKey: string
+    fieldLabel: string
+    elementId: string | null
+    pageId: string | null
+    parentId: string | null
+    valueType: string
+    stringValue: string | null
+    numberValue: number | null
+    booleanValue: boolean | null
+    dateValue: Date | null
+    jsonValue: string | null
+    rawValue: string | null
+    createdAt: Date
+    _count: FormSubmissionValueCountAggregateOutputType | null
+    _avg: FormSubmissionValueAvgAggregateOutputType | null
+    _sum: FormSubmissionValueSumAggregateOutputType | null
+    _min: FormSubmissionValueMinAggregateOutputType | null
+    _max: FormSubmissionValueMaxAggregateOutputType | null
+  }
+
+  type GetFormSubmissionValueGroupByPayload<T extends FormSubmissionValueGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<FormSubmissionValueGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof FormSubmissionValueGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], FormSubmissionValueGroupByOutputType[P]>
+            : GetScalarType<T[P], FormSubmissionValueGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type FormSubmissionValueSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    submissionId?: boolean
+    formId?: boolean
+    formVersionId?: boolean
+    fieldKey?: boolean
+    fieldLabel?: boolean
+    elementId?: boolean
+    pageId?: boolean
+    parentId?: boolean
+    valueType?: boolean
+    stringValue?: boolean
+    numberValue?: boolean
+    booleanValue?: boolean
+    dateValue?: boolean
+    jsonValue?: boolean
+    rawValue?: boolean
+    createdAt?: boolean
+    submission?: boolean | FormSubmissionDefaultArgs<ExtArgs>
+    form?: boolean | FormDefaultArgs<ExtArgs>
+    formVersion?: boolean | FormSubmissionValue$formVersionArgs<ExtArgs>
+  }, ExtArgs["result"]["formSubmissionValue"]>
+
+  export type FormSubmissionValueSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    submissionId?: boolean
+    formId?: boolean
+    formVersionId?: boolean
+    fieldKey?: boolean
+    fieldLabel?: boolean
+    elementId?: boolean
+    pageId?: boolean
+    parentId?: boolean
+    valueType?: boolean
+    stringValue?: boolean
+    numberValue?: boolean
+    booleanValue?: boolean
+    dateValue?: boolean
+    jsonValue?: boolean
+    rawValue?: boolean
+    createdAt?: boolean
+    submission?: boolean | FormSubmissionDefaultArgs<ExtArgs>
+    form?: boolean | FormDefaultArgs<ExtArgs>
+    formVersion?: boolean | FormSubmissionValue$formVersionArgs<ExtArgs>
+  }, ExtArgs["result"]["formSubmissionValue"]>
+
+  export type FormSubmissionValueSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    submissionId?: boolean
+    formId?: boolean
+    formVersionId?: boolean
+    fieldKey?: boolean
+    fieldLabel?: boolean
+    elementId?: boolean
+    pageId?: boolean
+    parentId?: boolean
+    valueType?: boolean
+    stringValue?: boolean
+    numberValue?: boolean
+    booleanValue?: boolean
+    dateValue?: boolean
+    jsonValue?: boolean
+    rawValue?: boolean
+    createdAt?: boolean
+    submission?: boolean | FormSubmissionDefaultArgs<ExtArgs>
+    form?: boolean | FormDefaultArgs<ExtArgs>
+    formVersion?: boolean | FormSubmissionValue$formVersionArgs<ExtArgs>
+  }, ExtArgs["result"]["formSubmissionValue"]>
+
+  export type FormSubmissionValueSelectScalar = {
+    id?: boolean
+    submissionId?: boolean
+    formId?: boolean
+    formVersionId?: boolean
+    fieldKey?: boolean
+    fieldLabel?: boolean
+    elementId?: boolean
+    pageId?: boolean
+    parentId?: boolean
+    valueType?: boolean
+    stringValue?: boolean
+    numberValue?: boolean
+    booleanValue?: boolean
+    dateValue?: boolean
+    jsonValue?: boolean
+    rawValue?: boolean
+    createdAt?: boolean
+  }
+
+  export type FormSubmissionValueOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "submissionId" | "formId" | "formVersionId" | "fieldKey" | "fieldLabel" | "elementId" | "pageId" | "parentId" | "valueType" | "stringValue" | "numberValue" | "booleanValue" | "dateValue" | "jsonValue" | "rawValue" | "createdAt", ExtArgs["result"]["formSubmissionValue"]>
+  export type FormSubmissionValueInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    submission?: boolean | FormSubmissionDefaultArgs<ExtArgs>
+    form?: boolean | FormDefaultArgs<ExtArgs>
+    formVersion?: boolean | FormSubmissionValue$formVersionArgs<ExtArgs>
+  }
+  export type FormSubmissionValueIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    submission?: boolean | FormSubmissionDefaultArgs<ExtArgs>
+    form?: boolean | FormDefaultArgs<ExtArgs>
+    formVersion?: boolean | FormSubmissionValue$formVersionArgs<ExtArgs>
+  }
+  export type FormSubmissionValueIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    submission?: boolean | FormSubmissionDefaultArgs<ExtArgs>
+    form?: boolean | FormDefaultArgs<ExtArgs>
+    formVersion?: boolean | FormSubmissionValue$formVersionArgs<ExtArgs>
+  }
+
+  export type $FormSubmissionValuePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "FormSubmissionValue"
+    objects: {
+      submission: Prisma.$FormSubmissionPayload<ExtArgs>
+      form: Prisma.$FormPayload<ExtArgs>
+      formVersion: Prisma.$FormVersionPayload<ExtArgs> | null
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      submissionId: number
+      formId: number
+      formVersionId: number | null
+      fieldKey: string
+      fieldLabel: string
+      elementId: string | null
+      pageId: string | null
+      parentId: string | null
+      valueType: string
+      stringValue: string | null
+      numberValue: number | null
+      booleanValue: boolean | null
+      dateValue: Date | null
+      jsonValue: string | null
+      rawValue: string | null
+      createdAt: Date
+    }, ExtArgs["result"]["formSubmissionValue"]>
+    composites: {}
+  }
+
+  type FormSubmissionValueGetPayload<S extends boolean | null | undefined | FormSubmissionValueDefaultArgs> = $Result.GetResult<Prisma.$FormSubmissionValuePayload, S>
+
+  type FormSubmissionValueCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<FormSubmissionValueFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: FormSubmissionValueCountAggregateInputType | true
+    }
+
+  export interface FormSubmissionValueDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['FormSubmissionValue'], meta: { name: 'FormSubmissionValue' } }
+    /**
+     * Find zero or one FormSubmissionValue that matches the filter.
+     * @param {FormSubmissionValueFindUniqueArgs} args - Arguments to find a FormSubmissionValue
+     * @example
+     * // Get one FormSubmissionValue
+     * const formSubmissionValue = await prisma.formSubmissionValue.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends FormSubmissionValueFindUniqueArgs>(args: SelectSubset<T, FormSubmissionValueFindUniqueArgs<ExtArgs>>): Prisma__FormSubmissionValueClient<$Result.GetResult<Prisma.$FormSubmissionValuePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one FormSubmissionValue that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {FormSubmissionValueFindUniqueOrThrowArgs} args - Arguments to find a FormSubmissionValue
+     * @example
+     * // Get one FormSubmissionValue
+     * const formSubmissionValue = await prisma.formSubmissionValue.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends FormSubmissionValueFindUniqueOrThrowArgs>(args: SelectSubset<T, FormSubmissionValueFindUniqueOrThrowArgs<ExtArgs>>): Prisma__FormSubmissionValueClient<$Result.GetResult<Prisma.$FormSubmissionValuePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first FormSubmissionValue that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FormSubmissionValueFindFirstArgs} args - Arguments to find a FormSubmissionValue
+     * @example
+     * // Get one FormSubmissionValue
+     * const formSubmissionValue = await prisma.formSubmissionValue.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends FormSubmissionValueFindFirstArgs>(args?: SelectSubset<T, FormSubmissionValueFindFirstArgs<ExtArgs>>): Prisma__FormSubmissionValueClient<$Result.GetResult<Prisma.$FormSubmissionValuePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first FormSubmissionValue that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FormSubmissionValueFindFirstOrThrowArgs} args - Arguments to find a FormSubmissionValue
+     * @example
+     * // Get one FormSubmissionValue
+     * const formSubmissionValue = await prisma.formSubmissionValue.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends FormSubmissionValueFindFirstOrThrowArgs>(args?: SelectSubset<T, FormSubmissionValueFindFirstOrThrowArgs<ExtArgs>>): Prisma__FormSubmissionValueClient<$Result.GetResult<Prisma.$FormSubmissionValuePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more FormSubmissionValues that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FormSubmissionValueFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all FormSubmissionValues
+     * const formSubmissionValues = await prisma.formSubmissionValue.findMany()
+     * 
+     * // Get first 10 FormSubmissionValues
+     * const formSubmissionValues = await prisma.formSubmissionValue.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const formSubmissionValueWithIdOnly = await prisma.formSubmissionValue.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends FormSubmissionValueFindManyArgs>(args?: SelectSubset<T, FormSubmissionValueFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FormSubmissionValuePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a FormSubmissionValue.
+     * @param {FormSubmissionValueCreateArgs} args - Arguments to create a FormSubmissionValue.
+     * @example
+     * // Create one FormSubmissionValue
+     * const FormSubmissionValue = await prisma.formSubmissionValue.create({
+     *   data: {
+     *     // ... data to create a FormSubmissionValue
+     *   }
+     * })
+     * 
+     */
+    create<T extends FormSubmissionValueCreateArgs>(args: SelectSubset<T, FormSubmissionValueCreateArgs<ExtArgs>>): Prisma__FormSubmissionValueClient<$Result.GetResult<Prisma.$FormSubmissionValuePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many FormSubmissionValues.
+     * @param {FormSubmissionValueCreateManyArgs} args - Arguments to create many FormSubmissionValues.
+     * @example
+     * // Create many FormSubmissionValues
+     * const formSubmissionValue = await prisma.formSubmissionValue.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends FormSubmissionValueCreateManyArgs>(args?: SelectSubset<T, FormSubmissionValueCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many FormSubmissionValues and returns the data saved in the database.
+     * @param {FormSubmissionValueCreateManyAndReturnArgs} args - Arguments to create many FormSubmissionValues.
+     * @example
+     * // Create many FormSubmissionValues
+     * const formSubmissionValue = await prisma.formSubmissionValue.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many FormSubmissionValues and only return the `id`
+     * const formSubmissionValueWithIdOnly = await prisma.formSubmissionValue.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends FormSubmissionValueCreateManyAndReturnArgs>(args?: SelectSubset<T, FormSubmissionValueCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FormSubmissionValuePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a FormSubmissionValue.
+     * @param {FormSubmissionValueDeleteArgs} args - Arguments to delete one FormSubmissionValue.
+     * @example
+     * // Delete one FormSubmissionValue
+     * const FormSubmissionValue = await prisma.formSubmissionValue.delete({
+     *   where: {
+     *     // ... filter to delete one FormSubmissionValue
+     *   }
+     * })
+     * 
+     */
+    delete<T extends FormSubmissionValueDeleteArgs>(args: SelectSubset<T, FormSubmissionValueDeleteArgs<ExtArgs>>): Prisma__FormSubmissionValueClient<$Result.GetResult<Prisma.$FormSubmissionValuePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one FormSubmissionValue.
+     * @param {FormSubmissionValueUpdateArgs} args - Arguments to update one FormSubmissionValue.
+     * @example
+     * // Update one FormSubmissionValue
+     * const formSubmissionValue = await prisma.formSubmissionValue.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends FormSubmissionValueUpdateArgs>(args: SelectSubset<T, FormSubmissionValueUpdateArgs<ExtArgs>>): Prisma__FormSubmissionValueClient<$Result.GetResult<Prisma.$FormSubmissionValuePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more FormSubmissionValues.
+     * @param {FormSubmissionValueDeleteManyArgs} args - Arguments to filter FormSubmissionValues to delete.
+     * @example
+     * // Delete a few FormSubmissionValues
+     * const { count } = await prisma.formSubmissionValue.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends FormSubmissionValueDeleteManyArgs>(args?: SelectSubset<T, FormSubmissionValueDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more FormSubmissionValues.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FormSubmissionValueUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many FormSubmissionValues
+     * const formSubmissionValue = await prisma.formSubmissionValue.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends FormSubmissionValueUpdateManyArgs>(args: SelectSubset<T, FormSubmissionValueUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more FormSubmissionValues and returns the data updated in the database.
+     * @param {FormSubmissionValueUpdateManyAndReturnArgs} args - Arguments to update many FormSubmissionValues.
+     * @example
+     * // Update many FormSubmissionValues
+     * const formSubmissionValue = await prisma.formSubmissionValue.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more FormSubmissionValues and only return the `id`
+     * const formSubmissionValueWithIdOnly = await prisma.formSubmissionValue.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends FormSubmissionValueUpdateManyAndReturnArgs>(args: SelectSubset<T, FormSubmissionValueUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FormSubmissionValuePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one FormSubmissionValue.
+     * @param {FormSubmissionValueUpsertArgs} args - Arguments to update or create a FormSubmissionValue.
+     * @example
+     * // Update or create a FormSubmissionValue
+     * const formSubmissionValue = await prisma.formSubmissionValue.upsert({
+     *   create: {
+     *     // ... data to create a FormSubmissionValue
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the FormSubmissionValue we want to update
+     *   }
+     * })
+     */
+    upsert<T extends FormSubmissionValueUpsertArgs>(args: SelectSubset<T, FormSubmissionValueUpsertArgs<ExtArgs>>): Prisma__FormSubmissionValueClient<$Result.GetResult<Prisma.$FormSubmissionValuePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of FormSubmissionValues.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FormSubmissionValueCountArgs} args - Arguments to filter FormSubmissionValues to count.
+     * @example
+     * // Count the number of FormSubmissionValues
+     * const count = await prisma.formSubmissionValue.count({
+     *   where: {
+     *     // ... the filter for the FormSubmissionValues we want to count
+     *   }
+     * })
+    **/
+    count<T extends FormSubmissionValueCountArgs>(
+      args?: Subset<T, FormSubmissionValueCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], FormSubmissionValueCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a FormSubmissionValue.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FormSubmissionValueAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends FormSubmissionValueAggregateArgs>(args: Subset<T, FormSubmissionValueAggregateArgs>): Prisma.PrismaPromise<GetFormSubmissionValueAggregateType<T>>
+
+    /**
+     * Group by FormSubmissionValue.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FormSubmissionValueGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends FormSubmissionValueGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: FormSubmissionValueGroupByArgs['orderBy'] }
+        : { orderBy?: FormSubmissionValueGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, FormSubmissionValueGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetFormSubmissionValueGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the FormSubmissionValue model
+   */
+  readonly fields: FormSubmissionValueFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for FormSubmissionValue.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__FormSubmissionValueClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    submission<T extends FormSubmissionDefaultArgs<ExtArgs> = {}>(args?: Subset<T, FormSubmissionDefaultArgs<ExtArgs>>): Prisma__FormSubmissionClient<$Result.GetResult<Prisma.$FormSubmissionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    form<T extends FormDefaultArgs<ExtArgs> = {}>(args?: Subset<T, FormDefaultArgs<ExtArgs>>): Prisma__FormClient<$Result.GetResult<Prisma.$FormPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    formVersion<T extends FormSubmissionValue$formVersionArgs<ExtArgs> = {}>(args?: Subset<T, FormSubmissionValue$formVersionArgs<ExtArgs>>): Prisma__FormVersionClient<$Result.GetResult<Prisma.$FormVersionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the FormSubmissionValue model
+   */
+  interface FormSubmissionValueFieldRefs {
+    readonly id: FieldRef<"FormSubmissionValue", 'Int'>
+    readonly submissionId: FieldRef<"FormSubmissionValue", 'Int'>
+    readonly formId: FieldRef<"FormSubmissionValue", 'Int'>
+    readonly formVersionId: FieldRef<"FormSubmissionValue", 'Int'>
+    readonly fieldKey: FieldRef<"FormSubmissionValue", 'String'>
+    readonly fieldLabel: FieldRef<"FormSubmissionValue", 'String'>
+    readonly elementId: FieldRef<"FormSubmissionValue", 'String'>
+    readonly pageId: FieldRef<"FormSubmissionValue", 'String'>
+    readonly parentId: FieldRef<"FormSubmissionValue", 'String'>
+    readonly valueType: FieldRef<"FormSubmissionValue", 'String'>
+    readonly stringValue: FieldRef<"FormSubmissionValue", 'String'>
+    readonly numberValue: FieldRef<"FormSubmissionValue", 'Float'>
+    readonly booleanValue: FieldRef<"FormSubmissionValue", 'Boolean'>
+    readonly dateValue: FieldRef<"FormSubmissionValue", 'DateTime'>
+    readonly jsonValue: FieldRef<"FormSubmissionValue", 'String'>
+    readonly rawValue: FieldRef<"FormSubmissionValue", 'String'>
+    readonly createdAt: FieldRef<"FormSubmissionValue", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * FormSubmissionValue findUnique
+   */
+  export type FormSubmissionValueFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FormSubmissionValue
+     */
+    select?: FormSubmissionValueSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FormSubmissionValue
+     */
+    omit?: FormSubmissionValueOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FormSubmissionValueInclude<ExtArgs> | null
+    /**
+     * Filter, which FormSubmissionValue to fetch.
+     */
+    where: FormSubmissionValueWhereUniqueInput
+  }
+
+  /**
+   * FormSubmissionValue findUniqueOrThrow
+   */
+  export type FormSubmissionValueFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FormSubmissionValue
+     */
+    select?: FormSubmissionValueSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FormSubmissionValue
+     */
+    omit?: FormSubmissionValueOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FormSubmissionValueInclude<ExtArgs> | null
+    /**
+     * Filter, which FormSubmissionValue to fetch.
+     */
+    where: FormSubmissionValueWhereUniqueInput
+  }
+
+  /**
+   * FormSubmissionValue findFirst
+   */
+  export type FormSubmissionValueFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FormSubmissionValue
+     */
+    select?: FormSubmissionValueSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FormSubmissionValue
+     */
+    omit?: FormSubmissionValueOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FormSubmissionValueInclude<ExtArgs> | null
+    /**
+     * Filter, which FormSubmissionValue to fetch.
+     */
+    where?: FormSubmissionValueWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FormSubmissionValues to fetch.
+     */
+    orderBy?: FormSubmissionValueOrderByWithRelationInput | FormSubmissionValueOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for FormSubmissionValues.
+     */
+    cursor?: FormSubmissionValueWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FormSubmissionValues from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FormSubmissionValues.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of FormSubmissionValues.
+     */
+    distinct?: FormSubmissionValueScalarFieldEnum | FormSubmissionValueScalarFieldEnum[]
+  }
+
+  /**
+   * FormSubmissionValue findFirstOrThrow
+   */
+  export type FormSubmissionValueFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FormSubmissionValue
+     */
+    select?: FormSubmissionValueSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FormSubmissionValue
+     */
+    omit?: FormSubmissionValueOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FormSubmissionValueInclude<ExtArgs> | null
+    /**
+     * Filter, which FormSubmissionValue to fetch.
+     */
+    where?: FormSubmissionValueWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FormSubmissionValues to fetch.
+     */
+    orderBy?: FormSubmissionValueOrderByWithRelationInput | FormSubmissionValueOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for FormSubmissionValues.
+     */
+    cursor?: FormSubmissionValueWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FormSubmissionValues from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FormSubmissionValues.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of FormSubmissionValues.
+     */
+    distinct?: FormSubmissionValueScalarFieldEnum | FormSubmissionValueScalarFieldEnum[]
+  }
+
+  /**
+   * FormSubmissionValue findMany
+   */
+  export type FormSubmissionValueFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FormSubmissionValue
+     */
+    select?: FormSubmissionValueSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FormSubmissionValue
+     */
+    omit?: FormSubmissionValueOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FormSubmissionValueInclude<ExtArgs> | null
+    /**
+     * Filter, which FormSubmissionValues to fetch.
+     */
+    where?: FormSubmissionValueWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FormSubmissionValues to fetch.
+     */
+    orderBy?: FormSubmissionValueOrderByWithRelationInput | FormSubmissionValueOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing FormSubmissionValues.
+     */
+    cursor?: FormSubmissionValueWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FormSubmissionValues from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FormSubmissionValues.
+     */
+    skip?: number
+    distinct?: FormSubmissionValueScalarFieldEnum | FormSubmissionValueScalarFieldEnum[]
+  }
+
+  /**
+   * FormSubmissionValue create
+   */
+  export type FormSubmissionValueCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FormSubmissionValue
+     */
+    select?: FormSubmissionValueSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FormSubmissionValue
+     */
+    omit?: FormSubmissionValueOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FormSubmissionValueInclude<ExtArgs> | null
+    /**
+     * The data needed to create a FormSubmissionValue.
+     */
+    data: XOR<FormSubmissionValueCreateInput, FormSubmissionValueUncheckedCreateInput>
+  }
+
+  /**
+   * FormSubmissionValue createMany
+   */
+  export type FormSubmissionValueCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many FormSubmissionValues.
+     */
+    data: FormSubmissionValueCreateManyInput | FormSubmissionValueCreateManyInput[]
+  }
+
+  /**
+   * FormSubmissionValue createManyAndReturn
+   */
+  export type FormSubmissionValueCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FormSubmissionValue
+     */
+    select?: FormSubmissionValueSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the FormSubmissionValue
+     */
+    omit?: FormSubmissionValueOmit<ExtArgs> | null
+    /**
+     * The data used to create many FormSubmissionValues.
+     */
+    data: FormSubmissionValueCreateManyInput | FormSubmissionValueCreateManyInput[]
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FormSubmissionValueIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * FormSubmissionValue update
+   */
+  export type FormSubmissionValueUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FormSubmissionValue
+     */
+    select?: FormSubmissionValueSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FormSubmissionValue
+     */
+    omit?: FormSubmissionValueOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FormSubmissionValueInclude<ExtArgs> | null
+    /**
+     * The data needed to update a FormSubmissionValue.
+     */
+    data: XOR<FormSubmissionValueUpdateInput, FormSubmissionValueUncheckedUpdateInput>
+    /**
+     * Choose, which FormSubmissionValue to update.
+     */
+    where: FormSubmissionValueWhereUniqueInput
+  }
+
+  /**
+   * FormSubmissionValue updateMany
+   */
+  export type FormSubmissionValueUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update FormSubmissionValues.
+     */
+    data: XOR<FormSubmissionValueUpdateManyMutationInput, FormSubmissionValueUncheckedUpdateManyInput>
+    /**
+     * Filter which FormSubmissionValues to update
+     */
+    where?: FormSubmissionValueWhereInput
+    /**
+     * Limit how many FormSubmissionValues to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * FormSubmissionValue updateManyAndReturn
+   */
+  export type FormSubmissionValueUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FormSubmissionValue
+     */
+    select?: FormSubmissionValueSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the FormSubmissionValue
+     */
+    omit?: FormSubmissionValueOmit<ExtArgs> | null
+    /**
+     * The data used to update FormSubmissionValues.
+     */
+    data: XOR<FormSubmissionValueUpdateManyMutationInput, FormSubmissionValueUncheckedUpdateManyInput>
+    /**
+     * Filter which FormSubmissionValues to update
+     */
+    where?: FormSubmissionValueWhereInput
+    /**
+     * Limit how many FormSubmissionValues to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FormSubmissionValueIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * FormSubmissionValue upsert
+   */
+  export type FormSubmissionValueUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FormSubmissionValue
+     */
+    select?: FormSubmissionValueSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FormSubmissionValue
+     */
+    omit?: FormSubmissionValueOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FormSubmissionValueInclude<ExtArgs> | null
+    /**
+     * The filter to search for the FormSubmissionValue to update in case it exists.
+     */
+    where: FormSubmissionValueWhereUniqueInput
+    /**
+     * In case the FormSubmissionValue found by the `where` argument doesn't exist, create a new FormSubmissionValue with this data.
+     */
+    create: XOR<FormSubmissionValueCreateInput, FormSubmissionValueUncheckedCreateInput>
+    /**
+     * In case the FormSubmissionValue was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<FormSubmissionValueUpdateInput, FormSubmissionValueUncheckedUpdateInput>
+  }
+
+  /**
+   * FormSubmissionValue delete
+   */
+  export type FormSubmissionValueDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FormSubmissionValue
+     */
+    select?: FormSubmissionValueSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FormSubmissionValue
+     */
+    omit?: FormSubmissionValueOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FormSubmissionValueInclude<ExtArgs> | null
+    /**
+     * Filter which FormSubmissionValue to delete.
+     */
+    where: FormSubmissionValueWhereUniqueInput
+  }
+
+  /**
+   * FormSubmissionValue deleteMany
+   */
+  export type FormSubmissionValueDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which FormSubmissionValues to delete
+     */
+    where?: FormSubmissionValueWhereInput
+    /**
+     * Limit how many FormSubmissionValues to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * FormSubmissionValue.formVersion
+   */
+  export type FormSubmissionValue$formVersionArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FormVersion
+     */
+    select?: FormVersionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FormVersion
+     */
+    omit?: FormVersionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FormVersionInclude<ExtArgs> | null
+    where?: FormVersionWhereInput
+  }
+
+  /**
+   * FormSubmissionValue without action
+   */
+  export type FormSubmissionValueDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FormSubmissionValue
+     */
+    select?: FormSubmissionValueSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FormSubmissionValue
+     */
+    omit?: FormSubmissionValueOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FormSubmissionValueInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model FormEvent
+   */
+
+  export type AggregateFormEvent = {
+    _count: FormEventCountAggregateOutputType | null
+    _avg: FormEventAvgAggregateOutputType | null
+    _sum: FormEventSumAggregateOutputType | null
+    _min: FormEventMinAggregateOutputType | null
+    _max: FormEventMaxAggregateOutputType | null
+  }
+
+  export type FormEventAvgAggregateOutputType = {
+    id: number | null
+    formId: number | null
+    version: number | null
+  }
+
+  export type FormEventSumAggregateOutputType = {
+    id: number | null
+    formId: number | null
+    version: number | null
+  }
+
+  export type FormEventMinAggregateOutputType = {
+    id: number | null
+    formId: number | null
+    version: number | null
+    name: string | null
+    sourceField: string | null
+    targetField: string | null
+    expression: string | null
+    trigger: string | null
+    enabled: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type FormEventMaxAggregateOutputType = {
+    id: number | null
+    formId: number | null
+    version: number | null
+    name: string | null
+    sourceField: string | null
+    targetField: string | null
+    expression: string | null
+    trigger: string | null
+    enabled: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type FormEventCountAggregateOutputType = {
+    id: number
+    formId: number
+    version: number
+    name: number
+    sourceField: number
+    targetField: number
+    expression: number
+    trigger: number
+    enabled: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type FormEventAvgAggregateInputType = {
+    id?: true
+    formId?: true
+    version?: true
+  }
+
+  export type FormEventSumAggregateInputType = {
+    id?: true
+    formId?: true
+    version?: true
+  }
+
+  export type FormEventMinAggregateInputType = {
+    id?: true
+    formId?: true
+    version?: true
+    name?: true
+    sourceField?: true
+    targetField?: true
+    expression?: true
+    trigger?: true
+    enabled?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type FormEventMaxAggregateInputType = {
+    id?: true
+    formId?: true
+    version?: true
+    name?: true
+    sourceField?: true
+    targetField?: true
+    expression?: true
+    trigger?: true
+    enabled?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type FormEventCountAggregateInputType = {
+    id?: true
+    formId?: true
+    version?: true
+    name?: true
+    sourceField?: true
+    targetField?: true
+    expression?: true
+    trigger?: true
+    enabled?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type FormEventAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which FormEvent to aggregate.
+     */
+    where?: FormEventWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FormEvents to fetch.
+     */
+    orderBy?: FormEventOrderByWithRelationInput | FormEventOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: FormEventWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FormEvents from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FormEvents.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned FormEvents
+    **/
+    _count?: true | FormEventCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: FormEventAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: FormEventSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: FormEventMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: FormEventMaxAggregateInputType
+  }
+
+  export type GetFormEventAggregateType<T extends FormEventAggregateArgs> = {
+        [P in keyof T & keyof AggregateFormEvent]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateFormEvent[P]>
+      : GetScalarType<T[P], AggregateFormEvent[P]>
+  }
+
+
+
+
+  export type FormEventGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: FormEventWhereInput
+    orderBy?: FormEventOrderByWithAggregationInput | FormEventOrderByWithAggregationInput[]
+    by: FormEventScalarFieldEnum[] | FormEventScalarFieldEnum
+    having?: FormEventScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: FormEventCountAggregateInputType | true
+    _avg?: FormEventAvgAggregateInputType
+    _sum?: FormEventSumAggregateInputType
+    _min?: FormEventMinAggregateInputType
+    _max?: FormEventMaxAggregateInputType
+  }
+
+  export type FormEventGroupByOutputType = {
+    id: number
+    formId: number
+    version: number
+    name: string
+    sourceField: string | null
+    targetField: string
+    expression: string
+    trigger: string
+    enabled: boolean
+    createdAt: Date
+    updatedAt: Date
+    _count: FormEventCountAggregateOutputType | null
+    _avg: FormEventAvgAggregateOutputType | null
+    _sum: FormEventSumAggregateOutputType | null
+    _min: FormEventMinAggregateOutputType | null
+    _max: FormEventMaxAggregateOutputType | null
+  }
+
+  type GetFormEventGroupByPayload<T extends FormEventGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<FormEventGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof FormEventGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], FormEventGroupByOutputType[P]>
+            : GetScalarType<T[P], FormEventGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type FormEventSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    formId?: boolean
+    version?: boolean
+    name?: boolean
+    sourceField?: boolean
+    targetField?: boolean
+    expression?: boolean
+    trigger?: boolean
+    enabled?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    form?: boolean | FormDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["formEvent"]>
+
+  export type FormEventSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    formId?: boolean
+    version?: boolean
+    name?: boolean
+    sourceField?: boolean
+    targetField?: boolean
+    expression?: boolean
+    trigger?: boolean
+    enabled?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    form?: boolean | FormDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["formEvent"]>
+
+  export type FormEventSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    formId?: boolean
+    version?: boolean
+    name?: boolean
+    sourceField?: boolean
+    targetField?: boolean
+    expression?: boolean
+    trigger?: boolean
+    enabled?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    form?: boolean | FormDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["formEvent"]>
+
+  export type FormEventSelectScalar = {
+    id?: boolean
+    formId?: boolean
+    version?: boolean
+    name?: boolean
+    sourceField?: boolean
+    targetField?: boolean
+    expression?: boolean
+    trigger?: boolean
+    enabled?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type FormEventOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "formId" | "version" | "name" | "sourceField" | "targetField" | "expression" | "trigger" | "enabled" | "createdAt" | "updatedAt", ExtArgs["result"]["formEvent"]>
+  export type FormEventInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    form?: boolean | FormDefaultArgs<ExtArgs>
+  }
+  export type FormEventIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    form?: boolean | FormDefaultArgs<ExtArgs>
+  }
+  export type FormEventIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    form?: boolean | FormDefaultArgs<ExtArgs>
+  }
+
+  export type $FormEventPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "FormEvent"
+    objects: {
+      form: Prisma.$FormPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      formId: number
+      version: number
+      name: string
+      sourceField: string | null
+      targetField: string
+      expression: string
+      trigger: string
+      enabled: boolean
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["formEvent"]>
+    composites: {}
+  }
+
+  type FormEventGetPayload<S extends boolean | null | undefined | FormEventDefaultArgs> = $Result.GetResult<Prisma.$FormEventPayload, S>
+
+  type FormEventCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<FormEventFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: FormEventCountAggregateInputType | true
+    }
+
+  export interface FormEventDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['FormEvent'], meta: { name: 'FormEvent' } }
+    /**
+     * Find zero or one FormEvent that matches the filter.
+     * @param {FormEventFindUniqueArgs} args - Arguments to find a FormEvent
+     * @example
+     * // Get one FormEvent
+     * const formEvent = await prisma.formEvent.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends FormEventFindUniqueArgs>(args: SelectSubset<T, FormEventFindUniqueArgs<ExtArgs>>): Prisma__FormEventClient<$Result.GetResult<Prisma.$FormEventPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one FormEvent that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {FormEventFindUniqueOrThrowArgs} args - Arguments to find a FormEvent
+     * @example
+     * // Get one FormEvent
+     * const formEvent = await prisma.formEvent.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends FormEventFindUniqueOrThrowArgs>(args: SelectSubset<T, FormEventFindUniqueOrThrowArgs<ExtArgs>>): Prisma__FormEventClient<$Result.GetResult<Prisma.$FormEventPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first FormEvent that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FormEventFindFirstArgs} args - Arguments to find a FormEvent
+     * @example
+     * // Get one FormEvent
+     * const formEvent = await prisma.formEvent.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends FormEventFindFirstArgs>(args?: SelectSubset<T, FormEventFindFirstArgs<ExtArgs>>): Prisma__FormEventClient<$Result.GetResult<Prisma.$FormEventPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first FormEvent that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FormEventFindFirstOrThrowArgs} args - Arguments to find a FormEvent
+     * @example
+     * // Get one FormEvent
+     * const formEvent = await prisma.formEvent.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends FormEventFindFirstOrThrowArgs>(args?: SelectSubset<T, FormEventFindFirstOrThrowArgs<ExtArgs>>): Prisma__FormEventClient<$Result.GetResult<Prisma.$FormEventPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more FormEvents that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FormEventFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all FormEvents
+     * const formEvents = await prisma.formEvent.findMany()
+     * 
+     * // Get first 10 FormEvents
+     * const formEvents = await prisma.formEvent.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const formEventWithIdOnly = await prisma.formEvent.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends FormEventFindManyArgs>(args?: SelectSubset<T, FormEventFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FormEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a FormEvent.
+     * @param {FormEventCreateArgs} args - Arguments to create a FormEvent.
+     * @example
+     * // Create one FormEvent
+     * const FormEvent = await prisma.formEvent.create({
+     *   data: {
+     *     // ... data to create a FormEvent
+     *   }
+     * })
+     * 
+     */
+    create<T extends FormEventCreateArgs>(args: SelectSubset<T, FormEventCreateArgs<ExtArgs>>): Prisma__FormEventClient<$Result.GetResult<Prisma.$FormEventPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many FormEvents.
+     * @param {FormEventCreateManyArgs} args - Arguments to create many FormEvents.
+     * @example
+     * // Create many FormEvents
+     * const formEvent = await prisma.formEvent.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends FormEventCreateManyArgs>(args?: SelectSubset<T, FormEventCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many FormEvents and returns the data saved in the database.
+     * @param {FormEventCreateManyAndReturnArgs} args - Arguments to create many FormEvents.
+     * @example
+     * // Create many FormEvents
+     * const formEvent = await prisma.formEvent.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many FormEvents and only return the `id`
+     * const formEventWithIdOnly = await prisma.formEvent.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends FormEventCreateManyAndReturnArgs>(args?: SelectSubset<T, FormEventCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FormEventPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a FormEvent.
+     * @param {FormEventDeleteArgs} args - Arguments to delete one FormEvent.
+     * @example
+     * // Delete one FormEvent
+     * const FormEvent = await prisma.formEvent.delete({
+     *   where: {
+     *     // ... filter to delete one FormEvent
+     *   }
+     * })
+     * 
+     */
+    delete<T extends FormEventDeleteArgs>(args: SelectSubset<T, FormEventDeleteArgs<ExtArgs>>): Prisma__FormEventClient<$Result.GetResult<Prisma.$FormEventPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one FormEvent.
+     * @param {FormEventUpdateArgs} args - Arguments to update one FormEvent.
+     * @example
+     * // Update one FormEvent
+     * const formEvent = await prisma.formEvent.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends FormEventUpdateArgs>(args: SelectSubset<T, FormEventUpdateArgs<ExtArgs>>): Prisma__FormEventClient<$Result.GetResult<Prisma.$FormEventPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more FormEvents.
+     * @param {FormEventDeleteManyArgs} args - Arguments to filter FormEvents to delete.
+     * @example
+     * // Delete a few FormEvents
+     * const { count } = await prisma.formEvent.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends FormEventDeleteManyArgs>(args?: SelectSubset<T, FormEventDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more FormEvents.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FormEventUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many FormEvents
+     * const formEvent = await prisma.formEvent.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends FormEventUpdateManyArgs>(args: SelectSubset<T, FormEventUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more FormEvents and returns the data updated in the database.
+     * @param {FormEventUpdateManyAndReturnArgs} args - Arguments to update many FormEvents.
+     * @example
+     * // Update many FormEvents
+     * const formEvent = await prisma.formEvent.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more FormEvents and only return the `id`
+     * const formEventWithIdOnly = await prisma.formEvent.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends FormEventUpdateManyAndReturnArgs>(args: SelectSubset<T, FormEventUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FormEventPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one FormEvent.
+     * @param {FormEventUpsertArgs} args - Arguments to update or create a FormEvent.
+     * @example
+     * // Update or create a FormEvent
+     * const formEvent = await prisma.formEvent.upsert({
+     *   create: {
+     *     // ... data to create a FormEvent
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the FormEvent we want to update
+     *   }
+     * })
+     */
+    upsert<T extends FormEventUpsertArgs>(args: SelectSubset<T, FormEventUpsertArgs<ExtArgs>>): Prisma__FormEventClient<$Result.GetResult<Prisma.$FormEventPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of FormEvents.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FormEventCountArgs} args - Arguments to filter FormEvents to count.
+     * @example
+     * // Count the number of FormEvents
+     * const count = await prisma.formEvent.count({
+     *   where: {
+     *     // ... the filter for the FormEvents we want to count
+     *   }
+     * })
+    **/
+    count<T extends FormEventCountArgs>(
+      args?: Subset<T, FormEventCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], FormEventCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a FormEvent.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FormEventAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends FormEventAggregateArgs>(args: Subset<T, FormEventAggregateArgs>): Prisma.PrismaPromise<GetFormEventAggregateType<T>>
+
+    /**
+     * Group by FormEvent.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FormEventGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends FormEventGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: FormEventGroupByArgs['orderBy'] }
+        : { orderBy?: FormEventGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, FormEventGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetFormEventGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the FormEvent model
+   */
+  readonly fields: FormEventFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for FormEvent.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__FormEventClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    form<T extends FormDefaultArgs<ExtArgs> = {}>(args?: Subset<T, FormDefaultArgs<ExtArgs>>): Prisma__FormClient<$Result.GetResult<Prisma.$FormPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the FormEvent model
+   */
+  interface FormEventFieldRefs {
+    readonly id: FieldRef<"FormEvent", 'Int'>
+    readonly formId: FieldRef<"FormEvent", 'Int'>
+    readonly version: FieldRef<"FormEvent", 'Int'>
+    readonly name: FieldRef<"FormEvent", 'String'>
+    readonly sourceField: FieldRef<"FormEvent", 'String'>
+    readonly targetField: FieldRef<"FormEvent", 'String'>
+    readonly expression: FieldRef<"FormEvent", 'String'>
+    readonly trigger: FieldRef<"FormEvent", 'String'>
+    readonly enabled: FieldRef<"FormEvent", 'Boolean'>
+    readonly createdAt: FieldRef<"FormEvent", 'DateTime'>
+    readonly updatedAt: FieldRef<"FormEvent", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * FormEvent findUnique
+   */
+  export type FormEventFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FormEvent
+     */
+    select?: FormEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FormEvent
+     */
+    omit?: FormEventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FormEventInclude<ExtArgs> | null
+    /**
+     * Filter, which FormEvent to fetch.
+     */
+    where: FormEventWhereUniqueInput
+  }
+
+  /**
+   * FormEvent findUniqueOrThrow
+   */
+  export type FormEventFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FormEvent
+     */
+    select?: FormEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FormEvent
+     */
+    omit?: FormEventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FormEventInclude<ExtArgs> | null
+    /**
+     * Filter, which FormEvent to fetch.
+     */
+    where: FormEventWhereUniqueInput
+  }
+
+  /**
+   * FormEvent findFirst
+   */
+  export type FormEventFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FormEvent
+     */
+    select?: FormEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FormEvent
+     */
+    omit?: FormEventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FormEventInclude<ExtArgs> | null
+    /**
+     * Filter, which FormEvent to fetch.
+     */
+    where?: FormEventWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FormEvents to fetch.
+     */
+    orderBy?: FormEventOrderByWithRelationInput | FormEventOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for FormEvents.
+     */
+    cursor?: FormEventWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FormEvents from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FormEvents.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of FormEvents.
+     */
+    distinct?: FormEventScalarFieldEnum | FormEventScalarFieldEnum[]
+  }
+
+  /**
+   * FormEvent findFirstOrThrow
+   */
+  export type FormEventFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FormEvent
+     */
+    select?: FormEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FormEvent
+     */
+    omit?: FormEventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FormEventInclude<ExtArgs> | null
+    /**
+     * Filter, which FormEvent to fetch.
+     */
+    where?: FormEventWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FormEvents to fetch.
+     */
+    orderBy?: FormEventOrderByWithRelationInput | FormEventOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for FormEvents.
+     */
+    cursor?: FormEventWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FormEvents from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FormEvents.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of FormEvents.
+     */
+    distinct?: FormEventScalarFieldEnum | FormEventScalarFieldEnum[]
+  }
+
+  /**
+   * FormEvent findMany
+   */
+  export type FormEventFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FormEvent
+     */
+    select?: FormEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FormEvent
+     */
+    omit?: FormEventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FormEventInclude<ExtArgs> | null
+    /**
+     * Filter, which FormEvents to fetch.
+     */
+    where?: FormEventWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FormEvents to fetch.
+     */
+    orderBy?: FormEventOrderByWithRelationInput | FormEventOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing FormEvents.
+     */
+    cursor?: FormEventWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FormEvents from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FormEvents.
+     */
+    skip?: number
+    distinct?: FormEventScalarFieldEnum | FormEventScalarFieldEnum[]
+  }
+
+  /**
+   * FormEvent create
+   */
+  export type FormEventCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FormEvent
+     */
+    select?: FormEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FormEvent
+     */
+    omit?: FormEventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FormEventInclude<ExtArgs> | null
+    /**
+     * The data needed to create a FormEvent.
+     */
+    data: XOR<FormEventCreateInput, FormEventUncheckedCreateInput>
+  }
+
+  /**
+   * FormEvent createMany
+   */
+  export type FormEventCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many FormEvents.
+     */
+    data: FormEventCreateManyInput | FormEventCreateManyInput[]
+  }
+
+  /**
+   * FormEvent createManyAndReturn
+   */
+  export type FormEventCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FormEvent
+     */
+    select?: FormEventSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the FormEvent
+     */
+    omit?: FormEventOmit<ExtArgs> | null
+    /**
+     * The data used to create many FormEvents.
+     */
+    data: FormEventCreateManyInput | FormEventCreateManyInput[]
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FormEventIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * FormEvent update
+   */
+  export type FormEventUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FormEvent
+     */
+    select?: FormEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FormEvent
+     */
+    omit?: FormEventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FormEventInclude<ExtArgs> | null
+    /**
+     * The data needed to update a FormEvent.
+     */
+    data: XOR<FormEventUpdateInput, FormEventUncheckedUpdateInput>
+    /**
+     * Choose, which FormEvent to update.
+     */
+    where: FormEventWhereUniqueInput
+  }
+
+  /**
+   * FormEvent updateMany
+   */
+  export type FormEventUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update FormEvents.
+     */
+    data: XOR<FormEventUpdateManyMutationInput, FormEventUncheckedUpdateManyInput>
+    /**
+     * Filter which FormEvents to update
+     */
+    where?: FormEventWhereInput
+    /**
+     * Limit how many FormEvents to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * FormEvent updateManyAndReturn
+   */
+  export type FormEventUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FormEvent
+     */
+    select?: FormEventSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the FormEvent
+     */
+    omit?: FormEventOmit<ExtArgs> | null
+    /**
+     * The data used to update FormEvents.
+     */
+    data: XOR<FormEventUpdateManyMutationInput, FormEventUncheckedUpdateManyInput>
+    /**
+     * Filter which FormEvents to update
+     */
+    where?: FormEventWhereInput
+    /**
+     * Limit how many FormEvents to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FormEventIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * FormEvent upsert
+   */
+  export type FormEventUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FormEvent
+     */
+    select?: FormEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FormEvent
+     */
+    omit?: FormEventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FormEventInclude<ExtArgs> | null
+    /**
+     * The filter to search for the FormEvent to update in case it exists.
+     */
+    where: FormEventWhereUniqueInput
+    /**
+     * In case the FormEvent found by the `where` argument doesn't exist, create a new FormEvent with this data.
+     */
+    create: XOR<FormEventCreateInput, FormEventUncheckedCreateInput>
+    /**
+     * In case the FormEvent was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<FormEventUpdateInput, FormEventUncheckedUpdateInput>
+  }
+
+  /**
+   * FormEvent delete
+   */
+  export type FormEventDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FormEvent
+     */
+    select?: FormEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FormEvent
+     */
+    omit?: FormEventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FormEventInclude<ExtArgs> | null
+    /**
+     * Filter which FormEvent to delete.
+     */
+    where: FormEventWhereUniqueInput
+  }
+
+  /**
+   * FormEvent deleteMany
+   */
+  export type FormEventDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which FormEvents to delete
+     */
+    where?: FormEventWhereInput
+    /**
+     * Limit how many FormEvents to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * FormEvent without action
+   */
+  export type FormEventDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FormEvent
+     */
+    select?: FormEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FormEvent
+     */
+    omit?: FormEventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FormEventInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model FormAssignment
+   */
+
+  export type AggregateFormAssignment = {
+    _count: FormAssignmentCountAggregateOutputType | null
+    _avg: FormAssignmentAvgAggregateOutputType | null
+    _sum: FormAssignmentSumAggregateOutputType | null
+    _min: FormAssignmentMinAggregateOutputType | null
+    _max: FormAssignmentMaxAggregateOutputType | null
+  }
+
+  export type FormAssignmentAvgAggregateOutputType = {
+    id: number | null
+    formId: number | null
+    roleId: number | null
+    submoduleId: number | null
+  }
+
+  export type FormAssignmentSumAggregateOutputType = {
+    id: number | null
+    formId: number | null
+    roleId: number | null
+    submoduleId: number | null
+  }
+
+  export type FormAssignmentMinAggregateOutputType = {
+    id: number | null
+    formId: number | null
+    userId: string | null
+    roleId: number | null
+    submoduleId: number | null
+    active: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type FormAssignmentMaxAggregateOutputType = {
+    id: number | null
+    formId: number | null
+    userId: string | null
+    roleId: number | null
+    submoduleId: number | null
+    active: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type FormAssignmentCountAggregateOutputType = {
+    id: number
+    formId: number
+    userId: number
+    roleId: number
+    submoduleId: number
+    active: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type FormAssignmentAvgAggregateInputType = {
+    id?: true
+    formId?: true
+    roleId?: true
+    submoduleId?: true
+  }
+
+  export type FormAssignmentSumAggregateInputType = {
+    id?: true
+    formId?: true
+    roleId?: true
+    submoduleId?: true
+  }
+
+  export type FormAssignmentMinAggregateInputType = {
+    id?: true
+    formId?: true
+    userId?: true
+    roleId?: true
+    submoduleId?: true
+    active?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type FormAssignmentMaxAggregateInputType = {
+    id?: true
+    formId?: true
+    userId?: true
+    roleId?: true
+    submoduleId?: true
+    active?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type FormAssignmentCountAggregateInputType = {
+    id?: true
+    formId?: true
+    userId?: true
+    roleId?: true
+    submoduleId?: true
+    active?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type FormAssignmentAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which FormAssignment to aggregate.
+     */
+    where?: FormAssignmentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FormAssignments to fetch.
+     */
+    orderBy?: FormAssignmentOrderByWithRelationInput | FormAssignmentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: FormAssignmentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FormAssignments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FormAssignments.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned FormAssignments
+    **/
+    _count?: true | FormAssignmentCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: FormAssignmentAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: FormAssignmentSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: FormAssignmentMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: FormAssignmentMaxAggregateInputType
+  }
+
+  export type GetFormAssignmentAggregateType<T extends FormAssignmentAggregateArgs> = {
+        [P in keyof T & keyof AggregateFormAssignment]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateFormAssignment[P]>
+      : GetScalarType<T[P], AggregateFormAssignment[P]>
+  }
+
+
+
+
+  export type FormAssignmentGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: FormAssignmentWhereInput
+    orderBy?: FormAssignmentOrderByWithAggregationInput | FormAssignmentOrderByWithAggregationInput[]
+    by: FormAssignmentScalarFieldEnum[] | FormAssignmentScalarFieldEnum
+    having?: FormAssignmentScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: FormAssignmentCountAggregateInputType | true
+    _avg?: FormAssignmentAvgAggregateInputType
+    _sum?: FormAssignmentSumAggregateInputType
+    _min?: FormAssignmentMinAggregateInputType
+    _max?: FormAssignmentMaxAggregateInputType
+  }
+
+  export type FormAssignmentGroupByOutputType = {
+    id: number
+    formId: number
+    userId: string | null
+    roleId: number | null
+    submoduleId: number
+    active: boolean
+    createdAt: Date
+    updatedAt: Date
+    _count: FormAssignmentCountAggregateOutputType | null
+    _avg: FormAssignmentAvgAggregateOutputType | null
+    _sum: FormAssignmentSumAggregateOutputType | null
+    _min: FormAssignmentMinAggregateOutputType | null
+    _max: FormAssignmentMaxAggregateOutputType | null
+  }
+
+  type GetFormAssignmentGroupByPayload<T extends FormAssignmentGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<FormAssignmentGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof FormAssignmentGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], FormAssignmentGroupByOutputType[P]>
+            : GetScalarType<T[P], FormAssignmentGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type FormAssignmentSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    formId?: boolean
+    userId?: boolean
+    roleId?: boolean
+    submoduleId?: boolean
+    active?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    form?: boolean | FormDefaultArgs<ExtArgs>
+    role?: boolean | FormAssignment$roleArgs<ExtArgs>
+    submodule?: boolean | SubmoduleDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["formAssignment"]>
+
+  export type FormAssignmentSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    formId?: boolean
+    userId?: boolean
+    roleId?: boolean
+    submoduleId?: boolean
+    active?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    form?: boolean | FormDefaultArgs<ExtArgs>
+    role?: boolean | FormAssignment$roleArgs<ExtArgs>
+    submodule?: boolean | SubmoduleDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["formAssignment"]>
+
+  export type FormAssignmentSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    formId?: boolean
+    userId?: boolean
+    roleId?: boolean
+    submoduleId?: boolean
+    active?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    form?: boolean | FormDefaultArgs<ExtArgs>
+    role?: boolean | FormAssignment$roleArgs<ExtArgs>
+    submodule?: boolean | SubmoduleDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["formAssignment"]>
+
+  export type FormAssignmentSelectScalar = {
+    id?: boolean
+    formId?: boolean
+    userId?: boolean
+    roleId?: boolean
+    submoduleId?: boolean
+    active?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type FormAssignmentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "formId" | "userId" | "roleId" | "submoduleId" | "active" | "createdAt" | "updatedAt", ExtArgs["result"]["formAssignment"]>
+  export type FormAssignmentInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    form?: boolean | FormDefaultArgs<ExtArgs>
+    role?: boolean | FormAssignment$roleArgs<ExtArgs>
+    submodule?: boolean | SubmoduleDefaultArgs<ExtArgs>
+  }
+  export type FormAssignmentIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    form?: boolean | FormDefaultArgs<ExtArgs>
+    role?: boolean | FormAssignment$roleArgs<ExtArgs>
+    submodule?: boolean | SubmoduleDefaultArgs<ExtArgs>
+  }
+  export type FormAssignmentIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    form?: boolean | FormDefaultArgs<ExtArgs>
+    role?: boolean | FormAssignment$roleArgs<ExtArgs>
+    submodule?: boolean | SubmoduleDefaultArgs<ExtArgs>
+  }
+
+  export type $FormAssignmentPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "FormAssignment"
+    objects: {
+      form: Prisma.$FormPayload<ExtArgs>
+      role: Prisma.$RolePayload<ExtArgs> | null
+      submodule: Prisma.$SubmodulePayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      formId: number
+      userId: string | null
+      roleId: number | null
+      submoduleId: number
+      active: boolean
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["formAssignment"]>
+    composites: {}
+  }
+
+  type FormAssignmentGetPayload<S extends boolean | null | undefined | FormAssignmentDefaultArgs> = $Result.GetResult<Prisma.$FormAssignmentPayload, S>
+
+  type FormAssignmentCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<FormAssignmentFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: FormAssignmentCountAggregateInputType | true
+    }
+
+  export interface FormAssignmentDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['FormAssignment'], meta: { name: 'FormAssignment' } }
+    /**
+     * Find zero or one FormAssignment that matches the filter.
+     * @param {FormAssignmentFindUniqueArgs} args - Arguments to find a FormAssignment
+     * @example
+     * // Get one FormAssignment
+     * const formAssignment = await prisma.formAssignment.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends FormAssignmentFindUniqueArgs>(args: SelectSubset<T, FormAssignmentFindUniqueArgs<ExtArgs>>): Prisma__FormAssignmentClient<$Result.GetResult<Prisma.$FormAssignmentPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one FormAssignment that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {FormAssignmentFindUniqueOrThrowArgs} args - Arguments to find a FormAssignment
+     * @example
+     * // Get one FormAssignment
+     * const formAssignment = await prisma.formAssignment.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends FormAssignmentFindUniqueOrThrowArgs>(args: SelectSubset<T, FormAssignmentFindUniqueOrThrowArgs<ExtArgs>>): Prisma__FormAssignmentClient<$Result.GetResult<Prisma.$FormAssignmentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first FormAssignment that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FormAssignmentFindFirstArgs} args - Arguments to find a FormAssignment
+     * @example
+     * // Get one FormAssignment
+     * const formAssignment = await prisma.formAssignment.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends FormAssignmentFindFirstArgs>(args?: SelectSubset<T, FormAssignmentFindFirstArgs<ExtArgs>>): Prisma__FormAssignmentClient<$Result.GetResult<Prisma.$FormAssignmentPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first FormAssignment that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FormAssignmentFindFirstOrThrowArgs} args - Arguments to find a FormAssignment
+     * @example
+     * // Get one FormAssignment
+     * const formAssignment = await prisma.formAssignment.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends FormAssignmentFindFirstOrThrowArgs>(args?: SelectSubset<T, FormAssignmentFindFirstOrThrowArgs<ExtArgs>>): Prisma__FormAssignmentClient<$Result.GetResult<Prisma.$FormAssignmentPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more FormAssignments that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FormAssignmentFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all FormAssignments
+     * const formAssignments = await prisma.formAssignment.findMany()
+     * 
+     * // Get first 10 FormAssignments
+     * const formAssignments = await prisma.formAssignment.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const formAssignmentWithIdOnly = await prisma.formAssignment.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends FormAssignmentFindManyArgs>(args?: SelectSubset<T, FormAssignmentFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FormAssignmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a FormAssignment.
+     * @param {FormAssignmentCreateArgs} args - Arguments to create a FormAssignment.
+     * @example
+     * // Create one FormAssignment
+     * const FormAssignment = await prisma.formAssignment.create({
+     *   data: {
+     *     // ... data to create a FormAssignment
+     *   }
+     * })
+     * 
+     */
+    create<T extends FormAssignmentCreateArgs>(args: SelectSubset<T, FormAssignmentCreateArgs<ExtArgs>>): Prisma__FormAssignmentClient<$Result.GetResult<Prisma.$FormAssignmentPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many FormAssignments.
+     * @param {FormAssignmentCreateManyArgs} args - Arguments to create many FormAssignments.
+     * @example
+     * // Create many FormAssignments
+     * const formAssignment = await prisma.formAssignment.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends FormAssignmentCreateManyArgs>(args?: SelectSubset<T, FormAssignmentCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many FormAssignments and returns the data saved in the database.
+     * @param {FormAssignmentCreateManyAndReturnArgs} args - Arguments to create many FormAssignments.
+     * @example
+     * // Create many FormAssignments
+     * const formAssignment = await prisma.formAssignment.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many FormAssignments and only return the `id`
+     * const formAssignmentWithIdOnly = await prisma.formAssignment.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends FormAssignmentCreateManyAndReturnArgs>(args?: SelectSubset<T, FormAssignmentCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FormAssignmentPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a FormAssignment.
+     * @param {FormAssignmentDeleteArgs} args - Arguments to delete one FormAssignment.
+     * @example
+     * // Delete one FormAssignment
+     * const FormAssignment = await prisma.formAssignment.delete({
+     *   where: {
+     *     // ... filter to delete one FormAssignment
+     *   }
+     * })
+     * 
+     */
+    delete<T extends FormAssignmentDeleteArgs>(args: SelectSubset<T, FormAssignmentDeleteArgs<ExtArgs>>): Prisma__FormAssignmentClient<$Result.GetResult<Prisma.$FormAssignmentPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one FormAssignment.
+     * @param {FormAssignmentUpdateArgs} args - Arguments to update one FormAssignment.
+     * @example
+     * // Update one FormAssignment
+     * const formAssignment = await prisma.formAssignment.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends FormAssignmentUpdateArgs>(args: SelectSubset<T, FormAssignmentUpdateArgs<ExtArgs>>): Prisma__FormAssignmentClient<$Result.GetResult<Prisma.$FormAssignmentPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more FormAssignments.
+     * @param {FormAssignmentDeleteManyArgs} args - Arguments to filter FormAssignments to delete.
+     * @example
+     * // Delete a few FormAssignments
+     * const { count } = await prisma.formAssignment.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends FormAssignmentDeleteManyArgs>(args?: SelectSubset<T, FormAssignmentDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more FormAssignments.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FormAssignmentUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many FormAssignments
+     * const formAssignment = await prisma.formAssignment.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends FormAssignmentUpdateManyArgs>(args: SelectSubset<T, FormAssignmentUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more FormAssignments and returns the data updated in the database.
+     * @param {FormAssignmentUpdateManyAndReturnArgs} args - Arguments to update many FormAssignments.
+     * @example
+     * // Update many FormAssignments
+     * const formAssignment = await prisma.formAssignment.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more FormAssignments and only return the `id`
+     * const formAssignmentWithIdOnly = await prisma.formAssignment.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends FormAssignmentUpdateManyAndReturnArgs>(args: SelectSubset<T, FormAssignmentUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FormAssignmentPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one FormAssignment.
+     * @param {FormAssignmentUpsertArgs} args - Arguments to update or create a FormAssignment.
+     * @example
+     * // Update or create a FormAssignment
+     * const formAssignment = await prisma.formAssignment.upsert({
+     *   create: {
+     *     // ... data to create a FormAssignment
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the FormAssignment we want to update
+     *   }
+     * })
+     */
+    upsert<T extends FormAssignmentUpsertArgs>(args: SelectSubset<T, FormAssignmentUpsertArgs<ExtArgs>>): Prisma__FormAssignmentClient<$Result.GetResult<Prisma.$FormAssignmentPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of FormAssignments.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FormAssignmentCountArgs} args - Arguments to filter FormAssignments to count.
+     * @example
+     * // Count the number of FormAssignments
+     * const count = await prisma.formAssignment.count({
+     *   where: {
+     *     // ... the filter for the FormAssignments we want to count
+     *   }
+     * })
+    **/
+    count<T extends FormAssignmentCountArgs>(
+      args?: Subset<T, FormAssignmentCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], FormAssignmentCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a FormAssignment.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FormAssignmentAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends FormAssignmentAggregateArgs>(args: Subset<T, FormAssignmentAggregateArgs>): Prisma.PrismaPromise<GetFormAssignmentAggregateType<T>>
+
+    /**
+     * Group by FormAssignment.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FormAssignmentGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends FormAssignmentGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: FormAssignmentGroupByArgs['orderBy'] }
+        : { orderBy?: FormAssignmentGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, FormAssignmentGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetFormAssignmentGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the FormAssignment model
+   */
+  readonly fields: FormAssignmentFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for FormAssignment.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__FormAssignmentClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    form<T extends FormDefaultArgs<ExtArgs> = {}>(args?: Subset<T, FormDefaultArgs<ExtArgs>>): Prisma__FormClient<$Result.GetResult<Prisma.$FormPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    role<T extends FormAssignment$roleArgs<ExtArgs> = {}>(args?: Subset<T, FormAssignment$roleArgs<ExtArgs>>): Prisma__RoleClient<$Result.GetResult<Prisma.$RolePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    submodule<T extends SubmoduleDefaultArgs<ExtArgs> = {}>(args?: Subset<T, SubmoduleDefaultArgs<ExtArgs>>): Prisma__SubmoduleClient<$Result.GetResult<Prisma.$SubmodulePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the FormAssignment model
+   */
+  interface FormAssignmentFieldRefs {
+    readonly id: FieldRef<"FormAssignment", 'Int'>
+    readonly formId: FieldRef<"FormAssignment", 'Int'>
+    readonly userId: FieldRef<"FormAssignment", 'String'>
+    readonly roleId: FieldRef<"FormAssignment", 'Int'>
+    readonly submoduleId: FieldRef<"FormAssignment", 'Int'>
+    readonly active: FieldRef<"FormAssignment", 'Boolean'>
+    readonly createdAt: FieldRef<"FormAssignment", 'DateTime'>
+    readonly updatedAt: FieldRef<"FormAssignment", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * FormAssignment findUnique
+   */
+  export type FormAssignmentFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FormAssignment
+     */
+    select?: FormAssignmentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FormAssignment
+     */
+    omit?: FormAssignmentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FormAssignmentInclude<ExtArgs> | null
+    /**
+     * Filter, which FormAssignment to fetch.
+     */
+    where: FormAssignmentWhereUniqueInput
+  }
+
+  /**
+   * FormAssignment findUniqueOrThrow
+   */
+  export type FormAssignmentFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FormAssignment
+     */
+    select?: FormAssignmentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FormAssignment
+     */
+    omit?: FormAssignmentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FormAssignmentInclude<ExtArgs> | null
+    /**
+     * Filter, which FormAssignment to fetch.
+     */
+    where: FormAssignmentWhereUniqueInput
+  }
+
+  /**
+   * FormAssignment findFirst
+   */
+  export type FormAssignmentFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FormAssignment
+     */
+    select?: FormAssignmentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FormAssignment
+     */
+    omit?: FormAssignmentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FormAssignmentInclude<ExtArgs> | null
+    /**
+     * Filter, which FormAssignment to fetch.
+     */
+    where?: FormAssignmentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FormAssignments to fetch.
+     */
+    orderBy?: FormAssignmentOrderByWithRelationInput | FormAssignmentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for FormAssignments.
+     */
+    cursor?: FormAssignmentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FormAssignments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FormAssignments.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of FormAssignments.
+     */
+    distinct?: FormAssignmentScalarFieldEnum | FormAssignmentScalarFieldEnum[]
+  }
+
+  /**
+   * FormAssignment findFirstOrThrow
+   */
+  export type FormAssignmentFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FormAssignment
+     */
+    select?: FormAssignmentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FormAssignment
+     */
+    omit?: FormAssignmentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FormAssignmentInclude<ExtArgs> | null
+    /**
+     * Filter, which FormAssignment to fetch.
+     */
+    where?: FormAssignmentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FormAssignments to fetch.
+     */
+    orderBy?: FormAssignmentOrderByWithRelationInput | FormAssignmentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for FormAssignments.
+     */
+    cursor?: FormAssignmentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FormAssignments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FormAssignments.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of FormAssignments.
+     */
+    distinct?: FormAssignmentScalarFieldEnum | FormAssignmentScalarFieldEnum[]
+  }
+
+  /**
+   * FormAssignment findMany
+   */
+  export type FormAssignmentFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FormAssignment
+     */
+    select?: FormAssignmentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FormAssignment
+     */
+    omit?: FormAssignmentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FormAssignmentInclude<ExtArgs> | null
+    /**
+     * Filter, which FormAssignments to fetch.
+     */
+    where?: FormAssignmentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FormAssignments to fetch.
+     */
+    orderBy?: FormAssignmentOrderByWithRelationInput | FormAssignmentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing FormAssignments.
+     */
+    cursor?: FormAssignmentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FormAssignments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FormAssignments.
+     */
+    skip?: number
+    distinct?: FormAssignmentScalarFieldEnum | FormAssignmentScalarFieldEnum[]
+  }
+
+  /**
+   * FormAssignment create
+   */
+  export type FormAssignmentCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FormAssignment
+     */
+    select?: FormAssignmentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FormAssignment
+     */
+    omit?: FormAssignmentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FormAssignmentInclude<ExtArgs> | null
+    /**
+     * The data needed to create a FormAssignment.
+     */
+    data: XOR<FormAssignmentCreateInput, FormAssignmentUncheckedCreateInput>
+  }
+
+  /**
+   * FormAssignment createMany
+   */
+  export type FormAssignmentCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many FormAssignments.
+     */
+    data: FormAssignmentCreateManyInput | FormAssignmentCreateManyInput[]
+  }
+
+  /**
+   * FormAssignment createManyAndReturn
+   */
+  export type FormAssignmentCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FormAssignment
+     */
+    select?: FormAssignmentSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the FormAssignment
+     */
+    omit?: FormAssignmentOmit<ExtArgs> | null
+    /**
+     * The data used to create many FormAssignments.
+     */
+    data: FormAssignmentCreateManyInput | FormAssignmentCreateManyInput[]
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FormAssignmentIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * FormAssignment update
+   */
+  export type FormAssignmentUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FormAssignment
+     */
+    select?: FormAssignmentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FormAssignment
+     */
+    omit?: FormAssignmentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FormAssignmentInclude<ExtArgs> | null
+    /**
+     * The data needed to update a FormAssignment.
+     */
+    data: XOR<FormAssignmentUpdateInput, FormAssignmentUncheckedUpdateInput>
+    /**
+     * Choose, which FormAssignment to update.
+     */
+    where: FormAssignmentWhereUniqueInput
+  }
+
+  /**
+   * FormAssignment updateMany
+   */
+  export type FormAssignmentUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update FormAssignments.
+     */
+    data: XOR<FormAssignmentUpdateManyMutationInput, FormAssignmentUncheckedUpdateManyInput>
+    /**
+     * Filter which FormAssignments to update
+     */
+    where?: FormAssignmentWhereInput
+    /**
+     * Limit how many FormAssignments to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * FormAssignment updateManyAndReturn
+   */
+  export type FormAssignmentUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FormAssignment
+     */
+    select?: FormAssignmentSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the FormAssignment
+     */
+    omit?: FormAssignmentOmit<ExtArgs> | null
+    /**
+     * The data used to update FormAssignments.
+     */
+    data: XOR<FormAssignmentUpdateManyMutationInput, FormAssignmentUncheckedUpdateManyInput>
+    /**
+     * Filter which FormAssignments to update
+     */
+    where?: FormAssignmentWhereInput
+    /**
+     * Limit how many FormAssignments to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FormAssignmentIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * FormAssignment upsert
+   */
+  export type FormAssignmentUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FormAssignment
+     */
+    select?: FormAssignmentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FormAssignment
+     */
+    omit?: FormAssignmentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FormAssignmentInclude<ExtArgs> | null
+    /**
+     * The filter to search for the FormAssignment to update in case it exists.
+     */
+    where: FormAssignmentWhereUniqueInput
+    /**
+     * In case the FormAssignment found by the `where` argument doesn't exist, create a new FormAssignment with this data.
+     */
+    create: XOR<FormAssignmentCreateInput, FormAssignmentUncheckedCreateInput>
+    /**
+     * In case the FormAssignment was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<FormAssignmentUpdateInput, FormAssignmentUncheckedUpdateInput>
+  }
+
+  /**
+   * FormAssignment delete
+   */
+  export type FormAssignmentDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FormAssignment
+     */
+    select?: FormAssignmentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FormAssignment
+     */
+    omit?: FormAssignmentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FormAssignmentInclude<ExtArgs> | null
+    /**
+     * Filter which FormAssignment to delete.
+     */
+    where: FormAssignmentWhereUniqueInput
+  }
+
+  /**
+   * FormAssignment deleteMany
+   */
+  export type FormAssignmentDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which FormAssignments to delete
+     */
+    where?: FormAssignmentWhereInput
+    /**
+     * Limit how many FormAssignments to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * FormAssignment.role
+   */
+  export type FormAssignment$roleArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Role
+     */
+    select?: RoleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Role
+     */
+    omit?: RoleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RoleInclude<ExtArgs> | null
+    where?: RoleWhereInput
+  }
+
+  /**
+   * FormAssignment without action
+   */
+  export type FormAssignmentDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FormAssignment
+     */
+    select?: FormAssignmentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FormAssignment
+     */
+    omit?: FormAssignmentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FormAssignmentInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Submodule
+   */
+
+  export type AggregateSubmodule = {
+    _count: SubmoduleCountAggregateOutputType | null
+    _avg: SubmoduleAvgAggregateOutputType | null
+    _sum: SubmoduleSumAggregateOutputType | null
+    _min: SubmoduleMinAggregateOutputType | null
+    _max: SubmoduleMaxAggregateOutputType | null
+  }
+
+  export type SubmoduleAvgAggregateOutputType = {
+    id: number | null
+  }
+
+  export type SubmoduleSumAggregateOutputType = {
+    id: number | null
+  }
+
+  export type SubmoduleMinAggregateOutputType = {
+    id: number | null
+    slug: string | null
+    name: string | null
+    description: string | null
+    icon: string | null
+    metadata: string | null
+    baseTables: string | null
+    active: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type SubmoduleMaxAggregateOutputType = {
+    id: number | null
+    slug: string | null
+    name: string | null
+    description: string | null
+    icon: string | null
+    metadata: string | null
+    baseTables: string | null
+    active: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type SubmoduleCountAggregateOutputType = {
+    id: number
+    slug: number
+    name: number
+    description: number
+    icon: number
+    metadata: number
+    baseTables: number
+    active: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type SubmoduleAvgAggregateInputType = {
+    id?: true
+  }
+
+  export type SubmoduleSumAggregateInputType = {
+    id?: true
+  }
+
+  export type SubmoduleMinAggregateInputType = {
+    id?: true
+    slug?: true
+    name?: true
+    description?: true
+    icon?: true
+    metadata?: true
+    baseTables?: true
+    active?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type SubmoduleMaxAggregateInputType = {
+    id?: true
+    slug?: true
+    name?: true
+    description?: true
+    icon?: true
+    metadata?: true
+    baseTables?: true
+    active?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type SubmoduleCountAggregateInputType = {
+    id?: true
+    slug?: true
+    name?: true
+    description?: true
+    icon?: true
+    metadata?: true
+    baseTables?: true
+    active?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type SubmoduleAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Submodule to aggregate.
+     */
+    where?: SubmoduleWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Submodules to fetch.
+     */
+    orderBy?: SubmoduleOrderByWithRelationInput | SubmoduleOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: SubmoduleWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Submodules from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Submodules.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Submodules
+    **/
+    _count?: true | SubmoduleCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: SubmoduleAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: SubmoduleSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: SubmoduleMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: SubmoduleMaxAggregateInputType
+  }
+
+  export type GetSubmoduleAggregateType<T extends SubmoduleAggregateArgs> = {
+        [P in keyof T & keyof AggregateSubmodule]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateSubmodule[P]>
+      : GetScalarType<T[P], AggregateSubmodule[P]>
+  }
+
+
+
+
+  export type SubmoduleGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SubmoduleWhereInput
+    orderBy?: SubmoduleOrderByWithAggregationInput | SubmoduleOrderByWithAggregationInput[]
+    by: SubmoduleScalarFieldEnum[] | SubmoduleScalarFieldEnum
+    having?: SubmoduleScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: SubmoduleCountAggregateInputType | true
+    _avg?: SubmoduleAvgAggregateInputType
+    _sum?: SubmoduleSumAggregateInputType
+    _min?: SubmoduleMinAggregateInputType
+    _max?: SubmoduleMaxAggregateInputType
+  }
+
+  export type SubmoduleGroupByOutputType = {
+    id: number
+    slug: string
+    name: string
+    description: string
+    icon: string
+    metadata: string
+    baseTables: string
+    active: boolean
+    createdAt: Date
+    updatedAt: Date
+    _count: SubmoduleCountAggregateOutputType | null
+    _avg: SubmoduleAvgAggregateOutputType | null
+    _sum: SubmoduleSumAggregateOutputType | null
+    _min: SubmoduleMinAggregateOutputType | null
+    _max: SubmoduleMaxAggregateOutputType | null
+  }
+
+  type GetSubmoduleGroupByPayload<T extends SubmoduleGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<SubmoduleGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof SubmoduleGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], SubmoduleGroupByOutputType[P]>
+            : GetScalarType<T[P], SubmoduleGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type SubmoduleSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    slug?: boolean
+    name?: boolean
+    description?: boolean
+    icon?: boolean
+    metadata?: boolean
+    baseTables?: boolean
+    active?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    forms?: boolean | Submodule$formsArgs<ExtArgs>
+    assignments?: boolean | Submodule$assignmentsArgs<ExtArgs>
+    submissions?: boolean | Submodule$submissionsArgs<ExtArgs>
+    _count?: boolean | SubmoduleCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["submodule"]>
+
+  export type SubmoduleSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    slug?: boolean
+    name?: boolean
+    description?: boolean
+    icon?: boolean
+    metadata?: boolean
+    baseTables?: boolean
+    active?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["submodule"]>
+
+  export type SubmoduleSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    slug?: boolean
+    name?: boolean
+    description?: boolean
+    icon?: boolean
+    metadata?: boolean
+    baseTables?: boolean
+    active?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["submodule"]>
+
+  export type SubmoduleSelectScalar = {
+    id?: boolean
+    slug?: boolean
+    name?: boolean
+    description?: boolean
+    icon?: boolean
+    metadata?: boolean
+    baseTables?: boolean
+    active?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type SubmoduleOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "slug" | "name" | "description" | "icon" | "metadata" | "baseTables" | "active" | "createdAt" | "updatedAt", ExtArgs["result"]["submodule"]>
+  export type SubmoduleInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    forms?: boolean | Submodule$formsArgs<ExtArgs>
+    assignments?: boolean | Submodule$assignmentsArgs<ExtArgs>
+    submissions?: boolean | Submodule$submissionsArgs<ExtArgs>
+    _count?: boolean | SubmoduleCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type SubmoduleIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type SubmoduleIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $SubmodulePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Submodule"
+    objects: {
+      forms: Prisma.$FormPayload<ExtArgs>[]
+      assignments: Prisma.$FormAssignmentPayload<ExtArgs>[]
+      submissions: Prisma.$FormSubmissionPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      slug: string
+      name: string
+      description: string
+      icon: string
+      metadata: string
+      baseTables: string
+      active: boolean
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["submodule"]>
+    composites: {}
+  }
+
+  type SubmoduleGetPayload<S extends boolean | null | undefined | SubmoduleDefaultArgs> = $Result.GetResult<Prisma.$SubmodulePayload, S>
+
+  type SubmoduleCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<SubmoduleFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: SubmoduleCountAggregateInputType | true
+    }
+
+  export interface SubmoduleDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Submodule'], meta: { name: 'Submodule' } }
+    /**
+     * Find zero or one Submodule that matches the filter.
+     * @param {SubmoduleFindUniqueArgs} args - Arguments to find a Submodule
+     * @example
+     * // Get one Submodule
+     * const submodule = await prisma.submodule.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends SubmoduleFindUniqueArgs>(args: SelectSubset<T, SubmoduleFindUniqueArgs<ExtArgs>>): Prisma__SubmoduleClient<$Result.GetResult<Prisma.$SubmodulePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Submodule that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {SubmoduleFindUniqueOrThrowArgs} args - Arguments to find a Submodule
+     * @example
+     * // Get one Submodule
+     * const submodule = await prisma.submodule.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends SubmoduleFindUniqueOrThrowArgs>(args: SelectSubset<T, SubmoduleFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SubmoduleClient<$Result.GetResult<Prisma.$SubmodulePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Submodule that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SubmoduleFindFirstArgs} args - Arguments to find a Submodule
+     * @example
+     * // Get one Submodule
+     * const submodule = await prisma.submodule.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends SubmoduleFindFirstArgs>(args?: SelectSubset<T, SubmoduleFindFirstArgs<ExtArgs>>): Prisma__SubmoduleClient<$Result.GetResult<Prisma.$SubmodulePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Submodule that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SubmoduleFindFirstOrThrowArgs} args - Arguments to find a Submodule
+     * @example
+     * // Get one Submodule
+     * const submodule = await prisma.submodule.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends SubmoduleFindFirstOrThrowArgs>(args?: SelectSubset<T, SubmoduleFindFirstOrThrowArgs<ExtArgs>>): Prisma__SubmoduleClient<$Result.GetResult<Prisma.$SubmodulePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Submodules that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SubmoduleFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Submodules
+     * const submodules = await prisma.submodule.findMany()
+     * 
+     * // Get first 10 Submodules
+     * const submodules = await prisma.submodule.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const submoduleWithIdOnly = await prisma.submodule.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends SubmoduleFindManyArgs>(args?: SelectSubset<T, SubmoduleFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SubmodulePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Submodule.
+     * @param {SubmoduleCreateArgs} args - Arguments to create a Submodule.
+     * @example
+     * // Create one Submodule
+     * const Submodule = await prisma.submodule.create({
+     *   data: {
+     *     // ... data to create a Submodule
+     *   }
+     * })
+     * 
+     */
+    create<T extends SubmoduleCreateArgs>(args: SelectSubset<T, SubmoduleCreateArgs<ExtArgs>>): Prisma__SubmoduleClient<$Result.GetResult<Prisma.$SubmodulePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Submodules.
+     * @param {SubmoduleCreateManyArgs} args - Arguments to create many Submodules.
+     * @example
+     * // Create many Submodules
+     * const submodule = await prisma.submodule.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends SubmoduleCreateManyArgs>(args?: SelectSubset<T, SubmoduleCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Submodules and returns the data saved in the database.
+     * @param {SubmoduleCreateManyAndReturnArgs} args - Arguments to create many Submodules.
+     * @example
+     * // Create many Submodules
+     * const submodule = await prisma.submodule.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Submodules and only return the `id`
+     * const submoduleWithIdOnly = await prisma.submodule.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends SubmoduleCreateManyAndReturnArgs>(args?: SelectSubset<T, SubmoduleCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SubmodulePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Submodule.
+     * @param {SubmoduleDeleteArgs} args - Arguments to delete one Submodule.
+     * @example
+     * // Delete one Submodule
+     * const Submodule = await prisma.submodule.delete({
+     *   where: {
+     *     // ... filter to delete one Submodule
+     *   }
+     * })
+     * 
+     */
+    delete<T extends SubmoduleDeleteArgs>(args: SelectSubset<T, SubmoduleDeleteArgs<ExtArgs>>): Prisma__SubmoduleClient<$Result.GetResult<Prisma.$SubmodulePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Submodule.
+     * @param {SubmoduleUpdateArgs} args - Arguments to update one Submodule.
+     * @example
+     * // Update one Submodule
+     * const submodule = await prisma.submodule.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends SubmoduleUpdateArgs>(args: SelectSubset<T, SubmoduleUpdateArgs<ExtArgs>>): Prisma__SubmoduleClient<$Result.GetResult<Prisma.$SubmodulePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Submodules.
+     * @param {SubmoduleDeleteManyArgs} args - Arguments to filter Submodules to delete.
+     * @example
+     * // Delete a few Submodules
+     * const { count } = await prisma.submodule.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends SubmoduleDeleteManyArgs>(args?: SelectSubset<T, SubmoduleDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Submodules.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SubmoduleUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Submodules
+     * const submodule = await prisma.submodule.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends SubmoduleUpdateManyArgs>(args: SelectSubset<T, SubmoduleUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Submodules and returns the data updated in the database.
+     * @param {SubmoduleUpdateManyAndReturnArgs} args - Arguments to update many Submodules.
+     * @example
+     * // Update many Submodules
+     * const submodule = await prisma.submodule.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Submodules and only return the `id`
+     * const submoduleWithIdOnly = await prisma.submodule.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends SubmoduleUpdateManyAndReturnArgs>(args: SelectSubset<T, SubmoduleUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SubmodulePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Submodule.
+     * @param {SubmoduleUpsertArgs} args - Arguments to update or create a Submodule.
+     * @example
+     * // Update or create a Submodule
+     * const submodule = await prisma.submodule.upsert({
+     *   create: {
+     *     // ... data to create a Submodule
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Submodule we want to update
+     *   }
+     * })
+     */
+    upsert<T extends SubmoduleUpsertArgs>(args: SelectSubset<T, SubmoduleUpsertArgs<ExtArgs>>): Prisma__SubmoduleClient<$Result.GetResult<Prisma.$SubmodulePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Submodules.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SubmoduleCountArgs} args - Arguments to filter Submodules to count.
+     * @example
+     * // Count the number of Submodules
+     * const count = await prisma.submodule.count({
+     *   where: {
+     *     // ... the filter for the Submodules we want to count
+     *   }
+     * })
+    **/
+    count<T extends SubmoduleCountArgs>(
+      args?: Subset<T, SubmoduleCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], SubmoduleCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Submodule.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SubmoduleAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends SubmoduleAggregateArgs>(args: Subset<T, SubmoduleAggregateArgs>): Prisma.PrismaPromise<GetSubmoduleAggregateType<T>>
+
+    /**
+     * Group by Submodule.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SubmoduleGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends SubmoduleGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: SubmoduleGroupByArgs['orderBy'] }
+        : { orderBy?: SubmoduleGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, SubmoduleGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSubmoduleGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Submodule model
+   */
+  readonly fields: SubmoduleFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Submodule.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__SubmoduleClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    forms<T extends Submodule$formsArgs<ExtArgs> = {}>(args?: Subset<T, Submodule$formsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FormPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    assignments<T extends Submodule$assignmentsArgs<ExtArgs> = {}>(args?: Subset<T, Submodule$assignmentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FormAssignmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    submissions<T extends Submodule$submissionsArgs<ExtArgs> = {}>(args?: Subset<T, Submodule$submissionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FormSubmissionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Submodule model
+   */
+  interface SubmoduleFieldRefs {
+    readonly id: FieldRef<"Submodule", 'Int'>
+    readonly slug: FieldRef<"Submodule", 'String'>
+    readonly name: FieldRef<"Submodule", 'String'>
+    readonly description: FieldRef<"Submodule", 'String'>
+    readonly icon: FieldRef<"Submodule", 'String'>
+    readonly metadata: FieldRef<"Submodule", 'String'>
+    readonly baseTables: FieldRef<"Submodule", 'String'>
+    readonly active: FieldRef<"Submodule", 'Boolean'>
+    readonly createdAt: FieldRef<"Submodule", 'DateTime'>
+    readonly updatedAt: FieldRef<"Submodule", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Submodule findUnique
+   */
+  export type SubmoduleFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Submodule
+     */
+    select?: SubmoduleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Submodule
+     */
+    omit?: SubmoduleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubmoduleInclude<ExtArgs> | null
+    /**
+     * Filter, which Submodule to fetch.
+     */
+    where: SubmoduleWhereUniqueInput
+  }
+
+  /**
+   * Submodule findUniqueOrThrow
+   */
+  export type SubmoduleFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Submodule
+     */
+    select?: SubmoduleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Submodule
+     */
+    omit?: SubmoduleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubmoduleInclude<ExtArgs> | null
+    /**
+     * Filter, which Submodule to fetch.
+     */
+    where: SubmoduleWhereUniqueInput
+  }
+
+  /**
+   * Submodule findFirst
+   */
+  export type SubmoduleFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Submodule
+     */
+    select?: SubmoduleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Submodule
+     */
+    omit?: SubmoduleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubmoduleInclude<ExtArgs> | null
+    /**
+     * Filter, which Submodule to fetch.
+     */
+    where?: SubmoduleWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Submodules to fetch.
+     */
+    orderBy?: SubmoduleOrderByWithRelationInput | SubmoduleOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Submodules.
+     */
+    cursor?: SubmoduleWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Submodules from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Submodules.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Submodules.
+     */
+    distinct?: SubmoduleScalarFieldEnum | SubmoduleScalarFieldEnum[]
+  }
+
+  /**
+   * Submodule findFirstOrThrow
+   */
+  export type SubmoduleFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Submodule
+     */
+    select?: SubmoduleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Submodule
+     */
+    omit?: SubmoduleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubmoduleInclude<ExtArgs> | null
+    /**
+     * Filter, which Submodule to fetch.
+     */
+    where?: SubmoduleWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Submodules to fetch.
+     */
+    orderBy?: SubmoduleOrderByWithRelationInput | SubmoduleOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Submodules.
+     */
+    cursor?: SubmoduleWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Submodules from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Submodules.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Submodules.
+     */
+    distinct?: SubmoduleScalarFieldEnum | SubmoduleScalarFieldEnum[]
+  }
+
+  /**
+   * Submodule findMany
+   */
+  export type SubmoduleFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Submodule
+     */
+    select?: SubmoduleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Submodule
+     */
+    omit?: SubmoduleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubmoduleInclude<ExtArgs> | null
+    /**
+     * Filter, which Submodules to fetch.
+     */
+    where?: SubmoduleWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Submodules to fetch.
+     */
+    orderBy?: SubmoduleOrderByWithRelationInput | SubmoduleOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Submodules.
+     */
+    cursor?: SubmoduleWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Submodules from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Submodules.
+     */
+    skip?: number
+    distinct?: SubmoduleScalarFieldEnum | SubmoduleScalarFieldEnum[]
+  }
+
+  /**
+   * Submodule create
+   */
+  export type SubmoduleCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Submodule
+     */
+    select?: SubmoduleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Submodule
+     */
+    omit?: SubmoduleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubmoduleInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Submodule.
+     */
+    data: XOR<SubmoduleCreateInput, SubmoduleUncheckedCreateInput>
+  }
+
+  /**
+   * Submodule createMany
+   */
+  export type SubmoduleCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Submodules.
+     */
+    data: SubmoduleCreateManyInput | SubmoduleCreateManyInput[]
+  }
+
+  /**
+   * Submodule createManyAndReturn
+   */
+  export type SubmoduleCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Submodule
+     */
+    select?: SubmoduleSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Submodule
+     */
+    omit?: SubmoduleOmit<ExtArgs> | null
+    /**
+     * The data used to create many Submodules.
+     */
+    data: SubmoduleCreateManyInput | SubmoduleCreateManyInput[]
+  }
+
+  /**
+   * Submodule update
+   */
+  export type SubmoduleUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Submodule
+     */
+    select?: SubmoduleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Submodule
+     */
+    omit?: SubmoduleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubmoduleInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Submodule.
+     */
+    data: XOR<SubmoduleUpdateInput, SubmoduleUncheckedUpdateInput>
+    /**
+     * Choose, which Submodule to update.
+     */
+    where: SubmoduleWhereUniqueInput
+  }
+
+  /**
+   * Submodule updateMany
+   */
+  export type SubmoduleUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Submodules.
+     */
+    data: XOR<SubmoduleUpdateManyMutationInput, SubmoduleUncheckedUpdateManyInput>
+    /**
+     * Filter which Submodules to update
+     */
+    where?: SubmoduleWhereInput
+    /**
+     * Limit how many Submodules to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Submodule updateManyAndReturn
+   */
+  export type SubmoduleUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Submodule
+     */
+    select?: SubmoduleSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Submodule
+     */
+    omit?: SubmoduleOmit<ExtArgs> | null
+    /**
+     * The data used to update Submodules.
+     */
+    data: XOR<SubmoduleUpdateManyMutationInput, SubmoduleUncheckedUpdateManyInput>
+    /**
+     * Filter which Submodules to update
+     */
+    where?: SubmoduleWhereInput
+    /**
+     * Limit how many Submodules to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Submodule upsert
+   */
+  export type SubmoduleUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Submodule
+     */
+    select?: SubmoduleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Submodule
+     */
+    omit?: SubmoduleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubmoduleInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Submodule to update in case it exists.
+     */
+    where: SubmoduleWhereUniqueInput
+    /**
+     * In case the Submodule found by the `where` argument doesn't exist, create a new Submodule with this data.
+     */
+    create: XOR<SubmoduleCreateInput, SubmoduleUncheckedCreateInput>
+    /**
+     * In case the Submodule was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<SubmoduleUpdateInput, SubmoduleUncheckedUpdateInput>
+  }
+
+  /**
+   * Submodule delete
+   */
+  export type SubmoduleDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Submodule
+     */
+    select?: SubmoduleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Submodule
+     */
+    omit?: SubmoduleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubmoduleInclude<ExtArgs> | null
+    /**
+     * Filter which Submodule to delete.
+     */
+    where: SubmoduleWhereUniqueInput
+  }
+
+  /**
+   * Submodule deleteMany
+   */
+  export type SubmoduleDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Submodules to delete
+     */
+    where?: SubmoduleWhereInput
+    /**
+     * Limit how many Submodules to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Submodule.forms
+   */
+  export type Submodule$formsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Form
+     */
+    select?: FormSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Form
+     */
+    omit?: FormOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FormInclude<ExtArgs> | null
+    where?: FormWhereInput
+    orderBy?: FormOrderByWithRelationInput | FormOrderByWithRelationInput[]
+    cursor?: FormWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: FormScalarFieldEnum | FormScalarFieldEnum[]
+  }
+
+  /**
+   * Submodule.assignments
+   */
+  export type Submodule$assignmentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FormAssignment
+     */
+    select?: FormAssignmentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FormAssignment
+     */
+    omit?: FormAssignmentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FormAssignmentInclude<ExtArgs> | null
+    where?: FormAssignmentWhereInput
+    orderBy?: FormAssignmentOrderByWithRelationInput | FormAssignmentOrderByWithRelationInput[]
+    cursor?: FormAssignmentWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: FormAssignmentScalarFieldEnum | FormAssignmentScalarFieldEnum[]
+  }
+
+  /**
+   * Submodule.submissions
+   */
+  export type Submodule$submissionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FormSubmission
+     */
+    select?: FormSubmissionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FormSubmission
+     */
+    omit?: FormSubmissionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FormSubmissionInclude<ExtArgs> | null
+    where?: FormSubmissionWhereInput
+    orderBy?: FormSubmissionOrderByWithRelationInput | FormSubmissionOrderByWithRelationInput[]
+    cursor?: FormSubmissionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: FormSubmissionScalarFieldEnum | FormSubmissionScalarFieldEnum[]
+  }
+
+  /**
+   * Submodule without action
+   */
+  export type SubmoduleDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Submodule
+     */
+    select?: SubmoduleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Submodule
+     */
+    omit?: SubmoduleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubmoduleInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model FormTemplate
+   */
+
+  export type AggregateFormTemplate = {
+    _count: FormTemplateCountAggregateOutputType | null
+    _avg: FormTemplateAvgAggregateOutputType | null
+    _sum: FormTemplateSumAggregateOutputType | null
+    _min: FormTemplateMinAggregateOutputType | null
+    _max: FormTemplateMaxAggregateOutputType | null
+  }
+
+  export type FormTemplateAvgAggregateOutputType = {
+    id: number | null
+    scheduleInterval: number | null
+    currentVersion: number | null
+  }
+
+  export type FormTemplateSumAggregateOutputType = {
+    id: number | null
+    scheduleInterval: number | null
+    currentVersion: number | null
+  }
+
+  export type FormTemplateMinAggregateOutputType = {
+    id: number | null
+    slug: string | null
+    name: string | null
+    description: string | null
+    icon: string | null
+    metadata: string | null
+    page: string | null
+    components: string | null
+    context: string | null
+    eventConfig: string | null
+    scheduleType: string | null
+    scheduleInterval: number | null
+    scheduleConfig: string | null
+    currentVersion: number | null
+    active: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type FormTemplateMaxAggregateOutputType = {
+    id: number | null
+    slug: string | null
+    name: string | null
+    description: string | null
+    icon: string | null
+    metadata: string | null
+    page: string | null
+    components: string | null
+    context: string | null
+    eventConfig: string | null
+    scheduleType: string | null
+    scheduleInterval: number | null
+    scheduleConfig: string | null
+    currentVersion: number | null
+    active: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type FormTemplateCountAggregateOutputType = {
+    id: number
+    slug: number
+    name: number
+    description: number
+    icon: number
+    metadata: number
+    page: number
+    components: number
+    context: number
+    eventConfig: number
+    scheduleType: number
+    scheduleInterval: number
+    scheduleConfig: number
+    currentVersion: number
+    active: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type FormTemplateAvgAggregateInputType = {
+    id?: true
+    scheduleInterval?: true
+    currentVersion?: true
+  }
+
+  export type FormTemplateSumAggregateInputType = {
+    id?: true
+    scheduleInterval?: true
+    currentVersion?: true
+  }
+
+  export type FormTemplateMinAggregateInputType = {
+    id?: true
+    slug?: true
+    name?: true
+    description?: true
+    icon?: true
+    metadata?: true
+    page?: true
+    components?: true
+    context?: true
+    eventConfig?: true
+    scheduleType?: true
+    scheduleInterval?: true
+    scheduleConfig?: true
+    currentVersion?: true
+    active?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type FormTemplateMaxAggregateInputType = {
+    id?: true
+    slug?: true
+    name?: true
+    description?: true
+    icon?: true
+    metadata?: true
+    page?: true
+    components?: true
+    context?: true
+    eventConfig?: true
+    scheduleType?: true
+    scheduleInterval?: true
+    scheduleConfig?: true
+    currentVersion?: true
+    active?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type FormTemplateCountAggregateInputType = {
+    id?: true
+    slug?: true
+    name?: true
+    description?: true
+    icon?: true
+    metadata?: true
+    page?: true
+    components?: true
+    context?: true
+    eventConfig?: true
+    scheduleType?: true
+    scheduleInterval?: true
+    scheduleConfig?: true
+    currentVersion?: true
+    active?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type FormTemplateAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which FormTemplate to aggregate.
+     */
+    where?: FormTemplateWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FormTemplates to fetch.
+     */
+    orderBy?: FormTemplateOrderByWithRelationInput | FormTemplateOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: FormTemplateWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FormTemplates from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FormTemplates.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned FormTemplates
+    **/
+    _count?: true | FormTemplateCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: FormTemplateAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: FormTemplateSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: FormTemplateMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: FormTemplateMaxAggregateInputType
+  }
+
+  export type GetFormTemplateAggregateType<T extends FormTemplateAggregateArgs> = {
+        [P in keyof T & keyof AggregateFormTemplate]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateFormTemplate[P]>
+      : GetScalarType<T[P], AggregateFormTemplate[P]>
+  }
+
+
+
+
+  export type FormTemplateGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: FormTemplateWhereInput
+    orderBy?: FormTemplateOrderByWithAggregationInput | FormTemplateOrderByWithAggregationInput[]
+    by: FormTemplateScalarFieldEnum[] | FormTemplateScalarFieldEnum
+    having?: FormTemplateScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: FormTemplateCountAggregateInputType | true
+    _avg?: FormTemplateAvgAggregateInputType
+    _sum?: FormTemplateSumAggregateInputType
+    _min?: FormTemplateMinAggregateInputType
+    _max?: FormTemplateMaxAggregateInputType
+  }
+
+  export type FormTemplateGroupByOutputType = {
+    id: number
+    slug: string
+    name: string
+    description: string
+    icon: string
+    metadata: string
+    page: string | null
+    components: string
+    context: string
+    eventConfig: string
+    scheduleType: string
+    scheduleInterval: number
+    scheduleConfig: string
+    currentVersion: number
+    active: boolean
+    createdAt: Date
+    updatedAt: Date
+    _count: FormTemplateCountAggregateOutputType | null
+    _avg: FormTemplateAvgAggregateOutputType | null
+    _sum: FormTemplateSumAggregateOutputType | null
+    _min: FormTemplateMinAggregateOutputType | null
+    _max: FormTemplateMaxAggregateOutputType | null
+  }
+
+  type GetFormTemplateGroupByPayload<T extends FormTemplateGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<FormTemplateGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof FormTemplateGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], FormTemplateGroupByOutputType[P]>
+            : GetScalarType<T[P], FormTemplateGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type FormTemplateSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    slug?: boolean
+    name?: boolean
+    description?: boolean
+    icon?: boolean
+    metadata?: boolean
+    page?: boolean
+    components?: boolean
+    context?: boolean
+    eventConfig?: boolean
+    scheduleType?: boolean
+    scheduleInterval?: boolean
+    scheduleConfig?: boolean
+    currentVersion?: boolean
+    active?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    forms?: boolean | FormTemplate$formsArgs<ExtArgs>
+    versions?: boolean | FormTemplate$versionsArgs<ExtArgs>
+    _count?: boolean | FormTemplateCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["formTemplate"]>
+
+  export type FormTemplateSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    slug?: boolean
+    name?: boolean
+    description?: boolean
+    icon?: boolean
+    metadata?: boolean
+    page?: boolean
+    components?: boolean
+    context?: boolean
+    eventConfig?: boolean
+    scheduleType?: boolean
+    scheduleInterval?: boolean
+    scheduleConfig?: boolean
+    currentVersion?: boolean
+    active?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["formTemplate"]>
+
+  export type FormTemplateSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    slug?: boolean
+    name?: boolean
+    description?: boolean
+    icon?: boolean
+    metadata?: boolean
+    page?: boolean
+    components?: boolean
+    context?: boolean
+    eventConfig?: boolean
+    scheduleType?: boolean
+    scheduleInterval?: boolean
+    scheduleConfig?: boolean
+    currentVersion?: boolean
+    active?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["formTemplate"]>
+
+  export type FormTemplateSelectScalar = {
+    id?: boolean
+    slug?: boolean
+    name?: boolean
+    description?: boolean
+    icon?: boolean
+    metadata?: boolean
+    page?: boolean
+    components?: boolean
+    context?: boolean
+    eventConfig?: boolean
+    scheduleType?: boolean
+    scheduleInterval?: boolean
+    scheduleConfig?: boolean
+    currentVersion?: boolean
+    active?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type FormTemplateOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "slug" | "name" | "description" | "icon" | "metadata" | "page" | "components" | "context" | "eventConfig" | "scheduleType" | "scheduleInterval" | "scheduleConfig" | "currentVersion" | "active" | "createdAt" | "updatedAt", ExtArgs["result"]["formTemplate"]>
+  export type FormTemplateInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    forms?: boolean | FormTemplate$formsArgs<ExtArgs>
+    versions?: boolean | FormTemplate$versionsArgs<ExtArgs>
+    _count?: boolean | FormTemplateCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type FormTemplateIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type FormTemplateIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $FormTemplatePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "FormTemplate"
+    objects: {
+      forms: Prisma.$FormPayload<ExtArgs>[]
+      versions: Prisma.$FormTemplateVersionPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      slug: string
+      name: string
+      description: string
+      icon: string
+      metadata: string
+      page: string | null
+      components: string
+      context: string
+      eventConfig: string
+      scheduleType: string
+      scheduleInterval: number
+      scheduleConfig: string
+      currentVersion: number
+      active: boolean
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["formTemplate"]>
+    composites: {}
+  }
+
+  type FormTemplateGetPayload<S extends boolean | null | undefined | FormTemplateDefaultArgs> = $Result.GetResult<Prisma.$FormTemplatePayload, S>
+
+  type FormTemplateCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<FormTemplateFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: FormTemplateCountAggregateInputType | true
+    }
+
+  export interface FormTemplateDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['FormTemplate'], meta: { name: 'FormTemplate' } }
+    /**
+     * Find zero or one FormTemplate that matches the filter.
+     * @param {FormTemplateFindUniqueArgs} args - Arguments to find a FormTemplate
+     * @example
+     * // Get one FormTemplate
+     * const formTemplate = await prisma.formTemplate.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends FormTemplateFindUniqueArgs>(args: SelectSubset<T, FormTemplateFindUniqueArgs<ExtArgs>>): Prisma__FormTemplateClient<$Result.GetResult<Prisma.$FormTemplatePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one FormTemplate that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {FormTemplateFindUniqueOrThrowArgs} args - Arguments to find a FormTemplate
+     * @example
+     * // Get one FormTemplate
+     * const formTemplate = await prisma.formTemplate.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends FormTemplateFindUniqueOrThrowArgs>(args: SelectSubset<T, FormTemplateFindUniqueOrThrowArgs<ExtArgs>>): Prisma__FormTemplateClient<$Result.GetResult<Prisma.$FormTemplatePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first FormTemplate that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FormTemplateFindFirstArgs} args - Arguments to find a FormTemplate
+     * @example
+     * // Get one FormTemplate
+     * const formTemplate = await prisma.formTemplate.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends FormTemplateFindFirstArgs>(args?: SelectSubset<T, FormTemplateFindFirstArgs<ExtArgs>>): Prisma__FormTemplateClient<$Result.GetResult<Prisma.$FormTemplatePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first FormTemplate that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FormTemplateFindFirstOrThrowArgs} args - Arguments to find a FormTemplate
+     * @example
+     * // Get one FormTemplate
+     * const formTemplate = await prisma.formTemplate.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends FormTemplateFindFirstOrThrowArgs>(args?: SelectSubset<T, FormTemplateFindFirstOrThrowArgs<ExtArgs>>): Prisma__FormTemplateClient<$Result.GetResult<Prisma.$FormTemplatePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more FormTemplates that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FormTemplateFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all FormTemplates
+     * const formTemplates = await prisma.formTemplate.findMany()
+     * 
+     * // Get first 10 FormTemplates
+     * const formTemplates = await prisma.formTemplate.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const formTemplateWithIdOnly = await prisma.formTemplate.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends FormTemplateFindManyArgs>(args?: SelectSubset<T, FormTemplateFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FormTemplatePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a FormTemplate.
+     * @param {FormTemplateCreateArgs} args - Arguments to create a FormTemplate.
+     * @example
+     * // Create one FormTemplate
+     * const FormTemplate = await prisma.formTemplate.create({
+     *   data: {
+     *     // ... data to create a FormTemplate
+     *   }
+     * })
+     * 
+     */
+    create<T extends FormTemplateCreateArgs>(args: SelectSubset<T, FormTemplateCreateArgs<ExtArgs>>): Prisma__FormTemplateClient<$Result.GetResult<Prisma.$FormTemplatePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many FormTemplates.
+     * @param {FormTemplateCreateManyArgs} args - Arguments to create many FormTemplates.
+     * @example
+     * // Create many FormTemplates
+     * const formTemplate = await prisma.formTemplate.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends FormTemplateCreateManyArgs>(args?: SelectSubset<T, FormTemplateCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many FormTemplates and returns the data saved in the database.
+     * @param {FormTemplateCreateManyAndReturnArgs} args - Arguments to create many FormTemplates.
+     * @example
+     * // Create many FormTemplates
+     * const formTemplate = await prisma.formTemplate.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many FormTemplates and only return the `id`
+     * const formTemplateWithIdOnly = await prisma.formTemplate.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends FormTemplateCreateManyAndReturnArgs>(args?: SelectSubset<T, FormTemplateCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FormTemplatePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a FormTemplate.
+     * @param {FormTemplateDeleteArgs} args - Arguments to delete one FormTemplate.
+     * @example
+     * // Delete one FormTemplate
+     * const FormTemplate = await prisma.formTemplate.delete({
+     *   where: {
+     *     // ... filter to delete one FormTemplate
+     *   }
+     * })
+     * 
+     */
+    delete<T extends FormTemplateDeleteArgs>(args: SelectSubset<T, FormTemplateDeleteArgs<ExtArgs>>): Prisma__FormTemplateClient<$Result.GetResult<Prisma.$FormTemplatePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one FormTemplate.
+     * @param {FormTemplateUpdateArgs} args - Arguments to update one FormTemplate.
+     * @example
+     * // Update one FormTemplate
+     * const formTemplate = await prisma.formTemplate.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends FormTemplateUpdateArgs>(args: SelectSubset<T, FormTemplateUpdateArgs<ExtArgs>>): Prisma__FormTemplateClient<$Result.GetResult<Prisma.$FormTemplatePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more FormTemplates.
+     * @param {FormTemplateDeleteManyArgs} args - Arguments to filter FormTemplates to delete.
+     * @example
+     * // Delete a few FormTemplates
+     * const { count } = await prisma.formTemplate.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends FormTemplateDeleteManyArgs>(args?: SelectSubset<T, FormTemplateDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more FormTemplates.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FormTemplateUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many FormTemplates
+     * const formTemplate = await prisma.formTemplate.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends FormTemplateUpdateManyArgs>(args: SelectSubset<T, FormTemplateUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more FormTemplates and returns the data updated in the database.
+     * @param {FormTemplateUpdateManyAndReturnArgs} args - Arguments to update many FormTemplates.
+     * @example
+     * // Update many FormTemplates
+     * const formTemplate = await prisma.formTemplate.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more FormTemplates and only return the `id`
+     * const formTemplateWithIdOnly = await prisma.formTemplate.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends FormTemplateUpdateManyAndReturnArgs>(args: SelectSubset<T, FormTemplateUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FormTemplatePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one FormTemplate.
+     * @param {FormTemplateUpsertArgs} args - Arguments to update or create a FormTemplate.
+     * @example
+     * // Update or create a FormTemplate
+     * const formTemplate = await prisma.formTemplate.upsert({
+     *   create: {
+     *     // ... data to create a FormTemplate
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the FormTemplate we want to update
+     *   }
+     * })
+     */
+    upsert<T extends FormTemplateUpsertArgs>(args: SelectSubset<T, FormTemplateUpsertArgs<ExtArgs>>): Prisma__FormTemplateClient<$Result.GetResult<Prisma.$FormTemplatePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of FormTemplates.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FormTemplateCountArgs} args - Arguments to filter FormTemplates to count.
+     * @example
+     * // Count the number of FormTemplates
+     * const count = await prisma.formTemplate.count({
+     *   where: {
+     *     // ... the filter for the FormTemplates we want to count
+     *   }
+     * })
+    **/
+    count<T extends FormTemplateCountArgs>(
+      args?: Subset<T, FormTemplateCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], FormTemplateCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a FormTemplate.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FormTemplateAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends FormTemplateAggregateArgs>(args: Subset<T, FormTemplateAggregateArgs>): Prisma.PrismaPromise<GetFormTemplateAggregateType<T>>
+
+    /**
+     * Group by FormTemplate.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FormTemplateGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends FormTemplateGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: FormTemplateGroupByArgs['orderBy'] }
+        : { orderBy?: FormTemplateGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, FormTemplateGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetFormTemplateGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the FormTemplate model
+   */
+  readonly fields: FormTemplateFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for FormTemplate.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__FormTemplateClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    forms<T extends FormTemplate$formsArgs<ExtArgs> = {}>(args?: Subset<T, FormTemplate$formsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FormPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    versions<T extends FormTemplate$versionsArgs<ExtArgs> = {}>(args?: Subset<T, FormTemplate$versionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FormTemplateVersionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the FormTemplate model
+   */
+  interface FormTemplateFieldRefs {
+    readonly id: FieldRef<"FormTemplate", 'Int'>
+    readonly slug: FieldRef<"FormTemplate", 'String'>
+    readonly name: FieldRef<"FormTemplate", 'String'>
+    readonly description: FieldRef<"FormTemplate", 'String'>
+    readonly icon: FieldRef<"FormTemplate", 'String'>
+    readonly metadata: FieldRef<"FormTemplate", 'String'>
+    readonly page: FieldRef<"FormTemplate", 'String'>
+    readonly components: FieldRef<"FormTemplate", 'String'>
+    readonly context: FieldRef<"FormTemplate", 'String'>
+    readonly eventConfig: FieldRef<"FormTemplate", 'String'>
+    readonly scheduleType: FieldRef<"FormTemplate", 'String'>
+    readonly scheduleInterval: FieldRef<"FormTemplate", 'Int'>
+    readonly scheduleConfig: FieldRef<"FormTemplate", 'String'>
+    readonly currentVersion: FieldRef<"FormTemplate", 'Int'>
+    readonly active: FieldRef<"FormTemplate", 'Boolean'>
+    readonly createdAt: FieldRef<"FormTemplate", 'DateTime'>
+    readonly updatedAt: FieldRef<"FormTemplate", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * FormTemplate findUnique
+   */
+  export type FormTemplateFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FormTemplate
+     */
+    select?: FormTemplateSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FormTemplate
+     */
+    omit?: FormTemplateOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FormTemplateInclude<ExtArgs> | null
+    /**
+     * Filter, which FormTemplate to fetch.
+     */
+    where: FormTemplateWhereUniqueInput
+  }
+
+  /**
+   * FormTemplate findUniqueOrThrow
+   */
+  export type FormTemplateFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FormTemplate
+     */
+    select?: FormTemplateSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FormTemplate
+     */
+    omit?: FormTemplateOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FormTemplateInclude<ExtArgs> | null
+    /**
+     * Filter, which FormTemplate to fetch.
+     */
+    where: FormTemplateWhereUniqueInput
+  }
+
+  /**
+   * FormTemplate findFirst
+   */
+  export type FormTemplateFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FormTemplate
+     */
+    select?: FormTemplateSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FormTemplate
+     */
+    omit?: FormTemplateOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FormTemplateInclude<ExtArgs> | null
+    /**
+     * Filter, which FormTemplate to fetch.
+     */
+    where?: FormTemplateWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FormTemplates to fetch.
+     */
+    orderBy?: FormTemplateOrderByWithRelationInput | FormTemplateOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for FormTemplates.
+     */
+    cursor?: FormTemplateWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FormTemplates from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FormTemplates.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of FormTemplates.
+     */
+    distinct?: FormTemplateScalarFieldEnum | FormTemplateScalarFieldEnum[]
+  }
+
+  /**
+   * FormTemplate findFirstOrThrow
+   */
+  export type FormTemplateFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FormTemplate
+     */
+    select?: FormTemplateSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FormTemplate
+     */
+    omit?: FormTemplateOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FormTemplateInclude<ExtArgs> | null
+    /**
+     * Filter, which FormTemplate to fetch.
+     */
+    where?: FormTemplateWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FormTemplates to fetch.
+     */
+    orderBy?: FormTemplateOrderByWithRelationInput | FormTemplateOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for FormTemplates.
+     */
+    cursor?: FormTemplateWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FormTemplates from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FormTemplates.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of FormTemplates.
+     */
+    distinct?: FormTemplateScalarFieldEnum | FormTemplateScalarFieldEnum[]
+  }
+
+  /**
+   * FormTemplate findMany
+   */
+  export type FormTemplateFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FormTemplate
+     */
+    select?: FormTemplateSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FormTemplate
+     */
+    omit?: FormTemplateOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FormTemplateInclude<ExtArgs> | null
+    /**
+     * Filter, which FormTemplates to fetch.
+     */
+    where?: FormTemplateWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FormTemplates to fetch.
+     */
+    orderBy?: FormTemplateOrderByWithRelationInput | FormTemplateOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing FormTemplates.
+     */
+    cursor?: FormTemplateWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FormTemplates from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FormTemplates.
+     */
+    skip?: number
+    distinct?: FormTemplateScalarFieldEnum | FormTemplateScalarFieldEnum[]
+  }
+
+  /**
+   * FormTemplate create
+   */
+  export type FormTemplateCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FormTemplate
+     */
+    select?: FormTemplateSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FormTemplate
+     */
+    omit?: FormTemplateOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FormTemplateInclude<ExtArgs> | null
+    /**
+     * The data needed to create a FormTemplate.
+     */
+    data: XOR<FormTemplateCreateInput, FormTemplateUncheckedCreateInput>
+  }
+
+  /**
+   * FormTemplate createMany
+   */
+  export type FormTemplateCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many FormTemplates.
+     */
+    data: FormTemplateCreateManyInput | FormTemplateCreateManyInput[]
+  }
+
+  /**
+   * FormTemplate createManyAndReturn
+   */
+  export type FormTemplateCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FormTemplate
+     */
+    select?: FormTemplateSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the FormTemplate
+     */
+    omit?: FormTemplateOmit<ExtArgs> | null
+    /**
+     * The data used to create many FormTemplates.
+     */
+    data: FormTemplateCreateManyInput | FormTemplateCreateManyInput[]
+  }
+
+  /**
+   * FormTemplate update
+   */
+  export type FormTemplateUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FormTemplate
+     */
+    select?: FormTemplateSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FormTemplate
+     */
+    omit?: FormTemplateOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FormTemplateInclude<ExtArgs> | null
+    /**
+     * The data needed to update a FormTemplate.
+     */
+    data: XOR<FormTemplateUpdateInput, FormTemplateUncheckedUpdateInput>
+    /**
+     * Choose, which FormTemplate to update.
+     */
+    where: FormTemplateWhereUniqueInput
+  }
+
+  /**
+   * FormTemplate updateMany
+   */
+  export type FormTemplateUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update FormTemplates.
+     */
+    data: XOR<FormTemplateUpdateManyMutationInput, FormTemplateUncheckedUpdateManyInput>
+    /**
+     * Filter which FormTemplates to update
+     */
+    where?: FormTemplateWhereInput
+    /**
+     * Limit how many FormTemplates to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * FormTemplate updateManyAndReturn
+   */
+  export type FormTemplateUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FormTemplate
+     */
+    select?: FormTemplateSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the FormTemplate
+     */
+    omit?: FormTemplateOmit<ExtArgs> | null
+    /**
+     * The data used to update FormTemplates.
+     */
+    data: XOR<FormTemplateUpdateManyMutationInput, FormTemplateUncheckedUpdateManyInput>
+    /**
+     * Filter which FormTemplates to update
+     */
+    where?: FormTemplateWhereInput
+    /**
+     * Limit how many FormTemplates to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * FormTemplate upsert
+   */
+  export type FormTemplateUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FormTemplate
+     */
+    select?: FormTemplateSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FormTemplate
+     */
+    omit?: FormTemplateOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FormTemplateInclude<ExtArgs> | null
+    /**
+     * The filter to search for the FormTemplate to update in case it exists.
+     */
+    where: FormTemplateWhereUniqueInput
+    /**
+     * In case the FormTemplate found by the `where` argument doesn't exist, create a new FormTemplate with this data.
+     */
+    create: XOR<FormTemplateCreateInput, FormTemplateUncheckedCreateInput>
+    /**
+     * In case the FormTemplate was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<FormTemplateUpdateInput, FormTemplateUncheckedUpdateInput>
+  }
+
+  /**
+   * FormTemplate delete
+   */
+  export type FormTemplateDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FormTemplate
+     */
+    select?: FormTemplateSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FormTemplate
+     */
+    omit?: FormTemplateOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FormTemplateInclude<ExtArgs> | null
+    /**
+     * Filter which FormTemplate to delete.
+     */
+    where: FormTemplateWhereUniqueInput
+  }
+
+  /**
+   * FormTemplate deleteMany
+   */
+  export type FormTemplateDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which FormTemplates to delete
+     */
+    where?: FormTemplateWhereInput
+    /**
+     * Limit how many FormTemplates to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * FormTemplate.forms
+   */
+  export type FormTemplate$formsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Form
+     */
+    select?: FormSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Form
+     */
+    omit?: FormOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FormInclude<ExtArgs> | null
+    where?: FormWhereInput
+    orderBy?: FormOrderByWithRelationInput | FormOrderByWithRelationInput[]
+    cursor?: FormWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: FormScalarFieldEnum | FormScalarFieldEnum[]
+  }
+
+  /**
+   * FormTemplate.versions
+   */
+  export type FormTemplate$versionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FormTemplateVersion
+     */
+    select?: FormTemplateVersionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FormTemplateVersion
+     */
+    omit?: FormTemplateVersionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FormTemplateVersionInclude<ExtArgs> | null
+    where?: FormTemplateVersionWhereInput
+    orderBy?: FormTemplateVersionOrderByWithRelationInput | FormTemplateVersionOrderByWithRelationInput[]
+    cursor?: FormTemplateVersionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: FormTemplateVersionScalarFieldEnum | FormTemplateVersionScalarFieldEnum[]
+  }
+
+  /**
+   * FormTemplate without action
+   */
+  export type FormTemplateDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FormTemplate
+     */
+    select?: FormTemplateSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FormTemplate
+     */
+    omit?: FormTemplateOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FormTemplateInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model FormTemplateVersion
+   */
+
+  export type AggregateFormTemplateVersion = {
+    _count: FormTemplateVersionCountAggregateOutputType | null
+    _avg: FormTemplateVersionAvgAggregateOutputType | null
+    _sum: FormTemplateVersionSumAggregateOutputType | null
+    _min: FormTemplateVersionMinAggregateOutputType | null
+    _max: FormTemplateVersionMaxAggregateOutputType | null
+  }
+
+  export type FormTemplateVersionAvgAggregateOutputType = {
+    id: number | null
+    templateId: number | null
+    version: number | null
+    scheduleInterval: number | null
+  }
+
+  export type FormTemplateVersionSumAggregateOutputType = {
+    id: number | null
+    templateId: number | null
+    version: number | null
+    scheduleInterval: number | null
+  }
+
+  export type FormTemplateVersionMinAggregateOutputType = {
+    id: number | null
+    templateId: number | null
+    version: number | null
+    name: string | null
+    description: string | null
+    icon: string | null
+    metadata: string | null
+    page: string | null
+    components: string | null
+    context: string | null
+    eventConfig: string | null
+    scheduleType: string | null
+    scheduleInterval: number | null
+    scheduleConfig: string | null
+    createdAt: Date | null
+  }
+
+  export type FormTemplateVersionMaxAggregateOutputType = {
+    id: number | null
+    templateId: number | null
+    version: number | null
+    name: string | null
+    description: string | null
+    icon: string | null
+    metadata: string | null
+    page: string | null
+    components: string | null
+    context: string | null
+    eventConfig: string | null
+    scheduleType: string | null
+    scheduleInterval: number | null
+    scheduleConfig: string | null
+    createdAt: Date | null
+  }
+
+  export type FormTemplateVersionCountAggregateOutputType = {
+    id: number
+    templateId: number
+    version: number
+    name: number
+    description: number
+    icon: number
+    metadata: number
+    page: number
+    components: number
+    context: number
+    eventConfig: number
+    scheduleType: number
+    scheduleInterval: number
+    scheduleConfig: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type FormTemplateVersionAvgAggregateInputType = {
+    id?: true
+    templateId?: true
+    version?: true
+    scheduleInterval?: true
+  }
+
+  export type FormTemplateVersionSumAggregateInputType = {
+    id?: true
+    templateId?: true
+    version?: true
+    scheduleInterval?: true
+  }
+
+  export type FormTemplateVersionMinAggregateInputType = {
+    id?: true
+    templateId?: true
+    version?: true
+    name?: true
+    description?: true
+    icon?: true
+    metadata?: true
+    page?: true
+    components?: true
+    context?: true
+    eventConfig?: true
+    scheduleType?: true
+    scheduleInterval?: true
+    scheduleConfig?: true
+    createdAt?: true
+  }
+
+  export type FormTemplateVersionMaxAggregateInputType = {
+    id?: true
+    templateId?: true
+    version?: true
+    name?: true
+    description?: true
+    icon?: true
+    metadata?: true
+    page?: true
+    components?: true
+    context?: true
+    eventConfig?: true
+    scheduleType?: true
+    scheduleInterval?: true
+    scheduleConfig?: true
+    createdAt?: true
+  }
+
+  export type FormTemplateVersionCountAggregateInputType = {
+    id?: true
+    templateId?: true
+    version?: true
+    name?: true
+    description?: true
+    icon?: true
+    metadata?: true
+    page?: true
+    components?: true
+    context?: true
+    eventConfig?: true
+    scheduleType?: true
+    scheduleInterval?: true
+    scheduleConfig?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type FormTemplateVersionAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which FormTemplateVersion to aggregate.
+     */
+    where?: FormTemplateVersionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FormTemplateVersions to fetch.
+     */
+    orderBy?: FormTemplateVersionOrderByWithRelationInput | FormTemplateVersionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: FormTemplateVersionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FormTemplateVersions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FormTemplateVersions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned FormTemplateVersions
+    **/
+    _count?: true | FormTemplateVersionCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: FormTemplateVersionAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: FormTemplateVersionSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: FormTemplateVersionMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: FormTemplateVersionMaxAggregateInputType
+  }
+
+  export type GetFormTemplateVersionAggregateType<T extends FormTemplateVersionAggregateArgs> = {
+        [P in keyof T & keyof AggregateFormTemplateVersion]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateFormTemplateVersion[P]>
+      : GetScalarType<T[P], AggregateFormTemplateVersion[P]>
+  }
+
+
+
+
+  export type FormTemplateVersionGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: FormTemplateVersionWhereInput
+    orderBy?: FormTemplateVersionOrderByWithAggregationInput | FormTemplateVersionOrderByWithAggregationInput[]
+    by: FormTemplateVersionScalarFieldEnum[] | FormTemplateVersionScalarFieldEnum
+    having?: FormTemplateVersionScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: FormTemplateVersionCountAggregateInputType | true
+    _avg?: FormTemplateVersionAvgAggregateInputType
+    _sum?: FormTemplateVersionSumAggregateInputType
+    _min?: FormTemplateVersionMinAggregateInputType
+    _max?: FormTemplateVersionMaxAggregateInputType
+  }
+
+  export type FormTemplateVersionGroupByOutputType = {
+    id: number
+    templateId: number
+    version: number
+    name: string
+    description: string
+    icon: string
+    metadata: string
+    page: string | null
+    components: string
+    context: string
+    eventConfig: string
+    scheduleType: string
+    scheduleInterval: number
+    scheduleConfig: string
+    createdAt: Date
+    _count: FormTemplateVersionCountAggregateOutputType | null
+    _avg: FormTemplateVersionAvgAggregateOutputType | null
+    _sum: FormTemplateVersionSumAggregateOutputType | null
+    _min: FormTemplateVersionMinAggregateOutputType | null
+    _max: FormTemplateVersionMaxAggregateOutputType | null
+  }
+
+  type GetFormTemplateVersionGroupByPayload<T extends FormTemplateVersionGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<FormTemplateVersionGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof FormTemplateVersionGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], FormTemplateVersionGroupByOutputType[P]>
+            : GetScalarType<T[P], FormTemplateVersionGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type FormTemplateVersionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    templateId?: boolean
+    version?: boolean
+    name?: boolean
+    description?: boolean
+    icon?: boolean
+    metadata?: boolean
+    page?: boolean
+    components?: boolean
+    context?: boolean
+    eventConfig?: boolean
+    scheduleType?: boolean
+    scheduleInterval?: boolean
+    scheduleConfig?: boolean
+    createdAt?: boolean
+    template?: boolean | FormTemplateDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["formTemplateVersion"]>
+
+  export type FormTemplateVersionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    templateId?: boolean
+    version?: boolean
+    name?: boolean
+    description?: boolean
+    icon?: boolean
+    metadata?: boolean
+    page?: boolean
+    components?: boolean
+    context?: boolean
+    eventConfig?: boolean
+    scheduleType?: boolean
+    scheduleInterval?: boolean
+    scheduleConfig?: boolean
+    createdAt?: boolean
+    template?: boolean | FormTemplateDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["formTemplateVersion"]>
+
+  export type FormTemplateVersionSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    templateId?: boolean
+    version?: boolean
+    name?: boolean
+    description?: boolean
+    icon?: boolean
+    metadata?: boolean
+    page?: boolean
+    components?: boolean
+    context?: boolean
+    eventConfig?: boolean
+    scheduleType?: boolean
+    scheduleInterval?: boolean
+    scheduleConfig?: boolean
+    createdAt?: boolean
+    template?: boolean | FormTemplateDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["formTemplateVersion"]>
+
+  export type FormTemplateVersionSelectScalar = {
+    id?: boolean
+    templateId?: boolean
+    version?: boolean
+    name?: boolean
+    description?: boolean
+    icon?: boolean
+    metadata?: boolean
+    page?: boolean
+    components?: boolean
+    context?: boolean
+    eventConfig?: boolean
+    scheduleType?: boolean
+    scheduleInterval?: boolean
+    scheduleConfig?: boolean
+    createdAt?: boolean
+  }
+
+  export type FormTemplateVersionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "templateId" | "version" | "name" | "description" | "icon" | "metadata" | "page" | "components" | "context" | "eventConfig" | "scheduleType" | "scheduleInterval" | "scheduleConfig" | "createdAt", ExtArgs["result"]["formTemplateVersion"]>
+  export type FormTemplateVersionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    template?: boolean | FormTemplateDefaultArgs<ExtArgs>
+  }
+  export type FormTemplateVersionIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    template?: boolean | FormTemplateDefaultArgs<ExtArgs>
+  }
+  export type FormTemplateVersionIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    template?: boolean | FormTemplateDefaultArgs<ExtArgs>
+  }
+
+  export type $FormTemplateVersionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "FormTemplateVersion"
+    objects: {
+      template: Prisma.$FormTemplatePayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      templateId: number
+      version: number
+      name: string
+      description: string
+      icon: string
+      metadata: string
+      page: string | null
+      components: string
+      context: string
+      eventConfig: string
+      scheduleType: string
+      scheduleInterval: number
+      scheduleConfig: string
+      createdAt: Date
+    }, ExtArgs["result"]["formTemplateVersion"]>
+    composites: {}
+  }
+
+  type FormTemplateVersionGetPayload<S extends boolean | null | undefined | FormTemplateVersionDefaultArgs> = $Result.GetResult<Prisma.$FormTemplateVersionPayload, S>
+
+  type FormTemplateVersionCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<FormTemplateVersionFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: FormTemplateVersionCountAggregateInputType | true
+    }
+
+  export interface FormTemplateVersionDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['FormTemplateVersion'], meta: { name: 'FormTemplateVersion' } }
+    /**
+     * Find zero or one FormTemplateVersion that matches the filter.
+     * @param {FormTemplateVersionFindUniqueArgs} args - Arguments to find a FormTemplateVersion
+     * @example
+     * // Get one FormTemplateVersion
+     * const formTemplateVersion = await prisma.formTemplateVersion.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends FormTemplateVersionFindUniqueArgs>(args: SelectSubset<T, FormTemplateVersionFindUniqueArgs<ExtArgs>>): Prisma__FormTemplateVersionClient<$Result.GetResult<Prisma.$FormTemplateVersionPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one FormTemplateVersion that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {FormTemplateVersionFindUniqueOrThrowArgs} args - Arguments to find a FormTemplateVersion
+     * @example
+     * // Get one FormTemplateVersion
+     * const formTemplateVersion = await prisma.formTemplateVersion.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends FormTemplateVersionFindUniqueOrThrowArgs>(args: SelectSubset<T, FormTemplateVersionFindUniqueOrThrowArgs<ExtArgs>>): Prisma__FormTemplateVersionClient<$Result.GetResult<Prisma.$FormTemplateVersionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first FormTemplateVersion that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FormTemplateVersionFindFirstArgs} args - Arguments to find a FormTemplateVersion
+     * @example
+     * // Get one FormTemplateVersion
+     * const formTemplateVersion = await prisma.formTemplateVersion.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends FormTemplateVersionFindFirstArgs>(args?: SelectSubset<T, FormTemplateVersionFindFirstArgs<ExtArgs>>): Prisma__FormTemplateVersionClient<$Result.GetResult<Prisma.$FormTemplateVersionPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first FormTemplateVersion that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FormTemplateVersionFindFirstOrThrowArgs} args - Arguments to find a FormTemplateVersion
+     * @example
+     * // Get one FormTemplateVersion
+     * const formTemplateVersion = await prisma.formTemplateVersion.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends FormTemplateVersionFindFirstOrThrowArgs>(args?: SelectSubset<T, FormTemplateVersionFindFirstOrThrowArgs<ExtArgs>>): Prisma__FormTemplateVersionClient<$Result.GetResult<Prisma.$FormTemplateVersionPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more FormTemplateVersions that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FormTemplateVersionFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all FormTemplateVersions
+     * const formTemplateVersions = await prisma.formTemplateVersion.findMany()
+     * 
+     * // Get first 10 FormTemplateVersions
+     * const formTemplateVersions = await prisma.formTemplateVersion.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const formTemplateVersionWithIdOnly = await prisma.formTemplateVersion.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends FormTemplateVersionFindManyArgs>(args?: SelectSubset<T, FormTemplateVersionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FormTemplateVersionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a FormTemplateVersion.
+     * @param {FormTemplateVersionCreateArgs} args - Arguments to create a FormTemplateVersion.
+     * @example
+     * // Create one FormTemplateVersion
+     * const FormTemplateVersion = await prisma.formTemplateVersion.create({
+     *   data: {
+     *     // ... data to create a FormTemplateVersion
+     *   }
+     * })
+     * 
+     */
+    create<T extends FormTemplateVersionCreateArgs>(args: SelectSubset<T, FormTemplateVersionCreateArgs<ExtArgs>>): Prisma__FormTemplateVersionClient<$Result.GetResult<Prisma.$FormTemplateVersionPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many FormTemplateVersions.
+     * @param {FormTemplateVersionCreateManyArgs} args - Arguments to create many FormTemplateVersions.
+     * @example
+     * // Create many FormTemplateVersions
+     * const formTemplateVersion = await prisma.formTemplateVersion.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends FormTemplateVersionCreateManyArgs>(args?: SelectSubset<T, FormTemplateVersionCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many FormTemplateVersions and returns the data saved in the database.
+     * @param {FormTemplateVersionCreateManyAndReturnArgs} args - Arguments to create many FormTemplateVersions.
+     * @example
+     * // Create many FormTemplateVersions
+     * const formTemplateVersion = await prisma.formTemplateVersion.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many FormTemplateVersions and only return the `id`
+     * const formTemplateVersionWithIdOnly = await prisma.formTemplateVersion.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends FormTemplateVersionCreateManyAndReturnArgs>(args?: SelectSubset<T, FormTemplateVersionCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FormTemplateVersionPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a FormTemplateVersion.
+     * @param {FormTemplateVersionDeleteArgs} args - Arguments to delete one FormTemplateVersion.
+     * @example
+     * // Delete one FormTemplateVersion
+     * const FormTemplateVersion = await prisma.formTemplateVersion.delete({
+     *   where: {
+     *     // ... filter to delete one FormTemplateVersion
+     *   }
+     * })
+     * 
+     */
+    delete<T extends FormTemplateVersionDeleteArgs>(args: SelectSubset<T, FormTemplateVersionDeleteArgs<ExtArgs>>): Prisma__FormTemplateVersionClient<$Result.GetResult<Prisma.$FormTemplateVersionPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one FormTemplateVersion.
+     * @param {FormTemplateVersionUpdateArgs} args - Arguments to update one FormTemplateVersion.
+     * @example
+     * // Update one FormTemplateVersion
+     * const formTemplateVersion = await prisma.formTemplateVersion.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends FormTemplateVersionUpdateArgs>(args: SelectSubset<T, FormTemplateVersionUpdateArgs<ExtArgs>>): Prisma__FormTemplateVersionClient<$Result.GetResult<Prisma.$FormTemplateVersionPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more FormTemplateVersions.
+     * @param {FormTemplateVersionDeleteManyArgs} args - Arguments to filter FormTemplateVersions to delete.
+     * @example
+     * // Delete a few FormTemplateVersions
+     * const { count } = await prisma.formTemplateVersion.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends FormTemplateVersionDeleteManyArgs>(args?: SelectSubset<T, FormTemplateVersionDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more FormTemplateVersions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FormTemplateVersionUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many FormTemplateVersions
+     * const formTemplateVersion = await prisma.formTemplateVersion.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends FormTemplateVersionUpdateManyArgs>(args: SelectSubset<T, FormTemplateVersionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more FormTemplateVersions and returns the data updated in the database.
+     * @param {FormTemplateVersionUpdateManyAndReturnArgs} args - Arguments to update many FormTemplateVersions.
+     * @example
+     * // Update many FormTemplateVersions
+     * const formTemplateVersion = await prisma.formTemplateVersion.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more FormTemplateVersions and only return the `id`
+     * const formTemplateVersionWithIdOnly = await prisma.formTemplateVersion.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends FormTemplateVersionUpdateManyAndReturnArgs>(args: SelectSubset<T, FormTemplateVersionUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FormTemplateVersionPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one FormTemplateVersion.
+     * @param {FormTemplateVersionUpsertArgs} args - Arguments to update or create a FormTemplateVersion.
+     * @example
+     * // Update or create a FormTemplateVersion
+     * const formTemplateVersion = await prisma.formTemplateVersion.upsert({
+     *   create: {
+     *     // ... data to create a FormTemplateVersion
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the FormTemplateVersion we want to update
+     *   }
+     * })
+     */
+    upsert<T extends FormTemplateVersionUpsertArgs>(args: SelectSubset<T, FormTemplateVersionUpsertArgs<ExtArgs>>): Prisma__FormTemplateVersionClient<$Result.GetResult<Prisma.$FormTemplateVersionPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of FormTemplateVersions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FormTemplateVersionCountArgs} args - Arguments to filter FormTemplateVersions to count.
+     * @example
+     * // Count the number of FormTemplateVersions
+     * const count = await prisma.formTemplateVersion.count({
+     *   where: {
+     *     // ... the filter for the FormTemplateVersions we want to count
+     *   }
+     * })
+    **/
+    count<T extends FormTemplateVersionCountArgs>(
+      args?: Subset<T, FormTemplateVersionCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], FormTemplateVersionCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a FormTemplateVersion.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FormTemplateVersionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends FormTemplateVersionAggregateArgs>(args: Subset<T, FormTemplateVersionAggregateArgs>): Prisma.PrismaPromise<GetFormTemplateVersionAggregateType<T>>
+
+    /**
+     * Group by FormTemplateVersion.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FormTemplateVersionGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends FormTemplateVersionGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: FormTemplateVersionGroupByArgs['orderBy'] }
+        : { orderBy?: FormTemplateVersionGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, FormTemplateVersionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetFormTemplateVersionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the FormTemplateVersion model
+   */
+  readonly fields: FormTemplateVersionFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for FormTemplateVersion.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__FormTemplateVersionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    template<T extends FormTemplateDefaultArgs<ExtArgs> = {}>(args?: Subset<T, FormTemplateDefaultArgs<ExtArgs>>): Prisma__FormTemplateClient<$Result.GetResult<Prisma.$FormTemplatePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the FormTemplateVersion model
+   */
+  interface FormTemplateVersionFieldRefs {
+    readonly id: FieldRef<"FormTemplateVersion", 'Int'>
+    readonly templateId: FieldRef<"FormTemplateVersion", 'Int'>
+    readonly version: FieldRef<"FormTemplateVersion", 'Int'>
+    readonly name: FieldRef<"FormTemplateVersion", 'String'>
+    readonly description: FieldRef<"FormTemplateVersion", 'String'>
+    readonly icon: FieldRef<"FormTemplateVersion", 'String'>
+    readonly metadata: FieldRef<"FormTemplateVersion", 'String'>
+    readonly page: FieldRef<"FormTemplateVersion", 'String'>
+    readonly components: FieldRef<"FormTemplateVersion", 'String'>
+    readonly context: FieldRef<"FormTemplateVersion", 'String'>
+    readonly eventConfig: FieldRef<"FormTemplateVersion", 'String'>
+    readonly scheduleType: FieldRef<"FormTemplateVersion", 'String'>
+    readonly scheduleInterval: FieldRef<"FormTemplateVersion", 'Int'>
+    readonly scheduleConfig: FieldRef<"FormTemplateVersion", 'String'>
+    readonly createdAt: FieldRef<"FormTemplateVersion", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * FormTemplateVersion findUnique
+   */
+  export type FormTemplateVersionFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FormTemplateVersion
+     */
+    select?: FormTemplateVersionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FormTemplateVersion
+     */
+    omit?: FormTemplateVersionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FormTemplateVersionInclude<ExtArgs> | null
+    /**
+     * Filter, which FormTemplateVersion to fetch.
+     */
+    where: FormTemplateVersionWhereUniqueInput
+  }
+
+  /**
+   * FormTemplateVersion findUniqueOrThrow
+   */
+  export type FormTemplateVersionFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FormTemplateVersion
+     */
+    select?: FormTemplateVersionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FormTemplateVersion
+     */
+    omit?: FormTemplateVersionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FormTemplateVersionInclude<ExtArgs> | null
+    /**
+     * Filter, which FormTemplateVersion to fetch.
+     */
+    where: FormTemplateVersionWhereUniqueInput
+  }
+
+  /**
+   * FormTemplateVersion findFirst
+   */
+  export type FormTemplateVersionFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FormTemplateVersion
+     */
+    select?: FormTemplateVersionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FormTemplateVersion
+     */
+    omit?: FormTemplateVersionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FormTemplateVersionInclude<ExtArgs> | null
+    /**
+     * Filter, which FormTemplateVersion to fetch.
+     */
+    where?: FormTemplateVersionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FormTemplateVersions to fetch.
+     */
+    orderBy?: FormTemplateVersionOrderByWithRelationInput | FormTemplateVersionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for FormTemplateVersions.
+     */
+    cursor?: FormTemplateVersionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FormTemplateVersions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FormTemplateVersions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of FormTemplateVersions.
+     */
+    distinct?: FormTemplateVersionScalarFieldEnum | FormTemplateVersionScalarFieldEnum[]
+  }
+
+  /**
+   * FormTemplateVersion findFirstOrThrow
+   */
+  export type FormTemplateVersionFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FormTemplateVersion
+     */
+    select?: FormTemplateVersionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FormTemplateVersion
+     */
+    omit?: FormTemplateVersionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FormTemplateVersionInclude<ExtArgs> | null
+    /**
+     * Filter, which FormTemplateVersion to fetch.
+     */
+    where?: FormTemplateVersionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FormTemplateVersions to fetch.
+     */
+    orderBy?: FormTemplateVersionOrderByWithRelationInput | FormTemplateVersionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for FormTemplateVersions.
+     */
+    cursor?: FormTemplateVersionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FormTemplateVersions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FormTemplateVersions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of FormTemplateVersions.
+     */
+    distinct?: FormTemplateVersionScalarFieldEnum | FormTemplateVersionScalarFieldEnum[]
+  }
+
+  /**
+   * FormTemplateVersion findMany
+   */
+  export type FormTemplateVersionFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FormTemplateVersion
+     */
+    select?: FormTemplateVersionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FormTemplateVersion
+     */
+    omit?: FormTemplateVersionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FormTemplateVersionInclude<ExtArgs> | null
+    /**
+     * Filter, which FormTemplateVersions to fetch.
+     */
+    where?: FormTemplateVersionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FormTemplateVersions to fetch.
+     */
+    orderBy?: FormTemplateVersionOrderByWithRelationInput | FormTemplateVersionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing FormTemplateVersions.
+     */
+    cursor?: FormTemplateVersionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FormTemplateVersions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FormTemplateVersions.
+     */
+    skip?: number
+    distinct?: FormTemplateVersionScalarFieldEnum | FormTemplateVersionScalarFieldEnum[]
+  }
+
+  /**
+   * FormTemplateVersion create
+   */
+  export type FormTemplateVersionCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FormTemplateVersion
+     */
+    select?: FormTemplateVersionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FormTemplateVersion
+     */
+    omit?: FormTemplateVersionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FormTemplateVersionInclude<ExtArgs> | null
+    /**
+     * The data needed to create a FormTemplateVersion.
+     */
+    data: XOR<FormTemplateVersionCreateInput, FormTemplateVersionUncheckedCreateInput>
+  }
+
+  /**
+   * FormTemplateVersion createMany
+   */
+  export type FormTemplateVersionCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many FormTemplateVersions.
+     */
+    data: FormTemplateVersionCreateManyInput | FormTemplateVersionCreateManyInput[]
+  }
+
+  /**
+   * FormTemplateVersion createManyAndReturn
+   */
+  export type FormTemplateVersionCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FormTemplateVersion
+     */
+    select?: FormTemplateVersionSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the FormTemplateVersion
+     */
+    omit?: FormTemplateVersionOmit<ExtArgs> | null
+    /**
+     * The data used to create many FormTemplateVersions.
+     */
+    data: FormTemplateVersionCreateManyInput | FormTemplateVersionCreateManyInput[]
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FormTemplateVersionIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * FormTemplateVersion update
+   */
+  export type FormTemplateVersionUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FormTemplateVersion
+     */
+    select?: FormTemplateVersionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FormTemplateVersion
+     */
+    omit?: FormTemplateVersionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FormTemplateVersionInclude<ExtArgs> | null
+    /**
+     * The data needed to update a FormTemplateVersion.
+     */
+    data: XOR<FormTemplateVersionUpdateInput, FormTemplateVersionUncheckedUpdateInput>
+    /**
+     * Choose, which FormTemplateVersion to update.
+     */
+    where: FormTemplateVersionWhereUniqueInput
+  }
+
+  /**
+   * FormTemplateVersion updateMany
+   */
+  export type FormTemplateVersionUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update FormTemplateVersions.
+     */
+    data: XOR<FormTemplateVersionUpdateManyMutationInput, FormTemplateVersionUncheckedUpdateManyInput>
+    /**
+     * Filter which FormTemplateVersions to update
+     */
+    where?: FormTemplateVersionWhereInput
+    /**
+     * Limit how many FormTemplateVersions to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * FormTemplateVersion updateManyAndReturn
+   */
+  export type FormTemplateVersionUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FormTemplateVersion
+     */
+    select?: FormTemplateVersionSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the FormTemplateVersion
+     */
+    omit?: FormTemplateVersionOmit<ExtArgs> | null
+    /**
+     * The data used to update FormTemplateVersions.
+     */
+    data: XOR<FormTemplateVersionUpdateManyMutationInput, FormTemplateVersionUncheckedUpdateManyInput>
+    /**
+     * Filter which FormTemplateVersions to update
+     */
+    where?: FormTemplateVersionWhereInput
+    /**
+     * Limit how many FormTemplateVersions to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FormTemplateVersionIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * FormTemplateVersion upsert
+   */
+  export type FormTemplateVersionUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FormTemplateVersion
+     */
+    select?: FormTemplateVersionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FormTemplateVersion
+     */
+    omit?: FormTemplateVersionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FormTemplateVersionInclude<ExtArgs> | null
+    /**
+     * The filter to search for the FormTemplateVersion to update in case it exists.
+     */
+    where: FormTemplateVersionWhereUniqueInput
+    /**
+     * In case the FormTemplateVersion found by the `where` argument doesn't exist, create a new FormTemplateVersion with this data.
+     */
+    create: XOR<FormTemplateVersionCreateInput, FormTemplateVersionUncheckedCreateInput>
+    /**
+     * In case the FormTemplateVersion was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<FormTemplateVersionUpdateInput, FormTemplateVersionUncheckedUpdateInput>
+  }
+
+  /**
+   * FormTemplateVersion delete
+   */
+  export type FormTemplateVersionDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FormTemplateVersion
+     */
+    select?: FormTemplateVersionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FormTemplateVersion
+     */
+    omit?: FormTemplateVersionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FormTemplateVersionInclude<ExtArgs> | null
+    /**
+     * Filter which FormTemplateVersion to delete.
+     */
+    where: FormTemplateVersionWhereUniqueInput
+  }
+
+  /**
+   * FormTemplateVersion deleteMany
+   */
+  export type FormTemplateVersionDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which FormTemplateVersions to delete
+     */
+    where?: FormTemplateVersionWhereInput
+    /**
+     * Limit how many FormTemplateVersions to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * FormTemplateVersion without action
+   */
+  export type FormTemplateVersionDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FormTemplateVersion
+     */
+    select?: FormTemplateVersionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FormTemplateVersion
+     */
+    omit?: FormTemplateVersionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FormTemplateVersionInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Role
+   */
+
+  export type AggregateRole = {
+    _count: RoleCountAggregateOutputType | null
+    _avg: RoleAvgAggregateOutputType | null
+    _sum: RoleSumAggregateOutputType | null
+    _min: RoleMinAggregateOutputType | null
+    _max: RoleMaxAggregateOutputType | null
+  }
+
+  export type RoleAvgAggregateOutputType = {
+    id: number | null
+  }
+
+  export type RoleSumAggregateOutputType = {
+    id: number | null
+  }
+
+  export type RoleMinAggregateOutputType = {
+    id: number | null
+    key: string | null
+    name: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type RoleMaxAggregateOutputType = {
+    id: number | null
+    key: string | null
+    name: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type RoleCountAggregateOutputType = {
+    id: number
+    key: number
+    name: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type RoleAvgAggregateInputType = {
+    id?: true
+  }
+
+  export type RoleSumAggregateInputType = {
+    id?: true
+  }
+
+  export type RoleMinAggregateInputType = {
+    id?: true
+    key?: true
+    name?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type RoleMaxAggregateInputType = {
+    id?: true
+    key?: true
+    name?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type RoleCountAggregateInputType = {
+    id?: true
+    key?: true
+    name?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type RoleAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Role to aggregate.
+     */
+    where?: RoleWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Roles to fetch.
+     */
+    orderBy?: RoleOrderByWithRelationInput | RoleOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: RoleWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Roles from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Roles.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Roles
+    **/
+    _count?: true | RoleCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: RoleAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: RoleSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: RoleMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: RoleMaxAggregateInputType
+  }
+
+  export type GetRoleAggregateType<T extends RoleAggregateArgs> = {
+        [P in keyof T & keyof AggregateRole]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateRole[P]>
+      : GetScalarType<T[P], AggregateRole[P]>
+  }
+
+
+
+
+  export type RoleGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: RoleWhereInput
+    orderBy?: RoleOrderByWithAggregationInput | RoleOrderByWithAggregationInput[]
+    by: RoleScalarFieldEnum[] | RoleScalarFieldEnum
+    having?: RoleScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: RoleCountAggregateInputType | true
+    _avg?: RoleAvgAggregateInputType
+    _sum?: RoleSumAggregateInputType
+    _min?: RoleMinAggregateInputType
+    _max?: RoleMaxAggregateInputType
+  }
+
+  export type RoleGroupByOutputType = {
+    id: number
+    key: string
+    name: string
+    createdAt: Date
+    updatedAt: Date
+    _count: RoleCountAggregateOutputType | null
+    _avg: RoleAvgAggregateOutputType | null
+    _sum: RoleSumAggregateOutputType | null
+    _min: RoleMinAggregateOutputType | null
+    _max: RoleMaxAggregateOutputType | null
+  }
+
+  type GetRoleGroupByPayload<T extends RoleGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<RoleGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof RoleGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], RoleGroupByOutputType[P]>
+            : GetScalarType<T[P], RoleGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type RoleSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    key?: boolean
+    name?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    users?: boolean | Role$usersArgs<ExtArgs>
+    forms?: boolean | Role$formsArgs<ExtArgs>
+    assignments?: boolean | Role$assignmentsArgs<ExtArgs>
+    submissions?: boolean | Role$submissionsArgs<ExtArgs>
+    _count?: boolean | RoleCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["role"]>
+
+  export type RoleSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    key?: boolean
+    name?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["role"]>
+
+  export type RoleSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    key?: boolean
+    name?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["role"]>
+
+  export type RoleSelectScalar = {
+    id?: boolean
+    key?: boolean
+    name?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type RoleOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "key" | "name" | "createdAt" | "updatedAt", ExtArgs["result"]["role"]>
+  export type RoleInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    users?: boolean | Role$usersArgs<ExtArgs>
+    forms?: boolean | Role$formsArgs<ExtArgs>
+    assignments?: boolean | Role$assignmentsArgs<ExtArgs>
+    submissions?: boolean | Role$submissionsArgs<ExtArgs>
+    _count?: boolean | RoleCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type RoleIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type RoleIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $RolePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Role"
+    objects: {
+      users: Prisma.$AppUserPayload<ExtArgs>[]
+      forms: Prisma.$FormPayload<ExtArgs>[]
+      assignments: Prisma.$FormAssignmentPayload<ExtArgs>[]
+      submissions: Prisma.$FormSubmissionPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      key: string
+      name: string
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["role"]>
+    composites: {}
+  }
+
+  type RoleGetPayload<S extends boolean | null | undefined | RoleDefaultArgs> = $Result.GetResult<Prisma.$RolePayload, S>
+
+  type RoleCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<RoleFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: RoleCountAggregateInputType | true
+    }
+
+  export interface RoleDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Role'], meta: { name: 'Role' } }
+    /**
+     * Find zero or one Role that matches the filter.
+     * @param {RoleFindUniqueArgs} args - Arguments to find a Role
+     * @example
+     * // Get one Role
+     * const role = await prisma.role.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends RoleFindUniqueArgs>(args: SelectSubset<T, RoleFindUniqueArgs<ExtArgs>>): Prisma__RoleClient<$Result.GetResult<Prisma.$RolePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Role that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {RoleFindUniqueOrThrowArgs} args - Arguments to find a Role
+     * @example
+     * // Get one Role
+     * const role = await prisma.role.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends RoleFindUniqueOrThrowArgs>(args: SelectSubset<T, RoleFindUniqueOrThrowArgs<ExtArgs>>): Prisma__RoleClient<$Result.GetResult<Prisma.$RolePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Role that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RoleFindFirstArgs} args - Arguments to find a Role
+     * @example
+     * // Get one Role
+     * const role = await prisma.role.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends RoleFindFirstArgs>(args?: SelectSubset<T, RoleFindFirstArgs<ExtArgs>>): Prisma__RoleClient<$Result.GetResult<Prisma.$RolePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Role that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RoleFindFirstOrThrowArgs} args - Arguments to find a Role
+     * @example
+     * // Get one Role
+     * const role = await prisma.role.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends RoleFindFirstOrThrowArgs>(args?: SelectSubset<T, RoleFindFirstOrThrowArgs<ExtArgs>>): Prisma__RoleClient<$Result.GetResult<Prisma.$RolePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Roles that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RoleFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Roles
+     * const roles = await prisma.role.findMany()
+     * 
+     * // Get first 10 Roles
+     * const roles = await prisma.role.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const roleWithIdOnly = await prisma.role.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends RoleFindManyArgs>(args?: SelectSubset<T, RoleFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RolePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Role.
+     * @param {RoleCreateArgs} args - Arguments to create a Role.
+     * @example
+     * // Create one Role
+     * const Role = await prisma.role.create({
+     *   data: {
+     *     // ... data to create a Role
+     *   }
+     * })
+     * 
+     */
+    create<T extends RoleCreateArgs>(args: SelectSubset<T, RoleCreateArgs<ExtArgs>>): Prisma__RoleClient<$Result.GetResult<Prisma.$RolePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Roles.
+     * @param {RoleCreateManyArgs} args - Arguments to create many Roles.
+     * @example
+     * // Create many Roles
+     * const role = await prisma.role.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends RoleCreateManyArgs>(args?: SelectSubset<T, RoleCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Roles and returns the data saved in the database.
+     * @param {RoleCreateManyAndReturnArgs} args - Arguments to create many Roles.
+     * @example
+     * // Create many Roles
+     * const role = await prisma.role.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Roles and only return the `id`
+     * const roleWithIdOnly = await prisma.role.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends RoleCreateManyAndReturnArgs>(args?: SelectSubset<T, RoleCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RolePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Role.
+     * @param {RoleDeleteArgs} args - Arguments to delete one Role.
+     * @example
+     * // Delete one Role
+     * const Role = await prisma.role.delete({
+     *   where: {
+     *     // ... filter to delete one Role
+     *   }
+     * })
+     * 
+     */
+    delete<T extends RoleDeleteArgs>(args: SelectSubset<T, RoleDeleteArgs<ExtArgs>>): Prisma__RoleClient<$Result.GetResult<Prisma.$RolePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Role.
+     * @param {RoleUpdateArgs} args - Arguments to update one Role.
+     * @example
+     * // Update one Role
+     * const role = await prisma.role.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends RoleUpdateArgs>(args: SelectSubset<T, RoleUpdateArgs<ExtArgs>>): Prisma__RoleClient<$Result.GetResult<Prisma.$RolePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Roles.
+     * @param {RoleDeleteManyArgs} args - Arguments to filter Roles to delete.
+     * @example
+     * // Delete a few Roles
+     * const { count } = await prisma.role.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends RoleDeleteManyArgs>(args?: SelectSubset<T, RoleDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Roles.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RoleUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Roles
+     * const role = await prisma.role.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends RoleUpdateManyArgs>(args: SelectSubset<T, RoleUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Roles and returns the data updated in the database.
+     * @param {RoleUpdateManyAndReturnArgs} args - Arguments to update many Roles.
+     * @example
+     * // Update many Roles
+     * const role = await prisma.role.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Roles and only return the `id`
+     * const roleWithIdOnly = await prisma.role.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends RoleUpdateManyAndReturnArgs>(args: SelectSubset<T, RoleUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RolePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Role.
+     * @param {RoleUpsertArgs} args - Arguments to update or create a Role.
+     * @example
+     * // Update or create a Role
+     * const role = await prisma.role.upsert({
+     *   create: {
+     *     // ... data to create a Role
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Role we want to update
+     *   }
+     * })
+     */
+    upsert<T extends RoleUpsertArgs>(args: SelectSubset<T, RoleUpsertArgs<ExtArgs>>): Prisma__RoleClient<$Result.GetResult<Prisma.$RolePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Roles.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RoleCountArgs} args - Arguments to filter Roles to count.
+     * @example
+     * // Count the number of Roles
+     * const count = await prisma.role.count({
+     *   where: {
+     *     // ... the filter for the Roles we want to count
+     *   }
+     * })
+    **/
+    count<T extends RoleCountArgs>(
+      args?: Subset<T, RoleCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], RoleCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Role.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RoleAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends RoleAggregateArgs>(args: Subset<T, RoleAggregateArgs>): Prisma.PrismaPromise<GetRoleAggregateType<T>>
+
+    /**
+     * Group by Role.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RoleGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends RoleGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: RoleGroupByArgs['orderBy'] }
+        : { orderBy?: RoleGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, RoleGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetRoleGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Role model
+   */
+  readonly fields: RoleFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Role.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__RoleClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    users<T extends Role$usersArgs<ExtArgs> = {}>(args?: Subset<T, Role$usersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AppUserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    forms<T extends Role$formsArgs<ExtArgs> = {}>(args?: Subset<T, Role$formsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FormPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    assignments<T extends Role$assignmentsArgs<ExtArgs> = {}>(args?: Subset<T, Role$assignmentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FormAssignmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    submissions<T extends Role$submissionsArgs<ExtArgs> = {}>(args?: Subset<T, Role$submissionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FormSubmissionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Role model
+   */
+  interface RoleFieldRefs {
+    readonly id: FieldRef<"Role", 'Int'>
+    readonly key: FieldRef<"Role", 'String'>
+    readonly name: FieldRef<"Role", 'String'>
+    readonly createdAt: FieldRef<"Role", 'DateTime'>
+    readonly updatedAt: FieldRef<"Role", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Role findUnique
+   */
+  export type RoleFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Role
+     */
+    select?: RoleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Role
+     */
+    omit?: RoleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RoleInclude<ExtArgs> | null
+    /**
+     * Filter, which Role to fetch.
+     */
+    where: RoleWhereUniqueInput
+  }
+
+  /**
+   * Role findUniqueOrThrow
+   */
+  export type RoleFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Role
+     */
+    select?: RoleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Role
+     */
+    omit?: RoleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RoleInclude<ExtArgs> | null
+    /**
+     * Filter, which Role to fetch.
+     */
+    where: RoleWhereUniqueInput
+  }
+
+  /**
+   * Role findFirst
+   */
+  export type RoleFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Role
+     */
+    select?: RoleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Role
+     */
+    omit?: RoleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RoleInclude<ExtArgs> | null
+    /**
+     * Filter, which Role to fetch.
+     */
+    where?: RoleWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Roles to fetch.
+     */
+    orderBy?: RoleOrderByWithRelationInput | RoleOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Roles.
+     */
+    cursor?: RoleWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Roles from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Roles.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Roles.
+     */
+    distinct?: RoleScalarFieldEnum | RoleScalarFieldEnum[]
+  }
+
+  /**
+   * Role findFirstOrThrow
+   */
+  export type RoleFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Role
+     */
+    select?: RoleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Role
+     */
+    omit?: RoleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RoleInclude<ExtArgs> | null
+    /**
+     * Filter, which Role to fetch.
+     */
+    where?: RoleWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Roles to fetch.
+     */
+    orderBy?: RoleOrderByWithRelationInput | RoleOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Roles.
+     */
+    cursor?: RoleWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Roles from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Roles.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Roles.
+     */
+    distinct?: RoleScalarFieldEnum | RoleScalarFieldEnum[]
+  }
+
+  /**
+   * Role findMany
+   */
+  export type RoleFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Role
+     */
+    select?: RoleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Role
+     */
+    omit?: RoleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RoleInclude<ExtArgs> | null
+    /**
+     * Filter, which Roles to fetch.
+     */
+    where?: RoleWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Roles to fetch.
+     */
+    orderBy?: RoleOrderByWithRelationInput | RoleOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Roles.
+     */
+    cursor?: RoleWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Roles from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Roles.
+     */
+    skip?: number
+    distinct?: RoleScalarFieldEnum | RoleScalarFieldEnum[]
+  }
+
+  /**
+   * Role create
+   */
+  export type RoleCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Role
+     */
+    select?: RoleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Role
+     */
+    omit?: RoleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RoleInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Role.
+     */
+    data: XOR<RoleCreateInput, RoleUncheckedCreateInput>
+  }
+
+  /**
+   * Role createMany
+   */
+  export type RoleCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Roles.
+     */
+    data: RoleCreateManyInput | RoleCreateManyInput[]
+  }
+
+  /**
+   * Role createManyAndReturn
+   */
+  export type RoleCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Role
+     */
+    select?: RoleSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Role
+     */
+    omit?: RoleOmit<ExtArgs> | null
+    /**
+     * The data used to create many Roles.
+     */
+    data: RoleCreateManyInput | RoleCreateManyInput[]
+  }
+
+  /**
+   * Role update
+   */
+  export type RoleUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Role
+     */
+    select?: RoleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Role
+     */
+    omit?: RoleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RoleInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Role.
+     */
+    data: XOR<RoleUpdateInput, RoleUncheckedUpdateInput>
+    /**
+     * Choose, which Role to update.
+     */
+    where: RoleWhereUniqueInput
+  }
+
+  /**
+   * Role updateMany
+   */
+  export type RoleUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Roles.
+     */
+    data: XOR<RoleUpdateManyMutationInput, RoleUncheckedUpdateManyInput>
+    /**
+     * Filter which Roles to update
+     */
+    where?: RoleWhereInput
+    /**
+     * Limit how many Roles to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Role updateManyAndReturn
+   */
+  export type RoleUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Role
+     */
+    select?: RoleSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Role
+     */
+    omit?: RoleOmit<ExtArgs> | null
+    /**
+     * The data used to update Roles.
+     */
+    data: XOR<RoleUpdateManyMutationInput, RoleUncheckedUpdateManyInput>
+    /**
+     * Filter which Roles to update
+     */
+    where?: RoleWhereInput
+    /**
+     * Limit how many Roles to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Role upsert
+   */
+  export type RoleUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Role
+     */
+    select?: RoleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Role
+     */
+    omit?: RoleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RoleInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Role to update in case it exists.
+     */
+    where: RoleWhereUniqueInput
+    /**
+     * In case the Role found by the `where` argument doesn't exist, create a new Role with this data.
+     */
+    create: XOR<RoleCreateInput, RoleUncheckedCreateInput>
+    /**
+     * In case the Role was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<RoleUpdateInput, RoleUncheckedUpdateInput>
+  }
+
+  /**
+   * Role delete
+   */
+  export type RoleDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Role
+     */
+    select?: RoleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Role
+     */
+    omit?: RoleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RoleInclude<ExtArgs> | null
+    /**
+     * Filter which Role to delete.
+     */
+    where: RoleWhereUniqueInput
+  }
+
+  /**
+   * Role deleteMany
+   */
+  export type RoleDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Roles to delete
+     */
+    where?: RoleWhereInput
+    /**
+     * Limit how many Roles to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Role.users
+   */
+  export type Role$usersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AppUser
+     */
+    select?: AppUserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AppUser
+     */
+    omit?: AppUserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AppUserInclude<ExtArgs> | null
+    where?: AppUserWhereInput
+    orderBy?: AppUserOrderByWithRelationInput | AppUserOrderByWithRelationInput[]
+    cursor?: AppUserWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: AppUserScalarFieldEnum | AppUserScalarFieldEnum[]
+  }
+
+  /**
+   * Role.forms
+   */
+  export type Role$formsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Form
+     */
+    select?: FormSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Form
+     */
+    omit?: FormOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FormInclude<ExtArgs> | null
+    where?: FormWhereInput
+    orderBy?: FormOrderByWithRelationInput | FormOrderByWithRelationInput[]
+    cursor?: FormWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: FormScalarFieldEnum | FormScalarFieldEnum[]
+  }
+
+  /**
+   * Role.assignments
+   */
+  export type Role$assignmentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FormAssignment
+     */
+    select?: FormAssignmentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FormAssignment
+     */
+    omit?: FormAssignmentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FormAssignmentInclude<ExtArgs> | null
+    where?: FormAssignmentWhereInput
+    orderBy?: FormAssignmentOrderByWithRelationInput | FormAssignmentOrderByWithRelationInput[]
+    cursor?: FormAssignmentWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: FormAssignmentScalarFieldEnum | FormAssignmentScalarFieldEnum[]
+  }
+
+  /**
+   * Role.submissions
+   */
+  export type Role$submissionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FormSubmission
+     */
+    select?: FormSubmissionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FormSubmission
+     */
+    omit?: FormSubmissionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FormSubmissionInclude<ExtArgs> | null
+    where?: FormSubmissionWhereInput
+    orderBy?: FormSubmissionOrderByWithRelationInput | FormSubmissionOrderByWithRelationInput[]
+    cursor?: FormSubmissionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: FormSubmissionScalarFieldEnum | FormSubmissionScalarFieldEnum[]
+  }
+
+  /**
+   * Role without action
+   */
+  export type RoleDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Role
+     */
+    select?: RoleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Role
+     */
+    omit?: RoleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RoleInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model AppUser
+   */
+
+  export type AggregateAppUser = {
+    _count: AppUserCountAggregateOutputType | null
+    _avg: AppUserAvgAggregateOutputType | null
+    _sum: AppUserSumAggregateOutputType | null
+    _min: AppUserMinAggregateOutputType | null
+    _max: AppUserMaxAggregateOutputType | null
+  }
+
+  export type AppUserAvgAggregateOutputType = {
+    roleId: number | null
+  }
+
+  export type AppUserSumAggregateOutputType = {
+    roleId: number | null
+  }
+
+  export type AppUserMinAggregateOutputType = {
+    id: string | null
+    email: string | null
+    name: string | null
+    roleId: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type AppUserMaxAggregateOutputType = {
+    id: string | null
+    email: string | null
+    name: string | null
+    roleId: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type AppUserCountAggregateOutputType = {
+    id: number
+    email: number
+    name: number
+    roleId: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type AppUserAvgAggregateInputType = {
+    roleId?: true
+  }
+
+  export type AppUserSumAggregateInputType = {
+    roleId?: true
+  }
+
+  export type AppUserMinAggregateInputType = {
+    id?: true
+    email?: true
+    name?: true
+    roleId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type AppUserMaxAggregateInputType = {
+    id?: true
+    email?: true
+    name?: true
+    roleId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type AppUserCountAggregateInputType = {
+    id?: true
+    email?: true
+    name?: true
+    roleId?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type AppUserAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AppUser to aggregate.
+     */
+    where?: AppUserWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AppUsers to fetch.
+     */
+    orderBy?: AppUserOrderByWithRelationInput | AppUserOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: AppUserWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AppUsers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AppUsers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned AppUsers
+    **/
+    _count?: true | AppUserCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: AppUserAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: AppUserSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: AppUserMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: AppUserMaxAggregateInputType
+  }
+
+  export type GetAppUserAggregateType<T extends AppUserAggregateArgs> = {
+        [P in keyof T & keyof AggregateAppUser]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateAppUser[P]>
+      : GetScalarType<T[P], AggregateAppUser[P]>
+  }
+
+
+
+
+  export type AppUserGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AppUserWhereInput
+    orderBy?: AppUserOrderByWithAggregationInput | AppUserOrderByWithAggregationInput[]
+    by: AppUserScalarFieldEnum[] | AppUserScalarFieldEnum
+    having?: AppUserScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: AppUserCountAggregateInputType | true
+    _avg?: AppUserAvgAggregateInputType
+    _sum?: AppUserSumAggregateInputType
+    _min?: AppUserMinAggregateInputType
+    _max?: AppUserMaxAggregateInputType
+  }
+
+  export type AppUserGroupByOutputType = {
+    id: string
+    email: string | null
+    name: string
+    roleId: number | null
+    createdAt: Date
+    updatedAt: Date
+    _count: AppUserCountAggregateOutputType | null
+    _avg: AppUserAvgAggregateOutputType | null
+    _sum: AppUserSumAggregateOutputType | null
+    _min: AppUserMinAggregateOutputType | null
+    _max: AppUserMaxAggregateOutputType | null
+  }
+
+  type GetAppUserGroupByPayload<T extends AppUserGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<AppUserGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof AppUserGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], AppUserGroupByOutputType[P]>
+            : GetScalarType<T[P], AppUserGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type AppUserSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    email?: boolean
+    name?: boolean
+    roleId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    role?: boolean | AppUser$roleArgs<ExtArgs>
+  }, ExtArgs["result"]["appUser"]>
+
+  export type AppUserSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    email?: boolean
+    name?: boolean
+    roleId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    role?: boolean | AppUser$roleArgs<ExtArgs>
+  }, ExtArgs["result"]["appUser"]>
+
+  export type AppUserSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    email?: boolean
+    name?: boolean
+    roleId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    role?: boolean | AppUser$roleArgs<ExtArgs>
+  }, ExtArgs["result"]["appUser"]>
+
+  export type AppUserSelectScalar = {
+    id?: boolean
+    email?: boolean
+    name?: boolean
+    roleId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type AppUserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "name" | "roleId" | "createdAt" | "updatedAt", ExtArgs["result"]["appUser"]>
+  export type AppUserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    role?: boolean | AppUser$roleArgs<ExtArgs>
+  }
+  export type AppUserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    role?: boolean | AppUser$roleArgs<ExtArgs>
+  }
+  export type AppUserIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    role?: boolean | AppUser$roleArgs<ExtArgs>
+  }
+
+  export type $AppUserPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "AppUser"
+    objects: {
+      role: Prisma.$RolePayload<ExtArgs> | null
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      email: string | null
+      name: string
+      roleId: number | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["appUser"]>
+    composites: {}
+  }
+
+  type AppUserGetPayload<S extends boolean | null | undefined | AppUserDefaultArgs> = $Result.GetResult<Prisma.$AppUserPayload, S>
+
+  type AppUserCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<AppUserFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: AppUserCountAggregateInputType | true
+    }
+
+  export interface AppUserDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['AppUser'], meta: { name: 'AppUser' } }
+    /**
+     * Find zero or one AppUser that matches the filter.
+     * @param {AppUserFindUniqueArgs} args - Arguments to find a AppUser
+     * @example
+     * // Get one AppUser
+     * const appUser = await prisma.appUser.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends AppUserFindUniqueArgs>(args: SelectSubset<T, AppUserFindUniqueArgs<ExtArgs>>): Prisma__AppUserClient<$Result.GetResult<Prisma.$AppUserPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one AppUser that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {AppUserFindUniqueOrThrowArgs} args - Arguments to find a AppUser
+     * @example
+     * // Get one AppUser
+     * const appUser = await prisma.appUser.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends AppUserFindUniqueOrThrowArgs>(args: SelectSubset<T, AppUserFindUniqueOrThrowArgs<ExtArgs>>): Prisma__AppUserClient<$Result.GetResult<Prisma.$AppUserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first AppUser that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AppUserFindFirstArgs} args - Arguments to find a AppUser
+     * @example
+     * // Get one AppUser
+     * const appUser = await prisma.appUser.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends AppUserFindFirstArgs>(args?: SelectSubset<T, AppUserFindFirstArgs<ExtArgs>>): Prisma__AppUserClient<$Result.GetResult<Prisma.$AppUserPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first AppUser that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AppUserFindFirstOrThrowArgs} args - Arguments to find a AppUser
+     * @example
+     * // Get one AppUser
+     * const appUser = await prisma.appUser.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends AppUserFindFirstOrThrowArgs>(args?: SelectSubset<T, AppUserFindFirstOrThrowArgs<ExtArgs>>): Prisma__AppUserClient<$Result.GetResult<Prisma.$AppUserPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more AppUsers that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AppUserFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all AppUsers
+     * const appUsers = await prisma.appUser.findMany()
+     * 
+     * // Get first 10 AppUsers
+     * const appUsers = await prisma.appUser.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const appUserWithIdOnly = await prisma.appUser.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends AppUserFindManyArgs>(args?: SelectSubset<T, AppUserFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AppUserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a AppUser.
+     * @param {AppUserCreateArgs} args - Arguments to create a AppUser.
+     * @example
+     * // Create one AppUser
+     * const AppUser = await prisma.appUser.create({
+     *   data: {
+     *     // ... data to create a AppUser
+     *   }
+     * })
+     * 
+     */
+    create<T extends AppUserCreateArgs>(args: SelectSubset<T, AppUserCreateArgs<ExtArgs>>): Prisma__AppUserClient<$Result.GetResult<Prisma.$AppUserPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many AppUsers.
+     * @param {AppUserCreateManyArgs} args - Arguments to create many AppUsers.
+     * @example
+     * // Create many AppUsers
+     * const appUser = await prisma.appUser.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends AppUserCreateManyArgs>(args?: SelectSubset<T, AppUserCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many AppUsers and returns the data saved in the database.
+     * @param {AppUserCreateManyAndReturnArgs} args - Arguments to create many AppUsers.
+     * @example
+     * // Create many AppUsers
+     * const appUser = await prisma.appUser.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many AppUsers and only return the `id`
+     * const appUserWithIdOnly = await prisma.appUser.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends AppUserCreateManyAndReturnArgs>(args?: SelectSubset<T, AppUserCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AppUserPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a AppUser.
+     * @param {AppUserDeleteArgs} args - Arguments to delete one AppUser.
+     * @example
+     * // Delete one AppUser
+     * const AppUser = await prisma.appUser.delete({
+     *   where: {
+     *     // ... filter to delete one AppUser
+     *   }
+     * })
+     * 
+     */
+    delete<T extends AppUserDeleteArgs>(args: SelectSubset<T, AppUserDeleteArgs<ExtArgs>>): Prisma__AppUserClient<$Result.GetResult<Prisma.$AppUserPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one AppUser.
+     * @param {AppUserUpdateArgs} args - Arguments to update one AppUser.
+     * @example
+     * // Update one AppUser
+     * const appUser = await prisma.appUser.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends AppUserUpdateArgs>(args: SelectSubset<T, AppUserUpdateArgs<ExtArgs>>): Prisma__AppUserClient<$Result.GetResult<Prisma.$AppUserPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more AppUsers.
+     * @param {AppUserDeleteManyArgs} args - Arguments to filter AppUsers to delete.
+     * @example
+     * // Delete a few AppUsers
+     * const { count } = await prisma.appUser.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends AppUserDeleteManyArgs>(args?: SelectSubset<T, AppUserDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AppUsers.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AppUserUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many AppUsers
+     * const appUser = await prisma.appUser.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends AppUserUpdateManyArgs>(args: SelectSubset<T, AppUserUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AppUsers and returns the data updated in the database.
+     * @param {AppUserUpdateManyAndReturnArgs} args - Arguments to update many AppUsers.
+     * @example
+     * // Update many AppUsers
+     * const appUser = await prisma.appUser.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more AppUsers and only return the `id`
+     * const appUserWithIdOnly = await prisma.appUser.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends AppUserUpdateManyAndReturnArgs>(args: SelectSubset<T, AppUserUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AppUserPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one AppUser.
+     * @param {AppUserUpsertArgs} args - Arguments to update or create a AppUser.
+     * @example
+     * // Update or create a AppUser
+     * const appUser = await prisma.appUser.upsert({
+     *   create: {
+     *     // ... data to create a AppUser
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the AppUser we want to update
+     *   }
+     * })
+     */
+    upsert<T extends AppUserUpsertArgs>(args: SelectSubset<T, AppUserUpsertArgs<ExtArgs>>): Prisma__AppUserClient<$Result.GetResult<Prisma.$AppUserPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of AppUsers.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AppUserCountArgs} args - Arguments to filter AppUsers to count.
+     * @example
+     * // Count the number of AppUsers
+     * const count = await prisma.appUser.count({
+     *   where: {
+     *     // ... the filter for the AppUsers we want to count
+     *   }
+     * })
+    **/
+    count<T extends AppUserCountArgs>(
+      args?: Subset<T, AppUserCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], AppUserCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a AppUser.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AppUserAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends AppUserAggregateArgs>(args: Subset<T, AppUserAggregateArgs>): Prisma.PrismaPromise<GetAppUserAggregateType<T>>
+
+    /**
+     * Group by AppUser.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AppUserGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends AppUserGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: AppUserGroupByArgs['orderBy'] }
+        : { orderBy?: AppUserGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, AppUserGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAppUserGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the AppUser model
+   */
+  readonly fields: AppUserFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for AppUser.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__AppUserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    role<T extends AppUser$roleArgs<ExtArgs> = {}>(args?: Subset<T, AppUser$roleArgs<ExtArgs>>): Prisma__RoleClient<$Result.GetResult<Prisma.$RolePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the AppUser model
+   */
+  interface AppUserFieldRefs {
+    readonly id: FieldRef<"AppUser", 'String'>
+    readonly email: FieldRef<"AppUser", 'String'>
+    readonly name: FieldRef<"AppUser", 'String'>
+    readonly roleId: FieldRef<"AppUser", 'Int'>
+    readonly createdAt: FieldRef<"AppUser", 'DateTime'>
+    readonly updatedAt: FieldRef<"AppUser", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * AppUser findUnique
+   */
+  export type AppUserFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AppUser
+     */
+    select?: AppUserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AppUser
+     */
+    omit?: AppUserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AppUserInclude<ExtArgs> | null
+    /**
+     * Filter, which AppUser to fetch.
+     */
+    where: AppUserWhereUniqueInput
+  }
+
+  /**
+   * AppUser findUniqueOrThrow
+   */
+  export type AppUserFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AppUser
+     */
+    select?: AppUserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AppUser
+     */
+    omit?: AppUserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AppUserInclude<ExtArgs> | null
+    /**
+     * Filter, which AppUser to fetch.
+     */
+    where: AppUserWhereUniqueInput
+  }
+
+  /**
+   * AppUser findFirst
+   */
+  export type AppUserFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AppUser
+     */
+    select?: AppUserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AppUser
+     */
+    omit?: AppUserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AppUserInclude<ExtArgs> | null
+    /**
+     * Filter, which AppUser to fetch.
+     */
+    where?: AppUserWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AppUsers to fetch.
+     */
+    orderBy?: AppUserOrderByWithRelationInput | AppUserOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AppUsers.
+     */
+    cursor?: AppUserWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AppUsers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AppUsers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AppUsers.
+     */
+    distinct?: AppUserScalarFieldEnum | AppUserScalarFieldEnum[]
+  }
+
+  /**
+   * AppUser findFirstOrThrow
+   */
+  export type AppUserFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AppUser
+     */
+    select?: AppUserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AppUser
+     */
+    omit?: AppUserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AppUserInclude<ExtArgs> | null
+    /**
+     * Filter, which AppUser to fetch.
+     */
+    where?: AppUserWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AppUsers to fetch.
+     */
+    orderBy?: AppUserOrderByWithRelationInput | AppUserOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AppUsers.
+     */
+    cursor?: AppUserWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AppUsers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AppUsers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AppUsers.
+     */
+    distinct?: AppUserScalarFieldEnum | AppUserScalarFieldEnum[]
+  }
+
+  /**
+   * AppUser findMany
+   */
+  export type AppUserFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AppUser
+     */
+    select?: AppUserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AppUser
+     */
+    omit?: AppUserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AppUserInclude<ExtArgs> | null
+    /**
+     * Filter, which AppUsers to fetch.
+     */
+    where?: AppUserWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AppUsers to fetch.
+     */
+    orderBy?: AppUserOrderByWithRelationInput | AppUserOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing AppUsers.
+     */
+    cursor?: AppUserWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AppUsers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AppUsers.
+     */
+    skip?: number
+    distinct?: AppUserScalarFieldEnum | AppUserScalarFieldEnum[]
+  }
+
+  /**
+   * AppUser create
+   */
+  export type AppUserCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AppUser
+     */
+    select?: AppUserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AppUser
+     */
+    omit?: AppUserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AppUserInclude<ExtArgs> | null
+    /**
+     * The data needed to create a AppUser.
+     */
+    data: XOR<AppUserCreateInput, AppUserUncheckedCreateInput>
+  }
+
+  /**
+   * AppUser createMany
+   */
+  export type AppUserCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many AppUsers.
+     */
+    data: AppUserCreateManyInput | AppUserCreateManyInput[]
+  }
+
+  /**
+   * AppUser createManyAndReturn
+   */
+  export type AppUserCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AppUser
+     */
+    select?: AppUserSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AppUser
+     */
+    omit?: AppUserOmit<ExtArgs> | null
+    /**
+     * The data used to create many AppUsers.
+     */
+    data: AppUserCreateManyInput | AppUserCreateManyInput[]
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AppUserIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * AppUser update
+   */
+  export type AppUserUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AppUser
+     */
+    select?: AppUserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AppUser
+     */
+    omit?: AppUserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AppUserInclude<ExtArgs> | null
+    /**
+     * The data needed to update a AppUser.
+     */
+    data: XOR<AppUserUpdateInput, AppUserUncheckedUpdateInput>
+    /**
+     * Choose, which AppUser to update.
+     */
+    where: AppUserWhereUniqueInput
+  }
+
+  /**
+   * AppUser updateMany
+   */
+  export type AppUserUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update AppUsers.
+     */
+    data: XOR<AppUserUpdateManyMutationInput, AppUserUncheckedUpdateManyInput>
+    /**
+     * Filter which AppUsers to update
+     */
+    where?: AppUserWhereInput
+    /**
+     * Limit how many AppUsers to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * AppUser updateManyAndReturn
+   */
+  export type AppUserUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AppUser
+     */
+    select?: AppUserSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AppUser
+     */
+    omit?: AppUserOmit<ExtArgs> | null
+    /**
+     * The data used to update AppUsers.
+     */
+    data: XOR<AppUserUpdateManyMutationInput, AppUserUncheckedUpdateManyInput>
+    /**
+     * Filter which AppUsers to update
+     */
+    where?: AppUserWhereInput
+    /**
+     * Limit how many AppUsers to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AppUserIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * AppUser upsert
+   */
+  export type AppUserUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AppUser
+     */
+    select?: AppUserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AppUser
+     */
+    omit?: AppUserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AppUserInclude<ExtArgs> | null
+    /**
+     * The filter to search for the AppUser to update in case it exists.
+     */
+    where: AppUserWhereUniqueInput
+    /**
+     * In case the AppUser found by the `where` argument doesn't exist, create a new AppUser with this data.
+     */
+    create: XOR<AppUserCreateInput, AppUserUncheckedCreateInput>
+    /**
+     * In case the AppUser was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<AppUserUpdateInput, AppUserUncheckedUpdateInput>
+  }
+
+  /**
+   * AppUser delete
+   */
+  export type AppUserDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AppUser
+     */
+    select?: AppUserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AppUser
+     */
+    omit?: AppUserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AppUserInclude<ExtArgs> | null
+    /**
+     * Filter which AppUser to delete.
+     */
+    where: AppUserWhereUniqueInput
+  }
+
+  /**
+   * AppUser deleteMany
+   */
+  export type AppUserDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AppUsers to delete
+     */
+    where?: AppUserWhereInput
+    /**
+     * Limit how many AppUsers to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * AppUser.role
+   */
+  export type AppUser$roleArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Role
+     */
+    select?: RoleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Role
+     */
+    omit?: RoleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RoleInclude<ExtArgs> | null
+    where?: RoleWhereInput
+  }
+
+  /**
+   * AppUser without action
+   */
+  export type AppUserDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AppUser
+     */
+    select?: AppUserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AppUser
+     */
+    omit?: AppUserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AppUserInclude<ExtArgs> | null
   }
 
 
@@ -3028,7 +15932,17 @@ export namespace Prisma {
     context: 'context',
     visit: 'visit',
     submission: 'submission',
-    sharedURL: 'sharedURL'
+    sharedURL: 'sharedURL',
+    currentVersion: 'currentVersion',
+    eventConfig: 'eventConfig',
+    scheduleType: 'scheduleType',
+    scheduleInterval: 'scheduleInterval',
+    scheduleConfig: 'scheduleConfig',
+    assignedUserId: 'assignedUserId',
+    roleId: 'roleId',
+    submoduleId: 'submoduleId',
+    templateId: 'templateId',
+    templateVersion: 'templateVersion'
   };
 
   export type FormScalarFieldEnum = (typeof FormScalarFieldEnum)[keyof typeof FormScalarFieldEnum]
@@ -3038,10 +15952,174 @@ export namespace Prisma {
     id: 'id',
     published: 'published',
     formId: 'formId',
-    content: 'content'
+    formVersionId: 'formVersionId',
+    version: 'version',
+    userId: 'userId',
+    roleId: 'roleId',
+    submoduleId: 'submoduleId',
+    content: 'content',
+    computedContent: 'computedContent',
+    submittedAt: 'submittedAt'
   };
 
   export type FormSubmissionScalarFieldEnum = (typeof FormSubmissionScalarFieldEnum)[keyof typeof FormSubmissionScalarFieldEnum]
+
+
+  export const FormVersionScalarFieldEnum: {
+    id: 'id',
+    formId: 'formId',
+    version: 'version',
+    name: 'name',
+    description: 'description',
+    page: 'page',
+    components: 'components',
+    context: 'context',
+    eventConfig: 'eventConfig',
+    scheduleType: 'scheduleType',
+    scheduleInterval: 'scheduleInterval',
+    scheduleConfig: 'scheduleConfig',
+    published: 'published',
+    createdAt: 'createdAt'
+  };
+
+  export type FormVersionScalarFieldEnum = (typeof FormVersionScalarFieldEnum)[keyof typeof FormVersionScalarFieldEnum]
+
+
+  export const FormSubmissionValueScalarFieldEnum: {
+    id: 'id',
+    submissionId: 'submissionId',
+    formId: 'formId',
+    formVersionId: 'formVersionId',
+    fieldKey: 'fieldKey',
+    fieldLabel: 'fieldLabel',
+    elementId: 'elementId',
+    pageId: 'pageId',
+    parentId: 'parentId',
+    valueType: 'valueType',
+    stringValue: 'stringValue',
+    numberValue: 'numberValue',
+    booleanValue: 'booleanValue',
+    dateValue: 'dateValue',
+    jsonValue: 'jsonValue',
+    rawValue: 'rawValue',
+    createdAt: 'createdAt'
+  };
+
+  export type FormSubmissionValueScalarFieldEnum = (typeof FormSubmissionValueScalarFieldEnum)[keyof typeof FormSubmissionValueScalarFieldEnum]
+
+
+  export const FormEventScalarFieldEnum: {
+    id: 'id',
+    formId: 'formId',
+    version: 'version',
+    name: 'name',
+    sourceField: 'sourceField',
+    targetField: 'targetField',
+    expression: 'expression',
+    trigger: 'trigger',
+    enabled: 'enabled',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type FormEventScalarFieldEnum = (typeof FormEventScalarFieldEnum)[keyof typeof FormEventScalarFieldEnum]
+
+
+  export const FormAssignmentScalarFieldEnum: {
+    id: 'id',
+    formId: 'formId',
+    userId: 'userId',
+    roleId: 'roleId',
+    submoduleId: 'submoduleId',
+    active: 'active',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type FormAssignmentScalarFieldEnum = (typeof FormAssignmentScalarFieldEnum)[keyof typeof FormAssignmentScalarFieldEnum]
+
+
+  export const SubmoduleScalarFieldEnum: {
+    id: 'id',
+    slug: 'slug',
+    name: 'name',
+    description: 'description',
+    icon: 'icon',
+    metadata: 'metadata',
+    baseTables: 'baseTables',
+    active: 'active',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type SubmoduleScalarFieldEnum = (typeof SubmoduleScalarFieldEnum)[keyof typeof SubmoduleScalarFieldEnum]
+
+
+  export const FormTemplateScalarFieldEnum: {
+    id: 'id',
+    slug: 'slug',
+    name: 'name',
+    description: 'description',
+    icon: 'icon',
+    metadata: 'metadata',
+    page: 'page',
+    components: 'components',
+    context: 'context',
+    eventConfig: 'eventConfig',
+    scheduleType: 'scheduleType',
+    scheduleInterval: 'scheduleInterval',
+    scheduleConfig: 'scheduleConfig',
+    currentVersion: 'currentVersion',
+    active: 'active',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type FormTemplateScalarFieldEnum = (typeof FormTemplateScalarFieldEnum)[keyof typeof FormTemplateScalarFieldEnum]
+
+
+  export const FormTemplateVersionScalarFieldEnum: {
+    id: 'id',
+    templateId: 'templateId',
+    version: 'version',
+    name: 'name',
+    description: 'description',
+    icon: 'icon',
+    metadata: 'metadata',
+    page: 'page',
+    components: 'components',
+    context: 'context',
+    eventConfig: 'eventConfig',
+    scheduleType: 'scheduleType',
+    scheduleInterval: 'scheduleInterval',
+    scheduleConfig: 'scheduleConfig',
+    createdAt: 'createdAt'
+  };
+
+  export type FormTemplateVersionScalarFieldEnum = (typeof FormTemplateVersionScalarFieldEnum)[keyof typeof FormTemplateVersionScalarFieldEnum]
+
+
+  export const RoleScalarFieldEnum: {
+    id: 'id',
+    key: 'key',
+    name: 'name',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type RoleScalarFieldEnum = (typeof RoleScalarFieldEnum)[keyof typeof RoleScalarFieldEnum]
+
+
+  export const AppUserScalarFieldEnum: {
+    id: 'id',
+    email: 'email',
+    name: 'name',
+    roleId: 'roleId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type AppUserScalarFieldEnum = (typeof AppUserScalarFieldEnum)[keyof typeof AppUserScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -3061,7 +16139,7 @@ export namespace Prisma {
 
 
   /**
-   * Field references 
+   * Field references
    */
 
 
@@ -3120,7 +16198,24 @@ export namespace Prisma {
     visit?: IntFilter<"Form"> | number
     submission?: IntFilter<"Form"> | number
     sharedURL?: StringFilter<"Form"> | string
-    FormSubmission?: FormSubmissionListRelationFilter
+    currentVersion?: IntFilter<"Form"> | number
+    eventConfig?: StringFilter<"Form"> | string
+    scheduleType?: StringFilter<"Form"> | string
+    scheduleInterval?: IntFilter<"Form"> | number
+    scheduleConfig?: StringFilter<"Form"> | string
+    assignedUserId?: StringNullableFilter<"Form"> | string | null
+    roleId?: IntNullableFilter<"Form"> | number | null
+    submoduleId?: IntNullableFilter<"Form"> | number | null
+    templateId?: IntNullableFilter<"Form"> | number | null
+    templateVersion?: IntNullableFilter<"Form"> | number | null
+    role?: XOR<RoleNullableScalarRelationFilter, RoleWhereInput> | null
+    submodule?: XOR<SubmoduleNullableScalarRelationFilter, SubmoduleWhereInput> | null
+    template?: XOR<FormTemplateNullableScalarRelationFilter, FormTemplateWhereInput> | null
+    submissions?: FormSubmissionListRelationFilter
+    submissionValues?: FormSubmissionValueListRelationFilter
+    versions?: FormVersionListRelationFilter
+    assignments?: FormAssignmentListRelationFilter
+    eventRules?: FormEventListRelationFilter
   }
 
   export type FormOrderByWithRelationInput = {
@@ -3137,7 +16232,24 @@ export namespace Prisma {
     visit?: SortOrder
     submission?: SortOrder
     sharedURL?: SortOrder
-    FormSubmission?: FormSubmissionOrderByRelationAggregateInput
+    currentVersion?: SortOrder
+    eventConfig?: SortOrder
+    scheduleType?: SortOrder
+    scheduleInterval?: SortOrder
+    scheduleConfig?: SortOrder
+    assignedUserId?: SortOrderInput | SortOrder
+    roleId?: SortOrderInput | SortOrder
+    submoduleId?: SortOrderInput | SortOrder
+    templateId?: SortOrderInput | SortOrder
+    templateVersion?: SortOrderInput | SortOrder
+    role?: RoleOrderByWithRelationInput
+    submodule?: SubmoduleOrderByWithRelationInput
+    template?: FormTemplateOrderByWithRelationInput
+    submissions?: FormSubmissionOrderByRelationAggregateInput
+    submissionValues?: FormSubmissionValueOrderByRelationAggregateInput
+    versions?: FormVersionOrderByRelationAggregateInput
+    assignments?: FormAssignmentOrderByRelationAggregateInput
+    eventRules?: FormEventOrderByRelationAggregateInput
   }
 
   export type FormWhereUniqueInput = Prisma.AtLeast<{
@@ -3158,7 +16270,24 @@ export namespace Prisma {
     context?: StringFilter<"Form"> | string
     visit?: IntFilter<"Form"> | number
     submission?: IntFilter<"Form"> | number
-    FormSubmission?: FormSubmissionListRelationFilter
+    currentVersion?: IntFilter<"Form"> | number
+    eventConfig?: StringFilter<"Form"> | string
+    scheduleType?: StringFilter<"Form"> | string
+    scheduleInterval?: IntFilter<"Form"> | number
+    scheduleConfig?: StringFilter<"Form"> | string
+    assignedUserId?: StringNullableFilter<"Form"> | string | null
+    roleId?: IntNullableFilter<"Form"> | number | null
+    submoduleId?: IntNullableFilter<"Form"> | number | null
+    templateId?: IntNullableFilter<"Form"> | number | null
+    templateVersion?: IntNullableFilter<"Form"> | number | null
+    role?: XOR<RoleNullableScalarRelationFilter, RoleWhereInput> | null
+    submodule?: XOR<SubmoduleNullableScalarRelationFilter, SubmoduleWhereInput> | null
+    template?: XOR<FormTemplateNullableScalarRelationFilter, FormTemplateWhereInput> | null
+    submissions?: FormSubmissionListRelationFilter
+    submissionValues?: FormSubmissionValueListRelationFilter
+    versions?: FormVersionListRelationFilter
+    assignments?: FormAssignmentListRelationFilter
+    eventRules?: FormEventListRelationFilter
   }, "id" | "sharedURL" | "userId_name">
 
   export type FormOrderByWithAggregationInput = {
@@ -3175,6 +16304,16 @@ export namespace Prisma {
     visit?: SortOrder
     submission?: SortOrder
     sharedURL?: SortOrder
+    currentVersion?: SortOrder
+    eventConfig?: SortOrder
+    scheduleType?: SortOrder
+    scheduleInterval?: SortOrder
+    scheduleConfig?: SortOrder
+    assignedUserId?: SortOrderInput | SortOrder
+    roleId?: SortOrderInput | SortOrder
+    submoduleId?: SortOrderInput | SortOrder
+    templateId?: SortOrderInput | SortOrder
+    templateVersion?: SortOrderInput | SortOrder
     _count?: FormCountOrderByAggregateInput
     _avg?: FormAvgOrderByAggregateInput
     _max?: FormMaxOrderByAggregateInput
@@ -3199,6 +16338,16 @@ export namespace Prisma {
     visit?: IntWithAggregatesFilter<"Form"> | number
     submission?: IntWithAggregatesFilter<"Form"> | number
     sharedURL?: StringWithAggregatesFilter<"Form"> | string
+    currentVersion?: IntWithAggregatesFilter<"Form"> | number
+    eventConfig?: StringWithAggregatesFilter<"Form"> | string
+    scheduleType?: StringWithAggregatesFilter<"Form"> | string
+    scheduleInterval?: IntWithAggregatesFilter<"Form"> | number
+    scheduleConfig?: StringWithAggregatesFilter<"Form"> | string
+    assignedUserId?: StringNullableWithAggregatesFilter<"Form"> | string | null
+    roleId?: IntNullableWithAggregatesFilter<"Form"> | number | null
+    submoduleId?: IntNullableWithAggregatesFilter<"Form"> | number | null
+    templateId?: IntNullableWithAggregatesFilter<"Form"> | number | null
+    templateVersion?: IntNullableWithAggregatesFilter<"Form"> | number | null
   }
 
   export type FormSubmissionWhereInput = {
@@ -3208,16 +16357,38 @@ export namespace Prisma {
     id?: IntFilter<"FormSubmission"> | number
     published?: BoolFilter<"FormSubmission"> | boolean
     formId?: IntFilter<"FormSubmission"> | number
+    formVersionId?: IntNullableFilter<"FormSubmission"> | number | null
+    version?: IntFilter<"FormSubmission"> | number
+    userId?: StringNullableFilter<"FormSubmission"> | string | null
+    roleId?: IntNullableFilter<"FormSubmission"> | number | null
+    submoduleId?: IntNullableFilter<"FormSubmission"> | number | null
     content?: StringFilter<"FormSubmission"> | string
+    computedContent?: StringFilter<"FormSubmission"> | string
+    submittedAt?: DateTimeFilter<"FormSubmission"> | Date | string
     form?: XOR<FormScalarRelationFilter, FormWhereInput>
+    formVersion?: XOR<FormVersionNullableScalarRelationFilter, FormVersionWhereInput> | null
+    role?: XOR<RoleNullableScalarRelationFilter, RoleWhereInput> | null
+    submodule?: XOR<SubmoduleNullableScalarRelationFilter, SubmoduleWhereInput> | null
+    values?: FormSubmissionValueListRelationFilter
   }
 
   export type FormSubmissionOrderByWithRelationInput = {
     id?: SortOrder
     published?: SortOrder
     formId?: SortOrder
+    formVersionId?: SortOrderInput | SortOrder
+    version?: SortOrder
+    userId?: SortOrderInput | SortOrder
+    roleId?: SortOrderInput | SortOrder
+    submoduleId?: SortOrderInput | SortOrder
     content?: SortOrder
+    computedContent?: SortOrder
+    submittedAt?: SortOrder
     form?: FormOrderByWithRelationInput
+    formVersion?: FormVersionOrderByWithRelationInput
+    role?: RoleOrderByWithRelationInput
+    submodule?: SubmoduleOrderByWithRelationInput
+    values?: FormSubmissionValueOrderByRelationAggregateInput
   }
 
   export type FormSubmissionWhereUniqueInput = Prisma.AtLeast<{
@@ -3227,15 +16398,33 @@ export namespace Prisma {
     NOT?: FormSubmissionWhereInput | FormSubmissionWhereInput[]
     published?: BoolFilter<"FormSubmission"> | boolean
     formId?: IntFilter<"FormSubmission"> | number
+    formVersionId?: IntNullableFilter<"FormSubmission"> | number | null
+    version?: IntFilter<"FormSubmission"> | number
+    userId?: StringNullableFilter<"FormSubmission"> | string | null
+    roleId?: IntNullableFilter<"FormSubmission"> | number | null
+    submoduleId?: IntNullableFilter<"FormSubmission"> | number | null
     content?: StringFilter<"FormSubmission"> | string
+    computedContent?: StringFilter<"FormSubmission"> | string
+    submittedAt?: DateTimeFilter<"FormSubmission"> | Date | string
     form?: XOR<FormScalarRelationFilter, FormWhereInput>
+    formVersion?: XOR<FormVersionNullableScalarRelationFilter, FormVersionWhereInput> | null
+    role?: XOR<RoleNullableScalarRelationFilter, RoleWhereInput> | null
+    submodule?: XOR<SubmoduleNullableScalarRelationFilter, SubmoduleWhereInput> | null
+    values?: FormSubmissionValueListRelationFilter
   }, "id">
 
   export type FormSubmissionOrderByWithAggregationInput = {
     id?: SortOrder
     published?: SortOrder
     formId?: SortOrder
+    formVersionId?: SortOrderInput | SortOrder
+    version?: SortOrder
+    userId?: SortOrderInput | SortOrder
+    roleId?: SortOrderInput | SortOrder
+    submoduleId?: SortOrderInput | SortOrder
     content?: SortOrder
+    computedContent?: SortOrder
+    submittedAt?: SortOrder
     _count?: FormSubmissionCountOrderByAggregateInput
     _avg?: FormSubmissionAvgOrderByAggregateInput
     _max?: FormSubmissionMaxOrderByAggregateInput
@@ -3250,7 +16439,857 @@ export namespace Prisma {
     id?: IntWithAggregatesFilter<"FormSubmission"> | number
     published?: BoolWithAggregatesFilter<"FormSubmission"> | boolean
     formId?: IntWithAggregatesFilter<"FormSubmission"> | number
+    formVersionId?: IntNullableWithAggregatesFilter<"FormSubmission"> | number | null
+    version?: IntWithAggregatesFilter<"FormSubmission"> | number
+    userId?: StringNullableWithAggregatesFilter<"FormSubmission"> | string | null
+    roleId?: IntNullableWithAggregatesFilter<"FormSubmission"> | number | null
+    submoduleId?: IntNullableWithAggregatesFilter<"FormSubmission"> | number | null
     content?: StringWithAggregatesFilter<"FormSubmission"> | string
+    computedContent?: StringWithAggregatesFilter<"FormSubmission"> | string
+    submittedAt?: DateTimeWithAggregatesFilter<"FormSubmission"> | Date | string
+  }
+
+  export type FormVersionWhereInput = {
+    AND?: FormVersionWhereInput | FormVersionWhereInput[]
+    OR?: FormVersionWhereInput[]
+    NOT?: FormVersionWhereInput | FormVersionWhereInput[]
+    id?: IntFilter<"FormVersion"> | number
+    formId?: IntFilter<"FormVersion"> | number
+    version?: IntFilter<"FormVersion"> | number
+    name?: StringFilter<"FormVersion"> | string
+    description?: StringFilter<"FormVersion"> | string
+    page?: StringNullableFilter<"FormVersion"> | string | null
+    components?: StringFilter<"FormVersion"> | string
+    context?: StringFilter<"FormVersion"> | string
+    eventConfig?: StringFilter<"FormVersion"> | string
+    scheduleType?: StringFilter<"FormVersion"> | string
+    scheduleInterval?: IntFilter<"FormVersion"> | number
+    scheduleConfig?: StringFilter<"FormVersion"> | string
+    published?: BoolFilter<"FormVersion"> | boolean
+    createdAt?: DateTimeFilter<"FormVersion"> | Date | string
+    form?: XOR<FormScalarRelationFilter, FormWhereInput>
+    submissions?: FormSubmissionListRelationFilter
+    submissionValues?: FormSubmissionValueListRelationFilter
+  }
+
+  export type FormVersionOrderByWithRelationInput = {
+    id?: SortOrder
+    formId?: SortOrder
+    version?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    page?: SortOrderInput | SortOrder
+    components?: SortOrder
+    context?: SortOrder
+    eventConfig?: SortOrder
+    scheduleType?: SortOrder
+    scheduleInterval?: SortOrder
+    scheduleConfig?: SortOrder
+    published?: SortOrder
+    createdAt?: SortOrder
+    form?: FormOrderByWithRelationInput
+    submissions?: FormSubmissionOrderByRelationAggregateInput
+    submissionValues?: FormSubmissionValueOrderByRelationAggregateInput
+  }
+
+  export type FormVersionWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    formId_version?: FormVersionFormIdVersionCompoundUniqueInput
+    AND?: FormVersionWhereInput | FormVersionWhereInput[]
+    OR?: FormVersionWhereInput[]
+    NOT?: FormVersionWhereInput | FormVersionWhereInput[]
+    formId?: IntFilter<"FormVersion"> | number
+    version?: IntFilter<"FormVersion"> | number
+    name?: StringFilter<"FormVersion"> | string
+    description?: StringFilter<"FormVersion"> | string
+    page?: StringNullableFilter<"FormVersion"> | string | null
+    components?: StringFilter<"FormVersion"> | string
+    context?: StringFilter<"FormVersion"> | string
+    eventConfig?: StringFilter<"FormVersion"> | string
+    scheduleType?: StringFilter<"FormVersion"> | string
+    scheduleInterval?: IntFilter<"FormVersion"> | number
+    scheduleConfig?: StringFilter<"FormVersion"> | string
+    published?: BoolFilter<"FormVersion"> | boolean
+    createdAt?: DateTimeFilter<"FormVersion"> | Date | string
+    form?: XOR<FormScalarRelationFilter, FormWhereInput>
+    submissions?: FormSubmissionListRelationFilter
+    submissionValues?: FormSubmissionValueListRelationFilter
+  }, "id" | "formId_version">
+
+  export type FormVersionOrderByWithAggregationInput = {
+    id?: SortOrder
+    formId?: SortOrder
+    version?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    page?: SortOrderInput | SortOrder
+    components?: SortOrder
+    context?: SortOrder
+    eventConfig?: SortOrder
+    scheduleType?: SortOrder
+    scheduleInterval?: SortOrder
+    scheduleConfig?: SortOrder
+    published?: SortOrder
+    createdAt?: SortOrder
+    _count?: FormVersionCountOrderByAggregateInput
+    _avg?: FormVersionAvgOrderByAggregateInput
+    _max?: FormVersionMaxOrderByAggregateInput
+    _min?: FormVersionMinOrderByAggregateInput
+    _sum?: FormVersionSumOrderByAggregateInput
+  }
+
+  export type FormVersionScalarWhereWithAggregatesInput = {
+    AND?: FormVersionScalarWhereWithAggregatesInput | FormVersionScalarWhereWithAggregatesInput[]
+    OR?: FormVersionScalarWhereWithAggregatesInput[]
+    NOT?: FormVersionScalarWhereWithAggregatesInput | FormVersionScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"FormVersion"> | number
+    formId?: IntWithAggregatesFilter<"FormVersion"> | number
+    version?: IntWithAggregatesFilter<"FormVersion"> | number
+    name?: StringWithAggregatesFilter<"FormVersion"> | string
+    description?: StringWithAggregatesFilter<"FormVersion"> | string
+    page?: StringNullableWithAggregatesFilter<"FormVersion"> | string | null
+    components?: StringWithAggregatesFilter<"FormVersion"> | string
+    context?: StringWithAggregatesFilter<"FormVersion"> | string
+    eventConfig?: StringWithAggregatesFilter<"FormVersion"> | string
+    scheduleType?: StringWithAggregatesFilter<"FormVersion"> | string
+    scheduleInterval?: IntWithAggregatesFilter<"FormVersion"> | number
+    scheduleConfig?: StringWithAggregatesFilter<"FormVersion"> | string
+    published?: BoolWithAggregatesFilter<"FormVersion"> | boolean
+    createdAt?: DateTimeWithAggregatesFilter<"FormVersion"> | Date | string
+  }
+
+  export type FormSubmissionValueWhereInput = {
+    AND?: FormSubmissionValueWhereInput | FormSubmissionValueWhereInput[]
+    OR?: FormSubmissionValueWhereInput[]
+    NOT?: FormSubmissionValueWhereInput | FormSubmissionValueWhereInput[]
+    id?: IntFilter<"FormSubmissionValue"> | number
+    submissionId?: IntFilter<"FormSubmissionValue"> | number
+    formId?: IntFilter<"FormSubmissionValue"> | number
+    formVersionId?: IntNullableFilter<"FormSubmissionValue"> | number | null
+    fieldKey?: StringFilter<"FormSubmissionValue"> | string
+    fieldLabel?: StringFilter<"FormSubmissionValue"> | string
+    elementId?: StringNullableFilter<"FormSubmissionValue"> | string | null
+    pageId?: StringNullableFilter<"FormSubmissionValue"> | string | null
+    parentId?: StringNullableFilter<"FormSubmissionValue"> | string | null
+    valueType?: StringFilter<"FormSubmissionValue"> | string
+    stringValue?: StringNullableFilter<"FormSubmissionValue"> | string | null
+    numberValue?: FloatNullableFilter<"FormSubmissionValue"> | number | null
+    booleanValue?: BoolNullableFilter<"FormSubmissionValue"> | boolean | null
+    dateValue?: DateTimeNullableFilter<"FormSubmissionValue"> | Date | string | null
+    jsonValue?: StringNullableFilter<"FormSubmissionValue"> | string | null
+    rawValue?: StringNullableFilter<"FormSubmissionValue"> | string | null
+    createdAt?: DateTimeFilter<"FormSubmissionValue"> | Date | string
+    submission?: XOR<FormSubmissionScalarRelationFilter, FormSubmissionWhereInput>
+    form?: XOR<FormScalarRelationFilter, FormWhereInput>
+    formVersion?: XOR<FormVersionNullableScalarRelationFilter, FormVersionWhereInput> | null
+  }
+
+  export type FormSubmissionValueOrderByWithRelationInput = {
+    id?: SortOrder
+    submissionId?: SortOrder
+    formId?: SortOrder
+    formVersionId?: SortOrderInput | SortOrder
+    fieldKey?: SortOrder
+    fieldLabel?: SortOrder
+    elementId?: SortOrderInput | SortOrder
+    pageId?: SortOrderInput | SortOrder
+    parentId?: SortOrderInput | SortOrder
+    valueType?: SortOrder
+    stringValue?: SortOrderInput | SortOrder
+    numberValue?: SortOrderInput | SortOrder
+    booleanValue?: SortOrderInput | SortOrder
+    dateValue?: SortOrderInput | SortOrder
+    jsonValue?: SortOrderInput | SortOrder
+    rawValue?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    submission?: FormSubmissionOrderByWithRelationInput
+    form?: FormOrderByWithRelationInput
+    formVersion?: FormVersionOrderByWithRelationInput
+  }
+
+  export type FormSubmissionValueWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    submissionId_fieldKey?: FormSubmissionValueSubmissionIdFieldKeyCompoundUniqueInput
+    AND?: FormSubmissionValueWhereInput | FormSubmissionValueWhereInput[]
+    OR?: FormSubmissionValueWhereInput[]
+    NOT?: FormSubmissionValueWhereInput | FormSubmissionValueWhereInput[]
+    submissionId?: IntFilter<"FormSubmissionValue"> | number
+    formId?: IntFilter<"FormSubmissionValue"> | number
+    formVersionId?: IntNullableFilter<"FormSubmissionValue"> | number | null
+    fieldKey?: StringFilter<"FormSubmissionValue"> | string
+    fieldLabel?: StringFilter<"FormSubmissionValue"> | string
+    elementId?: StringNullableFilter<"FormSubmissionValue"> | string | null
+    pageId?: StringNullableFilter<"FormSubmissionValue"> | string | null
+    parentId?: StringNullableFilter<"FormSubmissionValue"> | string | null
+    valueType?: StringFilter<"FormSubmissionValue"> | string
+    stringValue?: StringNullableFilter<"FormSubmissionValue"> | string | null
+    numberValue?: FloatNullableFilter<"FormSubmissionValue"> | number | null
+    booleanValue?: BoolNullableFilter<"FormSubmissionValue"> | boolean | null
+    dateValue?: DateTimeNullableFilter<"FormSubmissionValue"> | Date | string | null
+    jsonValue?: StringNullableFilter<"FormSubmissionValue"> | string | null
+    rawValue?: StringNullableFilter<"FormSubmissionValue"> | string | null
+    createdAt?: DateTimeFilter<"FormSubmissionValue"> | Date | string
+    submission?: XOR<FormSubmissionScalarRelationFilter, FormSubmissionWhereInput>
+    form?: XOR<FormScalarRelationFilter, FormWhereInput>
+    formVersion?: XOR<FormVersionNullableScalarRelationFilter, FormVersionWhereInput> | null
+  }, "id" | "submissionId_fieldKey">
+
+  export type FormSubmissionValueOrderByWithAggregationInput = {
+    id?: SortOrder
+    submissionId?: SortOrder
+    formId?: SortOrder
+    formVersionId?: SortOrderInput | SortOrder
+    fieldKey?: SortOrder
+    fieldLabel?: SortOrder
+    elementId?: SortOrderInput | SortOrder
+    pageId?: SortOrderInput | SortOrder
+    parentId?: SortOrderInput | SortOrder
+    valueType?: SortOrder
+    stringValue?: SortOrderInput | SortOrder
+    numberValue?: SortOrderInput | SortOrder
+    booleanValue?: SortOrderInput | SortOrder
+    dateValue?: SortOrderInput | SortOrder
+    jsonValue?: SortOrderInput | SortOrder
+    rawValue?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    _count?: FormSubmissionValueCountOrderByAggregateInput
+    _avg?: FormSubmissionValueAvgOrderByAggregateInput
+    _max?: FormSubmissionValueMaxOrderByAggregateInput
+    _min?: FormSubmissionValueMinOrderByAggregateInput
+    _sum?: FormSubmissionValueSumOrderByAggregateInput
+  }
+
+  export type FormSubmissionValueScalarWhereWithAggregatesInput = {
+    AND?: FormSubmissionValueScalarWhereWithAggregatesInput | FormSubmissionValueScalarWhereWithAggregatesInput[]
+    OR?: FormSubmissionValueScalarWhereWithAggregatesInput[]
+    NOT?: FormSubmissionValueScalarWhereWithAggregatesInput | FormSubmissionValueScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"FormSubmissionValue"> | number
+    submissionId?: IntWithAggregatesFilter<"FormSubmissionValue"> | number
+    formId?: IntWithAggregatesFilter<"FormSubmissionValue"> | number
+    formVersionId?: IntNullableWithAggregatesFilter<"FormSubmissionValue"> | number | null
+    fieldKey?: StringWithAggregatesFilter<"FormSubmissionValue"> | string
+    fieldLabel?: StringWithAggregatesFilter<"FormSubmissionValue"> | string
+    elementId?: StringNullableWithAggregatesFilter<"FormSubmissionValue"> | string | null
+    pageId?: StringNullableWithAggregatesFilter<"FormSubmissionValue"> | string | null
+    parentId?: StringNullableWithAggregatesFilter<"FormSubmissionValue"> | string | null
+    valueType?: StringWithAggregatesFilter<"FormSubmissionValue"> | string
+    stringValue?: StringNullableWithAggregatesFilter<"FormSubmissionValue"> | string | null
+    numberValue?: FloatNullableWithAggregatesFilter<"FormSubmissionValue"> | number | null
+    booleanValue?: BoolNullableWithAggregatesFilter<"FormSubmissionValue"> | boolean | null
+    dateValue?: DateTimeNullableWithAggregatesFilter<"FormSubmissionValue"> | Date | string | null
+    jsonValue?: StringNullableWithAggregatesFilter<"FormSubmissionValue"> | string | null
+    rawValue?: StringNullableWithAggregatesFilter<"FormSubmissionValue"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"FormSubmissionValue"> | Date | string
+  }
+
+  export type FormEventWhereInput = {
+    AND?: FormEventWhereInput | FormEventWhereInput[]
+    OR?: FormEventWhereInput[]
+    NOT?: FormEventWhereInput | FormEventWhereInput[]
+    id?: IntFilter<"FormEvent"> | number
+    formId?: IntFilter<"FormEvent"> | number
+    version?: IntFilter<"FormEvent"> | number
+    name?: StringFilter<"FormEvent"> | string
+    sourceField?: StringNullableFilter<"FormEvent"> | string | null
+    targetField?: StringFilter<"FormEvent"> | string
+    expression?: StringFilter<"FormEvent"> | string
+    trigger?: StringFilter<"FormEvent"> | string
+    enabled?: BoolFilter<"FormEvent"> | boolean
+    createdAt?: DateTimeFilter<"FormEvent"> | Date | string
+    updatedAt?: DateTimeFilter<"FormEvent"> | Date | string
+    form?: XOR<FormScalarRelationFilter, FormWhereInput>
+  }
+
+  export type FormEventOrderByWithRelationInput = {
+    id?: SortOrder
+    formId?: SortOrder
+    version?: SortOrder
+    name?: SortOrder
+    sourceField?: SortOrderInput | SortOrder
+    targetField?: SortOrder
+    expression?: SortOrder
+    trigger?: SortOrder
+    enabled?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    form?: FormOrderByWithRelationInput
+  }
+
+  export type FormEventWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: FormEventWhereInput | FormEventWhereInput[]
+    OR?: FormEventWhereInput[]
+    NOT?: FormEventWhereInput | FormEventWhereInput[]
+    formId?: IntFilter<"FormEvent"> | number
+    version?: IntFilter<"FormEvent"> | number
+    name?: StringFilter<"FormEvent"> | string
+    sourceField?: StringNullableFilter<"FormEvent"> | string | null
+    targetField?: StringFilter<"FormEvent"> | string
+    expression?: StringFilter<"FormEvent"> | string
+    trigger?: StringFilter<"FormEvent"> | string
+    enabled?: BoolFilter<"FormEvent"> | boolean
+    createdAt?: DateTimeFilter<"FormEvent"> | Date | string
+    updatedAt?: DateTimeFilter<"FormEvent"> | Date | string
+    form?: XOR<FormScalarRelationFilter, FormWhereInput>
+  }, "id">
+
+  export type FormEventOrderByWithAggregationInput = {
+    id?: SortOrder
+    formId?: SortOrder
+    version?: SortOrder
+    name?: SortOrder
+    sourceField?: SortOrderInput | SortOrder
+    targetField?: SortOrder
+    expression?: SortOrder
+    trigger?: SortOrder
+    enabled?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: FormEventCountOrderByAggregateInput
+    _avg?: FormEventAvgOrderByAggregateInput
+    _max?: FormEventMaxOrderByAggregateInput
+    _min?: FormEventMinOrderByAggregateInput
+    _sum?: FormEventSumOrderByAggregateInput
+  }
+
+  export type FormEventScalarWhereWithAggregatesInput = {
+    AND?: FormEventScalarWhereWithAggregatesInput | FormEventScalarWhereWithAggregatesInput[]
+    OR?: FormEventScalarWhereWithAggregatesInput[]
+    NOT?: FormEventScalarWhereWithAggregatesInput | FormEventScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"FormEvent"> | number
+    formId?: IntWithAggregatesFilter<"FormEvent"> | number
+    version?: IntWithAggregatesFilter<"FormEvent"> | number
+    name?: StringWithAggregatesFilter<"FormEvent"> | string
+    sourceField?: StringNullableWithAggregatesFilter<"FormEvent"> | string | null
+    targetField?: StringWithAggregatesFilter<"FormEvent"> | string
+    expression?: StringWithAggregatesFilter<"FormEvent"> | string
+    trigger?: StringWithAggregatesFilter<"FormEvent"> | string
+    enabled?: BoolWithAggregatesFilter<"FormEvent"> | boolean
+    createdAt?: DateTimeWithAggregatesFilter<"FormEvent"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"FormEvent"> | Date | string
+  }
+
+  export type FormAssignmentWhereInput = {
+    AND?: FormAssignmentWhereInput | FormAssignmentWhereInput[]
+    OR?: FormAssignmentWhereInput[]
+    NOT?: FormAssignmentWhereInput | FormAssignmentWhereInput[]
+    id?: IntFilter<"FormAssignment"> | number
+    formId?: IntFilter<"FormAssignment"> | number
+    userId?: StringNullableFilter<"FormAssignment"> | string | null
+    roleId?: IntNullableFilter<"FormAssignment"> | number | null
+    submoduleId?: IntFilter<"FormAssignment"> | number
+    active?: BoolFilter<"FormAssignment"> | boolean
+    createdAt?: DateTimeFilter<"FormAssignment"> | Date | string
+    updatedAt?: DateTimeFilter<"FormAssignment"> | Date | string
+    form?: XOR<FormScalarRelationFilter, FormWhereInput>
+    role?: XOR<RoleNullableScalarRelationFilter, RoleWhereInput> | null
+    submodule?: XOR<SubmoduleScalarRelationFilter, SubmoduleWhereInput>
+  }
+
+  export type FormAssignmentOrderByWithRelationInput = {
+    id?: SortOrder
+    formId?: SortOrder
+    userId?: SortOrderInput | SortOrder
+    roleId?: SortOrderInput | SortOrder
+    submoduleId?: SortOrder
+    active?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    form?: FormOrderByWithRelationInput
+    role?: RoleOrderByWithRelationInput
+    submodule?: SubmoduleOrderByWithRelationInput
+  }
+
+  export type FormAssignmentWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    formId_userId_roleId_submoduleId?: FormAssignmentFormIdUserIdRoleIdSubmoduleIdCompoundUniqueInput
+    AND?: FormAssignmentWhereInput | FormAssignmentWhereInput[]
+    OR?: FormAssignmentWhereInput[]
+    NOT?: FormAssignmentWhereInput | FormAssignmentWhereInput[]
+    formId?: IntFilter<"FormAssignment"> | number
+    userId?: StringNullableFilter<"FormAssignment"> | string | null
+    roleId?: IntNullableFilter<"FormAssignment"> | number | null
+    submoduleId?: IntFilter<"FormAssignment"> | number
+    active?: BoolFilter<"FormAssignment"> | boolean
+    createdAt?: DateTimeFilter<"FormAssignment"> | Date | string
+    updatedAt?: DateTimeFilter<"FormAssignment"> | Date | string
+    form?: XOR<FormScalarRelationFilter, FormWhereInput>
+    role?: XOR<RoleNullableScalarRelationFilter, RoleWhereInput> | null
+    submodule?: XOR<SubmoduleScalarRelationFilter, SubmoduleWhereInput>
+  }, "id" | "formId_userId_roleId_submoduleId">
+
+  export type FormAssignmentOrderByWithAggregationInput = {
+    id?: SortOrder
+    formId?: SortOrder
+    userId?: SortOrderInput | SortOrder
+    roleId?: SortOrderInput | SortOrder
+    submoduleId?: SortOrder
+    active?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: FormAssignmentCountOrderByAggregateInput
+    _avg?: FormAssignmentAvgOrderByAggregateInput
+    _max?: FormAssignmentMaxOrderByAggregateInput
+    _min?: FormAssignmentMinOrderByAggregateInput
+    _sum?: FormAssignmentSumOrderByAggregateInput
+  }
+
+  export type FormAssignmentScalarWhereWithAggregatesInput = {
+    AND?: FormAssignmentScalarWhereWithAggregatesInput | FormAssignmentScalarWhereWithAggregatesInput[]
+    OR?: FormAssignmentScalarWhereWithAggregatesInput[]
+    NOT?: FormAssignmentScalarWhereWithAggregatesInput | FormAssignmentScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"FormAssignment"> | number
+    formId?: IntWithAggregatesFilter<"FormAssignment"> | number
+    userId?: StringNullableWithAggregatesFilter<"FormAssignment"> | string | null
+    roleId?: IntNullableWithAggregatesFilter<"FormAssignment"> | number | null
+    submoduleId?: IntWithAggregatesFilter<"FormAssignment"> | number
+    active?: BoolWithAggregatesFilter<"FormAssignment"> | boolean
+    createdAt?: DateTimeWithAggregatesFilter<"FormAssignment"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"FormAssignment"> | Date | string
+  }
+
+  export type SubmoduleWhereInput = {
+    AND?: SubmoduleWhereInput | SubmoduleWhereInput[]
+    OR?: SubmoduleWhereInput[]
+    NOT?: SubmoduleWhereInput | SubmoduleWhereInput[]
+    id?: IntFilter<"Submodule"> | number
+    slug?: StringFilter<"Submodule"> | string
+    name?: StringFilter<"Submodule"> | string
+    description?: StringFilter<"Submodule"> | string
+    icon?: StringFilter<"Submodule"> | string
+    metadata?: StringFilter<"Submodule"> | string
+    baseTables?: StringFilter<"Submodule"> | string
+    active?: BoolFilter<"Submodule"> | boolean
+    createdAt?: DateTimeFilter<"Submodule"> | Date | string
+    updatedAt?: DateTimeFilter<"Submodule"> | Date | string
+    forms?: FormListRelationFilter
+    assignments?: FormAssignmentListRelationFilter
+    submissions?: FormSubmissionListRelationFilter
+  }
+
+  export type SubmoduleOrderByWithRelationInput = {
+    id?: SortOrder
+    slug?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    icon?: SortOrder
+    metadata?: SortOrder
+    baseTables?: SortOrder
+    active?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    forms?: FormOrderByRelationAggregateInput
+    assignments?: FormAssignmentOrderByRelationAggregateInput
+    submissions?: FormSubmissionOrderByRelationAggregateInput
+  }
+
+  export type SubmoduleWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    slug?: string
+    AND?: SubmoduleWhereInput | SubmoduleWhereInput[]
+    OR?: SubmoduleWhereInput[]
+    NOT?: SubmoduleWhereInput | SubmoduleWhereInput[]
+    name?: StringFilter<"Submodule"> | string
+    description?: StringFilter<"Submodule"> | string
+    icon?: StringFilter<"Submodule"> | string
+    metadata?: StringFilter<"Submodule"> | string
+    baseTables?: StringFilter<"Submodule"> | string
+    active?: BoolFilter<"Submodule"> | boolean
+    createdAt?: DateTimeFilter<"Submodule"> | Date | string
+    updatedAt?: DateTimeFilter<"Submodule"> | Date | string
+    forms?: FormListRelationFilter
+    assignments?: FormAssignmentListRelationFilter
+    submissions?: FormSubmissionListRelationFilter
+  }, "id" | "slug">
+
+  export type SubmoduleOrderByWithAggregationInput = {
+    id?: SortOrder
+    slug?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    icon?: SortOrder
+    metadata?: SortOrder
+    baseTables?: SortOrder
+    active?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: SubmoduleCountOrderByAggregateInput
+    _avg?: SubmoduleAvgOrderByAggregateInput
+    _max?: SubmoduleMaxOrderByAggregateInput
+    _min?: SubmoduleMinOrderByAggregateInput
+    _sum?: SubmoduleSumOrderByAggregateInput
+  }
+
+  export type SubmoduleScalarWhereWithAggregatesInput = {
+    AND?: SubmoduleScalarWhereWithAggregatesInput | SubmoduleScalarWhereWithAggregatesInput[]
+    OR?: SubmoduleScalarWhereWithAggregatesInput[]
+    NOT?: SubmoduleScalarWhereWithAggregatesInput | SubmoduleScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"Submodule"> | number
+    slug?: StringWithAggregatesFilter<"Submodule"> | string
+    name?: StringWithAggregatesFilter<"Submodule"> | string
+    description?: StringWithAggregatesFilter<"Submodule"> | string
+    icon?: StringWithAggregatesFilter<"Submodule"> | string
+    metadata?: StringWithAggregatesFilter<"Submodule"> | string
+    baseTables?: StringWithAggregatesFilter<"Submodule"> | string
+    active?: BoolWithAggregatesFilter<"Submodule"> | boolean
+    createdAt?: DateTimeWithAggregatesFilter<"Submodule"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Submodule"> | Date | string
+  }
+
+  export type FormTemplateWhereInput = {
+    AND?: FormTemplateWhereInput | FormTemplateWhereInput[]
+    OR?: FormTemplateWhereInput[]
+    NOT?: FormTemplateWhereInput | FormTemplateWhereInput[]
+    id?: IntFilter<"FormTemplate"> | number
+    slug?: StringFilter<"FormTemplate"> | string
+    name?: StringFilter<"FormTemplate"> | string
+    description?: StringFilter<"FormTemplate"> | string
+    icon?: StringFilter<"FormTemplate"> | string
+    metadata?: StringFilter<"FormTemplate"> | string
+    page?: StringNullableFilter<"FormTemplate"> | string | null
+    components?: StringFilter<"FormTemplate"> | string
+    context?: StringFilter<"FormTemplate"> | string
+    eventConfig?: StringFilter<"FormTemplate"> | string
+    scheduleType?: StringFilter<"FormTemplate"> | string
+    scheduleInterval?: IntFilter<"FormTemplate"> | number
+    scheduleConfig?: StringFilter<"FormTemplate"> | string
+    currentVersion?: IntFilter<"FormTemplate"> | number
+    active?: BoolFilter<"FormTemplate"> | boolean
+    createdAt?: DateTimeFilter<"FormTemplate"> | Date | string
+    updatedAt?: DateTimeFilter<"FormTemplate"> | Date | string
+    forms?: FormListRelationFilter
+    versions?: FormTemplateVersionListRelationFilter
+  }
+
+  export type FormTemplateOrderByWithRelationInput = {
+    id?: SortOrder
+    slug?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    icon?: SortOrder
+    metadata?: SortOrder
+    page?: SortOrderInput | SortOrder
+    components?: SortOrder
+    context?: SortOrder
+    eventConfig?: SortOrder
+    scheduleType?: SortOrder
+    scheduleInterval?: SortOrder
+    scheduleConfig?: SortOrder
+    currentVersion?: SortOrder
+    active?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    forms?: FormOrderByRelationAggregateInput
+    versions?: FormTemplateVersionOrderByRelationAggregateInput
+  }
+
+  export type FormTemplateWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    slug?: string
+    AND?: FormTemplateWhereInput | FormTemplateWhereInput[]
+    OR?: FormTemplateWhereInput[]
+    NOT?: FormTemplateWhereInput | FormTemplateWhereInput[]
+    name?: StringFilter<"FormTemplate"> | string
+    description?: StringFilter<"FormTemplate"> | string
+    icon?: StringFilter<"FormTemplate"> | string
+    metadata?: StringFilter<"FormTemplate"> | string
+    page?: StringNullableFilter<"FormTemplate"> | string | null
+    components?: StringFilter<"FormTemplate"> | string
+    context?: StringFilter<"FormTemplate"> | string
+    eventConfig?: StringFilter<"FormTemplate"> | string
+    scheduleType?: StringFilter<"FormTemplate"> | string
+    scheduleInterval?: IntFilter<"FormTemplate"> | number
+    scheduleConfig?: StringFilter<"FormTemplate"> | string
+    currentVersion?: IntFilter<"FormTemplate"> | number
+    active?: BoolFilter<"FormTemplate"> | boolean
+    createdAt?: DateTimeFilter<"FormTemplate"> | Date | string
+    updatedAt?: DateTimeFilter<"FormTemplate"> | Date | string
+    forms?: FormListRelationFilter
+    versions?: FormTemplateVersionListRelationFilter
+  }, "id" | "slug">
+
+  export type FormTemplateOrderByWithAggregationInput = {
+    id?: SortOrder
+    slug?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    icon?: SortOrder
+    metadata?: SortOrder
+    page?: SortOrderInput | SortOrder
+    components?: SortOrder
+    context?: SortOrder
+    eventConfig?: SortOrder
+    scheduleType?: SortOrder
+    scheduleInterval?: SortOrder
+    scheduleConfig?: SortOrder
+    currentVersion?: SortOrder
+    active?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: FormTemplateCountOrderByAggregateInput
+    _avg?: FormTemplateAvgOrderByAggregateInput
+    _max?: FormTemplateMaxOrderByAggregateInput
+    _min?: FormTemplateMinOrderByAggregateInput
+    _sum?: FormTemplateSumOrderByAggregateInput
+  }
+
+  export type FormTemplateScalarWhereWithAggregatesInput = {
+    AND?: FormTemplateScalarWhereWithAggregatesInput | FormTemplateScalarWhereWithAggregatesInput[]
+    OR?: FormTemplateScalarWhereWithAggregatesInput[]
+    NOT?: FormTemplateScalarWhereWithAggregatesInput | FormTemplateScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"FormTemplate"> | number
+    slug?: StringWithAggregatesFilter<"FormTemplate"> | string
+    name?: StringWithAggregatesFilter<"FormTemplate"> | string
+    description?: StringWithAggregatesFilter<"FormTemplate"> | string
+    icon?: StringWithAggregatesFilter<"FormTemplate"> | string
+    metadata?: StringWithAggregatesFilter<"FormTemplate"> | string
+    page?: StringNullableWithAggregatesFilter<"FormTemplate"> | string | null
+    components?: StringWithAggregatesFilter<"FormTemplate"> | string
+    context?: StringWithAggregatesFilter<"FormTemplate"> | string
+    eventConfig?: StringWithAggregatesFilter<"FormTemplate"> | string
+    scheduleType?: StringWithAggregatesFilter<"FormTemplate"> | string
+    scheduleInterval?: IntWithAggregatesFilter<"FormTemplate"> | number
+    scheduleConfig?: StringWithAggregatesFilter<"FormTemplate"> | string
+    currentVersion?: IntWithAggregatesFilter<"FormTemplate"> | number
+    active?: BoolWithAggregatesFilter<"FormTemplate"> | boolean
+    createdAt?: DateTimeWithAggregatesFilter<"FormTemplate"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"FormTemplate"> | Date | string
+  }
+
+  export type FormTemplateVersionWhereInput = {
+    AND?: FormTemplateVersionWhereInput | FormTemplateVersionWhereInput[]
+    OR?: FormTemplateVersionWhereInput[]
+    NOT?: FormTemplateVersionWhereInput | FormTemplateVersionWhereInput[]
+    id?: IntFilter<"FormTemplateVersion"> | number
+    templateId?: IntFilter<"FormTemplateVersion"> | number
+    version?: IntFilter<"FormTemplateVersion"> | number
+    name?: StringFilter<"FormTemplateVersion"> | string
+    description?: StringFilter<"FormTemplateVersion"> | string
+    icon?: StringFilter<"FormTemplateVersion"> | string
+    metadata?: StringFilter<"FormTemplateVersion"> | string
+    page?: StringNullableFilter<"FormTemplateVersion"> | string | null
+    components?: StringFilter<"FormTemplateVersion"> | string
+    context?: StringFilter<"FormTemplateVersion"> | string
+    eventConfig?: StringFilter<"FormTemplateVersion"> | string
+    scheduleType?: StringFilter<"FormTemplateVersion"> | string
+    scheduleInterval?: IntFilter<"FormTemplateVersion"> | number
+    scheduleConfig?: StringFilter<"FormTemplateVersion"> | string
+    createdAt?: DateTimeFilter<"FormTemplateVersion"> | Date | string
+    template?: XOR<FormTemplateScalarRelationFilter, FormTemplateWhereInput>
+  }
+
+  export type FormTemplateVersionOrderByWithRelationInput = {
+    id?: SortOrder
+    templateId?: SortOrder
+    version?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    icon?: SortOrder
+    metadata?: SortOrder
+    page?: SortOrderInput | SortOrder
+    components?: SortOrder
+    context?: SortOrder
+    eventConfig?: SortOrder
+    scheduleType?: SortOrder
+    scheduleInterval?: SortOrder
+    scheduleConfig?: SortOrder
+    createdAt?: SortOrder
+    template?: FormTemplateOrderByWithRelationInput
+  }
+
+  export type FormTemplateVersionWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    templateId_version?: FormTemplateVersionTemplateIdVersionCompoundUniqueInput
+    AND?: FormTemplateVersionWhereInput | FormTemplateVersionWhereInput[]
+    OR?: FormTemplateVersionWhereInput[]
+    NOT?: FormTemplateVersionWhereInput | FormTemplateVersionWhereInput[]
+    templateId?: IntFilter<"FormTemplateVersion"> | number
+    version?: IntFilter<"FormTemplateVersion"> | number
+    name?: StringFilter<"FormTemplateVersion"> | string
+    description?: StringFilter<"FormTemplateVersion"> | string
+    icon?: StringFilter<"FormTemplateVersion"> | string
+    metadata?: StringFilter<"FormTemplateVersion"> | string
+    page?: StringNullableFilter<"FormTemplateVersion"> | string | null
+    components?: StringFilter<"FormTemplateVersion"> | string
+    context?: StringFilter<"FormTemplateVersion"> | string
+    eventConfig?: StringFilter<"FormTemplateVersion"> | string
+    scheduleType?: StringFilter<"FormTemplateVersion"> | string
+    scheduleInterval?: IntFilter<"FormTemplateVersion"> | number
+    scheduleConfig?: StringFilter<"FormTemplateVersion"> | string
+    createdAt?: DateTimeFilter<"FormTemplateVersion"> | Date | string
+    template?: XOR<FormTemplateScalarRelationFilter, FormTemplateWhereInput>
+  }, "id" | "templateId_version">
+
+  export type FormTemplateVersionOrderByWithAggregationInput = {
+    id?: SortOrder
+    templateId?: SortOrder
+    version?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    icon?: SortOrder
+    metadata?: SortOrder
+    page?: SortOrderInput | SortOrder
+    components?: SortOrder
+    context?: SortOrder
+    eventConfig?: SortOrder
+    scheduleType?: SortOrder
+    scheduleInterval?: SortOrder
+    scheduleConfig?: SortOrder
+    createdAt?: SortOrder
+    _count?: FormTemplateVersionCountOrderByAggregateInput
+    _avg?: FormTemplateVersionAvgOrderByAggregateInput
+    _max?: FormTemplateVersionMaxOrderByAggregateInput
+    _min?: FormTemplateVersionMinOrderByAggregateInput
+    _sum?: FormTemplateVersionSumOrderByAggregateInput
+  }
+
+  export type FormTemplateVersionScalarWhereWithAggregatesInput = {
+    AND?: FormTemplateVersionScalarWhereWithAggregatesInput | FormTemplateVersionScalarWhereWithAggregatesInput[]
+    OR?: FormTemplateVersionScalarWhereWithAggregatesInput[]
+    NOT?: FormTemplateVersionScalarWhereWithAggregatesInput | FormTemplateVersionScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"FormTemplateVersion"> | number
+    templateId?: IntWithAggregatesFilter<"FormTemplateVersion"> | number
+    version?: IntWithAggregatesFilter<"FormTemplateVersion"> | number
+    name?: StringWithAggregatesFilter<"FormTemplateVersion"> | string
+    description?: StringWithAggregatesFilter<"FormTemplateVersion"> | string
+    icon?: StringWithAggregatesFilter<"FormTemplateVersion"> | string
+    metadata?: StringWithAggregatesFilter<"FormTemplateVersion"> | string
+    page?: StringNullableWithAggregatesFilter<"FormTemplateVersion"> | string | null
+    components?: StringWithAggregatesFilter<"FormTemplateVersion"> | string
+    context?: StringWithAggregatesFilter<"FormTemplateVersion"> | string
+    eventConfig?: StringWithAggregatesFilter<"FormTemplateVersion"> | string
+    scheduleType?: StringWithAggregatesFilter<"FormTemplateVersion"> | string
+    scheduleInterval?: IntWithAggregatesFilter<"FormTemplateVersion"> | number
+    scheduleConfig?: StringWithAggregatesFilter<"FormTemplateVersion"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"FormTemplateVersion"> | Date | string
+  }
+
+  export type RoleWhereInput = {
+    AND?: RoleWhereInput | RoleWhereInput[]
+    OR?: RoleWhereInput[]
+    NOT?: RoleWhereInput | RoleWhereInput[]
+    id?: IntFilter<"Role"> | number
+    key?: StringFilter<"Role"> | string
+    name?: StringFilter<"Role"> | string
+    createdAt?: DateTimeFilter<"Role"> | Date | string
+    updatedAt?: DateTimeFilter<"Role"> | Date | string
+    users?: AppUserListRelationFilter
+    forms?: FormListRelationFilter
+    assignments?: FormAssignmentListRelationFilter
+    submissions?: FormSubmissionListRelationFilter
+  }
+
+  export type RoleOrderByWithRelationInput = {
+    id?: SortOrder
+    key?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    users?: AppUserOrderByRelationAggregateInput
+    forms?: FormOrderByRelationAggregateInput
+    assignments?: FormAssignmentOrderByRelationAggregateInput
+    submissions?: FormSubmissionOrderByRelationAggregateInput
+  }
+
+  export type RoleWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    key?: string
+    AND?: RoleWhereInput | RoleWhereInput[]
+    OR?: RoleWhereInput[]
+    NOT?: RoleWhereInput | RoleWhereInput[]
+    name?: StringFilter<"Role"> | string
+    createdAt?: DateTimeFilter<"Role"> | Date | string
+    updatedAt?: DateTimeFilter<"Role"> | Date | string
+    users?: AppUserListRelationFilter
+    forms?: FormListRelationFilter
+    assignments?: FormAssignmentListRelationFilter
+    submissions?: FormSubmissionListRelationFilter
+  }, "id" | "key">
+
+  export type RoleOrderByWithAggregationInput = {
+    id?: SortOrder
+    key?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: RoleCountOrderByAggregateInput
+    _avg?: RoleAvgOrderByAggregateInput
+    _max?: RoleMaxOrderByAggregateInput
+    _min?: RoleMinOrderByAggregateInput
+    _sum?: RoleSumOrderByAggregateInput
+  }
+
+  export type RoleScalarWhereWithAggregatesInput = {
+    AND?: RoleScalarWhereWithAggregatesInput | RoleScalarWhereWithAggregatesInput[]
+    OR?: RoleScalarWhereWithAggregatesInput[]
+    NOT?: RoleScalarWhereWithAggregatesInput | RoleScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"Role"> | number
+    key?: StringWithAggregatesFilter<"Role"> | string
+    name?: StringWithAggregatesFilter<"Role"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"Role"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Role"> | Date | string
+  }
+
+  export type AppUserWhereInput = {
+    AND?: AppUserWhereInput | AppUserWhereInput[]
+    OR?: AppUserWhereInput[]
+    NOT?: AppUserWhereInput | AppUserWhereInput[]
+    id?: StringFilter<"AppUser"> | string
+    email?: StringNullableFilter<"AppUser"> | string | null
+    name?: StringFilter<"AppUser"> | string
+    roleId?: IntNullableFilter<"AppUser"> | number | null
+    createdAt?: DateTimeFilter<"AppUser"> | Date | string
+    updatedAt?: DateTimeFilter<"AppUser"> | Date | string
+    role?: XOR<RoleNullableScalarRelationFilter, RoleWhereInput> | null
+  }
+
+  export type AppUserOrderByWithRelationInput = {
+    id?: SortOrder
+    email?: SortOrderInput | SortOrder
+    name?: SortOrder
+    roleId?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    role?: RoleOrderByWithRelationInput
+  }
+
+  export type AppUserWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    email?: string
+    AND?: AppUserWhereInput | AppUserWhereInput[]
+    OR?: AppUserWhereInput[]
+    NOT?: AppUserWhereInput | AppUserWhereInput[]
+    name?: StringFilter<"AppUser"> | string
+    roleId?: IntNullableFilter<"AppUser"> | number | null
+    createdAt?: DateTimeFilter<"AppUser"> | Date | string
+    updatedAt?: DateTimeFilter<"AppUser"> | Date | string
+    role?: XOR<RoleNullableScalarRelationFilter, RoleWhereInput> | null
+  }, "id" | "email">
+
+  export type AppUserOrderByWithAggregationInput = {
+    id?: SortOrder
+    email?: SortOrderInput | SortOrder
+    name?: SortOrder
+    roleId?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: AppUserCountOrderByAggregateInput
+    _avg?: AppUserAvgOrderByAggregateInput
+    _max?: AppUserMaxOrderByAggregateInput
+    _min?: AppUserMinOrderByAggregateInput
+    _sum?: AppUserSumOrderByAggregateInput
+  }
+
+  export type AppUserScalarWhereWithAggregatesInput = {
+    AND?: AppUserScalarWhereWithAggregatesInput | AppUserScalarWhereWithAggregatesInput[]
+    OR?: AppUserScalarWhereWithAggregatesInput[]
+    NOT?: AppUserScalarWhereWithAggregatesInput | AppUserScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"AppUser"> | string
+    email?: StringNullableWithAggregatesFilter<"AppUser"> | string | null
+    name?: StringWithAggregatesFilter<"AppUser"> | string
+    roleId?: IntNullableWithAggregatesFilter<"AppUser"> | number | null
+    createdAt?: DateTimeWithAggregatesFilter<"AppUser"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"AppUser"> | Date | string
   }
 
   export type FormCreateInput = {
@@ -3266,7 +17305,21 @@ export namespace Prisma {
     visit?: number
     submission?: number
     sharedURL?: string
-    FormSubmission?: FormSubmissionCreateNestedManyWithoutFormInput
+    currentVersion?: number
+    eventConfig?: string
+    scheduleType?: string
+    scheduleInterval?: number
+    scheduleConfig?: string
+    assignedUserId?: string | null
+    templateVersion?: number | null
+    role?: RoleCreateNestedOneWithoutFormsInput
+    submodule?: SubmoduleCreateNestedOneWithoutFormsInput
+    template?: FormTemplateCreateNestedOneWithoutFormsInput
+    submissions?: FormSubmissionCreateNestedManyWithoutFormInput
+    submissionValues?: FormSubmissionValueCreateNestedManyWithoutFormInput
+    versions?: FormVersionCreateNestedManyWithoutFormInput
+    assignments?: FormAssignmentCreateNestedManyWithoutFormInput
+    eventRules?: FormEventCreateNestedManyWithoutFormInput
   }
 
   export type FormUncheckedCreateInput = {
@@ -3283,7 +17336,21 @@ export namespace Prisma {
     visit?: number
     submission?: number
     sharedURL?: string
-    FormSubmission?: FormSubmissionUncheckedCreateNestedManyWithoutFormInput
+    currentVersion?: number
+    eventConfig?: string
+    scheduleType?: string
+    scheduleInterval?: number
+    scheduleConfig?: string
+    assignedUserId?: string | null
+    roleId?: number | null
+    submoduleId?: number | null
+    templateId?: number | null
+    templateVersion?: number | null
+    submissions?: FormSubmissionUncheckedCreateNestedManyWithoutFormInput
+    submissionValues?: FormSubmissionValueUncheckedCreateNestedManyWithoutFormInput
+    versions?: FormVersionUncheckedCreateNestedManyWithoutFormInput
+    assignments?: FormAssignmentUncheckedCreateNestedManyWithoutFormInput
+    eventRules?: FormEventUncheckedCreateNestedManyWithoutFormInput
   }
 
   export type FormUpdateInput = {
@@ -3299,7 +17366,21 @@ export namespace Prisma {
     visit?: IntFieldUpdateOperationsInput | number
     submission?: IntFieldUpdateOperationsInput | number
     sharedURL?: StringFieldUpdateOperationsInput | string
-    FormSubmission?: FormSubmissionUpdateManyWithoutFormNestedInput
+    currentVersion?: IntFieldUpdateOperationsInput | number
+    eventConfig?: StringFieldUpdateOperationsInput | string
+    scheduleType?: StringFieldUpdateOperationsInput | string
+    scheduleInterval?: IntFieldUpdateOperationsInput | number
+    scheduleConfig?: StringFieldUpdateOperationsInput | string
+    assignedUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    templateVersion?: NullableIntFieldUpdateOperationsInput | number | null
+    role?: RoleUpdateOneWithoutFormsNestedInput
+    submodule?: SubmoduleUpdateOneWithoutFormsNestedInput
+    template?: FormTemplateUpdateOneWithoutFormsNestedInput
+    submissions?: FormSubmissionUpdateManyWithoutFormNestedInput
+    submissionValues?: FormSubmissionValueUpdateManyWithoutFormNestedInput
+    versions?: FormVersionUpdateManyWithoutFormNestedInput
+    assignments?: FormAssignmentUpdateManyWithoutFormNestedInput
+    eventRules?: FormEventUpdateManyWithoutFormNestedInput
   }
 
   export type FormUncheckedUpdateInput = {
@@ -3316,7 +17397,21 @@ export namespace Prisma {
     visit?: IntFieldUpdateOperationsInput | number
     submission?: IntFieldUpdateOperationsInput | number
     sharedURL?: StringFieldUpdateOperationsInput | string
-    FormSubmission?: FormSubmissionUncheckedUpdateManyWithoutFormNestedInput
+    currentVersion?: IntFieldUpdateOperationsInput | number
+    eventConfig?: StringFieldUpdateOperationsInput | string
+    scheduleType?: StringFieldUpdateOperationsInput | string
+    scheduleInterval?: IntFieldUpdateOperationsInput | number
+    scheduleConfig?: StringFieldUpdateOperationsInput | string
+    assignedUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    roleId?: NullableIntFieldUpdateOperationsInput | number | null
+    submoduleId?: NullableIntFieldUpdateOperationsInput | number | null
+    templateId?: NullableIntFieldUpdateOperationsInput | number | null
+    templateVersion?: NullableIntFieldUpdateOperationsInput | number | null
+    submissions?: FormSubmissionUncheckedUpdateManyWithoutFormNestedInput
+    submissionValues?: FormSubmissionValueUncheckedUpdateManyWithoutFormNestedInput
+    versions?: FormVersionUncheckedUpdateManyWithoutFormNestedInput
+    assignments?: FormAssignmentUncheckedUpdateManyWithoutFormNestedInput
+    eventRules?: FormEventUncheckedUpdateManyWithoutFormNestedInput
   }
 
   export type FormCreateManyInput = {
@@ -3333,6 +17428,16 @@ export namespace Prisma {
     visit?: number
     submission?: number
     sharedURL?: string
+    currentVersion?: number
+    eventConfig?: string
+    scheduleType?: string
+    scheduleInterval?: number
+    scheduleConfig?: string
+    assignedUserId?: string | null
+    roleId?: number | null
+    submoduleId?: number | null
+    templateId?: number | null
+    templateVersion?: number | null
   }
 
   export type FormUpdateManyMutationInput = {
@@ -3348,6 +17453,13 @@ export namespace Prisma {
     visit?: IntFieldUpdateOperationsInput | number
     submission?: IntFieldUpdateOperationsInput | number
     sharedURL?: StringFieldUpdateOperationsInput | string
+    currentVersion?: IntFieldUpdateOperationsInput | number
+    eventConfig?: StringFieldUpdateOperationsInput | string
+    scheduleType?: StringFieldUpdateOperationsInput | string
+    scheduleInterval?: IntFieldUpdateOperationsInput | number
+    scheduleConfig?: StringFieldUpdateOperationsInput | string
+    assignedUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    templateVersion?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type FormUncheckedUpdateManyInput = {
@@ -3364,51 +17476,1031 @@ export namespace Prisma {
     visit?: IntFieldUpdateOperationsInput | number
     submission?: IntFieldUpdateOperationsInput | number
     sharedURL?: StringFieldUpdateOperationsInput | string
+    currentVersion?: IntFieldUpdateOperationsInput | number
+    eventConfig?: StringFieldUpdateOperationsInput | string
+    scheduleType?: StringFieldUpdateOperationsInput | string
+    scheduleInterval?: IntFieldUpdateOperationsInput | number
+    scheduleConfig?: StringFieldUpdateOperationsInput | string
+    assignedUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    roleId?: NullableIntFieldUpdateOperationsInput | number | null
+    submoduleId?: NullableIntFieldUpdateOperationsInput | number | null
+    templateId?: NullableIntFieldUpdateOperationsInput | number | null
+    templateVersion?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type FormSubmissionCreateInput = {
     published?: boolean
+    version?: number
+    userId?: string | null
     content: string
-    form: FormCreateNestedOneWithoutFormSubmissionInput
+    computedContent?: string
+    submittedAt?: Date | string
+    form: FormCreateNestedOneWithoutSubmissionsInput
+    formVersion?: FormVersionCreateNestedOneWithoutSubmissionsInput
+    role?: RoleCreateNestedOneWithoutSubmissionsInput
+    submodule?: SubmoduleCreateNestedOneWithoutSubmissionsInput
+    values?: FormSubmissionValueCreateNestedManyWithoutSubmissionInput
   }
 
   export type FormSubmissionUncheckedCreateInput = {
     id?: number
     published?: boolean
     formId: number
+    formVersionId?: number | null
+    version?: number
+    userId?: string | null
+    roleId?: number | null
+    submoduleId?: number | null
     content: string
+    computedContent?: string
+    submittedAt?: Date | string
+    values?: FormSubmissionValueUncheckedCreateNestedManyWithoutSubmissionInput
   }
 
   export type FormSubmissionUpdateInput = {
     published?: BoolFieldUpdateOperationsInput | boolean
+    version?: IntFieldUpdateOperationsInput | number
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
     content?: StringFieldUpdateOperationsInput | string
-    form?: FormUpdateOneRequiredWithoutFormSubmissionNestedInput
+    computedContent?: StringFieldUpdateOperationsInput | string
+    submittedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    form?: FormUpdateOneRequiredWithoutSubmissionsNestedInput
+    formVersion?: FormVersionUpdateOneWithoutSubmissionsNestedInput
+    role?: RoleUpdateOneWithoutSubmissionsNestedInput
+    submodule?: SubmoduleUpdateOneWithoutSubmissionsNestedInput
+    values?: FormSubmissionValueUpdateManyWithoutSubmissionNestedInput
   }
 
   export type FormSubmissionUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     published?: BoolFieldUpdateOperationsInput | boolean
     formId?: IntFieldUpdateOperationsInput | number
+    formVersionId?: NullableIntFieldUpdateOperationsInput | number | null
+    version?: IntFieldUpdateOperationsInput | number
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    roleId?: NullableIntFieldUpdateOperationsInput | number | null
+    submoduleId?: NullableIntFieldUpdateOperationsInput | number | null
     content?: StringFieldUpdateOperationsInput | string
+    computedContent?: StringFieldUpdateOperationsInput | string
+    submittedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    values?: FormSubmissionValueUncheckedUpdateManyWithoutSubmissionNestedInput
   }
 
   export type FormSubmissionCreateManyInput = {
     id?: number
     published?: boolean
     formId: number
+    formVersionId?: number | null
+    version?: number
+    userId?: string | null
+    roleId?: number | null
+    submoduleId?: number | null
     content: string
+    computedContent?: string
+    submittedAt?: Date | string
   }
 
   export type FormSubmissionUpdateManyMutationInput = {
     published?: BoolFieldUpdateOperationsInput | boolean
+    version?: IntFieldUpdateOperationsInput | number
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
     content?: StringFieldUpdateOperationsInput | string
+    computedContent?: StringFieldUpdateOperationsInput | string
+    submittedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type FormSubmissionUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     published?: BoolFieldUpdateOperationsInput | boolean
     formId?: IntFieldUpdateOperationsInput | number
+    formVersionId?: NullableIntFieldUpdateOperationsInput | number | null
+    version?: IntFieldUpdateOperationsInput | number
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    roleId?: NullableIntFieldUpdateOperationsInput | number | null
+    submoduleId?: NullableIntFieldUpdateOperationsInput | number | null
     content?: StringFieldUpdateOperationsInput | string
+    computedContent?: StringFieldUpdateOperationsInput | string
+    submittedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FormVersionCreateInput = {
+    version: number
+    name: string
+    description?: string
+    page?: string | null
+    components?: string
+    context?: string
+    eventConfig?: string
+    scheduleType?: string
+    scheduleInterval?: number
+    scheduleConfig?: string
+    published?: boolean
+    createdAt?: Date | string
+    form: FormCreateNestedOneWithoutVersionsInput
+    submissions?: FormSubmissionCreateNestedManyWithoutFormVersionInput
+    submissionValues?: FormSubmissionValueCreateNestedManyWithoutFormVersionInput
+  }
+
+  export type FormVersionUncheckedCreateInput = {
+    id?: number
+    formId: number
+    version: number
+    name: string
+    description?: string
+    page?: string | null
+    components?: string
+    context?: string
+    eventConfig?: string
+    scheduleType?: string
+    scheduleInterval?: number
+    scheduleConfig?: string
+    published?: boolean
+    createdAt?: Date | string
+    submissions?: FormSubmissionUncheckedCreateNestedManyWithoutFormVersionInput
+    submissionValues?: FormSubmissionValueUncheckedCreateNestedManyWithoutFormVersionInput
+  }
+
+  export type FormVersionUpdateInput = {
+    version?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    page?: NullableStringFieldUpdateOperationsInput | string | null
+    components?: StringFieldUpdateOperationsInput | string
+    context?: StringFieldUpdateOperationsInput | string
+    eventConfig?: StringFieldUpdateOperationsInput | string
+    scheduleType?: StringFieldUpdateOperationsInput | string
+    scheduleInterval?: IntFieldUpdateOperationsInput | number
+    scheduleConfig?: StringFieldUpdateOperationsInput | string
+    published?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    form?: FormUpdateOneRequiredWithoutVersionsNestedInput
+    submissions?: FormSubmissionUpdateManyWithoutFormVersionNestedInput
+    submissionValues?: FormSubmissionValueUpdateManyWithoutFormVersionNestedInput
+  }
+
+  export type FormVersionUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    formId?: IntFieldUpdateOperationsInput | number
+    version?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    page?: NullableStringFieldUpdateOperationsInput | string | null
+    components?: StringFieldUpdateOperationsInput | string
+    context?: StringFieldUpdateOperationsInput | string
+    eventConfig?: StringFieldUpdateOperationsInput | string
+    scheduleType?: StringFieldUpdateOperationsInput | string
+    scheduleInterval?: IntFieldUpdateOperationsInput | number
+    scheduleConfig?: StringFieldUpdateOperationsInput | string
+    published?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    submissions?: FormSubmissionUncheckedUpdateManyWithoutFormVersionNestedInput
+    submissionValues?: FormSubmissionValueUncheckedUpdateManyWithoutFormVersionNestedInput
+  }
+
+  export type FormVersionCreateManyInput = {
+    id?: number
+    formId: number
+    version: number
+    name: string
+    description?: string
+    page?: string | null
+    components?: string
+    context?: string
+    eventConfig?: string
+    scheduleType?: string
+    scheduleInterval?: number
+    scheduleConfig?: string
+    published?: boolean
+    createdAt?: Date | string
+  }
+
+  export type FormVersionUpdateManyMutationInput = {
+    version?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    page?: NullableStringFieldUpdateOperationsInput | string | null
+    components?: StringFieldUpdateOperationsInput | string
+    context?: StringFieldUpdateOperationsInput | string
+    eventConfig?: StringFieldUpdateOperationsInput | string
+    scheduleType?: StringFieldUpdateOperationsInput | string
+    scheduleInterval?: IntFieldUpdateOperationsInput | number
+    scheduleConfig?: StringFieldUpdateOperationsInput | string
+    published?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FormVersionUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    formId?: IntFieldUpdateOperationsInput | number
+    version?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    page?: NullableStringFieldUpdateOperationsInput | string | null
+    components?: StringFieldUpdateOperationsInput | string
+    context?: StringFieldUpdateOperationsInput | string
+    eventConfig?: StringFieldUpdateOperationsInput | string
+    scheduleType?: StringFieldUpdateOperationsInput | string
+    scheduleInterval?: IntFieldUpdateOperationsInput | number
+    scheduleConfig?: StringFieldUpdateOperationsInput | string
+    published?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FormSubmissionValueCreateInput = {
+    fieldKey: string
+    fieldLabel?: string
+    elementId?: string | null
+    pageId?: string | null
+    parentId?: string | null
+    valueType?: string
+    stringValue?: string | null
+    numberValue?: number | null
+    booleanValue?: boolean | null
+    dateValue?: Date | string | null
+    jsonValue?: string | null
+    rawValue?: string | null
+    createdAt?: Date | string
+    submission: FormSubmissionCreateNestedOneWithoutValuesInput
+    form: FormCreateNestedOneWithoutSubmissionValuesInput
+    formVersion?: FormVersionCreateNestedOneWithoutSubmissionValuesInput
+  }
+
+  export type FormSubmissionValueUncheckedCreateInput = {
+    id?: number
+    submissionId: number
+    formId: number
+    formVersionId?: number | null
+    fieldKey: string
+    fieldLabel?: string
+    elementId?: string | null
+    pageId?: string | null
+    parentId?: string | null
+    valueType?: string
+    stringValue?: string | null
+    numberValue?: number | null
+    booleanValue?: boolean | null
+    dateValue?: Date | string | null
+    jsonValue?: string | null
+    rawValue?: string | null
+    createdAt?: Date | string
+  }
+
+  export type FormSubmissionValueUpdateInput = {
+    fieldKey?: StringFieldUpdateOperationsInput | string
+    fieldLabel?: StringFieldUpdateOperationsInput | string
+    elementId?: NullableStringFieldUpdateOperationsInput | string | null
+    pageId?: NullableStringFieldUpdateOperationsInput | string | null
+    parentId?: NullableStringFieldUpdateOperationsInput | string | null
+    valueType?: StringFieldUpdateOperationsInput | string
+    stringValue?: NullableStringFieldUpdateOperationsInput | string | null
+    numberValue?: NullableFloatFieldUpdateOperationsInput | number | null
+    booleanValue?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    dateValue?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    jsonValue?: NullableStringFieldUpdateOperationsInput | string | null
+    rawValue?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    submission?: FormSubmissionUpdateOneRequiredWithoutValuesNestedInput
+    form?: FormUpdateOneRequiredWithoutSubmissionValuesNestedInput
+    formVersion?: FormVersionUpdateOneWithoutSubmissionValuesNestedInput
+  }
+
+  export type FormSubmissionValueUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    submissionId?: IntFieldUpdateOperationsInput | number
+    formId?: IntFieldUpdateOperationsInput | number
+    formVersionId?: NullableIntFieldUpdateOperationsInput | number | null
+    fieldKey?: StringFieldUpdateOperationsInput | string
+    fieldLabel?: StringFieldUpdateOperationsInput | string
+    elementId?: NullableStringFieldUpdateOperationsInput | string | null
+    pageId?: NullableStringFieldUpdateOperationsInput | string | null
+    parentId?: NullableStringFieldUpdateOperationsInput | string | null
+    valueType?: StringFieldUpdateOperationsInput | string
+    stringValue?: NullableStringFieldUpdateOperationsInput | string | null
+    numberValue?: NullableFloatFieldUpdateOperationsInput | number | null
+    booleanValue?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    dateValue?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    jsonValue?: NullableStringFieldUpdateOperationsInput | string | null
+    rawValue?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FormSubmissionValueCreateManyInput = {
+    id?: number
+    submissionId: number
+    formId: number
+    formVersionId?: number | null
+    fieldKey: string
+    fieldLabel?: string
+    elementId?: string | null
+    pageId?: string | null
+    parentId?: string | null
+    valueType?: string
+    stringValue?: string | null
+    numberValue?: number | null
+    booleanValue?: boolean | null
+    dateValue?: Date | string | null
+    jsonValue?: string | null
+    rawValue?: string | null
+    createdAt?: Date | string
+  }
+
+  export type FormSubmissionValueUpdateManyMutationInput = {
+    fieldKey?: StringFieldUpdateOperationsInput | string
+    fieldLabel?: StringFieldUpdateOperationsInput | string
+    elementId?: NullableStringFieldUpdateOperationsInput | string | null
+    pageId?: NullableStringFieldUpdateOperationsInput | string | null
+    parentId?: NullableStringFieldUpdateOperationsInput | string | null
+    valueType?: StringFieldUpdateOperationsInput | string
+    stringValue?: NullableStringFieldUpdateOperationsInput | string | null
+    numberValue?: NullableFloatFieldUpdateOperationsInput | number | null
+    booleanValue?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    dateValue?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    jsonValue?: NullableStringFieldUpdateOperationsInput | string | null
+    rawValue?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FormSubmissionValueUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    submissionId?: IntFieldUpdateOperationsInput | number
+    formId?: IntFieldUpdateOperationsInput | number
+    formVersionId?: NullableIntFieldUpdateOperationsInput | number | null
+    fieldKey?: StringFieldUpdateOperationsInput | string
+    fieldLabel?: StringFieldUpdateOperationsInput | string
+    elementId?: NullableStringFieldUpdateOperationsInput | string | null
+    pageId?: NullableStringFieldUpdateOperationsInput | string | null
+    parentId?: NullableStringFieldUpdateOperationsInput | string | null
+    valueType?: StringFieldUpdateOperationsInput | string
+    stringValue?: NullableStringFieldUpdateOperationsInput | string | null
+    numberValue?: NullableFloatFieldUpdateOperationsInput | number | null
+    booleanValue?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    dateValue?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    jsonValue?: NullableStringFieldUpdateOperationsInput | string | null
+    rawValue?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FormEventCreateInput = {
+    version?: number
+    name: string
+    sourceField?: string | null
+    targetField: string
+    expression: string
+    trigger?: string
+    enabled?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    form: FormCreateNestedOneWithoutEventRulesInput
+  }
+
+  export type FormEventUncheckedCreateInput = {
+    id?: number
+    formId: number
+    version?: number
+    name: string
+    sourceField?: string | null
+    targetField: string
+    expression: string
+    trigger?: string
+    enabled?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FormEventUpdateInput = {
+    version?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    sourceField?: NullableStringFieldUpdateOperationsInput | string | null
+    targetField?: StringFieldUpdateOperationsInput | string
+    expression?: StringFieldUpdateOperationsInput | string
+    trigger?: StringFieldUpdateOperationsInput | string
+    enabled?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    form?: FormUpdateOneRequiredWithoutEventRulesNestedInput
+  }
+
+  export type FormEventUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    formId?: IntFieldUpdateOperationsInput | number
+    version?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    sourceField?: NullableStringFieldUpdateOperationsInput | string | null
+    targetField?: StringFieldUpdateOperationsInput | string
+    expression?: StringFieldUpdateOperationsInput | string
+    trigger?: StringFieldUpdateOperationsInput | string
+    enabled?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FormEventCreateManyInput = {
+    id?: number
+    formId: number
+    version?: number
+    name: string
+    sourceField?: string | null
+    targetField: string
+    expression: string
+    trigger?: string
+    enabled?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FormEventUpdateManyMutationInput = {
+    version?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    sourceField?: NullableStringFieldUpdateOperationsInput | string | null
+    targetField?: StringFieldUpdateOperationsInput | string
+    expression?: StringFieldUpdateOperationsInput | string
+    trigger?: StringFieldUpdateOperationsInput | string
+    enabled?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FormEventUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    formId?: IntFieldUpdateOperationsInput | number
+    version?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    sourceField?: NullableStringFieldUpdateOperationsInput | string | null
+    targetField?: StringFieldUpdateOperationsInput | string
+    expression?: StringFieldUpdateOperationsInput | string
+    trigger?: StringFieldUpdateOperationsInput | string
+    enabled?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FormAssignmentCreateInput = {
+    userId?: string | null
+    active?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    form: FormCreateNestedOneWithoutAssignmentsInput
+    role?: RoleCreateNestedOneWithoutAssignmentsInput
+    submodule: SubmoduleCreateNestedOneWithoutAssignmentsInput
+  }
+
+  export type FormAssignmentUncheckedCreateInput = {
+    id?: number
+    formId: number
+    userId?: string | null
+    roleId?: number | null
+    submoduleId: number
+    active?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FormAssignmentUpdateInput = {
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    active?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    form?: FormUpdateOneRequiredWithoutAssignmentsNestedInput
+    role?: RoleUpdateOneWithoutAssignmentsNestedInput
+    submodule?: SubmoduleUpdateOneRequiredWithoutAssignmentsNestedInput
+  }
+
+  export type FormAssignmentUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    formId?: IntFieldUpdateOperationsInput | number
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    roleId?: NullableIntFieldUpdateOperationsInput | number | null
+    submoduleId?: IntFieldUpdateOperationsInput | number
+    active?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FormAssignmentCreateManyInput = {
+    id?: number
+    formId: number
+    userId?: string | null
+    roleId?: number | null
+    submoduleId: number
+    active?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FormAssignmentUpdateManyMutationInput = {
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    active?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FormAssignmentUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    formId?: IntFieldUpdateOperationsInput | number
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    roleId?: NullableIntFieldUpdateOperationsInput | number | null
+    submoduleId?: IntFieldUpdateOperationsInput | number
+    active?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SubmoduleCreateInput = {
+    slug: string
+    name: string
+    description?: string
+    icon?: string
+    metadata?: string
+    baseTables?: string
+    active?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    forms?: FormCreateNestedManyWithoutSubmoduleInput
+    assignments?: FormAssignmentCreateNestedManyWithoutSubmoduleInput
+    submissions?: FormSubmissionCreateNestedManyWithoutSubmoduleInput
+  }
+
+  export type SubmoduleUncheckedCreateInput = {
+    id?: number
+    slug: string
+    name: string
+    description?: string
+    icon?: string
+    metadata?: string
+    baseTables?: string
+    active?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    forms?: FormUncheckedCreateNestedManyWithoutSubmoduleInput
+    assignments?: FormAssignmentUncheckedCreateNestedManyWithoutSubmoduleInput
+    submissions?: FormSubmissionUncheckedCreateNestedManyWithoutSubmoduleInput
+  }
+
+  export type SubmoduleUpdateInput = {
+    slug?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    icon?: StringFieldUpdateOperationsInput | string
+    metadata?: StringFieldUpdateOperationsInput | string
+    baseTables?: StringFieldUpdateOperationsInput | string
+    active?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    forms?: FormUpdateManyWithoutSubmoduleNestedInput
+    assignments?: FormAssignmentUpdateManyWithoutSubmoduleNestedInput
+    submissions?: FormSubmissionUpdateManyWithoutSubmoduleNestedInput
+  }
+
+  export type SubmoduleUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    slug?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    icon?: StringFieldUpdateOperationsInput | string
+    metadata?: StringFieldUpdateOperationsInput | string
+    baseTables?: StringFieldUpdateOperationsInput | string
+    active?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    forms?: FormUncheckedUpdateManyWithoutSubmoduleNestedInput
+    assignments?: FormAssignmentUncheckedUpdateManyWithoutSubmoduleNestedInput
+    submissions?: FormSubmissionUncheckedUpdateManyWithoutSubmoduleNestedInput
+  }
+
+  export type SubmoduleCreateManyInput = {
+    id?: number
+    slug: string
+    name: string
+    description?: string
+    icon?: string
+    metadata?: string
+    baseTables?: string
+    active?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SubmoduleUpdateManyMutationInput = {
+    slug?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    icon?: StringFieldUpdateOperationsInput | string
+    metadata?: StringFieldUpdateOperationsInput | string
+    baseTables?: StringFieldUpdateOperationsInput | string
+    active?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SubmoduleUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    slug?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    icon?: StringFieldUpdateOperationsInput | string
+    metadata?: StringFieldUpdateOperationsInput | string
+    baseTables?: StringFieldUpdateOperationsInput | string
+    active?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FormTemplateCreateInput = {
+    slug: string
+    name: string
+    description?: string
+    icon?: string
+    metadata?: string
+    page?: string | null
+    components?: string
+    context?: string
+    eventConfig?: string
+    scheduleType?: string
+    scheduleInterval?: number
+    scheduleConfig?: string
+    currentVersion?: number
+    active?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    forms?: FormCreateNestedManyWithoutTemplateInput
+    versions?: FormTemplateVersionCreateNestedManyWithoutTemplateInput
+  }
+
+  export type FormTemplateUncheckedCreateInput = {
+    id?: number
+    slug: string
+    name: string
+    description?: string
+    icon?: string
+    metadata?: string
+    page?: string | null
+    components?: string
+    context?: string
+    eventConfig?: string
+    scheduleType?: string
+    scheduleInterval?: number
+    scheduleConfig?: string
+    currentVersion?: number
+    active?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    forms?: FormUncheckedCreateNestedManyWithoutTemplateInput
+    versions?: FormTemplateVersionUncheckedCreateNestedManyWithoutTemplateInput
+  }
+
+  export type FormTemplateUpdateInput = {
+    slug?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    icon?: StringFieldUpdateOperationsInput | string
+    metadata?: StringFieldUpdateOperationsInput | string
+    page?: NullableStringFieldUpdateOperationsInput | string | null
+    components?: StringFieldUpdateOperationsInput | string
+    context?: StringFieldUpdateOperationsInput | string
+    eventConfig?: StringFieldUpdateOperationsInput | string
+    scheduleType?: StringFieldUpdateOperationsInput | string
+    scheduleInterval?: IntFieldUpdateOperationsInput | number
+    scheduleConfig?: StringFieldUpdateOperationsInput | string
+    currentVersion?: IntFieldUpdateOperationsInput | number
+    active?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    forms?: FormUpdateManyWithoutTemplateNestedInput
+    versions?: FormTemplateVersionUpdateManyWithoutTemplateNestedInput
+  }
+
+  export type FormTemplateUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    slug?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    icon?: StringFieldUpdateOperationsInput | string
+    metadata?: StringFieldUpdateOperationsInput | string
+    page?: NullableStringFieldUpdateOperationsInput | string | null
+    components?: StringFieldUpdateOperationsInput | string
+    context?: StringFieldUpdateOperationsInput | string
+    eventConfig?: StringFieldUpdateOperationsInput | string
+    scheduleType?: StringFieldUpdateOperationsInput | string
+    scheduleInterval?: IntFieldUpdateOperationsInput | number
+    scheduleConfig?: StringFieldUpdateOperationsInput | string
+    currentVersion?: IntFieldUpdateOperationsInput | number
+    active?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    forms?: FormUncheckedUpdateManyWithoutTemplateNestedInput
+    versions?: FormTemplateVersionUncheckedUpdateManyWithoutTemplateNestedInput
+  }
+
+  export type FormTemplateCreateManyInput = {
+    id?: number
+    slug: string
+    name: string
+    description?: string
+    icon?: string
+    metadata?: string
+    page?: string | null
+    components?: string
+    context?: string
+    eventConfig?: string
+    scheduleType?: string
+    scheduleInterval?: number
+    scheduleConfig?: string
+    currentVersion?: number
+    active?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FormTemplateUpdateManyMutationInput = {
+    slug?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    icon?: StringFieldUpdateOperationsInput | string
+    metadata?: StringFieldUpdateOperationsInput | string
+    page?: NullableStringFieldUpdateOperationsInput | string | null
+    components?: StringFieldUpdateOperationsInput | string
+    context?: StringFieldUpdateOperationsInput | string
+    eventConfig?: StringFieldUpdateOperationsInput | string
+    scheduleType?: StringFieldUpdateOperationsInput | string
+    scheduleInterval?: IntFieldUpdateOperationsInput | number
+    scheduleConfig?: StringFieldUpdateOperationsInput | string
+    currentVersion?: IntFieldUpdateOperationsInput | number
+    active?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FormTemplateUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    slug?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    icon?: StringFieldUpdateOperationsInput | string
+    metadata?: StringFieldUpdateOperationsInput | string
+    page?: NullableStringFieldUpdateOperationsInput | string | null
+    components?: StringFieldUpdateOperationsInput | string
+    context?: StringFieldUpdateOperationsInput | string
+    eventConfig?: StringFieldUpdateOperationsInput | string
+    scheduleType?: StringFieldUpdateOperationsInput | string
+    scheduleInterval?: IntFieldUpdateOperationsInput | number
+    scheduleConfig?: StringFieldUpdateOperationsInput | string
+    currentVersion?: IntFieldUpdateOperationsInput | number
+    active?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FormTemplateVersionCreateInput = {
+    version: number
+    name: string
+    description?: string
+    icon?: string
+    metadata?: string
+    page?: string | null
+    components?: string
+    context?: string
+    eventConfig?: string
+    scheduleType?: string
+    scheduleInterval?: number
+    scheduleConfig?: string
+    createdAt?: Date | string
+    template: FormTemplateCreateNestedOneWithoutVersionsInput
+  }
+
+  export type FormTemplateVersionUncheckedCreateInput = {
+    id?: number
+    templateId: number
+    version: number
+    name: string
+    description?: string
+    icon?: string
+    metadata?: string
+    page?: string | null
+    components?: string
+    context?: string
+    eventConfig?: string
+    scheduleType?: string
+    scheduleInterval?: number
+    scheduleConfig?: string
+    createdAt?: Date | string
+  }
+
+  export type FormTemplateVersionUpdateInput = {
+    version?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    icon?: StringFieldUpdateOperationsInput | string
+    metadata?: StringFieldUpdateOperationsInput | string
+    page?: NullableStringFieldUpdateOperationsInput | string | null
+    components?: StringFieldUpdateOperationsInput | string
+    context?: StringFieldUpdateOperationsInput | string
+    eventConfig?: StringFieldUpdateOperationsInput | string
+    scheduleType?: StringFieldUpdateOperationsInput | string
+    scheduleInterval?: IntFieldUpdateOperationsInput | number
+    scheduleConfig?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    template?: FormTemplateUpdateOneRequiredWithoutVersionsNestedInput
+  }
+
+  export type FormTemplateVersionUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    templateId?: IntFieldUpdateOperationsInput | number
+    version?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    icon?: StringFieldUpdateOperationsInput | string
+    metadata?: StringFieldUpdateOperationsInput | string
+    page?: NullableStringFieldUpdateOperationsInput | string | null
+    components?: StringFieldUpdateOperationsInput | string
+    context?: StringFieldUpdateOperationsInput | string
+    eventConfig?: StringFieldUpdateOperationsInput | string
+    scheduleType?: StringFieldUpdateOperationsInput | string
+    scheduleInterval?: IntFieldUpdateOperationsInput | number
+    scheduleConfig?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FormTemplateVersionCreateManyInput = {
+    id?: number
+    templateId: number
+    version: number
+    name: string
+    description?: string
+    icon?: string
+    metadata?: string
+    page?: string | null
+    components?: string
+    context?: string
+    eventConfig?: string
+    scheduleType?: string
+    scheduleInterval?: number
+    scheduleConfig?: string
+    createdAt?: Date | string
+  }
+
+  export type FormTemplateVersionUpdateManyMutationInput = {
+    version?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    icon?: StringFieldUpdateOperationsInput | string
+    metadata?: StringFieldUpdateOperationsInput | string
+    page?: NullableStringFieldUpdateOperationsInput | string | null
+    components?: StringFieldUpdateOperationsInput | string
+    context?: StringFieldUpdateOperationsInput | string
+    eventConfig?: StringFieldUpdateOperationsInput | string
+    scheduleType?: StringFieldUpdateOperationsInput | string
+    scheduleInterval?: IntFieldUpdateOperationsInput | number
+    scheduleConfig?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FormTemplateVersionUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    templateId?: IntFieldUpdateOperationsInput | number
+    version?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    icon?: StringFieldUpdateOperationsInput | string
+    metadata?: StringFieldUpdateOperationsInput | string
+    page?: NullableStringFieldUpdateOperationsInput | string | null
+    components?: StringFieldUpdateOperationsInput | string
+    context?: StringFieldUpdateOperationsInput | string
+    eventConfig?: StringFieldUpdateOperationsInput | string
+    scheduleType?: StringFieldUpdateOperationsInput | string
+    scheduleInterval?: IntFieldUpdateOperationsInput | number
+    scheduleConfig?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RoleCreateInput = {
+    key: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    users?: AppUserCreateNestedManyWithoutRoleInput
+    forms?: FormCreateNestedManyWithoutRoleInput
+    assignments?: FormAssignmentCreateNestedManyWithoutRoleInput
+    submissions?: FormSubmissionCreateNestedManyWithoutRoleInput
+  }
+
+  export type RoleUncheckedCreateInput = {
+    id?: number
+    key: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    users?: AppUserUncheckedCreateNestedManyWithoutRoleInput
+    forms?: FormUncheckedCreateNestedManyWithoutRoleInput
+    assignments?: FormAssignmentUncheckedCreateNestedManyWithoutRoleInput
+    submissions?: FormSubmissionUncheckedCreateNestedManyWithoutRoleInput
+  }
+
+  export type RoleUpdateInput = {
+    key?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    users?: AppUserUpdateManyWithoutRoleNestedInput
+    forms?: FormUpdateManyWithoutRoleNestedInput
+    assignments?: FormAssignmentUpdateManyWithoutRoleNestedInput
+    submissions?: FormSubmissionUpdateManyWithoutRoleNestedInput
+  }
+
+  export type RoleUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    key?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    users?: AppUserUncheckedUpdateManyWithoutRoleNestedInput
+    forms?: FormUncheckedUpdateManyWithoutRoleNestedInput
+    assignments?: FormAssignmentUncheckedUpdateManyWithoutRoleNestedInput
+    submissions?: FormSubmissionUncheckedUpdateManyWithoutRoleNestedInput
+  }
+
+  export type RoleCreateManyInput = {
+    id?: number
+    key: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type RoleUpdateManyMutationInput = {
+    key?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RoleUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    key?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AppUserCreateInput = {
+    id: string
+    email?: string | null
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    role?: RoleCreateNestedOneWithoutUsersInput
+  }
+
+  export type AppUserUncheckedCreateInput = {
+    id: string
+    email?: string | null
+    name: string
+    roleId?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type AppUserUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    role?: RoleUpdateOneWithoutUsersNestedInput
+  }
+
+  export type AppUserUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    roleId?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AppUserCreateManyInput = {
+    id: string
+    email?: string | null
+    name: string
+    roleId?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type AppUserUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AppUserUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    roleId?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type IntFilter<$PrismaModel = never> = {
@@ -3466,10 +18558,60 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
+  export type IntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type RoleNullableScalarRelationFilter = {
+    is?: RoleWhereInput | null
+    isNot?: RoleWhereInput | null
+  }
+
+  export type SubmoduleNullableScalarRelationFilter = {
+    is?: SubmoduleWhereInput | null
+    isNot?: SubmoduleWhereInput | null
+  }
+
+  export type FormTemplateNullableScalarRelationFilter = {
+    is?: FormTemplateWhereInput | null
+    isNot?: FormTemplateWhereInput | null
+  }
+
   export type FormSubmissionListRelationFilter = {
     every?: FormSubmissionWhereInput
     some?: FormSubmissionWhereInput
     none?: FormSubmissionWhereInput
+  }
+
+  export type FormSubmissionValueListRelationFilter = {
+    every?: FormSubmissionValueWhereInput
+    some?: FormSubmissionValueWhereInput
+    none?: FormSubmissionValueWhereInput
+  }
+
+  export type FormVersionListRelationFilter = {
+    every?: FormVersionWhereInput
+    some?: FormVersionWhereInput
+    none?: FormVersionWhereInput
+  }
+
+  export type FormAssignmentListRelationFilter = {
+    every?: FormAssignmentWhereInput
+    some?: FormAssignmentWhereInput
+    none?: FormAssignmentWhereInput
+  }
+
+  export type FormEventListRelationFilter = {
+    every?: FormEventWhereInput
+    some?: FormEventWhereInput
+    none?: FormEventWhereInput
   }
 
   export type SortOrderInput = {
@@ -3478,6 +18620,22 @@ export namespace Prisma {
   }
 
   export type FormSubmissionOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type FormSubmissionValueOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type FormVersionOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type FormAssignmentOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type FormEventOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -3500,12 +18658,28 @@ export namespace Prisma {
     visit?: SortOrder
     submission?: SortOrder
     sharedURL?: SortOrder
+    currentVersion?: SortOrder
+    eventConfig?: SortOrder
+    scheduleType?: SortOrder
+    scheduleInterval?: SortOrder
+    scheduleConfig?: SortOrder
+    assignedUserId?: SortOrder
+    roleId?: SortOrder
+    submoduleId?: SortOrder
+    templateId?: SortOrder
+    templateVersion?: SortOrder
   }
 
   export type FormAvgOrderByAggregateInput = {
     id?: SortOrder
     visit?: SortOrder
     submission?: SortOrder
+    currentVersion?: SortOrder
+    scheduleInterval?: SortOrder
+    roleId?: SortOrder
+    submoduleId?: SortOrder
+    templateId?: SortOrder
+    templateVersion?: SortOrder
   }
 
   export type FormMaxOrderByAggregateInput = {
@@ -3522,6 +18696,16 @@ export namespace Prisma {
     visit?: SortOrder
     submission?: SortOrder
     sharedURL?: SortOrder
+    currentVersion?: SortOrder
+    eventConfig?: SortOrder
+    scheduleType?: SortOrder
+    scheduleInterval?: SortOrder
+    scheduleConfig?: SortOrder
+    assignedUserId?: SortOrder
+    roleId?: SortOrder
+    submoduleId?: SortOrder
+    templateId?: SortOrder
+    templateVersion?: SortOrder
   }
 
   export type FormMinOrderByAggregateInput = {
@@ -3538,12 +18722,28 @@ export namespace Prisma {
     visit?: SortOrder
     submission?: SortOrder
     sharedURL?: SortOrder
+    currentVersion?: SortOrder
+    eventConfig?: SortOrder
+    scheduleType?: SortOrder
+    scheduleInterval?: SortOrder
+    scheduleConfig?: SortOrder
+    assignedUserId?: SortOrder
+    roleId?: SortOrder
+    submoduleId?: SortOrder
+    templateId?: SortOrder
+    templateVersion?: SortOrder
   }
 
   export type FormSumOrderByAggregateInput = {
     id?: SortOrder
     visit?: SortOrder
     submission?: SortOrder
+    currentVersion?: SortOrder
+    scheduleInterval?: SortOrder
+    roleId?: SortOrder
+    submoduleId?: SortOrder
+    templateId?: SortOrder
+    templateVersion?: SortOrder
   }
 
   export type IntWithAggregatesFilter<$PrismaModel = never> = {
@@ -3618,40 +18818,736 @@ export namespace Prisma {
     _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
+  export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
+  }
+
   export type FormScalarRelationFilter = {
     is?: FormWhereInput
     isNot?: FormWhereInput
+  }
+
+  export type FormVersionNullableScalarRelationFilter = {
+    is?: FormVersionWhereInput | null
+    isNot?: FormVersionWhereInput | null
   }
 
   export type FormSubmissionCountOrderByAggregateInput = {
     id?: SortOrder
     published?: SortOrder
     formId?: SortOrder
+    formVersionId?: SortOrder
+    version?: SortOrder
+    userId?: SortOrder
+    roleId?: SortOrder
+    submoduleId?: SortOrder
     content?: SortOrder
+    computedContent?: SortOrder
+    submittedAt?: SortOrder
   }
 
   export type FormSubmissionAvgOrderByAggregateInput = {
     id?: SortOrder
     formId?: SortOrder
+    formVersionId?: SortOrder
+    version?: SortOrder
+    roleId?: SortOrder
+    submoduleId?: SortOrder
   }
 
   export type FormSubmissionMaxOrderByAggregateInput = {
     id?: SortOrder
     published?: SortOrder
     formId?: SortOrder
+    formVersionId?: SortOrder
+    version?: SortOrder
+    userId?: SortOrder
+    roleId?: SortOrder
+    submoduleId?: SortOrder
     content?: SortOrder
+    computedContent?: SortOrder
+    submittedAt?: SortOrder
   }
 
   export type FormSubmissionMinOrderByAggregateInput = {
     id?: SortOrder
     published?: SortOrder
     formId?: SortOrder
+    formVersionId?: SortOrder
+    version?: SortOrder
+    userId?: SortOrder
+    roleId?: SortOrder
+    submoduleId?: SortOrder
     content?: SortOrder
+    computedContent?: SortOrder
+    submittedAt?: SortOrder
   }
 
   export type FormSubmissionSumOrderByAggregateInput = {
     id?: SortOrder
     formId?: SortOrder
+    formVersionId?: SortOrder
+    version?: SortOrder
+    roleId?: SortOrder
+    submoduleId?: SortOrder
+  }
+
+  export type FormVersionFormIdVersionCompoundUniqueInput = {
+    formId: number
+    version: number
+  }
+
+  export type FormVersionCountOrderByAggregateInput = {
+    id?: SortOrder
+    formId?: SortOrder
+    version?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    page?: SortOrder
+    components?: SortOrder
+    context?: SortOrder
+    eventConfig?: SortOrder
+    scheduleType?: SortOrder
+    scheduleInterval?: SortOrder
+    scheduleConfig?: SortOrder
+    published?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type FormVersionAvgOrderByAggregateInput = {
+    id?: SortOrder
+    formId?: SortOrder
+    version?: SortOrder
+    scheduleInterval?: SortOrder
+  }
+
+  export type FormVersionMaxOrderByAggregateInput = {
+    id?: SortOrder
+    formId?: SortOrder
+    version?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    page?: SortOrder
+    components?: SortOrder
+    context?: SortOrder
+    eventConfig?: SortOrder
+    scheduleType?: SortOrder
+    scheduleInterval?: SortOrder
+    scheduleConfig?: SortOrder
+    published?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type FormVersionMinOrderByAggregateInput = {
+    id?: SortOrder
+    formId?: SortOrder
+    version?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    page?: SortOrder
+    components?: SortOrder
+    context?: SortOrder
+    eventConfig?: SortOrder
+    scheduleType?: SortOrder
+    scheduleInterval?: SortOrder
+    scheduleConfig?: SortOrder
+    published?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type FormVersionSumOrderByAggregateInput = {
+    id?: SortOrder
+    formId?: SortOrder
+    version?: SortOrder
+    scheduleInterval?: SortOrder
+  }
+
+  export type FloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type BoolNullableFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
+    not?: NestedBoolNullableFilter<$PrismaModel> | boolean | null
+  }
+
+  export type DateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | null
+    notIn?: Date[] | string[] | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
+  export type FormSubmissionScalarRelationFilter = {
+    is?: FormSubmissionWhereInput
+    isNot?: FormSubmissionWhereInput
+  }
+
+  export type FormSubmissionValueSubmissionIdFieldKeyCompoundUniqueInput = {
+    submissionId: number
+    fieldKey: string
+  }
+
+  export type FormSubmissionValueCountOrderByAggregateInput = {
+    id?: SortOrder
+    submissionId?: SortOrder
+    formId?: SortOrder
+    formVersionId?: SortOrder
+    fieldKey?: SortOrder
+    fieldLabel?: SortOrder
+    elementId?: SortOrder
+    pageId?: SortOrder
+    parentId?: SortOrder
+    valueType?: SortOrder
+    stringValue?: SortOrder
+    numberValue?: SortOrder
+    booleanValue?: SortOrder
+    dateValue?: SortOrder
+    jsonValue?: SortOrder
+    rawValue?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type FormSubmissionValueAvgOrderByAggregateInput = {
+    id?: SortOrder
+    submissionId?: SortOrder
+    formId?: SortOrder
+    formVersionId?: SortOrder
+    numberValue?: SortOrder
+  }
+
+  export type FormSubmissionValueMaxOrderByAggregateInput = {
+    id?: SortOrder
+    submissionId?: SortOrder
+    formId?: SortOrder
+    formVersionId?: SortOrder
+    fieldKey?: SortOrder
+    fieldLabel?: SortOrder
+    elementId?: SortOrder
+    pageId?: SortOrder
+    parentId?: SortOrder
+    valueType?: SortOrder
+    stringValue?: SortOrder
+    numberValue?: SortOrder
+    booleanValue?: SortOrder
+    dateValue?: SortOrder
+    jsonValue?: SortOrder
+    rawValue?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type FormSubmissionValueMinOrderByAggregateInput = {
+    id?: SortOrder
+    submissionId?: SortOrder
+    formId?: SortOrder
+    formVersionId?: SortOrder
+    fieldKey?: SortOrder
+    fieldLabel?: SortOrder
+    elementId?: SortOrder
+    pageId?: SortOrder
+    parentId?: SortOrder
+    valueType?: SortOrder
+    stringValue?: SortOrder
+    numberValue?: SortOrder
+    booleanValue?: SortOrder
+    dateValue?: SortOrder
+    jsonValue?: SortOrder
+    rawValue?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type FormSubmissionValueSumOrderByAggregateInput = {
+    id?: SortOrder
+    submissionId?: SortOrder
+    formId?: SortOrder
+    formVersionId?: SortOrder
+    numberValue?: SortOrder
+  }
+
+  export type FloatNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedFloatNullableFilter<$PrismaModel>
+    _min?: NestedFloatNullableFilter<$PrismaModel>
+    _max?: NestedFloatNullableFilter<$PrismaModel>
+  }
+
+  export type BoolNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
+    not?: NestedBoolNullableWithAggregatesFilter<$PrismaModel> | boolean | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedBoolNullableFilter<$PrismaModel>
+    _max?: NestedBoolNullableFilter<$PrismaModel>
+  }
+
+  export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | null
+    notIn?: Date[] | string[] | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  }
+
+  export type FormEventCountOrderByAggregateInput = {
+    id?: SortOrder
+    formId?: SortOrder
+    version?: SortOrder
+    name?: SortOrder
+    sourceField?: SortOrder
+    targetField?: SortOrder
+    expression?: SortOrder
+    trigger?: SortOrder
+    enabled?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type FormEventAvgOrderByAggregateInput = {
+    id?: SortOrder
+    formId?: SortOrder
+    version?: SortOrder
+  }
+
+  export type FormEventMaxOrderByAggregateInput = {
+    id?: SortOrder
+    formId?: SortOrder
+    version?: SortOrder
+    name?: SortOrder
+    sourceField?: SortOrder
+    targetField?: SortOrder
+    expression?: SortOrder
+    trigger?: SortOrder
+    enabled?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type FormEventMinOrderByAggregateInput = {
+    id?: SortOrder
+    formId?: SortOrder
+    version?: SortOrder
+    name?: SortOrder
+    sourceField?: SortOrder
+    targetField?: SortOrder
+    expression?: SortOrder
+    trigger?: SortOrder
+    enabled?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type FormEventSumOrderByAggregateInput = {
+    id?: SortOrder
+    formId?: SortOrder
+    version?: SortOrder
+  }
+
+  export type SubmoduleScalarRelationFilter = {
+    is?: SubmoduleWhereInput
+    isNot?: SubmoduleWhereInput
+  }
+
+  export type FormAssignmentFormIdUserIdRoleIdSubmoduleIdCompoundUniqueInput = {
+    formId: number
+    userId: string
+    roleId: number
+    submoduleId: number
+  }
+
+  export type FormAssignmentCountOrderByAggregateInput = {
+    id?: SortOrder
+    formId?: SortOrder
+    userId?: SortOrder
+    roleId?: SortOrder
+    submoduleId?: SortOrder
+    active?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type FormAssignmentAvgOrderByAggregateInput = {
+    id?: SortOrder
+    formId?: SortOrder
+    roleId?: SortOrder
+    submoduleId?: SortOrder
+  }
+
+  export type FormAssignmentMaxOrderByAggregateInput = {
+    id?: SortOrder
+    formId?: SortOrder
+    userId?: SortOrder
+    roleId?: SortOrder
+    submoduleId?: SortOrder
+    active?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type FormAssignmentMinOrderByAggregateInput = {
+    id?: SortOrder
+    formId?: SortOrder
+    userId?: SortOrder
+    roleId?: SortOrder
+    submoduleId?: SortOrder
+    active?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type FormAssignmentSumOrderByAggregateInput = {
+    id?: SortOrder
+    formId?: SortOrder
+    roleId?: SortOrder
+    submoduleId?: SortOrder
+  }
+
+  export type FormListRelationFilter = {
+    every?: FormWhereInput
+    some?: FormWhereInput
+    none?: FormWhereInput
+  }
+
+  export type FormOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type SubmoduleCountOrderByAggregateInput = {
+    id?: SortOrder
+    slug?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    icon?: SortOrder
+    metadata?: SortOrder
+    baseTables?: SortOrder
+    active?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type SubmoduleAvgOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type SubmoduleMaxOrderByAggregateInput = {
+    id?: SortOrder
+    slug?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    icon?: SortOrder
+    metadata?: SortOrder
+    baseTables?: SortOrder
+    active?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type SubmoduleMinOrderByAggregateInput = {
+    id?: SortOrder
+    slug?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    icon?: SortOrder
+    metadata?: SortOrder
+    baseTables?: SortOrder
+    active?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type SubmoduleSumOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type FormTemplateVersionListRelationFilter = {
+    every?: FormTemplateVersionWhereInput
+    some?: FormTemplateVersionWhereInput
+    none?: FormTemplateVersionWhereInput
+  }
+
+  export type FormTemplateVersionOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type FormTemplateCountOrderByAggregateInput = {
+    id?: SortOrder
+    slug?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    icon?: SortOrder
+    metadata?: SortOrder
+    page?: SortOrder
+    components?: SortOrder
+    context?: SortOrder
+    eventConfig?: SortOrder
+    scheduleType?: SortOrder
+    scheduleInterval?: SortOrder
+    scheduleConfig?: SortOrder
+    currentVersion?: SortOrder
+    active?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type FormTemplateAvgOrderByAggregateInput = {
+    id?: SortOrder
+    scheduleInterval?: SortOrder
+    currentVersion?: SortOrder
+  }
+
+  export type FormTemplateMaxOrderByAggregateInput = {
+    id?: SortOrder
+    slug?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    icon?: SortOrder
+    metadata?: SortOrder
+    page?: SortOrder
+    components?: SortOrder
+    context?: SortOrder
+    eventConfig?: SortOrder
+    scheduleType?: SortOrder
+    scheduleInterval?: SortOrder
+    scheduleConfig?: SortOrder
+    currentVersion?: SortOrder
+    active?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type FormTemplateMinOrderByAggregateInput = {
+    id?: SortOrder
+    slug?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    icon?: SortOrder
+    metadata?: SortOrder
+    page?: SortOrder
+    components?: SortOrder
+    context?: SortOrder
+    eventConfig?: SortOrder
+    scheduleType?: SortOrder
+    scheduleInterval?: SortOrder
+    scheduleConfig?: SortOrder
+    currentVersion?: SortOrder
+    active?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type FormTemplateSumOrderByAggregateInput = {
+    id?: SortOrder
+    scheduleInterval?: SortOrder
+    currentVersion?: SortOrder
+  }
+
+  export type FormTemplateScalarRelationFilter = {
+    is?: FormTemplateWhereInput
+    isNot?: FormTemplateWhereInput
+  }
+
+  export type FormTemplateVersionTemplateIdVersionCompoundUniqueInput = {
+    templateId: number
+    version: number
+  }
+
+  export type FormTemplateVersionCountOrderByAggregateInput = {
+    id?: SortOrder
+    templateId?: SortOrder
+    version?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    icon?: SortOrder
+    metadata?: SortOrder
+    page?: SortOrder
+    components?: SortOrder
+    context?: SortOrder
+    eventConfig?: SortOrder
+    scheduleType?: SortOrder
+    scheduleInterval?: SortOrder
+    scheduleConfig?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type FormTemplateVersionAvgOrderByAggregateInput = {
+    id?: SortOrder
+    templateId?: SortOrder
+    version?: SortOrder
+    scheduleInterval?: SortOrder
+  }
+
+  export type FormTemplateVersionMaxOrderByAggregateInput = {
+    id?: SortOrder
+    templateId?: SortOrder
+    version?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    icon?: SortOrder
+    metadata?: SortOrder
+    page?: SortOrder
+    components?: SortOrder
+    context?: SortOrder
+    eventConfig?: SortOrder
+    scheduleType?: SortOrder
+    scheduleInterval?: SortOrder
+    scheduleConfig?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type FormTemplateVersionMinOrderByAggregateInput = {
+    id?: SortOrder
+    templateId?: SortOrder
+    version?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    icon?: SortOrder
+    metadata?: SortOrder
+    page?: SortOrder
+    components?: SortOrder
+    context?: SortOrder
+    eventConfig?: SortOrder
+    scheduleType?: SortOrder
+    scheduleInterval?: SortOrder
+    scheduleConfig?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type FormTemplateVersionSumOrderByAggregateInput = {
+    id?: SortOrder
+    templateId?: SortOrder
+    version?: SortOrder
+    scheduleInterval?: SortOrder
+  }
+
+  export type AppUserListRelationFilter = {
+    every?: AppUserWhereInput
+    some?: AppUserWhereInput
+    none?: AppUserWhereInput
+  }
+
+  export type AppUserOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type RoleCountOrderByAggregateInput = {
+    id?: SortOrder
+    key?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type RoleAvgOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type RoleMaxOrderByAggregateInput = {
+    id?: SortOrder
+    key?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type RoleMinOrderByAggregateInput = {
+    id?: SortOrder
+    key?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type RoleSumOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type AppUserCountOrderByAggregateInput = {
+    id?: SortOrder
+    email?: SortOrder
+    name?: SortOrder
+    roleId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type AppUserAvgOrderByAggregateInput = {
+    roleId?: SortOrder
+  }
+
+  export type AppUserMaxOrderByAggregateInput = {
+    id?: SortOrder
+    email?: SortOrder
+    name?: SortOrder
+    roleId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type AppUserMinOrderByAggregateInput = {
+    id?: SortOrder
+    email?: SortOrder
+    name?: SortOrder
+    roleId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type AppUserSumOrderByAggregateInput = {
+    roleId?: SortOrder
+  }
+
+  export type RoleCreateNestedOneWithoutFormsInput = {
+    create?: XOR<RoleCreateWithoutFormsInput, RoleUncheckedCreateWithoutFormsInput>
+    connectOrCreate?: RoleCreateOrConnectWithoutFormsInput
+    connect?: RoleWhereUniqueInput
+  }
+
+  export type SubmoduleCreateNestedOneWithoutFormsInput = {
+    create?: XOR<SubmoduleCreateWithoutFormsInput, SubmoduleUncheckedCreateWithoutFormsInput>
+    connectOrCreate?: SubmoduleCreateOrConnectWithoutFormsInput
+    connect?: SubmoduleWhereUniqueInput
+  }
+
+  export type FormTemplateCreateNestedOneWithoutFormsInput = {
+    create?: XOR<FormTemplateCreateWithoutFormsInput, FormTemplateUncheckedCreateWithoutFormsInput>
+    connectOrCreate?: FormTemplateCreateOrConnectWithoutFormsInput
+    connect?: FormTemplateWhereUniqueInput
   }
 
   export type FormSubmissionCreateNestedManyWithoutFormInput = {
@@ -3661,11 +19557,67 @@ export namespace Prisma {
     connect?: FormSubmissionWhereUniqueInput | FormSubmissionWhereUniqueInput[]
   }
 
+  export type FormSubmissionValueCreateNestedManyWithoutFormInput = {
+    create?: XOR<FormSubmissionValueCreateWithoutFormInput, FormSubmissionValueUncheckedCreateWithoutFormInput> | FormSubmissionValueCreateWithoutFormInput[] | FormSubmissionValueUncheckedCreateWithoutFormInput[]
+    connectOrCreate?: FormSubmissionValueCreateOrConnectWithoutFormInput | FormSubmissionValueCreateOrConnectWithoutFormInput[]
+    createMany?: FormSubmissionValueCreateManyFormInputEnvelope
+    connect?: FormSubmissionValueWhereUniqueInput | FormSubmissionValueWhereUniqueInput[]
+  }
+
+  export type FormVersionCreateNestedManyWithoutFormInput = {
+    create?: XOR<FormVersionCreateWithoutFormInput, FormVersionUncheckedCreateWithoutFormInput> | FormVersionCreateWithoutFormInput[] | FormVersionUncheckedCreateWithoutFormInput[]
+    connectOrCreate?: FormVersionCreateOrConnectWithoutFormInput | FormVersionCreateOrConnectWithoutFormInput[]
+    createMany?: FormVersionCreateManyFormInputEnvelope
+    connect?: FormVersionWhereUniqueInput | FormVersionWhereUniqueInput[]
+  }
+
+  export type FormAssignmentCreateNestedManyWithoutFormInput = {
+    create?: XOR<FormAssignmentCreateWithoutFormInput, FormAssignmentUncheckedCreateWithoutFormInput> | FormAssignmentCreateWithoutFormInput[] | FormAssignmentUncheckedCreateWithoutFormInput[]
+    connectOrCreate?: FormAssignmentCreateOrConnectWithoutFormInput | FormAssignmentCreateOrConnectWithoutFormInput[]
+    createMany?: FormAssignmentCreateManyFormInputEnvelope
+    connect?: FormAssignmentWhereUniqueInput | FormAssignmentWhereUniqueInput[]
+  }
+
+  export type FormEventCreateNestedManyWithoutFormInput = {
+    create?: XOR<FormEventCreateWithoutFormInput, FormEventUncheckedCreateWithoutFormInput> | FormEventCreateWithoutFormInput[] | FormEventUncheckedCreateWithoutFormInput[]
+    connectOrCreate?: FormEventCreateOrConnectWithoutFormInput | FormEventCreateOrConnectWithoutFormInput[]
+    createMany?: FormEventCreateManyFormInputEnvelope
+    connect?: FormEventWhereUniqueInput | FormEventWhereUniqueInput[]
+  }
+
   export type FormSubmissionUncheckedCreateNestedManyWithoutFormInput = {
     create?: XOR<FormSubmissionCreateWithoutFormInput, FormSubmissionUncheckedCreateWithoutFormInput> | FormSubmissionCreateWithoutFormInput[] | FormSubmissionUncheckedCreateWithoutFormInput[]
     connectOrCreate?: FormSubmissionCreateOrConnectWithoutFormInput | FormSubmissionCreateOrConnectWithoutFormInput[]
     createMany?: FormSubmissionCreateManyFormInputEnvelope
     connect?: FormSubmissionWhereUniqueInput | FormSubmissionWhereUniqueInput[]
+  }
+
+  export type FormSubmissionValueUncheckedCreateNestedManyWithoutFormInput = {
+    create?: XOR<FormSubmissionValueCreateWithoutFormInput, FormSubmissionValueUncheckedCreateWithoutFormInput> | FormSubmissionValueCreateWithoutFormInput[] | FormSubmissionValueUncheckedCreateWithoutFormInput[]
+    connectOrCreate?: FormSubmissionValueCreateOrConnectWithoutFormInput | FormSubmissionValueCreateOrConnectWithoutFormInput[]
+    createMany?: FormSubmissionValueCreateManyFormInputEnvelope
+    connect?: FormSubmissionValueWhereUniqueInput | FormSubmissionValueWhereUniqueInput[]
+  }
+
+  export type FormVersionUncheckedCreateNestedManyWithoutFormInput = {
+    create?: XOR<FormVersionCreateWithoutFormInput, FormVersionUncheckedCreateWithoutFormInput> | FormVersionCreateWithoutFormInput[] | FormVersionUncheckedCreateWithoutFormInput[]
+    connectOrCreate?: FormVersionCreateOrConnectWithoutFormInput | FormVersionCreateOrConnectWithoutFormInput[]
+    createMany?: FormVersionCreateManyFormInputEnvelope
+    connect?: FormVersionWhereUniqueInput | FormVersionWhereUniqueInput[]
+  }
+
+  export type FormAssignmentUncheckedCreateNestedManyWithoutFormInput = {
+    create?: XOR<FormAssignmentCreateWithoutFormInput, FormAssignmentUncheckedCreateWithoutFormInput> | FormAssignmentCreateWithoutFormInput[] | FormAssignmentUncheckedCreateWithoutFormInput[]
+    connectOrCreate?: FormAssignmentCreateOrConnectWithoutFormInput | FormAssignmentCreateOrConnectWithoutFormInput[]
+    createMany?: FormAssignmentCreateManyFormInputEnvelope
+    connect?: FormAssignmentWhereUniqueInput | FormAssignmentWhereUniqueInput[]
+  }
+
+  export type FormEventUncheckedCreateNestedManyWithoutFormInput = {
+    create?: XOR<FormEventCreateWithoutFormInput, FormEventUncheckedCreateWithoutFormInput> | FormEventCreateWithoutFormInput[] | FormEventUncheckedCreateWithoutFormInput[]
+    connectOrCreate?: FormEventCreateOrConnectWithoutFormInput | FormEventCreateOrConnectWithoutFormInput[]
+    createMany?: FormEventCreateManyFormInputEnvelope
+    connect?: FormEventWhereUniqueInput | FormEventWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -3692,6 +19644,44 @@ export namespace Prisma {
     divide?: number
   }
 
+  export type NullableIntFieldUpdateOperationsInput = {
+    set?: number | null
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type RoleUpdateOneWithoutFormsNestedInput = {
+    create?: XOR<RoleCreateWithoutFormsInput, RoleUncheckedCreateWithoutFormsInput>
+    connectOrCreate?: RoleCreateOrConnectWithoutFormsInput
+    upsert?: RoleUpsertWithoutFormsInput
+    disconnect?: RoleWhereInput | boolean
+    delete?: RoleWhereInput | boolean
+    connect?: RoleWhereUniqueInput
+    update?: XOR<XOR<RoleUpdateToOneWithWhereWithoutFormsInput, RoleUpdateWithoutFormsInput>, RoleUncheckedUpdateWithoutFormsInput>
+  }
+
+  export type SubmoduleUpdateOneWithoutFormsNestedInput = {
+    create?: XOR<SubmoduleCreateWithoutFormsInput, SubmoduleUncheckedCreateWithoutFormsInput>
+    connectOrCreate?: SubmoduleCreateOrConnectWithoutFormsInput
+    upsert?: SubmoduleUpsertWithoutFormsInput
+    disconnect?: SubmoduleWhereInput | boolean
+    delete?: SubmoduleWhereInput | boolean
+    connect?: SubmoduleWhereUniqueInput
+    update?: XOR<XOR<SubmoduleUpdateToOneWithWhereWithoutFormsInput, SubmoduleUpdateWithoutFormsInput>, SubmoduleUncheckedUpdateWithoutFormsInput>
+  }
+
+  export type FormTemplateUpdateOneWithoutFormsNestedInput = {
+    create?: XOR<FormTemplateCreateWithoutFormsInput, FormTemplateUncheckedCreateWithoutFormsInput>
+    connectOrCreate?: FormTemplateCreateOrConnectWithoutFormsInput
+    upsert?: FormTemplateUpsertWithoutFormsInput
+    disconnect?: FormTemplateWhereInput | boolean
+    delete?: FormTemplateWhereInput | boolean
+    connect?: FormTemplateWhereUniqueInput
+    update?: XOR<XOR<FormTemplateUpdateToOneWithWhereWithoutFormsInput, FormTemplateUpdateWithoutFormsInput>, FormTemplateUncheckedUpdateWithoutFormsInput>
+  }
+
   export type FormSubmissionUpdateManyWithoutFormNestedInput = {
     create?: XOR<FormSubmissionCreateWithoutFormInput, FormSubmissionUncheckedCreateWithoutFormInput> | FormSubmissionCreateWithoutFormInput[] | FormSubmissionUncheckedCreateWithoutFormInput[]
     connectOrCreate?: FormSubmissionCreateOrConnectWithoutFormInput | FormSubmissionCreateOrConnectWithoutFormInput[]
@@ -3704,6 +19694,62 @@ export namespace Prisma {
     update?: FormSubmissionUpdateWithWhereUniqueWithoutFormInput | FormSubmissionUpdateWithWhereUniqueWithoutFormInput[]
     updateMany?: FormSubmissionUpdateManyWithWhereWithoutFormInput | FormSubmissionUpdateManyWithWhereWithoutFormInput[]
     deleteMany?: FormSubmissionScalarWhereInput | FormSubmissionScalarWhereInput[]
+  }
+
+  export type FormSubmissionValueUpdateManyWithoutFormNestedInput = {
+    create?: XOR<FormSubmissionValueCreateWithoutFormInput, FormSubmissionValueUncheckedCreateWithoutFormInput> | FormSubmissionValueCreateWithoutFormInput[] | FormSubmissionValueUncheckedCreateWithoutFormInput[]
+    connectOrCreate?: FormSubmissionValueCreateOrConnectWithoutFormInput | FormSubmissionValueCreateOrConnectWithoutFormInput[]
+    upsert?: FormSubmissionValueUpsertWithWhereUniqueWithoutFormInput | FormSubmissionValueUpsertWithWhereUniqueWithoutFormInput[]
+    createMany?: FormSubmissionValueCreateManyFormInputEnvelope
+    set?: FormSubmissionValueWhereUniqueInput | FormSubmissionValueWhereUniqueInput[]
+    disconnect?: FormSubmissionValueWhereUniqueInput | FormSubmissionValueWhereUniqueInput[]
+    delete?: FormSubmissionValueWhereUniqueInput | FormSubmissionValueWhereUniqueInput[]
+    connect?: FormSubmissionValueWhereUniqueInput | FormSubmissionValueWhereUniqueInput[]
+    update?: FormSubmissionValueUpdateWithWhereUniqueWithoutFormInput | FormSubmissionValueUpdateWithWhereUniqueWithoutFormInput[]
+    updateMany?: FormSubmissionValueUpdateManyWithWhereWithoutFormInput | FormSubmissionValueUpdateManyWithWhereWithoutFormInput[]
+    deleteMany?: FormSubmissionValueScalarWhereInput | FormSubmissionValueScalarWhereInput[]
+  }
+
+  export type FormVersionUpdateManyWithoutFormNestedInput = {
+    create?: XOR<FormVersionCreateWithoutFormInput, FormVersionUncheckedCreateWithoutFormInput> | FormVersionCreateWithoutFormInput[] | FormVersionUncheckedCreateWithoutFormInput[]
+    connectOrCreate?: FormVersionCreateOrConnectWithoutFormInput | FormVersionCreateOrConnectWithoutFormInput[]
+    upsert?: FormVersionUpsertWithWhereUniqueWithoutFormInput | FormVersionUpsertWithWhereUniqueWithoutFormInput[]
+    createMany?: FormVersionCreateManyFormInputEnvelope
+    set?: FormVersionWhereUniqueInput | FormVersionWhereUniqueInput[]
+    disconnect?: FormVersionWhereUniqueInput | FormVersionWhereUniqueInput[]
+    delete?: FormVersionWhereUniqueInput | FormVersionWhereUniqueInput[]
+    connect?: FormVersionWhereUniqueInput | FormVersionWhereUniqueInput[]
+    update?: FormVersionUpdateWithWhereUniqueWithoutFormInput | FormVersionUpdateWithWhereUniqueWithoutFormInput[]
+    updateMany?: FormVersionUpdateManyWithWhereWithoutFormInput | FormVersionUpdateManyWithWhereWithoutFormInput[]
+    deleteMany?: FormVersionScalarWhereInput | FormVersionScalarWhereInput[]
+  }
+
+  export type FormAssignmentUpdateManyWithoutFormNestedInput = {
+    create?: XOR<FormAssignmentCreateWithoutFormInput, FormAssignmentUncheckedCreateWithoutFormInput> | FormAssignmentCreateWithoutFormInput[] | FormAssignmentUncheckedCreateWithoutFormInput[]
+    connectOrCreate?: FormAssignmentCreateOrConnectWithoutFormInput | FormAssignmentCreateOrConnectWithoutFormInput[]
+    upsert?: FormAssignmentUpsertWithWhereUniqueWithoutFormInput | FormAssignmentUpsertWithWhereUniqueWithoutFormInput[]
+    createMany?: FormAssignmentCreateManyFormInputEnvelope
+    set?: FormAssignmentWhereUniqueInput | FormAssignmentWhereUniqueInput[]
+    disconnect?: FormAssignmentWhereUniqueInput | FormAssignmentWhereUniqueInput[]
+    delete?: FormAssignmentWhereUniqueInput | FormAssignmentWhereUniqueInput[]
+    connect?: FormAssignmentWhereUniqueInput | FormAssignmentWhereUniqueInput[]
+    update?: FormAssignmentUpdateWithWhereUniqueWithoutFormInput | FormAssignmentUpdateWithWhereUniqueWithoutFormInput[]
+    updateMany?: FormAssignmentUpdateManyWithWhereWithoutFormInput | FormAssignmentUpdateManyWithWhereWithoutFormInput[]
+    deleteMany?: FormAssignmentScalarWhereInput | FormAssignmentScalarWhereInput[]
+  }
+
+  export type FormEventUpdateManyWithoutFormNestedInput = {
+    create?: XOR<FormEventCreateWithoutFormInput, FormEventUncheckedCreateWithoutFormInput> | FormEventCreateWithoutFormInput[] | FormEventUncheckedCreateWithoutFormInput[]
+    connectOrCreate?: FormEventCreateOrConnectWithoutFormInput | FormEventCreateOrConnectWithoutFormInput[]
+    upsert?: FormEventUpsertWithWhereUniqueWithoutFormInput | FormEventUpsertWithWhereUniqueWithoutFormInput[]
+    createMany?: FormEventCreateManyFormInputEnvelope
+    set?: FormEventWhereUniqueInput | FormEventWhereUniqueInput[]
+    disconnect?: FormEventWhereUniqueInput | FormEventWhereUniqueInput[]
+    delete?: FormEventWhereUniqueInput | FormEventWhereUniqueInput[]
+    connect?: FormEventWhereUniqueInput | FormEventWhereUniqueInput[]
+    update?: FormEventUpdateWithWhereUniqueWithoutFormInput | FormEventUpdateWithWhereUniqueWithoutFormInput[]
+    updateMany?: FormEventUpdateManyWithWhereWithoutFormInput | FormEventUpdateManyWithWhereWithoutFormInput[]
+    deleteMany?: FormEventScalarWhereInput | FormEventScalarWhereInput[]
   }
 
   export type FormSubmissionUncheckedUpdateManyWithoutFormNestedInput = {
@@ -3720,18 +19766,788 @@ export namespace Prisma {
     deleteMany?: FormSubmissionScalarWhereInput | FormSubmissionScalarWhereInput[]
   }
 
-  export type FormCreateNestedOneWithoutFormSubmissionInput = {
-    create?: XOR<FormCreateWithoutFormSubmissionInput, FormUncheckedCreateWithoutFormSubmissionInput>
-    connectOrCreate?: FormCreateOrConnectWithoutFormSubmissionInput
+  export type FormSubmissionValueUncheckedUpdateManyWithoutFormNestedInput = {
+    create?: XOR<FormSubmissionValueCreateWithoutFormInput, FormSubmissionValueUncheckedCreateWithoutFormInput> | FormSubmissionValueCreateWithoutFormInput[] | FormSubmissionValueUncheckedCreateWithoutFormInput[]
+    connectOrCreate?: FormSubmissionValueCreateOrConnectWithoutFormInput | FormSubmissionValueCreateOrConnectWithoutFormInput[]
+    upsert?: FormSubmissionValueUpsertWithWhereUniqueWithoutFormInput | FormSubmissionValueUpsertWithWhereUniqueWithoutFormInput[]
+    createMany?: FormSubmissionValueCreateManyFormInputEnvelope
+    set?: FormSubmissionValueWhereUniqueInput | FormSubmissionValueWhereUniqueInput[]
+    disconnect?: FormSubmissionValueWhereUniqueInput | FormSubmissionValueWhereUniqueInput[]
+    delete?: FormSubmissionValueWhereUniqueInput | FormSubmissionValueWhereUniqueInput[]
+    connect?: FormSubmissionValueWhereUniqueInput | FormSubmissionValueWhereUniqueInput[]
+    update?: FormSubmissionValueUpdateWithWhereUniqueWithoutFormInput | FormSubmissionValueUpdateWithWhereUniqueWithoutFormInput[]
+    updateMany?: FormSubmissionValueUpdateManyWithWhereWithoutFormInput | FormSubmissionValueUpdateManyWithWhereWithoutFormInput[]
+    deleteMany?: FormSubmissionValueScalarWhereInput | FormSubmissionValueScalarWhereInput[]
+  }
+
+  export type FormVersionUncheckedUpdateManyWithoutFormNestedInput = {
+    create?: XOR<FormVersionCreateWithoutFormInput, FormVersionUncheckedCreateWithoutFormInput> | FormVersionCreateWithoutFormInput[] | FormVersionUncheckedCreateWithoutFormInput[]
+    connectOrCreate?: FormVersionCreateOrConnectWithoutFormInput | FormVersionCreateOrConnectWithoutFormInput[]
+    upsert?: FormVersionUpsertWithWhereUniqueWithoutFormInput | FormVersionUpsertWithWhereUniqueWithoutFormInput[]
+    createMany?: FormVersionCreateManyFormInputEnvelope
+    set?: FormVersionWhereUniqueInput | FormVersionWhereUniqueInput[]
+    disconnect?: FormVersionWhereUniqueInput | FormVersionWhereUniqueInput[]
+    delete?: FormVersionWhereUniqueInput | FormVersionWhereUniqueInput[]
+    connect?: FormVersionWhereUniqueInput | FormVersionWhereUniqueInput[]
+    update?: FormVersionUpdateWithWhereUniqueWithoutFormInput | FormVersionUpdateWithWhereUniqueWithoutFormInput[]
+    updateMany?: FormVersionUpdateManyWithWhereWithoutFormInput | FormVersionUpdateManyWithWhereWithoutFormInput[]
+    deleteMany?: FormVersionScalarWhereInput | FormVersionScalarWhereInput[]
+  }
+
+  export type FormAssignmentUncheckedUpdateManyWithoutFormNestedInput = {
+    create?: XOR<FormAssignmentCreateWithoutFormInput, FormAssignmentUncheckedCreateWithoutFormInput> | FormAssignmentCreateWithoutFormInput[] | FormAssignmentUncheckedCreateWithoutFormInput[]
+    connectOrCreate?: FormAssignmentCreateOrConnectWithoutFormInput | FormAssignmentCreateOrConnectWithoutFormInput[]
+    upsert?: FormAssignmentUpsertWithWhereUniqueWithoutFormInput | FormAssignmentUpsertWithWhereUniqueWithoutFormInput[]
+    createMany?: FormAssignmentCreateManyFormInputEnvelope
+    set?: FormAssignmentWhereUniqueInput | FormAssignmentWhereUniqueInput[]
+    disconnect?: FormAssignmentWhereUniqueInput | FormAssignmentWhereUniqueInput[]
+    delete?: FormAssignmentWhereUniqueInput | FormAssignmentWhereUniqueInput[]
+    connect?: FormAssignmentWhereUniqueInput | FormAssignmentWhereUniqueInput[]
+    update?: FormAssignmentUpdateWithWhereUniqueWithoutFormInput | FormAssignmentUpdateWithWhereUniqueWithoutFormInput[]
+    updateMany?: FormAssignmentUpdateManyWithWhereWithoutFormInput | FormAssignmentUpdateManyWithWhereWithoutFormInput[]
+    deleteMany?: FormAssignmentScalarWhereInput | FormAssignmentScalarWhereInput[]
+  }
+
+  export type FormEventUncheckedUpdateManyWithoutFormNestedInput = {
+    create?: XOR<FormEventCreateWithoutFormInput, FormEventUncheckedCreateWithoutFormInput> | FormEventCreateWithoutFormInput[] | FormEventUncheckedCreateWithoutFormInput[]
+    connectOrCreate?: FormEventCreateOrConnectWithoutFormInput | FormEventCreateOrConnectWithoutFormInput[]
+    upsert?: FormEventUpsertWithWhereUniqueWithoutFormInput | FormEventUpsertWithWhereUniqueWithoutFormInput[]
+    createMany?: FormEventCreateManyFormInputEnvelope
+    set?: FormEventWhereUniqueInput | FormEventWhereUniqueInput[]
+    disconnect?: FormEventWhereUniqueInput | FormEventWhereUniqueInput[]
+    delete?: FormEventWhereUniqueInput | FormEventWhereUniqueInput[]
+    connect?: FormEventWhereUniqueInput | FormEventWhereUniqueInput[]
+    update?: FormEventUpdateWithWhereUniqueWithoutFormInput | FormEventUpdateWithWhereUniqueWithoutFormInput[]
+    updateMany?: FormEventUpdateManyWithWhereWithoutFormInput | FormEventUpdateManyWithWhereWithoutFormInput[]
+    deleteMany?: FormEventScalarWhereInput | FormEventScalarWhereInput[]
+  }
+
+  export type FormCreateNestedOneWithoutSubmissionsInput = {
+    create?: XOR<FormCreateWithoutSubmissionsInput, FormUncheckedCreateWithoutSubmissionsInput>
+    connectOrCreate?: FormCreateOrConnectWithoutSubmissionsInput
     connect?: FormWhereUniqueInput
   }
 
-  export type FormUpdateOneRequiredWithoutFormSubmissionNestedInput = {
-    create?: XOR<FormCreateWithoutFormSubmissionInput, FormUncheckedCreateWithoutFormSubmissionInput>
-    connectOrCreate?: FormCreateOrConnectWithoutFormSubmissionInput
-    upsert?: FormUpsertWithoutFormSubmissionInput
+  export type FormVersionCreateNestedOneWithoutSubmissionsInput = {
+    create?: XOR<FormVersionCreateWithoutSubmissionsInput, FormVersionUncheckedCreateWithoutSubmissionsInput>
+    connectOrCreate?: FormVersionCreateOrConnectWithoutSubmissionsInput
+    connect?: FormVersionWhereUniqueInput
+  }
+
+  export type RoleCreateNestedOneWithoutSubmissionsInput = {
+    create?: XOR<RoleCreateWithoutSubmissionsInput, RoleUncheckedCreateWithoutSubmissionsInput>
+    connectOrCreate?: RoleCreateOrConnectWithoutSubmissionsInput
+    connect?: RoleWhereUniqueInput
+  }
+
+  export type SubmoduleCreateNestedOneWithoutSubmissionsInput = {
+    create?: XOR<SubmoduleCreateWithoutSubmissionsInput, SubmoduleUncheckedCreateWithoutSubmissionsInput>
+    connectOrCreate?: SubmoduleCreateOrConnectWithoutSubmissionsInput
+    connect?: SubmoduleWhereUniqueInput
+  }
+
+  export type FormSubmissionValueCreateNestedManyWithoutSubmissionInput = {
+    create?: XOR<FormSubmissionValueCreateWithoutSubmissionInput, FormSubmissionValueUncheckedCreateWithoutSubmissionInput> | FormSubmissionValueCreateWithoutSubmissionInput[] | FormSubmissionValueUncheckedCreateWithoutSubmissionInput[]
+    connectOrCreate?: FormSubmissionValueCreateOrConnectWithoutSubmissionInput | FormSubmissionValueCreateOrConnectWithoutSubmissionInput[]
+    createMany?: FormSubmissionValueCreateManySubmissionInputEnvelope
+    connect?: FormSubmissionValueWhereUniqueInput | FormSubmissionValueWhereUniqueInput[]
+  }
+
+  export type FormSubmissionValueUncheckedCreateNestedManyWithoutSubmissionInput = {
+    create?: XOR<FormSubmissionValueCreateWithoutSubmissionInput, FormSubmissionValueUncheckedCreateWithoutSubmissionInput> | FormSubmissionValueCreateWithoutSubmissionInput[] | FormSubmissionValueUncheckedCreateWithoutSubmissionInput[]
+    connectOrCreate?: FormSubmissionValueCreateOrConnectWithoutSubmissionInput | FormSubmissionValueCreateOrConnectWithoutSubmissionInput[]
+    createMany?: FormSubmissionValueCreateManySubmissionInputEnvelope
+    connect?: FormSubmissionValueWhereUniqueInput | FormSubmissionValueWhereUniqueInput[]
+  }
+
+  export type FormUpdateOneRequiredWithoutSubmissionsNestedInput = {
+    create?: XOR<FormCreateWithoutSubmissionsInput, FormUncheckedCreateWithoutSubmissionsInput>
+    connectOrCreate?: FormCreateOrConnectWithoutSubmissionsInput
+    upsert?: FormUpsertWithoutSubmissionsInput
     connect?: FormWhereUniqueInput
-    update?: XOR<XOR<FormUpdateToOneWithWhereWithoutFormSubmissionInput, FormUpdateWithoutFormSubmissionInput>, FormUncheckedUpdateWithoutFormSubmissionInput>
+    update?: XOR<XOR<FormUpdateToOneWithWhereWithoutSubmissionsInput, FormUpdateWithoutSubmissionsInput>, FormUncheckedUpdateWithoutSubmissionsInput>
+  }
+
+  export type FormVersionUpdateOneWithoutSubmissionsNestedInput = {
+    create?: XOR<FormVersionCreateWithoutSubmissionsInput, FormVersionUncheckedCreateWithoutSubmissionsInput>
+    connectOrCreate?: FormVersionCreateOrConnectWithoutSubmissionsInput
+    upsert?: FormVersionUpsertWithoutSubmissionsInput
+    disconnect?: FormVersionWhereInput | boolean
+    delete?: FormVersionWhereInput | boolean
+    connect?: FormVersionWhereUniqueInput
+    update?: XOR<XOR<FormVersionUpdateToOneWithWhereWithoutSubmissionsInput, FormVersionUpdateWithoutSubmissionsInput>, FormVersionUncheckedUpdateWithoutSubmissionsInput>
+  }
+
+  export type RoleUpdateOneWithoutSubmissionsNestedInput = {
+    create?: XOR<RoleCreateWithoutSubmissionsInput, RoleUncheckedCreateWithoutSubmissionsInput>
+    connectOrCreate?: RoleCreateOrConnectWithoutSubmissionsInput
+    upsert?: RoleUpsertWithoutSubmissionsInput
+    disconnect?: RoleWhereInput | boolean
+    delete?: RoleWhereInput | boolean
+    connect?: RoleWhereUniqueInput
+    update?: XOR<XOR<RoleUpdateToOneWithWhereWithoutSubmissionsInput, RoleUpdateWithoutSubmissionsInput>, RoleUncheckedUpdateWithoutSubmissionsInput>
+  }
+
+  export type SubmoduleUpdateOneWithoutSubmissionsNestedInput = {
+    create?: XOR<SubmoduleCreateWithoutSubmissionsInput, SubmoduleUncheckedCreateWithoutSubmissionsInput>
+    connectOrCreate?: SubmoduleCreateOrConnectWithoutSubmissionsInput
+    upsert?: SubmoduleUpsertWithoutSubmissionsInput
+    disconnect?: SubmoduleWhereInput | boolean
+    delete?: SubmoduleWhereInput | boolean
+    connect?: SubmoduleWhereUniqueInput
+    update?: XOR<XOR<SubmoduleUpdateToOneWithWhereWithoutSubmissionsInput, SubmoduleUpdateWithoutSubmissionsInput>, SubmoduleUncheckedUpdateWithoutSubmissionsInput>
+  }
+
+  export type FormSubmissionValueUpdateManyWithoutSubmissionNestedInput = {
+    create?: XOR<FormSubmissionValueCreateWithoutSubmissionInput, FormSubmissionValueUncheckedCreateWithoutSubmissionInput> | FormSubmissionValueCreateWithoutSubmissionInput[] | FormSubmissionValueUncheckedCreateWithoutSubmissionInput[]
+    connectOrCreate?: FormSubmissionValueCreateOrConnectWithoutSubmissionInput | FormSubmissionValueCreateOrConnectWithoutSubmissionInput[]
+    upsert?: FormSubmissionValueUpsertWithWhereUniqueWithoutSubmissionInput | FormSubmissionValueUpsertWithWhereUniqueWithoutSubmissionInput[]
+    createMany?: FormSubmissionValueCreateManySubmissionInputEnvelope
+    set?: FormSubmissionValueWhereUniqueInput | FormSubmissionValueWhereUniqueInput[]
+    disconnect?: FormSubmissionValueWhereUniqueInput | FormSubmissionValueWhereUniqueInput[]
+    delete?: FormSubmissionValueWhereUniqueInput | FormSubmissionValueWhereUniqueInput[]
+    connect?: FormSubmissionValueWhereUniqueInput | FormSubmissionValueWhereUniqueInput[]
+    update?: FormSubmissionValueUpdateWithWhereUniqueWithoutSubmissionInput | FormSubmissionValueUpdateWithWhereUniqueWithoutSubmissionInput[]
+    updateMany?: FormSubmissionValueUpdateManyWithWhereWithoutSubmissionInput | FormSubmissionValueUpdateManyWithWhereWithoutSubmissionInput[]
+    deleteMany?: FormSubmissionValueScalarWhereInput | FormSubmissionValueScalarWhereInput[]
+  }
+
+  export type FormSubmissionValueUncheckedUpdateManyWithoutSubmissionNestedInput = {
+    create?: XOR<FormSubmissionValueCreateWithoutSubmissionInput, FormSubmissionValueUncheckedCreateWithoutSubmissionInput> | FormSubmissionValueCreateWithoutSubmissionInput[] | FormSubmissionValueUncheckedCreateWithoutSubmissionInput[]
+    connectOrCreate?: FormSubmissionValueCreateOrConnectWithoutSubmissionInput | FormSubmissionValueCreateOrConnectWithoutSubmissionInput[]
+    upsert?: FormSubmissionValueUpsertWithWhereUniqueWithoutSubmissionInput | FormSubmissionValueUpsertWithWhereUniqueWithoutSubmissionInput[]
+    createMany?: FormSubmissionValueCreateManySubmissionInputEnvelope
+    set?: FormSubmissionValueWhereUniqueInput | FormSubmissionValueWhereUniqueInput[]
+    disconnect?: FormSubmissionValueWhereUniqueInput | FormSubmissionValueWhereUniqueInput[]
+    delete?: FormSubmissionValueWhereUniqueInput | FormSubmissionValueWhereUniqueInput[]
+    connect?: FormSubmissionValueWhereUniqueInput | FormSubmissionValueWhereUniqueInput[]
+    update?: FormSubmissionValueUpdateWithWhereUniqueWithoutSubmissionInput | FormSubmissionValueUpdateWithWhereUniqueWithoutSubmissionInput[]
+    updateMany?: FormSubmissionValueUpdateManyWithWhereWithoutSubmissionInput | FormSubmissionValueUpdateManyWithWhereWithoutSubmissionInput[]
+    deleteMany?: FormSubmissionValueScalarWhereInput | FormSubmissionValueScalarWhereInput[]
+  }
+
+  export type FormCreateNestedOneWithoutVersionsInput = {
+    create?: XOR<FormCreateWithoutVersionsInput, FormUncheckedCreateWithoutVersionsInput>
+    connectOrCreate?: FormCreateOrConnectWithoutVersionsInput
+    connect?: FormWhereUniqueInput
+  }
+
+  export type FormSubmissionCreateNestedManyWithoutFormVersionInput = {
+    create?: XOR<FormSubmissionCreateWithoutFormVersionInput, FormSubmissionUncheckedCreateWithoutFormVersionInput> | FormSubmissionCreateWithoutFormVersionInput[] | FormSubmissionUncheckedCreateWithoutFormVersionInput[]
+    connectOrCreate?: FormSubmissionCreateOrConnectWithoutFormVersionInput | FormSubmissionCreateOrConnectWithoutFormVersionInput[]
+    createMany?: FormSubmissionCreateManyFormVersionInputEnvelope
+    connect?: FormSubmissionWhereUniqueInput | FormSubmissionWhereUniqueInput[]
+  }
+
+  export type FormSubmissionValueCreateNestedManyWithoutFormVersionInput = {
+    create?: XOR<FormSubmissionValueCreateWithoutFormVersionInput, FormSubmissionValueUncheckedCreateWithoutFormVersionInput> | FormSubmissionValueCreateWithoutFormVersionInput[] | FormSubmissionValueUncheckedCreateWithoutFormVersionInput[]
+    connectOrCreate?: FormSubmissionValueCreateOrConnectWithoutFormVersionInput | FormSubmissionValueCreateOrConnectWithoutFormVersionInput[]
+    createMany?: FormSubmissionValueCreateManyFormVersionInputEnvelope
+    connect?: FormSubmissionValueWhereUniqueInput | FormSubmissionValueWhereUniqueInput[]
+  }
+
+  export type FormSubmissionUncheckedCreateNestedManyWithoutFormVersionInput = {
+    create?: XOR<FormSubmissionCreateWithoutFormVersionInput, FormSubmissionUncheckedCreateWithoutFormVersionInput> | FormSubmissionCreateWithoutFormVersionInput[] | FormSubmissionUncheckedCreateWithoutFormVersionInput[]
+    connectOrCreate?: FormSubmissionCreateOrConnectWithoutFormVersionInput | FormSubmissionCreateOrConnectWithoutFormVersionInput[]
+    createMany?: FormSubmissionCreateManyFormVersionInputEnvelope
+    connect?: FormSubmissionWhereUniqueInput | FormSubmissionWhereUniqueInput[]
+  }
+
+  export type FormSubmissionValueUncheckedCreateNestedManyWithoutFormVersionInput = {
+    create?: XOR<FormSubmissionValueCreateWithoutFormVersionInput, FormSubmissionValueUncheckedCreateWithoutFormVersionInput> | FormSubmissionValueCreateWithoutFormVersionInput[] | FormSubmissionValueUncheckedCreateWithoutFormVersionInput[]
+    connectOrCreate?: FormSubmissionValueCreateOrConnectWithoutFormVersionInput | FormSubmissionValueCreateOrConnectWithoutFormVersionInput[]
+    createMany?: FormSubmissionValueCreateManyFormVersionInputEnvelope
+    connect?: FormSubmissionValueWhereUniqueInput | FormSubmissionValueWhereUniqueInput[]
+  }
+
+  export type FormUpdateOneRequiredWithoutVersionsNestedInput = {
+    create?: XOR<FormCreateWithoutVersionsInput, FormUncheckedCreateWithoutVersionsInput>
+    connectOrCreate?: FormCreateOrConnectWithoutVersionsInput
+    upsert?: FormUpsertWithoutVersionsInput
+    connect?: FormWhereUniqueInput
+    update?: XOR<XOR<FormUpdateToOneWithWhereWithoutVersionsInput, FormUpdateWithoutVersionsInput>, FormUncheckedUpdateWithoutVersionsInput>
+  }
+
+  export type FormSubmissionUpdateManyWithoutFormVersionNestedInput = {
+    create?: XOR<FormSubmissionCreateWithoutFormVersionInput, FormSubmissionUncheckedCreateWithoutFormVersionInput> | FormSubmissionCreateWithoutFormVersionInput[] | FormSubmissionUncheckedCreateWithoutFormVersionInput[]
+    connectOrCreate?: FormSubmissionCreateOrConnectWithoutFormVersionInput | FormSubmissionCreateOrConnectWithoutFormVersionInput[]
+    upsert?: FormSubmissionUpsertWithWhereUniqueWithoutFormVersionInput | FormSubmissionUpsertWithWhereUniqueWithoutFormVersionInput[]
+    createMany?: FormSubmissionCreateManyFormVersionInputEnvelope
+    set?: FormSubmissionWhereUniqueInput | FormSubmissionWhereUniqueInput[]
+    disconnect?: FormSubmissionWhereUniqueInput | FormSubmissionWhereUniqueInput[]
+    delete?: FormSubmissionWhereUniqueInput | FormSubmissionWhereUniqueInput[]
+    connect?: FormSubmissionWhereUniqueInput | FormSubmissionWhereUniqueInput[]
+    update?: FormSubmissionUpdateWithWhereUniqueWithoutFormVersionInput | FormSubmissionUpdateWithWhereUniqueWithoutFormVersionInput[]
+    updateMany?: FormSubmissionUpdateManyWithWhereWithoutFormVersionInput | FormSubmissionUpdateManyWithWhereWithoutFormVersionInput[]
+    deleteMany?: FormSubmissionScalarWhereInput | FormSubmissionScalarWhereInput[]
+  }
+
+  export type FormSubmissionValueUpdateManyWithoutFormVersionNestedInput = {
+    create?: XOR<FormSubmissionValueCreateWithoutFormVersionInput, FormSubmissionValueUncheckedCreateWithoutFormVersionInput> | FormSubmissionValueCreateWithoutFormVersionInput[] | FormSubmissionValueUncheckedCreateWithoutFormVersionInput[]
+    connectOrCreate?: FormSubmissionValueCreateOrConnectWithoutFormVersionInput | FormSubmissionValueCreateOrConnectWithoutFormVersionInput[]
+    upsert?: FormSubmissionValueUpsertWithWhereUniqueWithoutFormVersionInput | FormSubmissionValueUpsertWithWhereUniqueWithoutFormVersionInput[]
+    createMany?: FormSubmissionValueCreateManyFormVersionInputEnvelope
+    set?: FormSubmissionValueWhereUniqueInput | FormSubmissionValueWhereUniqueInput[]
+    disconnect?: FormSubmissionValueWhereUniqueInput | FormSubmissionValueWhereUniqueInput[]
+    delete?: FormSubmissionValueWhereUniqueInput | FormSubmissionValueWhereUniqueInput[]
+    connect?: FormSubmissionValueWhereUniqueInput | FormSubmissionValueWhereUniqueInput[]
+    update?: FormSubmissionValueUpdateWithWhereUniqueWithoutFormVersionInput | FormSubmissionValueUpdateWithWhereUniqueWithoutFormVersionInput[]
+    updateMany?: FormSubmissionValueUpdateManyWithWhereWithoutFormVersionInput | FormSubmissionValueUpdateManyWithWhereWithoutFormVersionInput[]
+    deleteMany?: FormSubmissionValueScalarWhereInput | FormSubmissionValueScalarWhereInput[]
+  }
+
+  export type FormSubmissionUncheckedUpdateManyWithoutFormVersionNestedInput = {
+    create?: XOR<FormSubmissionCreateWithoutFormVersionInput, FormSubmissionUncheckedCreateWithoutFormVersionInput> | FormSubmissionCreateWithoutFormVersionInput[] | FormSubmissionUncheckedCreateWithoutFormVersionInput[]
+    connectOrCreate?: FormSubmissionCreateOrConnectWithoutFormVersionInput | FormSubmissionCreateOrConnectWithoutFormVersionInput[]
+    upsert?: FormSubmissionUpsertWithWhereUniqueWithoutFormVersionInput | FormSubmissionUpsertWithWhereUniqueWithoutFormVersionInput[]
+    createMany?: FormSubmissionCreateManyFormVersionInputEnvelope
+    set?: FormSubmissionWhereUniqueInput | FormSubmissionWhereUniqueInput[]
+    disconnect?: FormSubmissionWhereUniqueInput | FormSubmissionWhereUniqueInput[]
+    delete?: FormSubmissionWhereUniqueInput | FormSubmissionWhereUniqueInput[]
+    connect?: FormSubmissionWhereUniqueInput | FormSubmissionWhereUniqueInput[]
+    update?: FormSubmissionUpdateWithWhereUniqueWithoutFormVersionInput | FormSubmissionUpdateWithWhereUniqueWithoutFormVersionInput[]
+    updateMany?: FormSubmissionUpdateManyWithWhereWithoutFormVersionInput | FormSubmissionUpdateManyWithWhereWithoutFormVersionInput[]
+    deleteMany?: FormSubmissionScalarWhereInput | FormSubmissionScalarWhereInput[]
+  }
+
+  export type FormSubmissionValueUncheckedUpdateManyWithoutFormVersionNestedInput = {
+    create?: XOR<FormSubmissionValueCreateWithoutFormVersionInput, FormSubmissionValueUncheckedCreateWithoutFormVersionInput> | FormSubmissionValueCreateWithoutFormVersionInput[] | FormSubmissionValueUncheckedCreateWithoutFormVersionInput[]
+    connectOrCreate?: FormSubmissionValueCreateOrConnectWithoutFormVersionInput | FormSubmissionValueCreateOrConnectWithoutFormVersionInput[]
+    upsert?: FormSubmissionValueUpsertWithWhereUniqueWithoutFormVersionInput | FormSubmissionValueUpsertWithWhereUniqueWithoutFormVersionInput[]
+    createMany?: FormSubmissionValueCreateManyFormVersionInputEnvelope
+    set?: FormSubmissionValueWhereUniqueInput | FormSubmissionValueWhereUniqueInput[]
+    disconnect?: FormSubmissionValueWhereUniqueInput | FormSubmissionValueWhereUniqueInput[]
+    delete?: FormSubmissionValueWhereUniqueInput | FormSubmissionValueWhereUniqueInput[]
+    connect?: FormSubmissionValueWhereUniqueInput | FormSubmissionValueWhereUniqueInput[]
+    update?: FormSubmissionValueUpdateWithWhereUniqueWithoutFormVersionInput | FormSubmissionValueUpdateWithWhereUniqueWithoutFormVersionInput[]
+    updateMany?: FormSubmissionValueUpdateManyWithWhereWithoutFormVersionInput | FormSubmissionValueUpdateManyWithWhereWithoutFormVersionInput[]
+    deleteMany?: FormSubmissionValueScalarWhereInput | FormSubmissionValueScalarWhereInput[]
+  }
+
+  export type FormSubmissionCreateNestedOneWithoutValuesInput = {
+    create?: XOR<FormSubmissionCreateWithoutValuesInput, FormSubmissionUncheckedCreateWithoutValuesInput>
+    connectOrCreate?: FormSubmissionCreateOrConnectWithoutValuesInput
+    connect?: FormSubmissionWhereUniqueInput
+  }
+
+  export type FormCreateNestedOneWithoutSubmissionValuesInput = {
+    create?: XOR<FormCreateWithoutSubmissionValuesInput, FormUncheckedCreateWithoutSubmissionValuesInput>
+    connectOrCreate?: FormCreateOrConnectWithoutSubmissionValuesInput
+    connect?: FormWhereUniqueInput
+  }
+
+  export type FormVersionCreateNestedOneWithoutSubmissionValuesInput = {
+    create?: XOR<FormVersionCreateWithoutSubmissionValuesInput, FormVersionUncheckedCreateWithoutSubmissionValuesInput>
+    connectOrCreate?: FormVersionCreateOrConnectWithoutSubmissionValuesInput
+    connect?: FormVersionWhereUniqueInput
+  }
+
+  export type NullableFloatFieldUpdateOperationsInput = {
+    set?: number | null
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type NullableBoolFieldUpdateOperationsInput = {
+    set?: boolean | null
+  }
+
+  export type NullableDateTimeFieldUpdateOperationsInput = {
+    set?: Date | string | null
+  }
+
+  export type FormSubmissionUpdateOneRequiredWithoutValuesNestedInput = {
+    create?: XOR<FormSubmissionCreateWithoutValuesInput, FormSubmissionUncheckedCreateWithoutValuesInput>
+    connectOrCreate?: FormSubmissionCreateOrConnectWithoutValuesInput
+    upsert?: FormSubmissionUpsertWithoutValuesInput
+    connect?: FormSubmissionWhereUniqueInput
+    update?: XOR<XOR<FormSubmissionUpdateToOneWithWhereWithoutValuesInput, FormSubmissionUpdateWithoutValuesInput>, FormSubmissionUncheckedUpdateWithoutValuesInput>
+  }
+
+  export type FormUpdateOneRequiredWithoutSubmissionValuesNestedInput = {
+    create?: XOR<FormCreateWithoutSubmissionValuesInput, FormUncheckedCreateWithoutSubmissionValuesInput>
+    connectOrCreate?: FormCreateOrConnectWithoutSubmissionValuesInput
+    upsert?: FormUpsertWithoutSubmissionValuesInput
+    connect?: FormWhereUniqueInput
+    update?: XOR<XOR<FormUpdateToOneWithWhereWithoutSubmissionValuesInput, FormUpdateWithoutSubmissionValuesInput>, FormUncheckedUpdateWithoutSubmissionValuesInput>
+  }
+
+  export type FormVersionUpdateOneWithoutSubmissionValuesNestedInput = {
+    create?: XOR<FormVersionCreateWithoutSubmissionValuesInput, FormVersionUncheckedCreateWithoutSubmissionValuesInput>
+    connectOrCreate?: FormVersionCreateOrConnectWithoutSubmissionValuesInput
+    upsert?: FormVersionUpsertWithoutSubmissionValuesInput
+    disconnect?: FormVersionWhereInput | boolean
+    delete?: FormVersionWhereInput | boolean
+    connect?: FormVersionWhereUniqueInput
+    update?: XOR<XOR<FormVersionUpdateToOneWithWhereWithoutSubmissionValuesInput, FormVersionUpdateWithoutSubmissionValuesInput>, FormVersionUncheckedUpdateWithoutSubmissionValuesInput>
+  }
+
+  export type FormCreateNestedOneWithoutEventRulesInput = {
+    create?: XOR<FormCreateWithoutEventRulesInput, FormUncheckedCreateWithoutEventRulesInput>
+    connectOrCreate?: FormCreateOrConnectWithoutEventRulesInput
+    connect?: FormWhereUniqueInput
+  }
+
+  export type FormUpdateOneRequiredWithoutEventRulesNestedInput = {
+    create?: XOR<FormCreateWithoutEventRulesInput, FormUncheckedCreateWithoutEventRulesInput>
+    connectOrCreate?: FormCreateOrConnectWithoutEventRulesInput
+    upsert?: FormUpsertWithoutEventRulesInput
+    connect?: FormWhereUniqueInput
+    update?: XOR<XOR<FormUpdateToOneWithWhereWithoutEventRulesInput, FormUpdateWithoutEventRulesInput>, FormUncheckedUpdateWithoutEventRulesInput>
+  }
+
+  export type FormCreateNestedOneWithoutAssignmentsInput = {
+    create?: XOR<FormCreateWithoutAssignmentsInput, FormUncheckedCreateWithoutAssignmentsInput>
+    connectOrCreate?: FormCreateOrConnectWithoutAssignmentsInput
+    connect?: FormWhereUniqueInput
+  }
+
+  export type RoleCreateNestedOneWithoutAssignmentsInput = {
+    create?: XOR<RoleCreateWithoutAssignmentsInput, RoleUncheckedCreateWithoutAssignmentsInput>
+    connectOrCreate?: RoleCreateOrConnectWithoutAssignmentsInput
+    connect?: RoleWhereUniqueInput
+  }
+
+  export type SubmoduleCreateNestedOneWithoutAssignmentsInput = {
+    create?: XOR<SubmoduleCreateWithoutAssignmentsInput, SubmoduleUncheckedCreateWithoutAssignmentsInput>
+    connectOrCreate?: SubmoduleCreateOrConnectWithoutAssignmentsInput
+    connect?: SubmoduleWhereUniqueInput
+  }
+
+  export type FormUpdateOneRequiredWithoutAssignmentsNestedInput = {
+    create?: XOR<FormCreateWithoutAssignmentsInput, FormUncheckedCreateWithoutAssignmentsInput>
+    connectOrCreate?: FormCreateOrConnectWithoutAssignmentsInput
+    upsert?: FormUpsertWithoutAssignmentsInput
+    connect?: FormWhereUniqueInput
+    update?: XOR<XOR<FormUpdateToOneWithWhereWithoutAssignmentsInput, FormUpdateWithoutAssignmentsInput>, FormUncheckedUpdateWithoutAssignmentsInput>
+  }
+
+  export type RoleUpdateOneWithoutAssignmentsNestedInput = {
+    create?: XOR<RoleCreateWithoutAssignmentsInput, RoleUncheckedCreateWithoutAssignmentsInput>
+    connectOrCreate?: RoleCreateOrConnectWithoutAssignmentsInput
+    upsert?: RoleUpsertWithoutAssignmentsInput
+    disconnect?: RoleWhereInput | boolean
+    delete?: RoleWhereInput | boolean
+    connect?: RoleWhereUniqueInput
+    update?: XOR<XOR<RoleUpdateToOneWithWhereWithoutAssignmentsInput, RoleUpdateWithoutAssignmentsInput>, RoleUncheckedUpdateWithoutAssignmentsInput>
+  }
+
+  export type SubmoduleUpdateOneRequiredWithoutAssignmentsNestedInput = {
+    create?: XOR<SubmoduleCreateWithoutAssignmentsInput, SubmoduleUncheckedCreateWithoutAssignmentsInput>
+    connectOrCreate?: SubmoduleCreateOrConnectWithoutAssignmentsInput
+    upsert?: SubmoduleUpsertWithoutAssignmentsInput
+    connect?: SubmoduleWhereUniqueInput
+    update?: XOR<XOR<SubmoduleUpdateToOneWithWhereWithoutAssignmentsInput, SubmoduleUpdateWithoutAssignmentsInput>, SubmoduleUncheckedUpdateWithoutAssignmentsInput>
+  }
+
+  export type FormCreateNestedManyWithoutSubmoduleInput = {
+    create?: XOR<FormCreateWithoutSubmoduleInput, FormUncheckedCreateWithoutSubmoduleInput> | FormCreateWithoutSubmoduleInput[] | FormUncheckedCreateWithoutSubmoduleInput[]
+    connectOrCreate?: FormCreateOrConnectWithoutSubmoduleInput | FormCreateOrConnectWithoutSubmoduleInput[]
+    createMany?: FormCreateManySubmoduleInputEnvelope
+    connect?: FormWhereUniqueInput | FormWhereUniqueInput[]
+  }
+
+  export type FormAssignmentCreateNestedManyWithoutSubmoduleInput = {
+    create?: XOR<FormAssignmentCreateWithoutSubmoduleInput, FormAssignmentUncheckedCreateWithoutSubmoduleInput> | FormAssignmentCreateWithoutSubmoduleInput[] | FormAssignmentUncheckedCreateWithoutSubmoduleInput[]
+    connectOrCreate?: FormAssignmentCreateOrConnectWithoutSubmoduleInput | FormAssignmentCreateOrConnectWithoutSubmoduleInput[]
+    createMany?: FormAssignmentCreateManySubmoduleInputEnvelope
+    connect?: FormAssignmentWhereUniqueInput | FormAssignmentWhereUniqueInput[]
+  }
+
+  export type FormSubmissionCreateNestedManyWithoutSubmoduleInput = {
+    create?: XOR<FormSubmissionCreateWithoutSubmoduleInput, FormSubmissionUncheckedCreateWithoutSubmoduleInput> | FormSubmissionCreateWithoutSubmoduleInput[] | FormSubmissionUncheckedCreateWithoutSubmoduleInput[]
+    connectOrCreate?: FormSubmissionCreateOrConnectWithoutSubmoduleInput | FormSubmissionCreateOrConnectWithoutSubmoduleInput[]
+    createMany?: FormSubmissionCreateManySubmoduleInputEnvelope
+    connect?: FormSubmissionWhereUniqueInput | FormSubmissionWhereUniqueInput[]
+  }
+
+  export type FormUncheckedCreateNestedManyWithoutSubmoduleInput = {
+    create?: XOR<FormCreateWithoutSubmoduleInput, FormUncheckedCreateWithoutSubmoduleInput> | FormCreateWithoutSubmoduleInput[] | FormUncheckedCreateWithoutSubmoduleInput[]
+    connectOrCreate?: FormCreateOrConnectWithoutSubmoduleInput | FormCreateOrConnectWithoutSubmoduleInput[]
+    createMany?: FormCreateManySubmoduleInputEnvelope
+    connect?: FormWhereUniqueInput | FormWhereUniqueInput[]
+  }
+
+  export type FormAssignmentUncheckedCreateNestedManyWithoutSubmoduleInput = {
+    create?: XOR<FormAssignmentCreateWithoutSubmoduleInput, FormAssignmentUncheckedCreateWithoutSubmoduleInput> | FormAssignmentCreateWithoutSubmoduleInput[] | FormAssignmentUncheckedCreateWithoutSubmoduleInput[]
+    connectOrCreate?: FormAssignmentCreateOrConnectWithoutSubmoduleInput | FormAssignmentCreateOrConnectWithoutSubmoduleInput[]
+    createMany?: FormAssignmentCreateManySubmoduleInputEnvelope
+    connect?: FormAssignmentWhereUniqueInput | FormAssignmentWhereUniqueInput[]
+  }
+
+  export type FormSubmissionUncheckedCreateNestedManyWithoutSubmoduleInput = {
+    create?: XOR<FormSubmissionCreateWithoutSubmoduleInput, FormSubmissionUncheckedCreateWithoutSubmoduleInput> | FormSubmissionCreateWithoutSubmoduleInput[] | FormSubmissionUncheckedCreateWithoutSubmoduleInput[]
+    connectOrCreate?: FormSubmissionCreateOrConnectWithoutSubmoduleInput | FormSubmissionCreateOrConnectWithoutSubmoduleInput[]
+    createMany?: FormSubmissionCreateManySubmoduleInputEnvelope
+    connect?: FormSubmissionWhereUniqueInput | FormSubmissionWhereUniqueInput[]
+  }
+
+  export type FormUpdateManyWithoutSubmoduleNestedInput = {
+    create?: XOR<FormCreateWithoutSubmoduleInput, FormUncheckedCreateWithoutSubmoduleInput> | FormCreateWithoutSubmoduleInput[] | FormUncheckedCreateWithoutSubmoduleInput[]
+    connectOrCreate?: FormCreateOrConnectWithoutSubmoduleInput | FormCreateOrConnectWithoutSubmoduleInput[]
+    upsert?: FormUpsertWithWhereUniqueWithoutSubmoduleInput | FormUpsertWithWhereUniqueWithoutSubmoduleInput[]
+    createMany?: FormCreateManySubmoduleInputEnvelope
+    set?: FormWhereUniqueInput | FormWhereUniqueInput[]
+    disconnect?: FormWhereUniqueInput | FormWhereUniqueInput[]
+    delete?: FormWhereUniqueInput | FormWhereUniqueInput[]
+    connect?: FormWhereUniqueInput | FormWhereUniqueInput[]
+    update?: FormUpdateWithWhereUniqueWithoutSubmoduleInput | FormUpdateWithWhereUniqueWithoutSubmoduleInput[]
+    updateMany?: FormUpdateManyWithWhereWithoutSubmoduleInput | FormUpdateManyWithWhereWithoutSubmoduleInput[]
+    deleteMany?: FormScalarWhereInput | FormScalarWhereInput[]
+  }
+
+  export type FormAssignmentUpdateManyWithoutSubmoduleNestedInput = {
+    create?: XOR<FormAssignmentCreateWithoutSubmoduleInput, FormAssignmentUncheckedCreateWithoutSubmoduleInput> | FormAssignmentCreateWithoutSubmoduleInput[] | FormAssignmentUncheckedCreateWithoutSubmoduleInput[]
+    connectOrCreate?: FormAssignmentCreateOrConnectWithoutSubmoduleInput | FormAssignmentCreateOrConnectWithoutSubmoduleInput[]
+    upsert?: FormAssignmentUpsertWithWhereUniqueWithoutSubmoduleInput | FormAssignmentUpsertWithWhereUniqueWithoutSubmoduleInput[]
+    createMany?: FormAssignmentCreateManySubmoduleInputEnvelope
+    set?: FormAssignmentWhereUniqueInput | FormAssignmentWhereUniqueInput[]
+    disconnect?: FormAssignmentWhereUniqueInput | FormAssignmentWhereUniqueInput[]
+    delete?: FormAssignmentWhereUniqueInput | FormAssignmentWhereUniqueInput[]
+    connect?: FormAssignmentWhereUniqueInput | FormAssignmentWhereUniqueInput[]
+    update?: FormAssignmentUpdateWithWhereUniqueWithoutSubmoduleInput | FormAssignmentUpdateWithWhereUniqueWithoutSubmoduleInput[]
+    updateMany?: FormAssignmentUpdateManyWithWhereWithoutSubmoduleInput | FormAssignmentUpdateManyWithWhereWithoutSubmoduleInput[]
+    deleteMany?: FormAssignmentScalarWhereInput | FormAssignmentScalarWhereInput[]
+  }
+
+  export type FormSubmissionUpdateManyWithoutSubmoduleNestedInput = {
+    create?: XOR<FormSubmissionCreateWithoutSubmoduleInput, FormSubmissionUncheckedCreateWithoutSubmoduleInput> | FormSubmissionCreateWithoutSubmoduleInput[] | FormSubmissionUncheckedCreateWithoutSubmoduleInput[]
+    connectOrCreate?: FormSubmissionCreateOrConnectWithoutSubmoduleInput | FormSubmissionCreateOrConnectWithoutSubmoduleInput[]
+    upsert?: FormSubmissionUpsertWithWhereUniqueWithoutSubmoduleInput | FormSubmissionUpsertWithWhereUniqueWithoutSubmoduleInput[]
+    createMany?: FormSubmissionCreateManySubmoduleInputEnvelope
+    set?: FormSubmissionWhereUniqueInput | FormSubmissionWhereUniqueInput[]
+    disconnect?: FormSubmissionWhereUniqueInput | FormSubmissionWhereUniqueInput[]
+    delete?: FormSubmissionWhereUniqueInput | FormSubmissionWhereUniqueInput[]
+    connect?: FormSubmissionWhereUniqueInput | FormSubmissionWhereUniqueInput[]
+    update?: FormSubmissionUpdateWithWhereUniqueWithoutSubmoduleInput | FormSubmissionUpdateWithWhereUniqueWithoutSubmoduleInput[]
+    updateMany?: FormSubmissionUpdateManyWithWhereWithoutSubmoduleInput | FormSubmissionUpdateManyWithWhereWithoutSubmoduleInput[]
+    deleteMany?: FormSubmissionScalarWhereInput | FormSubmissionScalarWhereInput[]
+  }
+
+  export type FormUncheckedUpdateManyWithoutSubmoduleNestedInput = {
+    create?: XOR<FormCreateWithoutSubmoduleInput, FormUncheckedCreateWithoutSubmoduleInput> | FormCreateWithoutSubmoduleInput[] | FormUncheckedCreateWithoutSubmoduleInput[]
+    connectOrCreate?: FormCreateOrConnectWithoutSubmoduleInput | FormCreateOrConnectWithoutSubmoduleInput[]
+    upsert?: FormUpsertWithWhereUniqueWithoutSubmoduleInput | FormUpsertWithWhereUniqueWithoutSubmoduleInput[]
+    createMany?: FormCreateManySubmoduleInputEnvelope
+    set?: FormWhereUniqueInput | FormWhereUniqueInput[]
+    disconnect?: FormWhereUniqueInput | FormWhereUniqueInput[]
+    delete?: FormWhereUniqueInput | FormWhereUniqueInput[]
+    connect?: FormWhereUniqueInput | FormWhereUniqueInput[]
+    update?: FormUpdateWithWhereUniqueWithoutSubmoduleInput | FormUpdateWithWhereUniqueWithoutSubmoduleInput[]
+    updateMany?: FormUpdateManyWithWhereWithoutSubmoduleInput | FormUpdateManyWithWhereWithoutSubmoduleInput[]
+    deleteMany?: FormScalarWhereInput | FormScalarWhereInput[]
+  }
+
+  export type FormAssignmentUncheckedUpdateManyWithoutSubmoduleNestedInput = {
+    create?: XOR<FormAssignmentCreateWithoutSubmoduleInput, FormAssignmentUncheckedCreateWithoutSubmoduleInput> | FormAssignmentCreateWithoutSubmoduleInput[] | FormAssignmentUncheckedCreateWithoutSubmoduleInput[]
+    connectOrCreate?: FormAssignmentCreateOrConnectWithoutSubmoduleInput | FormAssignmentCreateOrConnectWithoutSubmoduleInput[]
+    upsert?: FormAssignmentUpsertWithWhereUniqueWithoutSubmoduleInput | FormAssignmentUpsertWithWhereUniqueWithoutSubmoduleInput[]
+    createMany?: FormAssignmentCreateManySubmoduleInputEnvelope
+    set?: FormAssignmentWhereUniqueInput | FormAssignmentWhereUniqueInput[]
+    disconnect?: FormAssignmentWhereUniqueInput | FormAssignmentWhereUniqueInput[]
+    delete?: FormAssignmentWhereUniqueInput | FormAssignmentWhereUniqueInput[]
+    connect?: FormAssignmentWhereUniqueInput | FormAssignmentWhereUniqueInput[]
+    update?: FormAssignmentUpdateWithWhereUniqueWithoutSubmoduleInput | FormAssignmentUpdateWithWhereUniqueWithoutSubmoduleInput[]
+    updateMany?: FormAssignmentUpdateManyWithWhereWithoutSubmoduleInput | FormAssignmentUpdateManyWithWhereWithoutSubmoduleInput[]
+    deleteMany?: FormAssignmentScalarWhereInput | FormAssignmentScalarWhereInput[]
+  }
+
+  export type FormSubmissionUncheckedUpdateManyWithoutSubmoduleNestedInput = {
+    create?: XOR<FormSubmissionCreateWithoutSubmoduleInput, FormSubmissionUncheckedCreateWithoutSubmoduleInput> | FormSubmissionCreateWithoutSubmoduleInput[] | FormSubmissionUncheckedCreateWithoutSubmoduleInput[]
+    connectOrCreate?: FormSubmissionCreateOrConnectWithoutSubmoduleInput | FormSubmissionCreateOrConnectWithoutSubmoduleInput[]
+    upsert?: FormSubmissionUpsertWithWhereUniqueWithoutSubmoduleInput | FormSubmissionUpsertWithWhereUniqueWithoutSubmoduleInput[]
+    createMany?: FormSubmissionCreateManySubmoduleInputEnvelope
+    set?: FormSubmissionWhereUniqueInput | FormSubmissionWhereUniqueInput[]
+    disconnect?: FormSubmissionWhereUniqueInput | FormSubmissionWhereUniqueInput[]
+    delete?: FormSubmissionWhereUniqueInput | FormSubmissionWhereUniqueInput[]
+    connect?: FormSubmissionWhereUniqueInput | FormSubmissionWhereUniqueInput[]
+    update?: FormSubmissionUpdateWithWhereUniqueWithoutSubmoduleInput | FormSubmissionUpdateWithWhereUniqueWithoutSubmoduleInput[]
+    updateMany?: FormSubmissionUpdateManyWithWhereWithoutSubmoduleInput | FormSubmissionUpdateManyWithWhereWithoutSubmoduleInput[]
+    deleteMany?: FormSubmissionScalarWhereInput | FormSubmissionScalarWhereInput[]
+  }
+
+  export type FormCreateNestedManyWithoutTemplateInput = {
+    create?: XOR<FormCreateWithoutTemplateInput, FormUncheckedCreateWithoutTemplateInput> | FormCreateWithoutTemplateInput[] | FormUncheckedCreateWithoutTemplateInput[]
+    connectOrCreate?: FormCreateOrConnectWithoutTemplateInput | FormCreateOrConnectWithoutTemplateInput[]
+    createMany?: FormCreateManyTemplateInputEnvelope
+    connect?: FormWhereUniqueInput | FormWhereUniqueInput[]
+  }
+
+  export type FormTemplateVersionCreateNestedManyWithoutTemplateInput = {
+    create?: XOR<FormTemplateVersionCreateWithoutTemplateInput, FormTemplateVersionUncheckedCreateWithoutTemplateInput> | FormTemplateVersionCreateWithoutTemplateInput[] | FormTemplateVersionUncheckedCreateWithoutTemplateInput[]
+    connectOrCreate?: FormTemplateVersionCreateOrConnectWithoutTemplateInput | FormTemplateVersionCreateOrConnectWithoutTemplateInput[]
+    createMany?: FormTemplateVersionCreateManyTemplateInputEnvelope
+    connect?: FormTemplateVersionWhereUniqueInput | FormTemplateVersionWhereUniqueInput[]
+  }
+
+  export type FormUncheckedCreateNestedManyWithoutTemplateInput = {
+    create?: XOR<FormCreateWithoutTemplateInput, FormUncheckedCreateWithoutTemplateInput> | FormCreateWithoutTemplateInput[] | FormUncheckedCreateWithoutTemplateInput[]
+    connectOrCreate?: FormCreateOrConnectWithoutTemplateInput | FormCreateOrConnectWithoutTemplateInput[]
+    createMany?: FormCreateManyTemplateInputEnvelope
+    connect?: FormWhereUniqueInput | FormWhereUniqueInput[]
+  }
+
+  export type FormTemplateVersionUncheckedCreateNestedManyWithoutTemplateInput = {
+    create?: XOR<FormTemplateVersionCreateWithoutTemplateInput, FormTemplateVersionUncheckedCreateWithoutTemplateInput> | FormTemplateVersionCreateWithoutTemplateInput[] | FormTemplateVersionUncheckedCreateWithoutTemplateInput[]
+    connectOrCreate?: FormTemplateVersionCreateOrConnectWithoutTemplateInput | FormTemplateVersionCreateOrConnectWithoutTemplateInput[]
+    createMany?: FormTemplateVersionCreateManyTemplateInputEnvelope
+    connect?: FormTemplateVersionWhereUniqueInput | FormTemplateVersionWhereUniqueInput[]
+  }
+
+  export type FormUpdateManyWithoutTemplateNestedInput = {
+    create?: XOR<FormCreateWithoutTemplateInput, FormUncheckedCreateWithoutTemplateInput> | FormCreateWithoutTemplateInput[] | FormUncheckedCreateWithoutTemplateInput[]
+    connectOrCreate?: FormCreateOrConnectWithoutTemplateInput | FormCreateOrConnectWithoutTemplateInput[]
+    upsert?: FormUpsertWithWhereUniqueWithoutTemplateInput | FormUpsertWithWhereUniqueWithoutTemplateInput[]
+    createMany?: FormCreateManyTemplateInputEnvelope
+    set?: FormWhereUniqueInput | FormWhereUniqueInput[]
+    disconnect?: FormWhereUniqueInput | FormWhereUniqueInput[]
+    delete?: FormWhereUniqueInput | FormWhereUniqueInput[]
+    connect?: FormWhereUniqueInput | FormWhereUniqueInput[]
+    update?: FormUpdateWithWhereUniqueWithoutTemplateInput | FormUpdateWithWhereUniqueWithoutTemplateInput[]
+    updateMany?: FormUpdateManyWithWhereWithoutTemplateInput | FormUpdateManyWithWhereWithoutTemplateInput[]
+    deleteMany?: FormScalarWhereInput | FormScalarWhereInput[]
+  }
+
+  export type FormTemplateVersionUpdateManyWithoutTemplateNestedInput = {
+    create?: XOR<FormTemplateVersionCreateWithoutTemplateInput, FormTemplateVersionUncheckedCreateWithoutTemplateInput> | FormTemplateVersionCreateWithoutTemplateInput[] | FormTemplateVersionUncheckedCreateWithoutTemplateInput[]
+    connectOrCreate?: FormTemplateVersionCreateOrConnectWithoutTemplateInput | FormTemplateVersionCreateOrConnectWithoutTemplateInput[]
+    upsert?: FormTemplateVersionUpsertWithWhereUniqueWithoutTemplateInput | FormTemplateVersionUpsertWithWhereUniqueWithoutTemplateInput[]
+    createMany?: FormTemplateVersionCreateManyTemplateInputEnvelope
+    set?: FormTemplateVersionWhereUniqueInput | FormTemplateVersionWhereUniqueInput[]
+    disconnect?: FormTemplateVersionWhereUniqueInput | FormTemplateVersionWhereUniqueInput[]
+    delete?: FormTemplateVersionWhereUniqueInput | FormTemplateVersionWhereUniqueInput[]
+    connect?: FormTemplateVersionWhereUniqueInput | FormTemplateVersionWhereUniqueInput[]
+    update?: FormTemplateVersionUpdateWithWhereUniqueWithoutTemplateInput | FormTemplateVersionUpdateWithWhereUniqueWithoutTemplateInput[]
+    updateMany?: FormTemplateVersionUpdateManyWithWhereWithoutTemplateInput | FormTemplateVersionUpdateManyWithWhereWithoutTemplateInput[]
+    deleteMany?: FormTemplateVersionScalarWhereInput | FormTemplateVersionScalarWhereInput[]
+  }
+
+  export type FormUncheckedUpdateManyWithoutTemplateNestedInput = {
+    create?: XOR<FormCreateWithoutTemplateInput, FormUncheckedCreateWithoutTemplateInput> | FormCreateWithoutTemplateInput[] | FormUncheckedCreateWithoutTemplateInput[]
+    connectOrCreate?: FormCreateOrConnectWithoutTemplateInput | FormCreateOrConnectWithoutTemplateInput[]
+    upsert?: FormUpsertWithWhereUniqueWithoutTemplateInput | FormUpsertWithWhereUniqueWithoutTemplateInput[]
+    createMany?: FormCreateManyTemplateInputEnvelope
+    set?: FormWhereUniqueInput | FormWhereUniqueInput[]
+    disconnect?: FormWhereUniqueInput | FormWhereUniqueInput[]
+    delete?: FormWhereUniqueInput | FormWhereUniqueInput[]
+    connect?: FormWhereUniqueInput | FormWhereUniqueInput[]
+    update?: FormUpdateWithWhereUniqueWithoutTemplateInput | FormUpdateWithWhereUniqueWithoutTemplateInput[]
+    updateMany?: FormUpdateManyWithWhereWithoutTemplateInput | FormUpdateManyWithWhereWithoutTemplateInput[]
+    deleteMany?: FormScalarWhereInput | FormScalarWhereInput[]
+  }
+
+  export type FormTemplateVersionUncheckedUpdateManyWithoutTemplateNestedInput = {
+    create?: XOR<FormTemplateVersionCreateWithoutTemplateInput, FormTemplateVersionUncheckedCreateWithoutTemplateInput> | FormTemplateVersionCreateWithoutTemplateInput[] | FormTemplateVersionUncheckedCreateWithoutTemplateInput[]
+    connectOrCreate?: FormTemplateVersionCreateOrConnectWithoutTemplateInput | FormTemplateVersionCreateOrConnectWithoutTemplateInput[]
+    upsert?: FormTemplateVersionUpsertWithWhereUniqueWithoutTemplateInput | FormTemplateVersionUpsertWithWhereUniqueWithoutTemplateInput[]
+    createMany?: FormTemplateVersionCreateManyTemplateInputEnvelope
+    set?: FormTemplateVersionWhereUniqueInput | FormTemplateVersionWhereUniqueInput[]
+    disconnect?: FormTemplateVersionWhereUniqueInput | FormTemplateVersionWhereUniqueInput[]
+    delete?: FormTemplateVersionWhereUniqueInput | FormTemplateVersionWhereUniqueInput[]
+    connect?: FormTemplateVersionWhereUniqueInput | FormTemplateVersionWhereUniqueInput[]
+    update?: FormTemplateVersionUpdateWithWhereUniqueWithoutTemplateInput | FormTemplateVersionUpdateWithWhereUniqueWithoutTemplateInput[]
+    updateMany?: FormTemplateVersionUpdateManyWithWhereWithoutTemplateInput | FormTemplateVersionUpdateManyWithWhereWithoutTemplateInput[]
+    deleteMany?: FormTemplateVersionScalarWhereInput | FormTemplateVersionScalarWhereInput[]
+  }
+
+  export type FormTemplateCreateNestedOneWithoutVersionsInput = {
+    create?: XOR<FormTemplateCreateWithoutVersionsInput, FormTemplateUncheckedCreateWithoutVersionsInput>
+    connectOrCreate?: FormTemplateCreateOrConnectWithoutVersionsInput
+    connect?: FormTemplateWhereUniqueInput
+  }
+
+  export type FormTemplateUpdateOneRequiredWithoutVersionsNestedInput = {
+    create?: XOR<FormTemplateCreateWithoutVersionsInput, FormTemplateUncheckedCreateWithoutVersionsInput>
+    connectOrCreate?: FormTemplateCreateOrConnectWithoutVersionsInput
+    upsert?: FormTemplateUpsertWithoutVersionsInput
+    connect?: FormTemplateWhereUniqueInput
+    update?: XOR<XOR<FormTemplateUpdateToOneWithWhereWithoutVersionsInput, FormTemplateUpdateWithoutVersionsInput>, FormTemplateUncheckedUpdateWithoutVersionsInput>
+  }
+
+  export type AppUserCreateNestedManyWithoutRoleInput = {
+    create?: XOR<AppUserCreateWithoutRoleInput, AppUserUncheckedCreateWithoutRoleInput> | AppUserCreateWithoutRoleInput[] | AppUserUncheckedCreateWithoutRoleInput[]
+    connectOrCreate?: AppUserCreateOrConnectWithoutRoleInput | AppUserCreateOrConnectWithoutRoleInput[]
+    createMany?: AppUserCreateManyRoleInputEnvelope
+    connect?: AppUserWhereUniqueInput | AppUserWhereUniqueInput[]
+  }
+
+  export type FormCreateNestedManyWithoutRoleInput = {
+    create?: XOR<FormCreateWithoutRoleInput, FormUncheckedCreateWithoutRoleInput> | FormCreateWithoutRoleInput[] | FormUncheckedCreateWithoutRoleInput[]
+    connectOrCreate?: FormCreateOrConnectWithoutRoleInput | FormCreateOrConnectWithoutRoleInput[]
+    createMany?: FormCreateManyRoleInputEnvelope
+    connect?: FormWhereUniqueInput | FormWhereUniqueInput[]
+  }
+
+  export type FormAssignmentCreateNestedManyWithoutRoleInput = {
+    create?: XOR<FormAssignmentCreateWithoutRoleInput, FormAssignmentUncheckedCreateWithoutRoleInput> | FormAssignmentCreateWithoutRoleInput[] | FormAssignmentUncheckedCreateWithoutRoleInput[]
+    connectOrCreate?: FormAssignmentCreateOrConnectWithoutRoleInput | FormAssignmentCreateOrConnectWithoutRoleInput[]
+    createMany?: FormAssignmentCreateManyRoleInputEnvelope
+    connect?: FormAssignmentWhereUniqueInput | FormAssignmentWhereUniqueInput[]
+  }
+
+  export type FormSubmissionCreateNestedManyWithoutRoleInput = {
+    create?: XOR<FormSubmissionCreateWithoutRoleInput, FormSubmissionUncheckedCreateWithoutRoleInput> | FormSubmissionCreateWithoutRoleInput[] | FormSubmissionUncheckedCreateWithoutRoleInput[]
+    connectOrCreate?: FormSubmissionCreateOrConnectWithoutRoleInput | FormSubmissionCreateOrConnectWithoutRoleInput[]
+    createMany?: FormSubmissionCreateManyRoleInputEnvelope
+    connect?: FormSubmissionWhereUniqueInput | FormSubmissionWhereUniqueInput[]
+  }
+
+  export type AppUserUncheckedCreateNestedManyWithoutRoleInput = {
+    create?: XOR<AppUserCreateWithoutRoleInput, AppUserUncheckedCreateWithoutRoleInput> | AppUserCreateWithoutRoleInput[] | AppUserUncheckedCreateWithoutRoleInput[]
+    connectOrCreate?: AppUserCreateOrConnectWithoutRoleInput | AppUserCreateOrConnectWithoutRoleInput[]
+    createMany?: AppUserCreateManyRoleInputEnvelope
+    connect?: AppUserWhereUniqueInput | AppUserWhereUniqueInput[]
+  }
+
+  export type FormUncheckedCreateNestedManyWithoutRoleInput = {
+    create?: XOR<FormCreateWithoutRoleInput, FormUncheckedCreateWithoutRoleInput> | FormCreateWithoutRoleInput[] | FormUncheckedCreateWithoutRoleInput[]
+    connectOrCreate?: FormCreateOrConnectWithoutRoleInput | FormCreateOrConnectWithoutRoleInput[]
+    createMany?: FormCreateManyRoleInputEnvelope
+    connect?: FormWhereUniqueInput | FormWhereUniqueInput[]
+  }
+
+  export type FormAssignmentUncheckedCreateNestedManyWithoutRoleInput = {
+    create?: XOR<FormAssignmentCreateWithoutRoleInput, FormAssignmentUncheckedCreateWithoutRoleInput> | FormAssignmentCreateWithoutRoleInput[] | FormAssignmentUncheckedCreateWithoutRoleInput[]
+    connectOrCreate?: FormAssignmentCreateOrConnectWithoutRoleInput | FormAssignmentCreateOrConnectWithoutRoleInput[]
+    createMany?: FormAssignmentCreateManyRoleInputEnvelope
+    connect?: FormAssignmentWhereUniqueInput | FormAssignmentWhereUniqueInput[]
+  }
+
+  export type FormSubmissionUncheckedCreateNestedManyWithoutRoleInput = {
+    create?: XOR<FormSubmissionCreateWithoutRoleInput, FormSubmissionUncheckedCreateWithoutRoleInput> | FormSubmissionCreateWithoutRoleInput[] | FormSubmissionUncheckedCreateWithoutRoleInput[]
+    connectOrCreate?: FormSubmissionCreateOrConnectWithoutRoleInput | FormSubmissionCreateOrConnectWithoutRoleInput[]
+    createMany?: FormSubmissionCreateManyRoleInputEnvelope
+    connect?: FormSubmissionWhereUniqueInput | FormSubmissionWhereUniqueInput[]
+  }
+
+  export type AppUserUpdateManyWithoutRoleNestedInput = {
+    create?: XOR<AppUserCreateWithoutRoleInput, AppUserUncheckedCreateWithoutRoleInput> | AppUserCreateWithoutRoleInput[] | AppUserUncheckedCreateWithoutRoleInput[]
+    connectOrCreate?: AppUserCreateOrConnectWithoutRoleInput | AppUserCreateOrConnectWithoutRoleInput[]
+    upsert?: AppUserUpsertWithWhereUniqueWithoutRoleInput | AppUserUpsertWithWhereUniqueWithoutRoleInput[]
+    createMany?: AppUserCreateManyRoleInputEnvelope
+    set?: AppUserWhereUniqueInput | AppUserWhereUniqueInput[]
+    disconnect?: AppUserWhereUniqueInput | AppUserWhereUniqueInput[]
+    delete?: AppUserWhereUniqueInput | AppUserWhereUniqueInput[]
+    connect?: AppUserWhereUniqueInput | AppUserWhereUniqueInput[]
+    update?: AppUserUpdateWithWhereUniqueWithoutRoleInput | AppUserUpdateWithWhereUniqueWithoutRoleInput[]
+    updateMany?: AppUserUpdateManyWithWhereWithoutRoleInput | AppUserUpdateManyWithWhereWithoutRoleInput[]
+    deleteMany?: AppUserScalarWhereInput | AppUserScalarWhereInput[]
+  }
+
+  export type FormUpdateManyWithoutRoleNestedInput = {
+    create?: XOR<FormCreateWithoutRoleInput, FormUncheckedCreateWithoutRoleInput> | FormCreateWithoutRoleInput[] | FormUncheckedCreateWithoutRoleInput[]
+    connectOrCreate?: FormCreateOrConnectWithoutRoleInput | FormCreateOrConnectWithoutRoleInput[]
+    upsert?: FormUpsertWithWhereUniqueWithoutRoleInput | FormUpsertWithWhereUniqueWithoutRoleInput[]
+    createMany?: FormCreateManyRoleInputEnvelope
+    set?: FormWhereUniqueInput | FormWhereUniqueInput[]
+    disconnect?: FormWhereUniqueInput | FormWhereUniqueInput[]
+    delete?: FormWhereUniqueInput | FormWhereUniqueInput[]
+    connect?: FormWhereUniqueInput | FormWhereUniqueInput[]
+    update?: FormUpdateWithWhereUniqueWithoutRoleInput | FormUpdateWithWhereUniqueWithoutRoleInput[]
+    updateMany?: FormUpdateManyWithWhereWithoutRoleInput | FormUpdateManyWithWhereWithoutRoleInput[]
+    deleteMany?: FormScalarWhereInput | FormScalarWhereInput[]
+  }
+
+  export type FormAssignmentUpdateManyWithoutRoleNestedInput = {
+    create?: XOR<FormAssignmentCreateWithoutRoleInput, FormAssignmentUncheckedCreateWithoutRoleInput> | FormAssignmentCreateWithoutRoleInput[] | FormAssignmentUncheckedCreateWithoutRoleInput[]
+    connectOrCreate?: FormAssignmentCreateOrConnectWithoutRoleInput | FormAssignmentCreateOrConnectWithoutRoleInput[]
+    upsert?: FormAssignmentUpsertWithWhereUniqueWithoutRoleInput | FormAssignmentUpsertWithWhereUniqueWithoutRoleInput[]
+    createMany?: FormAssignmentCreateManyRoleInputEnvelope
+    set?: FormAssignmentWhereUniqueInput | FormAssignmentWhereUniqueInput[]
+    disconnect?: FormAssignmentWhereUniqueInput | FormAssignmentWhereUniqueInput[]
+    delete?: FormAssignmentWhereUniqueInput | FormAssignmentWhereUniqueInput[]
+    connect?: FormAssignmentWhereUniqueInput | FormAssignmentWhereUniqueInput[]
+    update?: FormAssignmentUpdateWithWhereUniqueWithoutRoleInput | FormAssignmentUpdateWithWhereUniqueWithoutRoleInput[]
+    updateMany?: FormAssignmentUpdateManyWithWhereWithoutRoleInput | FormAssignmentUpdateManyWithWhereWithoutRoleInput[]
+    deleteMany?: FormAssignmentScalarWhereInput | FormAssignmentScalarWhereInput[]
+  }
+
+  export type FormSubmissionUpdateManyWithoutRoleNestedInput = {
+    create?: XOR<FormSubmissionCreateWithoutRoleInput, FormSubmissionUncheckedCreateWithoutRoleInput> | FormSubmissionCreateWithoutRoleInput[] | FormSubmissionUncheckedCreateWithoutRoleInput[]
+    connectOrCreate?: FormSubmissionCreateOrConnectWithoutRoleInput | FormSubmissionCreateOrConnectWithoutRoleInput[]
+    upsert?: FormSubmissionUpsertWithWhereUniqueWithoutRoleInput | FormSubmissionUpsertWithWhereUniqueWithoutRoleInput[]
+    createMany?: FormSubmissionCreateManyRoleInputEnvelope
+    set?: FormSubmissionWhereUniqueInput | FormSubmissionWhereUniqueInput[]
+    disconnect?: FormSubmissionWhereUniqueInput | FormSubmissionWhereUniqueInput[]
+    delete?: FormSubmissionWhereUniqueInput | FormSubmissionWhereUniqueInput[]
+    connect?: FormSubmissionWhereUniqueInput | FormSubmissionWhereUniqueInput[]
+    update?: FormSubmissionUpdateWithWhereUniqueWithoutRoleInput | FormSubmissionUpdateWithWhereUniqueWithoutRoleInput[]
+    updateMany?: FormSubmissionUpdateManyWithWhereWithoutRoleInput | FormSubmissionUpdateManyWithWhereWithoutRoleInput[]
+    deleteMany?: FormSubmissionScalarWhereInput | FormSubmissionScalarWhereInput[]
+  }
+
+  export type AppUserUncheckedUpdateManyWithoutRoleNestedInput = {
+    create?: XOR<AppUserCreateWithoutRoleInput, AppUserUncheckedCreateWithoutRoleInput> | AppUserCreateWithoutRoleInput[] | AppUserUncheckedCreateWithoutRoleInput[]
+    connectOrCreate?: AppUserCreateOrConnectWithoutRoleInput | AppUserCreateOrConnectWithoutRoleInput[]
+    upsert?: AppUserUpsertWithWhereUniqueWithoutRoleInput | AppUserUpsertWithWhereUniqueWithoutRoleInput[]
+    createMany?: AppUserCreateManyRoleInputEnvelope
+    set?: AppUserWhereUniqueInput | AppUserWhereUniqueInput[]
+    disconnect?: AppUserWhereUniqueInput | AppUserWhereUniqueInput[]
+    delete?: AppUserWhereUniqueInput | AppUserWhereUniqueInput[]
+    connect?: AppUserWhereUniqueInput | AppUserWhereUniqueInput[]
+    update?: AppUserUpdateWithWhereUniqueWithoutRoleInput | AppUserUpdateWithWhereUniqueWithoutRoleInput[]
+    updateMany?: AppUserUpdateManyWithWhereWithoutRoleInput | AppUserUpdateManyWithWhereWithoutRoleInput[]
+    deleteMany?: AppUserScalarWhereInput | AppUserScalarWhereInput[]
+  }
+
+  export type FormUncheckedUpdateManyWithoutRoleNestedInput = {
+    create?: XOR<FormCreateWithoutRoleInput, FormUncheckedCreateWithoutRoleInput> | FormCreateWithoutRoleInput[] | FormUncheckedCreateWithoutRoleInput[]
+    connectOrCreate?: FormCreateOrConnectWithoutRoleInput | FormCreateOrConnectWithoutRoleInput[]
+    upsert?: FormUpsertWithWhereUniqueWithoutRoleInput | FormUpsertWithWhereUniqueWithoutRoleInput[]
+    createMany?: FormCreateManyRoleInputEnvelope
+    set?: FormWhereUniqueInput | FormWhereUniqueInput[]
+    disconnect?: FormWhereUniqueInput | FormWhereUniqueInput[]
+    delete?: FormWhereUniqueInput | FormWhereUniqueInput[]
+    connect?: FormWhereUniqueInput | FormWhereUniqueInput[]
+    update?: FormUpdateWithWhereUniqueWithoutRoleInput | FormUpdateWithWhereUniqueWithoutRoleInput[]
+    updateMany?: FormUpdateManyWithWhereWithoutRoleInput | FormUpdateManyWithWhereWithoutRoleInput[]
+    deleteMany?: FormScalarWhereInput | FormScalarWhereInput[]
+  }
+
+  export type FormAssignmentUncheckedUpdateManyWithoutRoleNestedInput = {
+    create?: XOR<FormAssignmentCreateWithoutRoleInput, FormAssignmentUncheckedCreateWithoutRoleInput> | FormAssignmentCreateWithoutRoleInput[] | FormAssignmentUncheckedCreateWithoutRoleInput[]
+    connectOrCreate?: FormAssignmentCreateOrConnectWithoutRoleInput | FormAssignmentCreateOrConnectWithoutRoleInput[]
+    upsert?: FormAssignmentUpsertWithWhereUniqueWithoutRoleInput | FormAssignmentUpsertWithWhereUniqueWithoutRoleInput[]
+    createMany?: FormAssignmentCreateManyRoleInputEnvelope
+    set?: FormAssignmentWhereUniqueInput | FormAssignmentWhereUniqueInput[]
+    disconnect?: FormAssignmentWhereUniqueInput | FormAssignmentWhereUniqueInput[]
+    delete?: FormAssignmentWhereUniqueInput | FormAssignmentWhereUniqueInput[]
+    connect?: FormAssignmentWhereUniqueInput | FormAssignmentWhereUniqueInput[]
+    update?: FormAssignmentUpdateWithWhereUniqueWithoutRoleInput | FormAssignmentUpdateWithWhereUniqueWithoutRoleInput[]
+    updateMany?: FormAssignmentUpdateManyWithWhereWithoutRoleInput | FormAssignmentUpdateManyWithWhereWithoutRoleInput[]
+    deleteMany?: FormAssignmentScalarWhereInput | FormAssignmentScalarWhereInput[]
+  }
+
+  export type FormSubmissionUncheckedUpdateManyWithoutRoleNestedInput = {
+    create?: XOR<FormSubmissionCreateWithoutRoleInput, FormSubmissionUncheckedCreateWithoutRoleInput> | FormSubmissionCreateWithoutRoleInput[] | FormSubmissionUncheckedCreateWithoutRoleInput[]
+    connectOrCreate?: FormSubmissionCreateOrConnectWithoutRoleInput | FormSubmissionCreateOrConnectWithoutRoleInput[]
+    upsert?: FormSubmissionUpsertWithWhereUniqueWithoutRoleInput | FormSubmissionUpsertWithWhereUniqueWithoutRoleInput[]
+    createMany?: FormSubmissionCreateManyRoleInputEnvelope
+    set?: FormSubmissionWhereUniqueInput | FormSubmissionWhereUniqueInput[]
+    disconnect?: FormSubmissionWhereUniqueInput | FormSubmissionWhereUniqueInput[]
+    delete?: FormSubmissionWhereUniqueInput | FormSubmissionWhereUniqueInput[]
+    connect?: FormSubmissionWhereUniqueInput | FormSubmissionWhereUniqueInput[]
+    update?: FormSubmissionUpdateWithWhereUniqueWithoutRoleInput | FormSubmissionUpdateWithWhereUniqueWithoutRoleInput[]
+    updateMany?: FormSubmissionUpdateManyWithWhereWithoutRoleInput | FormSubmissionUpdateManyWithWhereWithoutRoleInput[]
+    deleteMany?: FormSubmissionScalarWhereInput | FormSubmissionScalarWhereInput[]
+  }
+
+  export type RoleCreateNestedOneWithoutUsersInput = {
+    create?: XOR<RoleCreateWithoutUsersInput, RoleUncheckedCreateWithoutUsersInput>
+    connectOrCreate?: RoleCreateOrConnectWithoutUsersInput
+    connect?: RoleWhereUniqueInput
+  }
+
+  export type RoleUpdateOneWithoutUsersNestedInput = {
+    create?: XOR<RoleCreateWithoutUsersInput, RoleUncheckedCreateWithoutUsersInput>
+    connectOrCreate?: RoleCreateOrConnectWithoutUsersInput
+    upsert?: RoleUpsertWithoutUsersInput
+    disconnect?: RoleWhereInput | boolean
+    delete?: RoleWhereInput | boolean
+    connect?: RoleWhereUniqueInput
+    update?: XOR<XOR<RoleUpdateToOneWithWhereWithoutUsersInput, RoleUpdateWithoutUsersInput>, RoleUncheckedUpdateWithoutUsersInput>
   }
 
   export type NestedIntFilter<$PrismaModel = never> = {
@@ -3787,6 +20603,17 @@ export namespace Prisma {
     startsWith?: string | StringFieldRefInput<$PrismaModel>
     endsWith?: string | StringFieldRefInput<$PrismaModel>
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
+  export type NestedIntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
   export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
@@ -3872,7 +20699,7 @@ export namespace Prisma {
     _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
-  export type NestedIntNullableFilter<$PrismaModel = never> = {
+  export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel> | null
     in?: number[] | null
     notIn?: number[] | null
@@ -3880,18 +20707,210 @@ export namespace Prisma {
     lte?: number | IntFieldRefInput<$PrismaModel>
     gt?: number | IntFieldRefInput<$PrismaModel>
     gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
+  }
+
+  export type NestedFloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type NestedBoolNullableFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
+    not?: NestedBoolNullableFilter<$PrismaModel> | boolean | null
+  }
+
+  export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | null
+    notIn?: Date[] | string[] | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
+  export type NestedFloatNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedFloatNullableFilter<$PrismaModel>
+    _min?: NestedFloatNullableFilter<$PrismaModel>
+    _max?: NestedFloatNullableFilter<$PrismaModel>
+  }
+
+  export type NestedBoolNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
+    not?: NestedBoolNullableWithAggregatesFilter<$PrismaModel> | boolean | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedBoolNullableFilter<$PrismaModel>
+    _max?: NestedBoolNullableFilter<$PrismaModel>
+  }
+
+  export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | null
+    notIn?: Date[] | string[] | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  }
+
+  export type RoleCreateWithoutFormsInput = {
+    key: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    users?: AppUserCreateNestedManyWithoutRoleInput
+    assignments?: FormAssignmentCreateNestedManyWithoutRoleInput
+    submissions?: FormSubmissionCreateNestedManyWithoutRoleInput
+  }
+
+  export type RoleUncheckedCreateWithoutFormsInput = {
+    id?: number
+    key: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    users?: AppUserUncheckedCreateNestedManyWithoutRoleInput
+    assignments?: FormAssignmentUncheckedCreateNestedManyWithoutRoleInput
+    submissions?: FormSubmissionUncheckedCreateNestedManyWithoutRoleInput
+  }
+
+  export type RoleCreateOrConnectWithoutFormsInput = {
+    where: RoleWhereUniqueInput
+    create: XOR<RoleCreateWithoutFormsInput, RoleUncheckedCreateWithoutFormsInput>
+  }
+
+  export type SubmoduleCreateWithoutFormsInput = {
+    slug: string
+    name: string
+    description?: string
+    icon?: string
+    metadata?: string
+    baseTables?: string
+    active?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    assignments?: FormAssignmentCreateNestedManyWithoutSubmoduleInput
+    submissions?: FormSubmissionCreateNestedManyWithoutSubmoduleInput
+  }
+
+  export type SubmoduleUncheckedCreateWithoutFormsInput = {
+    id?: number
+    slug: string
+    name: string
+    description?: string
+    icon?: string
+    metadata?: string
+    baseTables?: string
+    active?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    assignments?: FormAssignmentUncheckedCreateNestedManyWithoutSubmoduleInput
+    submissions?: FormSubmissionUncheckedCreateNestedManyWithoutSubmoduleInput
+  }
+
+  export type SubmoduleCreateOrConnectWithoutFormsInput = {
+    where: SubmoduleWhereUniqueInput
+    create: XOR<SubmoduleCreateWithoutFormsInput, SubmoduleUncheckedCreateWithoutFormsInput>
+  }
+
+  export type FormTemplateCreateWithoutFormsInput = {
+    slug: string
+    name: string
+    description?: string
+    icon?: string
+    metadata?: string
+    page?: string | null
+    components?: string
+    context?: string
+    eventConfig?: string
+    scheduleType?: string
+    scheduleInterval?: number
+    scheduleConfig?: string
+    currentVersion?: number
+    active?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    versions?: FormTemplateVersionCreateNestedManyWithoutTemplateInput
+  }
+
+  export type FormTemplateUncheckedCreateWithoutFormsInput = {
+    id?: number
+    slug: string
+    name: string
+    description?: string
+    icon?: string
+    metadata?: string
+    page?: string | null
+    components?: string
+    context?: string
+    eventConfig?: string
+    scheduleType?: string
+    scheduleInterval?: number
+    scheduleConfig?: string
+    currentVersion?: number
+    active?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    versions?: FormTemplateVersionUncheckedCreateNestedManyWithoutTemplateInput
+  }
+
+  export type FormTemplateCreateOrConnectWithoutFormsInput = {
+    where: FormTemplateWhereUniqueInput
+    create: XOR<FormTemplateCreateWithoutFormsInput, FormTemplateUncheckedCreateWithoutFormsInput>
   }
 
   export type FormSubmissionCreateWithoutFormInput = {
     published?: boolean
+    version?: number
+    userId?: string | null
     content: string
+    computedContent?: string
+    submittedAt?: Date | string
+    formVersion?: FormVersionCreateNestedOneWithoutSubmissionsInput
+    role?: RoleCreateNestedOneWithoutSubmissionsInput
+    submodule?: SubmoduleCreateNestedOneWithoutSubmissionsInput
+    values?: FormSubmissionValueCreateNestedManyWithoutSubmissionInput
   }
 
   export type FormSubmissionUncheckedCreateWithoutFormInput = {
     id?: number
     published?: boolean
+    formVersionId?: number | null
+    version?: number
+    userId?: string | null
+    roleId?: number | null
+    submoduleId?: number | null
     content: string
+    computedContent?: string
+    submittedAt?: Date | string
+    values?: FormSubmissionValueUncheckedCreateNestedManyWithoutSubmissionInput
   }
 
   export type FormSubmissionCreateOrConnectWithoutFormInput = {
@@ -3901,6 +20920,282 @@ export namespace Prisma {
 
   export type FormSubmissionCreateManyFormInputEnvelope = {
     data: FormSubmissionCreateManyFormInput | FormSubmissionCreateManyFormInput[]
+  }
+
+  export type FormSubmissionValueCreateWithoutFormInput = {
+    fieldKey: string
+    fieldLabel?: string
+    elementId?: string | null
+    pageId?: string | null
+    parentId?: string | null
+    valueType?: string
+    stringValue?: string | null
+    numberValue?: number | null
+    booleanValue?: boolean | null
+    dateValue?: Date | string | null
+    jsonValue?: string | null
+    rawValue?: string | null
+    createdAt?: Date | string
+    submission: FormSubmissionCreateNestedOneWithoutValuesInput
+    formVersion?: FormVersionCreateNestedOneWithoutSubmissionValuesInput
+  }
+
+  export type FormSubmissionValueUncheckedCreateWithoutFormInput = {
+    id?: number
+    submissionId: number
+    formVersionId?: number | null
+    fieldKey: string
+    fieldLabel?: string
+    elementId?: string | null
+    pageId?: string | null
+    parentId?: string | null
+    valueType?: string
+    stringValue?: string | null
+    numberValue?: number | null
+    booleanValue?: boolean | null
+    dateValue?: Date | string | null
+    jsonValue?: string | null
+    rawValue?: string | null
+    createdAt?: Date | string
+  }
+
+  export type FormSubmissionValueCreateOrConnectWithoutFormInput = {
+    where: FormSubmissionValueWhereUniqueInput
+    create: XOR<FormSubmissionValueCreateWithoutFormInput, FormSubmissionValueUncheckedCreateWithoutFormInput>
+  }
+
+  export type FormSubmissionValueCreateManyFormInputEnvelope = {
+    data: FormSubmissionValueCreateManyFormInput | FormSubmissionValueCreateManyFormInput[]
+  }
+
+  export type FormVersionCreateWithoutFormInput = {
+    version: number
+    name: string
+    description?: string
+    page?: string | null
+    components?: string
+    context?: string
+    eventConfig?: string
+    scheduleType?: string
+    scheduleInterval?: number
+    scheduleConfig?: string
+    published?: boolean
+    createdAt?: Date | string
+    submissions?: FormSubmissionCreateNestedManyWithoutFormVersionInput
+    submissionValues?: FormSubmissionValueCreateNestedManyWithoutFormVersionInput
+  }
+
+  export type FormVersionUncheckedCreateWithoutFormInput = {
+    id?: number
+    version: number
+    name: string
+    description?: string
+    page?: string | null
+    components?: string
+    context?: string
+    eventConfig?: string
+    scheduleType?: string
+    scheduleInterval?: number
+    scheduleConfig?: string
+    published?: boolean
+    createdAt?: Date | string
+    submissions?: FormSubmissionUncheckedCreateNestedManyWithoutFormVersionInput
+    submissionValues?: FormSubmissionValueUncheckedCreateNestedManyWithoutFormVersionInput
+  }
+
+  export type FormVersionCreateOrConnectWithoutFormInput = {
+    where: FormVersionWhereUniqueInput
+    create: XOR<FormVersionCreateWithoutFormInput, FormVersionUncheckedCreateWithoutFormInput>
+  }
+
+  export type FormVersionCreateManyFormInputEnvelope = {
+    data: FormVersionCreateManyFormInput | FormVersionCreateManyFormInput[]
+  }
+
+  export type FormAssignmentCreateWithoutFormInput = {
+    userId?: string | null
+    active?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    role?: RoleCreateNestedOneWithoutAssignmentsInput
+    submodule: SubmoduleCreateNestedOneWithoutAssignmentsInput
+  }
+
+  export type FormAssignmentUncheckedCreateWithoutFormInput = {
+    id?: number
+    userId?: string | null
+    roleId?: number | null
+    submoduleId: number
+    active?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FormAssignmentCreateOrConnectWithoutFormInput = {
+    where: FormAssignmentWhereUniqueInput
+    create: XOR<FormAssignmentCreateWithoutFormInput, FormAssignmentUncheckedCreateWithoutFormInput>
+  }
+
+  export type FormAssignmentCreateManyFormInputEnvelope = {
+    data: FormAssignmentCreateManyFormInput | FormAssignmentCreateManyFormInput[]
+  }
+
+  export type FormEventCreateWithoutFormInput = {
+    version?: number
+    name: string
+    sourceField?: string | null
+    targetField: string
+    expression: string
+    trigger?: string
+    enabled?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FormEventUncheckedCreateWithoutFormInput = {
+    id?: number
+    version?: number
+    name: string
+    sourceField?: string | null
+    targetField: string
+    expression: string
+    trigger?: string
+    enabled?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FormEventCreateOrConnectWithoutFormInput = {
+    where: FormEventWhereUniqueInput
+    create: XOR<FormEventCreateWithoutFormInput, FormEventUncheckedCreateWithoutFormInput>
+  }
+
+  export type FormEventCreateManyFormInputEnvelope = {
+    data: FormEventCreateManyFormInput | FormEventCreateManyFormInput[]
+  }
+
+  export type RoleUpsertWithoutFormsInput = {
+    update: XOR<RoleUpdateWithoutFormsInput, RoleUncheckedUpdateWithoutFormsInput>
+    create: XOR<RoleCreateWithoutFormsInput, RoleUncheckedCreateWithoutFormsInput>
+    where?: RoleWhereInput
+  }
+
+  export type RoleUpdateToOneWithWhereWithoutFormsInput = {
+    where?: RoleWhereInput
+    data: XOR<RoleUpdateWithoutFormsInput, RoleUncheckedUpdateWithoutFormsInput>
+  }
+
+  export type RoleUpdateWithoutFormsInput = {
+    key?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    users?: AppUserUpdateManyWithoutRoleNestedInput
+    assignments?: FormAssignmentUpdateManyWithoutRoleNestedInput
+    submissions?: FormSubmissionUpdateManyWithoutRoleNestedInput
+  }
+
+  export type RoleUncheckedUpdateWithoutFormsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    key?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    users?: AppUserUncheckedUpdateManyWithoutRoleNestedInput
+    assignments?: FormAssignmentUncheckedUpdateManyWithoutRoleNestedInput
+    submissions?: FormSubmissionUncheckedUpdateManyWithoutRoleNestedInput
+  }
+
+  export type SubmoduleUpsertWithoutFormsInput = {
+    update: XOR<SubmoduleUpdateWithoutFormsInput, SubmoduleUncheckedUpdateWithoutFormsInput>
+    create: XOR<SubmoduleCreateWithoutFormsInput, SubmoduleUncheckedCreateWithoutFormsInput>
+    where?: SubmoduleWhereInput
+  }
+
+  export type SubmoduleUpdateToOneWithWhereWithoutFormsInput = {
+    where?: SubmoduleWhereInput
+    data: XOR<SubmoduleUpdateWithoutFormsInput, SubmoduleUncheckedUpdateWithoutFormsInput>
+  }
+
+  export type SubmoduleUpdateWithoutFormsInput = {
+    slug?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    icon?: StringFieldUpdateOperationsInput | string
+    metadata?: StringFieldUpdateOperationsInput | string
+    baseTables?: StringFieldUpdateOperationsInput | string
+    active?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    assignments?: FormAssignmentUpdateManyWithoutSubmoduleNestedInput
+    submissions?: FormSubmissionUpdateManyWithoutSubmoduleNestedInput
+  }
+
+  export type SubmoduleUncheckedUpdateWithoutFormsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    slug?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    icon?: StringFieldUpdateOperationsInput | string
+    metadata?: StringFieldUpdateOperationsInput | string
+    baseTables?: StringFieldUpdateOperationsInput | string
+    active?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    assignments?: FormAssignmentUncheckedUpdateManyWithoutSubmoduleNestedInput
+    submissions?: FormSubmissionUncheckedUpdateManyWithoutSubmoduleNestedInput
+  }
+
+  export type FormTemplateUpsertWithoutFormsInput = {
+    update: XOR<FormTemplateUpdateWithoutFormsInput, FormTemplateUncheckedUpdateWithoutFormsInput>
+    create: XOR<FormTemplateCreateWithoutFormsInput, FormTemplateUncheckedCreateWithoutFormsInput>
+    where?: FormTemplateWhereInput
+  }
+
+  export type FormTemplateUpdateToOneWithWhereWithoutFormsInput = {
+    where?: FormTemplateWhereInput
+    data: XOR<FormTemplateUpdateWithoutFormsInput, FormTemplateUncheckedUpdateWithoutFormsInput>
+  }
+
+  export type FormTemplateUpdateWithoutFormsInput = {
+    slug?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    icon?: StringFieldUpdateOperationsInput | string
+    metadata?: StringFieldUpdateOperationsInput | string
+    page?: NullableStringFieldUpdateOperationsInput | string | null
+    components?: StringFieldUpdateOperationsInput | string
+    context?: StringFieldUpdateOperationsInput | string
+    eventConfig?: StringFieldUpdateOperationsInput | string
+    scheduleType?: StringFieldUpdateOperationsInput | string
+    scheduleInterval?: IntFieldUpdateOperationsInput | number
+    scheduleConfig?: StringFieldUpdateOperationsInput | string
+    currentVersion?: IntFieldUpdateOperationsInput | number
+    active?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    versions?: FormTemplateVersionUpdateManyWithoutTemplateNestedInput
+  }
+
+  export type FormTemplateUncheckedUpdateWithoutFormsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    slug?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    icon?: StringFieldUpdateOperationsInput | string
+    metadata?: StringFieldUpdateOperationsInput | string
+    page?: NullableStringFieldUpdateOperationsInput | string | null
+    components?: StringFieldUpdateOperationsInput | string
+    context?: StringFieldUpdateOperationsInput | string
+    eventConfig?: StringFieldUpdateOperationsInput | string
+    scheduleType?: StringFieldUpdateOperationsInput | string
+    scheduleInterval?: IntFieldUpdateOperationsInput | number
+    scheduleConfig?: StringFieldUpdateOperationsInput | string
+    currentVersion?: IntFieldUpdateOperationsInput | number
+    active?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    versions?: FormTemplateVersionUncheckedUpdateManyWithoutTemplateNestedInput
   }
 
   export type FormSubmissionUpsertWithWhereUniqueWithoutFormInput = {
@@ -3926,10 +21221,155 @@ export namespace Prisma {
     id?: IntFilter<"FormSubmission"> | number
     published?: BoolFilter<"FormSubmission"> | boolean
     formId?: IntFilter<"FormSubmission"> | number
+    formVersionId?: IntNullableFilter<"FormSubmission"> | number | null
+    version?: IntFilter<"FormSubmission"> | number
+    userId?: StringNullableFilter<"FormSubmission"> | string | null
+    roleId?: IntNullableFilter<"FormSubmission"> | number | null
+    submoduleId?: IntNullableFilter<"FormSubmission"> | number | null
     content?: StringFilter<"FormSubmission"> | string
+    computedContent?: StringFilter<"FormSubmission"> | string
+    submittedAt?: DateTimeFilter<"FormSubmission"> | Date | string
   }
 
-  export type FormCreateWithoutFormSubmissionInput = {
+  export type FormSubmissionValueUpsertWithWhereUniqueWithoutFormInput = {
+    where: FormSubmissionValueWhereUniqueInput
+    update: XOR<FormSubmissionValueUpdateWithoutFormInput, FormSubmissionValueUncheckedUpdateWithoutFormInput>
+    create: XOR<FormSubmissionValueCreateWithoutFormInput, FormSubmissionValueUncheckedCreateWithoutFormInput>
+  }
+
+  export type FormSubmissionValueUpdateWithWhereUniqueWithoutFormInput = {
+    where: FormSubmissionValueWhereUniqueInput
+    data: XOR<FormSubmissionValueUpdateWithoutFormInput, FormSubmissionValueUncheckedUpdateWithoutFormInput>
+  }
+
+  export type FormSubmissionValueUpdateManyWithWhereWithoutFormInput = {
+    where: FormSubmissionValueScalarWhereInput
+    data: XOR<FormSubmissionValueUpdateManyMutationInput, FormSubmissionValueUncheckedUpdateManyWithoutFormInput>
+  }
+
+  export type FormSubmissionValueScalarWhereInput = {
+    AND?: FormSubmissionValueScalarWhereInput | FormSubmissionValueScalarWhereInput[]
+    OR?: FormSubmissionValueScalarWhereInput[]
+    NOT?: FormSubmissionValueScalarWhereInput | FormSubmissionValueScalarWhereInput[]
+    id?: IntFilter<"FormSubmissionValue"> | number
+    submissionId?: IntFilter<"FormSubmissionValue"> | number
+    formId?: IntFilter<"FormSubmissionValue"> | number
+    formVersionId?: IntNullableFilter<"FormSubmissionValue"> | number | null
+    fieldKey?: StringFilter<"FormSubmissionValue"> | string
+    fieldLabel?: StringFilter<"FormSubmissionValue"> | string
+    elementId?: StringNullableFilter<"FormSubmissionValue"> | string | null
+    pageId?: StringNullableFilter<"FormSubmissionValue"> | string | null
+    parentId?: StringNullableFilter<"FormSubmissionValue"> | string | null
+    valueType?: StringFilter<"FormSubmissionValue"> | string
+    stringValue?: StringNullableFilter<"FormSubmissionValue"> | string | null
+    numberValue?: FloatNullableFilter<"FormSubmissionValue"> | number | null
+    booleanValue?: BoolNullableFilter<"FormSubmissionValue"> | boolean | null
+    dateValue?: DateTimeNullableFilter<"FormSubmissionValue"> | Date | string | null
+    jsonValue?: StringNullableFilter<"FormSubmissionValue"> | string | null
+    rawValue?: StringNullableFilter<"FormSubmissionValue"> | string | null
+    createdAt?: DateTimeFilter<"FormSubmissionValue"> | Date | string
+  }
+
+  export type FormVersionUpsertWithWhereUniqueWithoutFormInput = {
+    where: FormVersionWhereUniqueInput
+    update: XOR<FormVersionUpdateWithoutFormInput, FormVersionUncheckedUpdateWithoutFormInput>
+    create: XOR<FormVersionCreateWithoutFormInput, FormVersionUncheckedCreateWithoutFormInput>
+  }
+
+  export type FormVersionUpdateWithWhereUniqueWithoutFormInput = {
+    where: FormVersionWhereUniqueInput
+    data: XOR<FormVersionUpdateWithoutFormInput, FormVersionUncheckedUpdateWithoutFormInput>
+  }
+
+  export type FormVersionUpdateManyWithWhereWithoutFormInput = {
+    where: FormVersionScalarWhereInput
+    data: XOR<FormVersionUpdateManyMutationInput, FormVersionUncheckedUpdateManyWithoutFormInput>
+  }
+
+  export type FormVersionScalarWhereInput = {
+    AND?: FormVersionScalarWhereInput | FormVersionScalarWhereInput[]
+    OR?: FormVersionScalarWhereInput[]
+    NOT?: FormVersionScalarWhereInput | FormVersionScalarWhereInput[]
+    id?: IntFilter<"FormVersion"> | number
+    formId?: IntFilter<"FormVersion"> | number
+    version?: IntFilter<"FormVersion"> | number
+    name?: StringFilter<"FormVersion"> | string
+    description?: StringFilter<"FormVersion"> | string
+    page?: StringNullableFilter<"FormVersion"> | string | null
+    components?: StringFilter<"FormVersion"> | string
+    context?: StringFilter<"FormVersion"> | string
+    eventConfig?: StringFilter<"FormVersion"> | string
+    scheduleType?: StringFilter<"FormVersion"> | string
+    scheduleInterval?: IntFilter<"FormVersion"> | number
+    scheduleConfig?: StringFilter<"FormVersion"> | string
+    published?: BoolFilter<"FormVersion"> | boolean
+    createdAt?: DateTimeFilter<"FormVersion"> | Date | string
+  }
+
+  export type FormAssignmentUpsertWithWhereUniqueWithoutFormInput = {
+    where: FormAssignmentWhereUniqueInput
+    update: XOR<FormAssignmentUpdateWithoutFormInput, FormAssignmentUncheckedUpdateWithoutFormInput>
+    create: XOR<FormAssignmentCreateWithoutFormInput, FormAssignmentUncheckedCreateWithoutFormInput>
+  }
+
+  export type FormAssignmentUpdateWithWhereUniqueWithoutFormInput = {
+    where: FormAssignmentWhereUniqueInput
+    data: XOR<FormAssignmentUpdateWithoutFormInput, FormAssignmentUncheckedUpdateWithoutFormInput>
+  }
+
+  export type FormAssignmentUpdateManyWithWhereWithoutFormInput = {
+    where: FormAssignmentScalarWhereInput
+    data: XOR<FormAssignmentUpdateManyMutationInput, FormAssignmentUncheckedUpdateManyWithoutFormInput>
+  }
+
+  export type FormAssignmentScalarWhereInput = {
+    AND?: FormAssignmentScalarWhereInput | FormAssignmentScalarWhereInput[]
+    OR?: FormAssignmentScalarWhereInput[]
+    NOT?: FormAssignmentScalarWhereInput | FormAssignmentScalarWhereInput[]
+    id?: IntFilter<"FormAssignment"> | number
+    formId?: IntFilter<"FormAssignment"> | number
+    userId?: StringNullableFilter<"FormAssignment"> | string | null
+    roleId?: IntNullableFilter<"FormAssignment"> | number | null
+    submoduleId?: IntFilter<"FormAssignment"> | number
+    active?: BoolFilter<"FormAssignment"> | boolean
+    createdAt?: DateTimeFilter<"FormAssignment"> | Date | string
+    updatedAt?: DateTimeFilter<"FormAssignment"> | Date | string
+  }
+
+  export type FormEventUpsertWithWhereUniqueWithoutFormInput = {
+    where: FormEventWhereUniqueInput
+    update: XOR<FormEventUpdateWithoutFormInput, FormEventUncheckedUpdateWithoutFormInput>
+    create: XOR<FormEventCreateWithoutFormInput, FormEventUncheckedCreateWithoutFormInput>
+  }
+
+  export type FormEventUpdateWithWhereUniqueWithoutFormInput = {
+    where: FormEventWhereUniqueInput
+    data: XOR<FormEventUpdateWithoutFormInput, FormEventUncheckedUpdateWithoutFormInput>
+  }
+
+  export type FormEventUpdateManyWithWhereWithoutFormInput = {
+    where: FormEventScalarWhereInput
+    data: XOR<FormEventUpdateManyMutationInput, FormEventUncheckedUpdateManyWithoutFormInput>
+  }
+
+  export type FormEventScalarWhereInput = {
+    AND?: FormEventScalarWhereInput | FormEventScalarWhereInput[]
+    OR?: FormEventScalarWhereInput[]
+    NOT?: FormEventScalarWhereInput | FormEventScalarWhereInput[]
+    id?: IntFilter<"FormEvent"> | number
+    formId?: IntFilter<"FormEvent"> | number
+    version?: IntFilter<"FormEvent"> | number
+    name?: StringFilter<"FormEvent"> | string
+    sourceField?: StringNullableFilter<"FormEvent"> | string | null
+    targetField?: StringFilter<"FormEvent"> | string
+    expression?: StringFilter<"FormEvent"> | string
+    trigger?: StringFilter<"FormEvent"> | string
+    enabled?: BoolFilter<"FormEvent"> | boolean
+    createdAt?: DateTimeFilter<"FormEvent"> | Date | string
+    updatedAt?: DateTimeFilter<"FormEvent"> | Date | string
+  }
+
+  export type FormCreateWithoutSubmissionsInput = {
     userId: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -3942,9 +21382,23 @@ export namespace Prisma {
     visit?: number
     submission?: number
     sharedURL?: string
+    currentVersion?: number
+    eventConfig?: string
+    scheduleType?: string
+    scheduleInterval?: number
+    scheduleConfig?: string
+    assignedUserId?: string | null
+    templateVersion?: number | null
+    role?: RoleCreateNestedOneWithoutFormsInput
+    submodule?: SubmoduleCreateNestedOneWithoutFormsInput
+    template?: FormTemplateCreateNestedOneWithoutFormsInput
+    submissionValues?: FormSubmissionValueCreateNestedManyWithoutFormInput
+    versions?: FormVersionCreateNestedManyWithoutFormInput
+    assignments?: FormAssignmentCreateNestedManyWithoutFormInput
+    eventRules?: FormEventCreateNestedManyWithoutFormInput
   }
 
-  export type FormUncheckedCreateWithoutFormSubmissionInput = {
+  export type FormUncheckedCreateWithoutSubmissionsInput = {
     id?: number
     userId: string
     createdAt?: Date | string
@@ -3958,25 +21412,185 @@ export namespace Prisma {
     visit?: number
     submission?: number
     sharedURL?: string
+    currentVersion?: number
+    eventConfig?: string
+    scheduleType?: string
+    scheduleInterval?: number
+    scheduleConfig?: string
+    assignedUserId?: string | null
+    roleId?: number | null
+    submoduleId?: number | null
+    templateId?: number | null
+    templateVersion?: number | null
+    submissionValues?: FormSubmissionValueUncheckedCreateNestedManyWithoutFormInput
+    versions?: FormVersionUncheckedCreateNestedManyWithoutFormInput
+    assignments?: FormAssignmentUncheckedCreateNestedManyWithoutFormInput
+    eventRules?: FormEventUncheckedCreateNestedManyWithoutFormInput
   }
 
-  export type FormCreateOrConnectWithoutFormSubmissionInput = {
+  export type FormCreateOrConnectWithoutSubmissionsInput = {
     where: FormWhereUniqueInput
-    create: XOR<FormCreateWithoutFormSubmissionInput, FormUncheckedCreateWithoutFormSubmissionInput>
+    create: XOR<FormCreateWithoutSubmissionsInput, FormUncheckedCreateWithoutSubmissionsInput>
   }
 
-  export type FormUpsertWithoutFormSubmissionInput = {
-    update: XOR<FormUpdateWithoutFormSubmissionInput, FormUncheckedUpdateWithoutFormSubmissionInput>
-    create: XOR<FormCreateWithoutFormSubmissionInput, FormUncheckedCreateWithoutFormSubmissionInput>
+  export type FormVersionCreateWithoutSubmissionsInput = {
+    version: number
+    name: string
+    description?: string
+    page?: string | null
+    components?: string
+    context?: string
+    eventConfig?: string
+    scheduleType?: string
+    scheduleInterval?: number
+    scheduleConfig?: string
+    published?: boolean
+    createdAt?: Date | string
+    form: FormCreateNestedOneWithoutVersionsInput
+    submissionValues?: FormSubmissionValueCreateNestedManyWithoutFormVersionInput
+  }
+
+  export type FormVersionUncheckedCreateWithoutSubmissionsInput = {
+    id?: number
+    formId: number
+    version: number
+    name: string
+    description?: string
+    page?: string | null
+    components?: string
+    context?: string
+    eventConfig?: string
+    scheduleType?: string
+    scheduleInterval?: number
+    scheduleConfig?: string
+    published?: boolean
+    createdAt?: Date | string
+    submissionValues?: FormSubmissionValueUncheckedCreateNestedManyWithoutFormVersionInput
+  }
+
+  export type FormVersionCreateOrConnectWithoutSubmissionsInput = {
+    where: FormVersionWhereUniqueInput
+    create: XOR<FormVersionCreateWithoutSubmissionsInput, FormVersionUncheckedCreateWithoutSubmissionsInput>
+  }
+
+  export type RoleCreateWithoutSubmissionsInput = {
+    key: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    users?: AppUserCreateNestedManyWithoutRoleInput
+    forms?: FormCreateNestedManyWithoutRoleInput
+    assignments?: FormAssignmentCreateNestedManyWithoutRoleInput
+  }
+
+  export type RoleUncheckedCreateWithoutSubmissionsInput = {
+    id?: number
+    key: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    users?: AppUserUncheckedCreateNestedManyWithoutRoleInput
+    forms?: FormUncheckedCreateNestedManyWithoutRoleInput
+    assignments?: FormAssignmentUncheckedCreateNestedManyWithoutRoleInput
+  }
+
+  export type RoleCreateOrConnectWithoutSubmissionsInput = {
+    where: RoleWhereUniqueInput
+    create: XOR<RoleCreateWithoutSubmissionsInput, RoleUncheckedCreateWithoutSubmissionsInput>
+  }
+
+  export type SubmoduleCreateWithoutSubmissionsInput = {
+    slug: string
+    name: string
+    description?: string
+    icon?: string
+    metadata?: string
+    baseTables?: string
+    active?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    forms?: FormCreateNestedManyWithoutSubmoduleInput
+    assignments?: FormAssignmentCreateNestedManyWithoutSubmoduleInput
+  }
+
+  export type SubmoduleUncheckedCreateWithoutSubmissionsInput = {
+    id?: number
+    slug: string
+    name: string
+    description?: string
+    icon?: string
+    metadata?: string
+    baseTables?: string
+    active?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    forms?: FormUncheckedCreateNestedManyWithoutSubmoduleInput
+    assignments?: FormAssignmentUncheckedCreateNestedManyWithoutSubmoduleInput
+  }
+
+  export type SubmoduleCreateOrConnectWithoutSubmissionsInput = {
+    where: SubmoduleWhereUniqueInput
+    create: XOR<SubmoduleCreateWithoutSubmissionsInput, SubmoduleUncheckedCreateWithoutSubmissionsInput>
+  }
+
+  export type FormSubmissionValueCreateWithoutSubmissionInput = {
+    fieldKey: string
+    fieldLabel?: string
+    elementId?: string | null
+    pageId?: string | null
+    parentId?: string | null
+    valueType?: string
+    stringValue?: string | null
+    numberValue?: number | null
+    booleanValue?: boolean | null
+    dateValue?: Date | string | null
+    jsonValue?: string | null
+    rawValue?: string | null
+    createdAt?: Date | string
+    form: FormCreateNestedOneWithoutSubmissionValuesInput
+    formVersion?: FormVersionCreateNestedOneWithoutSubmissionValuesInput
+  }
+
+  export type FormSubmissionValueUncheckedCreateWithoutSubmissionInput = {
+    id?: number
+    formId: number
+    formVersionId?: number | null
+    fieldKey: string
+    fieldLabel?: string
+    elementId?: string | null
+    pageId?: string | null
+    parentId?: string | null
+    valueType?: string
+    stringValue?: string | null
+    numberValue?: number | null
+    booleanValue?: boolean | null
+    dateValue?: Date | string | null
+    jsonValue?: string | null
+    rawValue?: string | null
+    createdAt?: Date | string
+  }
+
+  export type FormSubmissionValueCreateOrConnectWithoutSubmissionInput = {
+    where: FormSubmissionValueWhereUniqueInput
+    create: XOR<FormSubmissionValueCreateWithoutSubmissionInput, FormSubmissionValueUncheckedCreateWithoutSubmissionInput>
+  }
+
+  export type FormSubmissionValueCreateManySubmissionInputEnvelope = {
+    data: FormSubmissionValueCreateManySubmissionInput | FormSubmissionValueCreateManySubmissionInput[]
+  }
+
+  export type FormUpsertWithoutSubmissionsInput = {
+    update: XOR<FormUpdateWithoutSubmissionsInput, FormUncheckedUpdateWithoutSubmissionsInput>
+    create: XOR<FormCreateWithoutSubmissionsInput, FormUncheckedCreateWithoutSubmissionsInput>
     where?: FormWhereInput
   }
 
-  export type FormUpdateToOneWithWhereWithoutFormSubmissionInput = {
+  export type FormUpdateToOneWithWhereWithoutSubmissionsInput = {
     where?: FormWhereInput
-    data: XOR<FormUpdateWithoutFormSubmissionInput, FormUncheckedUpdateWithoutFormSubmissionInput>
+    data: XOR<FormUpdateWithoutSubmissionsInput, FormUncheckedUpdateWithoutSubmissionsInput>
   }
 
-  export type FormUpdateWithoutFormSubmissionInput = {
+  export type FormUpdateWithoutSubmissionsInput = {
     userId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -3989,9 +21603,23 @@ export namespace Prisma {
     visit?: IntFieldUpdateOperationsInput | number
     submission?: IntFieldUpdateOperationsInput | number
     sharedURL?: StringFieldUpdateOperationsInput | string
+    currentVersion?: IntFieldUpdateOperationsInput | number
+    eventConfig?: StringFieldUpdateOperationsInput | string
+    scheduleType?: StringFieldUpdateOperationsInput | string
+    scheduleInterval?: IntFieldUpdateOperationsInput | number
+    scheduleConfig?: StringFieldUpdateOperationsInput | string
+    assignedUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    templateVersion?: NullableIntFieldUpdateOperationsInput | number | null
+    role?: RoleUpdateOneWithoutFormsNestedInput
+    submodule?: SubmoduleUpdateOneWithoutFormsNestedInput
+    template?: FormTemplateUpdateOneWithoutFormsNestedInput
+    submissionValues?: FormSubmissionValueUpdateManyWithoutFormNestedInput
+    versions?: FormVersionUpdateManyWithoutFormNestedInput
+    assignments?: FormAssignmentUpdateManyWithoutFormNestedInput
+    eventRules?: FormEventUpdateManyWithoutFormNestedInput
   }
 
-  export type FormUncheckedUpdateWithoutFormSubmissionInput = {
+  export type FormUncheckedUpdateWithoutSubmissionsInput = {
     id?: IntFieldUpdateOperationsInput | number
     userId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -4005,48 +21633,2954 @@ export namespace Prisma {
     visit?: IntFieldUpdateOperationsInput | number
     submission?: IntFieldUpdateOperationsInput | number
     sharedURL?: StringFieldUpdateOperationsInput | string
+    currentVersion?: IntFieldUpdateOperationsInput | number
+    eventConfig?: StringFieldUpdateOperationsInput | string
+    scheduleType?: StringFieldUpdateOperationsInput | string
+    scheduleInterval?: IntFieldUpdateOperationsInput | number
+    scheduleConfig?: StringFieldUpdateOperationsInput | string
+    assignedUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    roleId?: NullableIntFieldUpdateOperationsInput | number | null
+    submoduleId?: NullableIntFieldUpdateOperationsInput | number | null
+    templateId?: NullableIntFieldUpdateOperationsInput | number | null
+    templateVersion?: NullableIntFieldUpdateOperationsInput | number | null
+    submissionValues?: FormSubmissionValueUncheckedUpdateManyWithoutFormNestedInput
+    versions?: FormVersionUncheckedUpdateManyWithoutFormNestedInput
+    assignments?: FormAssignmentUncheckedUpdateManyWithoutFormNestedInput
+    eventRules?: FormEventUncheckedUpdateManyWithoutFormNestedInput
+  }
+
+  export type FormVersionUpsertWithoutSubmissionsInput = {
+    update: XOR<FormVersionUpdateWithoutSubmissionsInput, FormVersionUncheckedUpdateWithoutSubmissionsInput>
+    create: XOR<FormVersionCreateWithoutSubmissionsInput, FormVersionUncheckedCreateWithoutSubmissionsInput>
+    where?: FormVersionWhereInput
+  }
+
+  export type FormVersionUpdateToOneWithWhereWithoutSubmissionsInput = {
+    where?: FormVersionWhereInput
+    data: XOR<FormVersionUpdateWithoutSubmissionsInput, FormVersionUncheckedUpdateWithoutSubmissionsInput>
+  }
+
+  export type FormVersionUpdateWithoutSubmissionsInput = {
+    version?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    page?: NullableStringFieldUpdateOperationsInput | string | null
+    components?: StringFieldUpdateOperationsInput | string
+    context?: StringFieldUpdateOperationsInput | string
+    eventConfig?: StringFieldUpdateOperationsInput | string
+    scheduleType?: StringFieldUpdateOperationsInput | string
+    scheduleInterval?: IntFieldUpdateOperationsInput | number
+    scheduleConfig?: StringFieldUpdateOperationsInput | string
+    published?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    form?: FormUpdateOneRequiredWithoutVersionsNestedInput
+    submissionValues?: FormSubmissionValueUpdateManyWithoutFormVersionNestedInput
+  }
+
+  export type FormVersionUncheckedUpdateWithoutSubmissionsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    formId?: IntFieldUpdateOperationsInput | number
+    version?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    page?: NullableStringFieldUpdateOperationsInput | string | null
+    components?: StringFieldUpdateOperationsInput | string
+    context?: StringFieldUpdateOperationsInput | string
+    eventConfig?: StringFieldUpdateOperationsInput | string
+    scheduleType?: StringFieldUpdateOperationsInput | string
+    scheduleInterval?: IntFieldUpdateOperationsInput | number
+    scheduleConfig?: StringFieldUpdateOperationsInput | string
+    published?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    submissionValues?: FormSubmissionValueUncheckedUpdateManyWithoutFormVersionNestedInput
+  }
+
+  export type RoleUpsertWithoutSubmissionsInput = {
+    update: XOR<RoleUpdateWithoutSubmissionsInput, RoleUncheckedUpdateWithoutSubmissionsInput>
+    create: XOR<RoleCreateWithoutSubmissionsInput, RoleUncheckedCreateWithoutSubmissionsInput>
+    where?: RoleWhereInput
+  }
+
+  export type RoleUpdateToOneWithWhereWithoutSubmissionsInput = {
+    where?: RoleWhereInput
+    data: XOR<RoleUpdateWithoutSubmissionsInput, RoleUncheckedUpdateWithoutSubmissionsInput>
+  }
+
+  export type RoleUpdateWithoutSubmissionsInput = {
+    key?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    users?: AppUserUpdateManyWithoutRoleNestedInput
+    forms?: FormUpdateManyWithoutRoleNestedInput
+    assignments?: FormAssignmentUpdateManyWithoutRoleNestedInput
+  }
+
+  export type RoleUncheckedUpdateWithoutSubmissionsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    key?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    users?: AppUserUncheckedUpdateManyWithoutRoleNestedInput
+    forms?: FormUncheckedUpdateManyWithoutRoleNestedInput
+    assignments?: FormAssignmentUncheckedUpdateManyWithoutRoleNestedInput
+  }
+
+  export type SubmoduleUpsertWithoutSubmissionsInput = {
+    update: XOR<SubmoduleUpdateWithoutSubmissionsInput, SubmoduleUncheckedUpdateWithoutSubmissionsInput>
+    create: XOR<SubmoduleCreateWithoutSubmissionsInput, SubmoduleUncheckedCreateWithoutSubmissionsInput>
+    where?: SubmoduleWhereInput
+  }
+
+  export type SubmoduleUpdateToOneWithWhereWithoutSubmissionsInput = {
+    where?: SubmoduleWhereInput
+    data: XOR<SubmoduleUpdateWithoutSubmissionsInput, SubmoduleUncheckedUpdateWithoutSubmissionsInput>
+  }
+
+  export type SubmoduleUpdateWithoutSubmissionsInput = {
+    slug?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    icon?: StringFieldUpdateOperationsInput | string
+    metadata?: StringFieldUpdateOperationsInput | string
+    baseTables?: StringFieldUpdateOperationsInput | string
+    active?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    forms?: FormUpdateManyWithoutSubmoduleNestedInput
+    assignments?: FormAssignmentUpdateManyWithoutSubmoduleNestedInput
+  }
+
+  export type SubmoduleUncheckedUpdateWithoutSubmissionsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    slug?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    icon?: StringFieldUpdateOperationsInput | string
+    metadata?: StringFieldUpdateOperationsInput | string
+    baseTables?: StringFieldUpdateOperationsInput | string
+    active?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    forms?: FormUncheckedUpdateManyWithoutSubmoduleNestedInput
+    assignments?: FormAssignmentUncheckedUpdateManyWithoutSubmoduleNestedInput
+  }
+
+  export type FormSubmissionValueUpsertWithWhereUniqueWithoutSubmissionInput = {
+    where: FormSubmissionValueWhereUniqueInput
+    update: XOR<FormSubmissionValueUpdateWithoutSubmissionInput, FormSubmissionValueUncheckedUpdateWithoutSubmissionInput>
+    create: XOR<FormSubmissionValueCreateWithoutSubmissionInput, FormSubmissionValueUncheckedCreateWithoutSubmissionInput>
+  }
+
+  export type FormSubmissionValueUpdateWithWhereUniqueWithoutSubmissionInput = {
+    where: FormSubmissionValueWhereUniqueInput
+    data: XOR<FormSubmissionValueUpdateWithoutSubmissionInput, FormSubmissionValueUncheckedUpdateWithoutSubmissionInput>
+  }
+
+  export type FormSubmissionValueUpdateManyWithWhereWithoutSubmissionInput = {
+    where: FormSubmissionValueScalarWhereInput
+    data: XOR<FormSubmissionValueUpdateManyMutationInput, FormSubmissionValueUncheckedUpdateManyWithoutSubmissionInput>
+  }
+
+  export type FormCreateWithoutVersionsInput = {
+    userId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    published?: boolean
+    name: string
+    page?: string | null
+    components?: string
+    description?: string
+    context?: string
+    visit?: number
+    submission?: number
+    sharedURL?: string
+    currentVersion?: number
+    eventConfig?: string
+    scheduleType?: string
+    scheduleInterval?: number
+    scheduleConfig?: string
+    assignedUserId?: string | null
+    templateVersion?: number | null
+    role?: RoleCreateNestedOneWithoutFormsInput
+    submodule?: SubmoduleCreateNestedOneWithoutFormsInput
+    template?: FormTemplateCreateNestedOneWithoutFormsInput
+    submissions?: FormSubmissionCreateNestedManyWithoutFormInput
+    submissionValues?: FormSubmissionValueCreateNestedManyWithoutFormInput
+    assignments?: FormAssignmentCreateNestedManyWithoutFormInput
+    eventRules?: FormEventCreateNestedManyWithoutFormInput
+  }
+
+  export type FormUncheckedCreateWithoutVersionsInput = {
+    id?: number
+    userId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    published?: boolean
+    name: string
+    page?: string | null
+    components?: string
+    description?: string
+    context?: string
+    visit?: number
+    submission?: number
+    sharedURL?: string
+    currentVersion?: number
+    eventConfig?: string
+    scheduleType?: string
+    scheduleInterval?: number
+    scheduleConfig?: string
+    assignedUserId?: string | null
+    roleId?: number | null
+    submoduleId?: number | null
+    templateId?: number | null
+    templateVersion?: number | null
+    submissions?: FormSubmissionUncheckedCreateNestedManyWithoutFormInput
+    submissionValues?: FormSubmissionValueUncheckedCreateNestedManyWithoutFormInput
+    assignments?: FormAssignmentUncheckedCreateNestedManyWithoutFormInput
+    eventRules?: FormEventUncheckedCreateNestedManyWithoutFormInput
+  }
+
+  export type FormCreateOrConnectWithoutVersionsInput = {
+    where: FormWhereUniqueInput
+    create: XOR<FormCreateWithoutVersionsInput, FormUncheckedCreateWithoutVersionsInput>
+  }
+
+  export type FormSubmissionCreateWithoutFormVersionInput = {
+    published?: boolean
+    version?: number
+    userId?: string | null
+    content: string
+    computedContent?: string
+    submittedAt?: Date | string
+    form: FormCreateNestedOneWithoutSubmissionsInput
+    role?: RoleCreateNestedOneWithoutSubmissionsInput
+    submodule?: SubmoduleCreateNestedOneWithoutSubmissionsInput
+    values?: FormSubmissionValueCreateNestedManyWithoutSubmissionInput
+  }
+
+  export type FormSubmissionUncheckedCreateWithoutFormVersionInput = {
+    id?: number
+    published?: boolean
+    formId: number
+    version?: number
+    userId?: string | null
+    roleId?: number | null
+    submoduleId?: number | null
+    content: string
+    computedContent?: string
+    submittedAt?: Date | string
+    values?: FormSubmissionValueUncheckedCreateNestedManyWithoutSubmissionInput
+  }
+
+  export type FormSubmissionCreateOrConnectWithoutFormVersionInput = {
+    where: FormSubmissionWhereUniqueInput
+    create: XOR<FormSubmissionCreateWithoutFormVersionInput, FormSubmissionUncheckedCreateWithoutFormVersionInput>
+  }
+
+  export type FormSubmissionCreateManyFormVersionInputEnvelope = {
+    data: FormSubmissionCreateManyFormVersionInput | FormSubmissionCreateManyFormVersionInput[]
+  }
+
+  export type FormSubmissionValueCreateWithoutFormVersionInput = {
+    fieldKey: string
+    fieldLabel?: string
+    elementId?: string | null
+    pageId?: string | null
+    parentId?: string | null
+    valueType?: string
+    stringValue?: string | null
+    numberValue?: number | null
+    booleanValue?: boolean | null
+    dateValue?: Date | string | null
+    jsonValue?: string | null
+    rawValue?: string | null
+    createdAt?: Date | string
+    submission: FormSubmissionCreateNestedOneWithoutValuesInput
+    form: FormCreateNestedOneWithoutSubmissionValuesInput
+  }
+
+  export type FormSubmissionValueUncheckedCreateWithoutFormVersionInput = {
+    id?: number
+    submissionId: number
+    formId: number
+    fieldKey: string
+    fieldLabel?: string
+    elementId?: string | null
+    pageId?: string | null
+    parentId?: string | null
+    valueType?: string
+    stringValue?: string | null
+    numberValue?: number | null
+    booleanValue?: boolean | null
+    dateValue?: Date | string | null
+    jsonValue?: string | null
+    rawValue?: string | null
+    createdAt?: Date | string
+  }
+
+  export type FormSubmissionValueCreateOrConnectWithoutFormVersionInput = {
+    where: FormSubmissionValueWhereUniqueInput
+    create: XOR<FormSubmissionValueCreateWithoutFormVersionInput, FormSubmissionValueUncheckedCreateWithoutFormVersionInput>
+  }
+
+  export type FormSubmissionValueCreateManyFormVersionInputEnvelope = {
+    data: FormSubmissionValueCreateManyFormVersionInput | FormSubmissionValueCreateManyFormVersionInput[]
+  }
+
+  export type FormUpsertWithoutVersionsInput = {
+    update: XOR<FormUpdateWithoutVersionsInput, FormUncheckedUpdateWithoutVersionsInput>
+    create: XOR<FormCreateWithoutVersionsInput, FormUncheckedCreateWithoutVersionsInput>
+    where?: FormWhereInput
+  }
+
+  export type FormUpdateToOneWithWhereWithoutVersionsInput = {
+    where?: FormWhereInput
+    data: XOR<FormUpdateWithoutVersionsInput, FormUncheckedUpdateWithoutVersionsInput>
+  }
+
+  export type FormUpdateWithoutVersionsInput = {
+    userId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    published?: BoolFieldUpdateOperationsInput | boolean
+    name?: StringFieldUpdateOperationsInput | string
+    page?: NullableStringFieldUpdateOperationsInput | string | null
+    components?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    context?: StringFieldUpdateOperationsInput | string
+    visit?: IntFieldUpdateOperationsInput | number
+    submission?: IntFieldUpdateOperationsInput | number
+    sharedURL?: StringFieldUpdateOperationsInput | string
+    currentVersion?: IntFieldUpdateOperationsInput | number
+    eventConfig?: StringFieldUpdateOperationsInput | string
+    scheduleType?: StringFieldUpdateOperationsInput | string
+    scheduleInterval?: IntFieldUpdateOperationsInput | number
+    scheduleConfig?: StringFieldUpdateOperationsInput | string
+    assignedUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    templateVersion?: NullableIntFieldUpdateOperationsInput | number | null
+    role?: RoleUpdateOneWithoutFormsNestedInput
+    submodule?: SubmoduleUpdateOneWithoutFormsNestedInput
+    template?: FormTemplateUpdateOneWithoutFormsNestedInput
+    submissions?: FormSubmissionUpdateManyWithoutFormNestedInput
+    submissionValues?: FormSubmissionValueUpdateManyWithoutFormNestedInput
+    assignments?: FormAssignmentUpdateManyWithoutFormNestedInput
+    eventRules?: FormEventUpdateManyWithoutFormNestedInput
+  }
+
+  export type FormUncheckedUpdateWithoutVersionsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    published?: BoolFieldUpdateOperationsInput | boolean
+    name?: StringFieldUpdateOperationsInput | string
+    page?: NullableStringFieldUpdateOperationsInput | string | null
+    components?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    context?: StringFieldUpdateOperationsInput | string
+    visit?: IntFieldUpdateOperationsInput | number
+    submission?: IntFieldUpdateOperationsInput | number
+    sharedURL?: StringFieldUpdateOperationsInput | string
+    currentVersion?: IntFieldUpdateOperationsInput | number
+    eventConfig?: StringFieldUpdateOperationsInput | string
+    scheduleType?: StringFieldUpdateOperationsInput | string
+    scheduleInterval?: IntFieldUpdateOperationsInput | number
+    scheduleConfig?: StringFieldUpdateOperationsInput | string
+    assignedUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    roleId?: NullableIntFieldUpdateOperationsInput | number | null
+    submoduleId?: NullableIntFieldUpdateOperationsInput | number | null
+    templateId?: NullableIntFieldUpdateOperationsInput | number | null
+    templateVersion?: NullableIntFieldUpdateOperationsInput | number | null
+    submissions?: FormSubmissionUncheckedUpdateManyWithoutFormNestedInput
+    submissionValues?: FormSubmissionValueUncheckedUpdateManyWithoutFormNestedInput
+    assignments?: FormAssignmentUncheckedUpdateManyWithoutFormNestedInput
+    eventRules?: FormEventUncheckedUpdateManyWithoutFormNestedInput
+  }
+
+  export type FormSubmissionUpsertWithWhereUniqueWithoutFormVersionInput = {
+    where: FormSubmissionWhereUniqueInput
+    update: XOR<FormSubmissionUpdateWithoutFormVersionInput, FormSubmissionUncheckedUpdateWithoutFormVersionInput>
+    create: XOR<FormSubmissionCreateWithoutFormVersionInput, FormSubmissionUncheckedCreateWithoutFormVersionInput>
+  }
+
+  export type FormSubmissionUpdateWithWhereUniqueWithoutFormVersionInput = {
+    where: FormSubmissionWhereUniqueInput
+    data: XOR<FormSubmissionUpdateWithoutFormVersionInput, FormSubmissionUncheckedUpdateWithoutFormVersionInput>
+  }
+
+  export type FormSubmissionUpdateManyWithWhereWithoutFormVersionInput = {
+    where: FormSubmissionScalarWhereInput
+    data: XOR<FormSubmissionUpdateManyMutationInput, FormSubmissionUncheckedUpdateManyWithoutFormVersionInput>
+  }
+
+  export type FormSubmissionValueUpsertWithWhereUniqueWithoutFormVersionInput = {
+    where: FormSubmissionValueWhereUniqueInput
+    update: XOR<FormSubmissionValueUpdateWithoutFormVersionInput, FormSubmissionValueUncheckedUpdateWithoutFormVersionInput>
+    create: XOR<FormSubmissionValueCreateWithoutFormVersionInput, FormSubmissionValueUncheckedCreateWithoutFormVersionInput>
+  }
+
+  export type FormSubmissionValueUpdateWithWhereUniqueWithoutFormVersionInput = {
+    where: FormSubmissionValueWhereUniqueInput
+    data: XOR<FormSubmissionValueUpdateWithoutFormVersionInput, FormSubmissionValueUncheckedUpdateWithoutFormVersionInput>
+  }
+
+  export type FormSubmissionValueUpdateManyWithWhereWithoutFormVersionInput = {
+    where: FormSubmissionValueScalarWhereInput
+    data: XOR<FormSubmissionValueUpdateManyMutationInput, FormSubmissionValueUncheckedUpdateManyWithoutFormVersionInput>
+  }
+
+  export type FormSubmissionCreateWithoutValuesInput = {
+    published?: boolean
+    version?: number
+    userId?: string | null
+    content: string
+    computedContent?: string
+    submittedAt?: Date | string
+    form: FormCreateNestedOneWithoutSubmissionsInput
+    formVersion?: FormVersionCreateNestedOneWithoutSubmissionsInput
+    role?: RoleCreateNestedOneWithoutSubmissionsInput
+    submodule?: SubmoduleCreateNestedOneWithoutSubmissionsInput
+  }
+
+  export type FormSubmissionUncheckedCreateWithoutValuesInput = {
+    id?: number
+    published?: boolean
+    formId: number
+    formVersionId?: number | null
+    version?: number
+    userId?: string | null
+    roleId?: number | null
+    submoduleId?: number | null
+    content: string
+    computedContent?: string
+    submittedAt?: Date | string
+  }
+
+  export type FormSubmissionCreateOrConnectWithoutValuesInput = {
+    where: FormSubmissionWhereUniqueInput
+    create: XOR<FormSubmissionCreateWithoutValuesInput, FormSubmissionUncheckedCreateWithoutValuesInput>
+  }
+
+  export type FormCreateWithoutSubmissionValuesInput = {
+    userId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    published?: boolean
+    name: string
+    page?: string | null
+    components?: string
+    description?: string
+    context?: string
+    visit?: number
+    submission?: number
+    sharedURL?: string
+    currentVersion?: number
+    eventConfig?: string
+    scheduleType?: string
+    scheduleInterval?: number
+    scheduleConfig?: string
+    assignedUserId?: string | null
+    templateVersion?: number | null
+    role?: RoleCreateNestedOneWithoutFormsInput
+    submodule?: SubmoduleCreateNestedOneWithoutFormsInput
+    template?: FormTemplateCreateNestedOneWithoutFormsInput
+    submissions?: FormSubmissionCreateNestedManyWithoutFormInput
+    versions?: FormVersionCreateNestedManyWithoutFormInput
+    assignments?: FormAssignmentCreateNestedManyWithoutFormInput
+    eventRules?: FormEventCreateNestedManyWithoutFormInput
+  }
+
+  export type FormUncheckedCreateWithoutSubmissionValuesInput = {
+    id?: number
+    userId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    published?: boolean
+    name: string
+    page?: string | null
+    components?: string
+    description?: string
+    context?: string
+    visit?: number
+    submission?: number
+    sharedURL?: string
+    currentVersion?: number
+    eventConfig?: string
+    scheduleType?: string
+    scheduleInterval?: number
+    scheduleConfig?: string
+    assignedUserId?: string | null
+    roleId?: number | null
+    submoduleId?: number | null
+    templateId?: number | null
+    templateVersion?: number | null
+    submissions?: FormSubmissionUncheckedCreateNestedManyWithoutFormInput
+    versions?: FormVersionUncheckedCreateNestedManyWithoutFormInput
+    assignments?: FormAssignmentUncheckedCreateNestedManyWithoutFormInput
+    eventRules?: FormEventUncheckedCreateNestedManyWithoutFormInput
+  }
+
+  export type FormCreateOrConnectWithoutSubmissionValuesInput = {
+    where: FormWhereUniqueInput
+    create: XOR<FormCreateWithoutSubmissionValuesInput, FormUncheckedCreateWithoutSubmissionValuesInput>
+  }
+
+  export type FormVersionCreateWithoutSubmissionValuesInput = {
+    version: number
+    name: string
+    description?: string
+    page?: string | null
+    components?: string
+    context?: string
+    eventConfig?: string
+    scheduleType?: string
+    scheduleInterval?: number
+    scheduleConfig?: string
+    published?: boolean
+    createdAt?: Date | string
+    form: FormCreateNestedOneWithoutVersionsInput
+    submissions?: FormSubmissionCreateNestedManyWithoutFormVersionInput
+  }
+
+  export type FormVersionUncheckedCreateWithoutSubmissionValuesInput = {
+    id?: number
+    formId: number
+    version: number
+    name: string
+    description?: string
+    page?: string | null
+    components?: string
+    context?: string
+    eventConfig?: string
+    scheduleType?: string
+    scheduleInterval?: number
+    scheduleConfig?: string
+    published?: boolean
+    createdAt?: Date | string
+    submissions?: FormSubmissionUncheckedCreateNestedManyWithoutFormVersionInput
+  }
+
+  export type FormVersionCreateOrConnectWithoutSubmissionValuesInput = {
+    where: FormVersionWhereUniqueInput
+    create: XOR<FormVersionCreateWithoutSubmissionValuesInput, FormVersionUncheckedCreateWithoutSubmissionValuesInput>
+  }
+
+  export type FormSubmissionUpsertWithoutValuesInput = {
+    update: XOR<FormSubmissionUpdateWithoutValuesInput, FormSubmissionUncheckedUpdateWithoutValuesInput>
+    create: XOR<FormSubmissionCreateWithoutValuesInput, FormSubmissionUncheckedCreateWithoutValuesInput>
+    where?: FormSubmissionWhereInput
+  }
+
+  export type FormSubmissionUpdateToOneWithWhereWithoutValuesInput = {
+    where?: FormSubmissionWhereInput
+    data: XOR<FormSubmissionUpdateWithoutValuesInput, FormSubmissionUncheckedUpdateWithoutValuesInput>
+  }
+
+  export type FormSubmissionUpdateWithoutValuesInput = {
+    published?: BoolFieldUpdateOperationsInput | boolean
+    version?: IntFieldUpdateOperationsInput | number
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    content?: StringFieldUpdateOperationsInput | string
+    computedContent?: StringFieldUpdateOperationsInput | string
+    submittedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    form?: FormUpdateOneRequiredWithoutSubmissionsNestedInput
+    formVersion?: FormVersionUpdateOneWithoutSubmissionsNestedInput
+    role?: RoleUpdateOneWithoutSubmissionsNestedInput
+    submodule?: SubmoduleUpdateOneWithoutSubmissionsNestedInput
+  }
+
+  export type FormSubmissionUncheckedUpdateWithoutValuesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    published?: BoolFieldUpdateOperationsInput | boolean
+    formId?: IntFieldUpdateOperationsInput | number
+    formVersionId?: NullableIntFieldUpdateOperationsInput | number | null
+    version?: IntFieldUpdateOperationsInput | number
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    roleId?: NullableIntFieldUpdateOperationsInput | number | null
+    submoduleId?: NullableIntFieldUpdateOperationsInput | number | null
+    content?: StringFieldUpdateOperationsInput | string
+    computedContent?: StringFieldUpdateOperationsInput | string
+    submittedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FormUpsertWithoutSubmissionValuesInput = {
+    update: XOR<FormUpdateWithoutSubmissionValuesInput, FormUncheckedUpdateWithoutSubmissionValuesInput>
+    create: XOR<FormCreateWithoutSubmissionValuesInput, FormUncheckedCreateWithoutSubmissionValuesInput>
+    where?: FormWhereInput
+  }
+
+  export type FormUpdateToOneWithWhereWithoutSubmissionValuesInput = {
+    where?: FormWhereInput
+    data: XOR<FormUpdateWithoutSubmissionValuesInput, FormUncheckedUpdateWithoutSubmissionValuesInput>
+  }
+
+  export type FormUpdateWithoutSubmissionValuesInput = {
+    userId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    published?: BoolFieldUpdateOperationsInput | boolean
+    name?: StringFieldUpdateOperationsInput | string
+    page?: NullableStringFieldUpdateOperationsInput | string | null
+    components?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    context?: StringFieldUpdateOperationsInput | string
+    visit?: IntFieldUpdateOperationsInput | number
+    submission?: IntFieldUpdateOperationsInput | number
+    sharedURL?: StringFieldUpdateOperationsInput | string
+    currentVersion?: IntFieldUpdateOperationsInput | number
+    eventConfig?: StringFieldUpdateOperationsInput | string
+    scheduleType?: StringFieldUpdateOperationsInput | string
+    scheduleInterval?: IntFieldUpdateOperationsInput | number
+    scheduleConfig?: StringFieldUpdateOperationsInput | string
+    assignedUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    templateVersion?: NullableIntFieldUpdateOperationsInput | number | null
+    role?: RoleUpdateOneWithoutFormsNestedInput
+    submodule?: SubmoduleUpdateOneWithoutFormsNestedInput
+    template?: FormTemplateUpdateOneWithoutFormsNestedInput
+    submissions?: FormSubmissionUpdateManyWithoutFormNestedInput
+    versions?: FormVersionUpdateManyWithoutFormNestedInput
+    assignments?: FormAssignmentUpdateManyWithoutFormNestedInput
+    eventRules?: FormEventUpdateManyWithoutFormNestedInput
+  }
+
+  export type FormUncheckedUpdateWithoutSubmissionValuesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    published?: BoolFieldUpdateOperationsInput | boolean
+    name?: StringFieldUpdateOperationsInput | string
+    page?: NullableStringFieldUpdateOperationsInput | string | null
+    components?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    context?: StringFieldUpdateOperationsInput | string
+    visit?: IntFieldUpdateOperationsInput | number
+    submission?: IntFieldUpdateOperationsInput | number
+    sharedURL?: StringFieldUpdateOperationsInput | string
+    currentVersion?: IntFieldUpdateOperationsInput | number
+    eventConfig?: StringFieldUpdateOperationsInput | string
+    scheduleType?: StringFieldUpdateOperationsInput | string
+    scheduleInterval?: IntFieldUpdateOperationsInput | number
+    scheduleConfig?: StringFieldUpdateOperationsInput | string
+    assignedUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    roleId?: NullableIntFieldUpdateOperationsInput | number | null
+    submoduleId?: NullableIntFieldUpdateOperationsInput | number | null
+    templateId?: NullableIntFieldUpdateOperationsInput | number | null
+    templateVersion?: NullableIntFieldUpdateOperationsInput | number | null
+    submissions?: FormSubmissionUncheckedUpdateManyWithoutFormNestedInput
+    versions?: FormVersionUncheckedUpdateManyWithoutFormNestedInput
+    assignments?: FormAssignmentUncheckedUpdateManyWithoutFormNestedInput
+    eventRules?: FormEventUncheckedUpdateManyWithoutFormNestedInput
+  }
+
+  export type FormVersionUpsertWithoutSubmissionValuesInput = {
+    update: XOR<FormVersionUpdateWithoutSubmissionValuesInput, FormVersionUncheckedUpdateWithoutSubmissionValuesInput>
+    create: XOR<FormVersionCreateWithoutSubmissionValuesInput, FormVersionUncheckedCreateWithoutSubmissionValuesInput>
+    where?: FormVersionWhereInput
+  }
+
+  export type FormVersionUpdateToOneWithWhereWithoutSubmissionValuesInput = {
+    where?: FormVersionWhereInput
+    data: XOR<FormVersionUpdateWithoutSubmissionValuesInput, FormVersionUncheckedUpdateWithoutSubmissionValuesInput>
+  }
+
+  export type FormVersionUpdateWithoutSubmissionValuesInput = {
+    version?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    page?: NullableStringFieldUpdateOperationsInput | string | null
+    components?: StringFieldUpdateOperationsInput | string
+    context?: StringFieldUpdateOperationsInput | string
+    eventConfig?: StringFieldUpdateOperationsInput | string
+    scheduleType?: StringFieldUpdateOperationsInput | string
+    scheduleInterval?: IntFieldUpdateOperationsInput | number
+    scheduleConfig?: StringFieldUpdateOperationsInput | string
+    published?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    form?: FormUpdateOneRequiredWithoutVersionsNestedInput
+    submissions?: FormSubmissionUpdateManyWithoutFormVersionNestedInput
+  }
+
+  export type FormVersionUncheckedUpdateWithoutSubmissionValuesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    formId?: IntFieldUpdateOperationsInput | number
+    version?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    page?: NullableStringFieldUpdateOperationsInput | string | null
+    components?: StringFieldUpdateOperationsInput | string
+    context?: StringFieldUpdateOperationsInput | string
+    eventConfig?: StringFieldUpdateOperationsInput | string
+    scheduleType?: StringFieldUpdateOperationsInput | string
+    scheduleInterval?: IntFieldUpdateOperationsInput | number
+    scheduleConfig?: StringFieldUpdateOperationsInput | string
+    published?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    submissions?: FormSubmissionUncheckedUpdateManyWithoutFormVersionNestedInput
+  }
+
+  export type FormCreateWithoutEventRulesInput = {
+    userId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    published?: boolean
+    name: string
+    page?: string | null
+    components?: string
+    description?: string
+    context?: string
+    visit?: number
+    submission?: number
+    sharedURL?: string
+    currentVersion?: number
+    eventConfig?: string
+    scheduleType?: string
+    scheduleInterval?: number
+    scheduleConfig?: string
+    assignedUserId?: string | null
+    templateVersion?: number | null
+    role?: RoleCreateNestedOneWithoutFormsInput
+    submodule?: SubmoduleCreateNestedOneWithoutFormsInput
+    template?: FormTemplateCreateNestedOneWithoutFormsInput
+    submissions?: FormSubmissionCreateNestedManyWithoutFormInput
+    submissionValues?: FormSubmissionValueCreateNestedManyWithoutFormInput
+    versions?: FormVersionCreateNestedManyWithoutFormInput
+    assignments?: FormAssignmentCreateNestedManyWithoutFormInput
+  }
+
+  export type FormUncheckedCreateWithoutEventRulesInput = {
+    id?: number
+    userId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    published?: boolean
+    name: string
+    page?: string | null
+    components?: string
+    description?: string
+    context?: string
+    visit?: number
+    submission?: number
+    sharedURL?: string
+    currentVersion?: number
+    eventConfig?: string
+    scheduleType?: string
+    scheduleInterval?: number
+    scheduleConfig?: string
+    assignedUserId?: string | null
+    roleId?: number | null
+    submoduleId?: number | null
+    templateId?: number | null
+    templateVersion?: number | null
+    submissions?: FormSubmissionUncheckedCreateNestedManyWithoutFormInput
+    submissionValues?: FormSubmissionValueUncheckedCreateNestedManyWithoutFormInput
+    versions?: FormVersionUncheckedCreateNestedManyWithoutFormInput
+    assignments?: FormAssignmentUncheckedCreateNestedManyWithoutFormInput
+  }
+
+  export type FormCreateOrConnectWithoutEventRulesInput = {
+    where: FormWhereUniqueInput
+    create: XOR<FormCreateWithoutEventRulesInput, FormUncheckedCreateWithoutEventRulesInput>
+  }
+
+  export type FormUpsertWithoutEventRulesInput = {
+    update: XOR<FormUpdateWithoutEventRulesInput, FormUncheckedUpdateWithoutEventRulesInput>
+    create: XOR<FormCreateWithoutEventRulesInput, FormUncheckedCreateWithoutEventRulesInput>
+    where?: FormWhereInput
+  }
+
+  export type FormUpdateToOneWithWhereWithoutEventRulesInput = {
+    where?: FormWhereInput
+    data: XOR<FormUpdateWithoutEventRulesInput, FormUncheckedUpdateWithoutEventRulesInput>
+  }
+
+  export type FormUpdateWithoutEventRulesInput = {
+    userId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    published?: BoolFieldUpdateOperationsInput | boolean
+    name?: StringFieldUpdateOperationsInput | string
+    page?: NullableStringFieldUpdateOperationsInput | string | null
+    components?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    context?: StringFieldUpdateOperationsInput | string
+    visit?: IntFieldUpdateOperationsInput | number
+    submission?: IntFieldUpdateOperationsInput | number
+    sharedURL?: StringFieldUpdateOperationsInput | string
+    currentVersion?: IntFieldUpdateOperationsInput | number
+    eventConfig?: StringFieldUpdateOperationsInput | string
+    scheduleType?: StringFieldUpdateOperationsInput | string
+    scheduleInterval?: IntFieldUpdateOperationsInput | number
+    scheduleConfig?: StringFieldUpdateOperationsInput | string
+    assignedUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    templateVersion?: NullableIntFieldUpdateOperationsInput | number | null
+    role?: RoleUpdateOneWithoutFormsNestedInput
+    submodule?: SubmoduleUpdateOneWithoutFormsNestedInput
+    template?: FormTemplateUpdateOneWithoutFormsNestedInput
+    submissions?: FormSubmissionUpdateManyWithoutFormNestedInput
+    submissionValues?: FormSubmissionValueUpdateManyWithoutFormNestedInput
+    versions?: FormVersionUpdateManyWithoutFormNestedInput
+    assignments?: FormAssignmentUpdateManyWithoutFormNestedInput
+  }
+
+  export type FormUncheckedUpdateWithoutEventRulesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    published?: BoolFieldUpdateOperationsInput | boolean
+    name?: StringFieldUpdateOperationsInput | string
+    page?: NullableStringFieldUpdateOperationsInput | string | null
+    components?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    context?: StringFieldUpdateOperationsInput | string
+    visit?: IntFieldUpdateOperationsInput | number
+    submission?: IntFieldUpdateOperationsInput | number
+    sharedURL?: StringFieldUpdateOperationsInput | string
+    currentVersion?: IntFieldUpdateOperationsInput | number
+    eventConfig?: StringFieldUpdateOperationsInput | string
+    scheduleType?: StringFieldUpdateOperationsInput | string
+    scheduleInterval?: IntFieldUpdateOperationsInput | number
+    scheduleConfig?: StringFieldUpdateOperationsInput | string
+    assignedUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    roleId?: NullableIntFieldUpdateOperationsInput | number | null
+    submoduleId?: NullableIntFieldUpdateOperationsInput | number | null
+    templateId?: NullableIntFieldUpdateOperationsInput | number | null
+    templateVersion?: NullableIntFieldUpdateOperationsInput | number | null
+    submissions?: FormSubmissionUncheckedUpdateManyWithoutFormNestedInput
+    submissionValues?: FormSubmissionValueUncheckedUpdateManyWithoutFormNestedInput
+    versions?: FormVersionUncheckedUpdateManyWithoutFormNestedInput
+    assignments?: FormAssignmentUncheckedUpdateManyWithoutFormNestedInput
+  }
+
+  export type FormCreateWithoutAssignmentsInput = {
+    userId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    published?: boolean
+    name: string
+    page?: string | null
+    components?: string
+    description?: string
+    context?: string
+    visit?: number
+    submission?: number
+    sharedURL?: string
+    currentVersion?: number
+    eventConfig?: string
+    scheduleType?: string
+    scheduleInterval?: number
+    scheduleConfig?: string
+    assignedUserId?: string | null
+    templateVersion?: number | null
+    role?: RoleCreateNestedOneWithoutFormsInput
+    submodule?: SubmoduleCreateNestedOneWithoutFormsInput
+    template?: FormTemplateCreateNestedOneWithoutFormsInput
+    submissions?: FormSubmissionCreateNestedManyWithoutFormInput
+    submissionValues?: FormSubmissionValueCreateNestedManyWithoutFormInput
+    versions?: FormVersionCreateNestedManyWithoutFormInput
+    eventRules?: FormEventCreateNestedManyWithoutFormInput
+  }
+
+  export type FormUncheckedCreateWithoutAssignmentsInput = {
+    id?: number
+    userId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    published?: boolean
+    name: string
+    page?: string | null
+    components?: string
+    description?: string
+    context?: string
+    visit?: number
+    submission?: number
+    sharedURL?: string
+    currentVersion?: number
+    eventConfig?: string
+    scheduleType?: string
+    scheduleInterval?: number
+    scheduleConfig?: string
+    assignedUserId?: string | null
+    roleId?: number | null
+    submoduleId?: number | null
+    templateId?: number | null
+    templateVersion?: number | null
+    submissions?: FormSubmissionUncheckedCreateNestedManyWithoutFormInput
+    submissionValues?: FormSubmissionValueUncheckedCreateNestedManyWithoutFormInput
+    versions?: FormVersionUncheckedCreateNestedManyWithoutFormInput
+    eventRules?: FormEventUncheckedCreateNestedManyWithoutFormInput
+  }
+
+  export type FormCreateOrConnectWithoutAssignmentsInput = {
+    where: FormWhereUniqueInput
+    create: XOR<FormCreateWithoutAssignmentsInput, FormUncheckedCreateWithoutAssignmentsInput>
+  }
+
+  export type RoleCreateWithoutAssignmentsInput = {
+    key: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    users?: AppUserCreateNestedManyWithoutRoleInput
+    forms?: FormCreateNestedManyWithoutRoleInput
+    submissions?: FormSubmissionCreateNestedManyWithoutRoleInput
+  }
+
+  export type RoleUncheckedCreateWithoutAssignmentsInput = {
+    id?: number
+    key: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    users?: AppUserUncheckedCreateNestedManyWithoutRoleInput
+    forms?: FormUncheckedCreateNestedManyWithoutRoleInput
+    submissions?: FormSubmissionUncheckedCreateNestedManyWithoutRoleInput
+  }
+
+  export type RoleCreateOrConnectWithoutAssignmentsInput = {
+    where: RoleWhereUniqueInput
+    create: XOR<RoleCreateWithoutAssignmentsInput, RoleUncheckedCreateWithoutAssignmentsInput>
+  }
+
+  export type SubmoduleCreateWithoutAssignmentsInput = {
+    slug: string
+    name: string
+    description?: string
+    icon?: string
+    metadata?: string
+    baseTables?: string
+    active?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    forms?: FormCreateNestedManyWithoutSubmoduleInput
+    submissions?: FormSubmissionCreateNestedManyWithoutSubmoduleInput
+  }
+
+  export type SubmoduleUncheckedCreateWithoutAssignmentsInput = {
+    id?: number
+    slug: string
+    name: string
+    description?: string
+    icon?: string
+    metadata?: string
+    baseTables?: string
+    active?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    forms?: FormUncheckedCreateNestedManyWithoutSubmoduleInput
+    submissions?: FormSubmissionUncheckedCreateNestedManyWithoutSubmoduleInput
+  }
+
+  export type SubmoduleCreateOrConnectWithoutAssignmentsInput = {
+    where: SubmoduleWhereUniqueInput
+    create: XOR<SubmoduleCreateWithoutAssignmentsInput, SubmoduleUncheckedCreateWithoutAssignmentsInput>
+  }
+
+  export type FormUpsertWithoutAssignmentsInput = {
+    update: XOR<FormUpdateWithoutAssignmentsInput, FormUncheckedUpdateWithoutAssignmentsInput>
+    create: XOR<FormCreateWithoutAssignmentsInput, FormUncheckedCreateWithoutAssignmentsInput>
+    where?: FormWhereInput
+  }
+
+  export type FormUpdateToOneWithWhereWithoutAssignmentsInput = {
+    where?: FormWhereInput
+    data: XOR<FormUpdateWithoutAssignmentsInput, FormUncheckedUpdateWithoutAssignmentsInput>
+  }
+
+  export type FormUpdateWithoutAssignmentsInput = {
+    userId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    published?: BoolFieldUpdateOperationsInput | boolean
+    name?: StringFieldUpdateOperationsInput | string
+    page?: NullableStringFieldUpdateOperationsInput | string | null
+    components?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    context?: StringFieldUpdateOperationsInput | string
+    visit?: IntFieldUpdateOperationsInput | number
+    submission?: IntFieldUpdateOperationsInput | number
+    sharedURL?: StringFieldUpdateOperationsInput | string
+    currentVersion?: IntFieldUpdateOperationsInput | number
+    eventConfig?: StringFieldUpdateOperationsInput | string
+    scheduleType?: StringFieldUpdateOperationsInput | string
+    scheduleInterval?: IntFieldUpdateOperationsInput | number
+    scheduleConfig?: StringFieldUpdateOperationsInput | string
+    assignedUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    templateVersion?: NullableIntFieldUpdateOperationsInput | number | null
+    role?: RoleUpdateOneWithoutFormsNestedInput
+    submodule?: SubmoduleUpdateOneWithoutFormsNestedInput
+    template?: FormTemplateUpdateOneWithoutFormsNestedInput
+    submissions?: FormSubmissionUpdateManyWithoutFormNestedInput
+    submissionValues?: FormSubmissionValueUpdateManyWithoutFormNestedInput
+    versions?: FormVersionUpdateManyWithoutFormNestedInput
+    eventRules?: FormEventUpdateManyWithoutFormNestedInput
+  }
+
+  export type FormUncheckedUpdateWithoutAssignmentsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    published?: BoolFieldUpdateOperationsInput | boolean
+    name?: StringFieldUpdateOperationsInput | string
+    page?: NullableStringFieldUpdateOperationsInput | string | null
+    components?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    context?: StringFieldUpdateOperationsInput | string
+    visit?: IntFieldUpdateOperationsInput | number
+    submission?: IntFieldUpdateOperationsInput | number
+    sharedURL?: StringFieldUpdateOperationsInput | string
+    currentVersion?: IntFieldUpdateOperationsInput | number
+    eventConfig?: StringFieldUpdateOperationsInput | string
+    scheduleType?: StringFieldUpdateOperationsInput | string
+    scheduleInterval?: IntFieldUpdateOperationsInput | number
+    scheduleConfig?: StringFieldUpdateOperationsInput | string
+    assignedUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    roleId?: NullableIntFieldUpdateOperationsInput | number | null
+    submoduleId?: NullableIntFieldUpdateOperationsInput | number | null
+    templateId?: NullableIntFieldUpdateOperationsInput | number | null
+    templateVersion?: NullableIntFieldUpdateOperationsInput | number | null
+    submissions?: FormSubmissionUncheckedUpdateManyWithoutFormNestedInput
+    submissionValues?: FormSubmissionValueUncheckedUpdateManyWithoutFormNestedInput
+    versions?: FormVersionUncheckedUpdateManyWithoutFormNestedInput
+    eventRules?: FormEventUncheckedUpdateManyWithoutFormNestedInput
+  }
+
+  export type RoleUpsertWithoutAssignmentsInput = {
+    update: XOR<RoleUpdateWithoutAssignmentsInput, RoleUncheckedUpdateWithoutAssignmentsInput>
+    create: XOR<RoleCreateWithoutAssignmentsInput, RoleUncheckedCreateWithoutAssignmentsInput>
+    where?: RoleWhereInput
+  }
+
+  export type RoleUpdateToOneWithWhereWithoutAssignmentsInput = {
+    where?: RoleWhereInput
+    data: XOR<RoleUpdateWithoutAssignmentsInput, RoleUncheckedUpdateWithoutAssignmentsInput>
+  }
+
+  export type RoleUpdateWithoutAssignmentsInput = {
+    key?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    users?: AppUserUpdateManyWithoutRoleNestedInput
+    forms?: FormUpdateManyWithoutRoleNestedInput
+    submissions?: FormSubmissionUpdateManyWithoutRoleNestedInput
+  }
+
+  export type RoleUncheckedUpdateWithoutAssignmentsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    key?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    users?: AppUserUncheckedUpdateManyWithoutRoleNestedInput
+    forms?: FormUncheckedUpdateManyWithoutRoleNestedInput
+    submissions?: FormSubmissionUncheckedUpdateManyWithoutRoleNestedInput
+  }
+
+  export type SubmoduleUpsertWithoutAssignmentsInput = {
+    update: XOR<SubmoduleUpdateWithoutAssignmentsInput, SubmoduleUncheckedUpdateWithoutAssignmentsInput>
+    create: XOR<SubmoduleCreateWithoutAssignmentsInput, SubmoduleUncheckedCreateWithoutAssignmentsInput>
+    where?: SubmoduleWhereInput
+  }
+
+  export type SubmoduleUpdateToOneWithWhereWithoutAssignmentsInput = {
+    where?: SubmoduleWhereInput
+    data: XOR<SubmoduleUpdateWithoutAssignmentsInput, SubmoduleUncheckedUpdateWithoutAssignmentsInput>
+  }
+
+  export type SubmoduleUpdateWithoutAssignmentsInput = {
+    slug?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    icon?: StringFieldUpdateOperationsInput | string
+    metadata?: StringFieldUpdateOperationsInput | string
+    baseTables?: StringFieldUpdateOperationsInput | string
+    active?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    forms?: FormUpdateManyWithoutSubmoduleNestedInput
+    submissions?: FormSubmissionUpdateManyWithoutSubmoduleNestedInput
+  }
+
+  export type SubmoduleUncheckedUpdateWithoutAssignmentsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    slug?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    icon?: StringFieldUpdateOperationsInput | string
+    metadata?: StringFieldUpdateOperationsInput | string
+    baseTables?: StringFieldUpdateOperationsInput | string
+    active?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    forms?: FormUncheckedUpdateManyWithoutSubmoduleNestedInput
+    submissions?: FormSubmissionUncheckedUpdateManyWithoutSubmoduleNestedInput
+  }
+
+  export type FormCreateWithoutSubmoduleInput = {
+    userId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    published?: boolean
+    name: string
+    page?: string | null
+    components?: string
+    description?: string
+    context?: string
+    visit?: number
+    submission?: number
+    sharedURL?: string
+    currentVersion?: number
+    eventConfig?: string
+    scheduleType?: string
+    scheduleInterval?: number
+    scheduleConfig?: string
+    assignedUserId?: string | null
+    templateVersion?: number | null
+    role?: RoleCreateNestedOneWithoutFormsInput
+    template?: FormTemplateCreateNestedOneWithoutFormsInput
+    submissions?: FormSubmissionCreateNestedManyWithoutFormInput
+    submissionValues?: FormSubmissionValueCreateNestedManyWithoutFormInput
+    versions?: FormVersionCreateNestedManyWithoutFormInput
+    assignments?: FormAssignmentCreateNestedManyWithoutFormInput
+    eventRules?: FormEventCreateNestedManyWithoutFormInput
+  }
+
+  export type FormUncheckedCreateWithoutSubmoduleInput = {
+    id?: number
+    userId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    published?: boolean
+    name: string
+    page?: string | null
+    components?: string
+    description?: string
+    context?: string
+    visit?: number
+    submission?: number
+    sharedURL?: string
+    currentVersion?: number
+    eventConfig?: string
+    scheduleType?: string
+    scheduleInterval?: number
+    scheduleConfig?: string
+    assignedUserId?: string | null
+    roleId?: number | null
+    templateId?: number | null
+    templateVersion?: number | null
+    submissions?: FormSubmissionUncheckedCreateNestedManyWithoutFormInput
+    submissionValues?: FormSubmissionValueUncheckedCreateNestedManyWithoutFormInput
+    versions?: FormVersionUncheckedCreateNestedManyWithoutFormInput
+    assignments?: FormAssignmentUncheckedCreateNestedManyWithoutFormInput
+    eventRules?: FormEventUncheckedCreateNestedManyWithoutFormInput
+  }
+
+  export type FormCreateOrConnectWithoutSubmoduleInput = {
+    where: FormWhereUniqueInput
+    create: XOR<FormCreateWithoutSubmoduleInput, FormUncheckedCreateWithoutSubmoduleInput>
+  }
+
+  export type FormCreateManySubmoduleInputEnvelope = {
+    data: FormCreateManySubmoduleInput | FormCreateManySubmoduleInput[]
+  }
+
+  export type FormAssignmentCreateWithoutSubmoduleInput = {
+    userId?: string | null
+    active?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    form: FormCreateNestedOneWithoutAssignmentsInput
+    role?: RoleCreateNestedOneWithoutAssignmentsInput
+  }
+
+  export type FormAssignmentUncheckedCreateWithoutSubmoduleInput = {
+    id?: number
+    formId: number
+    userId?: string | null
+    roleId?: number | null
+    active?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FormAssignmentCreateOrConnectWithoutSubmoduleInput = {
+    where: FormAssignmentWhereUniqueInput
+    create: XOR<FormAssignmentCreateWithoutSubmoduleInput, FormAssignmentUncheckedCreateWithoutSubmoduleInput>
+  }
+
+  export type FormAssignmentCreateManySubmoduleInputEnvelope = {
+    data: FormAssignmentCreateManySubmoduleInput | FormAssignmentCreateManySubmoduleInput[]
+  }
+
+  export type FormSubmissionCreateWithoutSubmoduleInput = {
+    published?: boolean
+    version?: number
+    userId?: string | null
+    content: string
+    computedContent?: string
+    submittedAt?: Date | string
+    form: FormCreateNestedOneWithoutSubmissionsInput
+    formVersion?: FormVersionCreateNestedOneWithoutSubmissionsInput
+    role?: RoleCreateNestedOneWithoutSubmissionsInput
+    values?: FormSubmissionValueCreateNestedManyWithoutSubmissionInput
+  }
+
+  export type FormSubmissionUncheckedCreateWithoutSubmoduleInput = {
+    id?: number
+    published?: boolean
+    formId: number
+    formVersionId?: number | null
+    version?: number
+    userId?: string | null
+    roleId?: number | null
+    content: string
+    computedContent?: string
+    submittedAt?: Date | string
+    values?: FormSubmissionValueUncheckedCreateNestedManyWithoutSubmissionInput
+  }
+
+  export type FormSubmissionCreateOrConnectWithoutSubmoduleInput = {
+    where: FormSubmissionWhereUniqueInput
+    create: XOR<FormSubmissionCreateWithoutSubmoduleInput, FormSubmissionUncheckedCreateWithoutSubmoduleInput>
+  }
+
+  export type FormSubmissionCreateManySubmoduleInputEnvelope = {
+    data: FormSubmissionCreateManySubmoduleInput | FormSubmissionCreateManySubmoduleInput[]
+  }
+
+  export type FormUpsertWithWhereUniqueWithoutSubmoduleInput = {
+    where: FormWhereUniqueInput
+    update: XOR<FormUpdateWithoutSubmoduleInput, FormUncheckedUpdateWithoutSubmoduleInput>
+    create: XOR<FormCreateWithoutSubmoduleInput, FormUncheckedCreateWithoutSubmoduleInput>
+  }
+
+  export type FormUpdateWithWhereUniqueWithoutSubmoduleInput = {
+    where: FormWhereUniqueInput
+    data: XOR<FormUpdateWithoutSubmoduleInput, FormUncheckedUpdateWithoutSubmoduleInput>
+  }
+
+  export type FormUpdateManyWithWhereWithoutSubmoduleInput = {
+    where: FormScalarWhereInput
+    data: XOR<FormUpdateManyMutationInput, FormUncheckedUpdateManyWithoutSubmoduleInput>
+  }
+
+  export type FormScalarWhereInput = {
+    AND?: FormScalarWhereInput | FormScalarWhereInput[]
+    OR?: FormScalarWhereInput[]
+    NOT?: FormScalarWhereInput | FormScalarWhereInput[]
+    id?: IntFilter<"Form"> | number
+    userId?: StringFilter<"Form"> | string
+    createdAt?: DateTimeFilter<"Form"> | Date | string
+    updatedAt?: DateTimeFilter<"Form"> | Date | string
+    published?: BoolFilter<"Form"> | boolean
+    name?: StringFilter<"Form"> | string
+    page?: StringNullableFilter<"Form"> | string | null
+    components?: StringFilter<"Form"> | string
+    description?: StringFilter<"Form"> | string
+    context?: StringFilter<"Form"> | string
+    visit?: IntFilter<"Form"> | number
+    submission?: IntFilter<"Form"> | number
+    sharedURL?: StringFilter<"Form"> | string
+    currentVersion?: IntFilter<"Form"> | number
+    eventConfig?: StringFilter<"Form"> | string
+    scheduleType?: StringFilter<"Form"> | string
+    scheduleInterval?: IntFilter<"Form"> | number
+    scheduleConfig?: StringFilter<"Form"> | string
+    assignedUserId?: StringNullableFilter<"Form"> | string | null
+    roleId?: IntNullableFilter<"Form"> | number | null
+    submoduleId?: IntNullableFilter<"Form"> | number | null
+    templateId?: IntNullableFilter<"Form"> | number | null
+    templateVersion?: IntNullableFilter<"Form"> | number | null
+  }
+
+  export type FormAssignmentUpsertWithWhereUniqueWithoutSubmoduleInput = {
+    where: FormAssignmentWhereUniqueInput
+    update: XOR<FormAssignmentUpdateWithoutSubmoduleInput, FormAssignmentUncheckedUpdateWithoutSubmoduleInput>
+    create: XOR<FormAssignmentCreateWithoutSubmoduleInput, FormAssignmentUncheckedCreateWithoutSubmoduleInput>
+  }
+
+  export type FormAssignmentUpdateWithWhereUniqueWithoutSubmoduleInput = {
+    where: FormAssignmentWhereUniqueInput
+    data: XOR<FormAssignmentUpdateWithoutSubmoduleInput, FormAssignmentUncheckedUpdateWithoutSubmoduleInput>
+  }
+
+  export type FormAssignmentUpdateManyWithWhereWithoutSubmoduleInput = {
+    where: FormAssignmentScalarWhereInput
+    data: XOR<FormAssignmentUpdateManyMutationInput, FormAssignmentUncheckedUpdateManyWithoutSubmoduleInput>
+  }
+
+  export type FormSubmissionUpsertWithWhereUniqueWithoutSubmoduleInput = {
+    where: FormSubmissionWhereUniqueInput
+    update: XOR<FormSubmissionUpdateWithoutSubmoduleInput, FormSubmissionUncheckedUpdateWithoutSubmoduleInput>
+    create: XOR<FormSubmissionCreateWithoutSubmoduleInput, FormSubmissionUncheckedCreateWithoutSubmoduleInput>
+  }
+
+  export type FormSubmissionUpdateWithWhereUniqueWithoutSubmoduleInput = {
+    where: FormSubmissionWhereUniqueInput
+    data: XOR<FormSubmissionUpdateWithoutSubmoduleInput, FormSubmissionUncheckedUpdateWithoutSubmoduleInput>
+  }
+
+  export type FormSubmissionUpdateManyWithWhereWithoutSubmoduleInput = {
+    where: FormSubmissionScalarWhereInput
+    data: XOR<FormSubmissionUpdateManyMutationInput, FormSubmissionUncheckedUpdateManyWithoutSubmoduleInput>
+  }
+
+  export type FormCreateWithoutTemplateInput = {
+    userId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    published?: boolean
+    name: string
+    page?: string | null
+    components?: string
+    description?: string
+    context?: string
+    visit?: number
+    submission?: number
+    sharedURL?: string
+    currentVersion?: number
+    eventConfig?: string
+    scheduleType?: string
+    scheduleInterval?: number
+    scheduleConfig?: string
+    assignedUserId?: string | null
+    templateVersion?: number | null
+    role?: RoleCreateNestedOneWithoutFormsInput
+    submodule?: SubmoduleCreateNestedOneWithoutFormsInput
+    submissions?: FormSubmissionCreateNestedManyWithoutFormInput
+    submissionValues?: FormSubmissionValueCreateNestedManyWithoutFormInput
+    versions?: FormVersionCreateNestedManyWithoutFormInput
+    assignments?: FormAssignmentCreateNestedManyWithoutFormInput
+    eventRules?: FormEventCreateNestedManyWithoutFormInput
+  }
+
+  export type FormUncheckedCreateWithoutTemplateInput = {
+    id?: number
+    userId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    published?: boolean
+    name: string
+    page?: string | null
+    components?: string
+    description?: string
+    context?: string
+    visit?: number
+    submission?: number
+    sharedURL?: string
+    currentVersion?: number
+    eventConfig?: string
+    scheduleType?: string
+    scheduleInterval?: number
+    scheduleConfig?: string
+    assignedUserId?: string | null
+    roleId?: number | null
+    submoduleId?: number | null
+    templateVersion?: number | null
+    submissions?: FormSubmissionUncheckedCreateNestedManyWithoutFormInput
+    submissionValues?: FormSubmissionValueUncheckedCreateNestedManyWithoutFormInput
+    versions?: FormVersionUncheckedCreateNestedManyWithoutFormInput
+    assignments?: FormAssignmentUncheckedCreateNestedManyWithoutFormInput
+    eventRules?: FormEventUncheckedCreateNestedManyWithoutFormInput
+  }
+
+  export type FormCreateOrConnectWithoutTemplateInput = {
+    where: FormWhereUniqueInput
+    create: XOR<FormCreateWithoutTemplateInput, FormUncheckedCreateWithoutTemplateInput>
+  }
+
+  export type FormCreateManyTemplateInputEnvelope = {
+    data: FormCreateManyTemplateInput | FormCreateManyTemplateInput[]
+  }
+
+  export type FormTemplateVersionCreateWithoutTemplateInput = {
+    version: number
+    name: string
+    description?: string
+    icon?: string
+    metadata?: string
+    page?: string | null
+    components?: string
+    context?: string
+    eventConfig?: string
+    scheduleType?: string
+    scheduleInterval?: number
+    scheduleConfig?: string
+    createdAt?: Date | string
+  }
+
+  export type FormTemplateVersionUncheckedCreateWithoutTemplateInput = {
+    id?: number
+    version: number
+    name: string
+    description?: string
+    icon?: string
+    metadata?: string
+    page?: string | null
+    components?: string
+    context?: string
+    eventConfig?: string
+    scheduleType?: string
+    scheduleInterval?: number
+    scheduleConfig?: string
+    createdAt?: Date | string
+  }
+
+  export type FormTemplateVersionCreateOrConnectWithoutTemplateInput = {
+    where: FormTemplateVersionWhereUniqueInput
+    create: XOR<FormTemplateVersionCreateWithoutTemplateInput, FormTemplateVersionUncheckedCreateWithoutTemplateInput>
+  }
+
+  export type FormTemplateVersionCreateManyTemplateInputEnvelope = {
+    data: FormTemplateVersionCreateManyTemplateInput | FormTemplateVersionCreateManyTemplateInput[]
+  }
+
+  export type FormUpsertWithWhereUniqueWithoutTemplateInput = {
+    where: FormWhereUniqueInput
+    update: XOR<FormUpdateWithoutTemplateInput, FormUncheckedUpdateWithoutTemplateInput>
+    create: XOR<FormCreateWithoutTemplateInput, FormUncheckedCreateWithoutTemplateInput>
+  }
+
+  export type FormUpdateWithWhereUniqueWithoutTemplateInput = {
+    where: FormWhereUniqueInput
+    data: XOR<FormUpdateWithoutTemplateInput, FormUncheckedUpdateWithoutTemplateInput>
+  }
+
+  export type FormUpdateManyWithWhereWithoutTemplateInput = {
+    where: FormScalarWhereInput
+    data: XOR<FormUpdateManyMutationInput, FormUncheckedUpdateManyWithoutTemplateInput>
+  }
+
+  export type FormTemplateVersionUpsertWithWhereUniqueWithoutTemplateInput = {
+    where: FormTemplateVersionWhereUniqueInput
+    update: XOR<FormTemplateVersionUpdateWithoutTemplateInput, FormTemplateVersionUncheckedUpdateWithoutTemplateInput>
+    create: XOR<FormTemplateVersionCreateWithoutTemplateInput, FormTemplateVersionUncheckedCreateWithoutTemplateInput>
+  }
+
+  export type FormTemplateVersionUpdateWithWhereUniqueWithoutTemplateInput = {
+    where: FormTemplateVersionWhereUniqueInput
+    data: XOR<FormTemplateVersionUpdateWithoutTemplateInput, FormTemplateVersionUncheckedUpdateWithoutTemplateInput>
+  }
+
+  export type FormTemplateVersionUpdateManyWithWhereWithoutTemplateInput = {
+    where: FormTemplateVersionScalarWhereInput
+    data: XOR<FormTemplateVersionUpdateManyMutationInput, FormTemplateVersionUncheckedUpdateManyWithoutTemplateInput>
+  }
+
+  export type FormTemplateVersionScalarWhereInput = {
+    AND?: FormTemplateVersionScalarWhereInput | FormTemplateVersionScalarWhereInput[]
+    OR?: FormTemplateVersionScalarWhereInput[]
+    NOT?: FormTemplateVersionScalarWhereInput | FormTemplateVersionScalarWhereInput[]
+    id?: IntFilter<"FormTemplateVersion"> | number
+    templateId?: IntFilter<"FormTemplateVersion"> | number
+    version?: IntFilter<"FormTemplateVersion"> | number
+    name?: StringFilter<"FormTemplateVersion"> | string
+    description?: StringFilter<"FormTemplateVersion"> | string
+    icon?: StringFilter<"FormTemplateVersion"> | string
+    metadata?: StringFilter<"FormTemplateVersion"> | string
+    page?: StringNullableFilter<"FormTemplateVersion"> | string | null
+    components?: StringFilter<"FormTemplateVersion"> | string
+    context?: StringFilter<"FormTemplateVersion"> | string
+    eventConfig?: StringFilter<"FormTemplateVersion"> | string
+    scheduleType?: StringFilter<"FormTemplateVersion"> | string
+    scheduleInterval?: IntFilter<"FormTemplateVersion"> | number
+    scheduleConfig?: StringFilter<"FormTemplateVersion"> | string
+    createdAt?: DateTimeFilter<"FormTemplateVersion"> | Date | string
+  }
+
+  export type FormTemplateCreateWithoutVersionsInput = {
+    slug: string
+    name: string
+    description?: string
+    icon?: string
+    metadata?: string
+    page?: string | null
+    components?: string
+    context?: string
+    eventConfig?: string
+    scheduleType?: string
+    scheduleInterval?: number
+    scheduleConfig?: string
+    currentVersion?: number
+    active?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    forms?: FormCreateNestedManyWithoutTemplateInput
+  }
+
+  export type FormTemplateUncheckedCreateWithoutVersionsInput = {
+    id?: number
+    slug: string
+    name: string
+    description?: string
+    icon?: string
+    metadata?: string
+    page?: string | null
+    components?: string
+    context?: string
+    eventConfig?: string
+    scheduleType?: string
+    scheduleInterval?: number
+    scheduleConfig?: string
+    currentVersion?: number
+    active?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    forms?: FormUncheckedCreateNestedManyWithoutTemplateInput
+  }
+
+  export type FormTemplateCreateOrConnectWithoutVersionsInput = {
+    where: FormTemplateWhereUniqueInput
+    create: XOR<FormTemplateCreateWithoutVersionsInput, FormTemplateUncheckedCreateWithoutVersionsInput>
+  }
+
+  export type FormTemplateUpsertWithoutVersionsInput = {
+    update: XOR<FormTemplateUpdateWithoutVersionsInput, FormTemplateUncheckedUpdateWithoutVersionsInput>
+    create: XOR<FormTemplateCreateWithoutVersionsInput, FormTemplateUncheckedCreateWithoutVersionsInput>
+    where?: FormTemplateWhereInput
+  }
+
+  export type FormTemplateUpdateToOneWithWhereWithoutVersionsInput = {
+    where?: FormTemplateWhereInput
+    data: XOR<FormTemplateUpdateWithoutVersionsInput, FormTemplateUncheckedUpdateWithoutVersionsInput>
+  }
+
+  export type FormTemplateUpdateWithoutVersionsInput = {
+    slug?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    icon?: StringFieldUpdateOperationsInput | string
+    metadata?: StringFieldUpdateOperationsInput | string
+    page?: NullableStringFieldUpdateOperationsInput | string | null
+    components?: StringFieldUpdateOperationsInput | string
+    context?: StringFieldUpdateOperationsInput | string
+    eventConfig?: StringFieldUpdateOperationsInput | string
+    scheduleType?: StringFieldUpdateOperationsInput | string
+    scheduleInterval?: IntFieldUpdateOperationsInput | number
+    scheduleConfig?: StringFieldUpdateOperationsInput | string
+    currentVersion?: IntFieldUpdateOperationsInput | number
+    active?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    forms?: FormUpdateManyWithoutTemplateNestedInput
+  }
+
+  export type FormTemplateUncheckedUpdateWithoutVersionsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    slug?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    icon?: StringFieldUpdateOperationsInput | string
+    metadata?: StringFieldUpdateOperationsInput | string
+    page?: NullableStringFieldUpdateOperationsInput | string | null
+    components?: StringFieldUpdateOperationsInput | string
+    context?: StringFieldUpdateOperationsInput | string
+    eventConfig?: StringFieldUpdateOperationsInput | string
+    scheduleType?: StringFieldUpdateOperationsInput | string
+    scheduleInterval?: IntFieldUpdateOperationsInput | number
+    scheduleConfig?: StringFieldUpdateOperationsInput | string
+    currentVersion?: IntFieldUpdateOperationsInput | number
+    active?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    forms?: FormUncheckedUpdateManyWithoutTemplateNestedInput
+  }
+
+  export type AppUserCreateWithoutRoleInput = {
+    id: string
+    email?: string | null
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type AppUserUncheckedCreateWithoutRoleInput = {
+    id: string
+    email?: string | null
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type AppUserCreateOrConnectWithoutRoleInput = {
+    where: AppUserWhereUniqueInput
+    create: XOR<AppUserCreateWithoutRoleInput, AppUserUncheckedCreateWithoutRoleInput>
+  }
+
+  export type AppUserCreateManyRoleInputEnvelope = {
+    data: AppUserCreateManyRoleInput | AppUserCreateManyRoleInput[]
+  }
+
+  export type FormCreateWithoutRoleInput = {
+    userId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    published?: boolean
+    name: string
+    page?: string | null
+    components?: string
+    description?: string
+    context?: string
+    visit?: number
+    submission?: number
+    sharedURL?: string
+    currentVersion?: number
+    eventConfig?: string
+    scheduleType?: string
+    scheduleInterval?: number
+    scheduleConfig?: string
+    assignedUserId?: string | null
+    templateVersion?: number | null
+    submodule?: SubmoduleCreateNestedOneWithoutFormsInput
+    template?: FormTemplateCreateNestedOneWithoutFormsInput
+    submissions?: FormSubmissionCreateNestedManyWithoutFormInput
+    submissionValues?: FormSubmissionValueCreateNestedManyWithoutFormInput
+    versions?: FormVersionCreateNestedManyWithoutFormInput
+    assignments?: FormAssignmentCreateNestedManyWithoutFormInput
+    eventRules?: FormEventCreateNestedManyWithoutFormInput
+  }
+
+  export type FormUncheckedCreateWithoutRoleInput = {
+    id?: number
+    userId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    published?: boolean
+    name: string
+    page?: string | null
+    components?: string
+    description?: string
+    context?: string
+    visit?: number
+    submission?: number
+    sharedURL?: string
+    currentVersion?: number
+    eventConfig?: string
+    scheduleType?: string
+    scheduleInterval?: number
+    scheduleConfig?: string
+    assignedUserId?: string | null
+    submoduleId?: number | null
+    templateId?: number | null
+    templateVersion?: number | null
+    submissions?: FormSubmissionUncheckedCreateNestedManyWithoutFormInput
+    submissionValues?: FormSubmissionValueUncheckedCreateNestedManyWithoutFormInput
+    versions?: FormVersionUncheckedCreateNestedManyWithoutFormInput
+    assignments?: FormAssignmentUncheckedCreateNestedManyWithoutFormInput
+    eventRules?: FormEventUncheckedCreateNestedManyWithoutFormInput
+  }
+
+  export type FormCreateOrConnectWithoutRoleInput = {
+    where: FormWhereUniqueInput
+    create: XOR<FormCreateWithoutRoleInput, FormUncheckedCreateWithoutRoleInput>
+  }
+
+  export type FormCreateManyRoleInputEnvelope = {
+    data: FormCreateManyRoleInput | FormCreateManyRoleInput[]
+  }
+
+  export type FormAssignmentCreateWithoutRoleInput = {
+    userId?: string | null
+    active?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    form: FormCreateNestedOneWithoutAssignmentsInput
+    submodule: SubmoduleCreateNestedOneWithoutAssignmentsInput
+  }
+
+  export type FormAssignmentUncheckedCreateWithoutRoleInput = {
+    id?: number
+    formId: number
+    userId?: string | null
+    submoduleId: number
+    active?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FormAssignmentCreateOrConnectWithoutRoleInput = {
+    where: FormAssignmentWhereUniqueInput
+    create: XOR<FormAssignmentCreateWithoutRoleInput, FormAssignmentUncheckedCreateWithoutRoleInput>
+  }
+
+  export type FormAssignmentCreateManyRoleInputEnvelope = {
+    data: FormAssignmentCreateManyRoleInput | FormAssignmentCreateManyRoleInput[]
+  }
+
+  export type FormSubmissionCreateWithoutRoleInput = {
+    published?: boolean
+    version?: number
+    userId?: string | null
+    content: string
+    computedContent?: string
+    submittedAt?: Date | string
+    form: FormCreateNestedOneWithoutSubmissionsInput
+    formVersion?: FormVersionCreateNestedOneWithoutSubmissionsInput
+    submodule?: SubmoduleCreateNestedOneWithoutSubmissionsInput
+    values?: FormSubmissionValueCreateNestedManyWithoutSubmissionInput
+  }
+
+  export type FormSubmissionUncheckedCreateWithoutRoleInput = {
+    id?: number
+    published?: boolean
+    formId: number
+    formVersionId?: number | null
+    version?: number
+    userId?: string | null
+    submoduleId?: number | null
+    content: string
+    computedContent?: string
+    submittedAt?: Date | string
+    values?: FormSubmissionValueUncheckedCreateNestedManyWithoutSubmissionInput
+  }
+
+  export type FormSubmissionCreateOrConnectWithoutRoleInput = {
+    where: FormSubmissionWhereUniqueInput
+    create: XOR<FormSubmissionCreateWithoutRoleInput, FormSubmissionUncheckedCreateWithoutRoleInput>
+  }
+
+  export type FormSubmissionCreateManyRoleInputEnvelope = {
+    data: FormSubmissionCreateManyRoleInput | FormSubmissionCreateManyRoleInput[]
+  }
+
+  export type AppUserUpsertWithWhereUniqueWithoutRoleInput = {
+    where: AppUserWhereUniqueInput
+    update: XOR<AppUserUpdateWithoutRoleInput, AppUserUncheckedUpdateWithoutRoleInput>
+    create: XOR<AppUserCreateWithoutRoleInput, AppUserUncheckedCreateWithoutRoleInput>
+  }
+
+  export type AppUserUpdateWithWhereUniqueWithoutRoleInput = {
+    where: AppUserWhereUniqueInput
+    data: XOR<AppUserUpdateWithoutRoleInput, AppUserUncheckedUpdateWithoutRoleInput>
+  }
+
+  export type AppUserUpdateManyWithWhereWithoutRoleInput = {
+    where: AppUserScalarWhereInput
+    data: XOR<AppUserUpdateManyMutationInput, AppUserUncheckedUpdateManyWithoutRoleInput>
+  }
+
+  export type AppUserScalarWhereInput = {
+    AND?: AppUserScalarWhereInput | AppUserScalarWhereInput[]
+    OR?: AppUserScalarWhereInput[]
+    NOT?: AppUserScalarWhereInput | AppUserScalarWhereInput[]
+    id?: StringFilter<"AppUser"> | string
+    email?: StringNullableFilter<"AppUser"> | string | null
+    name?: StringFilter<"AppUser"> | string
+    roleId?: IntNullableFilter<"AppUser"> | number | null
+    createdAt?: DateTimeFilter<"AppUser"> | Date | string
+    updatedAt?: DateTimeFilter<"AppUser"> | Date | string
+  }
+
+  export type FormUpsertWithWhereUniqueWithoutRoleInput = {
+    where: FormWhereUniqueInput
+    update: XOR<FormUpdateWithoutRoleInput, FormUncheckedUpdateWithoutRoleInput>
+    create: XOR<FormCreateWithoutRoleInput, FormUncheckedCreateWithoutRoleInput>
+  }
+
+  export type FormUpdateWithWhereUniqueWithoutRoleInput = {
+    where: FormWhereUniqueInput
+    data: XOR<FormUpdateWithoutRoleInput, FormUncheckedUpdateWithoutRoleInput>
+  }
+
+  export type FormUpdateManyWithWhereWithoutRoleInput = {
+    where: FormScalarWhereInput
+    data: XOR<FormUpdateManyMutationInput, FormUncheckedUpdateManyWithoutRoleInput>
+  }
+
+  export type FormAssignmentUpsertWithWhereUniqueWithoutRoleInput = {
+    where: FormAssignmentWhereUniqueInput
+    update: XOR<FormAssignmentUpdateWithoutRoleInput, FormAssignmentUncheckedUpdateWithoutRoleInput>
+    create: XOR<FormAssignmentCreateWithoutRoleInput, FormAssignmentUncheckedCreateWithoutRoleInput>
+  }
+
+  export type FormAssignmentUpdateWithWhereUniqueWithoutRoleInput = {
+    where: FormAssignmentWhereUniqueInput
+    data: XOR<FormAssignmentUpdateWithoutRoleInput, FormAssignmentUncheckedUpdateWithoutRoleInput>
+  }
+
+  export type FormAssignmentUpdateManyWithWhereWithoutRoleInput = {
+    where: FormAssignmentScalarWhereInput
+    data: XOR<FormAssignmentUpdateManyMutationInput, FormAssignmentUncheckedUpdateManyWithoutRoleInput>
+  }
+
+  export type FormSubmissionUpsertWithWhereUniqueWithoutRoleInput = {
+    where: FormSubmissionWhereUniqueInput
+    update: XOR<FormSubmissionUpdateWithoutRoleInput, FormSubmissionUncheckedUpdateWithoutRoleInput>
+    create: XOR<FormSubmissionCreateWithoutRoleInput, FormSubmissionUncheckedCreateWithoutRoleInput>
+  }
+
+  export type FormSubmissionUpdateWithWhereUniqueWithoutRoleInput = {
+    where: FormSubmissionWhereUniqueInput
+    data: XOR<FormSubmissionUpdateWithoutRoleInput, FormSubmissionUncheckedUpdateWithoutRoleInput>
+  }
+
+  export type FormSubmissionUpdateManyWithWhereWithoutRoleInput = {
+    where: FormSubmissionScalarWhereInput
+    data: XOR<FormSubmissionUpdateManyMutationInput, FormSubmissionUncheckedUpdateManyWithoutRoleInput>
+  }
+
+  export type RoleCreateWithoutUsersInput = {
+    key: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    forms?: FormCreateNestedManyWithoutRoleInput
+    assignments?: FormAssignmentCreateNestedManyWithoutRoleInput
+    submissions?: FormSubmissionCreateNestedManyWithoutRoleInput
+  }
+
+  export type RoleUncheckedCreateWithoutUsersInput = {
+    id?: number
+    key: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    forms?: FormUncheckedCreateNestedManyWithoutRoleInput
+    assignments?: FormAssignmentUncheckedCreateNestedManyWithoutRoleInput
+    submissions?: FormSubmissionUncheckedCreateNestedManyWithoutRoleInput
+  }
+
+  export type RoleCreateOrConnectWithoutUsersInput = {
+    where: RoleWhereUniqueInput
+    create: XOR<RoleCreateWithoutUsersInput, RoleUncheckedCreateWithoutUsersInput>
+  }
+
+  export type RoleUpsertWithoutUsersInput = {
+    update: XOR<RoleUpdateWithoutUsersInput, RoleUncheckedUpdateWithoutUsersInput>
+    create: XOR<RoleCreateWithoutUsersInput, RoleUncheckedCreateWithoutUsersInput>
+    where?: RoleWhereInput
+  }
+
+  export type RoleUpdateToOneWithWhereWithoutUsersInput = {
+    where?: RoleWhereInput
+    data: XOR<RoleUpdateWithoutUsersInput, RoleUncheckedUpdateWithoutUsersInput>
+  }
+
+  export type RoleUpdateWithoutUsersInput = {
+    key?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    forms?: FormUpdateManyWithoutRoleNestedInput
+    assignments?: FormAssignmentUpdateManyWithoutRoleNestedInput
+    submissions?: FormSubmissionUpdateManyWithoutRoleNestedInput
+  }
+
+  export type RoleUncheckedUpdateWithoutUsersInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    key?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    forms?: FormUncheckedUpdateManyWithoutRoleNestedInput
+    assignments?: FormAssignmentUncheckedUpdateManyWithoutRoleNestedInput
+    submissions?: FormSubmissionUncheckedUpdateManyWithoutRoleNestedInput
   }
 
   export type FormSubmissionCreateManyFormInput = {
     id?: number
     published?: boolean
+    formVersionId?: number | null
+    version?: number
+    userId?: string | null
+    roleId?: number | null
+    submoduleId?: number | null
     content: string
+    computedContent?: string
+    submittedAt?: Date | string
+  }
+
+  export type FormSubmissionValueCreateManyFormInput = {
+    id?: number
+    submissionId: number
+    formVersionId?: number | null
+    fieldKey: string
+    fieldLabel?: string
+    elementId?: string | null
+    pageId?: string | null
+    parentId?: string | null
+    valueType?: string
+    stringValue?: string | null
+    numberValue?: number | null
+    booleanValue?: boolean | null
+    dateValue?: Date | string | null
+    jsonValue?: string | null
+    rawValue?: string | null
+    createdAt?: Date | string
+  }
+
+  export type FormVersionCreateManyFormInput = {
+    id?: number
+    version: number
+    name: string
+    description?: string
+    page?: string | null
+    components?: string
+    context?: string
+    eventConfig?: string
+    scheduleType?: string
+    scheduleInterval?: number
+    scheduleConfig?: string
+    published?: boolean
+    createdAt?: Date | string
+  }
+
+  export type FormAssignmentCreateManyFormInput = {
+    id?: number
+    userId?: string | null
+    roleId?: number | null
+    submoduleId: number
+    active?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FormEventCreateManyFormInput = {
+    id?: number
+    version?: number
+    name: string
+    sourceField?: string | null
+    targetField: string
+    expression: string
+    trigger?: string
+    enabled?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type FormSubmissionUpdateWithoutFormInput = {
     published?: BoolFieldUpdateOperationsInput | boolean
+    version?: IntFieldUpdateOperationsInput | number
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
     content?: StringFieldUpdateOperationsInput | string
+    computedContent?: StringFieldUpdateOperationsInput | string
+    submittedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    formVersion?: FormVersionUpdateOneWithoutSubmissionsNestedInput
+    role?: RoleUpdateOneWithoutSubmissionsNestedInput
+    submodule?: SubmoduleUpdateOneWithoutSubmissionsNestedInput
+    values?: FormSubmissionValueUpdateManyWithoutSubmissionNestedInput
   }
 
   export type FormSubmissionUncheckedUpdateWithoutFormInput = {
     id?: IntFieldUpdateOperationsInput | number
     published?: BoolFieldUpdateOperationsInput | boolean
+    formVersionId?: NullableIntFieldUpdateOperationsInput | number | null
+    version?: IntFieldUpdateOperationsInput | number
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    roleId?: NullableIntFieldUpdateOperationsInput | number | null
+    submoduleId?: NullableIntFieldUpdateOperationsInput | number | null
     content?: StringFieldUpdateOperationsInput | string
+    computedContent?: StringFieldUpdateOperationsInput | string
+    submittedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    values?: FormSubmissionValueUncheckedUpdateManyWithoutSubmissionNestedInput
   }
 
   export type FormSubmissionUncheckedUpdateManyWithoutFormInput = {
     id?: IntFieldUpdateOperationsInput | number
     published?: BoolFieldUpdateOperationsInput | boolean
+    formVersionId?: NullableIntFieldUpdateOperationsInput | number | null
+    version?: IntFieldUpdateOperationsInput | number
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    roleId?: NullableIntFieldUpdateOperationsInput | number | null
+    submoduleId?: NullableIntFieldUpdateOperationsInput | number | null
     content?: StringFieldUpdateOperationsInput | string
+    computedContent?: StringFieldUpdateOperationsInput | string
+    submittedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FormSubmissionValueUpdateWithoutFormInput = {
+    fieldKey?: StringFieldUpdateOperationsInput | string
+    fieldLabel?: StringFieldUpdateOperationsInput | string
+    elementId?: NullableStringFieldUpdateOperationsInput | string | null
+    pageId?: NullableStringFieldUpdateOperationsInput | string | null
+    parentId?: NullableStringFieldUpdateOperationsInput | string | null
+    valueType?: StringFieldUpdateOperationsInput | string
+    stringValue?: NullableStringFieldUpdateOperationsInput | string | null
+    numberValue?: NullableFloatFieldUpdateOperationsInput | number | null
+    booleanValue?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    dateValue?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    jsonValue?: NullableStringFieldUpdateOperationsInput | string | null
+    rawValue?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    submission?: FormSubmissionUpdateOneRequiredWithoutValuesNestedInput
+    formVersion?: FormVersionUpdateOneWithoutSubmissionValuesNestedInput
+  }
+
+  export type FormSubmissionValueUncheckedUpdateWithoutFormInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    submissionId?: IntFieldUpdateOperationsInput | number
+    formVersionId?: NullableIntFieldUpdateOperationsInput | number | null
+    fieldKey?: StringFieldUpdateOperationsInput | string
+    fieldLabel?: StringFieldUpdateOperationsInput | string
+    elementId?: NullableStringFieldUpdateOperationsInput | string | null
+    pageId?: NullableStringFieldUpdateOperationsInput | string | null
+    parentId?: NullableStringFieldUpdateOperationsInput | string | null
+    valueType?: StringFieldUpdateOperationsInput | string
+    stringValue?: NullableStringFieldUpdateOperationsInput | string | null
+    numberValue?: NullableFloatFieldUpdateOperationsInput | number | null
+    booleanValue?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    dateValue?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    jsonValue?: NullableStringFieldUpdateOperationsInput | string | null
+    rawValue?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FormSubmissionValueUncheckedUpdateManyWithoutFormInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    submissionId?: IntFieldUpdateOperationsInput | number
+    formVersionId?: NullableIntFieldUpdateOperationsInput | number | null
+    fieldKey?: StringFieldUpdateOperationsInput | string
+    fieldLabel?: StringFieldUpdateOperationsInput | string
+    elementId?: NullableStringFieldUpdateOperationsInput | string | null
+    pageId?: NullableStringFieldUpdateOperationsInput | string | null
+    parentId?: NullableStringFieldUpdateOperationsInput | string | null
+    valueType?: StringFieldUpdateOperationsInput | string
+    stringValue?: NullableStringFieldUpdateOperationsInput | string | null
+    numberValue?: NullableFloatFieldUpdateOperationsInput | number | null
+    booleanValue?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    dateValue?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    jsonValue?: NullableStringFieldUpdateOperationsInput | string | null
+    rawValue?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FormVersionUpdateWithoutFormInput = {
+    version?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    page?: NullableStringFieldUpdateOperationsInput | string | null
+    components?: StringFieldUpdateOperationsInput | string
+    context?: StringFieldUpdateOperationsInput | string
+    eventConfig?: StringFieldUpdateOperationsInput | string
+    scheduleType?: StringFieldUpdateOperationsInput | string
+    scheduleInterval?: IntFieldUpdateOperationsInput | number
+    scheduleConfig?: StringFieldUpdateOperationsInput | string
+    published?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    submissions?: FormSubmissionUpdateManyWithoutFormVersionNestedInput
+    submissionValues?: FormSubmissionValueUpdateManyWithoutFormVersionNestedInput
+  }
+
+  export type FormVersionUncheckedUpdateWithoutFormInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    version?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    page?: NullableStringFieldUpdateOperationsInput | string | null
+    components?: StringFieldUpdateOperationsInput | string
+    context?: StringFieldUpdateOperationsInput | string
+    eventConfig?: StringFieldUpdateOperationsInput | string
+    scheduleType?: StringFieldUpdateOperationsInput | string
+    scheduleInterval?: IntFieldUpdateOperationsInput | number
+    scheduleConfig?: StringFieldUpdateOperationsInput | string
+    published?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    submissions?: FormSubmissionUncheckedUpdateManyWithoutFormVersionNestedInput
+    submissionValues?: FormSubmissionValueUncheckedUpdateManyWithoutFormVersionNestedInput
+  }
+
+  export type FormVersionUncheckedUpdateManyWithoutFormInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    version?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    page?: NullableStringFieldUpdateOperationsInput | string | null
+    components?: StringFieldUpdateOperationsInput | string
+    context?: StringFieldUpdateOperationsInput | string
+    eventConfig?: StringFieldUpdateOperationsInput | string
+    scheduleType?: StringFieldUpdateOperationsInput | string
+    scheduleInterval?: IntFieldUpdateOperationsInput | number
+    scheduleConfig?: StringFieldUpdateOperationsInput | string
+    published?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FormAssignmentUpdateWithoutFormInput = {
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    active?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    role?: RoleUpdateOneWithoutAssignmentsNestedInput
+    submodule?: SubmoduleUpdateOneRequiredWithoutAssignmentsNestedInput
+  }
+
+  export type FormAssignmentUncheckedUpdateWithoutFormInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    roleId?: NullableIntFieldUpdateOperationsInput | number | null
+    submoduleId?: IntFieldUpdateOperationsInput | number
+    active?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FormAssignmentUncheckedUpdateManyWithoutFormInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    roleId?: NullableIntFieldUpdateOperationsInput | number | null
+    submoduleId?: IntFieldUpdateOperationsInput | number
+    active?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FormEventUpdateWithoutFormInput = {
+    version?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    sourceField?: NullableStringFieldUpdateOperationsInput | string | null
+    targetField?: StringFieldUpdateOperationsInput | string
+    expression?: StringFieldUpdateOperationsInput | string
+    trigger?: StringFieldUpdateOperationsInput | string
+    enabled?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FormEventUncheckedUpdateWithoutFormInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    version?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    sourceField?: NullableStringFieldUpdateOperationsInput | string | null
+    targetField?: StringFieldUpdateOperationsInput | string
+    expression?: StringFieldUpdateOperationsInput | string
+    trigger?: StringFieldUpdateOperationsInput | string
+    enabled?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FormEventUncheckedUpdateManyWithoutFormInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    version?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    sourceField?: NullableStringFieldUpdateOperationsInput | string | null
+    targetField?: StringFieldUpdateOperationsInput | string
+    expression?: StringFieldUpdateOperationsInput | string
+    trigger?: StringFieldUpdateOperationsInput | string
+    enabled?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FormSubmissionValueCreateManySubmissionInput = {
+    id?: number
+    formId: number
+    formVersionId?: number | null
+    fieldKey: string
+    fieldLabel?: string
+    elementId?: string | null
+    pageId?: string | null
+    parentId?: string | null
+    valueType?: string
+    stringValue?: string | null
+    numberValue?: number | null
+    booleanValue?: boolean | null
+    dateValue?: Date | string | null
+    jsonValue?: string | null
+    rawValue?: string | null
+    createdAt?: Date | string
+  }
+
+  export type FormSubmissionValueUpdateWithoutSubmissionInput = {
+    fieldKey?: StringFieldUpdateOperationsInput | string
+    fieldLabel?: StringFieldUpdateOperationsInput | string
+    elementId?: NullableStringFieldUpdateOperationsInput | string | null
+    pageId?: NullableStringFieldUpdateOperationsInput | string | null
+    parentId?: NullableStringFieldUpdateOperationsInput | string | null
+    valueType?: StringFieldUpdateOperationsInput | string
+    stringValue?: NullableStringFieldUpdateOperationsInput | string | null
+    numberValue?: NullableFloatFieldUpdateOperationsInput | number | null
+    booleanValue?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    dateValue?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    jsonValue?: NullableStringFieldUpdateOperationsInput | string | null
+    rawValue?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    form?: FormUpdateOneRequiredWithoutSubmissionValuesNestedInput
+    formVersion?: FormVersionUpdateOneWithoutSubmissionValuesNestedInput
+  }
+
+  export type FormSubmissionValueUncheckedUpdateWithoutSubmissionInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    formId?: IntFieldUpdateOperationsInput | number
+    formVersionId?: NullableIntFieldUpdateOperationsInput | number | null
+    fieldKey?: StringFieldUpdateOperationsInput | string
+    fieldLabel?: StringFieldUpdateOperationsInput | string
+    elementId?: NullableStringFieldUpdateOperationsInput | string | null
+    pageId?: NullableStringFieldUpdateOperationsInput | string | null
+    parentId?: NullableStringFieldUpdateOperationsInput | string | null
+    valueType?: StringFieldUpdateOperationsInput | string
+    stringValue?: NullableStringFieldUpdateOperationsInput | string | null
+    numberValue?: NullableFloatFieldUpdateOperationsInput | number | null
+    booleanValue?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    dateValue?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    jsonValue?: NullableStringFieldUpdateOperationsInput | string | null
+    rawValue?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FormSubmissionValueUncheckedUpdateManyWithoutSubmissionInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    formId?: IntFieldUpdateOperationsInput | number
+    formVersionId?: NullableIntFieldUpdateOperationsInput | number | null
+    fieldKey?: StringFieldUpdateOperationsInput | string
+    fieldLabel?: StringFieldUpdateOperationsInput | string
+    elementId?: NullableStringFieldUpdateOperationsInput | string | null
+    pageId?: NullableStringFieldUpdateOperationsInput | string | null
+    parentId?: NullableStringFieldUpdateOperationsInput | string | null
+    valueType?: StringFieldUpdateOperationsInput | string
+    stringValue?: NullableStringFieldUpdateOperationsInput | string | null
+    numberValue?: NullableFloatFieldUpdateOperationsInput | number | null
+    booleanValue?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    dateValue?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    jsonValue?: NullableStringFieldUpdateOperationsInput | string | null
+    rawValue?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FormSubmissionCreateManyFormVersionInput = {
+    id?: number
+    published?: boolean
+    formId: number
+    version?: number
+    userId?: string | null
+    roleId?: number | null
+    submoduleId?: number | null
+    content: string
+    computedContent?: string
+    submittedAt?: Date | string
+  }
+
+  export type FormSubmissionValueCreateManyFormVersionInput = {
+    id?: number
+    submissionId: number
+    formId: number
+    fieldKey: string
+    fieldLabel?: string
+    elementId?: string | null
+    pageId?: string | null
+    parentId?: string | null
+    valueType?: string
+    stringValue?: string | null
+    numberValue?: number | null
+    booleanValue?: boolean | null
+    dateValue?: Date | string | null
+    jsonValue?: string | null
+    rawValue?: string | null
+    createdAt?: Date | string
+  }
+
+  export type FormSubmissionUpdateWithoutFormVersionInput = {
+    published?: BoolFieldUpdateOperationsInput | boolean
+    version?: IntFieldUpdateOperationsInput | number
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    content?: StringFieldUpdateOperationsInput | string
+    computedContent?: StringFieldUpdateOperationsInput | string
+    submittedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    form?: FormUpdateOneRequiredWithoutSubmissionsNestedInput
+    role?: RoleUpdateOneWithoutSubmissionsNestedInput
+    submodule?: SubmoduleUpdateOneWithoutSubmissionsNestedInput
+    values?: FormSubmissionValueUpdateManyWithoutSubmissionNestedInput
+  }
+
+  export type FormSubmissionUncheckedUpdateWithoutFormVersionInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    published?: BoolFieldUpdateOperationsInput | boolean
+    formId?: IntFieldUpdateOperationsInput | number
+    version?: IntFieldUpdateOperationsInput | number
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    roleId?: NullableIntFieldUpdateOperationsInput | number | null
+    submoduleId?: NullableIntFieldUpdateOperationsInput | number | null
+    content?: StringFieldUpdateOperationsInput | string
+    computedContent?: StringFieldUpdateOperationsInput | string
+    submittedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    values?: FormSubmissionValueUncheckedUpdateManyWithoutSubmissionNestedInput
+  }
+
+  export type FormSubmissionUncheckedUpdateManyWithoutFormVersionInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    published?: BoolFieldUpdateOperationsInput | boolean
+    formId?: IntFieldUpdateOperationsInput | number
+    version?: IntFieldUpdateOperationsInput | number
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    roleId?: NullableIntFieldUpdateOperationsInput | number | null
+    submoduleId?: NullableIntFieldUpdateOperationsInput | number | null
+    content?: StringFieldUpdateOperationsInput | string
+    computedContent?: StringFieldUpdateOperationsInput | string
+    submittedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FormSubmissionValueUpdateWithoutFormVersionInput = {
+    fieldKey?: StringFieldUpdateOperationsInput | string
+    fieldLabel?: StringFieldUpdateOperationsInput | string
+    elementId?: NullableStringFieldUpdateOperationsInput | string | null
+    pageId?: NullableStringFieldUpdateOperationsInput | string | null
+    parentId?: NullableStringFieldUpdateOperationsInput | string | null
+    valueType?: StringFieldUpdateOperationsInput | string
+    stringValue?: NullableStringFieldUpdateOperationsInput | string | null
+    numberValue?: NullableFloatFieldUpdateOperationsInput | number | null
+    booleanValue?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    dateValue?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    jsonValue?: NullableStringFieldUpdateOperationsInput | string | null
+    rawValue?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    submission?: FormSubmissionUpdateOneRequiredWithoutValuesNestedInput
+    form?: FormUpdateOneRequiredWithoutSubmissionValuesNestedInput
+  }
+
+  export type FormSubmissionValueUncheckedUpdateWithoutFormVersionInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    submissionId?: IntFieldUpdateOperationsInput | number
+    formId?: IntFieldUpdateOperationsInput | number
+    fieldKey?: StringFieldUpdateOperationsInput | string
+    fieldLabel?: StringFieldUpdateOperationsInput | string
+    elementId?: NullableStringFieldUpdateOperationsInput | string | null
+    pageId?: NullableStringFieldUpdateOperationsInput | string | null
+    parentId?: NullableStringFieldUpdateOperationsInput | string | null
+    valueType?: StringFieldUpdateOperationsInput | string
+    stringValue?: NullableStringFieldUpdateOperationsInput | string | null
+    numberValue?: NullableFloatFieldUpdateOperationsInput | number | null
+    booleanValue?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    dateValue?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    jsonValue?: NullableStringFieldUpdateOperationsInput | string | null
+    rawValue?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FormSubmissionValueUncheckedUpdateManyWithoutFormVersionInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    submissionId?: IntFieldUpdateOperationsInput | number
+    formId?: IntFieldUpdateOperationsInput | number
+    fieldKey?: StringFieldUpdateOperationsInput | string
+    fieldLabel?: StringFieldUpdateOperationsInput | string
+    elementId?: NullableStringFieldUpdateOperationsInput | string | null
+    pageId?: NullableStringFieldUpdateOperationsInput | string | null
+    parentId?: NullableStringFieldUpdateOperationsInput | string | null
+    valueType?: StringFieldUpdateOperationsInput | string
+    stringValue?: NullableStringFieldUpdateOperationsInput | string | null
+    numberValue?: NullableFloatFieldUpdateOperationsInput | number | null
+    booleanValue?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    dateValue?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    jsonValue?: NullableStringFieldUpdateOperationsInput | string | null
+    rawValue?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FormCreateManySubmoduleInput = {
+    id?: number
+    userId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    published?: boolean
+    name: string
+    page?: string | null
+    components?: string
+    description?: string
+    context?: string
+    visit?: number
+    submission?: number
+    sharedURL?: string
+    currentVersion?: number
+    eventConfig?: string
+    scheduleType?: string
+    scheduleInterval?: number
+    scheduleConfig?: string
+    assignedUserId?: string | null
+    roleId?: number | null
+    templateId?: number | null
+    templateVersion?: number | null
+  }
+
+  export type FormAssignmentCreateManySubmoduleInput = {
+    id?: number
+    formId: number
+    userId?: string | null
+    roleId?: number | null
+    active?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FormSubmissionCreateManySubmoduleInput = {
+    id?: number
+    published?: boolean
+    formId: number
+    formVersionId?: number | null
+    version?: number
+    userId?: string | null
+    roleId?: number | null
+    content: string
+    computedContent?: string
+    submittedAt?: Date | string
+  }
+
+  export type FormUpdateWithoutSubmoduleInput = {
+    userId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    published?: BoolFieldUpdateOperationsInput | boolean
+    name?: StringFieldUpdateOperationsInput | string
+    page?: NullableStringFieldUpdateOperationsInput | string | null
+    components?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    context?: StringFieldUpdateOperationsInput | string
+    visit?: IntFieldUpdateOperationsInput | number
+    submission?: IntFieldUpdateOperationsInput | number
+    sharedURL?: StringFieldUpdateOperationsInput | string
+    currentVersion?: IntFieldUpdateOperationsInput | number
+    eventConfig?: StringFieldUpdateOperationsInput | string
+    scheduleType?: StringFieldUpdateOperationsInput | string
+    scheduleInterval?: IntFieldUpdateOperationsInput | number
+    scheduleConfig?: StringFieldUpdateOperationsInput | string
+    assignedUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    templateVersion?: NullableIntFieldUpdateOperationsInput | number | null
+    role?: RoleUpdateOneWithoutFormsNestedInput
+    template?: FormTemplateUpdateOneWithoutFormsNestedInput
+    submissions?: FormSubmissionUpdateManyWithoutFormNestedInput
+    submissionValues?: FormSubmissionValueUpdateManyWithoutFormNestedInput
+    versions?: FormVersionUpdateManyWithoutFormNestedInput
+    assignments?: FormAssignmentUpdateManyWithoutFormNestedInput
+    eventRules?: FormEventUpdateManyWithoutFormNestedInput
+  }
+
+  export type FormUncheckedUpdateWithoutSubmoduleInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    published?: BoolFieldUpdateOperationsInput | boolean
+    name?: StringFieldUpdateOperationsInput | string
+    page?: NullableStringFieldUpdateOperationsInput | string | null
+    components?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    context?: StringFieldUpdateOperationsInput | string
+    visit?: IntFieldUpdateOperationsInput | number
+    submission?: IntFieldUpdateOperationsInput | number
+    sharedURL?: StringFieldUpdateOperationsInput | string
+    currentVersion?: IntFieldUpdateOperationsInput | number
+    eventConfig?: StringFieldUpdateOperationsInput | string
+    scheduleType?: StringFieldUpdateOperationsInput | string
+    scheduleInterval?: IntFieldUpdateOperationsInput | number
+    scheduleConfig?: StringFieldUpdateOperationsInput | string
+    assignedUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    roleId?: NullableIntFieldUpdateOperationsInput | number | null
+    templateId?: NullableIntFieldUpdateOperationsInput | number | null
+    templateVersion?: NullableIntFieldUpdateOperationsInput | number | null
+    submissions?: FormSubmissionUncheckedUpdateManyWithoutFormNestedInput
+    submissionValues?: FormSubmissionValueUncheckedUpdateManyWithoutFormNestedInput
+    versions?: FormVersionUncheckedUpdateManyWithoutFormNestedInput
+    assignments?: FormAssignmentUncheckedUpdateManyWithoutFormNestedInput
+    eventRules?: FormEventUncheckedUpdateManyWithoutFormNestedInput
+  }
+
+  export type FormUncheckedUpdateManyWithoutSubmoduleInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    published?: BoolFieldUpdateOperationsInput | boolean
+    name?: StringFieldUpdateOperationsInput | string
+    page?: NullableStringFieldUpdateOperationsInput | string | null
+    components?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    context?: StringFieldUpdateOperationsInput | string
+    visit?: IntFieldUpdateOperationsInput | number
+    submission?: IntFieldUpdateOperationsInput | number
+    sharedURL?: StringFieldUpdateOperationsInput | string
+    currentVersion?: IntFieldUpdateOperationsInput | number
+    eventConfig?: StringFieldUpdateOperationsInput | string
+    scheduleType?: StringFieldUpdateOperationsInput | string
+    scheduleInterval?: IntFieldUpdateOperationsInput | number
+    scheduleConfig?: StringFieldUpdateOperationsInput | string
+    assignedUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    roleId?: NullableIntFieldUpdateOperationsInput | number | null
+    templateId?: NullableIntFieldUpdateOperationsInput | number | null
+    templateVersion?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type FormAssignmentUpdateWithoutSubmoduleInput = {
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    active?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    form?: FormUpdateOneRequiredWithoutAssignmentsNestedInput
+    role?: RoleUpdateOneWithoutAssignmentsNestedInput
+  }
+
+  export type FormAssignmentUncheckedUpdateWithoutSubmoduleInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    formId?: IntFieldUpdateOperationsInput | number
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    roleId?: NullableIntFieldUpdateOperationsInput | number | null
+    active?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FormAssignmentUncheckedUpdateManyWithoutSubmoduleInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    formId?: IntFieldUpdateOperationsInput | number
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    roleId?: NullableIntFieldUpdateOperationsInput | number | null
+    active?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FormSubmissionUpdateWithoutSubmoduleInput = {
+    published?: BoolFieldUpdateOperationsInput | boolean
+    version?: IntFieldUpdateOperationsInput | number
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    content?: StringFieldUpdateOperationsInput | string
+    computedContent?: StringFieldUpdateOperationsInput | string
+    submittedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    form?: FormUpdateOneRequiredWithoutSubmissionsNestedInput
+    formVersion?: FormVersionUpdateOneWithoutSubmissionsNestedInput
+    role?: RoleUpdateOneWithoutSubmissionsNestedInput
+    values?: FormSubmissionValueUpdateManyWithoutSubmissionNestedInput
+  }
+
+  export type FormSubmissionUncheckedUpdateWithoutSubmoduleInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    published?: BoolFieldUpdateOperationsInput | boolean
+    formId?: IntFieldUpdateOperationsInput | number
+    formVersionId?: NullableIntFieldUpdateOperationsInput | number | null
+    version?: IntFieldUpdateOperationsInput | number
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    roleId?: NullableIntFieldUpdateOperationsInput | number | null
+    content?: StringFieldUpdateOperationsInput | string
+    computedContent?: StringFieldUpdateOperationsInput | string
+    submittedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    values?: FormSubmissionValueUncheckedUpdateManyWithoutSubmissionNestedInput
+  }
+
+  export type FormSubmissionUncheckedUpdateManyWithoutSubmoduleInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    published?: BoolFieldUpdateOperationsInput | boolean
+    formId?: IntFieldUpdateOperationsInput | number
+    formVersionId?: NullableIntFieldUpdateOperationsInput | number | null
+    version?: IntFieldUpdateOperationsInput | number
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    roleId?: NullableIntFieldUpdateOperationsInput | number | null
+    content?: StringFieldUpdateOperationsInput | string
+    computedContent?: StringFieldUpdateOperationsInput | string
+    submittedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FormCreateManyTemplateInput = {
+    id?: number
+    userId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    published?: boolean
+    name: string
+    page?: string | null
+    components?: string
+    description?: string
+    context?: string
+    visit?: number
+    submission?: number
+    sharedURL?: string
+    currentVersion?: number
+    eventConfig?: string
+    scheduleType?: string
+    scheduleInterval?: number
+    scheduleConfig?: string
+    assignedUserId?: string | null
+    roleId?: number | null
+    submoduleId?: number | null
+    templateVersion?: number | null
+  }
+
+  export type FormTemplateVersionCreateManyTemplateInput = {
+    id?: number
+    version: number
+    name: string
+    description?: string
+    icon?: string
+    metadata?: string
+    page?: string | null
+    components?: string
+    context?: string
+    eventConfig?: string
+    scheduleType?: string
+    scheduleInterval?: number
+    scheduleConfig?: string
+    createdAt?: Date | string
+  }
+
+  export type FormUpdateWithoutTemplateInput = {
+    userId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    published?: BoolFieldUpdateOperationsInput | boolean
+    name?: StringFieldUpdateOperationsInput | string
+    page?: NullableStringFieldUpdateOperationsInput | string | null
+    components?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    context?: StringFieldUpdateOperationsInput | string
+    visit?: IntFieldUpdateOperationsInput | number
+    submission?: IntFieldUpdateOperationsInput | number
+    sharedURL?: StringFieldUpdateOperationsInput | string
+    currentVersion?: IntFieldUpdateOperationsInput | number
+    eventConfig?: StringFieldUpdateOperationsInput | string
+    scheduleType?: StringFieldUpdateOperationsInput | string
+    scheduleInterval?: IntFieldUpdateOperationsInput | number
+    scheduleConfig?: StringFieldUpdateOperationsInput | string
+    assignedUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    templateVersion?: NullableIntFieldUpdateOperationsInput | number | null
+    role?: RoleUpdateOneWithoutFormsNestedInput
+    submodule?: SubmoduleUpdateOneWithoutFormsNestedInput
+    submissions?: FormSubmissionUpdateManyWithoutFormNestedInput
+    submissionValues?: FormSubmissionValueUpdateManyWithoutFormNestedInput
+    versions?: FormVersionUpdateManyWithoutFormNestedInput
+    assignments?: FormAssignmentUpdateManyWithoutFormNestedInput
+    eventRules?: FormEventUpdateManyWithoutFormNestedInput
+  }
+
+  export type FormUncheckedUpdateWithoutTemplateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    published?: BoolFieldUpdateOperationsInput | boolean
+    name?: StringFieldUpdateOperationsInput | string
+    page?: NullableStringFieldUpdateOperationsInput | string | null
+    components?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    context?: StringFieldUpdateOperationsInput | string
+    visit?: IntFieldUpdateOperationsInput | number
+    submission?: IntFieldUpdateOperationsInput | number
+    sharedURL?: StringFieldUpdateOperationsInput | string
+    currentVersion?: IntFieldUpdateOperationsInput | number
+    eventConfig?: StringFieldUpdateOperationsInput | string
+    scheduleType?: StringFieldUpdateOperationsInput | string
+    scheduleInterval?: IntFieldUpdateOperationsInput | number
+    scheduleConfig?: StringFieldUpdateOperationsInput | string
+    assignedUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    roleId?: NullableIntFieldUpdateOperationsInput | number | null
+    submoduleId?: NullableIntFieldUpdateOperationsInput | number | null
+    templateVersion?: NullableIntFieldUpdateOperationsInput | number | null
+    submissions?: FormSubmissionUncheckedUpdateManyWithoutFormNestedInput
+    submissionValues?: FormSubmissionValueUncheckedUpdateManyWithoutFormNestedInput
+    versions?: FormVersionUncheckedUpdateManyWithoutFormNestedInput
+    assignments?: FormAssignmentUncheckedUpdateManyWithoutFormNestedInput
+    eventRules?: FormEventUncheckedUpdateManyWithoutFormNestedInput
+  }
+
+  export type FormUncheckedUpdateManyWithoutTemplateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    published?: BoolFieldUpdateOperationsInput | boolean
+    name?: StringFieldUpdateOperationsInput | string
+    page?: NullableStringFieldUpdateOperationsInput | string | null
+    components?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    context?: StringFieldUpdateOperationsInput | string
+    visit?: IntFieldUpdateOperationsInput | number
+    submission?: IntFieldUpdateOperationsInput | number
+    sharedURL?: StringFieldUpdateOperationsInput | string
+    currentVersion?: IntFieldUpdateOperationsInput | number
+    eventConfig?: StringFieldUpdateOperationsInput | string
+    scheduleType?: StringFieldUpdateOperationsInput | string
+    scheduleInterval?: IntFieldUpdateOperationsInput | number
+    scheduleConfig?: StringFieldUpdateOperationsInput | string
+    assignedUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    roleId?: NullableIntFieldUpdateOperationsInput | number | null
+    submoduleId?: NullableIntFieldUpdateOperationsInput | number | null
+    templateVersion?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type FormTemplateVersionUpdateWithoutTemplateInput = {
+    version?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    icon?: StringFieldUpdateOperationsInput | string
+    metadata?: StringFieldUpdateOperationsInput | string
+    page?: NullableStringFieldUpdateOperationsInput | string | null
+    components?: StringFieldUpdateOperationsInput | string
+    context?: StringFieldUpdateOperationsInput | string
+    eventConfig?: StringFieldUpdateOperationsInput | string
+    scheduleType?: StringFieldUpdateOperationsInput | string
+    scheduleInterval?: IntFieldUpdateOperationsInput | number
+    scheduleConfig?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FormTemplateVersionUncheckedUpdateWithoutTemplateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    version?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    icon?: StringFieldUpdateOperationsInput | string
+    metadata?: StringFieldUpdateOperationsInput | string
+    page?: NullableStringFieldUpdateOperationsInput | string | null
+    components?: StringFieldUpdateOperationsInput | string
+    context?: StringFieldUpdateOperationsInput | string
+    eventConfig?: StringFieldUpdateOperationsInput | string
+    scheduleType?: StringFieldUpdateOperationsInput | string
+    scheduleInterval?: IntFieldUpdateOperationsInput | number
+    scheduleConfig?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FormTemplateVersionUncheckedUpdateManyWithoutTemplateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    version?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    icon?: StringFieldUpdateOperationsInput | string
+    metadata?: StringFieldUpdateOperationsInput | string
+    page?: NullableStringFieldUpdateOperationsInput | string | null
+    components?: StringFieldUpdateOperationsInput | string
+    context?: StringFieldUpdateOperationsInput | string
+    eventConfig?: StringFieldUpdateOperationsInput | string
+    scheduleType?: StringFieldUpdateOperationsInput | string
+    scheduleInterval?: IntFieldUpdateOperationsInput | number
+    scheduleConfig?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AppUserCreateManyRoleInput = {
+    id: string
+    email?: string | null
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FormCreateManyRoleInput = {
+    id?: number
+    userId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    published?: boolean
+    name: string
+    page?: string | null
+    components?: string
+    description?: string
+    context?: string
+    visit?: number
+    submission?: number
+    sharedURL?: string
+    currentVersion?: number
+    eventConfig?: string
+    scheduleType?: string
+    scheduleInterval?: number
+    scheduleConfig?: string
+    assignedUserId?: string | null
+    submoduleId?: number | null
+    templateId?: number | null
+    templateVersion?: number | null
+  }
+
+  export type FormAssignmentCreateManyRoleInput = {
+    id?: number
+    formId: number
+    userId?: string | null
+    submoduleId: number
+    active?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FormSubmissionCreateManyRoleInput = {
+    id?: number
+    published?: boolean
+    formId: number
+    formVersionId?: number | null
+    version?: number
+    userId?: string | null
+    submoduleId?: number | null
+    content: string
+    computedContent?: string
+    submittedAt?: Date | string
+  }
+
+  export type AppUserUpdateWithoutRoleInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AppUserUncheckedUpdateWithoutRoleInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AppUserUncheckedUpdateManyWithoutRoleInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FormUpdateWithoutRoleInput = {
+    userId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    published?: BoolFieldUpdateOperationsInput | boolean
+    name?: StringFieldUpdateOperationsInput | string
+    page?: NullableStringFieldUpdateOperationsInput | string | null
+    components?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    context?: StringFieldUpdateOperationsInput | string
+    visit?: IntFieldUpdateOperationsInput | number
+    submission?: IntFieldUpdateOperationsInput | number
+    sharedURL?: StringFieldUpdateOperationsInput | string
+    currentVersion?: IntFieldUpdateOperationsInput | number
+    eventConfig?: StringFieldUpdateOperationsInput | string
+    scheduleType?: StringFieldUpdateOperationsInput | string
+    scheduleInterval?: IntFieldUpdateOperationsInput | number
+    scheduleConfig?: StringFieldUpdateOperationsInput | string
+    assignedUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    templateVersion?: NullableIntFieldUpdateOperationsInput | number | null
+    submodule?: SubmoduleUpdateOneWithoutFormsNestedInput
+    template?: FormTemplateUpdateOneWithoutFormsNestedInput
+    submissions?: FormSubmissionUpdateManyWithoutFormNestedInput
+    submissionValues?: FormSubmissionValueUpdateManyWithoutFormNestedInput
+    versions?: FormVersionUpdateManyWithoutFormNestedInput
+    assignments?: FormAssignmentUpdateManyWithoutFormNestedInput
+    eventRules?: FormEventUpdateManyWithoutFormNestedInput
+  }
+
+  export type FormUncheckedUpdateWithoutRoleInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    published?: BoolFieldUpdateOperationsInput | boolean
+    name?: StringFieldUpdateOperationsInput | string
+    page?: NullableStringFieldUpdateOperationsInput | string | null
+    components?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    context?: StringFieldUpdateOperationsInput | string
+    visit?: IntFieldUpdateOperationsInput | number
+    submission?: IntFieldUpdateOperationsInput | number
+    sharedURL?: StringFieldUpdateOperationsInput | string
+    currentVersion?: IntFieldUpdateOperationsInput | number
+    eventConfig?: StringFieldUpdateOperationsInput | string
+    scheduleType?: StringFieldUpdateOperationsInput | string
+    scheduleInterval?: IntFieldUpdateOperationsInput | number
+    scheduleConfig?: StringFieldUpdateOperationsInput | string
+    assignedUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    submoduleId?: NullableIntFieldUpdateOperationsInput | number | null
+    templateId?: NullableIntFieldUpdateOperationsInput | number | null
+    templateVersion?: NullableIntFieldUpdateOperationsInput | number | null
+    submissions?: FormSubmissionUncheckedUpdateManyWithoutFormNestedInput
+    submissionValues?: FormSubmissionValueUncheckedUpdateManyWithoutFormNestedInput
+    versions?: FormVersionUncheckedUpdateManyWithoutFormNestedInput
+    assignments?: FormAssignmentUncheckedUpdateManyWithoutFormNestedInput
+    eventRules?: FormEventUncheckedUpdateManyWithoutFormNestedInput
+  }
+
+  export type FormUncheckedUpdateManyWithoutRoleInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    published?: BoolFieldUpdateOperationsInput | boolean
+    name?: StringFieldUpdateOperationsInput | string
+    page?: NullableStringFieldUpdateOperationsInput | string | null
+    components?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    context?: StringFieldUpdateOperationsInput | string
+    visit?: IntFieldUpdateOperationsInput | number
+    submission?: IntFieldUpdateOperationsInput | number
+    sharedURL?: StringFieldUpdateOperationsInput | string
+    currentVersion?: IntFieldUpdateOperationsInput | number
+    eventConfig?: StringFieldUpdateOperationsInput | string
+    scheduleType?: StringFieldUpdateOperationsInput | string
+    scheduleInterval?: IntFieldUpdateOperationsInput | number
+    scheduleConfig?: StringFieldUpdateOperationsInput | string
+    assignedUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    submoduleId?: NullableIntFieldUpdateOperationsInput | number | null
+    templateId?: NullableIntFieldUpdateOperationsInput | number | null
+    templateVersion?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type FormAssignmentUpdateWithoutRoleInput = {
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    active?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    form?: FormUpdateOneRequiredWithoutAssignmentsNestedInput
+    submodule?: SubmoduleUpdateOneRequiredWithoutAssignmentsNestedInput
+  }
+
+  export type FormAssignmentUncheckedUpdateWithoutRoleInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    formId?: IntFieldUpdateOperationsInput | number
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    submoduleId?: IntFieldUpdateOperationsInput | number
+    active?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FormAssignmentUncheckedUpdateManyWithoutRoleInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    formId?: IntFieldUpdateOperationsInput | number
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    submoduleId?: IntFieldUpdateOperationsInput | number
+    active?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FormSubmissionUpdateWithoutRoleInput = {
+    published?: BoolFieldUpdateOperationsInput | boolean
+    version?: IntFieldUpdateOperationsInput | number
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    content?: StringFieldUpdateOperationsInput | string
+    computedContent?: StringFieldUpdateOperationsInput | string
+    submittedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    form?: FormUpdateOneRequiredWithoutSubmissionsNestedInput
+    formVersion?: FormVersionUpdateOneWithoutSubmissionsNestedInput
+    submodule?: SubmoduleUpdateOneWithoutSubmissionsNestedInput
+    values?: FormSubmissionValueUpdateManyWithoutSubmissionNestedInput
+  }
+
+  export type FormSubmissionUncheckedUpdateWithoutRoleInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    published?: BoolFieldUpdateOperationsInput | boolean
+    formId?: IntFieldUpdateOperationsInput | number
+    formVersionId?: NullableIntFieldUpdateOperationsInput | number | null
+    version?: IntFieldUpdateOperationsInput | number
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    submoduleId?: NullableIntFieldUpdateOperationsInput | number | null
+    content?: StringFieldUpdateOperationsInput | string
+    computedContent?: StringFieldUpdateOperationsInput | string
+    submittedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    values?: FormSubmissionValueUncheckedUpdateManyWithoutSubmissionNestedInput
+  }
+
+  export type FormSubmissionUncheckedUpdateManyWithoutRoleInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    published?: BoolFieldUpdateOperationsInput | boolean
+    formId?: IntFieldUpdateOperationsInput | number
+    formVersionId?: NullableIntFieldUpdateOperationsInput | number | null
+    version?: IntFieldUpdateOperationsInput | number
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    submoduleId?: NullableIntFieldUpdateOperationsInput | number | null
+    content?: StringFieldUpdateOperationsInput | string
+    computedContent?: StringFieldUpdateOperationsInput | string
+    submittedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 
-
-  /**
-   * Aliases for legacy arg types
-   */
-    /**
-     * @deprecated Use FormCountOutputTypeDefaultArgs instead
-     */
-    export type FormCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = FormCountOutputTypeDefaultArgs<ExtArgs>
-    /**
-     * @deprecated Use FormDefaultArgs instead
-     */
-    export type FormArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = FormDefaultArgs<ExtArgs>
-    /**
-     * @deprecated Use FormSubmissionDefaultArgs instead
-     */
-    export type FormSubmissionArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = FormSubmissionDefaultArgs<ExtArgs>
 
   /**
    * Batch Payload for updateMany & deleteMany & createMany

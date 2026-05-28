@@ -153,11 +153,13 @@ function DesignerComponent({
 
 function FormComponent({
   elementInstance,
+  formController,
 }: {
   elementInstance: FormElementInstance
   isInvalid?: boolean
   submitValue?: SubmitFunction
   defaultValue?: string
+  formController?: any
 }) {
   const { elements } = useDesigner()
 
@@ -190,6 +192,7 @@ function FormComponent({
                 <FormElementInstance
                   key={element.id}
                   elementInstance={element}
+                  formController={formController}
                 />
               }
             </>

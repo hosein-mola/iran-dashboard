@@ -12,28 +12,216 @@ datasource db {
 }
 
 model Form {
-  id             Int              @id @default(autoincrement())
-  userId         String
-  createdAt      DateTime         @default(now())
-  updatedAt      DateTime         @updatedAt
-  published      Boolean          @default(false)
-  name           String
-  page           String?
-  components     String           @default("[]")
-  description    String           @default("")
-  context        String           @default("[]")
-  visit          Int              @default(0)
-  submission     Int              @default(0)
-  sharedURL      String           @unique @default(uuid())
-  FormSubmission FormSubmission[]
+  id               Int                   @id @default(autoincrement())
+  userId           String
+  createdAt        DateTime              @default(now())
+  updatedAt        DateTime              @updatedAt
+  published        Boolean               @default(false)
+  name             String
+  page             String?
+  components       String                @default("[]")
+  description      String                @default("")
+  context          String                @default("[]")
+  visit            Int                   @default(0)
+  submission       Int                   @default(0)
+  sharedURL        String                @unique @default(uuid())
+  currentVersion   Int                   @default(1)
+  eventConfig      String                @default("[]")
+  scheduleType     String                @default("monthly")
+  scheduleInterval Int                   @default(1)
+  scheduleConfig   String                @default("{}")
+  assignedUserId   String?
+  roleId           Int?
+  submoduleId      Int?
+  templateId       Int?
+  templateVersion  Int?
+  role             Role?                 @relation(fields: [roleId], references: [id], onDelete: SetNull)
+  submodule        Submodule?            @relation(fields: [submoduleId], references: [id], onDelete: SetNull)
+  template         FormTemplate?         @relation(fields: [templateId], references: [id], onDelete: SetNull)
+  submissions      FormSubmission[]
+  submissionValues FormSubmissionValue[]
+  versions         FormVersion[]
+  assignments      FormAssignment[]
+  eventRules       FormEvent[]
 
   @@unique([userId, name])
 }
 
 model FormSubmission {
-  id        Int     @id @default(autoincrement())
-  published Boolean @default(false)
-  formId    Int
-  form      Form    @relation(fields: [formId], references: [id])
-  content   String
+  id              Int                   @id @default(autoincrement())
+  published       Boolean               @default(false)
+  formId          Int
+  formVersionId   Int?
+  version         Int                   @default(1)
+  userId          String?
+  roleId          Int?
+  submoduleId     Int?
+  content         String
+  computedContent String                @default("{}")
+  submittedAt     DateTime              @default(now())
+  form            Form                  @relation(fields: [formId], references: [id], onDelete: Cascade)
+  formVersion     FormVersion?          @relation(fields: [formVersionId], references: [id], onDelete: SetNull)
+  role            Role?                 @relation(fields: [roleId], references: [id], onDelete: SetNull)
+  submodule       Submodule?            @relation(fields: [submoduleId], references: [id], onDelete: SetNull)
+  values          FormSubmissionValue[]
+}
+
+model FormVersion {
+  id               Int                   @id @default(autoincrement())
+  formId           Int
+  version          Int
+  name             String
+  description      String                @default("")
+  page             String?
+  components       String                @default("[]")
+  context          String                @default("[]")
+  eventConfig      String                @default("[]")
+  scheduleType     String                @default("monthly")
+  scheduleInterval Int                   @default(1)
+  scheduleConfig   String                @default("{}")
+  published        Boolean               @default(false)
+  createdAt        DateTime              @default(now())
+  form             Form                  @relation(fields: [formId], references: [id], onDelete: Cascade)
+  submissions      FormSubmission[]
+  submissionValues FormSubmissionValue[]
+
+  @@unique([formId, version])
+}
+
+model FormSubmissionValue {
+  id            Int            @id @default(autoincrement())
+  submissionId  Int
+  formId        Int
+  formVersionId Int?
+  fieldKey      String
+  fieldLabel    String         @default("")
+  elementId     String?
+  pageId        String?
+  parentId      String?
+  valueType     String         @default("text")
+  stringValue   String?
+  numberValue   Float?
+  booleanValue  Boolean?
+  dateValue     DateTime?
+  jsonValue     String?
+  rawValue      String?
+  createdAt     DateTime       @default(now())
+  submission    FormSubmission @relation(fields: [submissionId], references: [id], onDelete: Cascade)
+  form          Form           @relation(fields: [formId], references: [id], onDelete: Cascade)
+  formVersion   FormVersion?   @relation(fields: [formVersionId], references: [id], onDelete: SetNull)
+
+  @@unique([submissionId, fieldKey])
+  @@index([formId, fieldKey])
+}
+
+model FormEvent {
+  id          Int      @id @default(autoincrement())
+  formId      Int
+  version     Int      @default(1)
+  name        String
+  sourceField String?
+  targetField String
+  expression  String
+  trigger     String   @default("change")
+  enabled     Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  form        Form     @relation(fields: [formId], references: [id], onDelete: Cascade)
+}
+
+model FormAssignment {
+  id          Int       @id @default(autoincrement())
+  formId      Int
+  userId      String?
+  roleId      Int?
+  submoduleId Int
+  active      Boolean   @default(true)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  form        Form      @relation(fields: [formId], references: [id], onDelete: Cascade)
+  role        Role?     @relation(fields: [roleId], references: [id], onDelete: SetNull)
+  submodule   Submodule @relation(fields: [submoduleId], references: [id], onDelete: Cascade)
+
+  @@unique([formId, userId, roleId, submoduleId])
+}
+
+model Submodule {
+  id          Int              @id @default(autoincrement())
+  slug        String           @unique
+  name        String
+  description String           @default("")
+  icon        String           @default("layers")
+  metadata    String           @default("{}")
+  baseTables  String           @default("[]")
+  active      Boolean          @default(true)
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+  forms       Form[]
+  assignments FormAssignment[]
+  submissions FormSubmission[]
+}
+
+model FormTemplate {
+  id               Int                   @id @default(autoincrement())
+  slug             String                @unique
+  name             String
+  description      String                @default("")
+  icon             String                @default("file-text")
+  metadata         String                @default("{}")
+  page             String?
+  components       String                @default("[]")
+  context          String                @default("[]")
+  eventConfig      String                @default("[]")
+  scheduleType     String                @default("monthly")
+  scheduleInterval Int                   @default(1)
+  scheduleConfig   String                @default("{}")
+  currentVersion   Int                   @default(1)
+  active           Boolean               @default(true)
+  createdAt        DateTime              @default(now())
+  updatedAt        DateTime              @updatedAt
+  forms            Form[]
+  versions         FormTemplateVersion[]
+}
+
+model FormTemplateVersion {
+  id               Int          @id @default(autoincrement())
+  templateId       Int
+  version          Int
+  name             String
+  description      String       @default("")
+  icon             String       @default("file-text")
+  metadata         String       @default("{}")
+  page             String?
+  components       String       @default("[]")
+  context          String       @default("[]")
+  eventConfig      String       @default("[]")
+  scheduleType     String       @default("monthly")
+  scheduleInterval Int          @default(1)
+  scheduleConfig   String       @default("{}")
+  createdAt        DateTime     @default(now())
+  template         FormTemplate @relation(fields: [templateId], references: [id], onDelete: Cascade)
+
+  @@unique([templateId, version])
+}
+
+model Role {
+  id          Int              @id @default(autoincrement())
+  key         String           @unique
+  name        String
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+  users       AppUser[]
+  forms       Form[]
+  assignments FormAssignment[]
+  submissions FormSubmission[]
+}
+
+model AppUser {
+  id        String   @id
+  email     String?  @unique
+  name      String
+  roleId    Int?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  role      Role?    @relation(fields: [roleId], references: [id], onDelete: SetNull)
 }

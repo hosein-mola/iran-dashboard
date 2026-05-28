@@ -112,14 +112,17 @@ export const TextFieldFormElement: FormElement = {
     parentId: string | null,
     page: string
   ) => {
-    extraAttributes.id = id
     return {
       id,
       index,
       type,
       page,
       parentId,
-      extraAttributes,
+      extraAttributes: {
+        ...extraAttributes,
+        id,
+        name: `field_${id}`,
+      },
     }
   },
   designerBtnElement: {
@@ -144,13 +147,101 @@ type CustomInstance = FormElementInstance & {
 
 type propertiesFormSchemaType = z.infer<typeof propertiesSchema>
 
+function getFieldName(element: CustomInstance) {
+  return String(element.extraAttributes.name || element.id)
+}
+
+function parseNumericInput(value: unknown) {
+  if (value === undefined || value === null || value === '') return null
+
+  const parsed =
+    typeof value === 'number'
+      ? value
+      : Number(String(value).replaceAll(',', '').trim())
+
+  return Number.isFinite(parsed) ? parsed : null
+}
+
+function getFieldErrorMessage(formController: UseFormReturn<any>, name: string) {
+  const error = formController.formState.errors?.[name]
+  if (!error) return null
+
+  const message = error.message
+  return typeof message === 'string' ? message : 'مقدار وارد شده معتبر نیست.'
+}
+
+function buildValidationRules(element: CustomInstance) {
+  const { label, required, disabled, min, max, minLength, maxLength, type } =
+    element.extraAttributes
+  const fieldLabel = label || element.extraAttributes.name || 'این فیلد'
+
+  return {
+    required:
+      required && !disabled ? `${fieldLabel} الزامی است.` : undefined,
+    validate: {
+      min: (value: unknown) => {
+        if (type !== 'number' || value === undefined || value === null || value === '') {
+          return true
+        }
+
+        const minValue = parseNumericInput(min)
+        const currentValue = parseNumericInput(value)
+
+        if (minValue === null || currentValue === null) return true
+
+        return (
+          currentValue >= minValue ||
+          `${fieldLabel} نباید کمتر از ${minValue} باشد.`
+        )
+      },
+      max: (value: unknown) => {
+        if (type !== 'number' || value === undefined || value === null || value === '') {
+          return true
+        }
+
+        const maxValue = parseNumericInput(max)
+        const currentValue = parseNumericInput(value)
+
+        if (maxValue === null || currentValue === null) return true
+
+        return (
+          currentValue <= maxValue ||
+          `${fieldLabel} نباید بیشتر از ${maxValue} باشد.`
+        )
+      },
+      minLength: (value: unknown) => {
+        if (value === undefined || value === null || value === '') return true
+
+        const minLengthValue = Number(minLength)
+        if (!Number.isFinite(minLengthValue) || minLengthValue <= 0) return true
+
+        return (
+          String(value).length >= minLengthValue ||
+          `${fieldLabel} باید حداقل ${minLengthValue} کاراکتر باشد.`
+        )
+      },
+      maxLength: (value: unknown) => {
+        if (value === undefined || value === null || value === '') return true
+
+        const maxLengthValue = Number(maxLength)
+        if (!Number.isFinite(maxLengthValue) || maxLengthValue <= 0) return true
+
+        return (
+          String(value).length <= maxLengthValue ||
+          `${fieldLabel} باید حداکثر ${maxLengthValue} کاراکتر باشد.`
+        )
+      },
+    },
+  }
+}
+
 function DesignerComponent({
   elementInstance,
 }: {
   elementInstance: FormElementInstance
 }) {
   const element = elementInstance as CustomInstance
-  const { label, require, placeholder, helperText } = element.extraAttributes
+  const { label, required, placeholder, helperText } = element.extraAttributes
 
   return (
     <>
@@ -162,7 +253,7 @@ function DesignerComponent({
       >
         <Label className="hover:!cursor-pointer">
           {label}
-          {require && '*'}
+          {required && '*'}
         </Label>
         <Input
           className="mt-2 hover:!cursor-pointer"
@@ -184,33 +275,34 @@ function FormComponent({
   isInvalid,
 }: FormComponentType): JSX.Element {
   const element = elementInstance as CustomInstance
-  const { label, require, helperText } = element.extraAttributes
-  const [error, setError] = useState(false)
+  const { label, required, helperText } = element.extraAttributes
   const ref = useRef(null)
   const inputRef = useRef(null)
-
-  useEffect(() => {
-    setError(isInvalid == true)
-  }, [isInvalid])
+  const fieldName = getFieldName(element)
+  const errorMessage = getFieldErrorMessage(formController, fieldName)
+  const hasError = isInvalid === true || Boolean(errorMessage)
 
   return (
     <div className={cn('flex w-full flex-col gap-2', '')}>
-      <Label className={cn(error && 'text-red-500')}>
+      <Label className={cn(hasError && 'text-red-500')}>
         {label}
-        {require && '*'}
+        {required && '*'}
       </Label>
       <MaskInputGenerator
         element={element}
         formController={formController}
         ref={ref}
         inputRef={inputRef}
-        error={error}
+        error={hasError}
       />
+      {errorMessage && (
+        <p className="mt-1 text-[0.8rem] text-red-500">{errorMessage}</p>
+      )}
       {helperText && (
         <p
           className={cn(
             'text-muted-foreground mt-2 text-[0.8rem]',
-            error && 'text-red-500'
+            hasError && 'text-red-500'
           )}
         >
           {helperText}
@@ -783,7 +875,7 @@ function PropertiesComponent({
 }
 interface MaskInputGeneratorProps {
   element: CustomInstance // Replace 'any' with the actual type if known
-  formController: UseFormReturn<propertiesFormSchemaType> // Replace 'any' with the actual type if known
+  formController: UseFormReturn<any> // Replace 'any' with the actual type if known
   inputRef?: React.Ref<HTMLInputElement> // Assuming inputRef is a reference to an HTML input element
   error?: boolean // Assuming error is a string, adjust if needed
 }
@@ -793,18 +885,23 @@ const MaskInputGenerator = forwardRef<
   MaskInputGeneratorProps
 >((props, ref) => {
   const { element, formController, inputRef, error } = props
+  const fieldName = getFieldName(element)
+  const rules = buildValidationRules(element)
+
   if (element.extraAttributes.type === 'number') {
     return (
       <Controller
         key={element.extraAttributes.title}
         control={formController.control}
-        name={'name'}
-        render={({ field: { onChange, value } }) => (
+        name={fieldName}
+        rules={rules}
+        render={({ field: { onChange, onBlur, value } }) => (
           <IMaskInput
             autoFocus={false}
             inputRef={inputRef}
-            value={String(value)}
+            value={value === undefined || value === null ? '' : String(value)}
             dir="ltr"
+            aria-invalid={error}
             className={cn(
               'border-input placeholder:text-muted-foreground focus-visible:ring-ring flex h-9 w-full rounded-none border bg-transparent px-3 py-1 text-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:ring-1 disabled:cursor-not-allowed disabled:opacity-50',
               error && 'border-red-500 text-red-500'
@@ -827,14 +924,10 @@ const MaskInputGenerator = forwardRef<
             placeholder={element.extraAttributes.placeholder}
             placeholderChar={'#'}
             mapToRadix={['.', '-']}
-            onBlur={(value) => {
-              if (value === undefined) {
-                console.warn('Value is undefined')
-              }
-              console.log('run', element.extraAttributes.title)
-
+            onAccept={(value) => {
               onChange(value)
             }}
+            onBlur={onBlur}
             data-id={element.id}
           />
         )}
@@ -842,8 +935,28 @@ const MaskInputGenerator = forwardRef<
     )
   }
   if (element.extraAttributes.type === 'pattern') {
-    return 'format'
+    return (
+      <Controller
+        key={element.extraAttributes.title}
+        control={formController.control}
+        name={fieldName}
+        rules={rules}
+        render={({ field }) => (
+          <Input
+            {...field}
+            ref={ref}
+            aria-invalid={error}
+            disabled={element.extraAttributes.disabled}
+            placeholder={element.extraAttributes.placeholder}
+            className={cn(error && 'border-red-500 text-red-500')}
+            value={field.value ?? ''}
+          />
+        )}
+      />
+    )
   }
+
+  return null
 })
 
 // Add a display name to the component

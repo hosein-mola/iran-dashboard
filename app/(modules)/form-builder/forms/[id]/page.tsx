@@ -1,167 +1,97 @@
-'use client'
-import { GetFormById, GetFormWithSubmissions } from '@/actions/form'
-import FormLinkShare from '@/components/FormLinkShare'
-import VisitBtn from '@/components/VisitBtn'
-import React, { ReactNode } from 'react'
+import Link from 'next/link'
 import { FaWpforms } from 'react-icons/fa'
 import { HiCursorClick } from 'react-icons/hi'
 import { LuView } from 'react-icons/lu'
 import { TbArrowBounce } from 'react-icons/tb'
-import { ElementType } from '@/types/element-type'
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui/table'
-import { randomUUID } from 'crypto'
+
+import { GetFormWithSubmissions } from '@/actions/form'
+import FormLinkShare from '@/components/FormLinkShare'
+import FormSubmissionsGrid from '@/components/FormSubmissionsGrid'
+import VisitBtn from '@/components/VisitBtn'
+import { Button } from '@/components/ui/button'
+import { Separator } from '@/components/ui/separator'
 import { StatsCard } from '../../StatsCard'
 
-async function FormDetailPage(props: { params: Promise<{ id: number }> }) {
+export default async function FormDetailPage(props: {
+  params: Promise<{ id: string }>
+}) {
   const params = await props.params
-  const form = await GetFormById(params.id)
+  const form = await GetFormWithSubmissions(Number(params.id))
 
   if (!form) {
     throw new Error('form not found')
   }
-  const { visit, submission } = form
 
-  let submissionRate = 0
-  if (visit > 0) {
-    submissionRate = (submission / visit) * 100
-  }
+  const submissionRate =
+    form.visit > 0 ? Math.round((form.submission / form.visit) * 100) : 0
   const bounceRate = 100 - submissionRate
 
   return (
-    <>
-      <div className="border-muted border-b py-10">
-        <div className="container flex justify-between">
-          <h1 className="truncate text-4xl font-bold">{form.name}</h1>
-          <VisitBtn formId={`${form.id}`} />
+    <section className="space-y-6 p-4">
+      <header className="space-y-4 rounded-lg border bg-card p-4">
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <p className="text-sm text-muted-foreground">
+              نسخه جاری {form.currentVersion.toLocaleString('fa-IR')}
+            </p>
+            <h1 className="text-3xl font-bold">{form.name}</h1>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            <VisitBtn formId={`${form.id}`} />
+            <Button asChild variant="outline">
+              <Link href={`/form-builder/builder/${form.id}`}>ویرایش فرم</Link>
+            </Button>
+          </div>
         </div>
-      </div>
-      <div className="border-muted border-b py-4">
-        <div className="container flex items-center justify-between gap-2">
-          <FormLinkShare formId={`${form.id}`} />
-        </div>
-      </div>
-      <div className="container grid w-full grid-cols-1 gap-4 pt-8 md:grid-cols-2 lg:grid-cols-4">
+        <FormLinkShare formId={`${form.id}`} />
+      </header>
+
+      <div className="grid w-full grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
         <StatsCard
-          title="Total visits"
+          title="بازدید"
           icon={<LuView className="text-blue-600" />}
-          helperText="All time form visits"
-          value={visit.toLocaleString() || ''}
+          helperText="همه بازدیدهای فرم"
+          value={form.visit.toLocaleString('fa-IR')}
           loading={false}
           className=""
         />
-
         <StatsCard
-          title="Total submissions"
+          title="پاسخ‌ها"
           icon={<FaWpforms className="text-yellow-600" />}
-          helperText="All time form submissions"
-          value={submission.toLocaleString() || ''}
+          helperText="همه سابمیشن‌ها"
+          value={form.submission.toLocaleString('fa-IR')}
           loading={false}
           className=""
         />
         <StatsCard
-          title="Submission rate"
+          title="نرخ ثبت"
           icon={<HiCursorClick className="text-green-600" />}
-          helperText="Visits that result in form submission"
-          value={submissionRate.toLocaleString() + '%' || ''}
+          helperText="نسبت ثبت به بازدید"
+          value={`${submissionRate.toLocaleString('fa-IR')}٪`}
           loading={false}
           className=""
         />
         <StatsCard
-          title="Bounce rate"
+          title="نرخ خروج"
           icon={<TbArrowBounce className="text-red-600" />}
-          helperText="Visits that leaves without interacting"
-          value={bounceRate.toLocaleString() + '%' || ''}
+          helperText="بازدید بدون ثبت"
+          value={`${bounceRate.toLocaleString('fa-IR')}٪`}
           loading={false}
           className=""
         />
       </div>
 
-      <div className="container pt-10">
-        <SubmissionsTable id={form.id} />
-      </div>
-    </>
-  )
-}
+      <Separator />
 
-export default FormDetailPage
-
-
-async function SubmissionsTable({ id }: { id: number }) {
-  const form = await GetFormWithSubmissions(id)
-  console.log('🚀 ~ SubmissionsTable ~ form:', form)
-
-  if (!form) {
-    throw new Error('form not found')
-  }
-
-
-  const columns: any[] = []
-
-  const rows: any[] = []
-
-  form?.submissions?.forEach((submission: any) => {
-    const content = JSON.parse(submission.data)
-    const id = randomUUID().toString()
-    content['id'] = id
-    rows.push(content)
-    Object.entries(content).forEach(([key, value]) => {
-      if (!columns.includes(key)) {
-        columns.push(key)
-      }
-    })
-  })
-
-  return (
-    <>
-      <h1 className="my-4 text-2xl font-bold">Submissions</h1>
-      <div className="border">
-        <Table>
-          <TableHeader>
-            <TableRow className="bg-muted/40">
-              {columns.map((column) => (
-                <TableHead key={column} className="text-center uppercase">
-                  {column}
-                </TableHead>
-              ))}
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {rows.map((row) => {
-              return (
-                <TableRow key={row.id}>
-                  {columns.map((col) => {
-                    return <RowCell key={col} value={row[col]} type={'panel'} />
-                  })}
-                </TableRow>
-              )
-            })}
-          </TableBody>
-        </Table>
-      </div>
-    </>
-  )
-}
-
-function RowCell({
-  key,
-  type,
-  value,
-}: {
-  type: ElementType
-  value: string
-  key: string
-}) {
-  const node: ReactNode = value
-  return (
-    <TableCell key={key} className="text-foreground text-center">
-      {node}
-    </TableCell>
+      <section className="space-y-3">
+        <div>
+          <h2 className="text-xl font-semibold">سابمیشن‌ها</h2>
+          <p className="text-sm text-muted-foreground">
+            هر ردیف با نسخه فرم زمان ثبت ذخیره شده است.
+          </p>
+        </div>
+        <FormSubmissionsGrid rows={form.submissionRows} />
+      </section>
+    </section>
   )
 }

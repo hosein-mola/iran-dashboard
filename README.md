@@ -1446,6 +1446,7 @@ return (
 <Drawer direction="top">
 {children}
 <DrawerContent className="z-[9999] h-auto" dir="rtl">
+
 <div className="mx-auto w-full">
 <DrawerHeader>
 <DrawerTitle>انتخابگر ماژول</DrawerTitle>
@@ -1720,3 +1721,4 @@ app/
 Pages like `/dashboard/persons` and `/form-builder` inherit the dashboard chrome, while
 the lightweight stubs under `/ai`, `/code`, `/reports`, `/logs`, and `/files`
 act as placeholders until their business logic is ready.
+codex resume 019e6de2-94e3-75d1-85ae-f3f95039560a

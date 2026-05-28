@@ -4,7 +4,7 @@ import { Button } from './ui/button';
 
 function VisitBtn({ formId }: { formId: string }) {
     const [mounted, setMounted] = useState(false);
-    const shareLink = `/submit/${formId}`;
+    const shareLink = `/form-builder/submit/${formId}`;
 
     useEffect(() => {
         setMounted(true);

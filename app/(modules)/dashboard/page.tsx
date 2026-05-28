@@ -5,6 +5,7 @@ import {
   AlertTriangle,
   BellDot,
   CheckCircle2,
+  ClipboardList,
   DamIcon,
   Droplets,
   FileSpreadsheet,
@@ -13,8 +14,9 @@ import {
   WavesIcon,
 } from 'lucide-react'
 import Link from 'next/link'
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 
+import { GetDashboardSubmoduleCards } from '@/actions/form'
 import { Button } from '@/components/ui/button'
 import {
   Card,
@@ -27,19 +29,30 @@ import { Separator } from '@/components/ui/separator'
 import { Chart1 } from '@/components/Chart1'
 import { Chart2 } from '@/components/Chart2'
 
-const modules = [
+type DashboardSubmoduleCard = Awaited<
+  ReturnType<typeof GetDashboardSubmoduleCards>
+>[number]
+
+const defaultSubmoduleCards: DashboardSubmoduleCard[] = [
   {
-    title: 'منابع',
-    description: 'جدول منابع، فیلترها و داشبورد اختصاصی.',
-    href: '/dashboard/resources',
-    icon: DamIcon,
+    id: 0,
+    slug: 'resources',
+    name: 'منابع',
+    description: 'فرم‌ها و داشبوردهای مرتبط با زیرسیستم منابع سد.',
+    formsCount: 0,
+    submissionsCount: 0,
+    baseTablesCount: 0,
+    href: '/dashboard/submodule/resources',
   },
   {
-    title: 'مصارف',
-    description: 'ورود و مشاهده مصارف (به زودی).',
-    href: '#',
-    icon: WavesIcon,
-    disabled: true,
+    id: 0,
+    slug: 'usage',
+    name: 'مصارف',
+    description: 'فرم‌ها و داشبوردهای مرتبط با زیرسیستم مصارف سد.',
+    formsCount: 0,
+    submissionsCount: 0,
+    baseTablesCount: 0,
+    href: '/dashboard/submodule/usage',
   },
 ]
 
@@ -115,7 +128,7 @@ const approvals = [
 ]
 
 const quickActions = [
-  { label: 'ثبت ورودی جدید', href: '/dashboard/resources' },
+  { label: 'ثبت ورودی جدید', href: '/dashboard/submodule' },
   { label: 'گزارش هفتگی', href: '/reports' },
   { label: 'مدیریت کاربران', href: '/security' },
   { label: 'ارسال اعلان', href: '/logs' },
@@ -131,6 +144,9 @@ const heatmap = Array.from({ length: 28 }).map((_, idx) => {
 })
 
 export default function DashboardHome() {
+  const [submoduleCards, setSubmoduleCards] = useState<
+    DashboardSubmoduleCard[]
+  >(defaultSubmoduleCards)
   const [moduleFilter, setModuleFilter] = useState<
     'all' | 'resources' | 'reports' | 'security'
   >('all')
@@ -158,6 +174,26 @@ export default function DashboardHome() {
     [moduleFilter, priorityFilter]
   )
 
+  useEffect(() => {
+    let ignore = false
+
+    GetDashboardSubmoduleCards().then((cards) => {
+      if (!ignore && cards.length > 0) {
+        setSubmoduleCards(cards)
+      }
+    })
+
+    return () => {
+      ignore = true
+    }
+  }, [])
+
+  const getSubmoduleIcon = (slug: string) => {
+    if (slug === 'resources') return DamIcon
+    if (slug === 'usage') return WavesIcon
+    return FileSpreadsheet
+  }
+
   return (
     <div className="relative flex min-h-screen flex-1 flex-col gap-6 overflow-y-auto px-4 py-4">
       <div className="from-background via-background to-accent/10 pointer-events-none absolute inset-0 bg-gradient-to-br" />
@@ -183,41 +219,58 @@ export default function DashboardHome() {
             <div className="space-y-2 rounded-lg">
               <div className="flex items-center justify-between">
                 <div className="space-y-0.5">
-                  <p className="text-sm font-semibold">زیرسیستم‌های شما</p>
+                  <Link
+                    href="/dashboard/submodule"
+                    className="text-sm font-semibold"
+                  >
+                    زیرسیستم‌های شما
+                  </Link>
                   <p className="text-muted-foreground text-sm">
                     مرکز کنترل سد‌ایران
                   </p>
                 </div>
               </div>
-              <div className="grid gap-3 md:grid-cols-3">
-                {modules.map((module) => (
-                  <Card
-                    key={module.title}
-                    className="border-border/60 bg-card/90 rounded-lg border shadow-sm backdrop-blur"
-                  >
-                    <CardHeader className="flex flex-row items-center gap-3 pb-3">
-                      <module.icon className="text-primary size-8" />
-                      <div className="space-y-1">
-                        <CardTitle className="text-base">
-                          {module.title}
-                        </CardTitle>
-                        <CardDescription className="text-xs">
-                          {module.description}
-                        </CardDescription>
-                      </div>
-                    </CardHeader>
-                    <CardContent className="pt-0">
-                      <Button
-                        asChild
-                        variant="default"
-                        disabled={module.disabled}
-                        className="w-full"
-                      >
-                        <Link href={module.href}>ورود</Link>
-                      </Button>
-                    </CardContent>
-                  </Card>
-                ))}
+              <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
+                {submoduleCards.map((submodule) => {
+                  const SubmoduleIcon = getSubmoduleIcon(submodule.slug)
+
+                  return (
+                    <Card
+                      key={`${submodule.slug}-${submodule.id}`}
+                      className="border-border/60 bg-card/90 rounded-lg border shadow-sm backdrop-blur"
+                    >
+                      <CardHeader className="flex flex-row items-center gap-3 pb-3">
+                        <SubmoduleIcon className="text-primary size-8" />
+                        <div className="space-y-1">
+                          <CardTitle className="text-base">
+                            {submodule.name}
+                          </CardTitle>
+                          <CardDescription className="text-xs">
+                            {submodule.description}
+                          </CardDescription>
+                        </div>
+                      </CardHeader>
+                      <CardContent className="space-y-3 pt-0">
+                        <div className="text-muted-foreground flex flex-wrap gap-2 text-xs">
+                          <span>
+                            {submodule.formsCount.toLocaleString('fa-IR')} فرم
+                          </span>
+                          <span>
+                            {submodule.submissionsCount.toLocaleString('fa-IR')}{' '}
+                            ثبت
+                          </span>
+                          <span>
+                            {submodule.baseTablesCount.toLocaleString('fa-IR')}{' '}
+                            جدول پایه
+                          </span>
+                        </div>
+                        <Button asChild variant="default" className="w-full">
+                          <Link href={submodule.href}>ورود</Link>
+                        </Button>
+                      </CardContent>
+                    </Card>
+                  )
+                })}
               </div>
             </div>
             <div className="mt-2 grid gap-2 md:grid-cols-4">

@@ -16,13 +16,27 @@ const breadcrumbMatchers: Array<{
   { test: (path) => path === '/dashboard/persons', label: 'افراد' },
   { test: (path) => path === '/dashboard/resources', label: 'منابع' },
   {
+    test: (path) => path === '/dashboard/submodule',
+    label: 'فرم های زیرسیستم',
+  },
+  {
     test: (path) => path.startsWith('/dashboard/resources/dashboard'),
     label: 'داشبورد منابع',
   },
   { test: (path) => path === '/form-builder', label: 'فرم‌ساز' },
-  { test: (path) => path.startsWith('/form-builder/builder'), label: 'ویرایش فرم' },
+  {
+    test: (path) => path.startsWith('/form-builder/builder'),
+    label: 'ویرایش فرم',
+  },
   { test: (path) => path.startsWith('/form-builder/forms'), label: 'فرم‌ها' },
-  { test: (path) => path.startsWith('/form-builder/submit'), label: 'ارسال فرم' },
+  {
+    test: (path) => path.startsWith('/form-builder/modules'),
+    label: 'مدیریت زیرسیستم ها',
+  },
+  {
+    test: (path) => path.startsWith('/form-builder/submit'),
+    label: 'ارسال فرم',
+  },
   { test: (path) => path === '/ai', label: 'هوش مصنوعی' },
   { test: (path) => path === '/process', label: 'فرایند' },
   { test: (path) => path === '/reports', label: 'گزارش‌ها' },
@@ -30,7 +44,10 @@ const breadcrumbMatchers: Array<{
   { test: (path) => path === '/logs', label: 'لاگ‌ها' },
   { test: (path) => path === '/files', label: 'فایل‌ها' },
   { test: (path) => path === '/user-dashboard', label: 'داشبورد کاربر' },
-  { test: (path) => path === '/user-dashboard/resources', label: 'منابع کاربر' },
+  {
+    test: (path) => path === '/user-dashboard/resources',
+    label: 'منابع کاربر',
+  },
   { test: (path) => path === '/user-dashboard/usage', label: 'مصارف کاربر' },
   { test: (path) => path === '/security', label: 'امنیت و کاربران' },
 ]
@@ -70,10 +87,12 @@ export default function Breadcrumbs({ className }: { className?: string }) {
 
   const prefixPaths = moduleBase === homePath ? [] : [moduleBase]
   const nestedPaths = segmentsAfterBase.map(
-    (_, index) => `${moduleBase}/${segmentsAfterBase.slice(0, index + 1).join('/')}`
+    (_, index) =>
+      `${moduleBase}/${segmentsAfterBase.slice(0, index + 1).join('/')}`
   )
-  const paths = [homePath, ...prefixPaths, ...nestedPaths]
-    .filter((value, index, array) => Boolean(value) && array.indexOf(value) === index)
+  const paths = [homePath, ...prefixPaths, ...nestedPaths].filter(
+    (value, index, array) => Boolean(value) && array.indexOf(value) === index
+  )
 
   if (paths.length <= 1) {
     return null
@@ -83,21 +102,23 @@ export default function Breadcrumbs({ className }: { className?: string }) {
     <nav
       aria-label="Breadcrumb"
       className={cn(
-        'flex flex-wrap items-center gap-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground',
+        'text-muted-foreground flex flex-wrap items-center gap-2 text-xs font-semibold tracking-wide uppercase',
         className
       )}
     >
       {paths.map((path, index) => (
         <span
           key={`${path}-${index}`}
-          className="flex items-center gap-1 text-muted-foreground"
+          className="text-muted-foreground flex items-center gap-1"
         >
           {index > 0 && <span className="text-accent">/</span>}
           <Link
             href={path}
-            className="text-sm font-medium text-foreground hover:text-primary"
+            className="text-foreground hover:text-primary text-sm font-medium"
           >
-            {path === moduleBase ? activeModule?.label ?? 'ماژول' : formatLabel(path)}
+            {path === moduleBase
+              ? (activeModule?.label ?? 'ماژول')
+              : formatLabel(path)}
           </Link>
         </span>
       ))}

@@ -79,6 +79,16 @@ type DamRow = {
   status: string
   updatedAt: string
 }
+
+type DataGridProps<TData extends Record<string, any> = DamRow> = {
+  rowData?: TData[]
+  columnDefs?: (ColDef<TData> | ColGroupDef<TData>)[]
+  loading?: boolean
+  pinnedBottomRowData?: Partial<TData>[]
+  height?: string
+  onCellValueChanged?: (event: any) => void
+}
+
 ModuleRegistry.registerModules([
   FindModule,
   AdvancedFilterModule,
@@ -122,12 +132,19 @@ const ButtonRenderer = (params) => {
   )
 }
 
-const DataGrid = () => {
-  const containerStyle = useMemo(() => ({ width: '100%', height: '100%' }), [])
+function DataGrid<TData extends Record<string, any> = DamRow>({
+  rowData,
+  columnDefs,
+  loading,
+  pinnedBottomRowData,
+  height = '100%',
+  onCellValueChanged,
+}: DataGridProps<TData>) {
+  const containerStyle = useMemo(() => ({ width: '100%', height }), [height])
   const gridStyle = useMemo(() => ({ height: '100%', width: '100%' }), [])
   const themeState = useTheme()
   // @ts-nocheck
-  const [columnDefs] = useState<(ColDef | ColGroupDef)[]>([
+  const [defaultColumnDefs] = useState<(ColDef | ColGroupDef)[]>([
     {
       headerName: 'مشخصات سد',
       marryChildren: true,
@@ -209,21 +226,26 @@ const DataGrid = () => {
   ])
 
   const [data, setData] = useState<DamRow[]>([])
-  const [loading, setLoading] = useState(true)
+  const [internalLoading, setInternalLoading] = useState(true)
 
   useEffect(() => {
+    if (rowData !== undefined) {
+      setInternalLoading(false)
+      return
+    }
+
     const timer = setTimeout(() => {
       import('../data/dam-stats.json').then((module) => {
         setData(module.default as DamRow[])
       })
-      setLoading(false)
+      setInternalLoading(false)
     }, 600)
     return () => clearTimeout(timer)
-  }, [])
+  }, [rowData])
 
   interface RowData extends Partial<DamRow> {}
 
-  const pinnedBottomRowData = useMemo<RowData[]>(() => {
+  const defaultPinnedBottomRowData = useMemo<RowData[]>(() => {
     if (!data || !data.length) return []
     const totalVolume = data.reduce(
       (sum, item) => sum + Number(item.volume || 0),
@@ -249,6 +271,18 @@ const DataGrid = () => {
     ]
   }, [data])
 
+  const activeRowData = (rowData ?? data) as TData[]
+  const activeColumnDefs = (columnDefs ?? defaultColumnDefs) as (
+    | ColDef<TData>
+    | ColGroupDef<TData>
+  )[]
+  const activePinnedBottomRowData =
+    pinnedBottomRowData !== undefined
+      ? pinnedBottomRowData
+      : rowData !== undefined
+        ? []
+        : defaultPinnedBottomRowData
+
   return (
     <div style={containerStyle}>
       <div
@@ -260,7 +294,7 @@ const DataGrid = () => {
         }}
       >
         <div dir="ltr" style={gridStyle}>
-          <AgGridReact<DamRow>
+          <AgGridReact<TData>
             rowNumbers={{
               headerComponent: () => <h1>ردیف</h1>,
               width: 100,
@@ -275,17 +309,23 @@ const DataGrid = () => {
               },
             }}
             localeText={localeText}
-            rowData={data}
+            rowData={activeRowData}
             enableRtl={true}
             singleClickEdit={true}
-            loading={loading}
+            loading={loading ?? internalLoading}
             onCellValueChanged={(a) => {
-              if (a.newValue == 11) {
-                alert('wrong')
-                const rowNode = a.node
-                rowNode.setDataValue(a.column.getColId(), a.oldValue)
+              if (onCellValueChanged) {
+                onCellValueChanged(a)
+                return
               }
-              return
+              if (rowData === undefined) {
+                if (a.newValue == 11) {
+                  alert('wrong')
+                  const rowNode = a.node
+                  rowNode.setDataValue(a.column.getColId(), a.oldValue)
+                }
+                return
+              }
             }}
             rowSelection={{
               mode: 'singleRow',
@@ -300,11 +340,11 @@ const DataGrid = () => {
             animateRows={true}
             enableCellTextSelection={false}
             onSelectionChanged={(row) => console.log(row)}
-            columnDefs={columnDefs}
+            columnDefs={activeColumnDefs}
             sideBar={'columns'}
             alwaysAggregateAtRootLevel={false}
             pivotPanelShow={'never'}
-            pinnedBottomRowData={pinnedBottomRowData}
+            pinnedBottomRowData={activePinnedBottomRowData as TData[]}
             pivotMode={false}
             theme={
               themeState.theme === 'dark'

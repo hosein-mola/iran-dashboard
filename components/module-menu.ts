@@ -4,9 +4,11 @@ import {
   BoxIcon,
   BrainIcon,
   ChartBarBig,
+  ClipboardList,
   CodeSquareIcon,
   FolderDot,
   FormInputIcon,
+  Layers3,
   ShieldCheckIcon,
   User2,
   type LucideIcon,
@@ -34,7 +36,7 @@ export const moduleMenuConfig: ModuleMenuConfig[] = [
   },
   {
     base: '/dashboard',
-    label: 'ماژول سیستم',
+    label: 'داشبورد',
     navMain: [
       {
         title: 'افراد',
@@ -45,6 +47,11 @@ export const moduleMenuConfig: ModuleMenuConfig[] = [
         title: 'منابع',
         url: '/dashboard/resources',
         icon: ShieldCheckIcon,
+      },
+      {
+        title: 'زیرماژول',
+        url: '/dashboard/submodule',
+        icon: ClipboardList,
       },
     ],
     projects: [
@@ -73,6 +80,11 @@ export const moduleMenuConfig: ModuleMenuConfig[] = [
         title: 'استودیو فرم',
         url: '/form-builder',
         icon: FormInputIcon,
+      },
+      {
+        title: 'زیرماژول و قالب‌ها',
+        url: '/form-builder/modules',
+        icon: Layers3,
       },
     ],
     projects: [
