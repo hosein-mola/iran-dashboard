@@ -66,7 +66,8 @@ export default function FormInitialDataSourcePanel({
   const config = form.initialDataSource
   const [enabled, setEnabled] = useState(config?.enabled ?? false)
   const [url, setUrl] = useState(
-    config?.url ?? '/api/form-builder/sample-initial-data?resourceId={resourceId}'
+    config?.url ??
+      '/api/form-builder/sample-initial-data?resourceId={resourceId}'
   )
   const [method, setMethod] = useState<'GET' | 'POST'>(config?.method ?? 'GET')
   const [headers, setHeaders] = useState(formatJson(config?.headers ?? {}))
@@ -172,7 +173,10 @@ export default function FormInitialDataSourcePanel({
   }
 
   return (
-    <section className="bg-background flex h-full w-full flex-col overflow-hidden border-r">
+    <section
+      dir="rtl"
+      className="bg-background flex h-full w-full flex-col overflow-hidden border-r"
+    >
       <header className="flex min-h-16 items-center justify-between border-b px-4">
         <div>
           <h2 className="text-base font-semibold">داده اولیه زمان اجرا</h2>
@@ -182,7 +186,11 @@ export default function FormInitialDataSourcePanel({
           </p>
         </div>
         <div className="flex gap-2">
-          <Button disabled={pending} variant="outline" onClick={applySamplePreset}>
+          <Button
+            disabled={pending}
+            variant="outline"
+            onClick={applySamplePreset}
+          >
             نمونه
           </Button>
           <Button disabled={pending} variant="outline" onClick={test}>
@@ -209,7 +217,7 @@ export default function FormInitialDataSourcePanel({
                   استفاده کنید.
                 </p>
               </div>
-              <div className="flex items-center gap-2">
+              <div dir="ltr" className="flex items-center gap-2">
                 <Label>فعال</Label>
                 <Switch checked={enabled} onCheckedChange={setEnabled} />
               </div>
@@ -299,6 +307,7 @@ export default function FormInitialDataSourcePanel({
 
           {testResult && (
             <div
+              dir="ltr"
               className={`grid gap-3 rounded-lg border p-4 ${
                 testResult.ok
                   ? 'border-emerald-500/50 bg-emerald-500/5'

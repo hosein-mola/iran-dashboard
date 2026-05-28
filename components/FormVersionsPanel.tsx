@@ -30,7 +30,10 @@ export default function FormVersionsPanel({
   const versions = form.versions ?? []
 
   return (
-    <section className="bg-background flex h-full w-full flex-col overflow-hidden border-r">
+    <section
+      dir="rtl"
+      className="bg-background flex h-full w-full flex-col overflow-hidden border-r"
+    >
       <header className="flex min-h-16 items-center justify-between border-b px-4">
         <div>
           <h2 className="text-base font-semibold">نسخه‌های فرم</h2>

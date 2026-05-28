@@ -65,10 +65,7 @@ export default function FormEventsEditor({
     ])
   }
 
-  const updateEvent = (
-    index: number,
-    patch: Partial<FormEventRuleInput>
-  ) => {
+  const updateEvent = (index: number, patch: Partial<FormEventRuleInput>) => {
     setEvents((current) =>
       current.map((event, eventIndex) =>
         eventIndex === index ? { ...event, ...patch } : event
@@ -110,7 +107,10 @@ export default function FormEventsEditor({
   }
 
   return (
-    <section className="bg-background flex h-full w-full flex-col overflow-hidden border-r">
+    <section
+      dir="rtl"
+      className="bg-background flex h-full w-full flex-col overflow-hidden border-r"
+    >
       <header className="flex min-h-16 items-center justify-between border-b px-4">
         <div>
           <h2 className="text-base font-semibold">رویدادهای محاسباتی فرم</h2>
@@ -153,7 +153,7 @@ export default function FormEventsEditor({
                   }
                   placeholder="نام رویداد"
                 />
-                <div className="flex items-center gap-2">
+                <div dir="ltr" className="flex items-center gap-2">
                   <Switch
                     checked={event.enabled !== false}
                     onCheckedChange={(enabled) =>

@@ -12,6 +12,8 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 import { Separator } from '@/components/ui/separator'
+import { Chart1 } from '@/components/Chart1'
+import { Chart2 } from '@/components/Chart2'
 
 export default async function SubmoduleDashboardPage(props: {
   params: Promise<{ slug: string }>
@@ -25,12 +27,12 @@ export default async function SubmoduleDashboardPage(props: {
 
   return (
     <section className="space-y-6 p-4">
-      <header className="rounded-lg border bg-card p-4">
-        <p className="text-sm text-muted-foreground">زیرماژول</p>
+      <header className="bg-card rounded-lg border p-4">
+        <p className="text-muted-foreground text-sm">زیرماژول</p>
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
             <h1 className="text-3xl font-bold">{submodule.name}</h1>
-            <p className="mt-2 text-sm text-muted-foreground">
+            <p className="text-muted-foreground mt-2 text-sm">
               {submodule.description}
             </p>
           </div>
@@ -39,39 +41,48 @@ export default async function SubmoduleDashboardPage(props: {
           </Button>
         </div>
       </header>
-
+      <Card className="w-full rounded-lg">
+        <CardHeader>
+          <CardTitle>توزیع سابمیشن‌ها در طول زمان</CardTitle>
+          <CardDescription>روند ثبت داده‌ها در این زیرماژول</CardDescription>
+        </CardHeader>
+        <CardContent className="grid gap-4 md:grid-cols-2">
+          <Chart1 />
+          <Chart2 />
+        </CardContent>
+      </Card>
       <div className="grid gap-4 md:grid-cols-3">
         <Card className="rounded-lg">
           <CardContent className="flex items-center justify-between p-4">
             <div>
-              <p className="text-sm text-muted-foreground">فرم‌ها</p>
+              <p className="text-muted-foreground text-sm">فرم‌ها</p>
               <p className="text-2xl font-semibold">
                 {submodule.forms.length.toLocaleString('fa-IR')}
               </p>
             </div>
-            <FileText className="size-8 text-primary" />
+            <FileText className="text-primary size-8" />
           </CardContent>
         </Card>
         <Card className="rounded-lg">
           <CardContent className="flex items-center justify-between p-4">
             <div>
-              <p className="text-sm text-muted-foreground">سابمیشن‌ها</p>
+              <p className="text-muted-foreground text-sm">سابمیشن‌ها</p>
               <p className="text-2xl font-semibold">
                 {submodule.submissionCount.toLocaleString('fa-IR')}
               </p>
             </div>
-            <BarChart3 className="size-8 text-primary" />
+            <BarChart3 className="text-primary size-8" />
           </CardContent>
         </Card>
         <Card className="rounded-lg">
           <CardContent className="flex items-center justify-between p-4">
             <div>
-              <p className="text-sm text-muted-foreground">جداول پایه</p>
+              <p className="text-muted-foreground text-sm">جداول پایه</p>
               <p className="text-2xl font-semibold">
                 {submodule.baseTables.length.toLocaleString('fa-IR')}
               </p>
             </div>
-            <Database className="size-8 text-primary" />
+            <Database className="text-primary size-8" />
           </CardContent>
         </Card>
       </div>
@@ -127,11 +138,13 @@ export default async function SubmoduleDashboardPage(props: {
         <Card className="rounded-lg">
           <CardHeader>
             <CardTitle>آخرین سابمیشن‌ها</CardTitle>
-            <CardDescription>آخرین داده‌های ثبت‌شده در این زیرماژول</CardDescription>
+            <CardDescription>
+              آخرین داده‌های ثبت‌شده در این زیرماژول
+            </CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
             {submodule.latestSubmissions.length === 0 && (
-              <p className="text-sm text-muted-foreground">
+              <p className="text-muted-foreground text-sm">
                 هنوز داده‌ای ثبت نشده است.
               </p>
             )}
@@ -145,7 +158,7 @@ export default async function SubmoduleDashboardPage(props: {
                     v{submission.version.toLocaleString('fa-IR')}
                   </Badge>
                 </div>
-                <p className="mt-1 text-xs text-muted-foreground">
+                <p className="text-muted-foreground mt-1 text-xs">
                   {new Date(submission.submittedAt).toLocaleString('fa-IR')}
                 </p>
               </div>
