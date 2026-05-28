@@ -111,9 +111,9 @@ const PreviewDialogButton = ({
           پیش‌نمایش
         </Button>
       </DialogTrigger>
-      <DialogContent className="flex h-[80vh] w-full flex-col items-start justify-start overflow-scroll lg:max-h-full lg:max-w-8/12">
-        <DialogTitle className="w-full border-b px-4 py-2">
-          <p className="text-lg font-bold text-black">پیش‌نمایش فرم</p>
+      <DialogContent className="border-border bg-background text-foreground z-[99999] flex h-[80vh] w-full flex-col items-start justify-start overflow-scroll lg:max-h-full lg:max-w-8/12">
+        <DialogTitle className="border-border w-full border-b px-4 py-2">
+          <p className="text-foreground text-lg font-bold">پیش‌نمایش فرم</p>
           <p className="text-muted-foreground text-sm">
             پیش‌نمایش فرم با داده های
           </p>

@@ -109,8 +109,7 @@ function DesignerComponent({
 }: {
   elementInstance: FormElementInstance
 }) {
-  const { elements } =
-    useDesigner()
+  const { elements } = useDesigner()
   const droppble = useDroppable({
     id: elementInstance.id + '-panel',
     data: {
@@ -122,12 +121,13 @@ function DesignerComponent({
   })
 
   const element = elementInstance as CustomInstance
+  const panelTitle = String(element.extraAttributes.title || 'عنوان فیلد')
   return (
     <div
       dir="rtl"
       ref={droppble.setNodeRef}
       className={cn(
-        'grid h-full min-h-[5rem] grow grid-cols-2 gap-x-1 gap-y-1 border p-5',
+        'bg-card/70 border-border/70 grid h-full min-h-[5rem] grow grid-cols-2 gap-x-1 gap-y-1 rounded-xl border p-6 shadow-sm',
         String(element.extraAttributes.cols) == '1' && 'grid-cols-1',
         String(element.extraAttributes.cols) == '2' && 'grid-cols-2',
         String(element.extraAttributes.cols) == '3' && 'grid-cols-3',
@@ -150,6 +150,11 @@ function DesignerComponent({
         minHeight: element.extraAttributes['minHeight'] + 'rem',
       }}
     >
+      <div className="col-span-full flex justify-start pr-1">
+        <span className="text-muted-foreground/80 text-xs font-semibold tracking-wide">
+          {panelTitle}
+        </span>
+      </div>
       {elements
         .filter((el) => el.parentId == element.id)
         .sort(
@@ -173,7 +178,7 @@ function DesignerComponent({
                 String(element.extraAttributes.span) == '11' && 'col-span-11',
                 String(element.extraAttributes.span) == '12' && 'col-span-12',
                 String(element.extraAttributes.span) == 'full' &&
-                'col-span-full'
+                  'col-span-full'
               )}
               key={element.id}
             >
@@ -202,14 +207,22 @@ function FormComponent({
   const { elements } = useDesigner()
 
   const element = elementInstance as CustomInstance
+  const panelTitle = String(element.extraAttributes.title || 'عنوان فیلد')
   return (
     <div
       dir="rtl"
-      className={cn('bg-background flex w-full cursor-default flex-col')}
+      className={cn(
+        'bg-card/50 border-border/70 flex w-full cursor-default flex-col rounded-xl border shadow-sm'
+      )}
     >
+      <div className="border-border/60 flex justify-start px-6 pt-5">
+        <span className="text-muted-foreground/80 text-xs font-semibold tracking-wide">
+          {panelTitle}
+        </span>
+      </div>
       <div
         className={cn(
-          'grid min-h-[5rem] grid-cols-2 gap-x-1 gap-y-1 border p-5',
+          'grid min-h-[5rem] grid-cols-2 gap-x-1 gap-y-1 rounded-xl px-6 pt-3 pb-6',
           String(element.extraAttributes.cols) == '1' && 'grid-cols-1',
           String(element.extraAttributes.cols) == '2' && 'grid-cols-2',
           String(element.extraAttributes.cols) == '3' && 'grid-cols-3',
@@ -257,7 +270,7 @@ function FormComponent({
                   String(element.extraAttributes.span) == '11' && 'col-span-11',
                   String(element.extraAttributes.span) == '12' && 'col-span-12',
                   String(element.extraAttributes.span) == 'full' &&
-                  'col-span-full'
+                    'col-span-full'
                 )}
                 key={element.id}
               >

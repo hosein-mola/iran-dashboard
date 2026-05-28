@@ -47,6 +47,16 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+  --color-map-label-selected: var(--map-label-selected);
+  --color-map-label-hover: var(--map-label-hover);
+  --color-map-label: var(--map-label);
+  --color-map-region-focus-ring: var(--map-region-focus-ring);
+  --color-map-region-stroke-hover: var(--map-region-stroke-hover);
+  --color-map-region-stroke: var(--map-region-stroke);
+  --color-map-region-disabled: var(--map-region-disabled);
+  --color-map-region-selected: var(--map-region-selected);
+  --color-map-region-hover: var(--map-region-hover);
+  --color-map-region: var(--map-region);
 }
 
 * {
@@ -129,6 +139,16 @@
   --chart-6: oklch(0.16546762589928057 0.13333333333333336 258);
   --chart-7: oklch(0.497444329559498 0.2 247.19);
   --radius: 0.5rem;
+  --map-region: oklch(44.3% 0.11 240.79);
+  --map-region-hover: oklch(50% 0.134 242.748);
+  --map-region-selected: oklch(39.1% 0.09 240.875);
+  --map-region-disabled: oklch(55.4% 0.046 257.417);
+  --map-region-stroke: oklch(28.2% 0.091 267.935);
+  --map-region-stroke-hover: oklch(28.2% 0.091 267.935);
+  --map-region-focus-ring: oklch(70.7% 0.165 254.624);
+  --map-label: oklch(100% 0 0);
+  --map-label-hover: oklch(100% 0 0);
+  --map-label-selected: oklch(100% 0 0);
 }
 .dark {
   --background: oklch(0.168 0 0);
@@ -164,6 +184,16 @@
   --sidebar-accent-foreground: oklch(90% 0 0);
   --sidebar-border: oklch(40% 0 0);
   --sidebar-ring: oklch(30% 0 0);
+  --map-region: oklch(44.3% 0.11 240.79);
+  --map-region-hover: oklch(50% 0.134 242.748);
+  --map-region-selected: oklch(39.1% 0.09 240.875);
+  --map-region-disabled: oklch(55.4% 0.046 257.417);
+  --map-region-stroke: oklch(28.2% 0.091 267.935);
+  --map-region-stroke-hover: oklch(28.2% 0.091 267.935);
+  --map-region-focus-ring: oklch(70.7% 0.165 254.624);
+  --map-label: oklch(100% 0 0);
+  --map-label-hover: oklch(100% 0 0);
+  --map-label-selected: oklch(100% 0 0);
 }
 
 .wood {
@@ -207,6 +237,45 @@
   --ag-header-background: #2b2119;
   --ag-odd-row-background: #231b14;
   --ag-border-color: #352a21;
+}
+
+.dashboard-iran-map {
+  --map-region: oklch(58% 0.13 222);
+  --map-region-hover: oklch(64% 0.16 205);
+  --map-region-selected: oklch(48% 0.16 230);
+  --map-region-disabled: oklch(83% 0.02 240);
+  --map-region-stroke: oklch(97% 0.01 230);
+  --map-region-stroke-hover: oklch(99% 0 0);
+  --map-region-focus-ring: oklch(70% 0.17 195);
+  --map-label: oklch(99% 0 0);
+  --map-label-hover: oklch(100% 0 0);
+  --map-label-selected: oklch(100% 0 0);
+}
+
+.dark .dashboard-iran-map {
+  --map-region: oklch(52% 0.17 268);
+  --map-region-hover: oklch(66% 0.15 235);
+  --map-region-selected: oklch(73% 0.18 190);
+  --map-region-disabled: oklch(36% 0.02 260);
+  --map-region-stroke: oklch(20% 0.03 270);
+  --map-region-stroke-hover: oklch(84% 0.12 220);
+  --map-region-focus-ring: oklch(76% 0.18 190);
+  --map-label: oklch(96% 0 0);
+  --map-label-hover: oklch(100% 0 0);
+  --map-label-selected: oklch(14% 0.02 240);
+}
+
+.wood .dashboard-iran-map {
+  --map-region: #9b7f58;
+  --map-region-hover: #c1a47d;
+  --map-region-selected: #ffb347;
+  --map-region-disabled: #5b4734;
+  --map-region-stroke: #2b2119;
+  --map-region-stroke-hover: #f4ecdf;
+  --map-region-focus-ring: #ffd8a0;
+  --map-label: #fbf5ec;
+  --map-label-hover: #1f1812;
+  --map-label-selected: #1f1812;
 }
 @layer base {
   @font-face {

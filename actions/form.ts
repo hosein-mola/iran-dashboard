@@ -1650,10 +1650,7 @@ export async function DeleteForm(formId: number) {
   revalidatePath('/form-builder')
   revalidatePath('/form-builder/forms')
   revalidatePath(`/form-builder/forms/${form.id}`)
-  revalidatePath('/form-builder/builder')
   revalidatePath(`/form-builder/builder/${form.id}`)
-  revalidatePath('/form-builder/submit')
-  revalidatePath(`/form-builder/submit/${form.id}`)
   revalidatePath('/dashboard')
   revalidatePath('/dashboard/submodule')
 
@@ -1788,7 +1785,6 @@ export async function SaveFormInitialDataSource(
 
   revalidatePath('/form-builder')
   revalidatePath(`/form-builder/builder/${id}`)
-  revalidatePath(`/form-builder/submit/${id}`)
 
   return GetFormById(id)
 }

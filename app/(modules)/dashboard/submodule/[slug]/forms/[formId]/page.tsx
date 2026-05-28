@@ -40,9 +40,6 @@ export default async function SubmoduleFormSubmissionsPage(props: {
             <Button asChild variant="outline">
               <Link href={`/dashboard/submodule/${params.slug}`}>بازگشت</Link>
             </Button>
-            <Button asChild>
-              <Link href={`/form-builder/submit/${form.id}`}>ثبت جدید</Link>
-            </Button>
           </div>
         </div>
       </header>

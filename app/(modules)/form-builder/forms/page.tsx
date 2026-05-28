@@ -118,11 +118,6 @@ export default async function FormsIndexPage(props: {
                 <Button asChild className="flex-1 gap-2">
                   <Link href={`/form-builder/forms/${form.id}`}>پاسخ‌ها</Link>
                 </Button>
-                <Button asChild variant="outline" className="flex-1 gap-2">
-                  <Link href={`/form-builder/submit/${form.id}`}>
-                    ثبت فرم <FaWpforms />
-                  </Link>
-                </Button>
                 <DeleteRecordButton kind="form" id={form.id} name={form.name} />
               </CardFooter>
             </Card>

@@ -25,17 +25,13 @@ const breadcrumbMatchers: Array<{
   },
   { test: (path) => path === '/form-builder', label: 'فرم‌ساز' },
   {
-    test: (path) => path.startsWith('/form-builder/builder'),
+    test: (path) => path.startsWith('/form-builder/builder/'),
     label: 'ویرایش فرم',
   },
   { test: (path) => path.startsWith('/form-builder/forms'), label: 'فرم‌ها' },
   {
     test: (path) => path.startsWith('/form-builder/modules'),
     label: 'مدیریت زیرسیستم ها',
-  },
-  {
-    test: (path) => path.startsWith('/form-builder/submit'),
-    label: 'ارسال فرم',
   },
   { test: (path) => path === '/ai', label: 'هوش مصنوعی' },
   { test: (path) => path === '/process', label: 'فرایند' },
@@ -91,7 +87,10 @@ export default function Breadcrumbs({ className }: { className?: string }) {
       `${moduleBase}/${segmentsAfterBase.slice(0, index + 1).join('/')}`
   )
   const paths = [homePath, ...prefixPaths, ...nestedPaths].filter(
-    (value, index, array) => Boolean(value) && array.indexOf(value) === index
+    (value, index, array) =>
+      Boolean(value) &&
+      value !== '/form-builder/builder' &&
+      array.indexOf(value) === index
   )
 
   if (paths.length <= 1) {

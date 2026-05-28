@@ -16,6 +16,7 @@ import { Controller, useForm, UseFormReturn } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { IMaskInput } from 'react-imask'
 import { PlayIcon } from '@radix-ui/react-icons'
+import { HelpCircle } from 'lucide-react'
 
 import {
   Form,
@@ -62,13 +63,13 @@ const type: ElementType = 'text'
 const extraAttributes = {
   name: 'test',
   type: 'number',
-  title: 'Text',
+  title: 'متن',
   id: '',
-  label: 'TextFiel',
-  helperText: 'HelperText',
+  label: 'فیلد متنی',
+  helperText: 'متن راهنمای فیلد',
   required: false,
-  placeholder: 'Value here...',
-  mask: 'Number',
+  placeholder: 'مقدار را وارد کنید...',
+  mask: '0000-0000',
   min: '1',
   max: '100',
   minLength: '1',
@@ -81,6 +82,122 @@ const extraAttributes = {
   lazy: false,
   disabled: false,
 }
+
+const propertyHints = {
+  name: {
+    description: 'شناسه فنی فیلد برای ذخیره مقدار و استفاده در فرمول‌ها.',
+    example: 'field_water_level',
+  },
+  label: {
+    description: 'عنوانی که بالای فیلد به کاربر نمایش داده می‌شود.',
+    example: 'حجم ورودی سد',
+  },
+  placeholder: {
+    description: 'متن راهنما داخل فیلد قبل از وارد کردن مقدار.',
+    example: 'مثلا ۱۲۵۰',
+  },
+  helperText: {
+    description: 'توضیح کوتاه زیر فیلد برای راهنمایی کاربر.',
+    example: 'مقدار را بر حسب متر مکعب وارد کنید.',
+  },
+  required: {
+    description:
+      'اگر فعال باشد، کاربر بدون تکمیل این فیلد نمی‌تواند فرم را ثبت کند.',
+    example: 'برای فیلدهای الزامی مثل نام سد فعال کنید.',
+  },
+  type: {
+    description: 'نوع ورودی و قالب اعتبارسنجی فیلد را مشخص می‌کند.',
+    example: 'عدد برای مقدارهای قابل محاسبه، الگو برای متن ساده.',
+  },
+  mask: {
+    description:
+      'قالب ورود متن را با نشانه‌های 0 برای عدد، a برای حرف و * برای هر کاراکتر تعیین می‌کند.',
+    example: '0000-0000',
+  },
+  padFractionalZeros: {
+    description: 'صفرهای اعشار را تا تعداد رقم تعیین‌شده کامل می‌کند.',
+    example: '12.5 به 12.50 تبدیل می‌شود.',
+  },
+  normalizeZeros: {
+    description: 'صفرهای اضافه و نامعتبر را در مقدار عددی مرتب می‌کند.',
+    example: '00012 به 12 تبدیل می‌شود.',
+  },
+  lazy: {
+    description: 'نمایش قالب ورودی را تا زمان تایپ کاربر به تعویق می‌اندازد.',
+    example: 'برای نمایش خلوت‌تر فیلد عددی فعال کنید.',
+  },
+  disabled: {
+    description: 'فیلد را فقط‌خواندنی و غیرقابل ویرایش می‌کند.',
+    example: 'برای مقدارهای محاسبه‌شده یا داده‌های اولیه.',
+  },
+  radix: {
+    description: 'علامت جداکننده بخش اعشار را تعیین می‌کند.',
+    example: '.',
+  },
+  thousandsSeparator: {
+    description: 'علامت جداکننده هزارگان در عددهای بزرگ.',
+    example: ',',
+  },
+  scale: {
+    description: 'تعداد رقم مجاز بعد از اعشار.',
+    example: '2',
+  },
+  minLength: {
+    description: 'حداقل تعداد کاراکتر مجاز برای مقدار واردشده.',
+    example: '1',
+  },
+  maxLength: {
+    description: 'حداکثر تعداد کاراکتر مجاز برای مقدار واردشده.',
+    example: '10',
+  },
+  min: {
+    description: 'کمترین مقدار عددی قابل قبول.',
+    example: '1',
+  },
+  max: {
+    description: 'بیشترین مقدار عددی قابل قبول.',
+    example: '100',
+  },
+}
+
+const patternExamples = [
+  {
+    title: 'شماره موبایل ایران',
+    mask: '0000-000-0000',
+    example: '0912-345-6789',
+    useCase: 'ثبت شماره تماس کاربر یا مسئول بهره‌برداری',
+  },
+  {
+    title: 'کد ملی',
+    mask: '000-000000-0',
+    example: '123-456789-0',
+    useCase: 'شناسه ملی اشخاص حقیقی',
+  },
+  {
+    title: 'کد پستی',
+    mask: '00000-00000',
+    example: '12345-67890',
+    useCase: 'آدرس تاسیسات، ایستگاه یا دفتر',
+  },
+  {
+    title: 'کد تجهیز',
+    mask: 'aa-0000',
+    example: 'AB-2048',
+    useCase: 'کدگذاری پمپ، دریچه، سنسور یا تابلو برق',
+  },
+  {
+    title: 'شماره پرونده',
+    mask: '****/0000',
+    example: 'DAM7/1403',
+    useCase: 'پرونده‌های عملیاتی یا مکاتبات داخلی',
+  },
+  {
+    title: 'پلاک یا شناسه ترکیبی',
+    mask: '00-a-000',
+    example: '12-B-345',
+    useCase: 'شناسه خودرو، دستگاه یا نمونه آزمایشگاهی',
+  },
+]
 
 const propertiesSchema = z.object({
   name: z.string(),
@@ -127,7 +244,7 @@ export const TextFieldFormElement: FormElement = {
   },
   designerBtnElement: {
     icon: MdTextFields,
-    label: 'Text Field',
+    label: 'فیلد متنی',
   },
   designerComponent: DesignerComponent,
   formComponent: FormComponent,
@@ -147,6 +264,151 @@ type CustomInstance = FormElementInstance & {
 
 type propertiesFormSchemaType = z.infer<typeof propertiesSchema>
 
+const runtimeInputClassName =
+  'border-input placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground focus-visible:border-ring focus-visible:ring-ring/50 flex h-9 w-full rounded-md border bg-transparent px-3 py-1 text-sm shadow-xs transition-[color,box-shadow] outline-none file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50'
+
+const runtimeInputErrorClassName =
+  'border-destructive text-destructive focus-visible:border-destructive focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40'
+
+function PropertyHelp({
+  description,
+  example,
+  dir = 'rtl',
+}: {
+  description: string
+  example: string
+  dir?: 'rtl' | 'ltr'
+}) {
+  return (
+    <FormDescription className="text-muted-foreground flex flex-col gap-1 text-xs leading-5">
+      <span>{description}</span>
+      <span className="text-muted-foreground/70">
+        نمونه: <span dir={dir}>{example}</span>
+      </span>
+    </FormDescription>
+  )
+}
+
+function PropertySection({
+  title,
+  description,
+  children,
+}: {
+  title: string
+  description?: string
+  children: React.ReactNode
+}) {
+  return (
+    <section className="border-border/60 bg-card/60 space-y-4 rounded-lg border p-3">
+      <div className="space-y-1">
+        <h3 className="text-sm font-semibold">{title}</h3>
+        {description && (
+          <p className="text-muted-foreground text-xs leading-5">
+            {description}
+          </p>
+        )}
+      </div>
+      <div className="space-y-4">{children}</div>
+    </section>
+  )
+}
+
+function PropertyFieldShell({ children }: { children: React.ReactNode }) {
+  return <FormItem className="space-y-2">{children}</FormItem>
+}
+
+function PropertySwitchShell({ children }: { children: React.ReactNode }) {
+  return (
+    <FormItem className="border-border/60 bg-background/40 flex items-start justify-between gap-4 rounded-lg border p-3">
+      {children}
+    </FormItem>
+  )
+}
+
+function SwitchControl({
+  checked,
+  onCheckedChange,
+}: {
+  checked: boolean
+  onCheckedChange: (checked: boolean) => void
+}) {
+  return (
+    <div className="pt-1" dir="ltr">
+      <FormControl>
+        <Switch checked={checked} onCheckedChange={onCheckedChange} />
+      </FormControl>
+    </div>
+  )
+}
+
+function PatternExamplesDialog() {
+  return (
+    <Dialog>
+      <DialogTrigger asChild>
+        <Button
+          type="button"
+          variant="outline"
+          size="sm"
+          className="w-fit gap-2"
+        >
+          <HelpCircle className="size-4" />
+          راهنمای الگوها
+        </Button>
+      </DialogTrigger>
+      <DialogContent className="max-h-[85vh] overflow-y-auto sm:max-w-2xl">
+        <DialogTitle>نمونه‌ها و راهنمای الگوی متنی</DialogTitle>
+        <div className="space-y-4">
+          <div className="text-muted-foreground space-y-2 text-sm leading-6">
+            <p>
+              در الگوی متنی، <span dir="ltr">0</span> برای عدد،
+              <span dir="ltr"> a</span> برای حرف و<span dir="ltr"> *</span> برای
+              هر نوع کاراکتر استفاده می‌شود. کاراکترهایی مثل خط تیره، اسلش و
+              فاصله به همان شکل در فیلد نمایش داده می‌شوند.
+            </p>
+            <p>
+              برای فیلدهایی که ساختار مشخص دارند، الگو باعث می‌شود داده‌ها یکدست
+              و قابل پردازش ثبت شوند.
+            </p>
+          </div>
+          <div className="grid gap-3">
+            {patternExamples.map((item) => (
+              <div
+                key={item.title}
+                className="border-border/60 bg-card/60 rounded-lg border p-3"
+              >
+                <div className="flex flex-wrap items-start justify-between gap-2">
+                  <div className="space-y-1">
+                    <h4 className="text-sm font-semibold">{item.title}</h4>
+                    <p className="text-muted-foreground text-xs leading-5">
+                      {item.useCase}
+                    </p>
+                  </div>
+                  <code
+                    dir="ltr"
+                    className="bg-muted text-muted-foreground rounded px-2 py-1 text-xs"
+                  >
+                    {item.mask}
+                  </code>
+                </div>
+                <div className="mt-3 grid gap-2 text-xs sm:grid-cols-2">
+                  <div className="border-border/50 rounded-md border p-2">
+                    <span className="text-muted-foreground">الگو: </span>
+                    <span dir="ltr">{item.mask}</span>
+                  </div>
+                  <div className="border-border/50 rounded-md border p-2">
+                    <span className="text-muted-foreground">نمونه: </span>
+                    <span dir="ltr">{item.example}</span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </DialogContent>
+    </Dialog>
+  )
+}
+
 function getFieldName(element: CustomInstance) {
   return String(element.extraAttributes.name || element.id)
 }
@@ -162,7 +424,10 @@ function parseNumericInput(value: unknown) {
   return Number.isFinite(parsed) ? parsed : null
 }
 
-function getFieldErrorMessage(formController: UseFormReturn<any>, name: string) {
+function getFieldErrorMessage(
+  formController: UseFormReturn<any>,
+  name: string
+) {
   const error = formController.formState.errors?.[name]
   if (!error) return null
 
@@ -176,11 +441,15 @@ function buildValidationRules(element: CustomInstance) {
   const fieldLabel = label || element.extraAttributes.name || 'این فیلد'
 
   return {
-    required:
-      required && !disabled ? `${fieldLabel} الزامی است.` : undefined,
+    required: required && !disabled ? `${fieldLabel} الزامی است.` : undefined,
     validate: {
       min: (value: unknown) => {
-        if (type !== 'number' || value === undefined || value === null || value === '') {
+        if (
+          type !== 'number' ||
+          value === undefined ||
+          value === null ||
+          value === ''
+        ) {
           return true
         }
 
@@ -195,7 +464,12 @@ function buildValidationRules(element: CustomInstance) {
         )
       },
       max: (value: unknown) => {
-        if (type !== 'number' || value === undefined || value === null || value === '') {
+        if (
+          type !== 'number' ||
+          value === undefined ||
+          value === null ||
+          value === ''
+        ) {
           return true
         }
 
@@ -248,7 +522,7 @@ function DesignerComponent({
       <div
         key={element.id + 'id'}
         className={cn(
-          'bg-background flex min-w-full flex-col gap-2 p-2 hover:!cursor-pointer'
+          'border-border/60 bg-card/60 flex min-w-full flex-col gap-3 rounded-lg border p-3 shadow-sm hover:!cursor-pointer'
         )}
       >
         <Label className="hover:!cursor-pointer">
@@ -283,8 +557,13 @@ function FormComponent({
   const hasError = isInvalid === true || Boolean(errorMessage)
 
   return (
-    <div className={cn('flex w-full flex-col gap-2', '')}>
-      <Label className={cn(hasError && 'text-red-500')}>
+    <div
+      className={cn(
+        'border-border/60 bg-background/40 flex w-full flex-col gap-3 rounded-lg border p-3',
+        hasError && 'border-destructive/50 bg-destructive/5'
+      )}
+    >
+      <Label className={cn(hasError && 'text-destructive')}>
         {label}
         {required && '*'}
       </Label>
@@ -296,13 +575,13 @@ function FormComponent({
         error={hasError}
       />
       {errorMessage && (
-        <p className="mt-1 text-[0.8rem] text-red-500">{errorMessage}</p>
+        <p className="text-destructive mt-1 text-[0.8rem]">{errorMessage}</p>
       )}
       {helperText && (
         <p
           className={cn(
             'text-muted-foreground mt-2 text-[0.8rem]',
-            hasError && 'text-red-500'
+            hasError && 'text-destructive'
           )}
         >
           {helperText}
@@ -368,305 +647,356 @@ function PropertiesComponent({
 
   return (
     <Form {...form}>
-      <form onBlur={form.handleSubmit(applyChanges)} className="space-y-3">
-        <div className="flex h-12 w-full flex-wrap items-center">
-          <AlertDialog>
-            <AlertDialogTrigger asChild>
-              <Button
-                variant={'outline'}
-                className="text-muted-foreground gap-2"
-              >
-                <FaTrash className="h-4 w-4" />
-              </Button>
-            </AlertDialogTrigger>
-            <AlertDialogContent>
-              <AlertDialogHeader>
-                <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-                <AlertDialogDescription>
-                  This action cannot be undone. After deleting you will not be
-                  able to edit this form. <br />
-                  <br />
-                  <span className="font-medium">
-                    By Deleting this item all items children would be deleted as
-                    well.
-                  </span>
-                </AlertDialogDescription>
-              </AlertDialogHeader>
-              <AlertDialogFooter>
-                <AlertDialogCancel>Cancel</AlertDialogCancel>
-                <AlertDialogAction
-                  disabled={false}
-                  onClick={(e) => {
-                    e.preventDefault()
-                    deleteElement(element)
-                  }}
+      <form onBlur={form.handleSubmit(applyChanges)} className="space-y-5">
+        <div className="border-border/60 bg-card/60 flex w-full items-center justify-between rounded-lg border p-2">
+          <div className="space-y-0.5 px-1">
+            <p className="text-sm font-semibold">تنظیمات فیلد متنی</p>
+            <p className="text-muted-foreground text-xs">
+              مشخصات، نمایش و اعتبارسنجی این فیلد را تنظیم کنید.
+            </p>
+          </div>
+          <div className="flex items-center gap-2">
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <Button
+                  type="button"
+                  size="icon"
+                  variant={'outline'}
+                  className="text-muted-foreground"
                 >
-                  Delete Item
-                </AlertDialogAction>
-              </AlertDialogFooter>
-            </AlertDialogContent>
-          </AlertDialog>
-          <Dialog>
-            <DialogTrigger asChild>
-              <Button variant={'outline'} className="gap-2">
-                <BiMath className="h-6 w-6" />
-              </Button>
-            </DialogTrigger>
-            <DialogContent className="bg-accent z-[99999] flex h-screen max-h-screen w-screen max-w-full flex-grow flex-col items-center gap-0 p-8">
-              <DialogTitle className="bg-background m-0 w-full border-b px-4 py-2">
-                <p className="text-lg font-bold">Formula Editor</p>
-                <div className="flex h-12 items-center gap-2">
-                  <Button
-                    className="text-sm"
-                    onClick={() =>
-                      setFormulaList((prev) => [
-                        ...prev,
-                        { id: ulid(4), data: '' },
-                      ])
-                    }
-                  >
-                    <BiPlusCircle className="h-6 w-6" />
-                  </Button>
-                  <Button
-                    variant={'secondary'}
-                    className="text-sm"
-                    onClick={() => {
-                      const result = evaluate(
-                        formulaList.map((f) => f.data),
-                        data.getValues()
-                      )
-                      setEvaluateResultArray(result)
+                  <FaTrash className="h-4 w-4" />
+                </Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>حذف فیلد متنی</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    این عملیات قابل بازگشت نیست و بعد از حذف، این فیلد از فرم
+                    پاک می‌شود. <br />
+                    <br />
+                    <span className="font-medium">
+                      اگر این فیلد شامل زیرمجموعه باشد، زیرمجموعه‌ها هم حذف
+                      می‌شوند.
+                    </span>
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>انصراف</AlertDialogCancel>
+                  <AlertDialogAction
+                    disabled={false}
+                    onClick={(e) => {
+                      e.preventDefault()
+                      deleteElement(element)
                     }}
                   >
-                    <PlayIcon className="h-6 w-6" />
-                  </Button>
-                  <Button
-                    variant={'secondary'}
-                    className="text-sm"
-                    onClick={() => {
-                      const result = evaluate(
-                        formulaList.map((f) => f.data),
-                        data.getValues()
-                      )
-                      setEvaluateResultArray(result)
-                    }}
-                  >
-                    <IoSave className="h-6 w-6" />
-                  </Button>
-                </div>
-              </DialogTitle>
-              <div className="bg-background mt-2 flex w-full flex-grow flex-row items-start overflow-auto px-4 py-2 shadow-2xl">
-                <div className="flex w-6/12 flex-col">
-                  {formulaList.map(
-                    (formula: { id: string; data: string }, index: number) => {
-                      return (
-                        <div
-                          key={formula.id}
-                          className="flex h-12 w-full flex-row items-center justify-between gap-2 border-b px-4 py-2"
-                        >
-                          <div className="flex h-12 w-8/12 flex-row items-center gap-2">
-                            <Button
-                              onClick={() =>
-                                setFormulaList((prev) =>
-                                  prev.filter((item) => item.id !== formula.id)
-                                )
-                              }
-                              variant={'outline'}
-                              className="w-auto rounded-full"
-                            >
-                              <TbTrash className="h-3 w-3" />
-                            </Button>
-                            <span className="w-2/12 text-center">
-                              {'STEP' + ' ' + Number(index) + 1}
-                            </span>
-                            <Input
-                              className="w-8/12"
-                              onChange={(e) => {
-                                setFormulaList((prev) =>
-                                  prev.map(
-                                    (item: { id: string; data: string }) =>
-                                      item.id === formula.id
-                                        ? { ...item, data: e?.target.value }
-                                        : item
+                    حذف فیلد
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button type="button" size="icon" variant={'outline'}>
+                  <BiMath className="h-6 w-6" />
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="bg-accent z-[99999] flex h-screen max-h-screen w-screen max-w-full flex-grow flex-col items-center gap-0 p-8">
+                <DialogTitle className="bg-background m-0 w-full border-b px-4 py-2">
+                  <p className="text-lg font-bold">ویرایشگر فرمول</p>
+                  <div className="flex h-12 items-center gap-2">
+                    <Button
+                      className="text-sm"
+                      onClick={() =>
+                        setFormulaList((prev) => [
+                          ...prev,
+                          { id: ulid(4), data: '' },
+                        ])
+                      }
+                    >
+                      <BiPlusCircle className="h-6 w-6" />
+                    </Button>
+                    <Button
+                      variant={'secondary'}
+                      className="text-sm"
+                      onClick={() => {
+                        const result = evaluate(
+                          formulaList.map((f) => f.data),
+                          data.getValues()
+                        )
+                        setEvaluateResultArray(result)
+                      }}
+                    >
+                      <PlayIcon className="h-6 w-6" />
+                    </Button>
+                    <Button
+                      variant={'secondary'}
+                      className="text-sm"
+                      onClick={() => {
+                        const result = evaluate(
+                          formulaList.map((f) => f.data),
+                          data.getValues()
+                        )
+                        setEvaluateResultArray(result)
+                      }}
+                    >
+                      <IoSave className="h-6 w-6" />
+                    </Button>
+                  </div>
+                </DialogTitle>
+                <div className="bg-background mt-2 flex w-full flex-grow flex-row items-start overflow-auto px-4 py-2 shadow-2xl">
+                  <div className="flex w-6/12 flex-col">
+                    {formulaList.map(
+                      (
+                        formula: { id: string; data: string },
+                        index: number
+                      ) => {
+                        return (
+                          <div
+                            key={formula.id}
+                            className="flex h-12 w-full flex-row items-center justify-between gap-2 border-b px-4 py-2"
+                          >
+                            <div className="flex h-12 w-8/12 flex-row items-center gap-2">
+                              <Button
+                                onClick={() =>
+                                  setFormulaList((prev) =>
+                                    prev.filter(
+                                      (item) => item.id !== formula.id
+                                    )
                                   )
-                                )
-                              }}
-                              key={formula.id}
-                            />
+                                }
+                                variant={'outline'}
+                                className="w-auto rounded-full"
+                              >
+                                <TbTrash className="h-3 w-3" />
+                              </Button>
+                              <span className="w-2/12 text-center">
+                                {'مرحله' + ' ' + Number(index + 1)}
+                              </span>
+                              <Input
+                                className="w-8/12"
+                                onChange={(e) => {
+                                  setFormulaList((prev) =>
+                                    prev.map(
+                                      (item: { id: string; data: string }) =>
+                                        item.id === formula.id
+                                          ? { ...item, data: e?.target.value }
+                                          : item
+                                    )
+                                  )
+                                }}
+                                key={formula.id}
+                              />
+                            </div>
+                            <div className="text-foreground/70 w-2/12">
+                              {'//' +
+                                ' ' +
+                                (evaluateResultArray[index] == undefined
+                                  ? '?'
+                                  : evaluateResultArray[index])}
+                            </div>
                           </div>
-                          <div className="text-foreground/70 w-2/12">
-                            {'//' +
-                              ' ' +
-                              (evaluateResultArray[index] == undefined
-                                ? '?'
-                                : evaluateResultArray[index])}
-                          </div>
-                        </div>
-                      )
-                    }
-                  )}
+                        )
+                      }
+                    )}
+                  </div>
+                  <div className="w-6/12 border">
+                    <FormSubmitComponent
+                      formId={0}
+                      form={form_sample}
+                      type={'preview'}
+                      setData={setData}
+                    />
+                  </div>
                 </div>
-                <div className="w-6/12 border">
-                  <FormSubmitComponent
-                    formId={0}
-                    form={form_sample}
-                    type={'preview'}
-                    setData={setData}
-                  />
-                </div>
-              </div>
-            </DialogContent>
-          </Dialog>
+              </DialogContent>
+            </Dialog>
+          </div>
         </div>
-        <FormField
-          control={form.control}
-          name={'name'}
-          render={({ field }) => {
-            return (
-              <FormItem>
-                <FormLabel>Name</FormLabel>
-                <FormControl>
-                  <Input onChange={field.onChange} value={field.value} />
-                </FormControl>
-                <FormDescription className="flex flex-col" dir="ltr">
-                  <span>
-                    {' '}
-                    {element?.parentId == null ? 'body' : element.parentId}
-                  </span>
-                  <span>{element?.id}</span>
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )
-          }}
-        />
-        <FormField
-          control={form.control}
-          name={'label'}
-          render={({ field }) => {
-            return (
-              <FormItem>
-                <FormLabel>label</FormLabel>
-                <FormControl>
-                  <Input
-                    {...field}
-                    value={field.value}
-                    onChange={field.onChange}
+        <PropertySection
+          title="شناسه و نمایش"
+          description="این بخش تعیین می‌کند فیلد با چه نامی ذخیره و با چه متنی به کاربر نمایش داده شود."
+        >
+          <FormField
+            control={form.control}
+            name={'name'}
+            render={({ field }) => {
+              return (
+                <PropertyFieldShell>
+                  <FormLabel>نام فنی فیلد</FormLabel>
+                  <FormControl>
+                    <Input onChange={field.onChange} value={field.value} />
+                  </FormControl>
+                  <PropertyHelp
+                    description={propertyHints.name.description}
+                    example={propertyHints.name.example}
+                    dir="ltr"
                   />
-                </FormControl>
-                <FormDescription>
-                  label of the field <br />
-                  will be displayed above the filed
-                </FormDescription>
-                <FormDescription></FormDescription>
-                <FormMessage />
-              </FormItem>
-            )
-          }}
-        />
-        <FormField
-          control={form.control}
-          name={'placeholder'}
-          render={({ field }) => {
-            return (
-              <FormItem>
-                <FormLabel>placeHolder</FormLabel>
-                <FormControl>
-                  <Input onChange={field.onChange} value={field.value} />
-                </FormControl>
-                <FormDescription>the placeHolder of the field</FormDescription>
-                <FormMessage />
-              </FormItem>
-            )
-          }}
-        />
-        <FormField
-          control={form.control}
-          name={'helperText'}
-          render={({ field }) => {
-            return (
-              <FormItem>
-                <FormLabel>helper text</FormLabel>
-                <FormControl>
-                  <Input onChange={field.onChange} value={field.value} />
-                </FormControl>
-                <FormDescription>helper text</FormDescription>
-                <FormMessage />
-              </FormItem>
-            )
-          }}
-        />
-        <FormField
-          control={form.control}
-          name={'required'}
-          render={({ field }) => {
-            return (
-              <FormItem className="flex items-center justify-between rounded-lg border p-3 shadow-sm">
-                <div className="space-y-0.5">
-                  <FormLabel>Required</FormLabel>
-                  <FormDescription>Required</FormDescription>
-                </div>
-                <FormControl dir="ltr">
-                  <Switch
+                  <FormDescription
+                    className="text-muted-foreground/60 flex flex-col text-xs"
+                    dir="ltr"
+                  >
+                    <span>
+                      {' '}
+                      {element?.parentId == null ? 'body' : element.parentId}
+                    </span>
+                    <span>{element?.id}</span>
+                  </FormDescription>
+                  <FormMessage />
+                </PropertyFieldShell>
+              )
+            }}
+          />
+          <FormField
+            control={form.control}
+            name={'label'}
+            render={({ field }) => {
+              return (
+                <PropertyFieldShell>
+                  <FormLabel>برچسب نمایشی</FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      value={field.value}
+                      onChange={field.onChange}
+                    />
+                  </FormControl>
+                  <PropertyHelp {...propertyHints.label} />
+                  <FormMessage />
+                </PropertyFieldShell>
+              )
+            }}
+          />
+          <FormField
+            control={form.control}
+            name={'placeholder'}
+            render={({ field }) => {
+              return (
+                <PropertyFieldShell>
+                  <FormLabel>متن جایگزین</FormLabel>
+                  <FormControl>
+                    <Input onChange={field.onChange} value={field.value} />
+                  </FormControl>
+                  <PropertyHelp {...propertyHints.placeholder} />
+                  <FormMessage />
+                </PropertyFieldShell>
+              )
+            }}
+          />
+          <FormField
+            control={form.control}
+            name={'helperText'}
+            render={({ field }) => {
+              return (
+                <PropertyFieldShell>
+                  <FormLabel>متن راهنما</FormLabel>
+                  <FormControl>
+                    <Input onChange={field.onChange} value={field.value} />
+                  </FormControl>
+                  <PropertyHelp {...propertyHints.helperText} />
+                  <FormMessage />
+                </PropertyFieldShell>
+              )
+            }}
+          />
+        </PropertySection>
+
+        <PropertySection
+          title="رفتار فیلد"
+          description="نوع ورودی و وضعیت‌های اصلی فیلد را مشخص کنید."
+        >
+          <FormField
+            control={form.control}
+            name={'required'}
+            render={({ field }) => {
+              return (
+                <PropertySwitchShell>
+                  <div className="min-w-0 flex-1 space-y-1">
+                    <FormLabel>الزامی باشد</FormLabel>
+                    <PropertyHelp {...propertyHints.required} />
+                  </div>
+                  <SwitchControl
                     checked={field.value}
                     onCheckedChange={field.onChange}
                   />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )
-          }}
-        />
-        <FormField
-          control={form.control}
-          name={'type'}
-          render={({ field }) => {
-            return (
-              <FormItem className="flex flex-row items-center justify-between gap-2">
-                <FormLabel>type</FormLabel>
-                <FormControl>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={element.extraAttributes.type}
-                    value={field.value}
-                  >
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select a verified email to display" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      <SelectItem value="number">number</SelectItem>
-                      <SelectItem value="pattern">pattern</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )
-          }}
-        />
+                  <FormMessage />
+                </PropertySwitchShell>
+              )
+            }}
+          />
+          <FormField
+            control={form.control}
+            name={'type'}
+            render={({ field }) => {
+              return (
+                <PropertyFieldShell>
+                  <div className="space-y-1">
+                    <FormLabel>نوع ورودی</FormLabel>
+                    <PropertyHelp {...propertyHints.type} />
+                  </div>
+                  <FormControl>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={element.extraAttributes.type}
+                      value={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="نوع ورودی را انتخاب کنید" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value="number">عدد</SelectItem>
+                        <SelectItem value="pattern">الگو / متن</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </FormControl>
+                  <FormMessage />
+                </PropertyFieldShell>
+              )
+            }}
+          />
+          <FormField
+            control={form.control}
+            name={'disabled'}
+            render={({ field }) => {
+              return (
+                <PropertySwitchShell>
+                  <div className="min-w-0 flex-1 space-y-1">
+                    <FormLabel>غیرفعال باشد</FormLabel>
+                    <PropertyHelp {...propertyHints.disabled} />
+                  </div>
+                  <SwitchControl
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                  />
+                  <FormMessage />
+                </PropertySwitchShell>
+              )
+            }}
+          />
+        </PropertySection>
 
         {updatedtype == 'number' && (
-          <div>
+          <PropertySection
+            title="قالب و اعتبارسنجی عدد"
+            description="تنظیمات نمایش عدد، طول مقدار، بازه مجاز و کنترل صفرها."
+          >
             <FormField
               control={form.control}
               name={'padFractionalZeros'}
               render={({ field }) => {
                 return (
-                  <FormItem className="flex items-center justify-between rounded-lg border p-3 shadow-sm">
-                    <div className="space-y-0.5">
-                      <FormLabel>padFractionalZeros</FormLabel>
-                      <FormDescription>padFractionalZeros</FormDescription>
+                  <PropertySwitchShell>
+                    <div className="min-w-0 flex-1 space-y-1">
+                      <FormLabel>تکمیل صفرهای اعشار</FormLabel>
+                      <PropertyHelp {...propertyHints.padFractionalZeros} />
                     </div>
-                    <FormControl dir="ltr">
-                      <Switch
-                        checked={field.value}
-                        onCheckedChange={field.onChange}
-                      />
-                    </FormControl>
+                    <SwitchControl
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                    />
                     <FormMessage />
-                  </FormItem>
+                  </PropertySwitchShell>
                 )
               }}
             />
@@ -675,19 +1005,17 @@ function PropertiesComponent({
               name={'normalizeZeros'}
               render={({ field }) => {
                 return (
-                  <FormItem className="mt-2 flex items-center justify-between rounded-lg border p-3 shadow-sm">
-                    <div className="space-y-0.5">
-                      <FormLabel>normalizeZeros</FormLabel>
-                      <FormDescription>normalizeZeros</FormDescription>
+                  <PropertySwitchShell>
+                    <div className="min-w-0 flex-1 space-y-1">
+                      <FormLabel>مرتب‌سازی صفرها</FormLabel>
+                      <PropertyHelp {...propertyHints.normalizeZeros} />
                     </div>
-                    <FormControl dir="ltr">
-                      <Switch
-                        checked={field.value}
-                        onCheckedChange={field.onChange}
-                      />
-                    </FormControl>
+                    <SwitchControl
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                    />
                     <FormMessage />
-                  </FormItem>
+                  </PropertySwitchShell>
                 )
               }}
             />
@@ -696,40 +1024,17 @@ function PropertiesComponent({
               name={'lazy'}
               render={({ field }) => {
                 return (
-                  <FormItem className="mt-2 flex items-center justify-between rounded-lg border p-3 shadow-sm">
-                    <div className="space-y-0.5">
-                      <FormLabel>lazy</FormLabel>
-                      <FormDescription>lazy</FormDescription>
+                  <PropertySwitchShell>
+                    <div className="min-w-0 flex-1 space-y-1">
+                      <FormLabel>نمایش تنبل قالب</FormLabel>
+                      <PropertyHelp {...propertyHints.lazy} />
                     </div>
-                    <FormControl dir="ltr">
-                      <Switch
-                        checked={field.value}
-                        onCheckedChange={field.onChange}
-                      />
-                    </FormControl>
+                    <SwitchControl
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                    />
                     <FormMessage />
-                  </FormItem>
-                )
-              }}
-            />
-            <FormField
-              control={form.control}
-              name={'disabled'}
-              render={({ field }) => {
-                return (
-                  <FormItem className="mt-2 flex items-center justify-between rounded-lg border p-3 shadow-sm">
-                    <div className="space-y-0.5">
-                      <FormLabel>disabled</FormLabel>
-                      <FormDescription>disabled</FormDescription>
-                    </div>
-                    <FormControl dir="ltr">
-                      <Switch
-                        checked={field.value}
-                        onCheckedChange={field.onChange}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
+                  </PropertySwitchShell>
                 )
               }}
             />
@@ -738,8 +1043,8 @@ function PropertiesComponent({
               name={'radix'}
               render={({ field }) => {
                 return (
-                  <FormItem>
-                    <FormLabel>redix</FormLabel>
+                  <PropertyFieldShell>
+                    <FormLabel>جداکننده اعشار</FormLabel>
                     <FormControl>
                       <Input
                         dir="ltr"
@@ -747,8 +1052,9 @@ function PropertiesComponent({
                         onChange={field.onChange}
                       />
                     </FormControl>
+                    <PropertyHelp {...propertyHints.radix} dir="ltr" />
                     <FormMessage />
-                  </FormItem>
+                  </PropertyFieldShell>
                 )
               }}
             />
@@ -757,8 +1063,8 @@ function PropertiesComponent({
               name={'thousandsSeparator'}
               render={({ field }) => {
                 return (
-                  <FormItem>
-                    <FormLabel>thousandsSeparator</FormLabel>
+                  <PropertyFieldShell>
+                    <FormLabel>جداکننده هزارگان</FormLabel>
                     <FormControl>
                       <Input
                         dir="ltr"
@@ -766,8 +1072,12 @@ function PropertiesComponent({
                         onChange={field.onChange}
                       />
                     </FormControl>
+                    <PropertyHelp
+                      {...propertyHints.thousandsSeparator}
+                      dir="ltr"
+                    />
                     <FormMessage />
-                  </FormItem>
+                  </PropertyFieldShell>
                 )
               }}
             />
@@ -777,8 +1087,8 @@ function PropertiesComponent({
               name={'scale'}
               render={({ field }) => {
                 return (
-                  <FormItem>
-                    <FormLabel>scale</FormLabel>
+                  <PropertyFieldShell>
+                    <FormLabel>تعداد رقم اعشار</FormLabel>
                     <FormControl>
                       <Input
                         dir="ltr"
@@ -786,8 +1096,9 @@ function PropertiesComponent({
                         onChange={field.onChange}
                       />
                     </FormControl>
+                    <PropertyHelp {...propertyHints.scale} dir="ltr" />
                     <FormMessage />
-                  </FormItem>
+                  </PropertyFieldShell>
                 )
               }}
             />
@@ -796,8 +1107,8 @@ function PropertiesComponent({
               name={'minLength'}
               render={({ field }) => {
                 return (
-                  <FormItem>
-                    <FormLabel>minLength</FormLabel>
+                  <PropertyFieldShell>
+                    <FormLabel>حداقل طول</FormLabel>
                     <FormControl>
                       <Input
                         dir="ltr"
@@ -805,8 +1116,9 @@ function PropertiesComponent({
                         onChange={field.onChange}
                       />
                     </FormControl>
+                    <PropertyHelp {...propertyHints.minLength} dir="ltr" />
                     <FormMessage />
-                  </FormItem>
+                  </PropertyFieldShell>
                 )
               }}
             />
@@ -815,8 +1127,8 @@ function PropertiesComponent({
               name={'maxLength'}
               render={({ field }) => {
                 return (
-                  <FormItem>
-                    <FormLabel>MaxLength</FormLabel>
+                  <PropertyFieldShell>
+                    <FormLabel>حداکثر طول</FormLabel>
                     <FormControl>
                       <Input
                         dir="ltr"
@@ -824,8 +1136,9 @@ function PropertiesComponent({
                         onChange={field.onChange}
                       />
                     </FormControl>
+                    <PropertyHelp {...propertyHints.maxLength} dir="ltr" />
                     <FormMessage />
-                  </FormItem>
+                  </PropertyFieldShell>
                 )
               }}
             />
@@ -834,8 +1147,8 @@ function PropertiesComponent({
               name={'min'}
               render={({ field }) => {
                 return (
-                  <FormItem>
-                    <FormLabel>min</FormLabel>
+                  <PropertyFieldShell>
+                    <FormLabel>حداقل مقدار</FormLabel>
                     <FormControl>
                       <Input
                         dir="ltr"
@@ -843,8 +1156,9 @@ function PropertiesComponent({
                         onChange={field.onChange}
                       />
                     </FormControl>
+                    <PropertyHelp {...propertyHints.min} dir="ltr" />
                     <FormMessage />
-                  </FormItem>
+                  </PropertyFieldShell>
                 )
               }}
             />
@@ -853,8 +1167,8 @@ function PropertiesComponent({
               name={'max'}
               render={({ field }) => {
                 return (
-                  <FormItem>
-                    <FormLabel>max</FormLabel>
+                  <PropertyFieldShell>
+                    <FormLabel>حداکثر مقدار</FormLabel>
                     <FormControl>
                       <Input
                         dir="ltr"
@@ -862,12 +1176,101 @@ function PropertiesComponent({
                         onChange={field.onChange}
                       />
                     </FormControl>
+                    <PropertyHelp {...propertyHints.max} dir="ltr" />
                     <FormMessage />
-                  </FormItem>
+                  </PropertyFieldShell>
                 )
               }}
             />
-          </div>
+          </PropertySection>
+        )}
+
+        {updatedtype == 'pattern' && (
+          <PropertySection
+            title="قالب متنی"
+            description="برای متن‌های ساختاریافته مثل کد، پلاک، شماره پرونده یا شناسه از الگو استفاده کنید."
+          >
+            <FormField
+              control={form.control}
+              name={'mask'}
+              render={({ field }) => {
+                return (
+                  <PropertyFieldShell>
+                    <FormLabel>الگوی ورود</FormLabel>
+                    <FormControl>
+                      <Input
+                        dir="ltr"
+                        value={field.value}
+                        onChange={field.onChange}
+                      />
+                    </FormControl>
+                    <PropertyHelp {...propertyHints.mask} dir="ltr" />
+                    <PatternExamplesDialog />
+                    <FormMessage />
+                  </PropertyFieldShell>
+                )
+              }}
+            />
+            <FormField
+              control={form.control}
+              name={'lazy'}
+              render={({ field }) => {
+                return (
+                  <PropertySwitchShell>
+                    <div className="min-w-0 flex-1 space-y-1">
+                      <FormLabel>نمایش تنبل قالب</FormLabel>
+                      <PropertyHelp {...propertyHints.lazy} />
+                    </div>
+                    <SwitchControl
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                    />
+                    <FormMessage />
+                  </PropertySwitchShell>
+                )
+              }}
+            />
+            <FormField
+              control={form.control}
+              name={'minLength'}
+              render={({ field }) => {
+                return (
+                  <PropertyFieldShell>
+                    <FormLabel>حداقل طول</FormLabel>
+                    <FormControl>
+                      <Input
+                        dir="ltr"
+                        value={field.value}
+                        onChange={field.onChange}
+                      />
+                    </FormControl>
+                    <PropertyHelp {...propertyHints.minLength} dir="ltr" />
+                    <FormMessage />
+                  </PropertyFieldShell>
+                )
+              }}
+            />
+            <FormField
+              control={form.control}
+              name={'maxLength'}
+              render={({ field }) => {
+                return (
+                  <PropertyFieldShell>
+                    <FormLabel>حداکثر طول</FormLabel>
+                    <FormControl>
+                      <Input
+                        dir="ltr"
+                        value={field.value}
+                        onChange={field.onChange}
+                      />
+                    </FormControl>
+                    <PropertyHelp {...propertyHints.maxLength} dir="ltr" />
+                    <FormMessage />
+                  </PropertyFieldShell>
+                )
+              }}
+            />
+          </PropertySection>
         )}
       </form>
     </Form>
@@ -903,8 +1306,8 @@ const MaskInputGenerator = forwardRef<
             dir="ltr"
             aria-invalid={error}
             className={cn(
-              'border-input placeholder:text-muted-foreground focus-visible:ring-ring flex h-9 w-full rounded-none border bg-transparent px-3 py-1 text-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:ring-1 disabled:cursor-not-allowed disabled:opacity-50',
-              error && 'border-red-500 text-red-500'
+              runtimeInputClassName,
+              error && runtimeInputErrorClassName
             )}
             mask={Number}
             thousandsSeparator={element.extraAttributes.thousandsSeparator}
@@ -941,15 +1344,28 @@ const MaskInputGenerator = forwardRef<
         control={formController.control}
         name={fieldName}
         rules={rules}
-        render={({ field }) => (
-          <Input
-            {...field}
+        render={({ field: { onChange, onBlur, value } }) => (
+          <IMaskInput
             ref={ref}
+            inputRef={inputRef}
+            value={value === undefined || value === null ? '' : String(value)}
+            dir="ltr"
             aria-invalid={error}
             disabled={element.extraAttributes.disabled}
             placeholder={element.extraAttributes.placeholder}
-            className={cn(error && 'border-red-500 text-red-500')}
-            value={field.value ?? ''}
+            className={cn(
+              runtimeInputClassName,
+              error && runtimeInputErrorClassName
+            )}
+            mask={element.extraAttributes.mask || '********************'}
+            lazy={Boolean(element.extraAttributes.lazy)}
+            overwrite={'shift'}
+            placeholderChar={'#'}
+            onAccept={(value) => {
+              onChange(value)
+            }}
+            onBlur={onBlur}
+            data-id={element.id}
           />
         )}
       />

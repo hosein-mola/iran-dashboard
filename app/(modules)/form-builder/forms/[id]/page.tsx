@@ -5,9 +5,7 @@ import { LuView } from 'react-icons/lu'
 import { TbArrowBounce } from 'react-icons/tb'
 
 import { GetFormWithSubmissions } from '@/actions/form'
-import FormLinkShare from '@/components/FormLinkShare'
 import FormSubmissionsGrid from '@/components/FormSubmissionsGrid'
-import VisitBtn from '@/components/VisitBtn'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 import { StatsCard } from '../../StatsCard'
@@ -37,13 +35,11 @@ export default async function FormDetailPage(props: {
             <h1 className="text-3xl font-bold">{form.name}</h1>
           </div>
           <div className="flex flex-wrap gap-2">
-            <VisitBtn formId={`${form.id}`} />
             <Button asChild variant="outline">
               <Link href={`/form-builder/builder/${form.id}`}>ویرایش فرم</Link>
             </Button>
           </div>
         </div>
-        <FormLinkShare formId={`${form.id}`} />
       </header>
 
       <div className="grid w-full grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">

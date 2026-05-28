@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { BarChart3, ClipboardList, Database, FileText } from 'lucide-react'
+import { BarChart3, Database, FileText } from 'lucide-react'
 
 import { GetSubmoduleDashboard } from '@/actions/form'
 import { Badge } from '@/components/ui/badge'
@@ -116,12 +116,6 @@ export default async function SubmoduleDashboardPage(props: {
                   </div>
                 </div>
                 <div className="flex gap-2">
-                  <Button asChild size="sm" variant="outline">
-                    <Link href={`/form-builder/submit/${form.id}`}>
-                      <ClipboardList className="size-4" />
-                      ثبت
-                    </Link>
-                  </Button>
                   <Button asChild size="sm">
                     <Link
                       href={`/dashboard/submodule/${submodule.slug}/forms/${form.id}`}

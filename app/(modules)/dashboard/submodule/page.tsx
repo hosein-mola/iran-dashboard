@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { ClipboardList, Layers3 } from 'lucide-react'
+import { Layers3 } from 'lucide-react'
 
 import { GetUserSubmodules } from '@/actions/form'
 import { Badge } from '@/components/ui/badge'
@@ -82,12 +82,6 @@ export default async function DashboardSubmodulePage() {
                     </div>
                   </div>
                   <div className="flex gap-2">
-                    <Button asChild size="sm" variant="outline">
-                      <Link href={`/form-builder/submit/${form.id}`}>
-                        <ClipboardList className="size-4" />
-                        ثبت
-                      </Link>
-                    </Button>
                     <Button asChild size="sm">
                       <Link
                         href={`/dashboard/submodule/${submodule.slug}/forms/${form.id}`}

@@ -17,6 +17,7 @@ import Link from 'next/link'
 import { useEffect, useMemo, useState } from 'react'
 
 import { GetDashboardSubmoduleCards } from '@/actions/form'
+import { IranMap } from '@/components/shadcnmaps/maps/iran'
 import { Button } from '@/components/ui/button'
 import {
   Card,
@@ -25,6 +26,13 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog'
 import { Separator } from '@/components/ui/separator'
 import { Chart1 } from '@/components/Chart1'
 import { Chart2 } from '@/components/Chart2'
@@ -143,10 +151,227 @@ const heatmap = Array.from({ length: 28 }).map((_, idx) => {
   }
 })
 
+const iranProvinceRegions = [
+  {
+    id: 'HG',
+    name: 'هرمزگان',
+    abbreviation: 'هرمزگان',
+    labelX: 417.8,
+    labelY: 550.0,
+  },
+  {
+    id: 'BS',
+    name: 'بوشهر',
+    abbreviation: 'بوشهر',
+    labelX: 245.8,
+    labelY: 484.1,
+  },
+  {
+    id: 'KB',
+    name: 'کهگیلویه و بویراحمد',
+    abbreviation: 'کهگیلویه',
+    labelX: 219.4,
+    labelY: 396.5,
+  },
+  {
+    id: 'FA',
+    name: 'فارس',
+    abbreviation: 'فارس',
+    labelX: 305.4,
+    labelY: 456.9,
+  },
+  {
+    id: 'ES',
+    name: 'اصفهان',
+    abbreviation: 'اصفهان',
+    labelX: 279.2,
+    labelY: 317.9,
+  },
+  {
+    id: 'SM',
+    name: 'سمنان',
+    abbreviation: 'سمنان',
+    labelX: 350.6,
+    labelY: 180.2,
+  },
+  {
+    id: 'GO',
+    name: 'گلستان',
+    abbreviation: 'گلستان',
+    labelX: 368.9,
+    labelY: 117.2,
+  },
+  {
+    id: 'MN',
+    name: 'مازندران',
+    abbreviation: 'مازندران',
+    labelX: 272.9,
+    labelY: 157.6,
+  },
+  {
+    id: 'TH',
+    name: 'تهران',
+    abbreviation: 'تهران',
+    labelX: 262.6,
+    labelY: 195.8,
+  },
+  {
+    id: 'MK',
+    name: 'مرکزی',
+    abbreviation: 'مرکزی',
+    labelX: 191.9,
+    labelY: 234.1,
+  },
+  { id: 'YA', name: 'یزد', abbreviation: 'یزد', labelX: 393.2, labelY: 322.8 },
+  {
+    id: 'CM',
+    name: 'چهارمحال و بختیاری',
+    abbreviation: 'چهارمحال',
+    labelX: 210.6,
+    labelY: 351.3,
+  },
+  {
+    id: 'KZ',
+    name: 'خوزستان',
+    abbreviation: 'خوزستان',
+    labelX: 153.8,
+    labelY: 365.1,
+    className: 'fill-map-region-selected',
+    labelClassName: 'fill-map-label-selected text-[8px]',
+  },
+  {
+    id: 'LO',
+    name: 'لرستان',
+    abbreviation: 'لرستان',
+    labelX: 135.4,
+    labelY: 278.9,
+  },
+  {
+    id: 'IL',
+    name: 'ایلام',
+    abbreviation: 'ایلام',
+    labelX: 76.8,
+    labelY: 294.6,
+  },
+  {
+    id: 'AR',
+    name: 'اردبیل',
+    abbreviation: 'اردبیل',
+    labelX: 120.4,
+    labelY: 66.1,
+  },
+  { id: 'QM', name: 'قم', abbreviation: 'قم', labelX: 228.6, labelY: 231.3 },
+  {
+    id: 'HD',
+    name: 'همدان',
+    abbreviation: 'همدان',
+    labelX: 143.2,
+    labelY: 219.9,
+  },
+  {
+    id: 'ZA',
+    name: 'زنجان',
+    abbreviation: 'زنجان',
+    labelX: 136.6,
+    labelY: 154.5,
+  },
+  {
+    id: 'QZ',
+    name: 'قزوین',
+    abbreviation: 'قزوین',
+    labelX: 184.8,
+    labelY: 166.9,
+  },
+  {
+    id: 'WA',
+    name: 'آذربایجان غربی',
+    abbreviation: 'آذربایجان غربی',
+    labelX: 51.5,
+    labelY: 82.9,
+  },
+  {
+    id: 'EA',
+    name: 'آذربایجان شرقی',
+    abbreviation: 'آذربایجان شرقی',
+    labelX: 87.5,
+    labelY: 84.0,
+  },
+  {
+    id: 'BK',
+    name: 'کرمانشاه',
+    abbreviation: 'کرمانشاه',
+    labelX: 74.8,
+    labelY: 232.7,
+  },
+  {
+    id: 'GI',
+    name: 'گیلان',
+    abbreviation: 'گیلان',
+    labelX: 180.6,
+    labelY: 107.4,
+  },
+  {
+    id: 'KD',
+    name: 'کردستان',
+    abbreviation: 'کردستان',
+    labelX: 85.2,
+    labelY: 184.6,
+  },
+  {
+    id: 'KJ',
+    name: 'خراسان جنوبی',
+    abbreviation: 'خراسان جنوبی',
+    labelX: 540.5,
+    labelY: 322.1,
+  },
+  {
+    id: 'KV',
+    name: 'خراسان رضوی',
+    abbreviation: 'خراسان رضوی',
+    labelX: 503.3,
+    labelY: 198.3,
+  },
+  {
+    id: 'KS',
+    name: 'خراسان شمالی',
+    abbreviation: 'خراسان شمالی',
+    labelX: 439.8,
+    labelY: 108.5,
+  },
+  {
+    id: 'SB',
+    name: 'سیستان و بلوچستان',
+    abbreviation: 'سیستان',
+    labelX: 611.9,
+    labelY: 495.6,
+  },
+  {
+    id: 'KE',
+    name: 'کرمان',
+    abbreviation: 'کرمان',
+    labelX: 448.8,
+    labelY: 469.8,
+  },
+  {
+    id: 'AL',
+    name: 'البرز',
+    abbreviation: 'البرز',
+    labelX: 223.3,
+    labelY: 175.9,
+  },
+].map((region) => ({
+  labelClassName: 'text-[8px]',
+  ...region,
+}))
+
 export default function DashboardHome() {
   const [submoduleCards, setSubmoduleCards] = useState<
     DashboardSubmoduleCard[]
   >(defaultSubmoduleCards)
+  const [selectedRegion, setSelectedRegion] = useState<{
+    id: string
+    name: string
+  } | null>(null)
   const [moduleFilter, setModuleFilter] = useState<
     'all' | 'resources' | 'reports' | 'security'
   >('all')
@@ -385,6 +610,68 @@ export default function DashboardHome() {
               </CardContent>
             </Card>
           </div>
+
+          <Card className="border-border/60 bg-card/90 border shadow-sm backdrop-blur">
+            <CardHeader className="flex flex-col gap-2 md:flex-row md:items-start md:justify-between">
+              <div className="space-y-1">
+                <CardTitle className="text-lg font-semibold">
+                  نقشه پایش ایران
+                </CardTitle>
+                <CardDescription>
+                  نمای استانی برای رصد سریع منابع و رخدادها
+                </CardDescription>
+              </div>
+              <div className="grid grid-cols-3 gap-2 text-center text-xs">
+                <div className="border-border/60 rounded-lg border px-3 py-2">
+                  <p className="font-semibold">۱۸</p>
+                  <p className="text-muted-foreground">منبع</p>
+                </div>
+                <div className="border-border/60 rounded-lg border px-3 py-2">
+                  <p className="font-semibold">۶</p>
+                  <p className="text-muted-foreground">هشدار</p>
+                </div>
+                <div className="border-border/60 rounded-lg border px-3 py-2">
+                  <p className="font-semibold">۲۴</p>
+                  <p className="text-muted-foreground">استان</p>
+                </div>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <div className="dashboard-iran-map border-border/60 bg-background/60 mx-auto max-w-4xl rounded-lg border p-3">
+                <Dialog
+                  open={!!selectedRegion}
+                  onOpenChange={(open) => {
+                    if (!open) setSelectedRegion(null)
+                  }}
+                >
+                  <DialogContent>
+                    <DialogHeader>
+                      <DialogTitle>{selectedRegion?.name}</DialogTitle>
+                    </DialogHeader>
+                    <DialogDescription>
+                      وضعیت منابع، هشدارها و رخدادهای ثبت‌شده برای این استان.
+                    </DialogDescription>
+                  </DialogContent>
+                </Dialog>
+                <IranMap
+                  aria-label="نقشه پایش ایران"
+                  selectedRegion={selectedRegion?.id}
+                  regions={iranProvinceRegions}
+                  showLabels
+                  showTooltips
+                  enableZoom
+                  className="max-h-[560px]"
+                  onRegionClick={({ region }) =>
+                    setSelectedRegion((current) =>
+                      current?.id === region.id
+                        ? null
+                        : { id: region.id, name: region.name ?? region.id }
+                    )
+                  }
+                />
+              </div>
+            </CardContent>
+          </Card>
 
           <div className="border-border/60 bg-card/90 flex flex-wrap items-center justify-between gap-4 rounded-lg border p-3 shadow-sm backdrop-blur">
             <div className="flex flex-wrap items-center gap-2">

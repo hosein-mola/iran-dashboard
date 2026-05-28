@@ -14,6 +14,7 @@ import {
 import CreateFormButton from '@/components/CreateFormButton'
 import DeleteRecordButton from '@/components/DeleteRecordButton'
 import FormBuilderFilters from '@/components/FormBuilderFilters'
+import SubmitFormDialogButton from '@/components/SubmitFormDialogButton'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import {
@@ -39,10 +40,7 @@ const scheduleLabels: Record<string, string> = {
   monthly: 'ماهانه',
 }
 
-function readSearchParam(
-  value: string | string[] | undefined,
-  fallback = ''
-) {
+function readSearchParam(value: string | string[] | undefined, fallback = '') {
   if (Array.isArray(value)) return value[0] ?? fallback
   return value ?? fallback
 }
@@ -128,7 +126,7 @@ export default async function FormBuilderHome(props: {
                     هر ذخیره، تنظیمات و رویداد یک نسخه جدید می‌سازد.
                   </CardDescription>
                 </CardHeader>
-                <CardContent className="space-y-2 text-sm text-muted-foreground">
+                <CardContent className="text-muted-foreground space-y-2 text-sm">
                   <p>نسخه فرم داخل هر سابمیشن ثبت می‌شود.</p>
                   <p>فرم‌های منتشرشده همچنان قابل ویرایش هستند.</p>
                 </CardContent>
@@ -138,7 +136,9 @@ export default async function FormBuilderHome(props: {
                   <CardTitle className="text-base font-semibold">
                     وضعیت انتشار
                   </CardTitle>
-                  <CardDescription>خلاصه فرم‌های فعال و پیش‌نویس</CardDescription>
+                  <CardDescription>
+                    خلاصه فرم‌های فعال و پیش‌نویس
+                  </CardDescription>
                 </CardHeader>
                 <CardContent className="grid grid-cols-2 gap-2 text-sm">
                   <div className="border-border/60 rounded-lg border p-2">
@@ -164,7 +164,7 @@ export default async function FormBuilderHome(props: {
                     دسترسی سریع به اقدامات پرکاربرد
                   </CardDescription>
                 </CardHeader>
-                <CardContent className="space-y-2 text-sm text-muted-foreground">
+                <CardContent className="text-muted-foreground space-y-2 text-sm">
                   <p>فرم‌ها را به زیرماژول و قالب وصل کنید.</p>
                   <p>قالب‌ها از فرم‌های موجود ساخته می‌شوند.</p>
                 </CardContent>
@@ -261,9 +261,7 @@ function StatsCards(props: StatsCardProps) {
       <StatsCard
         title={'داده‌های امروز'}
         value={
-          loading
-            ? ''
-            : data?.submissionsRate?.toLocaleString('fa-IR') || '۰'
+          loading ? '' : data?.submissionsRate?.toLocaleString('fa-IR') || '۰'
         }
         icon={<HiCursorClick className={'text-primary'} />}
         loading={loading}
@@ -374,11 +372,9 @@ function FormCard({ form }: { form: Forms[number] }) {
             پاسخ‌ها <LuView />
           </Link>
         </Button>
-        <Button asChild variant="outline" className="text-md flex-1 gap-2">
-          <Link href={`/form-builder/submit/${form.id}`}>
-            ثبت فرم <FaWpforms />
-          </Link>
-        </Button>
+        {form.published && (
+          <SubmitFormDialogButton formId={form.id} formName={form.name} />
+        )}
         <DeleteRecordButton kind="form" id={form.id} name={form.name} />
       </CardFooter>
     </Card>

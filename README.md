@@ -72,7 +72,6 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 │   │   └── TextField.tsx
 │   ├── FormBuilder.tsx
 │   ├── FormElementSidebar.tsx
-│   ├── FormLinkShare.tsx
 │   ├── FormSubmitComponent.tsx
 │   ├── header-dropdown.tsx
 │   ├── hooks
@@ -131,7 +130,6 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 │   │   ├── tooltip.tsx
 │   │   └── use-toast.ts
 │   ├── version-switcher.tsx
-│   └── VisitBtn.tsx
 ├── components.json
 ├── eslint.config.mjs
 ├── hooks

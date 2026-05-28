@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { ShieldCheck, ClipboardList, Inbox } from 'lucide-react'
+import { ShieldCheck, Inbox } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
 import {
