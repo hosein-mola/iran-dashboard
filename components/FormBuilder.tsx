@@ -1,9 +1,12 @@
 'use client'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import PreviewDialogButton from './PreviewDialogButton'
 import PublishFormButton from './PublishFormButton'
 import SaveFormButton from './SaveFormButton'
+import RestoreFormVersionButton from './RestoreFormVersionButton'
 import FormEventsEditor from './FormEventsEditor'
+import FormInitialDataSourcePanel from './FormInitialDataSourcePanel'
+import FormVersionsPanel from './FormVersionsPanel'
 import FormSettingsButton from './FormSettingsButton'
 import Designer from './Designer'
 import {
@@ -80,6 +83,37 @@ function FormBuilder(props: FormBuilderProps) {
   const sensors = useSensors(pointerSensor, mouseSensor)
   type RenameFormType = { name: string }
   const renameForm = useForm<RenameFormType>()
+  const { reset } = renameForm
+
+  const applyFormState = useCallback(
+    (_form: any | null) => {
+      setForm(_form)
+      reset({ name: _form?.name || '' })
+      setElements(
+        [...(_form?.components || [])].sort(
+          (a: FormElementInstance, b: FormElementInstance) => a.index - b.index
+        )
+      )
+
+      const pages: Array<PageType> = _form?.page || []
+      if (pages == null || pages.length == 0) {
+        const initPage = { id: ulid(10), index: 1, name: 'page-1' }
+        setPages([initPage])
+        setSelectedPage(initPage)
+      } else {
+        setPages(pages)
+        setSelectedPage(pages[0])
+      }
+      setSelectedElement(null)
+    },
+    [
+      reset,
+      setElements,
+      setPages,
+      setSelectedElement,
+      setSelectedPage,
+    ]
+  )
 
   useEffect(() => {
     setSelectedElement(null)
@@ -90,30 +124,14 @@ function FormBuilder(props: FormBuilderProps) {
     setIsReady(false)
     const req = async () => {
       const _form = await GetFormById(Number(params.id))
-      console.log('🚀 ~ req ~ _form:', _form)
-      setForm(_form)
-      setElements(
-        (_form?.components || []).sort(
-          (a: FormElementInstance, b: FormElementInstance) => a.index - b.index
-        )
-      )
-
-      const pages: Array<PageType> = _form?.page || []
-      console.log('xxx', pages)
-      if (pages == null || pages.length == 0) {
-        const initPage = { id: ulid(10), index: 1, name: 'page-1' }
-        setPages([initPage])
-        setSelectedPage(initPage)
-      } else {
-        setPages(pages)
-        setSelectedPage(pages[0])
-      }
+      applyFormState(_form)
     }
     req().finally(() => {
       setIsReady(true)
     })
   }, [
     params.id,
+    applyFormState,
     setElements,
     setIsReady,
     setPages,
@@ -157,6 +175,14 @@ function FormBuilder(props: FormBuilderProps) {
             {form && !form.published && <PublishFormButton id={form.id} />}
             {form && <SaveFormButton id={form.id} />}
             {form && (
+              <RestoreFormVersionButton
+                formId={form.id}
+                currentVersion={form.currentVersion}
+                versions={form.versions || []}
+                onRestored={applyFormState}
+              />
+            )}
+            {form && (
               <FormSettingsButton
                 form={form}
                 options={props.setupOptions}
@@ -165,7 +191,10 @@ function FormBuilder(props: FormBuilderProps) {
                 }
               />
             )}
-            <PreviewDialogButton />
+            <PreviewDialogButton
+              initialData={form?.previewInitialData || {}}
+              initialDataSource={form?.initialDataSource}
+            />
           </div>
 
           <h2
@@ -233,7 +262,10 @@ function FormBuilder(props: FormBuilderProps) {
                   className="h-6 w-6 cursor-pointer"
                 />
               </div>
-              <div className="flex flex-row items-center gap-2">
+              <div
+                className="flex cursor-pointer flex-row items-center gap-2"
+                onClick={() => setLeftView('ds')}
+              >
                 {leftView == 'ds' ? (
                   <div className="bg-primary h-2 w-2 rounded-full"></div>
                 ) : (
@@ -244,7 +276,10 @@ function FormBuilder(props: FormBuilderProps) {
                   className="h-6 w-6 cursor-pointer"
                 />
               </div>
-              <div className="flex flex-row items-center gap-2">
+              <div
+                className="flex cursor-pointer flex-row items-center gap-2"
+                onClick={() => setLeftView('history')}
+              >
                 {leftView == 'history' ? (
                   <div className="bg-primary h-2 w-2 rounded-full"></div>
                 ) : (
@@ -285,6 +320,10 @@ function FormBuilder(props: FormBuilderProps) {
               formId={form.id}
               initialEvents={form.events || form.eventConfig || []}
             />
+          ) : leftView === 'ds' && form ? (
+            <FormInitialDataSourcePanel form={form} onSaved={applyFormState} />
+          ) : leftView === 'history' && form ? (
+            <FormVersionsPanel form={form} onRestored={applyFormState} />
           ) : (
             <Designer />
           )}

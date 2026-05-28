@@ -1,4 +1,7 @@
-import { GetFormById, GetFormSetupOptions } from '@/actions/form'
+import {
+  GetFormById,
+  GetFormSetupOptions,
+} from '@/actions/form'
 import FormBuilder from '@/components/FormBuilder'
 import React from 'react'
 
@@ -17,7 +20,9 @@ async function BuilderPage(
         throw new Error('form not found');
     }
 
-    return <FormBuilder form={form} setupOptions={setupOptions} />
+    return (
+      <FormBuilder form={form} setupOptions={setupOptions} />
+    )
 }
 
 export default BuilderPage

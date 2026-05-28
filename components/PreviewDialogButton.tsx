@@ -1,15 +1,29 @@
 'use client'
 
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button } from './ui/button'
 import { MdPreview } from 'react-icons/md'
 import useDesigner from './hooks/useDesigner'
 import { Dialog, DialogContent, DialogTitle, DialogTrigger } from './ui/dialog'
 import { FormElementInstance } from '../types/element-type'
 import FormSubmitComponent from './FormSubmitComponent'
+import {
+  FormInitialDataSourceInput,
+  TestFormInitialDataSource,
+} from '@/actions/form'
 
-const PreviewDialogButton = () => {
+const PreviewDialogButton = ({
+  initialData,
+  initialDataSource,
+}: {
+  initialData?: Record<string, unknown>
+  initialDataSource?: FormInitialDataSourceInput
+}) => {
   const { elements, pages, setSelectedPage, selectedPage } = useDesigner()
+  const [open, setOpen] = useState(false)
+  const [resolvedInitialData, setResolvedInitialData] = useState<
+    Record<string, unknown>
+  >(initialData ?? {})
 
   // Deep clone to avoid mutations
   const clonedElements = structuredClone(elements)
@@ -47,6 +61,31 @@ const PreviewDialogButton = () => {
     pages.findIndex((page) => page.id === selectedPage.id)
   )
 
+  useEffect(() => {
+    setResolvedInitialData(initialData ?? {})
+  }, [initialData])
+
+  useEffect(() => {
+    if (!open || !initialDataSource?.enabled || !initialDataSource.url) return
+
+    let active = true
+    TestFormInitialDataSource(initialDataSource, {})
+      .then((result) => {
+        if (!active) return
+        if (result.ok && result.data && typeof result.data === 'object') {
+          setResolvedInitialData(result.data as Record<string, unknown>)
+        }
+      })
+      .catch(() => {
+        if (!active) return
+        setResolvedInitialData(initialData ?? {})
+      })
+
+    return () => {
+      active = false
+    }
+  }, [open, initialData, initialDataSource])
+
   // Handle next and previous page navigation
   const handleNext = () => {
     if (currentPageIndex < clonedPages.length - 1) {
@@ -65,7 +104,7 @@ const PreviewDialogButton = () => {
   }
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button variant={'outline'} className="gap-2">
           <MdPreview className="h-6 w-6" />
@@ -123,7 +162,12 @@ const PreviewDialogButton = () => {
         </div>
 
         {/* Render selected page preview */}
-        <FormSubmitComponent formId={0} form={form} type={'preview'} />
+        <FormSubmitComponent
+          formId={0}
+          form={form}
+          type={'preview'}
+          initialData={resolvedInitialData}
+        />
       </DialogContent>
     </Dialog>
   )

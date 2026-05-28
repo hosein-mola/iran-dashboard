@@ -35,6 +35,21 @@ export type FormSettingsInput = {
   assignedUserId?: string | null
 }
 
+export type FormInitialDataSourceInput = {
+  enabled: boolean
+  url: string
+  method: 'GET' | 'POST'
+  headers?: Record<string, string>
+  body?: string
+  dataPath?: string
+  mapping?: Record<string, string>
+}
+
+type FormRuntimeContext = {
+  initialDataSource?: FormInitialDataSourceInput
+  [key: string]: unknown
+}
+
 export type SubmoduleInput = {
   slug: string
   name: string
@@ -84,6 +99,71 @@ function parseJson<T>(value: string | null | undefined, fallback: T): T {
 
 function stringifyJson(value: unknown) {
   return JSON.stringify(value ?? [])
+}
+
+function parseFormRuntimeContext(value: string | null | undefined) {
+  const parsed = parseJson<FormRuntimeContext | unknown[]>(value, {})
+
+  if (Array.isArray(parsed)) {
+    return { items: parsed } as FormRuntimeContext
+  }
+
+  return parsed ?? {}
+}
+
+function normalizeInitialDataSource(
+  input?: FormInitialDataSourceInput | null
+): FormInitialDataSourceInput | undefined {
+  if (!input) return undefined
+
+  return {
+    enabled: Boolean(input.enabled),
+    url: String(input.url || '').trim(),
+    method: input.method === 'POST' ? 'POST' : 'GET',
+    headers: input.headers && typeof input.headers === 'object'
+      ? input.headers
+      : {},
+    body: input.body || '',
+    dataPath: input.dataPath || '',
+    mapping: input.mapping && typeof input.mapping === 'object'
+      ? input.mapping
+      : {},
+  }
+}
+
+function replaceTemplateParams(
+  value: string,
+  params: Record<string, string | string[] | undefined>
+) {
+  return value.replace(/\{([^}]+)\}/g, (_, key: string) => {
+    const param = params[key.trim()]
+    return encodeURIComponent(Array.isArray(param) ? param[0] ?? '' : param ?? '')
+  })
+}
+
+function resolveRuntimeUrl(value: string) {
+  if (value.startsWith('/')) {
+    const baseUrl =
+      process.env.NEXT_PUBLIC_APP_URL ||
+      (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : '') ||
+      'http://localhost:3000'
+
+    return new URL(value, baseUrl)
+  }
+
+  return new URL(value)
+}
+
+function getValueByPath(source: unknown, path: string) {
+  if (!path.trim()) return source
+
+  return path.split('.').reduce<unknown>((current, segment) => {
+    if (current == null) return undefined
+    if (Array.isArray(current)) return current[Number(segment)]
+    if (typeof current !== 'object') return undefined
+
+    return (current as Record<string, unknown>)[segment]
+  }, source)
 }
 
 function defaultPages(): PageType[] {
@@ -767,12 +847,14 @@ async function ensureVersionForForm(formId: number) {
 
 function serializeForm(form: any) {
   const eventConfig = parseJson<FormEventRuleInput[]>(form.eventConfig, [])
+  const context = parseFormRuntimeContext(form.context)
 
   return {
     ...form,
     page: parseJson<PageType[]>(form.page, defaultPages()),
     components: parseJson<FormElementInstance[]>(form.components, []),
-    context: parseJson<unknown[]>(form.context, []),
+    context,
+    initialDataSource: normalizeInitialDataSource(context.initialDataSource),
     eventConfig,
     events:
       form.eventRules?.map((event: any) => ({
@@ -951,11 +1033,20 @@ export async function GetFormModuleCatalog() {
       name: form.name,
       description: form.description,
       currentVersion: form.currentVersion,
+      published: form.published,
+      visit: form.visit,
+      submission: form.submission,
+      scheduleType: form.scheduleType,
+      scheduleInterval: form.scheduleInterval,
+      createdAt: form.createdAt,
+      updatedAt: form.updatedAt,
+      submoduleId: form.submoduleId,
       templateId: form.templateId,
       templateVersion: form.templateVersion,
+      submoduleSlug: form.submodule?.slug ?? '',
       submoduleName: form.submodule?.name ?? '',
+      templateSlug: form.template?.slug ?? '',
       templateName: form.template?.name ?? '',
-      updatedAt: form.updatedAt,
     })),
   }
 }
@@ -1533,6 +1624,42 @@ export async function GetForms() {
   return forms
 }
 
+export async function DeleteForm(formId: number) {
+  const id = Number(formId)
+
+  if (!id) {
+    throw new Error('فرم معتبر نیست.')
+  }
+
+  const form = await prisma.form.findUnique({
+    where: { id },
+    select: {
+      id: true,
+      name: true,
+    },
+  })
+
+  if (!form) {
+    throw new Error('فرم پیدا نشد.')
+  }
+
+  await prisma.form.delete({
+    where: { id: form.id },
+  })
+
+  revalidatePath('/form-builder')
+  revalidatePath('/form-builder/forms')
+  revalidatePath(`/form-builder/forms/${form.id}`)
+  revalidatePath('/form-builder/builder')
+  revalidatePath(`/form-builder/builder/${form.id}`)
+  revalidatePath('/form-builder/submit')
+  revalidatePath(`/form-builder/submit/${form.id}`)
+  revalidatePath('/dashboard')
+  revalidatePath('/dashboard/submodule')
+
+  return { id: form.id, name: form.name }
+}
+
 export async function GetFormById(id: number) {
   await ensureBaseCatalog()
   await ensureVersionForForm(Number(id))
@@ -1550,7 +1677,7 @@ export async function GetFormById(id: number) {
       },
       versions: {
         orderBy: { version: 'desc' },
-        take: 10,
+        take: 50,
       },
     },
   })
@@ -1558,6 +1685,270 @@ export async function GetFormById(id: number) {
   if (!form) return null
 
   return serializeForm(form)
+}
+
+export async function RestoreFormVersion(formId: number, version: number) {
+  const id = Number(formId)
+  const targetVersion = Number(version)
+
+  if (!id || !targetVersion) {
+    throw new Error('نسخه فرم معتبر نیست.')
+  }
+
+  await prisma.$transaction(async (tx) => {
+    const snapshot = await tx.formVersion.findUnique({
+      where: {
+        formId_version: {
+          formId: id,
+          version: targetVersion,
+        },
+      },
+    })
+
+    if (!snapshot) {
+      throw new Error('نسخه انتخاب‌شده پیدا نشد.')
+    }
+
+    const { form, version: restoredVersion } = await updateFormAndVersion(
+      tx,
+      id,
+      {
+        name: snapshot.name,
+        description: snapshot.description,
+        page: snapshot.page,
+        components: snapshot.components,
+        context: snapshot.context,
+        eventConfig: snapshot.eventConfig,
+        scheduleType: snapshot.scheduleType,
+        scheduleInterval: snapshot.scheduleInterval,
+        scheduleConfig: snapshot.scheduleConfig,
+        published: snapshot.published,
+        updatedAt: new Date(),
+      }
+    )
+
+    const events = normalizeEvents(
+      parseJson<FormEventRuleInput[]>(snapshot.eventConfig, [])
+    )
+
+    await tx.formEvent.deleteMany({ where: { formId: form.id } })
+
+    if (events.length > 0) {
+      await tx.formEvent.createMany({
+        data: events.map((event) => ({
+          ...event,
+          formId: form.id,
+          version: restoredVersion.version,
+        })),
+      })
+    }
+
+    return form
+  })
+
+  revalidatePath('/form-builder')
+  revalidatePath(`/form-builder/builder/${id}`)
+  revalidatePath(`/form-builder/forms/${id}`)
+  revalidatePath('/dashboard/submodule')
+
+  return GetFormById(id)
+}
+
+export async function SaveFormInitialDataSource(
+  formId: number,
+  input: FormInitialDataSourceInput
+) {
+  const id = Number(formId)
+
+  if (!id) {
+    throw new Error('فرم معتبر نیست.')
+  }
+
+  const existingForm = await prisma.form.findUnique({
+    where: { id },
+    select: { context: true },
+  })
+
+  if (!existingForm) {
+    throw new Error('فرم پیدا نشد.')
+  }
+
+  const currentContext = parseFormRuntimeContext(existingForm.context)
+  const nextContext: FormRuntimeContext = {
+    ...currentContext,
+    initialDataSource: normalizeInitialDataSource(input),
+  }
+
+  await prisma.$transaction(async (tx) => {
+    await updateFormAndVersion(tx, id, {
+      context: stringifyJson(nextContext),
+      updatedAt: new Date(),
+    })
+  })
+
+  revalidatePath('/form-builder')
+  revalidatePath(`/form-builder/builder/${id}`)
+  revalidatePath(`/form-builder/submit/${id}`)
+
+  return GetFormById(id)
+}
+
+export async function ResolveFormInitialData(
+  formId: number,
+  params: Record<string, string | string[] | undefined> = {}
+) {
+  const form = await prisma.form.findUnique({
+    where: { id: Number(formId) },
+    select: { context: true },
+  })
+
+  if (!form) return {}
+
+  const context = parseFormRuntimeContext(form.context)
+  const config = normalizeInitialDataSource(context.initialDataSource)
+
+  if (!config?.enabled || !config.url) return {}
+
+  try {
+    const url = replaceTemplateParams(config.url, params)
+    const parsedUrl = resolveRuntimeUrl(url)
+
+    if (!['http:', 'https:'].includes(parsedUrl.protocol)) {
+      return {}
+    }
+
+    const response = await fetch(parsedUrl, {
+      method: config.method,
+      headers: config.headers,
+      body:
+        config.method === 'POST' && config.body
+          ? replaceTemplateParams(config.body, params)
+          : undefined,
+      cache: 'no-store',
+    })
+
+    if (!response.ok) return {}
+
+    const payload = await response.json()
+    const source = getValueByPath(payload, config.dataPath || '')
+    const mapping = config.mapping ?? {}
+
+    if (Object.keys(mapping).length === 0) {
+      return source && typeof source === 'object' && !Array.isArray(source)
+        ? source
+        : {}
+    }
+
+    return Object.fromEntries(
+      Object.entries(mapping)
+        .map(([fieldName, sourcePath]) => [
+          fieldName,
+          getValueByPath(source, sourcePath),
+        ])
+        .filter(([, value]) => value !== undefined)
+    )
+  } catch {
+    return {}
+  }
+}
+
+export async function TestFormInitialDataSource(
+  input: FormInitialDataSourceInput,
+  params: Record<string, string | string[] | undefined> = {}
+) {
+  const config = normalizeInitialDataSource(input)
+
+  if (!config?.url) {
+    return {
+      ok: false,
+      error: 'آدرس منبع داده وارد نشده است.',
+      data: {},
+      raw: null,
+    }
+  }
+
+  try {
+    const url = replaceTemplateParams(config.url, params)
+    const parsedUrl = resolveRuntimeUrl(url)
+
+    if (!['http:', 'https:'].includes(parsedUrl.protocol)) {
+      return {
+        ok: false,
+        error: 'فقط آدرس‌های http و https پشتیبانی می‌شوند.',
+        data: {},
+        raw: null,
+      }
+    }
+
+    const response = await fetch(parsedUrl, {
+      method: config.method,
+      headers: config.headers,
+      body:
+        config.method === 'POST' && config.body
+          ? replaceTemplateParams(config.body, params)
+          : undefined,
+      cache: 'no-store',
+    })
+
+    const text = await response.text()
+    const contentType = response.headers.get('content-type') || ''
+    let payload: unknown = null
+
+    try {
+      payload = text ? JSON.parse(text) : null
+    } catch {
+      return {
+        ok: false,
+        error: contentType.includes('text/html')
+          ? 'این آدرس صفحه HTML برگرداند. آدرس باید endpoint JSON باشد، نه صفحه فرم یا صفحه داشبورد.'
+          : 'پاسخ منبع داده JSON معتبر نیست.',
+        status: response.status,
+        data: {},
+        raw: text.slice(0, 1000),
+      }
+    }
+
+    if (!response.ok) {
+      return {
+        ok: false,
+        error: `درخواست با وضعیت ${response.status} برگشت.`,
+        status: response.status,
+        data: {},
+        raw: payload,
+      }
+    }
+
+    const source = getValueByPath(payload, config.dataPath || '')
+    const mapping = config.mapping ?? {}
+    const data =
+      Object.keys(mapping).length === 0
+        ? source && typeof source === 'object' && !Array.isArray(source)
+          ? source
+          : {}
+        : Object.fromEntries(
+            Object.entries(mapping)
+              .map(([fieldName, sourcePath]) => [
+                fieldName,
+                getValueByPath(source, sourcePath),
+              ])
+              .filter(([, value]) => value !== undefined)
+          )
+
+    return {
+      ok: true,
+      error: '',
+      status: response.status,
+      data,
+      raw: payload,
+    }
+  } catch (error) {
+    return {
+      ok: false,
+      error: error instanceof Error ? error.message : 'تست منبع داده ناموفق بود.',
+      data: {},
+      raw: null,
+    }
+  }
 }
 
 export async function UpdateFormContent(

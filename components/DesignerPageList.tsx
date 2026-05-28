@@ -12,6 +12,7 @@ import { PlusCircledIcon } from '@radix-ui/react-icons'
 import { CSS } from '@dnd-kit/utilities'
 import { cn } from '@/lib/utils'
 import { BiPlus } from 'react-icons/bi'
+import { Check, PencilLine, X } from 'lucide-react'
 
 import {
   ContextMenu,
@@ -19,6 +20,16 @@ import {
   ContextMenuItem,
   ContextMenuTrigger,
 } from '@/components/ui/context-menu'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog'
+import { Input } from '@/components/ui/input'
+import { Button } from '@/components/ui/button'
 
 import {
   AlertDialog,
@@ -40,6 +51,7 @@ function DesignerPageList() {
     setSelectedPage,
     newPage,
     duplicatePage,
+    renamePage,
   } = useDesigner()
 
   const [deleteConfirm, setDeleteConfirm] = useState(false)
@@ -47,6 +59,27 @@ function DesignerPageList() {
     id: -1,
     index: -1,
   })
+  const [renameOpen, setRenameOpen] = useState(false)
+  const [renameValue, setRenameValue] = useState('')
+  const [renameTarget, setRenameTarget] = useState<{
+    page: { id: string; name: string; index: number }
+    index: number
+  } | null>(null)
+
+  const closeRename = () => {
+    setRenameOpen(false)
+    setRenameValue('')
+    setRenameTarget(null)
+  }
+
+  const openRename = (
+    page: { id: string; name: string; index: number },
+    index: number
+  ) => {
+    setRenameTarget({ page, index })
+    setRenameValue(page.name)
+    setRenameOpen(true)
+  }
 
   return (
     <aside className="border-muted bg-background overflowx-y-auto flex h-full w-[300px] max-w-[300px] flex-grow flex-col items-center gap-2 border-l px-2">
@@ -110,6 +143,17 @@ function DesignerPageList() {
                       <span className="font-light">تکرار</span>
                     </ContextMenuItem>
                     <ContextMenuItem
+                      onSelect={(event) => {
+                        window.setTimeout(() => {
+                          openRename(page, index)
+                        }, 0)
+                      }}
+                      className="flex w-full cursor-pointer flex-row items-center justify-between gap-2 py-2"
+                    >
+                      <PencilLine className="h-4 w-4" />
+                      <span className="font-light">تغییر نام</span>
+                    </ContextMenuItem>
+                    <ContextMenuItem
                       onClick={() => {
                         setDeleteData({ id: page.index, index })
                         setDeleteConfirm(true)
@@ -127,6 +171,55 @@ function DesignerPageList() {
         </SortableContext>
         {/* </DndContext> */}
       </div>
+      <Dialog
+        key={renameTarget?.page.id || 'rename-dialog'}
+        open={renameOpen}
+        onOpenChange={(open) => (open ? setRenameOpen(true) : closeRename())}
+      >
+        <DialogContent dir="rtl" className="sm:max-w-[420px]">
+          <DialogHeader>
+            <DialogTitle>تغییر نام صفحه</DialogTitle>
+            <DialogDescription>
+              نام جدید را وارد کنید. این نام در استودیو و پیش‌نمایش نمایش داده
+              می‌شود.
+            </DialogDescription>
+          </DialogHeader>
+          <Input
+            value={renameValue}
+            onChange={(event) => setRenameValue(event.target.value)}
+            placeholder="نام صفحه"
+            autoFocus
+          />
+          <DialogFooter dir="rtl">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={closeRename}
+              className="flex flex-row-reverse gap-2"
+            >
+              <X className="h-4 w-4" />
+              انصراف
+            </Button>
+            <Button
+              type="button"
+              disabled={!renameValue.trim() || !renameTarget}
+              className="flex flex-row-reverse gap-2"
+              onClick={() => {
+                if (!renameTarget) return
+                const pageId = renameTarget.page.id
+                const nextName = renameValue
+                closeRename()
+                window.setTimeout(() => {
+                  renamePage(pageId, nextName)
+                }, 0)
+              }}
+            >
+              <Check className="h-4 w-4" />
+              ذخیره
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
       <AlertDialog open={deleteConfirm}>
         <AlertDialogContent>
           <AlertDialogHeader>

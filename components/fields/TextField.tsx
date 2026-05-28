@@ -361,7 +361,7 @@ function PropertiesComponent({
     page: ('{ "id": "-1", "extraAttributes": ' +
       JSON.stringify(pages) +
       ' }') as string & { id: string; extraAttributes: string },
-    components: elements.sort((a, b) => a.index - b.index),
+    components: [...elements].sort((a, b) => a.index - b.index),
   }
 
   console.log('err', form.formState.errors)

@@ -43,6 +43,7 @@ export type DesignerContextType = {
   updateSelectedParents: (element: FormElementInstance, level: number) => void
   duplicatePage: (page: PageType, index: number) => void
   newPage: (page: PageType, index: number) => void
+  renamePage: (pageId: string, name: string) => void
   deletePage: (page: PageType, index: number) => void
   addElement: (
     index: number,
@@ -66,32 +67,29 @@ export default function DesignerContextProvider({
 }: {
   children: ReactNode
 }) {
+  const initialPage = { id: ulid(10), name: 'Page-1', index: 1 }
   const [elements, setElements] = useState<FormElementInstance[]>([])
   const [leftView, setLeftView] = useState<SidebarViewType>('page')
-  const [pages, setPages] = useState<Array<PageType>>([
-    { id: ulid(10), name: 'Page-1', index: 1 },
-  ])
+  const [pages, setPages] = useState<Array<PageType>>([initialPage])
   const [active, setActive] = useState<Active | null>(null)
   const [selectedElement, setSelectedElement] =
     useState<FormElementInstance | null>(null)
   const [selectedElementParents, setSelectedElementParents] = useState<
     FormElementInstance[]
   >([])
-  const [selectedPage, setSelectedPage] = useState<PageType>({
-    id: ulid(10),
-    name: 'Page-1',
-    index: 1,
-  })
+  const [selectedPage, setSelectedPage] = useState<PageType>(initialPage)
   const [draggedItem, setDraggedItem] = useState<Active | null>(null)
   const [isReady, setIsReady] = useState(false)
 
   useEffect(() => {
-    console.log('🚀 ~ elements:', elements)
-    console.log('🚀 ~ pages:', pages)
-    console.log('🚀 ~ selectedPage:', selectedPage)
-  }, [elements, pages, selectedPage])
-
-  useEffect(() => {}, [])
+    setSelectedPage((prev) => {
+      const nextSelected =
+        pages.find((page) => page.id === prev.id) ?? pages[0] ?? prev
+      return nextSelected.id === prev.id && nextSelected.name === prev.name
+        ? prev
+        : nextSelected
+    })
+  }, [pages])
 
   const swapElement = (fromIndex: number, toIndex: number) => {
     setElements((prev) => {
@@ -273,6 +271,17 @@ export default function DesignerContextProvider({
     setSelectedPage(newPage)
   }
 
+  function renamePage(pageId: string, name: string) {
+    const nextName = name.trim()
+    if (!nextName) return
+
+    setPages((prev) => {
+      return prev.map((page) =>
+        page.id === pageId ? { ...page, name: nextName } : page
+      )
+    })
+  }
+
   function deletePage(page: PageType, index: number) {
     const clonePages = [...pages]
     clonePages.splice(index, 1)
@@ -316,6 +325,7 @@ export default function DesignerContextProvider({
     setPages,
     duplicatePage,
     newPage,
+    renamePage,
     deletePage,
     setActive,
     addElement,

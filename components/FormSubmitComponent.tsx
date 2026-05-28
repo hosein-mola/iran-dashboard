@@ -56,16 +56,39 @@ function buildScope(values: Record<string, unknown>) {
   )
 }
 
+function getFieldName(element: FormElementInstance) {
+  return String(element.extraAttributes?.name || element.id)
+}
+
+function getElementDefaultValue(element: FormElementInstance) {
+  const attributes = element.extraAttributes ?? {}
+
+  if (attributes.defaultValue !== undefined) return attributes.defaultValue
+  if (attributes.value !== undefined) return attributes.value
+
+  return undefined
+}
+
+function buildComponentDefaultValues(elements: FormElementInstance[]) {
+  return Object.fromEntries(
+    elements
+      .map((element) => [getFieldName(element), getElementDefaultValue(element)])
+      .filter(([, value]) => value !== undefined)
+  )
+}
+
 function FormSubmitComponent({
   formId,
   form,
   type,
   setData,
+  initialData,
 }: {
   formId: number
   form: any
   type: string
   setData?: (data: any) => void
+  initialData?: Record<string, unknown>
 }) {
   const {
     elements,
@@ -78,8 +101,17 @@ function FormSubmitComponent({
   const [renderkey] = useState(ulid(10))
   const [submitted, setSubmitted] = useState(false)
   const [pending, startTransition] = useTransition()
+  const componentDefaults = useMemo(
+    () => buildComponentDefaultValues(form.components || []),
+    [form.components]
+  )
+  const defaultValues = useMemo(
+    () => ({ ...componentDefaults, ...(initialData ?? {}) }),
+    [componentDefaults, initialData]
+  )
   const formController = useForm({
     mode: 'onChange',
+    defaultValues,
   })
   const watchedValues = useWatch({ control: formController.control })
   const theme = useTheme()
@@ -93,6 +125,10 @@ function FormSubmitComponent({
   useEffect(() => {
     setData?.(formController)
   }, [formController, setData])
+
+  useEffect(() => {
+    formController.reset(defaultValues)
+  }, [defaultValues, formController])
 
   useEffect(() => {
     if (type === 'preview') return
@@ -156,7 +192,7 @@ function FormSubmitComponent({
 
   if (submitted) {
     return (
-      <div className="flex h-full w-full flex-1 flex-grow items-center justify-center p-8">
+      <div className="flex min-h-screen w-full flex-1 flex-grow items-center justify-center p-4 sm:p-8">
         <Confetti recycle={false} numberOfPieces={1000} />
         <div className="bg-background flex w-full max-w-[620px] flex-grow flex-col gap-4 overflow-y-auto rounded border p-8 shadow">
           <h1 className="text-2xl font-bold">فرم ثبت شد</h1>
@@ -171,14 +207,20 @@ function FormSubmitComponent({
   return (
     <form
       className={cn(
-        'flex h-full w-full items-start border',
+        'flex min-h-screen w-full items-stretch border',
+        type !== 'preview' && 'justify-center p-4 sm:p-6 lg:p-10',
         `nord:bg-red-500 bg-[url(/paper.svg)] dark:bg-[url(/paper-dark.svg)]`,
         theme.theme == 'wood' && 'bg-[url(/paper-dark.svg)]'
       )}
     >
       <div
         key={renderkey}
-        className="bg-background flex w-full flex-grow flex-col overflow-y-auto rounded-none border-none shadow-none"
+        className={cn(
+          'bg-background flex w-full flex-grow flex-col overflow-hidden',
+          type === 'preview'
+            ? 'rounded-none border-none shadow-none'
+            : 'max-w-4xl rounded-none border-none shadow-none sm:rounded-2xl sm:border sm:shadow-xl'
+        )}
       >
         {type !== 'preview' && pages.length > 1 && (
           <div className="flex items-center justify-center gap-2 border-b p-3">
@@ -196,8 +238,13 @@ function FormSubmitComponent({
           </div>
         )}
 
-        <div className="flex w-full flex-grow flex-col items-center justify-center overflow-y-auto">
-          <div className="bg-background w-full overflow-y-auto p-2">
+        <div className="flex w-full flex-1 flex-col items-center justify-center overflow-y-auto">
+          <div
+            className={cn(
+              'bg-background w-full flex-1 overflow-y-auto',
+              type === 'preview' ? 'p-2' : 'p-4 sm:p-6 lg:p-8'
+            )}
+          >
             {visibleElements.map((element) => {
               const FormComponent = FormElements[element.type].formComponent
               return (
@@ -211,24 +258,26 @@ function FormSubmitComponent({
           </div>
         </div>
         {type !== 'preview' && (
-          <Button
-            type="button"
-            disabled={pending}
-            className="flex w-full flex-row items-center justify-center"
-            onClick={() =>
-              startTransition(() => {
-                formController.handleSubmit(submitForm, showValidationErrors)()
-              })
-            }
-          >
-            {!pending && (
-              <div className="flex flex-row gap-2">
-                <TbBrandSublimeText className="h-4 w-4" />
-                ثبت فرم
-              </div>
-            )}
-            {pending && <ImSpinner className="animate-spin" />}
-          </Button>
+          <div className="border-t bg-background/80 px-4 py-4 backdrop-blur sm:px-6">
+            <Button
+              type="button"
+              disabled={pending}
+              className="ml-auto flex h-11 w-full min-w-44 flex-row items-center justify-center gap-2 rounded-md px-5 shadow-sm sm:w-auto"
+              onClick={() =>
+                startTransition(() => {
+                  formController.handleSubmit(submitForm, showValidationErrors)()
+                })
+              }
+            >
+              {!pending && (
+                <>
+                  <TbBrandSublimeText className="h-4 w-4" />
+                  ثبت فرم
+                </>
+              )}
+              {pending && <ImSpinner className="animate-spin" />}
+            </Button>
+          </div>
         )}
       </div>
     </form>
