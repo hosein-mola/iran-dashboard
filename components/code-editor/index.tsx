@@ -557,6 +557,7 @@ export default function CodeEditor({
   const selectedProjectSlugRef = useRef(selectedProjectSlug)
   const loadingNonceRef = useRef(0)
   const hasAppliedInitialLayoutRef = useRef(false)
+  const hasBootstrappedRef = useRef(false)
 
   const isDirty = useMemo(
     () => Object.keys(dirtyPaths).length > 0,
@@ -733,9 +734,14 @@ export default function CodeEditor({
   const ensureEditorInstance = useCallback(() => {
     const monaco = monacoRef.current
     if (!monaco) return
-    if (editorRef.current || !containerRef.current) return
+    if (editorRef.current || !containerRef.current || isEndpointsOpen) return
 
-    editorRef.current = monaco.editor.create(containerRef.current, {
+    const container = containerRef.current
+    const rect = container.getBoundingClientRect()
+    if (!Number.isFinite(rect.width) || !Number.isFinite(rect.height)) return
+    if (rect.width < 2 || rect.height < 2) return
+
+    editorRef.current = monaco.editor.create(container, {
       automaticLayout: true,
       minimap: { enabled: true },
       fontSize: 20,
@@ -751,6 +757,7 @@ export default function CodeEditor({
       quickSuggestions: true,
       suggestOnTriggerCharacters: true,
       snippetSuggestions: 'inline',
+      stopRenderingLineAfter: 2000,
       padding: { top: 8, bottom: 8 },
       glyphMargin: true,
     })
@@ -766,7 +773,7 @@ export default function CodeEditor({
         }
       }
     }
-  }, [ensureModel])
+  }, [ensureModel, isEndpointsOpen])
 
   const createFileAtPath = useCallback(
     (rawPath: string) => {
@@ -1675,9 +1682,11 @@ export default function CodeEditor({
 
   useEffect(() => {
     ensureEditorInstance()
-  }, [ensureEditorInstance, isEndpointsOpen, tabs.length])
+  }, [ensureEditorInstance, isConsoleOpen, isEndpointsOpen, tabs.length])
 
   useEffect(() => {
+    if (hasBootstrappedRef.current) return
+    hasBootstrappedRef.current = true
     // eslint-disable-next-line react-hooks/set-state-in-effect
     void bootstrap()
   }, [bootstrap])
