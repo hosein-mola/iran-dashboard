@@ -42,6 +42,62 @@ import TabBar from "./TabBar";
 import EditorPanel from "./EditorPanel";
 import ContextMenu from "./ContextMenu";
 
+// Monaco needs explicit worker wiring in Next.js/Turbopack, otherwise
+// language features (format/save/diagnostics) can crash with moduleIdToUrl errors.
+if (typeof self !== "undefined") {
+  (self as any).MonacoEnvironment = {
+    getWorker: (_: unknown, label: string) => {
+      switch (label) {
+        case "json":
+          return new Worker(
+            new URL(
+              "monaco-editor/esm/vs/language/json/json.worker.js",
+              import.meta.url,
+            ),
+            { type: "module" },
+          );
+        case "css":
+        case "scss":
+        case "less":
+          return new Worker(
+            new URL(
+              "monaco-editor/esm/vs/language/css/css.worker.js",
+              import.meta.url,
+            ),
+            { type: "module" },
+          );
+        case "html":
+        case "handlebars":
+        case "razor":
+          return new Worker(
+            new URL(
+              "monaco-editor/esm/vs/language/html/html.worker.js",
+              import.meta.url,
+            ),
+            { type: "module" },
+          );
+        case "typescript":
+        case "javascript":
+          return new Worker(
+            new URL(
+              "monaco-editor/esm/vs/language/typescript/ts.worker.js",
+              import.meta.url,
+            ),
+            { type: "module" },
+          );
+        default:
+          return new Worker(
+            new URL(
+              "monaco-editor/esm/vs/editor/editor.worker.js",
+              import.meta.url,
+            ),
+            { type: "module" },
+          );
+      }
+    },
+  };
+}
+
 loader.config({ monaco });
 
 export default function CodeEditor({
@@ -53,6 +109,7 @@ export default function CodeEditor({
     editor: monaco.editor.IStandaloneCodeEditor;
     monaco: typeof monaco;
   } | null>(null);
+  const editorDisposedRef = useRef(false);
   const modelsRef = useRef<Record<FileId, monaco.editor.ITextModel>>({});
   const disposablesRef = useRef<monaco.IDisposable[]>([]);
 
@@ -83,6 +140,8 @@ export default function CodeEditor({
   const [versionsOpen, setVersionsOpen] = useState(false);
   const [versions, setVersions] = useState<WorkspaceVersionSummary[]>([]);
   const [remoteCurrentVersion, setRemoteCurrentVersion] = useState<number>(0);
+  const remoteCurrentVersionRef = useRef(remoteCurrentVersion);
+  remoteCurrentVersionRef.current = remoteCurrentVersion;
   const [isRemoteBusy, setIsRemoteBusy] = useState(false);
   const workspaceSlugRef = useRef(workspaceSlug);
   workspaceSlugRef.current = workspaceSlug;
@@ -238,6 +297,48 @@ export default function CodeEditor({
             console.log("Saved compiled code with keys:", [data.entryPoint]);
             console.log("All stored keys:", Object.keys(stored));
 
+            // Persist bundle for the latest saved remote version (if available).
+            // This lets the server run the exact bundled output by version.
+            void (async () => {
+              try {
+                const slug = workspaceSlugRef.current;
+                const ver = remoteCurrentVersionRef.current;
+                if (!slug || !ver) return;
+                if (!data.code || typeof data.code !== "string") return;
+
+                const res = await fetch(
+                  `/api/process/code-workspaces/${encodeURIComponent(slug)}/versions/${encodeURIComponent(String(ver))}/bundle`,
+                  {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                      entryPath: data.entryPoint,
+                      code: data.code,
+                    }),
+                  },
+                );
+                const json = await res.json().catch(() => null);
+                if (!res.ok) {
+                  console.warn("Failed to store bundle:", res.status, json);
+                  setLogs((prev) => [
+                    ...prev,
+                    `⚠️ Bundle save failed (v${ver}): ${json?.error || `HTTP ${res.status}`}`,
+                  ]);
+                } else {
+                  setLogs((prev) => [
+                    ...prev,
+                    `📦 Stored bundle for v${ver} (${data.entryPoint})`,
+                  ]);
+                }
+              } catch (err: any) {
+                console.warn("Bundle save error:", err);
+                setLogs((prev) => [
+                  ...prev,
+                  `⚠️ Bundle save error: ${err?.message || "unknown error"}`,
+                ]);
+              }
+            })();
+
             // ... rest of build result handling (logs, etc.)
           } catch (err) {
             console.error("Failed to store compiled code:", err);
@@ -276,6 +377,9 @@ export default function CodeEditor({
   // Cleanup Monaco models on unmount
   useEffect(() => {
     return () => {
+      editorDisposedRef.current = true;
+      editorRef.current = null;
+
       // Dispose all models
       Object.values(modelsRef.current).forEach((model) => {
         try {
@@ -564,9 +668,20 @@ export default function CodeEditor({
     editor: monaco.editor.IStandaloneCodeEditor,
     m: typeof monaco,
   ) {
+    editorDisposedRef.current = false;
     editorRef.current = { editor, monaco: m };
     configureMonaco(m);
     m.editor.setTheme("vscode-dark");
+
+    // Track disposal to avoid calling into a dead editor instance.
+    disposablesRef.current.push(
+      editor.onDidDispose(() => {
+        editorDisposedRef.current = true;
+        if (editorRef.current?.editor === editor) {
+          editorRef.current = null;
+        }
+      }),
+    );
 
     // Optimize typing performance
     editor.updateOptions({
@@ -727,6 +842,7 @@ export default function CodeEditor({
     const { editor, monaco: m } = editorRef.current ?? {};
     if (editor && m) {
       try {
+        if (editorDisposedRef.current) return;
         const model = getOrCreateModel(
           fileId,
           node.content ?? "",
@@ -745,6 +861,7 @@ export default function CodeEditor({
   useEffect(() => {
     if (!activeTabId || !editorRef.current) return;
     const { editor, monaco: m } = editorRef.current;
+    if (editorDisposedRef.current) return;
     const node = fs.nodes[activeTabId];
     if (!node || node.type !== "file") return;
 
@@ -755,10 +872,9 @@ export default function CodeEditor({
         langFromName(node.name),
         m,
       );
-      if (editor.getModel() !== model) {
-        editor.setModel(model);
-      }
-      const model2 = editorRef.current.editor.getModel();
+      if (editorDisposedRef.current) return;
+      if (editor.getModel() !== model) editor.setModel(model);
+      const model2 = editor.getModel();
       if (
         model2 &&
         (model2.getLanguageId() === "typescript" ||
@@ -859,10 +975,8 @@ export default function CodeEditor({
     }
   }
 
-  // Replace the existing buildFile function with this:
-  // Update the buildFile function
-  const buildFile = useCallback(
-    async (filePath: string) => {
+  // Build a file using the worker and the latest in-memory FS snapshot.
+  async function buildFile(filePath: string) {
       if (!buildWorkerRef.current) {
         console.warn("Build worker not created");
         setLogs((prev) => [...prev, "❌ Build system not available"]);
@@ -922,9 +1036,7 @@ export default function CodeEditor({
           files: allFiles,
         },
       });
-    },
-    [isBuildReady],
-  );
+  }
 
   // Add this helper function to gather files from a specific FS state
   function gatherAllFilesFromFS(fsState: FileSystem): Record<string, string> {

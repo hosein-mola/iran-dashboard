@@ -89,7 +89,6 @@ export default function EditorPanel({
         </div>
       ) : (
         <Editor
-          key={activeTabId} // Force re-render when tab changes
           onMount={onEditorDidMount}
           onChange={handleChange}
           value={getValue()}

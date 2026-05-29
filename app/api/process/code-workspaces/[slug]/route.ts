@@ -28,22 +28,10 @@ function getUserIdentity(req: Request) {
   return 'local-dev'
 }
 
-async function sha256Hex(input: string) {
-  const bytes = new TextEncoder().encode(input)
-  const digest = await crypto.subtle.digest('SHA-256', bytes)
-  return Array.from(new Uint8Array(digest))
-    .map((b) => b.toString(16).padStart(2, '0'))
-    .join('')
-}
-
-export async function GET(
-  req: Request,
-  { params }: { params: Promise<{ slug: string }> }
-) {
-  const { slug } = await params
-  const userId = getUserIdentity(req)
-  const res = await prisma.codeWorkspace.findUnique({
-    where: { createdByUserId_slug: { createdByUserId: userId, slug } },
+async function findWorkspaceBySlug(slug: string) {
+  return await prisma.codeWorkspace.findFirst({
+    where: { slug },
+    orderBy: { updatedAt: 'desc' },
     include: {
       versions: {
         orderBy: { version: 'desc' },
@@ -60,6 +48,22 @@ export async function GET(
       },
     },
   })
+}
+
+async function sha256Hex(input: string) {
+  const bytes = new TextEncoder().encode(input)
+  const digest = await crypto.subtle.digest('SHA-256', bytes)
+  return Array.from(new Uint8Array(digest))
+    .map((b) => b.toString(16).padStart(2, '0'))
+    .join('')
+}
+
+export async function GET(
+  req: Request,
+  { params }: { params: Promise<{ slug: string }> }
+) {
+  const { slug } = await params
+  const res = await findWorkspaceBySlug(slug)
 
   if (!res) {
     return NextResponse.json(
@@ -106,7 +110,6 @@ export async function POST(
   { params }: { params: Promise<{ slug: string }> }
 ) {
   const { slug } = await params
-  const userId = getUserIdentity(req)
   const body = await req.json().catch(() => null)
   const parsed = saveCodeWorkspaceVersionSchema.safeParse(body)
   if (!parsed.success) {
@@ -129,8 +132,9 @@ export async function POST(
   const message = parsed.data.message?.trim() ?? ''
   const isAutosave = parsed.data.isAutosave ?? false
 
-  let workspace = await prisma.codeWorkspace.findUnique({
-    where: { createdByUserId_slug: { createdByUserId: userId, slug } },
+  let workspace = await prisma.codeWorkspace.findFirst({
+    where: { slug },
+    orderBy: { updatedAt: 'desc' },
   })
 
   if (!workspace) {
@@ -139,8 +143,8 @@ export async function POST(
         slug,
         name: slug,
         language: 'typescript',
-        createdByUserId: userId,
-        updatedByUserId: userId,
+        createdByUserId: 'public',
+        updatedByUserId: 'public',
       },
     })
   }
@@ -191,7 +195,7 @@ export async function POST(
         ip,
         userAgent,
         referer,
-        createdByUserId: userId,
+        createdByUserId: 'public',
       },
       select: {
         id: true,
@@ -208,7 +212,7 @@ export async function POST(
       where: { id: ws.id },
       data: {
         currentVersion: nextVersion,
-        updatedByUserId: userId,
+        updatedByUserId: 'public',
       },
     })
 
