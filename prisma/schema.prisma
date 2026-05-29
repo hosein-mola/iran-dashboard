@@ -225,3 +225,45 @@ model AppUser {
   updatedAt DateTime @updatedAt
   role      Role?    @relation(fields: [roleId], references: [id], onDelete: SetNull)
 }
+
+model CodeWorkspace {
+  id              String                @id @default(cuid())
+  slug            String
+  name            String
+  description     String                @default("")
+  language        String                @default("typescript")
+  currentVersion  Int                   @default(0)
+  active          Boolean               @default(true)
+  createdAt       DateTime              @default(now())
+  updatedAt       DateTime              @updatedAt
+  createdByUserId String
+  updatedByUserId String
+  versions        CodeWorkspaceVersion[]
+
+  @@unique([createdByUserId, slug])
+  @@index([slug])
+}
+
+model CodeWorkspaceVersion {
+  id              String        @id @default(cuid())
+  workspaceId     String
+  version         Int
+  snapshot        String
+  snapshotHash    String
+  message         String        @default("")
+  isAutosave      Boolean       @default(false)
+  clientRequestId String?
+  ip              String?
+  userAgent       String?
+  referer         String?
+  meta            String        @default("{}")
+  sizeBytes       Int           @default(0)
+  createdAt       DateTime      @default(now())
+  createdByUserId String
+  workspace       CodeWorkspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+
+  @@unique([workspaceId, version])
+  @@unique([workspaceId, clientRequestId])
+  @@index([workspaceId, createdAt])
+  @@index([snapshotHash])
+}

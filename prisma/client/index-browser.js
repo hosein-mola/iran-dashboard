@@ -288,6 +288,38 @@ exports.Prisma.AppUserScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.CodeWorkspaceScalarFieldEnum = {
+  id: 'id',
+  slug: 'slug',
+  name: 'name',
+  description: 'description',
+  language: 'language',
+  currentVersion: 'currentVersion',
+  active: 'active',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  createdByUserId: 'createdByUserId',
+  updatedByUserId: 'updatedByUserId'
+};
+
+exports.Prisma.CodeWorkspaceVersionScalarFieldEnum = {
+  id: 'id',
+  workspaceId: 'workspaceId',
+  version: 'version',
+  snapshot: 'snapshot',
+  snapshotHash: 'snapshotHash',
+  message: 'message',
+  isAutosave: 'isAutosave',
+  clientRequestId: 'clientRequestId',
+  ip: 'ip',
+  userAgent: 'userAgent',
+  referer: 'referer',
+  meta: 'meta',
+  sizeBytes: 'sizeBytes',
+  createdAt: 'createdAt',
+  createdByUserId: 'createdByUserId'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -310,7 +342,9 @@ exports.Prisma.ModelName = {
   FormTemplate: 'FormTemplate',
   FormTemplateVersion: 'FormTemplateVersion',
   Role: 'Role',
-  AppUser: 'AppUser'
+  AppUser: 'AppUser',
+  CodeWorkspace: 'CodeWorkspace',
+  CodeWorkspaceVersion: 'CodeWorkspaceVersion'
 };
 
 /**

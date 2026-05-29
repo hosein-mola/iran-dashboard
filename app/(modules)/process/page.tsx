@@ -91,6 +91,9 @@ export default function ProcessPage() {
                 کنید.
               </p>
             </div>
+            <Button asChild variant="outline">
+              <Link href="/process/code-editor">ویرایشگر کد</Link>
+            </Button>
           </div>
           <WorkflowEditor />
         </section>

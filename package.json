@@ -6,11 +6,12 @@
     "dev": "next dev --turbopack -p 3000",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "eslint .",
     "pm2": "pm2 start pm2.json",
     "patch:linux": "cp -rf ./package/* ./node_modules/",
     "patch:windows": "xcopy /s /e /y /i .\\package\\* .\\node_modules\\",
-    "apply-patches": "node -e \"process.platform === 'win32' ? require('child_process').execSync('npm run patch:windows') : require('child_process').execSync('npm run patch:linux')\""
+    "apply-patches": "node -e \"process.platform === 'win32' ? require('child_process').execSync('npm run patch:windows') : require('child_process').execSync('npm run patch:linux')\"",
+    "postinstall": "bun scripts/copy-wasm.cjs"
   },
   "dependencies": {
     "@ag-grid-community/locale": "~33.2.1",
@@ -18,6 +19,7 @@
     "@dnd-kit/modifiers": "^7.0.0",
     "@dnd-kit/sortable": "^8.0.0",
     "@hookform/resolvers": "^3.10.0",
+    "@monaco-editor/react": "^4.7.0",
     "@prisma/client": "^6.19.3",
     "@radix-ui/react-accordion": "^1.2.4",
     "@radix-ui/react-alert-dialog": "^1.1.7",
@@ -56,6 +58,7 @@
     "lucide-react": "^0.484.0",
     "mathjs": "^15.2.0",
     "monaco-editor": "^0.52.2",
+    "esbuild-wasm": "^0.25.10",
     "nanoid": "^3.3.4",
     "next": "^16.2.6",
     "next-persian-fonts": "^1.0.0",

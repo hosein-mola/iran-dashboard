@@ -68,6 +68,16 @@ export type Role = $Result.DefaultSelection<Prisma.$RolePayload>
  * 
  */
 export type AppUser = $Result.DefaultSelection<Prisma.$AppUserPayload>
+/**
+ * Model CodeWorkspace
+ * 
+ */
+export type CodeWorkspace = $Result.DefaultSelection<Prisma.$CodeWorkspacePayload>
+/**
+ * Model CodeWorkspaceVersion
+ * 
+ */
+export type CodeWorkspaceVersion = $Result.DefaultSelection<Prisma.$CodeWorkspaceVersionPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -296,6 +306,26 @@ export class PrismaClient<
     * ```
     */
   get appUser(): Prisma.AppUserDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.codeWorkspace`: Exposes CRUD operations for the **CodeWorkspace** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more CodeWorkspaces
+    * const codeWorkspaces = await prisma.codeWorkspace.findMany()
+    * ```
+    */
+  get codeWorkspace(): Prisma.CodeWorkspaceDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.codeWorkspaceVersion`: Exposes CRUD operations for the **CodeWorkspaceVersion** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more CodeWorkspaceVersions
+    * const codeWorkspaceVersions = await prisma.codeWorkspaceVersion.findMany()
+    * ```
+    */
+  get codeWorkspaceVersion(): Prisma.CodeWorkspaceVersionDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -747,7 +777,9 @@ export namespace Prisma {
     FormTemplate: 'FormTemplate',
     FormTemplateVersion: 'FormTemplateVersion',
     Role: 'Role',
-    AppUser: 'AppUser'
+    AppUser: 'AppUser',
+    CodeWorkspace: 'CodeWorkspace',
+    CodeWorkspaceVersion: 'CodeWorkspaceVersion'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -766,7 +798,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "form" | "formSubmission" | "formVersion" | "formSubmissionValue" | "formEvent" | "formAssignment" | "submodule" | "formTemplate" | "formTemplateVersion" | "role" | "appUser"
+      modelProps: "form" | "formSubmission" | "formVersion" | "formSubmissionValue" | "formEvent" | "formAssignment" | "submodule" | "formTemplate" | "formTemplateVersion" | "role" | "appUser" | "codeWorkspace" | "codeWorkspaceVersion"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1584,6 +1616,154 @@ export namespace Prisma {
           }
         }
       }
+      CodeWorkspace: {
+        payload: Prisma.$CodeWorkspacePayload<ExtArgs>
+        fields: Prisma.CodeWorkspaceFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.CodeWorkspaceFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CodeWorkspacePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.CodeWorkspaceFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CodeWorkspacePayload>
+          }
+          findFirst: {
+            args: Prisma.CodeWorkspaceFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CodeWorkspacePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.CodeWorkspaceFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CodeWorkspacePayload>
+          }
+          findMany: {
+            args: Prisma.CodeWorkspaceFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CodeWorkspacePayload>[]
+          }
+          create: {
+            args: Prisma.CodeWorkspaceCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CodeWorkspacePayload>
+          }
+          createMany: {
+            args: Prisma.CodeWorkspaceCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.CodeWorkspaceCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CodeWorkspacePayload>[]
+          }
+          delete: {
+            args: Prisma.CodeWorkspaceDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CodeWorkspacePayload>
+          }
+          update: {
+            args: Prisma.CodeWorkspaceUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CodeWorkspacePayload>
+          }
+          deleteMany: {
+            args: Prisma.CodeWorkspaceDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.CodeWorkspaceUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.CodeWorkspaceUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CodeWorkspacePayload>[]
+          }
+          upsert: {
+            args: Prisma.CodeWorkspaceUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CodeWorkspacePayload>
+          }
+          aggregate: {
+            args: Prisma.CodeWorkspaceAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateCodeWorkspace>
+          }
+          groupBy: {
+            args: Prisma.CodeWorkspaceGroupByArgs<ExtArgs>
+            result: $Utils.Optional<CodeWorkspaceGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.CodeWorkspaceCountArgs<ExtArgs>
+            result: $Utils.Optional<CodeWorkspaceCountAggregateOutputType> | number
+          }
+        }
+      }
+      CodeWorkspaceVersion: {
+        payload: Prisma.$CodeWorkspaceVersionPayload<ExtArgs>
+        fields: Prisma.CodeWorkspaceVersionFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.CodeWorkspaceVersionFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CodeWorkspaceVersionPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.CodeWorkspaceVersionFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CodeWorkspaceVersionPayload>
+          }
+          findFirst: {
+            args: Prisma.CodeWorkspaceVersionFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CodeWorkspaceVersionPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.CodeWorkspaceVersionFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CodeWorkspaceVersionPayload>
+          }
+          findMany: {
+            args: Prisma.CodeWorkspaceVersionFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CodeWorkspaceVersionPayload>[]
+          }
+          create: {
+            args: Prisma.CodeWorkspaceVersionCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CodeWorkspaceVersionPayload>
+          }
+          createMany: {
+            args: Prisma.CodeWorkspaceVersionCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.CodeWorkspaceVersionCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CodeWorkspaceVersionPayload>[]
+          }
+          delete: {
+            args: Prisma.CodeWorkspaceVersionDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CodeWorkspaceVersionPayload>
+          }
+          update: {
+            args: Prisma.CodeWorkspaceVersionUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CodeWorkspaceVersionPayload>
+          }
+          deleteMany: {
+            args: Prisma.CodeWorkspaceVersionDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.CodeWorkspaceVersionUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.CodeWorkspaceVersionUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CodeWorkspaceVersionPayload>[]
+          }
+          upsert: {
+            args: Prisma.CodeWorkspaceVersionUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CodeWorkspaceVersionPayload>
+          }
+          aggregate: {
+            args: Prisma.CodeWorkspaceVersionAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateCodeWorkspaceVersion>
+          }
+          groupBy: {
+            args: Prisma.CodeWorkspaceVersionGroupByArgs<ExtArgs>
+            result: $Utils.Optional<CodeWorkspaceVersionGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.CodeWorkspaceVersionCountArgs<ExtArgs>
+            result: $Utils.Optional<CodeWorkspaceVersionCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1691,6 +1871,8 @@ export namespace Prisma {
     formTemplateVersion?: FormTemplateVersionOmit
     role?: RoleOmit
     appUser?: AppUserOmit
+    codeWorkspace?: CodeWorkspaceOmit
+    codeWorkspaceVersion?: CodeWorkspaceVersionOmit
   }
 
   /* Types for Logging */
@@ -2048,6 +2230,37 @@ export namespace Prisma {
    */
   export type RoleCountOutputTypeCountSubmissionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: FormSubmissionWhereInput
+  }
+
+
+  /**
+   * Count Type CodeWorkspaceCountOutputType
+   */
+
+  export type CodeWorkspaceCountOutputType = {
+    versions: number
+  }
+
+  export type CodeWorkspaceCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    versions?: boolean | CodeWorkspaceCountOutputTypeCountVersionsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * CodeWorkspaceCountOutputType without action
+   */
+  export type CodeWorkspaceCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CodeWorkspaceCountOutputType
+     */
+    select?: CodeWorkspaceCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * CodeWorkspaceCountOutputType without action
+   */
+  export type CodeWorkspaceCountOutputTypeCountVersionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CodeWorkspaceVersionWhereInput
   }
 
 
@@ -15909,6 +16122,2410 @@ export namespace Prisma {
 
 
   /**
+   * Model CodeWorkspace
+   */
+
+  export type AggregateCodeWorkspace = {
+    _count: CodeWorkspaceCountAggregateOutputType | null
+    _avg: CodeWorkspaceAvgAggregateOutputType | null
+    _sum: CodeWorkspaceSumAggregateOutputType | null
+    _min: CodeWorkspaceMinAggregateOutputType | null
+    _max: CodeWorkspaceMaxAggregateOutputType | null
+  }
+
+  export type CodeWorkspaceAvgAggregateOutputType = {
+    currentVersion: number | null
+  }
+
+  export type CodeWorkspaceSumAggregateOutputType = {
+    currentVersion: number | null
+  }
+
+  export type CodeWorkspaceMinAggregateOutputType = {
+    id: string | null
+    slug: string | null
+    name: string | null
+    description: string | null
+    language: string | null
+    currentVersion: number | null
+    active: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    createdByUserId: string | null
+    updatedByUserId: string | null
+  }
+
+  export type CodeWorkspaceMaxAggregateOutputType = {
+    id: string | null
+    slug: string | null
+    name: string | null
+    description: string | null
+    language: string | null
+    currentVersion: number | null
+    active: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    createdByUserId: string | null
+    updatedByUserId: string | null
+  }
+
+  export type CodeWorkspaceCountAggregateOutputType = {
+    id: number
+    slug: number
+    name: number
+    description: number
+    language: number
+    currentVersion: number
+    active: number
+    createdAt: number
+    updatedAt: number
+    createdByUserId: number
+    updatedByUserId: number
+    _all: number
+  }
+
+
+  export type CodeWorkspaceAvgAggregateInputType = {
+    currentVersion?: true
+  }
+
+  export type CodeWorkspaceSumAggregateInputType = {
+    currentVersion?: true
+  }
+
+  export type CodeWorkspaceMinAggregateInputType = {
+    id?: true
+    slug?: true
+    name?: true
+    description?: true
+    language?: true
+    currentVersion?: true
+    active?: true
+    createdAt?: true
+    updatedAt?: true
+    createdByUserId?: true
+    updatedByUserId?: true
+  }
+
+  export type CodeWorkspaceMaxAggregateInputType = {
+    id?: true
+    slug?: true
+    name?: true
+    description?: true
+    language?: true
+    currentVersion?: true
+    active?: true
+    createdAt?: true
+    updatedAt?: true
+    createdByUserId?: true
+    updatedByUserId?: true
+  }
+
+  export type CodeWorkspaceCountAggregateInputType = {
+    id?: true
+    slug?: true
+    name?: true
+    description?: true
+    language?: true
+    currentVersion?: true
+    active?: true
+    createdAt?: true
+    updatedAt?: true
+    createdByUserId?: true
+    updatedByUserId?: true
+    _all?: true
+  }
+
+  export type CodeWorkspaceAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which CodeWorkspace to aggregate.
+     */
+    where?: CodeWorkspaceWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CodeWorkspaces to fetch.
+     */
+    orderBy?: CodeWorkspaceOrderByWithRelationInput | CodeWorkspaceOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: CodeWorkspaceWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CodeWorkspaces from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CodeWorkspaces.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned CodeWorkspaces
+    **/
+    _count?: true | CodeWorkspaceCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: CodeWorkspaceAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: CodeWorkspaceSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: CodeWorkspaceMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: CodeWorkspaceMaxAggregateInputType
+  }
+
+  export type GetCodeWorkspaceAggregateType<T extends CodeWorkspaceAggregateArgs> = {
+        [P in keyof T & keyof AggregateCodeWorkspace]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateCodeWorkspace[P]>
+      : GetScalarType<T[P], AggregateCodeWorkspace[P]>
+  }
+
+
+
+
+  export type CodeWorkspaceGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CodeWorkspaceWhereInput
+    orderBy?: CodeWorkspaceOrderByWithAggregationInput | CodeWorkspaceOrderByWithAggregationInput[]
+    by: CodeWorkspaceScalarFieldEnum[] | CodeWorkspaceScalarFieldEnum
+    having?: CodeWorkspaceScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: CodeWorkspaceCountAggregateInputType | true
+    _avg?: CodeWorkspaceAvgAggregateInputType
+    _sum?: CodeWorkspaceSumAggregateInputType
+    _min?: CodeWorkspaceMinAggregateInputType
+    _max?: CodeWorkspaceMaxAggregateInputType
+  }
+
+  export type CodeWorkspaceGroupByOutputType = {
+    id: string
+    slug: string
+    name: string
+    description: string
+    language: string
+    currentVersion: number
+    active: boolean
+    createdAt: Date
+    updatedAt: Date
+    createdByUserId: string
+    updatedByUserId: string
+    _count: CodeWorkspaceCountAggregateOutputType | null
+    _avg: CodeWorkspaceAvgAggregateOutputType | null
+    _sum: CodeWorkspaceSumAggregateOutputType | null
+    _min: CodeWorkspaceMinAggregateOutputType | null
+    _max: CodeWorkspaceMaxAggregateOutputType | null
+  }
+
+  type GetCodeWorkspaceGroupByPayload<T extends CodeWorkspaceGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<CodeWorkspaceGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof CodeWorkspaceGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], CodeWorkspaceGroupByOutputType[P]>
+            : GetScalarType<T[P], CodeWorkspaceGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type CodeWorkspaceSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    slug?: boolean
+    name?: boolean
+    description?: boolean
+    language?: boolean
+    currentVersion?: boolean
+    active?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    createdByUserId?: boolean
+    updatedByUserId?: boolean
+    versions?: boolean | CodeWorkspace$versionsArgs<ExtArgs>
+    _count?: boolean | CodeWorkspaceCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["codeWorkspace"]>
+
+  export type CodeWorkspaceSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    slug?: boolean
+    name?: boolean
+    description?: boolean
+    language?: boolean
+    currentVersion?: boolean
+    active?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    createdByUserId?: boolean
+    updatedByUserId?: boolean
+  }, ExtArgs["result"]["codeWorkspace"]>
+
+  export type CodeWorkspaceSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    slug?: boolean
+    name?: boolean
+    description?: boolean
+    language?: boolean
+    currentVersion?: boolean
+    active?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    createdByUserId?: boolean
+    updatedByUserId?: boolean
+  }, ExtArgs["result"]["codeWorkspace"]>
+
+  export type CodeWorkspaceSelectScalar = {
+    id?: boolean
+    slug?: boolean
+    name?: boolean
+    description?: boolean
+    language?: boolean
+    currentVersion?: boolean
+    active?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    createdByUserId?: boolean
+    updatedByUserId?: boolean
+  }
+
+  export type CodeWorkspaceOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "slug" | "name" | "description" | "language" | "currentVersion" | "active" | "createdAt" | "updatedAt" | "createdByUserId" | "updatedByUserId", ExtArgs["result"]["codeWorkspace"]>
+  export type CodeWorkspaceInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    versions?: boolean | CodeWorkspace$versionsArgs<ExtArgs>
+    _count?: boolean | CodeWorkspaceCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type CodeWorkspaceIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type CodeWorkspaceIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $CodeWorkspacePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "CodeWorkspace"
+    objects: {
+      versions: Prisma.$CodeWorkspaceVersionPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      slug: string
+      name: string
+      description: string
+      language: string
+      currentVersion: number
+      active: boolean
+      createdAt: Date
+      updatedAt: Date
+      createdByUserId: string
+      updatedByUserId: string
+    }, ExtArgs["result"]["codeWorkspace"]>
+    composites: {}
+  }
+
+  type CodeWorkspaceGetPayload<S extends boolean | null | undefined | CodeWorkspaceDefaultArgs> = $Result.GetResult<Prisma.$CodeWorkspacePayload, S>
+
+  type CodeWorkspaceCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<CodeWorkspaceFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: CodeWorkspaceCountAggregateInputType | true
+    }
+
+  export interface CodeWorkspaceDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['CodeWorkspace'], meta: { name: 'CodeWorkspace' } }
+    /**
+     * Find zero or one CodeWorkspace that matches the filter.
+     * @param {CodeWorkspaceFindUniqueArgs} args - Arguments to find a CodeWorkspace
+     * @example
+     * // Get one CodeWorkspace
+     * const codeWorkspace = await prisma.codeWorkspace.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends CodeWorkspaceFindUniqueArgs>(args: SelectSubset<T, CodeWorkspaceFindUniqueArgs<ExtArgs>>): Prisma__CodeWorkspaceClient<$Result.GetResult<Prisma.$CodeWorkspacePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one CodeWorkspace that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {CodeWorkspaceFindUniqueOrThrowArgs} args - Arguments to find a CodeWorkspace
+     * @example
+     * // Get one CodeWorkspace
+     * const codeWorkspace = await prisma.codeWorkspace.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends CodeWorkspaceFindUniqueOrThrowArgs>(args: SelectSubset<T, CodeWorkspaceFindUniqueOrThrowArgs<ExtArgs>>): Prisma__CodeWorkspaceClient<$Result.GetResult<Prisma.$CodeWorkspacePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first CodeWorkspace that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CodeWorkspaceFindFirstArgs} args - Arguments to find a CodeWorkspace
+     * @example
+     * // Get one CodeWorkspace
+     * const codeWorkspace = await prisma.codeWorkspace.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends CodeWorkspaceFindFirstArgs>(args?: SelectSubset<T, CodeWorkspaceFindFirstArgs<ExtArgs>>): Prisma__CodeWorkspaceClient<$Result.GetResult<Prisma.$CodeWorkspacePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first CodeWorkspace that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CodeWorkspaceFindFirstOrThrowArgs} args - Arguments to find a CodeWorkspace
+     * @example
+     * // Get one CodeWorkspace
+     * const codeWorkspace = await prisma.codeWorkspace.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends CodeWorkspaceFindFirstOrThrowArgs>(args?: SelectSubset<T, CodeWorkspaceFindFirstOrThrowArgs<ExtArgs>>): Prisma__CodeWorkspaceClient<$Result.GetResult<Prisma.$CodeWorkspacePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more CodeWorkspaces that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CodeWorkspaceFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all CodeWorkspaces
+     * const codeWorkspaces = await prisma.codeWorkspace.findMany()
+     * 
+     * // Get first 10 CodeWorkspaces
+     * const codeWorkspaces = await prisma.codeWorkspace.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const codeWorkspaceWithIdOnly = await prisma.codeWorkspace.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends CodeWorkspaceFindManyArgs>(args?: SelectSubset<T, CodeWorkspaceFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CodeWorkspacePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a CodeWorkspace.
+     * @param {CodeWorkspaceCreateArgs} args - Arguments to create a CodeWorkspace.
+     * @example
+     * // Create one CodeWorkspace
+     * const CodeWorkspace = await prisma.codeWorkspace.create({
+     *   data: {
+     *     // ... data to create a CodeWorkspace
+     *   }
+     * })
+     * 
+     */
+    create<T extends CodeWorkspaceCreateArgs>(args: SelectSubset<T, CodeWorkspaceCreateArgs<ExtArgs>>): Prisma__CodeWorkspaceClient<$Result.GetResult<Prisma.$CodeWorkspacePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many CodeWorkspaces.
+     * @param {CodeWorkspaceCreateManyArgs} args - Arguments to create many CodeWorkspaces.
+     * @example
+     * // Create many CodeWorkspaces
+     * const codeWorkspace = await prisma.codeWorkspace.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends CodeWorkspaceCreateManyArgs>(args?: SelectSubset<T, CodeWorkspaceCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many CodeWorkspaces and returns the data saved in the database.
+     * @param {CodeWorkspaceCreateManyAndReturnArgs} args - Arguments to create many CodeWorkspaces.
+     * @example
+     * // Create many CodeWorkspaces
+     * const codeWorkspace = await prisma.codeWorkspace.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many CodeWorkspaces and only return the `id`
+     * const codeWorkspaceWithIdOnly = await prisma.codeWorkspace.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends CodeWorkspaceCreateManyAndReturnArgs>(args?: SelectSubset<T, CodeWorkspaceCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CodeWorkspacePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a CodeWorkspace.
+     * @param {CodeWorkspaceDeleteArgs} args - Arguments to delete one CodeWorkspace.
+     * @example
+     * // Delete one CodeWorkspace
+     * const CodeWorkspace = await prisma.codeWorkspace.delete({
+     *   where: {
+     *     // ... filter to delete one CodeWorkspace
+     *   }
+     * })
+     * 
+     */
+    delete<T extends CodeWorkspaceDeleteArgs>(args: SelectSubset<T, CodeWorkspaceDeleteArgs<ExtArgs>>): Prisma__CodeWorkspaceClient<$Result.GetResult<Prisma.$CodeWorkspacePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one CodeWorkspace.
+     * @param {CodeWorkspaceUpdateArgs} args - Arguments to update one CodeWorkspace.
+     * @example
+     * // Update one CodeWorkspace
+     * const codeWorkspace = await prisma.codeWorkspace.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends CodeWorkspaceUpdateArgs>(args: SelectSubset<T, CodeWorkspaceUpdateArgs<ExtArgs>>): Prisma__CodeWorkspaceClient<$Result.GetResult<Prisma.$CodeWorkspacePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more CodeWorkspaces.
+     * @param {CodeWorkspaceDeleteManyArgs} args - Arguments to filter CodeWorkspaces to delete.
+     * @example
+     * // Delete a few CodeWorkspaces
+     * const { count } = await prisma.codeWorkspace.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends CodeWorkspaceDeleteManyArgs>(args?: SelectSubset<T, CodeWorkspaceDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more CodeWorkspaces.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CodeWorkspaceUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many CodeWorkspaces
+     * const codeWorkspace = await prisma.codeWorkspace.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends CodeWorkspaceUpdateManyArgs>(args: SelectSubset<T, CodeWorkspaceUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more CodeWorkspaces and returns the data updated in the database.
+     * @param {CodeWorkspaceUpdateManyAndReturnArgs} args - Arguments to update many CodeWorkspaces.
+     * @example
+     * // Update many CodeWorkspaces
+     * const codeWorkspace = await prisma.codeWorkspace.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more CodeWorkspaces and only return the `id`
+     * const codeWorkspaceWithIdOnly = await prisma.codeWorkspace.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends CodeWorkspaceUpdateManyAndReturnArgs>(args: SelectSubset<T, CodeWorkspaceUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CodeWorkspacePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one CodeWorkspace.
+     * @param {CodeWorkspaceUpsertArgs} args - Arguments to update or create a CodeWorkspace.
+     * @example
+     * // Update or create a CodeWorkspace
+     * const codeWorkspace = await prisma.codeWorkspace.upsert({
+     *   create: {
+     *     // ... data to create a CodeWorkspace
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the CodeWorkspace we want to update
+     *   }
+     * })
+     */
+    upsert<T extends CodeWorkspaceUpsertArgs>(args: SelectSubset<T, CodeWorkspaceUpsertArgs<ExtArgs>>): Prisma__CodeWorkspaceClient<$Result.GetResult<Prisma.$CodeWorkspacePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of CodeWorkspaces.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CodeWorkspaceCountArgs} args - Arguments to filter CodeWorkspaces to count.
+     * @example
+     * // Count the number of CodeWorkspaces
+     * const count = await prisma.codeWorkspace.count({
+     *   where: {
+     *     // ... the filter for the CodeWorkspaces we want to count
+     *   }
+     * })
+    **/
+    count<T extends CodeWorkspaceCountArgs>(
+      args?: Subset<T, CodeWorkspaceCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], CodeWorkspaceCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a CodeWorkspace.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CodeWorkspaceAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends CodeWorkspaceAggregateArgs>(args: Subset<T, CodeWorkspaceAggregateArgs>): Prisma.PrismaPromise<GetCodeWorkspaceAggregateType<T>>
+
+    /**
+     * Group by CodeWorkspace.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CodeWorkspaceGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends CodeWorkspaceGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: CodeWorkspaceGroupByArgs['orderBy'] }
+        : { orderBy?: CodeWorkspaceGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, CodeWorkspaceGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetCodeWorkspaceGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the CodeWorkspace model
+   */
+  readonly fields: CodeWorkspaceFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for CodeWorkspace.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__CodeWorkspaceClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    versions<T extends CodeWorkspace$versionsArgs<ExtArgs> = {}>(args?: Subset<T, CodeWorkspace$versionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CodeWorkspaceVersionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the CodeWorkspace model
+   */
+  interface CodeWorkspaceFieldRefs {
+    readonly id: FieldRef<"CodeWorkspace", 'String'>
+    readonly slug: FieldRef<"CodeWorkspace", 'String'>
+    readonly name: FieldRef<"CodeWorkspace", 'String'>
+    readonly description: FieldRef<"CodeWorkspace", 'String'>
+    readonly language: FieldRef<"CodeWorkspace", 'String'>
+    readonly currentVersion: FieldRef<"CodeWorkspace", 'Int'>
+    readonly active: FieldRef<"CodeWorkspace", 'Boolean'>
+    readonly createdAt: FieldRef<"CodeWorkspace", 'DateTime'>
+    readonly updatedAt: FieldRef<"CodeWorkspace", 'DateTime'>
+    readonly createdByUserId: FieldRef<"CodeWorkspace", 'String'>
+    readonly updatedByUserId: FieldRef<"CodeWorkspace", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * CodeWorkspace findUnique
+   */
+  export type CodeWorkspaceFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CodeWorkspace
+     */
+    select?: CodeWorkspaceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CodeWorkspace
+     */
+    omit?: CodeWorkspaceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CodeWorkspaceInclude<ExtArgs> | null
+    /**
+     * Filter, which CodeWorkspace to fetch.
+     */
+    where: CodeWorkspaceWhereUniqueInput
+  }
+
+  /**
+   * CodeWorkspace findUniqueOrThrow
+   */
+  export type CodeWorkspaceFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CodeWorkspace
+     */
+    select?: CodeWorkspaceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CodeWorkspace
+     */
+    omit?: CodeWorkspaceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CodeWorkspaceInclude<ExtArgs> | null
+    /**
+     * Filter, which CodeWorkspace to fetch.
+     */
+    where: CodeWorkspaceWhereUniqueInput
+  }
+
+  /**
+   * CodeWorkspace findFirst
+   */
+  export type CodeWorkspaceFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CodeWorkspace
+     */
+    select?: CodeWorkspaceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CodeWorkspace
+     */
+    omit?: CodeWorkspaceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CodeWorkspaceInclude<ExtArgs> | null
+    /**
+     * Filter, which CodeWorkspace to fetch.
+     */
+    where?: CodeWorkspaceWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CodeWorkspaces to fetch.
+     */
+    orderBy?: CodeWorkspaceOrderByWithRelationInput | CodeWorkspaceOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for CodeWorkspaces.
+     */
+    cursor?: CodeWorkspaceWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CodeWorkspaces from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CodeWorkspaces.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CodeWorkspaces.
+     */
+    distinct?: CodeWorkspaceScalarFieldEnum | CodeWorkspaceScalarFieldEnum[]
+  }
+
+  /**
+   * CodeWorkspace findFirstOrThrow
+   */
+  export type CodeWorkspaceFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CodeWorkspace
+     */
+    select?: CodeWorkspaceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CodeWorkspace
+     */
+    omit?: CodeWorkspaceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CodeWorkspaceInclude<ExtArgs> | null
+    /**
+     * Filter, which CodeWorkspace to fetch.
+     */
+    where?: CodeWorkspaceWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CodeWorkspaces to fetch.
+     */
+    orderBy?: CodeWorkspaceOrderByWithRelationInput | CodeWorkspaceOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for CodeWorkspaces.
+     */
+    cursor?: CodeWorkspaceWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CodeWorkspaces from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CodeWorkspaces.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CodeWorkspaces.
+     */
+    distinct?: CodeWorkspaceScalarFieldEnum | CodeWorkspaceScalarFieldEnum[]
+  }
+
+  /**
+   * CodeWorkspace findMany
+   */
+  export type CodeWorkspaceFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CodeWorkspace
+     */
+    select?: CodeWorkspaceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CodeWorkspace
+     */
+    omit?: CodeWorkspaceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CodeWorkspaceInclude<ExtArgs> | null
+    /**
+     * Filter, which CodeWorkspaces to fetch.
+     */
+    where?: CodeWorkspaceWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CodeWorkspaces to fetch.
+     */
+    orderBy?: CodeWorkspaceOrderByWithRelationInput | CodeWorkspaceOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing CodeWorkspaces.
+     */
+    cursor?: CodeWorkspaceWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CodeWorkspaces from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CodeWorkspaces.
+     */
+    skip?: number
+    distinct?: CodeWorkspaceScalarFieldEnum | CodeWorkspaceScalarFieldEnum[]
+  }
+
+  /**
+   * CodeWorkspace create
+   */
+  export type CodeWorkspaceCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CodeWorkspace
+     */
+    select?: CodeWorkspaceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CodeWorkspace
+     */
+    omit?: CodeWorkspaceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CodeWorkspaceInclude<ExtArgs> | null
+    /**
+     * The data needed to create a CodeWorkspace.
+     */
+    data: XOR<CodeWorkspaceCreateInput, CodeWorkspaceUncheckedCreateInput>
+  }
+
+  /**
+   * CodeWorkspace createMany
+   */
+  export type CodeWorkspaceCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many CodeWorkspaces.
+     */
+    data: CodeWorkspaceCreateManyInput | CodeWorkspaceCreateManyInput[]
+  }
+
+  /**
+   * CodeWorkspace createManyAndReturn
+   */
+  export type CodeWorkspaceCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CodeWorkspace
+     */
+    select?: CodeWorkspaceSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the CodeWorkspace
+     */
+    omit?: CodeWorkspaceOmit<ExtArgs> | null
+    /**
+     * The data used to create many CodeWorkspaces.
+     */
+    data: CodeWorkspaceCreateManyInput | CodeWorkspaceCreateManyInput[]
+  }
+
+  /**
+   * CodeWorkspace update
+   */
+  export type CodeWorkspaceUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CodeWorkspace
+     */
+    select?: CodeWorkspaceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CodeWorkspace
+     */
+    omit?: CodeWorkspaceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CodeWorkspaceInclude<ExtArgs> | null
+    /**
+     * The data needed to update a CodeWorkspace.
+     */
+    data: XOR<CodeWorkspaceUpdateInput, CodeWorkspaceUncheckedUpdateInput>
+    /**
+     * Choose, which CodeWorkspace to update.
+     */
+    where: CodeWorkspaceWhereUniqueInput
+  }
+
+  /**
+   * CodeWorkspace updateMany
+   */
+  export type CodeWorkspaceUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update CodeWorkspaces.
+     */
+    data: XOR<CodeWorkspaceUpdateManyMutationInput, CodeWorkspaceUncheckedUpdateManyInput>
+    /**
+     * Filter which CodeWorkspaces to update
+     */
+    where?: CodeWorkspaceWhereInput
+    /**
+     * Limit how many CodeWorkspaces to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * CodeWorkspace updateManyAndReturn
+   */
+  export type CodeWorkspaceUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CodeWorkspace
+     */
+    select?: CodeWorkspaceSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the CodeWorkspace
+     */
+    omit?: CodeWorkspaceOmit<ExtArgs> | null
+    /**
+     * The data used to update CodeWorkspaces.
+     */
+    data: XOR<CodeWorkspaceUpdateManyMutationInput, CodeWorkspaceUncheckedUpdateManyInput>
+    /**
+     * Filter which CodeWorkspaces to update
+     */
+    where?: CodeWorkspaceWhereInput
+    /**
+     * Limit how many CodeWorkspaces to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * CodeWorkspace upsert
+   */
+  export type CodeWorkspaceUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CodeWorkspace
+     */
+    select?: CodeWorkspaceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CodeWorkspace
+     */
+    omit?: CodeWorkspaceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CodeWorkspaceInclude<ExtArgs> | null
+    /**
+     * The filter to search for the CodeWorkspace to update in case it exists.
+     */
+    where: CodeWorkspaceWhereUniqueInput
+    /**
+     * In case the CodeWorkspace found by the `where` argument doesn't exist, create a new CodeWorkspace with this data.
+     */
+    create: XOR<CodeWorkspaceCreateInput, CodeWorkspaceUncheckedCreateInput>
+    /**
+     * In case the CodeWorkspace was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<CodeWorkspaceUpdateInput, CodeWorkspaceUncheckedUpdateInput>
+  }
+
+  /**
+   * CodeWorkspace delete
+   */
+  export type CodeWorkspaceDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CodeWorkspace
+     */
+    select?: CodeWorkspaceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CodeWorkspace
+     */
+    omit?: CodeWorkspaceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CodeWorkspaceInclude<ExtArgs> | null
+    /**
+     * Filter which CodeWorkspace to delete.
+     */
+    where: CodeWorkspaceWhereUniqueInput
+  }
+
+  /**
+   * CodeWorkspace deleteMany
+   */
+  export type CodeWorkspaceDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which CodeWorkspaces to delete
+     */
+    where?: CodeWorkspaceWhereInput
+    /**
+     * Limit how many CodeWorkspaces to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * CodeWorkspace.versions
+   */
+  export type CodeWorkspace$versionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CodeWorkspaceVersion
+     */
+    select?: CodeWorkspaceVersionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CodeWorkspaceVersion
+     */
+    omit?: CodeWorkspaceVersionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CodeWorkspaceVersionInclude<ExtArgs> | null
+    where?: CodeWorkspaceVersionWhereInput
+    orderBy?: CodeWorkspaceVersionOrderByWithRelationInput | CodeWorkspaceVersionOrderByWithRelationInput[]
+    cursor?: CodeWorkspaceVersionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: CodeWorkspaceVersionScalarFieldEnum | CodeWorkspaceVersionScalarFieldEnum[]
+  }
+
+  /**
+   * CodeWorkspace without action
+   */
+  export type CodeWorkspaceDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CodeWorkspace
+     */
+    select?: CodeWorkspaceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CodeWorkspace
+     */
+    omit?: CodeWorkspaceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CodeWorkspaceInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model CodeWorkspaceVersion
+   */
+
+  export type AggregateCodeWorkspaceVersion = {
+    _count: CodeWorkspaceVersionCountAggregateOutputType | null
+    _avg: CodeWorkspaceVersionAvgAggregateOutputType | null
+    _sum: CodeWorkspaceVersionSumAggregateOutputType | null
+    _min: CodeWorkspaceVersionMinAggregateOutputType | null
+    _max: CodeWorkspaceVersionMaxAggregateOutputType | null
+  }
+
+  export type CodeWorkspaceVersionAvgAggregateOutputType = {
+    version: number | null
+    sizeBytes: number | null
+  }
+
+  export type CodeWorkspaceVersionSumAggregateOutputType = {
+    version: number | null
+    sizeBytes: number | null
+  }
+
+  export type CodeWorkspaceVersionMinAggregateOutputType = {
+    id: string | null
+    workspaceId: string | null
+    version: number | null
+    snapshot: string | null
+    snapshotHash: string | null
+    message: string | null
+    isAutosave: boolean | null
+    clientRequestId: string | null
+    ip: string | null
+    userAgent: string | null
+    referer: string | null
+    meta: string | null
+    sizeBytes: number | null
+    createdAt: Date | null
+    createdByUserId: string | null
+  }
+
+  export type CodeWorkspaceVersionMaxAggregateOutputType = {
+    id: string | null
+    workspaceId: string | null
+    version: number | null
+    snapshot: string | null
+    snapshotHash: string | null
+    message: string | null
+    isAutosave: boolean | null
+    clientRequestId: string | null
+    ip: string | null
+    userAgent: string | null
+    referer: string | null
+    meta: string | null
+    sizeBytes: number | null
+    createdAt: Date | null
+    createdByUserId: string | null
+  }
+
+  export type CodeWorkspaceVersionCountAggregateOutputType = {
+    id: number
+    workspaceId: number
+    version: number
+    snapshot: number
+    snapshotHash: number
+    message: number
+    isAutosave: number
+    clientRequestId: number
+    ip: number
+    userAgent: number
+    referer: number
+    meta: number
+    sizeBytes: number
+    createdAt: number
+    createdByUserId: number
+    _all: number
+  }
+
+
+  export type CodeWorkspaceVersionAvgAggregateInputType = {
+    version?: true
+    sizeBytes?: true
+  }
+
+  export type CodeWorkspaceVersionSumAggregateInputType = {
+    version?: true
+    sizeBytes?: true
+  }
+
+  export type CodeWorkspaceVersionMinAggregateInputType = {
+    id?: true
+    workspaceId?: true
+    version?: true
+    snapshot?: true
+    snapshotHash?: true
+    message?: true
+    isAutosave?: true
+    clientRequestId?: true
+    ip?: true
+    userAgent?: true
+    referer?: true
+    meta?: true
+    sizeBytes?: true
+    createdAt?: true
+    createdByUserId?: true
+  }
+
+  export type CodeWorkspaceVersionMaxAggregateInputType = {
+    id?: true
+    workspaceId?: true
+    version?: true
+    snapshot?: true
+    snapshotHash?: true
+    message?: true
+    isAutosave?: true
+    clientRequestId?: true
+    ip?: true
+    userAgent?: true
+    referer?: true
+    meta?: true
+    sizeBytes?: true
+    createdAt?: true
+    createdByUserId?: true
+  }
+
+  export type CodeWorkspaceVersionCountAggregateInputType = {
+    id?: true
+    workspaceId?: true
+    version?: true
+    snapshot?: true
+    snapshotHash?: true
+    message?: true
+    isAutosave?: true
+    clientRequestId?: true
+    ip?: true
+    userAgent?: true
+    referer?: true
+    meta?: true
+    sizeBytes?: true
+    createdAt?: true
+    createdByUserId?: true
+    _all?: true
+  }
+
+  export type CodeWorkspaceVersionAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which CodeWorkspaceVersion to aggregate.
+     */
+    where?: CodeWorkspaceVersionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CodeWorkspaceVersions to fetch.
+     */
+    orderBy?: CodeWorkspaceVersionOrderByWithRelationInput | CodeWorkspaceVersionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: CodeWorkspaceVersionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CodeWorkspaceVersions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CodeWorkspaceVersions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned CodeWorkspaceVersions
+    **/
+    _count?: true | CodeWorkspaceVersionCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: CodeWorkspaceVersionAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: CodeWorkspaceVersionSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: CodeWorkspaceVersionMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: CodeWorkspaceVersionMaxAggregateInputType
+  }
+
+  export type GetCodeWorkspaceVersionAggregateType<T extends CodeWorkspaceVersionAggregateArgs> = {
+        [P in keyof T & keyof AggregateCodeWorkspaceVersion]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateCodeWorkspaceVersion[P]>
+      : GetScalarType<T[P], AggregateCodeWorkspaceVersion[P]>
+  }
+
+
+
+
+  export type CodeWorkspaceVersionGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CodeWorkspaceVersionWhereInput
+    orderBy?: CodeWorkspaceVersionOrderByWithAggregationInput | CodeWorkspaceVersionOrderByWithAggregationInput[]
+    by: CodeWorkspaceVersionScalarFieldEnum[] | CodeWorkspaceVersionScalarFieldEnum
+    having?: CodeWorkspaceVersionScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: CodeWorkspaceVersionCountAggregateInputType | true
+    _avg?: CodeWorkspaceVersionAvgAggregateInputType
+    _sum?: CodeWorkspaceVersionSumAggregateInputType
+    _min?: CodeWorkspaceVersionMinAggregateInputType
+    _max?: CodeWorkspaceVersionMaxAggregateInputType
+  }
+
+  export type CodeWorkspaceVersionGroupByOutputType = {
+    id: string
+    workspaceId: string
+    version: number
+    snapshot: string
+    snapshotHash: string
+    message: string
+    isAutosave: boolean
+    clientRequestId: string | null
+    ip: string | null
+    userAgent: string | null
+    referer: string | null
+    meta: string
+    sizeBytes: number
+    createdAt: Date
+    createdByUserId: string
+    _count: CodeWorkspaceVersionCountAggregateOutputType | null
+    _avg: CodeWorkspaceVersionAvgAggregateOutputType | null
+    _sum: CodeWorkspaceVersionSumAggregateOutputType | null
+    _min: CodeWorkspaceVersionMinAggregateOutputType | null
+    _max: CodeWorkspaceVersionMaxAggregateOutputType | null
+  }
+
+  type GetCodeWorkspaceVersionGroupByPayload<T extends CodeWorkspaceVersionGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<CodeWorkspaceVersionGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof CodeWorkspaceVersionGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], CodeWorkspaceVersionGroupByOutputType[P]>
+            : GetScalarType<T[P], CodeWorkspaceVersionGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type CodeWorkspaceVersionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    workspaceId?: boolean
+    version?: boolean
+    snapshot?: boolean
+    snapshotHash?: boolean
+    message?: boolean
+    isAutosave?: boolean
+    clientRequestId?: boolean
+    ip?: boolean
+    userAgent?: boolean
+    referer?: boolean
+    meta?: boolean
+    sizeBytes?: boolean
+    createdAt?: boolean
+    createdByUserId?: boolean
+    workspace?: boolean | CodeWorkspaceDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["codeWorkspaceVersion"]>
+
+  export type CodeWorkspaceVersionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    workspaceId?: boolean
+    version?: boolean
+    snapshot?: boolean
+    snapshotHash?: boolean
+    message?: boolean
+    isAutosave?: boolean
+    clientRequestId?: boolean
+    ip?: boolean
+    userAgent?: boolean
+    referer?: boolean
+    meta?: boolean
+    sizeBytes?: boolean
+    createdAt?: boolean
+    createdByUserId?: boolean
+    workspace?: boolean | CodeWorkspaceDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["codeWorkspaceVersion"]>
+
+  export type CodeWorkspaceVersionSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    workspaceId?: boolean
+    version?: boolean
+    snapshot?: boolean
+    snapshotHash?: boolean
+    message?: boolean
+    isAutosave?: boolean
+    clientRequestId?: boolean
+    ip?: boolean
+    userAgent?: boolean
+    referer?: boolean
+    meta?: boolean
+    sizeBytes?: boolean
+    createdAt?: boolean
+    createdByUserId?: boolean
+    workspace?: boolean | CodeWorkspaceDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["codeWorkspaceVersion"]>
+
+  export type CodeWorkspaceVersionSelectScalar = {
+    id?: boolean
+    workspaceId?: boolean
+    version?: boolean
+    snapshot?: boolean
+    snapshotHash?: boolean
+    message?: boolean
+    isAutosave?: boolean
+    clientRequestId?: boolean
+    ip?: boolean
+    userAgent?: boolean
+    referer?: boolean
+    meta?: boolean
+    sizeBytes?: boolean
+    createdAt?: boolean
+    createdByUserId?: boolean
+  }
+
+  export type CodeWorkspaceVersionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "workspaceId" | "version" | "snapshot" | "snapshotHash" | "message" | "isAutosave" | "clientRequestId" | "ip" | "userAgent" | "referer" | "meta" | "sizeBytes" | "createdAt" | "createdByUserId", ExtArgs["result"]["codeWorkspaceVersion"]>
+  export type CodeWorkspaceVersionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    workspace?: boolean | CodeWorkspaceDefaultArgs<ExtArgs>
+  }
+  export type CodeWorkspaceVersionIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    workspace?: boolean | CodeWorkspaceDefaultArgs<ExtArgs>
+  }
+  export type CodeWorkspaceVersionIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    workspace?: boolean | CodeWorkspaceDefaultArgs<ExtArgs>
+  }
+
+  export type $CodeWorkspaceVersionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "CodeWorkspaceVersion"
+    objects: {
+      workspace: Prisma.$CodeWorkspacePayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      workspaceId: string
+      version: number
+      snapshot: string
+      snapshotHash: string
+      message: string
+      isAutosave: boolean
+      clientRequestId: string | null
+      ip: string | null
+      userAgent: string | null
+      referer: string | null
+      meta: string
+      sizeBytes: number
+      createdAt: Date
+      createdByUserId: string
+    }, ExtArgs["result"]["codeWorkspaceVersion"]>
+    composites: {}
+  }
+
+  type CodeWorkspaceVersionGetPayload<S extends boolean | null | undefined | CodeWorkspaceVersionDefaultArgs> = $Result.GetResult<Prisma.$CodeWorkspaceVersionPayload, S>
+
+  type CodeWorkspaceVersionCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<CodeWorkspaceVersionFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: CodeWorkspaceVersionCountAggregateInputType | true
+    }
+
+  export interface CodeWorkspaceVersionDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['CodeWorkspaceVersion'], meta: { name: 'CodeWorkspaceVersion' } }
+    /**
+     * Find zero or one CodeWorkspaceVersion that matches the filter.
+     * @param {CodeWorkspaceVersionFindUniqueArgs} args - Arguments to find a CodeWorkspaceVersion
+     * @example
+     * // Get one CodeWorkspaceVersion
+     * const codeWorkspaceVersion = await prisma.codeWorkspaceVersion.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends CodeWorkspaceVersionFindUniqueArgs>(args: SelectSubset<T, CodeWorkspaceVersionFindUniqueArgs<ExtArgs>>): Prisma__CodeWorkspaceVersionClient<$Result.GetResult<Prisma.$CodeWorkspaceVersionPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one CodeWorkspaceVersion that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {CodeWorkspaceVersionFindUniqueOrThrowArgs} args - Arguments to find a CodeWorkspaceVersion
+     * @example
+     * // Get one CodeWorkspaceVersion
+     * const codeWorkspaceVersion = await prisma.codeWorkspaceVersion.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends CodeWorkspaceVersionFindUniqueOrThrowArgs>(args: SelectSubset<T, CodeWorkspaceVersionFindUniqueOrThrowArgs<ExtArgs>>): Prisma__CodeWorkspaceVersionClient<$Result.GetResult<Prisma.$CodeWorkspaceVersionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first CodeWorkspaceVersion that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CodeWorkspaceVersionFindFirstArgs} args - Arguments to find a CodeWorkspaceVersion
+     * @example
+     * // Get one CodeWorkspaceVersion
+     * const codeWorkspaceVersion = await prisma.codeWorkspaceVersion.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends CodeWorkspaceVersionFindFirstArgs>(args?: SelectSubset<T, CodeWorkspaceVersionFindFirstArgs<ExtArgs>>): Prisma__CodeWorkspaceVersionClient<$Result.GetResult<Prisma.$CodeWorkspaceVersionPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first CodeWorkspaceVersion that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CodeWorkspaceVersionFindFirstOrThrowArgs} args - Arguments to find a CodeWorkspaceVersion
+     * @example
+     * // Get one CodeWorkspaceVersion
+     * const codeWorkspaceVersion = await prisma.codeWorkspaceVersion.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends CodeWorkspaceVersionFindFirstOrThrowArgs>(args?: SelectSubset<T, CodeWorkspaceVersionFindFirstOrThrowArgs<ExtArgs>>): Prisma__CodeWorkspaceVersionClient<$Result.GetResult<Prisma.$CodeWorkspaceVersionPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more CodeWorkspaceVersions that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CodeWorkspaceVersionFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all CodeWorkspaceVersions
+     * const codeWorkspaceVersions = await prisma.codeWorkspaceVersion.findMany()
+     * 
+     * // Get first 10 CodeWorkspaceVersions
+     * const codeWorkspaceVersions = await prisma.codeWorkspaceVersion.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const codeWorkspaceVersionWithIdOnly = await prisma.codeWorkspaceVersion.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends CodeWorkspaceVersionFindManyArgs>(args?: SelectSubset<T, CodeWorkspaceVersionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CodeWorkspaceVersionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a CodeWorkspaceVersion.
+     * @param {CodeWorkspaceVersionCreateArgs} args - Arguments to create a CodeWorkspaceVersion.
+     * @example
+     * // Create one CodeWorkspaceVersion
+     * const CodeWorkspaceVersion = await prisma.codeWorkspaceVersion.create({
+     *   data: {
+     *     // ... data to create a CodeWorkspaceVersion
+     *   }
+     * })
+     * 
+     */
+    create<T extends CodeWorkspaceVersionCreateArgs>(args: SelectSubset<T, CodeWorkspaceVersionCreateArgs<ExtArgs>>): Prisma__CodeWorkspaceVersionClient<$Result.GetResult<Prisma.$CodeWorkspaceVersionPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many CodeWorkspaceVersions.
+     * @param {CodeWorkspaceVersionCreateManyArgs} args - Arguments to create many CodeWorkspaceVersions.
+     * @example
+     * // Create many CodeWorkspaceVersions
+     * const codeWorkspaceVersion = await prisma.codeWorkspaceVersion.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends CodeWorkspaceVersionCreateManyArgs>(args?: SelectSubset<T, CodeWorkspaceVersionCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many CodeWorkspaceVersions and returns the data saved in the database.
+     * @param {CodeWorkspaceVersionCreateManyAndReturnArgs} args - Arguments to create many CodeWorkspaceVersions.
+     * @example
+     * // Create many CodeWorkspaceVersions
+     * const codeWorkspaceVersion = await prisma.codeWorkspaceVersion.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many CodeWorkspaceVersions and only return the `id`
+     * const codeWorkspaceVersionWithIdOnly = await prisma.codeWorkspaceVersion.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends CodeWorkspaceVersionCreateManyAndReturnArgs>(args?: SelectSubset<T, CodeWorkspaceVersionCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CodeWorkspaceVersionPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a CodeWorkspaceVersion.
+     * @param {CodeWorkspaceVersionDeleteArgs} args - Arguments to delete one CodeWorkspaceVersion.
+     * @example
+     * // Delete one CodeWorkspaceVersion
+     * const CodeWorkspaceVersion = await prisma.codeWorkspaceVersion.delete({
+     *   where: {
+     *     // ... filter to delete one CodeWorkspaceVersion
+     *   }
+     * })
+     * 
+     */
+    delete<T extends CodeWorkspaceVersionDeleteArgs>(args: SelectSubset<T, CodeWorkspaceVersionDeleteArgs<ExtArgs>>): Prisma__CodeWorkspaceVersionClient<$Result.GetResult<Prisma.$CodeWorkspaceVersionPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one CodeWorkspaceVersion.
+     * @param {CodeWorkspaceVersionUpdateArgs} args - Arguments to update one CodeWorkspaceVersion.
+     * @example
+     * // Update one CodeWorkspaceVersion
+     * const codeWorkspaceVersion = await prisma.codeWorkspaceVersion.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends CodeWorkspaceVersionUpdateArgs>(args: SelectSubset<T, CodeWorkspaceVersionUpdateArgs<ExtArgs>>): Prisma__CodeWorkspaceVersionClient<$Result.GetResult<Prisma.$CodeWorkspaceVersionPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more CodeWorkspaceVersions.
+     * @param {CodeWorkspaceVersionDeleteManyArgs} args - Arguments to filter CodeWorkspaceVersions to delete.
+     * @example
+     * // Delete a few CodeWorkspaceVersions
+     * const { count } = await prisma.codeWorkspaceVersion.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends CodeWorkspaceVersionDeleteManyArgs>(args?: SelectSubset<T, CodeWorkspaceVersionDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more CodeWorkspaceVersions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CodeWorkspaceVersionUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many CodeWorkspaceVersions
+     * const codeWorkspaceVersion = await prisma.codeWorkspaceVersion.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends CodeWorkspaceVersionUpdateManyArgs>(args: SelectSubset<T, CodeWorkspaceVersionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more CodeWorkspaceVersions and returns the data updated in the database.
+     * @param {CodeWorkspaceVersionUpdateManyAndReturnArgs} args - Arguments to update many CodeWorkspaceVersions.
+     * @example
+     * // Update many CodeWorkspaceVersions
+     * const codeWorkspaceVersion = await prisma.codeWorkspaceVersion.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more CodeWorkspaceVersions and only return the `id`
+     * const codeWorkspaceVersionWithIdOnly = await prisma.codeWorkspaceVersion.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends CodeWorkspaceVersionUpdateManyAndReturnArgs>(args: SelectSubset<T, CodeWorkspaceVersionUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CodeWorkspaceVersionPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one CodeWorkspaceVersion.
+     * @param {CodeWorkspaceVersionUpsertArgs} args - Arguments to update or create a CodeWorkspaceVersion.
+     * @example
+     * // Update or create a CodeWorkspaceVersion
+     * const codeWorkspaceVersion = await prisma.codeWorkspaceVersion.upsert({
+     *   create: {
+     *     // ... data to create a CodeWorkspaceVersion
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the CodeWorkspaceVersion we want to update
+     *   }
+     * })
+     */
+    upsert<T extends CodeWorkspaceVersionUpsertArgs>(args: SelectSubset<T, CodeWorkspaceVersionUpsertArgs<ExtArgs>>): Prisma__CodeWorkspaceVersionClient<$Result.GetResult<Prisma.$CodeWorkspaceVersionPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of CodeWorkspaceVersions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CodeWorkspaceVersionCountArgs} args - Arguments to filter CodeWorkspaceVersions to count.
+     * @example
+     * // Count the number of CodeWorkspaceVersions
+     * const count = await prisma.codeWorkspaceVersion.count({
+     *   where: {
+     *     // ... the filter for the CodeWorkspaceVersions we want to count
+     *   }
+     * })
+    **/
+    count<T extends CodeWorkspaceVersionCountArgs>(
+      args?: Subset<T, CodeWorkspaceVersionCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], CodeWorkspaceVersionCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a CodeWorkspaceVersion.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CodeWorkspaceVersionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends CodeWorkspaceVersionAggregateArgs>(args: Subset<T, CodeWorkspaceVersionAggregateArgs>): Prisma.PrismaPromise<GetCodeWorkspaceVersionAggregateType<T>>
+
+    /**
+     * Group by CodeWorkspaceVersion.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CodeWorkspaceVersionGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends CodeWorkspaceVersionGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: CodeWorkspaceVersionGroupByArgs['orderBy'] }
+        : { orderBy?: CodeWorkspaceVersionGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, CodeWorkspaceVersionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetCodeWorkspaceVersionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the CodeWorkspaceVersion model
+   */
+  readonly fields: CodeWorkspaceVersionFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for CodeWorkspaceVersion.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__CodeWorkspaceVersionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    workspace<T extends CodeWorkspaceDefaultArgs<ExtArgs> = {}>(args?: Subset<T, CodeWorkspaceDefaultArgs<ExtArgs>>): Prisma__CodeWorkspaceClient<$Result.GetResult<Prisma.$CodeWorkspacePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the CodeWorkspaceVersion model
+   */
+  interface CodeWorkspaceVersionFieldRefs {
+    readonly id: FieldRef<"CodeWorkspaceVersion", 'String'>
+    readonly workspaceId: FieldRef<"CodeWorkspaceVersion", 'String'>
+    readonly version: FieldRef<"CodeWorkspaceVersion", 'Int'>
+    readonly snapshot: FieldRef<"CodeWorkspaceVersion", 'String'>
+    readonly snapshotHash: FieldRef<"CodeWorkspaceVersion", 'String'>
+    readonly message: FieldRef<"CodeWorkspaceVersion", 'String'>
+    readonly isAutosave: FieldRef<"CodeWorkspaceVersion", 'Boolean'>
+    readonly clientRequestId: FieldRef<"CodeWorkspaceVersion", 'String'>
+    readonly ip: FieldRef<"CodeWorkspaceVersion", 'String'>
+    readonly userAgent: FieldRef<"CodeWorkspaceVersion", 'String'>
+    readonly referer: FieldRef<"CodeWorkspaceVersion", 'String'>
+    readonly meta: FieldRef<"CodeWorkspaceVersion", 'String'>
+    readonly sizeBytes: FieldRef<"CodeWorkspaceVersion", 'Int'>
+    readonly createdAt: FieldRef<"CodeWorkspaceVersion", 'DateTime'>
+    readonly createdByUserId: FieldRef<"CodeWorkspaceVersion", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * CodeWorkspaceVersion findUnique
+   */
+  export type CodeWorkspaceVersionFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CodeWorkspaceVersion
+     */
+    select?: CodeWorkspaceVersionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CodeWorkspaceVersion
+     */
+    omit?: CodeWorkspaceVersionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CodeWorkspaceVersionInclude<ExtArgs> | null
+    /**
+     * Filter, which CodeWorkspaceVersion to fetch.
+     */
+    where: CodeWorkspaceVersionWhereUniqueInput
+  }
+
+  /**
+   * CodeWorkspaceVersion findUniqueOrThrow
+   */
+  export type CodeWorkspaceVersionFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CodeWorkspaceVersion
+     */
+    select?: CodeWorkspaceVersionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CodeWorkspaceVersion
+     */
+    omit?: CodeWorkspaceVersionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CodeWorkspaceVersionInclude<ExtArgs> | null
+    /**
+     * Filter, which CodeWorkspaceVersion to fetch.
+     */
+    where: CodeWorkspaceVersionWhereUniqueInput
+  }
+
+  /**
+   * CodeWorkspaceVersion findFirst
+   */
+  export type CodeWorkspaceVersionFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CodeWorkspaceVersion
+     */
+    select?: CodeWorkspaceVersionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CodeWorkspaceVersion
+     */
+    omit?: CodeWorkspaceVersionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CodeWorkspaceVersionInclude<ExtArgs> | null
+    /**
+     * Filter, which CodeWorkspaceVersion to fetch.
+     */
+    where?: CodeWorkspaceVersionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CodeWorkspaceVersions to fetch.
+     */
+    orderBy?: CodeWorkspaceVersionOrderByWithRelationInput | CodeWorkspaceVersionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for CodeWorkspaceVersions.
+     */
+    cursor?: CodeWorkspaceVersionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CodeWorkspaceVersions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CodeWorkspaceVersions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CodeWorkspaceVersions.
+     */
+    distinct?: CodeWorkspaceVersionScalarFieldEnum | CodeWorkspaceVersionScalarFieldEnum[]
+  }
+
+  /**
+   * CodeWorkspaceVersion findFirstOrThrow
+   */
+  export type CodeWorkspaceVersionFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CodeWorkspaceVersion
+     */
+    select?: CodeWorkspaceVersionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CodeWorkspaceVersion
+     */
+    omit?: CodeWorkspaceVersionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CodeWorkspaceVersionInclude<ExtArgs> | null
+    /**
+     * Filter, which CodeWorkspaceVersion to fetch.
+     */
+    where?: CodeWorkspaceVersionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CodeWorkspaceVersions to fetch.
+     */
+    orderBy?: CodeWorkspaceVersionOrderByWithRelationInput | CodeWorkspaceVersionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for CodeWorkspaceVersions.
+     */
+    cursor?: CodeWorkspaceVersionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CodeWorkspaceVersions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CodeWorkspaceVersions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CodeWorkspaceVersions.
+     */
+    distinct?: CodeWorkspaceVersionScalarFieldEnum | CodeWorkspaceVersionScalarFieldEnum[]
+  }
+
+  /**
+   * CodeWorkspaceVersion findMany
+   */
+  export type CodeWorkspaceVersionFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CodeWorkspaceVersion
+     */
+    select?: CodeWorkspaceVersionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CodeWorkspaceVersion
+     */
+    omit?: CodeWorkspaceVersionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CodeWorkspaceVersionInclude<ExtArgs> | null
+    /**
+     * Filter, which CodeWorkspaceVersions to fetch.
+     */
+    where?: CodeWorkspaceVersionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CodeWorkspaceVersions to fetch.
+     */
+    orderBy?: CodeWorkspaceVersionOrderByWithRelationInput | CodeWorkspaceVersionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing CodeWorkspaceVersions.
+     */
+    cursor?: CodeWorkspaceVersionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CodeWorkspaceVersions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CodeWorkspaceVersions.
+     */
+    skip?: number
+    distinct?: CodeWorkspaceVersionScalarFieldEnum | CodeWorkspaceVersionScalarFieldEnum[]
+  }
+
+  /**
+   * CodeWorkspaceVersion create
+   */
+  export type CodeWorkspaceVersionCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CodeWorkspaceVersion
+     */
+    select?: CodeWorkspaceVersionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CodeWorkspaceVersion
+     */
+    omit?: CodeWorkspaceVersionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CodeWorkspaceVersionInclude<ExtArgs> | null
+    /**
+     * The data needed to create a CodeWorkspaceVersion.
+     */
+    data: XOR<CodeWorkspaceVersionCreateInput, CodeWorkspaceVersionUncheckedCreateInput>
+  }
+
+  /**
+   * CodeWorkspaceVersion createMany
+   */
+  export type CodeWorkspaceVersionCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many CodeWorkspaceVersions.
+     */
+    data: CodeWorkspaceVersionCreateManyInput | CodeWorkspaceVersionCreateManyInput[]
+  }
+
+  /**
+   * CodeWorkspaceVersion createManyAndReturn
+   */
+  export type CodeWorkspaceVersionCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CodeWorkspaceVersion
+     */
+    select?: CodeWorkspaceVersionSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the CodeWorkspaceVersion
+     */
+    omit?: CodeWorkspaceVersionOmit<ExtArgs> | null
+    /**
+     * The data used to create many CodeWorkspaceVersions.
+     */
+    data: CodeWorkspaceVersionCreateManyInput | CodeWorkspaceVersionCreateManyInput[]
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CodeWorkspaceVersionIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * CodeWorkspaceVersion update
+   */
+  export type CodeWorkspaceVersionUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CodeWorkspaceVersion
+     */
+    select?: CodeWorkspaceVersionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CodeWorkspaceVersion
+     */
+    omit?: CodeWorkspaceVersionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CodeWorkspaceVersionInclude<ExtArgs> | null
+    /**
+     * The data needed to update a CodeWorkspaceVersion.
+     */
+    data: XOR<CodeWorkspaceVersionUpdateInput, CodeWorkspaceVersionUncheckedUpdateInput>
+    /**
+     * Choose, which CodeWorkspaceVersion to update.
+     */
+    where: CodeWorkspaceVersionWhereUniqueInput
+  }
+
+  /**
+   * CodeWorkspaceVersion updateMany
+   */
+  export type CodeWorkspaceVersionUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update CodeWorkspaceVersions.
+     */
+    data: XOR<CodeWorkspaceVersionUpdateManyMutationInput, CodeWorkspaceVersionUncheckedUpdateManyInput>
+    /**
+     * Filter which CodeWorkspaceVersions to update
+     */
+    where?: CodeWorkspaceVersionWhereInput
+    /**
+     * Limit how many CodeWorkspaceVersions to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * CodeWorkspaceVersion updateManyAndReturn
+   */
+  export type CodeWorkspaceVersionUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CodeWorkspaceVersion
+     */
+    select?: CodeWorkspaceVersionSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the CodeWorkspaceVersion
+     */
+    omit?: CodeWorkspaceVersionOmit<ExtArgs> | null
+    /**
+     * The data used to update CodeWorkspaceVersions.
+     */
+    data: XOR<CodeWorkspaceVersionUpdateManyMutationInput, CodeWorkspaceVersionUncheckedUpdateManyInput>
+    /**
+     * Filter which CodeWorkspaceVersions to update
+     */
+    where?: CodeWorkspaceVersionWhereInput
+    /**
+     * Limit how many CodeWorkspaceVersions to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CodeWorkspaceVersionIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * CodeWorkspaceVersion upsert
+   */
+  export type CodeWorkspaceVersionUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CodeWorkspaceVersion
+     */
+    select?: CodeWorkspaceVersionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CodeWorkspaceVersion
+     */
+    omit?: CodeWorkspaceVersionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CodeWorkspaceVersionInclude<ExtArgs> | null
+    /**
+     * The filter to search for the CodeWorkspaceVersion to update in case it exists.
+     */
+    where: CodeWorkspaceVersionWhereUniqueInput
+    /**
+     * In case the CodeWorkspaceVersion found by the `where` argument doesn't exist, create a new CodeWorkspaceVersion with this data.
+     */
+    create: XOR<CodeWorkspaceVersionCreateInput, CodeWorkspaceVersionUncheckedCreateInput>
+    /**
+     * In case the CodeWorkspaceVersion was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<CodeWorkspaceVersionUpdateInput, CodeWorkspaceVersionUncheckedUpdateInput>
+  }
+
+  /**
+   * CodeWorkspaceVersion delete
+   */
+  export type CodeWorkspaceVersionDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CodeWorkspaceVersion
+     */
+    select?: CodeWorkspaceVersionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CodeWorkspaceVersion
+     */
+    omit?: CodeWorkspaceVersionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CodeWorkspaceVersionInclude<ExtArgs> | null
+    /**
+     * Filter which CodeWorkspaceVersion to delete.
+     */
+    where: CodeWorkspaceVersionWhereUniqueInput
+  }
+
+  /**
+   * CodeWorkspaceVersion deleteMany
+   */
+  export type CodeWorkspaceVersionDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which CodeWorkspaceVersions to delete
+     */
+    where?: CodeWorkspaceVersionWhereInput
+    /**
+     * Limit how many CodeWorkspaceVersions to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * CodeWorkspaceVersion without action
+   */
+  export type CodeWorkspaceVersionDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CodeWorkspaceVersion
+     */
+    select?: CodeWorkspaceVersionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CodeWorkspaceVersion
+     */
+    omit?: CodeWorkspaceVersionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CodeWorkspaceVersionInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -16120,6 +18737,44 @@ export namespace Prisma {
   };
 
   export type AppUserScalarFieldEnum = (typeof AppUserScalarFieldEnum)[keyof typeof AppUserScalarFieldEnum]
+
+
+  export const CodeWorkspaceScalarFieldEnum: {
+    id: 'id',
+    slug: 'slug',
+    name: 'name',
+    description: 'description',
+    language: 'language',
+    currentVersion: 'currentVersion',
+    active: 'active',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
+    createdByUserId: 'createdByUserId',
+    updatedByUserId: 'updatedByUserId'
+  };
+
+  export type CodeWorkspaceScalarFieldEnum = (typeof CodeWorkspaceScalarFieldEnum)[keyof typeof CodeWorkspaceScalarFieldEnum]
+
+
+  export const CodeWorkspaceVersionScalarFieldEnum: {
+    id: 'id',
+    workspaceId: 'workspaceId',
+    version: 'version',
+    snapshot: 'snapshot',
+    snapshotHash: 'snapshotHash',
+    message: 'message',
+    isAutosave: 'isAutosave',
+    clientRequestId: 'clientRequestId',
+    ip: 'ip',
+    userAgent: 'userAgent',
+    referer: 'referer',
+    meta: 'meta',
+    sizeBytes: 'sizeBytes',
+    createdAt: 'createdAt',
+    createdByUserId: 'createdByUserId'
+  };
+
+  export type CodeWorkspaceVersionScalarFieldEnum = (typeof CodeWorkspaceVersionScalarFieldEnum)[keyof typeof CodeWorkspaceVersionScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -17290,6 +19945,203 @@ export namespace Prisma {
     roleId?: IntNullableWithAggregatesFilter<"AppUser"> | number | null
     createdAt?: DateTimeWithAggregatesFilter<"AppUser"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"AppUser"> | Date | string
+  }
+
+  export type CodeWorkspaceWhereInput = {
+    AND?: CodeWorkspaceWhereInput | CodeWorkspaceWhereInput[]
+    OR?: CodeWorkspaceWhereInput[]
+    NOT?: CodeWorkspaceWhereInput | CodeWorkspaceWhereInput[]
+    id?: StringFilter<"CodeWorkspace"> | string
+    slug?: StringFilter<"CodeWorkspace"> | string
+    name?: StringFilter<"CodeWorkspace"> | string
+    description?: StringFilter<"CodeWorkspace"> | string
+    language?: StringFilter<"CodeWorkspace"> | string
+    currentVersion?: IntFilter<"CodeWorkspace"> | number
+    active?: BoolFilter<"CodeWorkspace"> | boolean
+    createdAt?: DateTimeFilter<"CodeWorkspace"> | Date | string
+    updatedAt?: DateTimeFilter<"CodeWorkspace"> | Date | string
+    createdByUserId?: StringFilter<"CodeWorkspace"> | string
+    updatedByUserId?: StringFilter<"CodeWorkspace"> | string
+    versions?: CodeWorkspaceVersionListRelationFilter
+  }
+
+  export type CodeWorkspaceOrderByWithRelationInput = {
+    id?: SortOrder
+    slug?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    language?: SortOrder
+    currentVersion?: SortOrder
+    active?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    createdByUserId?: SortOrder
+    updatedByUserId?: SortOrder
+    versions?: CodeWorkspaceVersionOrderByRelationAggregateInput
+  }
+
+  export type CodeWorkspaceWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    createdByUserId_slug?: CodeWorkspaceCreatedByUserIdSlugCompoundUniqueInput
+    AND?: CodeWorkspaceWhereInput | CodeWorkspaceWhereInput[]
+    OR?: CodeWorkspaceWhereInput[]
+    NOT?: CodeWorkspaceWhereInput | CodeWorkspaceWhereInput[]
+    slug?: StringFilter<"CodeWorkspace"> | string
+    name?: StringFilter<"CodeWorkspace"> | string
+    description?: StringFilter<"CodeWorkspace"> | string
+    language?: StringFilter<"CodeWorkspace"> | string
+    currentVersion?: IntFilter<"CodeWorkspace"> | number
+    active?: BoolFilter<"CodeWorkspace"> | boolean
+    createdAt?: DateTimeFilter<"CodeWorkspace"> | Date | string
+    updatedAt?: DateTimeFilter<"CodeWorkspace"> | Date | string
+    createdByUserId?: StringFilter<"CodeWorkspace"> | string
+    updatedByUserId?: StringFilter<"CodeWorkspace"> | string
+    versions?: CodeWorkspaceVersionListRelationFilter
+  }, "id" | "createdByUserId_slug">
+
+  export type CodeWorkspaceOrderByWithAggregationInput = {
+    id?: SortOrder
+    slug?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    language?: SortOrder
+    currentVersion?: SortOrder
+    active?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    createdByUserId?: SortOrder
+    updatedByUserId?: SortOrder
+    _count?: CodeWorkspaceCountOrderByAggregateInput
+    _avg?: CodeWorkspaceAvgOrderByAggregateInput
+    _max?: CodeWorkspaceMaxOrderByAggregateInput
+    _min?: CodeWorkspaceMinOrderByAggregateInput
+    _sum?: CodeWorkspaceSumOrderByAggregateInput
+  }
+
+  export type CodeWorkspaceScalarWhereWithAggregatesInput = {
+    AND?: CodeWorkspaceScalarWhereWithAggregatesInput | CodeWorkspaceScalarWhereWithAggregatesInput[]
+    OR?: CodeWorkspaceScalarWhereWithAggregatesInput[]
+    NOT?: CodeWorkspaceScalarWhereWithAggregatesInput | CodeWorkspaceScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"CodeWorkspace"> | string
+    slug?: StringWithAggregatesFilter<"CodeWorkspace"> | string
+    name?: StringWithAggregatesFilter<"CodeWorkspace"> | string
+    description?: StringWithAggregatesFilter<"CodeWorkspace"> | string
+    language?: StringWithAggregatesFilter<"CodeWorkspace"> | string
+    currentVersion?: IntWithAggregatesFilter<"CodeWorkspace"> | number
+    active?: BoolWithAggregatesFilter<"CodeWorkspace"> | boolean
+    createdAt?: DateTimeWithAggregatesFilter<"CodeWorkspace"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"CodeWorkspace"> | Date | string
+    createdByUserId?: StringWithAggregatesFilter<"CodeWorkspace"> | string
+    updatedByUserId?: StringWithAggregatesFilter<"CodeWorkspace"> | string
+  }
+
+  export type CodeWorkspaceVersionWhereInput = {
+    AND?: CodeWorkspaceVersionWhereInput | CodeWorkspaceVersionWhereInput[]
+    OR?: CodeWorkspaceVersionWhereInput[]
+    NOT?: CodeWorkspaceVersionWhereInput | CodeWorkspaceVersionWhereInput[]
+    id?: StringFilter<"CodeWorkspaceVersion"> | string
+    workspaceId?: StringFilter<"CodeWorkspaceVersion"> | string
+    version?: IntFilter<"CodeWorkspaceVersion"> | number
+    snapshot?: StringFilter<"CodeWorkspaceVersion"> | string
+    snapshotHash?: StringFilter<"CodeWorkspaceVersion"> | string
+    message?: StringFilter<"CodeWorkspaceVersion"> | string
+    isAutosave?: BoolFilter<"CodeWorkspaceVersion"> | boolean
+    clientRequestId?: StringNullableFilter<"CodeWorkspaceVersion"> | string | null
+    ip?: StringNullableFilter<"CodeWorkspaceVersion"> | string | null
+    userAgent?: StringNullableFilter<"CodeWorkspaceVersion"> | string | null
+    referer?: StringNullableFilter<"CodeWorkspaceVersion"> | string | null
+    meta?: StringFilter<"CodeWorkspaceVersion"> | string
+    sizeBytes?: IntFilter<"CodeWorkspaceVersion"> | number
+    createdAt?: DateTimeFilter<"CodeWorkspaceVersion"> | Date | string
+    createdByUserId?: StringFilter<"CodeWorkspaceVersion"> | string
+    workspace?: XOR<CodeWorkspaceScalarRelationFilter, CodeWorkspaceWhereInput>
+  }
+
+  export type CodeWorkspaceVersionOrderByWithRelationInput = {
+    id?: SortOrder
+    workspaceId?: SortOrder
+    version?: SortOrder
+    snapshot?: SortOrder
+    snapshotHash?: SortOrder
+    message?: SortOrder
+    isAutosave?: SortOrder
+    clientRequestId?: SortOrderInput | SortOrder
+    ip?: SortOrderInput | SortOrder
+    userAgent?: SortOrderInput | SortOrder
+    referer?: SortOrderInput | SortOrder
+    meta?: SortOrder
+    sizeBytes?: SortOrder
+    createdAt?: SortOrder
+    createdByUserId?: SortOrder
+    workspace?: CodeWorkspaceOrderByWithRelationInput
+  }
+
+  export type CodeWorkspaceVersionWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    workspaceId_version?: CodeWorkspaceVersionWorkspaceIdVersionCompoundUniqueInput
+    workspaceId_clientRequestId?: CodeWorkspaceVersionWorkspaceIdClientRequestIdCompoundUniqueInput
+    AND?: CodeWorkspaceVersionWhereInput | CodeWorkspaceVersionWhereInput[]
+    OR?: CodeWorkspaceVersionWhereInput[]
+    NOT?: CodeWorkspaceVersionWhereInput | CodeWorkspaceVersionWhereInput[]
+    workspaceId?: StringFilter<"CodeWorkspaceVersion"> | string
+    version?: IntFilter<"CodeWorkspaceVersion"> | number
+    snapshot?: StringFilter<"CodeWorkspaceVersion"> | string
+    snapshotHash?: StringFilter<"CodeWorkspaceVersion"> | string
+    message?: StringFilter<"CodeWorkspaceVersion"> | string
+    isAutosave?: BoolFilter<"CodeWorkspaceVersion"> | boolean
+    clientRequestId?: StringNullableFilter<"CodeWorkspaceVersion"> | string | null
+    ip?: StringNullableFilter<"CodeWorkspaceVersion"> | string | null
+    userAgent?: StringNullableFilter<"CodeWorkspaceVersion"> | string | null
+    referer?: StringNullableFilter<"CodeWorkspaceVersion"> | string | null
+    meta?: StringFilter<"CodeWorkspaceVersion"> | string
+    sizeBytes?: IntFilter<"CodeWorkspaceVersion"> | number
+    createdAt?: DateTimeFilter<"CodeWorkspaceVersion"> | Date | string
+    createdByUserId?: StringFilter<"CodeWorkspaceVersion"> | string
+    workspace?: XOR<CodeWorkspaceScalarRelationFilter, CodeWorkspaceWhereInput>
+  }, "id" | "workspaceId_version" | "workspaceId_clientRequestId">
+
+  export type CodeWorkspaceVersionOrderByWithAggregationInput = {
+    id?: SortOrder
+    workspaceId?: SortOrder
+    version?: SortOrder
+    snapshot?: SortOrder
+    snapshotHash?: SortOrder
+    message?: SortOrder
+    isAutosave?: SortOrder
+    clientRequestId?: SortOrderInput | SortOrder
+    ip?: SortOrderInput | SortOrder
+    userAgent?: SortOrderInput | SortOrder
+    referer?: SortOrderInput | SortOrder
+    meta?: SortOrder
+    sizeBytes?: SortOrder
+    createdAt?: SortOrder
+    createdByUserId?: SortOrder
+    _count?: CodeWorkspaceVersionCountOrderByAggregateInput
+    _avg?: CodeWorkspaceVersionAvgOrderByAggregateInput
+    _max?: CodeWorkspaceVersionMaxOrderByAggregateInput
+    _min?: CodeWorkspaceVersionMinOrderByAggregateInput
+    _sum?: CodeWorkspaceVersionSumOrderByAggregateInput
+  }
+
+  export type CodeWorkspaceVersionScalarWhereWithAggregatesInput = {
+    AND?: CodeWorkspaceVersionScalarWhereWithAggregatesInput | CodeWorkspaceVersionScalarWhereWithAggregatesInput[]
+    OR?: CodeWorkspaceVersionScalarWhereWithAggregatesInput[]
+    NOT?: CodeWorkspaceVersionScalarWhereWithAggregatesInput | CodeWorkspaceVersionScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"CodeWorkspaceVersion"> | string
+    workspaceId?: StringWithAggregatesFilter<"CodeWorkspaceVersion"> | string
+    version?: IntWithAggregatesFilter<"CodeWorkspaceVersion"> | number
+    snapshot?: StringWithAggregatesFilter<"CodeWorkspaceVersion"> | string
+    snapshotHash?: StringWithAggregatesFilter<"CodeWorkspaceVersion"> | string
+    message?: StringWithAggregatesFilter<"CodeWorkspaceVersion"> | string
+    isAutosave?: BoolWithAggregatesFilter<"CodeWorkspaceVersion"> | boolean
+    clientRequestId?: StringNullableWithAggregatesFilter<"CodeWorkspaceVersion"> | string | null
+    ip?: StringNullableWithAggregatesFilter<"CodeWorkspaceVersion"> | string | null
+    userAgent?: StringNullableWithAggregatesFilter<"CodeWorkspaceVersion"> | string | null
+    referer?: StringNullableWithAggregatesFilter<"CodeWorkspaceVersion"> | string | null
+    meta?: StringWithAggregatesFilter<"CodeWorkspaceVersion"> | string
+    sizeBytes?: IntWithAggregatesFilter<"CodeWorkspaceVersion"> | number
+    createdAt?: DateTimeWithAggregatesFilter<"CodeWorkspaceVersion"> | Date | string
+    createdByUserId?: StringWithAggregatesFilter<"CodeWorkspaceVersion"> | string
   }
 
   export type FormCreateInput = {
@@ -18503,6 +21355,233 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type CodeWorkspaceCreateInput = {
+    id?: string
+    slug: string
+    name: string
+    description?: string
+    language?: string
+    currentVersion?: number
+    active?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    createdByUserId: string
+    updatedByUserId: string
+    versions?: CodeWorkspaceVersionCreateNestedManyWithoutWorkspaceInput
+  }
+
+  export type CodeWorkspaceUncheckedCreateInput = {
+    id?: string
+    slug: string
+    name: string
+    description?: string
+    language?: string
+    currentVersion?: number
+    active?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    createdByUserId: string
+    updatedByUserId: string
+    versions?: CodeWorkspaceVersionUncheckedCreateNestedManyWithoutWorkspaceInput
+  }
+
+  export type CodeWorkspaceUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    language?: StringFieldUpdateOperationsInput | string
+    currentVersion?: IntFieldUpdateOperationsInput | number
+    active?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdByUserId?: StringFieldUpdateOperationsInput | string
+    updatedByUserId?: StringFieldUpdateOperationsInput | string
+    versions?: CodeWorkspaceVersionUpdateManyWithoutWorkspaceNestedInput
+  }
+
+  export type CodeWorkspaceUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    language?: StringFieldUpdateOperationsInput | string
+    currentVersion?: IntFieldUpdateOperationsInput | number
+    active?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdByUserId?: StringFieldUpdateOperationsInput | string
+    updatedByUserId?: StringFieldUpdateOperationsInput | string
+    versions?: CodeWorkspaceVersionUncheckedUpdateManyWithoutWorkspaceNestedInput
+  }
+
+  export type CodeWorkspaceCreateManyInput = {
+    id?: string
+    slug: string
+    name: string
+    description?: string
+    language?: string
+    currentVersion?: number
+    active?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    createdByUserId: string
+    updatedByUserId: string
+  }
+
+  export type CodeWorkspaceUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    language?: StringFieldUpdateOperationsInput | string
+    currentVersion?: IntFieldUpdateOperationsInput | number
+    active?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdByUserId?: StringFieldUpdateOperationsInput | string
+    updatedByUserId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type CodeWorkspaceUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    language?: StringFieldUpdateOperationsInput | string
+    currentVersion?: IntFieldUpdateOperationsInput | number
+    active?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdByUserId?: StringFieldUpdateOperationsInput | string
+    updatedByUserId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type CodeWorkspaceVersionCreateInput = {
+    id?: string
+    version: number
+    snapshot: string
+    snapshotHash: string
+    message?: string
+    isAutosave?: boolean
+    clientRequestId?: string | null
+    ip?: string | null
+    userAgent?: string | null
+    referer?: string | null
+    meta?: string
+    sizeBytes?: number
+    createdAt?: Date | string
+    createdByUserId: string
+    workspace: CodeWorkspaceCreateNestedOneWithoutVersionsInput
+  }
+
+  export type CodeWorkspaceVersionUncheckedCreateInput = {
+    id?: string
+    workspaceId: string
+    version: number
+    snapshot: string
+    snapshotHash: string
+    message?: string
+    isAutosave?: boolean
+    clientRequestId?: string | null
+    ip?: string | null
+    userAgent?: string | null
+    referer?: string | null
+    meta?: string
+    sizeBytes?: number
+    createdAt?: Date | string
+    createdByUserId: string
+  }
+
+  export type CodeWorkspaceVersionUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    version?: IntFieldUpdateOperationsInput | number
+    snapshot?: StringFieldUpdateOperationsInput | string
+    snapshotHash?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    isAutosave?: BoolFieldUpdateOperationsInput | boolean
+    clientRequestId?: NullableStringFieldUpdateOperationsInput | string | null
+    ip?: NullableStringFieldUpdateOperationsInput | string | null
+    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
+    referer?: NullableStringFieldUpdateOperationsInput | string | null
+    meta?: StringFieldUpdateOperationsInput | string
+    sizeBytes?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdByUserId?: StringFieldUpdateOperationsInput | string
+    workspace?: CodeWorkspaceUpdateOneRequiredWithoutVersionsNestedInput
+  }
+
+  export type CodeWorkspaceVersionUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    workspaceId?: StringFieldUpdateOperationsInput | string
+    version?: IntFieldUpdateOperationsInput | number
+    snapshot?: StringFieldUpdateOperationsInput | string
+    snapshotHash?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    isAutosave?: BoolFieldUpdateOperationsInput | boolean
+    clientRequestId?: NullableStringFieldUpdateOperationsInput | string | null
+    ip?: NullableStringFieldUpdateOperationsInput | string | null
+    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
+    referer?: NullableStringFieldUpdateOperationsInput | string | null
+    meta?: StringFieldUpdateOperationsInput | string
+    sizeBytes?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdByUserId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type CodeWorkspaceVersionCreateManyInput = {
+    id?: string
+    workspaceId: string
+    version: number
+    snapshot: string
+    snapshotHash: string
+    message?: string
+    isAutosave?: boolean
+    clientRequestId?: string | null
+    ip?: string | null
+    userAgent?: string | null
+    referer?: string | null
+    meta?: string
+    sizeBytes?: number
+    createdAt?: Date | string
+    createdByUserId: string
+  }
+
+  export type CodeWorkspaceVersionUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    version?: IntFieldUpdateOperationsInput | number
+    snapshot?: StringFieldUpdateOperationsInput | string
+    snapshotHash?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    isAutosave?: BoolFieldUpdateOperationsInput | boolean
+    clientRequestId?: NullableStringFieldUpdateOperationsInput | string | null
+    ip?: NullableStringFieldUpdateOperationsInput | string | null
+    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
+    referer?: NullableStringFieldUpdateOperationsInput | string | null
+    meta?: StringFieldUpdateOperationsInput | string
+    sizeBytes?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdByUserId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type CodeWorkspaceVersionUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    workspaceId?: StringFieldUpdateOperationsInput | string
+    version?: IntFieldUpdateOperationsInput | number
+    snapshot?: StringFieldUpdateOperationsInput | string
+    snapshotHash?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    isAutosave?: BoolFieldUpdateOperationsInput | boolean
+    clientRequestId?: NullableStringFieldUpdateOperationsInput | string | null
+    ip?: NullableStringFieldUpdateOperationsInput | string | null
+    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
+    referer?: NullableStringFieldUpdateOperationsInput | string | null
+    meta?: StringFieldUpdateOperationsInput | string
+    sizeBytes?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdByUserId?: StringFieldUpdateOperationsInput | string
+  }
+
   export type IntFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[]
@@ -19532,6 +22611,150 @@ export namespace Prisma {
     roleId?: SortOrder
   }
 
+  export type CodeWorkspaceVersionListRelationFilter = {
+    every?: CodeWorkspaceVersionWhereInput
+    some?: CodeWorkspaceVersionWhereInput
+    none?: CodeWorkspaceVersionWhereInput
+  }
+
+  export type CodeWorkspaceVersionOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type CodeWorkspaceCreatedByUserIdSlugCompoundUniqueInput = {
+    createdByUserId: string
+    slug: string
+  }
+
+  export type CodeWorkspaceCountOrderByAggregateInput = {
+    id?: SortOrder
+    slug?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    language?: SortOrder
+    currentVersion?: SortOrder
+    active?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    createdByUserId?: SortOrder
+    updatedByUserId?: SortOrder
+  }
+
+  export type CodeWorkspaceAvgOrderByAggregateInput = {
+    currentVersion?: SortOrder
+  }
+
+  export type CodeWorkspaceMaxOrderByAggregateInput = {
+    id?: SortOrder
+    slug?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    language?: SortOrder
+    currentVersion?: SortOrder
+    active?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    createdByUserId?: SortOrder
+    updatedByUserId?: SortOrder
+  }
+
+  export type CodeWorkspaceMinOrderByAggregateInput = {
+    id?: SortOrder
+    slug?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    language?: SortOrder
+    currentVersion?: SortOrder
+    active?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    createdByUserId?: SortOrder
+    updatedByUserId?: SortOrder
+  }
+
+  export type CodeWorkspaceSumOrderByAggregateInput = {
+    currentVersion?: SortOrder
+  }
+
+  export type CodeWorkspaceScalarRelationFilter = {
+    is?: CodeWorkspaceWhereInput
+    isNot?: CodeWorkspaceWhereInput
+  }
+
+  export type CodeWorkspaceVersionWorkspaceIdVersionCompoundUniqueInput = {
+    workspaceId: string
+    version: number
+  }
+
+  export type CodeWorkspaceVersionWorkspaceIdClientRequestIdCompoundUniqueInput = {
+    workspaceId: string
+    clientRequestId: string
+  }
+
+  export type CodeWorkspaceVersionCountOrderByAggregateInput = {
+    id?: SortOrder
+    workspaceId?: SortOrder
+    version?: SortOrder
+    snapshot?: SortOrder
+    snapshotHash?: SortOrder
+    message?: SortOrder
+    isAutosave?: SortOrder
+    clientRequestId?: SortOrder
+    ip?: SortOrder
+    userAgent?: SortOrder
+    referer?: SortOrder
+    meta?: SortOrder
+    sizeBytes?: SortOrder
+    createdAt?: SortOrder
+    createdByUserId?: SortOrder
+  }
+
+  export type CodeWorkspaceVersionAvgOrderByAggregateInput = {
+    version?: SortOrder
+    sizeBytes?: SortOrder
+  }
+
+  export type CodeWorkspaceVersionMaxOrderByAggregateInput = {
+    id?: SortOrder
+    workspaceId?: SortOrder
+    version?: SortOrder
+    snapshot?: SortOrder
+    snapshotHash?: SortOrder
+    message?: SortOrder
+    isAutosave?: SortOrder
+    clientRequestId?: SortOrder
+    ip?: SortOrder
+    userAgent?: SortOrder
+    referer?: SortOrder
+    meta?: SortOrder
+    sizeBytes?: SortOrder
+    createdAt?: SortOrder
+    createdByUserId?: SortOrder
+  }
+
+  export type CodeWorkspaceVersionMinOrderByAggregateInput = {
+    id?: SortOrder
+    workspaceId?: SortOrder
+    version?: SortOrder
+    snapshot?: SortOrder
+    snapshotHash?: SortOrder
+    message?: SortOrder
+    isAutosave?: SortOrder
+    clientRequestId?: SortOrder
+    ip?: SortOrder
+    userAgent?: SortOrder
+    referer?: SortOrder
+    meta?: SortOrder
+    sizeBytes?: SortOrder
+    createdAt?: SortOrder
+    createdByUserId?: SortOrder
+  }
+
+  export type CodeWorkspaceVersionSumOrderByAggregateInput = {
+    version?: SortOrder
+    sizeBytes?: SortOrder
+  }
+
   export type RoleCreateNestedOneWithoutFormsInput = {
     create?: XOR<RoleCreateWithoutFormsInput, RoleUncheckedCreateWithoutFormsInput>
     connectOrCreate?: RoleCreateOrConnectWithoutFormsInput
@@ -20548,6 +23771,62 @@ export namespace Prisma {
     delete?: RoleWhereInput | boolean
     connect?: RoleWhereUniqueInput
     update?: XOR<XOR<RoleUpdateToOneWithWhereWithoutUsersInput, RoleUpdateWithoutUsersInput>, RoleUncheckedUpdateWithoutUsersInput>
+  }
+
+  export type CodeWorkspaceVersionCreateNestedManyWithoutWorkspaceInput = {
+    create?: XOR<CodeWorkspaceVersionCreateWithoutWorkspaceInput, CodeWorkspaceVersionUncheckedCreateWithoutWorkspaceInput> | CodeWorkspaceVersionCreateWithoutWorkspaceInput[] | CodeWorkspaceVersionUncheckedCreateWithoutWorkspaceInput[]
+    connectOrCreate?: CodeWorkspaceVersionCreateOrConnectWithoutWorkspaceInput | CodeWorkspaceVersionCreateOrConnectWithoutWorkspaceInput[]
+    createMany?: CodeWorkspaceVersionCreateManyWorkspaceInputEnvelope
+    connect?: CodeWorkspaceVersionWhereUniqueInput | CodeWorkspaceVersionWhereUniqueInput[]
+  }
+
+  export type CodeWorkspaceVersionUncheckedCreateNestedManyWithoutWorkspaceInput = {
+    create?: XOR<CodeWorkspaceVersionCreateWithoutWorkspaceInput, CodeWorkspaceVersionUncheckedCreateWithoutWorkspaceInput> | CodeWorkspaceVersionCreateWithoutWorkspaceInput[] | CodeWorkspaceVersionUncheckedCreateWithoutWorkspaceInput[]
+    connectOrCreate?: CodeWorkspaceVersionCreateOrConnectWithoutWorkspaceInput | CodeWorkspaceVersionCreateOrConnectWithoutWorkspaceInput[]
+    createMany?: CodeWorkspaceVersionCreateManyWorkspaceInputEnvelope
+    connect?: CodeWorkspaceVersionWhereUniqueInput | CodeWorkspaceVersionWhereUniqueInput[]
+  }
+
+  export type CodeWorkspaceVersionUpdateManyWithoutWorkspaceNestedInput = {
+    create?: XOR<CodeWorkspaceVersionCreateWithoutWorkspaceInput, CodeWorkspaceVersionUncheckedCreateWithoutWorkspaceInput> | CodeWorkspaceVersionCreateWithoutWorkspaceInput[] | CodeWorkspaceVersionUncheckedCreateWithoutWorkspaceInput[]
+    connectOrCreate?: CodeWorkspaceVersionCreateOrConnectWithoutWorkspaceInput | CodeWorkspaceVersionCreateOrConnectWithoutWorkspaceInput[]
+    upsert?: CodeWorkspaceVersionUpsertWithWhereUniqueWithoutWorkspaceInput | CodeWorkspaceVersionUpsertWithWhereUniqueWithoutWorkspaceInput[]
+    createMany?: CodeWorkspaceVersionCreateManyWorkspaceInputEnvelope
+    set?: CodeWorkspaceVersionWhereUniqueInput | CodeWorkspaceVersionWhereUniqueInput[]
+    disconnect?: CodeWorkspaceVersionWhereUniqueInput | CodeWorkspaceVersionWhereUniqueInput[]
+    delete?: CodeWorkspaceVersionWhereUniqueInput | CodeWorkspaceVersionWhereUniqueInput[]
+    connect?: CodeWorkspaceVersionWhereUniqueInput | CodeWorkspaceVersionWhereUniqueInput[]
+    update?: CodeWorkspaceVersionUpdateWithWhereUniqueWithoutWorkspaceInput | CodeWorkspaceVersionUpdateWithWhereUniqueWithoutWorkspaceInput[]
+    updateMany?: CodeWorkspaceVersionUpdateManyWithWhereWithoutWorkspaceInput | CodeWorkspaceVersionUpdateManyWithWhereWithoutWorkspaceInput[]
+    deleteMany?: CodeWorkspaceVersionScalarWhereInput | CodeWorkspaceVersionScalarWhereInput[]
+  }
+
+  export type CodeWorkspaceVersionUncheckedUpdateManyWithoutWorkspaceNestedInput = {
+    create?: XOR<CodeWorkspaceVersionCreateWithoutWorkspaceInput, CodeWorkspaceVersionUncheckedCreateWithoutWorkspaceInput> | CodeWorkspaceVersionCreateWithoutWorkspaceInput[] | CodeWorkspaceVersionUncheckedCreateWithoutWorkspaceInput[]
+    connectOrCreate?: CodeWorkspaceVersionCreateOrConnectWithoutWorkspaceInput | CodeWorkspaceVersionCreateOrConnectWithoutWorkspaceInput[]
+    upsert?: CodeWorkspaceVersionUpsertWithWhereUniqueWithoutWorkspaceInput | CodeWorkspaceVersionUpsertWithWhereUniqueWithoutWorkspaceInput[]
+    createMany?: CodeWorkspaceVersionCreateManyWorkspaceInputEnvelope
+    set?: CodeWorkspaceVersionWhereUniqueInput | CodeWorkspaceVersionWhereUniqueInput[]
+    disconnect?: CodeWorkspaceVersionWhereUniqueInput | CodeWorkspaceVersionWhereUniqueInput[]
+    delete?: CodeWorkspaceVersionWhereUniqueInput | CodeWorkspaceVersionWhereUniqueInput[]
+    connect?: CodeWorkspaceVersionWhereUniqueInput | CodeWorkspaceVersionWhereUniqueInput[]
+    update?: CodeWorkspaceVersionUpdateWithWhereUniqueWithoutWorkspaceInput | CodeWorkspaceVersionUpdateWithWhereUniqueWithoutWorkspaceInput[]
+    updateMany?: CodeWorkspaceVersionUpdateManyWithWhereWithoutWorkspaceInput | CodeWorkspaceVersionUpdateManyWithWhereWithoutWorkspaceInput[]
+    deleteMany?: CodeWorkspaceVersionScalarWhereInput | CodeWorkspaceVersionScalarWhereInput[]
+  }
+
+  export type CodeWorkspaceCreateNestedOneWithoutVersionsInput = {
+    create?: XOR<CodeWorkspaceCreateWithoutVersionsInput, CodeWorkspaceUncheckedCreateWithoutVersionsInput>
+    connectOrCreate?: CodeWorkspaceCreateOrConnectWithoutVersionsInput
+    connect?: CodeWorkspaceWhereUniqueInput
+  }
+
+  export type CodeWorkspaceUpdateOneRequiredWithoutVersionsNestedInput = {
+    create?: XOR<CodeWorkspaceCreateWithoutVersionsInput, CodeWorkspaceUncheckedCreateWithoutVersionsInput>
+    connectOrCreate?: CodeWorkspaceCreateOrConnectWithoutVersionsInput
+    upsert?: CodeWorkspaceUpsertWithoutVersionsInput
+    connect?: CodeWorkspaceWhereUniqueInput
+    update?: XOR<XOR<CodeWorkspaceUpdateToOneWithWhereWithoutVersionsInput, CodeWorkspaceUpdateWithoutVersionsInput>, CodeWorkspaceUncheckedUpdateWithoutVersionsInput>
   }
 
   export type NestedIntFilter<$PrismaModel = never> = {
@@ -23482,6 +26761,158 @@ export namespace Prisma {
     submissions?: FormSubmissionUncheckedUpdateManyWithoutRoleNestedInput
   }
 
+  export type CodeWorkspaceVersionCreateWithoutWorkspaceInput = {
+    id?: string
+    version: number
+    snapshot: string
+    snapshotHash: string
+    message?: string
+    isAutosave?: boolean
+    clientRequestId?: string | null
+    ip?: string | null
+    userAgent?: string | null
+    referer?: string | null
+    meta?: string
+    sizeBytes?: number
+    createdAt?: Date | string
+    createdByUserId: string
+  }
+
+  export type CodeWorkspaceVersionUncheckedCreateWithoutWorkspaceInput = {
+    id?: string
+    version: number
+    snapshot: string
+    snapshotHash: string
+    message?: string
+    isAutosave?: boolean
+    clientRequestId?: string | null
+    ip?: string | null
+    userAgent?: string | null
+    referer?: string | null
+    meta?: string
+    sizeBytes?: number
+    createdAt?: Date | string
+    createdByUserId: string
+  }
+
+  export type CodeWorkspaceVersionCreateOrConnectWithoutWorkspaceInput = {
+    where: CodeWorkspaceVersionWhereUniqueInput
+    create: XOR<CodeWorkspaceVersionCreateWithoutWorkspaceInput, CodeWorkspaceVersionUncheckedCreateWithoutWorkspaceInput>
+  }
+
+  export type CodeWorkspaceVersionCreateManyWorkspaceInputEnvelope = {
+    data: CodeWorkspaceVersionCreateManyWorkspaceInput | CodeWorkspaceVersionCreateManyWorkspaceInput[]
+  }
+
+  export type CodeWorkspaceVersionUpsertWithWhereUniqueWithoutWorkspaceInput = {
+    where: CodeWorkspaceVersionWhereUniqueInput
+    update: XOR<CodeWorkspaceVersionUpdateWithoutWorkspaceInput, CodeWorkspaceVersionUncheckedUpdateWithoutWorkspaceInput>
+    create: XOR<CodeWorkspaceVersionCreateWithoutWorkspaceInput, CodeWorkspaceVersionUncheckedCreateWithoutWorkspaceInput>
+  }
+
+  export type CodeWorkspaceVersionUpdateWithWhereUniqueWithoutWorkspaceInput = {
+    where: CodeWorkspaceVersionWhereUniqueInput
+    data: XOR<CodeWorkspaceVersionUpdateWithoutWorkspaceInput, CodeWorkspaceVersionUncheckedUpdateWithoutWorkspaceInput>
+  }
+
+  export type CodeWorkspaceVersionUpdateManyWithWhereWithoutWorkspaceInput = {
+    where: CodeWorkspaceVersionScalarWhereInput
+    data: XOR<CodeWorkspaceVersionUpdateManyMutationInput, CodeWorkspaceVersionUncheckedUpdateManyWithoutWorkspaceInput>
+  }
+
+  export type CodeWorkspaceVersionScalarWhereInput = {
+    AND?: CodeWorkspaceVersionScalarWhereInput | CodeWorkspaceVersionScalarWhereInput[]
+    OR?: CodeWorkspaceVersionScalarWhereInput[]
+    NOT?: CodeWorkspaceVersionScalarWhereInput | CodeWorkspaceVersionScalarWhereInput[]
+    id?: StringFilter<"CodeWorkspaceVersion"> | string
+    workspaceId?: StringFilter<"CodeWorkspaceVersion"> | string
+    version?: IntFilter<"CodeWorkspaceVersion"> | number
+    snapshot?: StringFilter<"CodeWorkspaceVersion"> | string
+    snapshotHash?: StringFilter<"CodeWorkspaceVersion"> | string
+    message?: StringFilter<"CodeWorkspaceVersion"> | string
+    isAutosave?: BoolFilter<"CodeWorkspaceVersion"> | boolean
+    clientRequestId?: StringNullableFilter<"CodeWorkspaceVersion"> | string | null
+    ip?: StringNullableFilter<"CodeWorkspaceVersion"> | string | null
+    userAgent?: StringNullableFilter<"CodeWorkspaceVersion"> | string | null
+    referer?: StringNullableFilter<"CodeWorkspaceVersion"> | string | null
+    meta?: StringFilter<"CodeWorkspaceVersion"> | string
+    sizeBytes?: IntFilter<"CodeWorkspaceVersion"> | number
+    createdAt?: DateTimeFilter<"CodeWorkspaceVersion"> | Date | string
+    createdByUserId?: StringFilter<"CodeWorkspaceVersion"> | string
+  }
+
+  export type CodeWorkspaceCreateWithoutVersionsInput = {
+    id?: string
+    slug: string
+    name: string
+    description?: string
+    language?: string
+    currentVersion?: number
+    active?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    createdByUserId: string
+    updatedByUserId: string
+  }
+
+  export type CodeWorkspaceUncheckedCreateWithoutVersionsInput = {
+    id?: string
+    slug: string
+    name: string
+    description?: string
+    language?: string
+    currentVersion?: number
+    active?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    createdByUserId: string
+    updatedByUserId: string
+  }
+
+  export type CodeWorkspaceCreateOrConnectWithoutVersionsInput = {
+    where: CodeWorkspaceWhereUniqueInput
+    create: XOR<CodeWorkspaceCreateWithoutVersionsInput, CodeWorkspaceUncheckedCreateWithoutVersionsInput>
+  }
+
+  export type CodeWorkspaceUpsertWithoutVersionsInput = {
+    update: XOR<CodeWorkspaceUpdateWithoutVersionsInput, CodeWorkspaceUncheckedUpdateWithoutVersionsInput>
+    create: XOR<CodeWorkspaceCreateWithoutVersionsInput, CodeWorkspaceUncheckedCreateWithoutVersionsInput>
+    where?: CodeWorkspaceWhereInput
+  }
+
+  export type CodeWorkspaceUpdateToOneWithWhereWithoutVersionsInput = {
+    where?: CodeWorkspaceWhereInput
+    data: XOR<CodeWorkspaceUpdateWithoutVersionsInput, CodeWorkspaceUncheckedUpdateWithoutVersionsInput>
+  }
+
+  export type CodeWorkspaceUpdateWithoutVersionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    language?: StringFieldUpdateOperationsInput | string
+    currentVersion?: IntFieldUpdateOperationsInput | number
+    active?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdByUserId?: StringFieldUpdateOperationsInput | string
+    updatedByUserId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type CodeWorkspaceUncheckedUpdateWithoutVersionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    language?: StringFieldUpdateOperationsInput | string
+    currentVersion?: IntFieldUpdateOperationsInput | number
+    active?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdByUserId?: StringFieldUpdateOperationsInput | string
+    updatedByUserId?: StringFieldUpdateOperationsInput | string
+  }
+
   export type FormSubmissionCreateManyFormInput = {
     id?: number
     published?: boolean
@@ -24578,6 +28009,74 @@ export namespace Prisma {
     content?: StringFieldUpdateOperationsInput | string
     computedContent?: StringFieldUpdateOperationsInput | string
     submittedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CodeWorkspaceVersionCreateManyWorkspaceInput = {
+    id?: string
+    version: number
+    snapshot: string
+    snapshotHash: string
+    message?: string
+    isAutosave?: boolean
+    clientRequestId?: string | null
+    ip?: string | null
+    userAgent?: string | null
+    referer?: string | null
+    meta?: string
+    sizeBytes?: number
+    createdAt?: Date | string
+    createdByUserId: string
+  }
+
+  export type CodeWorkspaceVersionUpdateWithoutWorkspaceInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    version?: IntFieldUpdateOperationsInput | number
+    snapshot?: StringFieldUpdateOperationsInput | string
+    snapshotHash?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    isAutosave?: BoolFieldUpdateOperationsInput | boolean
+    clientRequestId?: NullableStringFieldUpdateOperationsInput | string | null
+    ip?: NullableStringFieldUpdateOperationsInput | string | null
+    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
+    referer?: NullableStringFieldUpdateOperationsInput | string | null
+    meta?: StringFieldUpdateOperationsInput | string
+    sizeBytes?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdByUserId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type CodeWorkspaceVersionUncheckedUpdateWithoutWorkspaceInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    version?: IntFieldUpdateOperationsInput | number
+    snapshot?: StringFieldUpdateOperationsInput | string
+    snapshotHash?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    isAutosave?: BoolFieldUpdateOperationsInput | boolean
+    clientRequestId?: NullableStringFieldUpdateOperationsInput | string | null
+    ip?: NullableStringFieldUpdateOperationsInput | string | null
+    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
+    referer?: NullableStringFieldUpdateOperationsInput | string | null
+    meta?: StringFieldUpdateOperationsInput | string
+    sizeBytes?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdByUserId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type CodeWorkspaceVersionUncheckedUpdateManyWithoutWorkspaceInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    version?: IntFieldUpdateOperationsInput | number
+    snapshot?: StringFieldUpdateOperationsInput | string
+    snapshotHash?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    isAutosave?: BoolFieldUpdateOperationsInput | boolean
+    clientRequestId?: NullableStringFieldUpdateOperationsInput | string | null
+    ip?: NullableStringFieldUpdateOperationsInput | string | null
+    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
+    referer?: NullableStringFieldUpdateOperationsInput | string | null
+    meta?: StringFieldUpdateOperationsInput | string
+    sizeBytes?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdByUserId?: StringFieldUpdateOperationsInput | string
   }
 
 
