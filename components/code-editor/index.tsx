@@ -399,6 +399,12 @@ function dirnamePath(path: string) {
   return normalized.slice(0, index)
 }
 
+function basenamePath(path: string) {
+  const normalized = normalizeWorkspacePath(path)
+  const parts = normalized.split('/').filter(Boolean)
+  return parts[parts.length - 1] ?? ''
+}
+
 function replacePathPrefix(
   path: string,
   sourcePath: string,
@@ -552,6 +558,8 @@ export default function CodeEditor({
   const [collapsedFolders, setCollapsedFolders] = useState<
     Record<string, boolean>
   >({})
+  const [draggedFilePath, setDraggedFilePath] = useState<string | null>(null)
+  const [dropFolderPath, setDropFolderPath] = useState<string | null>(null)
 
   const containerRef = useRef<HTMLDivElement | null>(null)
   const fileContextMenuRef = useRef<HTMLDivElement | null>(null)
@@ -885,52 +893,200 @@ export default function CodeEditor({
     [createFolderAtPath]
   )
 
+  const moveFilePath = useCallback(
+    (sourcePath: string, targetPathRaw: string, actionLabel = 'Moved') => {
+      const normalizedSource = normalizeWorkspacePath(sourcePath)
+      const normalizedTarget = normalizeWorkspacePath(targetPathRaw)
+      if (normalizedTarget === normalizedSource) return false
+
+      const sourceExists = snapshotRef.current.files.some(
+        (file) => file.path === normalizedSource
+      )
+      if (!sourceExists) {
+        addLog('error', `File not found: ${normalizedSource}`)
+        return false
+      }
+
+      if (
+        snapshotRef.current.files.some((file) => file.path === normalizedTarget)
+      ) {
+        addLog('error', `Target path already exists: ${normalizedTarget}`)
+        return false
+      }
+
+      const nextSnapshot = renameFile(
+        snapshotRef.current,
+        normalizedSource,
+        normalizedTarget
+      )
+      setSnapshot(nextSnapshot)
+      snapshotRef.current = nextSnapshot
+
+      const savedValue = savedContentsRef.current[normalizedSource]
+      if (typeof savedValue === 'string') {
+        savedContentsRef.current[normalizedTarget] = savedValue
+        delete savedContentsRef.current[normalizedSource]
+      }
+
+      const model = modelsRef.current.get(normalizedSource)
+      if (model) {
+        const content = model.getValue()
+        removeModel(normalizedSource)
+        ensureModel(normalizedTarget, content)
+      }
+
+      setTabs((prev) =>
+        prev.map((path) => (path === normalizedSource ? normalizedTarget : path))
+      )
+      setActivePath((prev) =>
+        prev === normalizedSource ? normalizedTarget : prev
+      )
+      setDirtyPaths((prev) => {
+        const next = { ...prev }
+        if (next[normalizedSource]) {
+          delete next[normalizedSource]
+          next[normalizedTarget] = true
+        }
+        return next
+      })
+
+      addLog(
+        'success',
+        `${actionLabel} ${normalizedSource} -> ${normalizedTarget}`
+      )
+      return true
+    },
+    [addLog, ensureModel, removeModel]
+  )
+
+  const moveFileToFolder = useCallback(
+    (sourcePath: string, targetFolderPath: string) => {
+      const normalizedSource = normalizeWorkspacePath(sourcePath)
+      const normalizedTargetFolder = normalizeWorkspacePath(targetFolderPath)
+      const fileName = basenamePath(normalizedSource)
+      if (!fileName) {
+        addLog('error', `Invalid file path: ${normalizedSource}`)
+        return false
+      }
+
+      const targetPath = normalizeWorkspacePath(
+        `${normalizedTargetFolder}/${fileName}`
+      )
+      return moveFilePath(normalizedSource, targetPath, 'Moved')
+    },
+    [addLog, moveFilePath]
+  )
+
   const renameFilePath = useCallback(
     (sourcePath: string) => {
       const nextPathRaw = window.prompt('Rename file path', sourcePath)
       if (!nextPathRaw) return
 
       const nextPath = normalizeWorkspacePath(nextPathRaw)
-      if (nextPath === sourcePath) return
+      moveFilePath(sourcePath, nextPath, 'Renamed')
+    },
+    [moveFilePath]
+  )
 
-      if (snapshotRef.current.files.some((file) => file.path === nextPath)) {
-        addLog('error', `Target path already exists: ${nextPath}`)
+  const handleFileDragStart = useCallback(
+    (event: React.DragEvent<HTMLElement>, path: string) => {
+      const normalizedPath = normalizeWorkspacePath(path)
+      setDraggedFilePath(normalizedPath)
+      setDropFolderPath(null)
+      event.dataTransfer.effectAllowed = 'move'
+      event.dataTransfer.setData('text/plain', normalizedPath)
+    },
+    []
+  )
+
+  const handleFileDragEnd = useCallback(() => {
+    setDraggedFilePath(null)
+    setDropFolderPath(null)
+  }, [])
+
+  const handleFolderDragOver = useCallback(
+    (event: React.DragEvent<HTMLElement>, targetFolderPath: string) => {
+      if (!draggedFilePath) return
+      event.preventDefault()
+      event.stopPropagation()
+      event.dataTransfer.dropEffect = 'move'
+      setDropFolderPath(normalizeWorkspacePath(targetFolderPath))
+    },
+    [draggedFilePath]
+  )
+
+  const handleFolderDrop = useCallback(
+    (event: React.DragEvent<HTMLElement>, targetFolderPath: string) => {
+      event.preventDefault()
+      event.stopPropagation()
+      const sourcePath =
+        draggedFilePath || event.dataTransfer.getData('text/plain')
+      if (!sourcePath) {
+        setDropFolderPath(null)
         return
       }
 
-      const nextSnapshot = renameFile(snapshotRef.current, sourcePath, nextPath)
-      setSnapshot(nextSnapshot)
-      snapshotRef.current = nextSnapshot
-
-      const savedValue = savedContentsRef.current[sourcePath]
-      if (typeof savedValue === 'string') {
-        savedContentsRef.current[nextPath] = savedValue
-        delete savedContentsRef.current[sourcePath]
-      }
-
-      const model = modelsRef.current.get(sourcePath)
-      if (model) {
-        const content = model.getValue()
-        removeModel(sourcePath)
-        ensureModel(nextPath, content)
-      }
-
-      setTabs((prev) =>
-        prev.map((path) => (path === sourcePath ? nextPath : path))
-      )
-      setActivePath(nextPath)
-      setDirtyPaths((prev) => {
-        const next = { ...prev }
-        if (next[sourcePath]) {
-          delete next[sourcePath]
-          next[nextPath] = true
-        }
-        return next
-      })
-
-      addLog('success', `Renamed ${sourcePath} -> ${nextPath}`)
+      moveFileToFolder(sourcePath, targetFolderPath)
+      setDraggedFilePath(null)
+      setDropFolderPath(null)
     },
-    [addLog, ensureModel, removeModel]
+    [draggedFilePath, moveFileToFolder]
+  )
+
+  const handleExplorerDragOver = useCallback(
+    (event: React.DragEvent<HTMLDivElement>) => {
+      if (!draggedFilePath) return
+      event.preventDefault()
+      event.dataTransfer.dropEffect = 'move'
+      setDropFolderPath('/')
+    },
+    [draggedFilePath]
+  )
+
+  const handleExplorerDrop = useCallback(
+    (event: React.DragEvent<HTMLDivElement>) => {
+      event.preventDefault()
+      const sourcePath =
+        draggedFilePath || event.dataTransfer.getData('text/plain')
+      if (!sourcePath) {
+        setDropFolderPath(null)
+        return
+      }
+
+      moveFileToFolder(sourcePath, '/')
+      setDraggedFilePath(null)
+      setDropFolderPath(null)
+    },
+    [draggedFilePath, moveFileToFolder]
+  )
+
+  const handleFileRowDragOver = useCallback(
+    (event: React.DragEvent<HTMLElement>, targetPath: string) => {
+      if (!draggedFilePath) return
+      event.preventDefault()
+      event.stopPropagation()
+      event.dataTransfer.dropEffect = 'move'
+      setDropFolderPath(dirnamePath(targetPath))
+    },
+    [draggedFilePath]
+  )
+
+  const handleFileRowDrop = useCallback(
+    (event: React.DragEvent<HTMLElement>, targetPath: string) => {
+      event.preventDefault()
+      event.stopPropagation()
+      const sourcePath =
+        draggedFilePath || event.dataTransfer.getData('text/plain')
+      if (!sourcePath) {
+        setDropFolderPath(null)
+        return
+      }
+
+      moveFileToFolder(sourcePath, dirnamePath(targetPath))
+      setDraggedFilePath(null)
+      setDropFolderPath(null)
+    },
+    [draggedFilePath, moveFileToFolder]
   )
 
   const renameFolderPath = useCallback(
@@ -1819,11 +1975,16 @@ export default function CodeEditor({
       } as CSSProperties
 
       if (node.type === 'folder') {
+        const folderDropActive =
+          draggedFilePath !== null && dropFolderPath === node.fullPath
         return (
           <div key={node.fullPath}>
             <button
               type="button"
-              className="flex w-full items-center gap-1 py-1 text-left text-xs text-[#c7c7c7] hover:bg-[#2a2d2e]"
+              className={cn(
+                'flex w-full items-center gap-1 py-1 text-left text-xs text-[#c7c7c7] hover:bg-[#2a2d2e]',
+                folderDropActive && 'bg-[#094771] text-white'
+              )}
               style={style}
               onClick={() => {
                 setCollapsedFolders((prev) => ({
@@ -1831,6 +1992,8 @@ export default function CodeEditor({
                   [node.fullPath]: !prev[node.fullPath],
                 }))
               }}
+              onDragOver={(event) => handleFolderDragOver(event, node.fullPath)}
+              onDrop={(event) => handleFolderDrop(event, node.fullPath)}
               onContextMenu={(event) =>
                 openFileContextMenu(event, node.fullPath, 'folder')
               }
@@ -1861,11 +2024,16 @@ export default function CodeEditor({
           key={node.fullPath}
           type="button"
           className={cn(
-            'flex w-full items-center gap-2 py-1 text-left text-xs text-[#c7c7c7] hover:bg-[#2a2d2e]',
+            'flex w-full cursor-grab items-center gap-2 py-1 text-left text-xs text-[#c7c7c7] hover:bg-[#2a2d2e] active:cursor-grabbing',
             active && 'bg-[#37373d] text-white'
           )}
           style={style}
+          draggable
           onClick={() => openFile(node.fullPath)}
+          onDragStart={(event) => handleFileDragStart(event, node.fullPath)}
+          onDragEnd={handleFileDragEnd}
+          onDragOver={(event) => handleFileRowDragOver(event, node.fullPath)}
+          onDrop={(event) => handleFileRowDrop(event, node.fullPath)}
           onContextMenu={(event) =>
             openFileContextMenu(event, node.fullPath, 'file')
           }
@@ -2094,7 +2262,14 @@ export default function CodeEditor({
                 </Button>
               </div>
 
-              <div className="min-h-0 flex-1 overflow-auto py-1">
+              <div
+                className={cn(
+                  'min-h-0 flex-1 overflow-auto py-1',
+                  draggedFilePath && dropFolderPath === '/' && 'bg-[#203343]'
+                )}
+                onDragOver={handleExplorerDragOver}
+                onDrop={handleExplorerDrop}
+              >
                 {renderTree(fileTree)}
               </div>
             </aside>
