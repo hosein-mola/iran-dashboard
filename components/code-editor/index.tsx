@@ -396,7 +396,11 @@ function dirnamePath(path: string) {
   return normalized.slice(0, index)
 }
 
-function replacePathPrefix(path: string, sourcePath: string, targetPath: string) {
+function replacePathPrefix(
+  path: string,
+  sourcePath: string,
+  targetPath: string
+) {
   const normalizedPath = normalizeWorkspacePath(path)
   const normalizedSource = normalizeWorkspacePath(sourcePath)
   const normalizedTarget = normalizeWorkspacePath(targetPath)
@@ -520,7 +524,7 @@ export default function CodeEditor({
   const [isSaving, setIsSaving] = useState(false)
   const [isBootstrapping, setIsBootstrapping] = useState(true)
   const [isExplorerOpen, setIsExplorerOpen] = useState(true)
-  const [isConsoleOpen, setIsConsoleOpen] = useState(true)
+  const [isConsoleOpen, setIsConsoleOpen] = useState(false)
   const [isEndpointsOpen, setIsEndpointsOpen] = useState(false)
   const [fileContextMenu, setFileContextMenu] =
     useState<FileContextMenuState | null>(null)
@@ -552,6 +556,7 @@ export default function CodeEditor({
   const activePathRef = useRef(activePath)
   const selectedProjectSlugRef = useRef(selectedProjectSlug)
   const loadingNonceRef = useRef(0)
+  const hasAppliedInitialLayoutRef = useRef(false)
 
   const isDirty = useMemo(
     () => Object.keys(dirtyPaths).length > 0,
@@ -916,10 +921,7 @@ export default function CodeEditor({
         return
       }
 
-      const nextPathRaw = window.prompt(
-        'Rename folder path',
-        normalizedSource
-      )
+      const nextPathRaw = window.prompt('Rename folder path', normalizedSource)
       if (!nextPathRaw) return
 
       const normalizedTarget = normalizeWorkspacePath(nextPathRaw)
@@ -1013,7 +1015,10 @@ export default function CodeEditor({
         return next
       })
 
-      addLog('success', `Renamed folder ${normalizedSource} -> ${normalizedTarget}`)
+      addLog(
+        'success',
+        `Renamed folder ${normalizedSource} -> ${normalizedTarget}`
+      )
     },
     [addLog, ensureModel, removeModel]
   )
@@ -1091,7 +1096,7 @@ export default function CodeEditor({
       const nextActivePath =
         activePathRef.current && !activePathRef.current.startsWith(folderPrefix)
           ? activePathRef.current
-          : nextTabs[nextTabs.length - 1] ?? null
+          : (nextTabs[nextTabs.length - 1] ?? null)
       setTabs(nextTabs)
       setActivePath(nextActivePath)
       setCollapsedFolders((prev) => {
@@ -1208,6 +1213,14 @@ export default function CodeEditor({
       setDirtyPaths({})
       setSnapshot(normalizedSnapshot)
       setEntryPathInput(normalizedEntry)
+
+      if (!hasAppliedInitialLayoutRef.current) {
+        hasAppliedInitialLayoutRef.current = true
+        setTabs([])
+        setActivePath(null)
+        setIsEndpointsOpen(true)
+        return
+      }
 
       const tabTargets = ensureTabTargetsExist(
         normalizedSnapshot,
@@ -2061,64 +2074,66 @@ export default function CodeEditor({
           ) : null}
 
           <section className="relative flex min-h-0 flex-1 flex-col overflow-hidden bg-[#1e1e1e]">
-            <div className="flex h-9 items-center gap-1 overflow-x-auto border-b border-[#2d2d2d] bg-[#2d2d2d] px-2">
-              {!hasOpenTabs ? (
-                <span className="px-2 text-xs text-[#9da5b4]">
-                  No open tabs
-                </span>
-              ) : null}
-              {tabs.map((tabPath) => {
-                const active = tabPath === activePath
-                const dirty = Boolean(dirtyPaths[tabPath])
-                const fileName =
-                  tabPath.split('/').filter(Boolean).pop() ?? tabPath
-                const Icon = pickFileIcon(tabPath)
+            <div className="h-9 overflow-x-auto border-b border-[#2d2d2d] bg-[#2d2d2d] [scrollbar-gutter:stable]">
+              <div className="flex h-full min-w-full items-center gap-1 px-2">
+                {!hasOpenTabs ? (
+                  <span className="px-2 text-xs text-[#9da5b4]">
+                    No open tabs
+                  </span>
+                ) : null}
+                {tabs.map((tabPath) => {
+                  const active = tabPath === activePath
+                  const dirty = Boolean(dirtyPaths[tabPath])
+                  const fileName =
+                    tabPath.split('/').filter(Boolean).pop() ?? tabPath
+                  const Icon = pickFileIcon(tabPath)
 
-                return (
-                  <div
-                    key={tabPath}
-                    className={cn(
-                      'group flex h-7 items-center gap-2 rounded border border-transparent px-2 text-xs',
-                      active
-                        ? 'border-[#3f3f46] bg-[#1e1e1e] text-white'
-                        : 'bg-[#2d2d2d] text-[#cccccc] hover:bg-[#383838]'
-                    )}
-                  >
-                    <button
-                      type="button"
-                      className="flex max-w-[180px] items-center gap-1.5 truncate"
-                      onClick={() => openFile(tabPath)}
-                      onContextMenu={(event) =>
-                        openFileContextMenu(event, tabPath, 'file')
-                      }
+                  return (
+                    <div
+                      key={tabPath}
+                      className={cn(
+                        'group flex h-7 shrink-0 items-center gap-2 rounded border border-transparent px-2 text-xs',
+                        active
+                          ? 'border-[#3f3f46] bg-[#1e1e1e] text-white'
+                          : 'bg-[#2d2d2d] text-[#cccccc] hover:bg-[#383838]'
+                      )}
                     >
-                      <Icon className="h-3.5 w-3.5 text-[#8ac6f2]" />
-                      <span className="truncate">{fileName}</span>
-                    </button>
-                    {dirty ? (
-                      <span className="text-[10px] text-[#e2c08d]">●</span>
-                    ) : null}
-                    <button
-                      type="button"
-                      className="rounded p-0.5 text-[#9da5b4] opacity-70 hover:bg-[#444] hover:text-white hover:opacity-100"
-                      onClick={() => {
-                        const nextTabs = tabs.filter(
-                          (candidate) => candidate !== tabPath
-                        )
-                        setTabs(nextTabs)
-
-                        if (activePath === tabPath) {
-                          const nextActive =
-                            nextTabs[nextTabs.length - 1] ?? null
-                          setActivePath(nextActive)
+                      <button
+                        type="button"
+                        className="flex max-w-[180px] items-center gap-1.5 truncate"
+                        onClick={() => openFile(tabPath)}
+                        onContextMenu={(event) =>
+                          openFileContextMenu(event, tabPath, 'file')
                         }
-                      }}
-                    >
-                      <X className="h-3 w-3" />
-                    </button>
-                  </div>
-                )
-              })}
+                      >
+                        <Icon className="h-3.5 w-3.5 text-[#8ac6f2]" />
+                        <span className="truncate">{fileName}</span>
+                      </button>
+                      {dirty ? (
+                        <span className="text-[10px] text-[#e2c08d]">●</span>
+                      ) : null}
+                      <button
+                        type="button"
+                        className="rounded p-0.5 text-[#9da5b4] opacity-70 hover:bg-[#444] hover:text-white hover:opacity-100"
+                        onClick={() => {
+                          const nextTabs = tabs.filter(
+                            (candidate) => candidate !== tabPath
+                          )
+                          setTabs(nextTabs)
+
+                          if (activePath === tabPath) {
+                            const nextActive =
+                              nextTabs[nextTabs.length - 1] ?? null
+                            setActivePath(nextActive)
+                          }
+                        }}
+                      >
+                        <X className="h-3 w-3" />
+                      </button>
+                    </div>
+                  )
+                })}
+              </div>
             </div>
 
             <div className="relative min-h-0 flex-1 overflow-hidden">
