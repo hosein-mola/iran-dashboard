@@ -1,6 +1,6 @@
-# `components/ui/` Guidelines (shadcn/ui primitives)
+# `components/ui/` Guidelines (shadcn Primitives)
 
-- Treat these as shared primitives: keep props and behavior stable.
-- Avoid adding app-specific business logic here; create wrappers in `components/` instead.
-- Follow existing `class-variance-authority` patterns when adding variants.
-- Prefer small, localized changes to fix styling/accessibility; do not redesign primitives.
+- Keep primitives generic and API-stable.
+- No app-specific business logic here; build wrappers in `components/`.
+- Follow existing `class-variance-authority` and `cn()` patterns.
+- Make accessibility/style fixes locally (focus, keyboard, ARIA) without broad redesign.

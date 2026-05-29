@@ -1,5 +1,6 @@
 # `lib/` Guidelines
 
-- Keep utilities small and focused; avoid circular dependencies.
-- Split server-only helpers from client-safe helpers when needed.
-- Prefer exporting functions over mutable singletons (except well-contained cases like Prisma client helpers).
+- Keep utilities focused and dependency-light; avoid circular imports.
+- Split server-only helpers from client-safe helpers.
+- Use shared `cn()` for class composition instead of duplicating merge helpers.
+- Prefer pure function exports; isolate mutable/singleton state to explicit modules only.

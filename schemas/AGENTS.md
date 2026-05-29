@@ -1,5 +1,6 @@
 # `schemas/` Guidelines
 
-- Use Zod schemas for validation/coercion.
-- Keep schema names descriptive and exportable (used by `actions/`, route handlers, and UI forms).
-- When changing schema shape, update all call sites that depend on it.
+- Use Zod as the validation source of truth.
+- Export descriptive, reusable schema/types (`XSchema`, `XInput`, `XOutput`).
+- Keep coercion/defaults explicit so server and UI interpret values the same way.
+- When schema shape changes, update dependent actions/routes/forms in the same diff.

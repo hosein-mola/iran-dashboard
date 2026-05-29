@@ -1,5 +1,6 @@
 # `prisma/` Guidelines
 
-- Keep `schema.prisma` as the source of truth; do not edit generated client output.
-- Prefer additive, migration-friendly changes.
-- If schema changes are required, ensure migrations and dependent code are updated together.
+- `schema.prisma` is the source of truth; never edit generated Prisma client files.
+- Prefer additive, migration-safe schema changes.
+- Update DB changes and dependent app code together (`actions/`, `schemas/`, UI assumptions).
+- After schema edits, run migration flow and verify with typecheck/build.

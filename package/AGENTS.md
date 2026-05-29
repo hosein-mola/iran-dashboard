@@ -1,5 +1,6 @@
-# `package/` Guidelines (node_modules patches)
+# `package/` Guidelines (node_modules Patches)
 
-- `npm run apply-patches` copies `package/` into `node_modules/`.
-- Keep patches minimal and well-targeted (only the files you must override).
-- When updating dependencies, re-apply patches and verify builds still work.
+- This folder holds targeted vendor overrides copied by `npm run apply-patches`.
+- Patch only what is required; avoid broad or unrelated edits.
+- Keep upstream path/version context in comments when practical.
+- After patch changes or dependency upgrades, re-apply patches and verify with typecheck/build.

@@ -1,5 +1,6 @@
 # `api/` Guidelines
 
-- Keep API configuration/helpers here (base URLs, shared headers, client wrappers).
-- Validate all untrusted inputs (prefer schemas in `schemas/`).
-- Avoid leaking secrets into client bundles; keep secret usage server-only.
+- Keep backend config and thin request helpers here (base URL, headers, wrappers).
+- Validate untrusted input at boundaries (reuse `schemas/`).
+- Keep secrets and privileged headers server-only.
+- Prefer centralized helpers over repeated inline fetch setup.

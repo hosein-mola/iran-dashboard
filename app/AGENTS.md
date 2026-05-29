@@ -1,25 +1,21 @@
-# `app/` Guidelines (Next.js 16 App Router)
+# `app/` Guidelines (App Router)
 
-## Server/Client Boundaries
+Scope: routes, layouts, pages, and route handlers.
 
-- Files here are Server Components by default.
-- Add `"use client"` only when the component needs browser APIs, React state/effects, or client-only libraries.
-- Do not import Client Components into Server-only modules that must remain server-only (keep the boundary explicit).
+## Build Here
 
-## Routing Conventions
+- Keep module-facing screens under `app/(modules)` and keep `/modules` as the module hub.
+- Use `layout.tsx` for shared segment chrome/providers.
+- Keep `page.tsx` thin; compose logic from `components/`, `actions/`, and `lib/`.
+- Use `route.ts` only for HTTP handlers.
 
-- Use `layout.tsx` for shared chrome and providers scoped to a segment.
-- Use `page.tsx` for route entrypoints; keep pages thin (compose from `components/`).
-- Use `route.ts` for HTTP handlers; return `Response`/`NextResponse` and validate inputs.
-- Keep route segment names stable; if removing routes, also remove all references (breadcrumbs, nav links, revalidation hooks).
+## Boundaries
 
-## Data Fetching
+- Server Component by default; add `"use client"` only for browser state/effects/APIs.
+- Do not import server-only modules into client files.
+- Keep caching/revalidation explicit to avoid stale behavior.
 
-- Prefer server-side fetching in Server Components when possible.
-- Be explicit about caching/revalidation when needed (avoid accidental stale data).
-- Keep fetch helpers in `lib/` so they can be shared and audited.
+## Route Safety
 
-## DX / Safety
-
-- Avoid reading `window`, `document`, or `localStorage` without `"use client"`.
-- Avoid importing heavy client deps into server components.
+- On route remove/rename, also clean breadcrumbs, navigation, revalidation calls, and docs.
+- Verify cleanup with `rg` and `npx tsc --noEmit`.

@@ -396,6 +396,25 @@ function dirnamePath(path: string) {
   return normalized.slice(0, index)
 }
 
+function replacePathPrefix(path: string, sourcePath: string, targetPath: string) {
+  const normalizedPath = normalizeWorkspacePath(path)
+  const normalizedSource = normalizeWorkspacePath(sourcePath)
+  const normalizedTarget = normalizeWorkspacePath(targetPath)
+
+  if (normalizedPath === normalizedSource) {
+    return normalizedTarget
+  }
+
+  const sourcePrefix = `${normalizedSource}/`
+  if (!normalizedPath.startsWith(sourcePrefix)) {
+    return normalizedPath
+  }
+
+  return normalizeWorkspacePath(
+    `${normalizedTarget}${normalizedPath.slice(normalizedSource.length)}`
+  )
+}
+
 function stripKnownExtension(path: string) {
   for (const extension of KNOWN_IMPORT_EXTENSIONS) {
     if (path.endsWith(extension)) {
@@ -513,6 +532,7 @@ export default function CodeEditor({
   >({})
 
   const containerRef = useRef<HTMLDivElement | null>(null)
+  const fileContextMenuRef = useRef<HTMLDivElement | null>(null)
   const editorRef = useRef<MonacoEditorInstance | null>(null)
   const monacoRef = useRef<MonacoApi | null>(null)
   const modelsRef = useRef<Map<string, monacoEditor.editor.ITextModel>>(
@@ -778,6 +798,63 @@ export default function CodeEditor({
     [addLog]
   )
 
+  const createFolderAtPath = useCallback(
+    (rawPath: string) => {
+      const normalizedPath = normalizeWorkspacePath(rawPath)
+      if (normalizedPath === '/') {
+        addLog('error', 'Invalid folder path')
+        return false
+      }
+
+      const folderPrefix = `${normalizedPath}/`
+      if (
+        snapshotRef.current.files.some((file) =>
+          file.path.startsWith(folderPrefix)
+        )
+      ) {
+        addLog('error', `Folder already exists: ${normalizedPath}`)
+        return false
+      }
+
+      const starterFilePath = normalizeWorkspacePath(
+        `${normalizedPath}/index.ts`
+      )
+      const created = createFileAtPath(starterFilePath)
+      if (!created) {
+        return false
+      }
+
+      setCollapsedFolders((prev) => ({
+        ...prev,
+        [normalizedPath]: false,
+      }))
+      addLog('success', `Added folder ${normalizedPath}`)
+      return true
+    },
+    [addLog, createFileAtPath]
+  )
+
+  const promptCreateFileAtBasePath = useCallback(
+    (basePath: string) => {
+      const suggested = normalizeWorkspacePath(`${basePath}/new-file.ts`)
+      const next = window.prompt('New file path', suggested)
+      if (next) {
+        createFileAtPath(next)
+      }
+    },
+    [createFileAtPath]
+  )
+
+  const promptCreateFolderAtBasePath = useCallback(
+    (basePath: string) => {
+      const suggested = normalizeWorkspacePath(`${basePath}/new-folder`)
+      const next = window.prompt('New folder path', suggested)
+      if (!next) return
+      createFolderAtPath(next)
+    },
+    [createFolderAtPath]
+  )
+
   const renameFilePath = useCallback(
     (sourcePath: string) => {
       const nextPathRaw = window.prompt('Rename file path', sourcePath)
@@ -826,6 +903,121 @@ export default function CodeEditor({
     [addLog, ensureModel, removeModel]
   )
 
+  const renameFolderPath = useCallback(
+    (sourcePath: string) => {
+      const normalizedSource = normalizeWorkspacePath(sourcePath)
+      const sourcePrefix = `${normalizedSource}/`
+      const sourceFiles = snapshotRef.current.files.filter((file) =>
+        file.path.startsWith(sourcePrefix)
+      )
+
+      if (sourceFiles.length === 0) {
+        addLog('error', `Folder not found: ${normalizedSource}`)
+        return
+      }
+
+      const nextPathRaw = window.prompt(
+        'Rename folder path',
+        normalizedSource
+      )
+      if (!nextPathRaw) return
+
+      const normalizedTarget = normalizeWorkspacePath(nextPathRaw)
+      if (normalizedTarget === normalizedSource) return
+
+      if (normalizedTarget === '/') {
+        addLog('error', 'Invalid folder path')
+        return
+      }
+
+      if (normalizedTarget.startsWith(sourcePrefix)) {
+        addLog('error', 'Target folder cannot be inside source folder')
+        return
+      }
+
+      const outsidePaths = new Set(
+        snapshotRef.current.files
+          .filter((file) => !file.path.startsWith(sourcePrefix))
+          .map((file) => file.path)
+      )
+
+      const pathMap = new Map<string, string>()
+      for (const file of sourceFiles) {
+        const targetPath = replacePathPrefix(
+          file.path,
+          normalizedSource,
+          normalizedTarget
+        )
+
+        if (outsidePaths.has(targetPath)) {
+          addLog('error', `Target path already exists: ${targetPath}`)
+          return
+        }
+
+        if (pathMap.has(targetPath)) {
+          addLog('error', `Invalid rename target: ${targetPath}`)
+          return
+        }
+
+        pathMap.set(file.path, targetPath)
+      }
+
+      let nextSnapshot = snapshotRef.current
+      for (const [fromPath, toPath] of pathMap.entries()) {
+        nextSnapshot = renameFile(nextSnapshot, fromPath, toPath)
+      }
+
+      setSnapshot(nextSnapshot)
+      snapshotRef.current = nextSnapshot
+
+      for (const [fromPath, toPath] of pathMap.entries()) {
+        const savedValue = savedContentsRef.current[fromPath]
+        if (typeof savedValue === 'string') {
+          savedContentsRef.current[toPath] = savedValue
+          delete savedContentsRef.current[fromPath]
+        }
+
+        const model = modelsRef.current.get(fromPath)
+        if (model) {
+          const content = model.getValue()
+          removeModel(fromPath)
+          ensureModel(toPath, content)
+        }
+      }
+
+      setTabs((prev) =>
+        prev.map((path) =>
+          replacePathPrefix(path, normalizedSource, normalizedTarget)
+        )
+      )
+      setActivePath((prev) =>
+        prev
+          ? replacePathPrefix(prev, normalizedSource, normalizedTarget)
+          : prev
+      )
+      setDirtyPaths((prev) => {
+        const next: Record<string, boolean> = {}
+        for (const [path, dirty] of Object.entries(prev)) {
+          if (!dirty) continue
+          next[replacePathPrefix(path, normalizedSource, normalizedTarget)] =
+            true
+        }
+        return next
+      })
+      setCollapsedFolders((prev) => {
+        const next: Record<string, boolean> = {}
+        for (const [path, collapsed] of Object.entries(prev)) {
+          next[replacePathPrefix(path, normalizedSource, normalizedTarget)] =
+            collapsed
+        }
+        return next
+      })
+
+      addLog('success', `Renamed folder ${normalizedSource} -> ${normalizedTarget}`)
+    },
+    [addLog, ensureModel, removeModel]
+  )
+
   const deleteFilePath = useCallback(
     (targetPath: string) => {
       const confirmed = window.confirm(`Delete file ${targetPath}?`)
@@ -850,6 +1042,70 @@ export default function CodeEditor({
       setActivePath(nextActivePath)
 
       addLog('success', `Deleted ${targetPath}`)
+    },
+    [addLog, removeModel, tabs]
+  )
+
+  const deleteFolderPath = useCallback(
+    (targetPath: string) => {
+      const normalizedPath = normalizeWorkspacePath(targetPath)
+      const folderPrefix = `${normalizedPath}/`
+      const filesToDelete = snapshotRef.current.files
+        .filter((file) => file.path.startsWith(folderPrefix))
+        .map((file) => file.path)
+
+      if (filesToDelete.length === 0) {
+        addLog('error', `Folder not found: ${normalizedPath}`)
+        return
+      }
+
+      const confirmed = window.confirm(
+        `Delete folder ${normalizedPath} and ${filesToDelete.length} file(s)?`
+      )
+      if (!confirmed) return
+
+      let nextSnapshot = snapshotRef.current
+      for (const filePath of filesToDelete) {
+        nextSnapshot = removeFile(nextSnapshot, filePath)
+      }
+
+      setSnapshot(nextSnapshot)
+      snapshotRef.current = nextSnapshot
+
+      for (const filePath of filesToDelete) {
+        delete savedContentsRef.current[filePath]
+        removeModel(filePath)
+      }
+
+      setDirtyPaths((prev) => {
+        const next = { ...prev }
+        for (const path of Object.keys(next)) {
+          if (path.startsWith(folderPrefix)) {
+            delete next[path]
+          }
+        }
+        return next
+      })
+
+      const nextTabs = tabs.filter((path) => !path.startsWith(folderPrefix))
+      const nextActivePath =
+        activePathRef.current && !activePathRef.current.startsWith(folderPrefix)
+          ? activePathRef.current
+          : nextTabs[nextTabs.length - 1] ?? null
+      setTabs(nextTabs)
+      setActivePath(nextActivePath)
+      setCollapsedFolders((prev) => {
+        const next: Record<string, boolean> = {}
+        for (const [path, collapsed] of Object.entries(prev)) {
+          if (path === normalizedPath || path.startsWith(folderPrefix)) {
+            continue
+          }
+          next[path] = collapsed
+        }
+        return next
+      })
+
+      addLog('success', `Deleted folder ${normalizedPath}`)
     },
     [addLog, removeModel, tabs]
   )
@@ -1280,13 +1536,25 @@ export default function CodeEditor({
   useEffect(() => {
     if (!fileContextMenu) return
 
-    const close = () => setFileContextMenu(null)
-    window.addEventListener('mousedown', close)
-    window.addEventListener('blur', close)
+    const closeOnPointerDown = (event: PointerEvent) => {
+      const target = event.target
+      if (
+        target instanceof Node &&
+        fileContextMenuRef.current?.contains(target)
+      ) {
+        return
+      }
+
+      setFileContextMenu(null)
+    }
+    const closeOnBlur = () => setFileContextMenu(null)
+
+    window.addEventListener('pointerdown', closeOnPointerDown)
+    window.addEventListener('blur', closeOnBlur)
 
     return () => {
-      window.removeEventListener('mousedown', close)
-      window.removeEventListener('blur', close)
+      window.removeEventListener('pointerdown', closeOnPointerDown)
+      window.removeEventListener('blur', closeOnBlur)
     }
   }, [fileContextMenu])
 
@@ -1719,25 +1987,34 @@ export default function CodeEditor({
                   <Files className="h-3.5 w-3.5" />
                   Explorer
                 </div>
-                <button
-                  type="button"
-                  className="rounded p-1 text-[#bdbdbd] hover:bg-[#2f2f2f] hover:text-white"
-                  onClick={() => {
-                    const defaultPath = activePath
-                      ? `${dirnamePath(activePath)}/new-file.ts`
-                      : '/new-file.ts'
-                    const next = window.prompt(
-                      'New file path',
-                      normalizeWorkspacePath(defaultPath)
-                    )
-                    if (next) {
-                      createFileAtPath(next)
-                    }
-                  }}
-                  title="New file"
-                >
-                  <FolderPlus className="h-3.5 w-3.5" />
-                </button>
+                <div className="flex items-center gap-1">
+                  <button
+                    type="button"
+                    className="rounded p-1 text-[#bdbdbd] hover:bg-[#2f2f2f] hover:text-white"
+                    onClick={() => {
+                      const basePath = activePath
+                        ? dirnamePath(activePath)
+                        : '/'
+                      promptCreateFileAtBasePath(basePath)
+                    }}
+                    title="New file"
+                  >
+                    <Plus className="h-3.5 w-3.5" />
+                  </button>
+                  <button
+                    type="button"
+                    className="rounded p-1 text-[#bdbdbd] hover:bg-[#2f2f2f] hover:text-white"
+                    onClick={() => {
+                      const basePath = activePath
+                        ? dirnamePath(activePath)
+                        : '/'
+                      promptCreateFolderAtBasePath(basePath)
+                    }}
+                    title="New folder"
+                  >
+                    <FolderPlus className="h-3.5 w-3.5" />
+                  </button>
+                </div>
               </div>
 
               <div className="flex items-center gap-2 border-b border-[#2d2d2d] p-2">
@@ -2024,6 +2301,7 @@ export default function CodeEditor({
 
       {fileContextMenu ? (
         <div
+          ref={fileContextMenuRef}
           className="fixed z-50 min-w-[170px] rounded border border-[#454545] bg-[#252526] py-1 shadow-2xl"
           style={{ left: fileContextMenu.x, top: fileContextMenu.y }}
         >
@@ -2031,52 +2309,74 @@ export default function CodeEditor({
             type="button"
             className="flex w-full items-center gap-2 px-3 py-1.5 text-left text-xs text-[#d4d4d4] hover:bg-[#094771]"
             onClick={() => {
-              const basePath =
-                fileContextMenu.nodeType === 'folder'
-                  ? fileContextMenu.path
-                  : dirnamePath(fileContextMenu.path)
-
-              const suggested = normalizeWorkspacePath(
-                `${basePath}/new-file.ts`
-              )
-              const next = window.prompt('New file path', suggested)
-              if (next) {
-                createFileAtPath(next)
-              }
+              const context = fileContextMenu
               setFileContextMenu(null)
+
+              const basePath =
+                context.nodeType === 'folder'
+                  ? context.path
+                  : dirnamePath(context.path)
+
+              promptCreateFileAtBasePath(basePath)
             }}
           >
             <Plus className="h-3.5 w-3.5" />
             New File
           </button>
 
-          {fileContextMenu.nodeType === 'file' ? (
-            <button
-              type="button"
-              className="flex w-full items-center gap-2 px-3 py-1.5 text-left text-xs text-[#d4d4d4] hover:bg-[#094771]"
-              onClick={() => {
-                renameFilePath(fileContextMenu.path)
-                setFileContextMenu(null)
-              }}
-            >
-              <Pencil className="h-3.5 w-3.5" />
-              Rename
-            </button>
-          ) : null}
+          <button
+            type="button"
+            className="flex w-full items-center gap-2 px-3 py-1.5 text-left text-xs text-[#d4d4d4] hover:bg-[#094771]"
+            onClick={() => {
+              const context = fileContextMenu
+              setFileContextMenu(null)
 
-          {fileContextMenu.nodeType === 'file' ? (
-            <button
-              type="button"
-              className="flex w-full items-center gap-2 px-3 py-1.5 text-left text-xs text-[#d4d4d4] hover:bg-[#094771]"
-              onClick={() => {
-                deleteFilePath(fileContextMenu.path)
-                setFileContextMenu(null)
-              }}
-            >
-              <Trash2 className="h-3.5 w-3.5" />
-              Delete
-            </button>
-          ) : null}
+              const basePath =
+                context.nodeType === 'folder'
+                  ? context.path
+                  : dirnamePath(context.path)
+              promptCreateFolderAtBasePath(basePath)
+            }}
+          >
+            <FolderPlus className="h-3.5 w-3.5" />
+            New Folder
+          </button>
+
+          <button
+            type="button"
+            className="flex w-full items-center gap-2 px-3 py-1.5 text-left text-xs text-[#d4d4d4] hover:bg-[#094771]"
+            onClick={() => {
+              const context = fileContextMenu
+              setFileContextMenu(null)
+
+              if (context.nodeType === 'folder') {
+                renameFolderPath(context.path)
+                return
+              }
+              renameFilePath(context.path)
+            }}
+          >
+            <Pencil className="h-3.5 w-3.5" />
+            {fileContextMenu.nodeType === 'folder' ? 'Rename Folder' : 'Rename'}
+          </button>
+
+          <button
+            type="button"
+            className="flex w-full items-center gap-2 px-3 py-1.5 text-left text-xs text-[#d4d4d4] hover:bg-[#094771]"
+            onClick={() => {
+              const context = fileContextMenu
+              setFileContextMenu(null)
+
+              if (context.nodeType === 'folder') {
+                deleteFolderPath(context.path)
+                return
+              }
+              deleteFilePath(context.path)
+            }}
+          >
+            <Trash2 className="h-3.5 w-3.5" />
+            {fileContextMenu.nodeType === 'folder' ? 'Delete Folder' : 'Delete'}
+          </button>
         </div>
       ) : null}
 
