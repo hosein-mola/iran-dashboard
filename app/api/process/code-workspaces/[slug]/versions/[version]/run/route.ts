@@ -2,14 +2,19 @@ import { NextResponse } from 'next/server'
 import prisma from '@/lib/prisma'
 import { runCodeWorkspaceVersionSchema } from '@/schemas/code-workspace-run'
 import { executeSavedCode } from '@/lib/execute-saved-code'
+import {
+  findWorkspaceBySlugForUser,
+  getUserIdentity,
+  normalizeEntryPath,
+} from '@/lib/code-workspaces/server'
 
 export const runtime = 'nodejs'
 
-function normalizePath(p?: string) {
-  if (!p) return null
-  const trimmed = p.trim()
-  if (!trimmed) return null
-  return trimmed.startsWith('/') ? trimmed : `/${trimmed}`
+type BundleMeta = {
+  bundles?: Record<
+    string,
+    { code?: unknown; hash?: unknown; sizeBytes?: unknown; savedAt?: unknown }
+  >
 }
 
 function safeJsonParse<T>(value: unknown, fallback: T): T {
@@ -22,10 +27,6 @@ function safeJsonParse<T>(value: unknown, fallback: T): T {
   }
 }
 
-type BundleMeta = {
-  bundles?: Record<string, { code?: unknown; hash?: unknown; sizeBytes?: unknown; savedAt?: unknown }>
-}
-
 function withoutKnownExtension(path: string) {
   return path.replace(/\.(tsx?|jsx?)$/i, '')
 }
@@ -34,22 +35,37 @@ function resolveBundle(
   bundles: NonNullable<BundleMeta['bundles']>,
   requestedPath: string | null
 ) {
-  const entries = Object.entries(bundles).filter(([, bundle]) => typeof bundle?.code === 'string')
+  const entries = Object.entries(bundles).filter(
+    ([, bundle]) => typeof bundle?.code === 'string'
+  )
   if (entries.length === 0) return null
 
   if (requestedPath) {
     const exact = bundles[requestedPath]
     if (typeof exact?.code === 'string') {
-      return { entryPath: requestedPath, bundle: exact }
+      return {
+        entryPath: requestedPath,
+        bundle: exact,
+      }
     }
 
     const requestedBase = withoutKnownExtension(requestedPath)
-    const matched = entries.find(([entryPath]) => withoutKnownExtension(entryPath) === requestedBase)
-    if (matched) return { entryPath: matched[0], bundle: matched[1] }
+    const matched = entries.find(
+      ([entryPath]) => withoutKnownExtension(entryPath) === requestedBase
+    )
+    if (matched) {
+      return {
+        entryPath: matched[0],
+        bundle: matched[1],
+      }
+    }
   }
 
   if (entries.length === 1) {
-    return { entryPath: entries[0][0], bundle: entries[0][1] }
+    return {
+      entryPath: entries[0][0],
+      bundle: entries[0][1],
+    }
   }
 
   return null
@@ -60,41 +76,74 @@ export async function POST(
   { params }: { params: Promise<{ slug: string; version: string }> }
 ) {
   const { slug, version } = await params
-  const v = Number(version)
-  if (!Number.isFinite(v) || v <= 0) {
-    return NextResponse.json({ success: false, error: 'Invalid version' }, { status: 400 })
+  const parsedVersion = Number(version)
+
+  if (!Number.isFinite(parsedVersion) || parsedVersion <= 0) {
+    return NextResponse.json(
+      {
+        success: false,
+        error: 'Invalid version',
+      },
+      { status: 400 }
+    )
   }
 
   const body = await req.json().catch(() => null)
   const parsed = runCodeWorkspaceVersionSchema.safeParse(body)
   if (!parsed.success) {
     return NextResponse.json(
-      { success: false, error: 'Invalid request', issues: parsed.error.issues },
+      {
+        success: false,
+        error: 'Invalid request',
+        issues: parsed.error.issues,
+      },
       { status: 400 }
     )
   }
 
-  const ws = await prisma.codeWorkspace.findFirst({
-    where: { slug },
-    orderBy: { updatedAt: 'desc' },
-    select: { id: true },
-  })
-  if (!ws) {
-    return NextResponse.json({ success: false, error: 'Workspace not found' }, { status: 404 })
+  const userId = getUserIdentity(req)
+  const workspace = await findWorkspaceBySlugForUser(slug, userId)
+
+  if (!workspace) {
+    return NextResponse.json(
+      {
+        success: false,
+        error: 'Workspace not found',
+      },
+      { status: 404 }
+    )
   }
 
   const row = await prisma.codeWorkspaceVersion.findUnique({
-    where: { workspaceId_version: { workspaceId: ws.id, version: v } },
-    select: { meta: true },
+    where: {
+      workspaceId_version: {
+        workspaceId: workspace.id,
+        version: parsedVersion,
+      },
+    },
+    select: {
+      meta: true,
+    },
   })
+
   if (!row) {
-    return NextResponse.json({ success: false, error: 'Version not found' }, { status: 404 })
+    return NextResponse.json(
+      {
+        success: false,
+        error: 'Version not found',
+      },
+      { status: 404 }
+    )
   }
 
   const meta = safeJsonParse<BundleMeta>(row.meta, {})
   const bundles = meta.bundles ?? {}
-  const requestedPath = normalizePath(parsed.data.entryPath)
-  const resolved = resolveBundle(bundles, requestedPath)
+
+  const requestedEntryPath = parsed.data.entryPath
+    ? normalizeEntryPath(parsed.data.entryPath)
+    : null
+
+  const resolved = resolveBundle(bundles, requestedEntryPath)
   if (!resolved) {
     const availableEntries = Object.entries(bundles)
       .filter(([, bundle]) => typeof bundle?.code === 'string')
@@ -103,8 +152,8 @@ export async function POST(
     return NextResponse.json(
       {
         success: false,
-        error: requestedPath
-          ? `Bundle not found in database for entry: ${requestedPath}`
+        error: requestedEntryPath
+          ? `Bundle not found in database for entry: ${requestedEntryPath}`
           : 'Bundle not found in database for this version',
         availableEntries,
       },
@@ -112,10 +161,13 @@ export async function POST(
     )
   }
 
-  const code = resolved.bundle.code as string
+  const code = String(resolved.bundle.code)
   if (code.length > 2_000_000) {
     return NextResponse.json(
-      { success: false, error: 'Bundle code too large (max 2MB)' },
+      {
+        success: false,
+        error: 'Bundle code too large (max 2MB)',
+      },
       { status: 413 }
     )
   }
@@ -134,11 +186,16 @@ export async function POST(
       meta: {
         used: 'bundle',
         entryPath: resolved.entryPath,
-        requestedEntryPath: requestedPath,
+        requestedEntryPath,
         hash: typeof resolved.bundle.hash === 'string' ? resolved.bundle.hash : null,
         sizeBytes:
-          typeof resolved.bundle.sizeBytes === 'number' ? resolved.bundle.sizeBytes : code.length,
-        savedAt: typeof resolved.bundle.savedAt === 'string' ? resolved.bundle.savedAt : null,
+          typeof resolved.bundle.sizeBytes === 'number'
+            ? resolved.bundle.sizeBytes
+            : code.length,
+        savedAt:
+          typeof resolved.bundle.savedAt === 'string'
+            ? resolved.bundle.savedAt
+            : null,
       },
     },
     { status: 200 }

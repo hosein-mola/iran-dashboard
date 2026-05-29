@@ -81,6 +81,14 @@ parentPort.on('message', async (msg) => {
     const fn =
       (exported && typeof exported === 'object' && typeof exported[msg.functionName] === 'function'
         ? exported[msg.functionName]
+        : context.workspaceBundle &&
+            typeof context.workspaceBundle === 'object' &&
+            typeof context.workspaceBundle[msg.functionName] === 'function'
+          ? context.workspaceBundle[msg.functionName]
+          : context.default &&
+              typeof context.default === 'object' &&
+              typeof context.default[msg.functionName] === 'function'
+            ? context.default[msg.functionName]
         : typeof context[msg.functionName] === 'function'
           ? context[msg.functionName]
           : null);

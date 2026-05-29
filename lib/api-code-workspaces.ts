@@ -1,31 +1,74 @@
-import type { FileSystem } from '@/components/code-editor/types'
+import type {
+  SaveBundleResponse,
+  SaveVersionResponse,
+  WorkspaceLoadResponse,
+  WorkspaceProject,
+  WorkspaceSnapshotV1,
+  WorkspaceVersionSummary,
+} from '@/components/code-editor/types'
 
-export type WorkspaceVersionSummary = {
-  id: string
-  version: number
-  message: string
-  isAutosave: boolean
-  createdAt: string
-  snapshotHash: string
-  sizeBytes: number
+function assertOk(res: Response, fallback: string) {
+  if (res.ok) return
+  throw new Error(fallback)
 }
 
-export async function fetchWorkspace(slug: string) {
+async function parseErrorMessage(res: Response, fallback: string) {
+  const data = await res.json().catch(() => null)
+  const message = data?.error ? String(data.error) : fallback
+  throw new Error(message)
+}
+
+export async function listCodeWorkspaces(): Promise<{ workspaces: WorkspaceProject[] }> {
+  const res = await fetch('/api/process/code-workspaces', {
+    method: 'GET',
+    headers: { 'Content-Type': 'application/json' },
+  })
+
+  if (!res.ok) {
+    await parseErrorMessage(res, `Failed to list projects (HTTP ${res.status})`)
+  }
+
+  return (await res.json()) as { workspaces: WorkspaceProject[] }
+}
+
+export async function createCodeWorkspace(input: {
+  slug: string
+  name: string
+  description?: string
+  initialSnapshot?: WorkspaceSnapshotV1
+}): Promise<{ workspace: WorkspaceProject; latest: { id: string; version: number } | null }> {
+  const res = await fetch('/api/process/code-workspaces', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(input),
+  })
+
+  if (!res.ok) {
+    await parseErrorMessage(res, `Failed to create project (HTTP ${res.status})`)
+  }
+
+  return (await res.json()) as {
+    workspace: WorkspaceProject
+    latest: { id: string; version: number } | null
+  }
+}
+
+export async function fetchWorkspace(slug: string): Promise<WorkspaceLoadResponse> {
   const res = await fetch(`/api/process/code-workspaces/${encodeURIComponent(slug)}`, {
     method: 'GET',
     headers: { 'Content-Type': 'application/json' },
   })
-  if (!res.ok) throw new Error(`Failed to load workspace (HTTP ${res.status})`)
-  return res.json() as Promise<{
-    workspace: { id: string; slug: string; name: string; language: string; currentVersion: number } | null
-    latest: { id: string; version: number; snapshot: string; message: string; createdAt: string } | null
-    versions: WorkspaceVersionSummary[]
-  }>
+
+  if (!res.ok) {
+    await parseErrorMessage(res, `Failed to load project (HTTP ${res.status})`)
+  }
+
+  return (await res.json()) as WorkspaceLoadResponse
 }
 
 export async function saveWorkspaceVersion(opts: {
   slug: string
-  snapshot: FileSystem
+  snapshot: WorkspaceSnapshotV1
   message?: string
   isAutosave?: boolean
   clientRequestId?: string
@@ -40,29 +83,53 @@ export async function saveWorkspaceVersion(opts: {
       clientRequestId: opts.clientRequestId,
     }),
   })
-  const data = await res.json().catch(() => null)
+
   if (!res.ok) {
-    const msg = data?.error ? String(data.error) : `HTTP ${res.status}`
-    throw new Error(`Save failed: ${msg}`)
+    await parseErrorMessage(res, `Save failed (HTTP ${res.status})`)
   }
-  return data as {
-    workspaceId: string
-    id: string
-    version: number
-    createdAt: string
-    message: string
-    snapshotHash: string
-    sizeBytes: number
-    isAutosave: boolean
-  }
+
+  return (await res.json()) as SaveVersionResponse
 }
 
-export async function fetchWorkspaceVersions(slug: string, limit = 50) {
-  const url = new URL(`/api/process/code-workspaces/${encodeURIComponent(slug)}/versions`, window.location.origin)
+export async function saveWorkspaceBundle(opts: {
+  slug: string
+  version: number
+  entryPath: string
+  code: string
+}) {
+  const res = await fetch(
+    `/api/process/code-workspaces/${encodeURIComponent(opts.slug)}/versions/${encodeURIComponent(String(opts.version))}/bundle`,
+    {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        entryPath: opts.entryPath,
+        code: opts.code,
+      }),
+    }
+  )
+
+  if (!res.ok) {
+    await parseErrorMessage(res, `Bundle save failed (HTTP ${res.status})`)
+  }
+
+  return (await res.json()) as SaveBundleResponse
+}
+
+export async function fetchWorkspaceVersions(
+  slug: string,
+  limit = 50
+): Promise<{ versions: WorkspaceVersionSummary[] }> {
+  const url = new URL(
+    `/api/process/code-workspaces/${encodeURIComponent(slug)}/versions`,
+    window.location.origin
+  )
   url.searchParams.set('limit', String(limit))
+
   const res = await fetch(url.toString(), { method: 'GET' })
-  if (!res.ok) throw new Error(`Failed to load versions (HTTP ${res.status})`)
-  return res.json() as Promise<{ versions: WorkspaceVersionSummary[] }>
+  assertOk(res, `Failed to load versions (HTTP ${res.status})`)
+
+  return (await res.json()) as { versions: WorkspaceVersionSummary[] }
 }
 
 export async function fetchWorkspaceVersionSnapshot(slug: string, version: number) {
@@ -70,6 +137,18 @@ export async function fetchWorkspaceVersionSnapshot(slug: string, version: numbe
     `/api/process/code-workspaces/${encodeURIComponent(slug)}/versions/${encodeURIComponent(String(version))}`,
     { method: 'GET' }
   )
-  if (!res.ok) throw new Error(`Failed to load version (HTTP ${res.status})`)
-  return res.json() as Promise<{ id: string; version: number; snapshot: string; message: string; createdAt: string }>
+
+  if (!res.ok) {
+    await parseErrorMessage(res, `Failed to load version ${version} (HTTP ${res.status})`)
+  }
+
+  return (await res.json()) as {
+    id: string
+    version: number
+    snapshot: string
+    message: string
+    createdAt: string
+    snapshotHash: string
+    sizeBytes: number
+  }
 }

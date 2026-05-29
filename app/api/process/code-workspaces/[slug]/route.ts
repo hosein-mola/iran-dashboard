@@ -1,107 +1,71 @@
 import { NextResponse } from 'next/server'
 import prisma from '@/lib/prisma'
+import {
+  findWorkspaceBySlugForUser,
+  getClientIp,
+  getUserIdentity,
+  sha256Hex,
+} from '@/lib/code-workspaces/server'
 import { saveCodeWorkspaceVersionSchema } from '@/schemas/code-workspace'
 
-function getClientIp(req: Request) {
-  const xf = req.headers.get('x-forwarded-for')
-  if (xf) return xf.split(',')[0]?.trim() || null
-  return (
-    req.headers.get('cf-connecting-ip') ??
-    req.headers.get('x-real-ip') ??
-    null
-  )
-}
-
-function getUserIdentity(req: Request) {
-  // Minimal, forward-compatible identity resolution.
-  // In production, replace with real auth and stable user id.
-  const cookie = req.headers.get('cookie') ?? ''
-  const m = cookie.match(/(?:^|;\s*)session=([^;]+)/)
-  if (m?.[1]) {
-    try {
-      const parsed = JSON.parse(decodeURIComponent(m[1]))
-      const userId =
-        parsed?.userId ?? parsed?.id ?? parsed?.email ?? parsed?.token
-      if (typeof userId === 'string' && userId.length > 0) return userId
-    } catch {}
-  }
-  return 'local-dev'
-}
-
-async function findWorkspaceBySlug(slug: string) {
-  return await prisma.codeWorkspace.findFirst({
-    where: { slug },
-    orderBy: { updatedAt: 'desc' },
-    include: {
-      versions: {
-        orderBy: { version: 'desc' },
-        take: 50,
-        select: {
-          id: true,
-          version: true,
-          message: true,
-          isAutosave: true,
-          createdAt: true,
-          snapshotHash: true,
-          sizeBytes: true,
-        },
-      },
-    },
-  })
-}
-
-async function sha256Hex(input: string) {
-  const bytes = new TextEncoder().encode(input)
-  const digest = await crypto.subtle.digest('SHA-256', bytes)
-  return Array.from(new Uint8Array(digest))
-    .map((b) => b.toString(16).padStart(2, '0'))
-    .join('')
-}
+const MAX_SNAPSHOT_BYTES = 2_000_000
 
 export async function GET(
   req: Request,
   { params }: { params: Promise<{ slug: string }> }
 ) {
   const { slug } = await params
-  const res = await findWorkspaceBySlug(slug)
+  const userId = getUserIdentity(req)
 
-  if (!res) {
-    return NextResponse.json(
-      {
-        workspace: null,
-        latest: null,
-        versions: [],
-      },
-      { status: 200 }
-    )
+  const workspace = await findWorkspaceBySlugForUser(slug, userId)
+  if (!workspace) {
+    return NextResponse.json({
+      workspace: null,
+      latest: null,
+      versions: [],
+    })
   }
 
-  const latest =
-    res.versions.length > 0
-      ? await prisma.codeWorkspaceVersion.findFirst({
-          where: { workspaceId: res.id },
-          orderBy: { version: 'desc' },
-          select: {
-            id: true,
-            version: true,
-            snapshot: true,
-            message: true,
-            createdAt: true,
-          },
-        })
-      : null
+  const [versions, latest] = await Promise.all([
+    prisma.codeWorkspaceVersion.findMany({
+      where: { workspaceId: workspace.id },
+      orderBy: { version: 'desc' },
+      take: 50,
+      select: {
+        id: true,
+        version: true,
+        message: true,
+        isAutosave: true,
+        createdAt: true,
+        snapshotHash: true,
+        sizeBytes: true,
+      },
+    }),
+    prisma.codeWorkspaceVersion.findFirst({
+      where: { workspaceId: workspace.id },
+      orderBy: { version: 'desc' },
+      select: {
+        id: true,
+        version: true,
+        snapshot: true,
+        message: true,
+        createdAt: true,
+      },
+    }),
+  ])
 
   return NextResponse.json({
     workspace: {
-      id: res.id,
-      slug: res.slug,
-      name: res.name,
-      language: res.language,
-      currentVersion: res.currentVersion,
-      updatedAt: res.updatedAt,
+      id: workspace.id,
+      slug: workspace.slug,
+      name: workspace.name,
+      description: workspace.description,
+      language: workspace.language,
+      currentVersion: workspace.currentVersion,
+      updatedAt: workspace.updatedAt,
     },
     latest,
-    versions: res.versions,
+    versions,
   })
 }
 
@@ -112,39 +76,43 @@ export async function POST(
   const { slug } = await params
   const body = await req.json().catch(() => null)
   const parsed = saveCodeWorkspaceVersionSchema.safeParse(body)
+
   if (!parsed.success) {
     return NextResponse.json(
-      { error: 'Invalid request', issues: parsed.error.issues },
+      {
+        error: 'Invalid request',
+        issues: parsed.error.issues,
+      },
       { status: 400 }
     )
   }
 
   const snapshotStr = JSON.stringify(parsed.data.snapshot)
   const sizeBytes = new TextEncoder().encode(snapshotStr).byteLength
-  if (sizeBytes > 2_000_000) {
+  if (sizeBytes > MAX_SNAPSHOT_BYTES) {
     return NextResponse.json(
-      { error: 'Snapshot too large (max 2MB)' },
+      {
+        error: 'Snapshot too large (max 2MB)',
+      },
       { status: 413 }
     )
   }
 
-  const clientRequestId = parsed.data.clientRequestId
-  const message = parsed.data.message?.trim() ?? ''
+  const userId = getUserIdentity(req)
+  const message = parsed.data.message ?? ''
   const isAutosave = parsed.data.isAutosave ?? false
+  const clientRequestId = parsed.data.clientRequestId
 
-  let workspace = await prisma.codeWorkspace.findFirst({
-    where: { slug },
-    orderBy: { updatedAt: 'desc' },
-  })
-
+  let workspace = await findWorkspaceBySlugForUser(slug, userId)
   if (!workspace) {
     workspace = await prisma.codeWorkspace.create({
       data: {
         slug,
         name: slug,
+        description: '',
         language: 'typescript',
-        createdByUserId: 'public',
-        updatedByUserId: 'public',
+        createdByUserId: userId,
+        updatedByUserId: userId,
       },
     })
   }
@@ -167,7 +135,13 @@ export async function POST(
         isAutosave: true,
       },
     })
-    if (existing) return NextResponse.json({ workspaceId: workspace.id, ...existing })
+
+    if (existing) {
+      return NextResponse.json({
+        workspaceId: workspace.id,
+        ...existing,
+      })
+    }
   }
 
   const snapshotHash = await sha256Hex(snapshotStr)
@@ -176,26 +150,29 @@ export async function POST(
   const referer = req.headers.get('referer')
 
   const created = await prisma.$transaction(async (tx) => {
-    // Re-read inside transaction.
     const ws = await tx.codeWorkspace.findUniqueOrThrow({
       where: { id: workspace.id },
+      select: {
+        id: true,
+        currentVersion: true,
+      },
     })
 
-    const nextVersion = ws.currentVersion + 1
-    const versionRow = await tx.codeWorkspaceVersion.create({
+    const version = ws.currentVersion + 1
+    const row = await tx.codeWorkspaceVersion.create({
       data: {
         workspaceId: ws.id,
-        version: nextVersion,
+        version,
         snapshot: snapshotStr,
         snapshotHash,
-        sizeBytes,
         message,
         isAutosave,
         clientRequestId,
         ip,
         userAgent,
         referer,
-        createdByUserId: 'public',
+        sizeBytes,
+        createdByUserId: userId,
       },
       select: {
         id: true,
@@ -211,13 +188,19 @@ export async function POST(
     await tx.codeWorkspace.update({
       where: { id: ws.id },
       data: {
-        currentVersion: nextVersion,
-        updatedByUserId: 'public',
+        currentVersion: version,
+        updatedByUserId: userId,
       },
     })
 
-    return versionRow
+    return row
   })
 
-  return NextResponse.json({ workspaceId: workspace.id, ...created }, { status: 201 })
+  return NextResponse.json(
+    {
+      workspaceId: workspace.id,
+      ...created,
+    },
+    { status: 201 }
+  )
 }

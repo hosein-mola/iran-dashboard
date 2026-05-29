@@ -1,11 +1,16 @@
 import { NextResponse } from 'next/server'
 import prisma from '@/lib/prisma'
+import {
+  findWorkspaceBySlugForUser,
+  getUserIdentity,
+} from '@/lib/code-workspaces/server'
 
 export async function GET(
   req: Request,
   { params }: { params: Promise<{ slug: string }> }
 ) {
   const { slug } = await params
+  const userId = getUserIdentity(req)
 
   const url = new URL(req.url)
   const limitRaw = url.searchParams.get('limit')
@@ -17,16 +22,14 @@ export async function GET(
       ? Number(beforeVersionRaw)
       : null
 
-  const ws = await prisma.codeWorkspace.findFirst({
-    where: { slug },
-    orderBy: { updatedAt: 'desc' },
-    select: { id: true },
-  })
-  if (!ws) return NextResponse.json({ versions: [] })
+  const workspace = await findWorkspaceBySlugForUser(slug, userId)
+  if (!workspace) {
+    return NextResponse.json({ versions: [] })
+  }
 
   const versions = await prisma.codeWorkspaceVersion.findMany({
     where: {
-      workspaceId: ws.id,
+      workspaceId: workspace.id,
       ...(beforeVersion ? { version: { lt: beforeVersion } } : {}),
     },
     orderBy: { version: 'desc' },

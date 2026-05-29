@@ -1,30 +1,107 @@
-export type FileId = string;
+export type SupportedLanguage =
+  | 'typescript'
+  | 'javascript'
+  | 'markdown'
+  | 'json'
+  | 'plaintext'
 
-export interface FileNode {
-  id: FileId;
-  name: string;
-  type: "file" | "folder";
-  parentId: FileId | null;
-  content?: string;
+export type WorkspaceFile = {
+  path: string
+  content: string
+  language: SupportedLanguage
+  updatedAt: string
 }
 
-export interface FileSystem {
-  nodes: Record<FileId, FileNode>;
-  rootIds: FileId[];
+export type WorkspaceSnapshotV1 = {
+  schemaVersion: 1
+  entryPath: string
+  files: WorkspaceFile[]
 }
 
-export interface Tab {
-  fileId: FileId;
-  dirty: boolean;
+export type WorkspaceProject = {
+  id: string
+  slug: string
+  name: string
+  description: string
+  language: string
+  currentVersion: number
+  updatedAt: string
 }
 
-export interface CtxMenu {
-  x: number;
-  y: number;
-  nodeId: FileId | null;
+export type WorkspaceVersionSummary = {
+  id: string
+  version: number
+  message: string
+  isAutosave: boolean
+  createdAt: string
+  snapshotHash: string
+  sizeBytes: number
 }
 
-export interface DragItem {
-  type: "file" | "folder";
-  id: FileId;
+export type WorkspaceLoadResponse = {
+  workspace: WorkspaceProject | null
+  latest: {
+    id: string
+    version: number
+    snapshot: string
+    message: string
+    createdAt: string
+  } | null
+  versions: WorkspaceVersionSummary[]
+}
+
+export type SaveVersionResponse = {
+  workspaceId: string
+  id: string
+  version: number
+  createdAt: string
+  message: string
+  snapshotHash: string
+  sizeBytes: number
+  isAutosave: boolean
+}
+
+export type SaveBundleResponse = {
+  success: boolean
+  version: number
+  entryPath: string
+  hash: string
+  sizeBytes: number
+  savedAt: string
+}
+
+export type BuildWorkerRequest = {
+  requestId: string
+  entryPath: string
+  files: Record<string, string>
+}
+
+export type BuildWorkerResponse =
+  | {
+      requestId: string
+      ok: true
+      entryPath: string
+      output: string
+      warnings: string[]
+    }
+  | {
+      requestId: string
+      ok: false
+      entryPath: string
+      error: string
+      warnings: string[]
+    }
+
+export type EditorTab = {
+  path: string
+  dirty: boolean
+}
+
+export type BuildLogLevel = 'info' | 'error' | 'success'
+
+export type BuildLogEntry = {
+  id: string
+  level: BuildLogLevel
+  message: string
+  at: string
 }

@@ -1,1778 +1,1314 @@
-"use client";
+'use client'
 
-import React, {
+import { loader } from '@monaco-editor/react'
+import * as monacoEditor from 'monaco-editor'
+import {
+  type CSSProperties,
+  type ReactNode,
   useCallback,
   useEffect,
+  useMemo,
   useRef,
   useState,
-  useMemo,
-} from "react";
-import { loader } from "@monaco-editor/react";
-import * as monaco from "monaco-editor";
-import { motion, AnimatePresence } from "framer-motion";
-import { runCode } from "../../lib/api-code";
+} from 'react'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { cn } from '@/lib/utils'
 import {
+  createCodeWorkspace,
   fetchWorkspace,
   fetchWorkspaceVersionSnapshot,
+  fetchWorkspaceVersions,
+  listCodeWorkspaces,
+  saveWorkspaceBundle,
   saveWorkspaceVersion,
-  type WorkspaceVersionSummary,
-} from "../../lib/api-code-workspaces";
-
+} from '@/lib/api-code-workspaces'
 import {
-  type FileId,
-  type FileNode,
-  type FileSystem,
-  type Tab,
-  type CtxMenu,
-} from "./types";
-import {
-  loadFS,
-  saveFS,
-  langFromName,
-  getDepth,
-  deleteNode,
-  uid,
-  moveNode,
-  debounce,
-} from "./helpers";
-import { Icon, ActionBtn } from "./icons";
-import ActivityBar from "./ActivityBar";
-import FileTree from "./FileTree";
-import TabBar from "./TabBar";
-import EditorPanel from "./EditorPanel";
-import ContextMenu from "./ContextMenu";
+  applyFileContent,
+  createDefaultSnapshot,
+  detectLanguageByPath,
+  ensureTabTargetsExist,
+  normalizeWorkspacePath,
+  parseWorkspaceSnapshot,
+  pickBuildTarget,
+  renameFile,
+  removeFile,
+  snapshotToFileMap,
+  upsertFile,
+} from './snapshot'
+import type {
+  BuildLogEntry,
+  BuildWorkerRequest,
+  BuildWorkerResponse,
+  WorkspaceProject,
+  WorkspaceSnapshotV1,
+  WorkspaceVersionSummary,
+} from './types'
 
-// Monaco needs explicit worker wiring in Next.js/Turbopack, otherwise
-// language features (format/save/diagnostics) can crash with moduleIdToUrl errors.
-if (typeof self !== "undefined") {
-  (self as any).MonacoEnvironment = {
-    getWorker: (_: unknown, label: string) => {
-      switch (label) {
-        case "json":
-          return new Worker(
-            new URL(
-              "monaco-editor/esm/vs/language/json/json.worker.js",
-              import.meta.url,
-            ),
-            { type: "module" },
-          );
-        case "css":
-        case "scss":
-        case "less":
-          return new Worker(
-            new URL(
-              "monaco-editor/esm/vs/language/css/css.worker.js",
-              import.meta.url,
-            ),
-            { type: "module" },
-          );
-        case "html":
-        case "handlebars":
-        case "razor":
-          return new Worker(
-            new URL(
-              "monaco-editor/esm/vs/language/html/html.worker.js",
-              import.meta.url,
-            ),
-            { type: "module" },
-          );
-        case "typescript":
-        case "javascript":
-          return new Worker(
-            new URL(
-              "monaco-editor/esm/vs/language/typescript/ts.worker.js",
-              import.meta.url,
-            ),
-            { type: "module" },
-          );
-        default:
-          return new Worker(
-            new URL(
-              "monaco-editor/esm/vs/editor/editor.worker.js",
-              import.meta.url,
-            ),
-            { type: "module" },
-          );
-      }
-    },
-  };
+loader.config({ monaco: monacoEditor })
+
+type MonacoApi = typeof monacoEditor
+type MonacoEditorInstance = monacoEditor.editor.IStandaloneCodeEditor
+
+type FileTreeNode = {
+  name: string
+  fullPath: string
+  type: 'file' | 'folder'
+  children: FileTreeNode[]
 }
 
-loader.config({ monaco });
+type MutableTreeNode = {
+  name: string
+  fullPath: string
+  type: 'file' | 'folder'
+  children: Map<string, MutableTreeNode>
+}
+
+type BuildWorkerPending = {
+  resolve: (value: BuildWorkerResponse) => void
+  reject: (reason?: unknown) => void
+  timeoutId: ReturnType<typeof setTimeout>
+}
+
+const MAX_LOG_LINES = 80
+const DEFAULT_WORKSPACE_SLUG = 'process'
+
+let monacoWorkersConfigured = false
+
+function configureMonacoWorkers() {
+  if (monacoWorkersConfigured || typeof window === 'undefined') return
+  ;(
+    self as Window & typeof globalThis & { MonacoEnvironment?: unknown }
+  ).MonacoEnvironment = {
+    getWorker(_: unknown, label: string) {
+      if (label === 'json') {
+        return new Worker(
+          new URL(
+            'monaco-editor/esm/vs/language/json/json.worker.js',
+            import.meta.url
+          ),
+          { type: 'module' }
+        )
+      }
+
+      if (label === 'css' || label === 'scss' || label === 'less') {
+        return new Worker(
+          new URL(
+            'monaco-editor/esm/vs/language/css/css.worker.js',
+            import.meta.url
+          ),
+          { type: 'module' }
+        )
+      }
+
+      if (label === 'html' || label === 'handlebars' || label === 'razor') {
+        return new Worker(
+          new URL(
+            'monaco-editor/esm/vs/language/html/html.worker.js',
+            import.meta.url
+          ),
+          { type: 'module' }
+        )
+      }
+
+      if (label === 'typescript' || label === 'javascript') {
+        return new Worker(
+          new URL(
+            'monaco-editor/esm/vs/language/typescript/ts.worker.js',
+            import.meta.url
+          ),
+          { type: 'module' }
+        )
+      }
+
+      return new Worker(
+        new URL(
+          'monaco-editor/esm/vs/editor/editor.worker.js',
+          import.meta.url
+        ),
+        { type: 'module' }
+      )
+    },
+  }
+
+  monacoWorkersConfigured = true
+}
+
+function configureTypeScriptLanguageService(m: MonacoApi) {
+  const commonCompilerOptions = {
+    target: m.languages.typescript.ScriptTarget.ES2020,
+    module: m.languages.typescript.ModuleKind.ESNext,
+    moduleResolution: m.languages.typescript.ModuleResolutionKind.NodeJs,
+    allowNonTsExtensions: true,
+    allowJs: true,
+    strict: true,
+    noEmit: true,
+    esModuleInterop: true,
+    resolveJsonModule: true,
+  }
+
+  m.languages.typescript.typescriptDefaults.setCompilerOptions(
+    commonCompilerOptions
+  )
+  m.languages.typescript.javascriptDefaults.setCompilerOptions(
+    commonCompilerOptions
+  )
+
+  m.languages.typescript.typescriptDefaults.setDiagnosticsOptions({
+    noSemanticValidation: false,
+    noSyntaxValidation: false,
+    noSuggestionDiagnostics: false,
+    onlyVisible: false,
+  })
+
+  m.languages.typescript.javascriptDefaults.setDiagnosticsOptions({
+    noSemanticValidation: false,
+    noSyntaxValidation: false,
+    noSuggestionDiagnostics: false,
+    onlyVisible: false,
+  })
+
+  m.languages.typescript.typescriptDefaults.setEagerModelSync(true)
+  m.languages.typescript.javascriptDefaults.setEagerModelSync(true)
+}
+
+function asSlug(input: string) {
+  return input
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/-{2,}/g, '-')
+    .replace(/^-+|-+$/g, '')
+}
+
+function buildTree(paths: string[]): FileTreeNode[] {
+  const root = new Map<string, MutableTreeNode>()
+
+  for (const path of paths) {
+    const normalized = normalizeWorkspacePath(path)
+    const parts = normalized.split('/').filter(Boolean)
+    if (parts.length === 0) continue
+
+    let currentMap = root
+    let currentPath = ''
+
+    for (let i = 0; i < parts.length; i += 1) {
+      const name = parts[i]
+      currentPath = `${currentPath}/${name}`
+      const isFile = i === parts.length - 1
+
+      if (!currentMap.has(name)) {
+        currentMap.set(name, {
+          name,
+          fullPath: currentPath,
+          type: isFile ? 'file' : 'folder',
+          children: new Map<string, MutableTreeNode>(),
+        })
+      }
+
+      const node = currentMap.get(name)
+      if (!node) continue
+
+      if (!isFile) {
+        node.type = 'folder'
+        currentMap = node.children
+      }
+    }
+  }
+
+  const toSorted = (nodes: MutableTreeNode[]): FileTreeNode[] => {
+    return nodes
+      .map((node) => {
+        const children = toSorted(Array.from(node.children.values()))
+        return {
+          name: node.name,
+          fullPath: node.fullPath,
+          type: node.type,
+          children,
+        }
+      })
+      .sort((a, b) => {
+        if (a.type !== b.type) return a.type === 'folder' ? -1 : 1
+        return a.name.localeCompare(b.name)
+      })
+  }
+
+  return toSorted(Array.from(root.values()))
+}
+
+function pickDefaultContent(path: string): string {
+  const lower = path.toLowerCase()
+
+  if (lower.endsWith('.md')) {
+    return '# Notes\n\n'
+  }
+
+  if (lower.endsWith('.json')) {
+    return '{\n  \n}\n'
+  }
+
+  if (lower.endsWith('.ts') || lower.endsWith('.tsx')) {
+    return 'export {}\n'
+  }
+
+  if (lower.endsWith('.js') || lower.endsWith('.jsx')) {
+    return 'export {}\n'
+  }
+
+  return ''
+}
+
+function monacoLanguageForPath(path: string) {
+  const language = detectLanguageByPath(path)
+  if (language === 'typescript') return 'typescript'
+  if (language === 'javascript') return 'javascript'
+  if (language === 'markdown') return 'markdown'
+  if (language === 'json') return 'json'
+  return 'plaintext'
+}
 
 export default function CodeEditor({
-  workspaceSlug = "process",
+  workspaceSlug = DEFAULT_WORKSPACE_SLUG,
 }: {
-  workspaceSlug?: string;
+  workspaceSlug?: string
 }) {
-  const editorRef = useRef<{
-    editor: monaco.editor.IStandaloneCodeEditor;
-    monaco: typeof monaco;
-  } | null>(null);
-  const editorDisposedRef = useRef(false);
-  const modelsRef = useRef<Record<FileId, monaco.editor.ITextModel>>({});
-  const disposablesRef = useRef<monaco.IDisposable[]>([]);
+  const [projects, setProjects] = useState<WorkspaceProject[]>([])
+  const [selectedProjectSlug, setSelectedProjectSlug] = useState(workspaceSlug)
+  const [snapshot, setSnapshot] = useState<WorkspaceSnapshotV1>(() =>
+    createDefaultSnapshot(workspaceSlug)
+  )
+  const [tabs, setTabs] = useState<string[]>([])
+  const [activePath, setActivePath] = useState<string | null>(null)
+  const [versions, setVersions] = useState<WorkspaceVersionSummary[]>([])
+  const [selectedVersion, setSelectedVersion] = useState<number | null>(null)
+  const [entryPathInput, setEntryPathInput] = useState('/api/index.ts')
+  const [dirtyPaths, setDirtyPaths] = useState<Record<string, boolean>>({})
+  const [logs, setLogs] = useState<BuildLogEntry[]>([])
+  const [isLoading, setIsLoading] = useState(true)
+  const [isSaving, setIsSaving] = useState(false)
+  const [isBootstrapping, setIsBootstrapping] = useState(true)
+  const [projectNameInput, setProjectNameInput] = useState('')
+  const [projectSlugInput, setProjectSlugInput] = useState('')
+  const [newFileInput, setNewFileInput] = useState('')
+  const [collapsedFolders, setCollapsedFolders] = useState<
+    Record<string, boolean>
+  >({})
 
-  const [explorerOpen, setExplorerOpen] = useState(true);
-  const [showConsole, setShowConsole] = useState(true);
+  const containerRef = useRef<HTMLDivElement | null>(null)
+  const editorRef = useRef<MonacoEditorInstance | null>(null)
+  const monacoRef = useRef<MonacoApi | null>(null)
+  const modelsRef = useRef<Map<string, monacoEditor.editor.ITextModel>>(
+    new Map()
+  )
+  const modelListenersRef = useRef<Map<string, monacoEditor.IDisposable>>(
+    new Map()
+  )
+  const savedContentsRef = useRef<Record<string, string>>({})
+  const workerRef = useRef<Worker | null>(null)
+  const pendingBuildsRef = useRef<Map<string, BuildWorkerPending>>(new Map())
+  const viewStateByPathRef = useRef<
+    Map<string, monacoEditor.editor.ICodeEditorViewState | null>
+  >(new Map())
+  const snapshotRef = useRef(snapshot)
+  const activePathRef = useRef(activePath)
+  const selectedProjectSlugRef = useRef(selectedProjectSlug)
+  const loadingNonceRef = useRef(0)
 
-  const [fs, setFs] = useState<FileSystem>(loadFS);
-  const fsRef = useRef(fs);
-  fsRef.current = fs;
+  const isDirty = useMemo(
+    () => Object.keys(dirtyPaths).length > 0,
+    [dirtyPaths]
+  )
 
-  const [selectedId, setSelectedId] = useState<FileId | null>(null);
-  const [tabs, setTabs] = useState<Tab[]>([]);
-  const [activeTabId, setActiveTabId] = useState<FileId | null>(null);
-  const activeTabIdRef = useRef(activeTabId);
-  activeTabIdRef.current = activeTabId;
-  const [expanded, setExpanded] = useState<Set<FileId>>(new Set(["src"]));
-  const [editingId, setEditingId] = useState<FileId | null>(null);
-  const [creating, setCreating] = useState<{
-    parentId: FileId | null;
-    type: "file" | "folder";
-    depth: number;
-  } | null>(null);
-
-  const [ctxMenu, setCtxMenu] = useState<CtxMenu | null>(null);
-  const ctxNodeRef = useRef<FileId | null>(null);
-
-  const [logs, setLogs] = useState<string[]>([]);
-  const [versionsOpen, setVersionsOpen] = useState(false);
-  const [versions, setVersions] = useState<WorkspaceVersionSummary[]>([]);
-  const [remoteCurrentVersion, setRemoteCurrentVersion] = useState<number>(0);
-  const remoteCurrentVersionRef = useRef(remoteCurrentVersion);
-  remoteCurrentVersionRef.current = remoteCurrentVersion;
-  const [isRemoteBusy, setIsRemoteBusy] = useState(false);
-  const workspaceSlugRef = useRef(workspaceSlug);
-  workspaceSlugRef.current = workspaceSlug;
-
-  // Build system refs
-  const buildWorkerRef = useRef<Worker | null>(null);
-  const [isBuildReady, setIsBuildReady] = useState(false);
-  const [isBuilding, setIsBuilding] = useState(false);
-
-  // Persist FS with debounce
-  const debouncedSave = useMemo(() => debounce(saveFS, 500), []);
-
-  useEffect(() => {
-    debouncedSave(fs);
-  }, [fs, debouncedSave]);
-
-  // Load latest snapshot from DB (if present) and hydrate versions list.
-  useEffect(() => {
-    let cancelled = false;
-
-    async function loadRemote() {
-      if (!workspaceSlugRef.current) return;
-      try {
-        setIsRemoteBusy(true);
-        const data = await fetchWorkspace(workspaceSlugRef.current);
-        if (cancelled) return;
-
-        setVersions(data.versions ?? []);
-        setRemoteCurrentVersion(data.workspace?.currentVersion ?? 0);
-
-        if (data.latest?.snapshot) {
-          const parsed = JSON.parse(data.latest.snapshot);
-          if (parsed && typeof parsed === "object" && parsed.nodes) {
-            setFs(parsed);
-            setTabs([]);
-            setActiveTabId(null);
-            setSelectedId(null);
-            setExpanded(new Set(Array.isArray(parsed.rootIds) ? parsed.rootIds : []));
-            setLogs((prev) => [
-              ...prev,
-              `📥 Loaded workspace "${workspaceSlugRef.current}" (v${data.latest?.version ?? "?"})`,
-            ]);
-          }
-        }
-      } catch (e: any) {
-        if (cancelled) return;
-        setLogs((prev) => [
+  const addLog = useCallback(
+    (level: BuildLogEntry['level'], message: string) => {
+      setLogs((prev) => {
+        const next = [
           ...prev,
-          `⚠️ Failed to load remote workspace: ${e?.message || "unknown error"}`,
-        ]);
-      } finally {
-        if (!cancelled) setIsRemoteBusy(false);
-      }
-    }
-
-    loadRemote();
-    return () => {
-      cancelled = true;
-    };
-  }, []);
-
-  // Initialize build worker
-  useEffect(() => {
-    let worker: Worker | null = null;
-
-    try {
-      const workerUrl = new URL(
-        "../../workers/esbuild.worker.ts",
-        import.meta.url,
-      );
-
-      console.log("Worker URL:", workerUrl.href);
-
-      worker = new Worker(workerUrl, {
-        type: "module",
-        name: "esbuild-worker",
-      });
-
-      buildWorkerRef.current = worker;
-
-      // Add this to the worker.onmessage handler in CodeEditor
-      worker.onmessage = (e: MessageEvent) => {
-        const { type, ...data } = e.data;
-        console.log("Worker message:", type, data);
-
-        if (type === "initialized") {
-          setIsBuildReady(true);
-          setLogs((prev) => [...prev, "✅ Build system ready"]);
-        } else if (type === "dependency-tree") {
-          // Display the dependency tree
-          setLogs((prev) => [
-            ...prev,
-            ``,
-            `🌳 Dependency Tree for: ${data.entryPoint}`,
-            `📊 Total dependencies: ${data.totalFiles}`,
-            ...data.tree.map((line: string) => `  ${line}`),
-            ``,
-          ]);
-        } else if (type === "build-start") {
-          setIsBuilding(true);
-
-          setLogs((prev) => [
-            ...prev,
-            `🔨 Building ${data.entryPoint || "file"}...`,
-            `📁 Resolving imports...`,
-          ]);
-
-          if (data.files && data.files.length > 0) {
-            setLogs((prev) => [
-              ...prev,
-              `📋 Entry point:`,
-              ...data.files.map((file: string) => `  ⭐ ${file}`),
-            ]);
-          }
-        } else if (type === "progress") {
-          if (data.currentFile && !data.currentFile.startsWith("⚠️")) {
-            setLogs((prev) => [...prev, `⏳ ${data.currentFile}`]);
-          }
-        } else if (type === "build-result") {
-          setIsBuilding(false);
-
-          // DEBUG: Log what we received
-          console.log("=== BUILD RESULT RECEIVED ===");
-          console.log("Entry point:", data.entryPoint);
-          console.log("Code length:", data.code?.length);
-          console.log("Code preview:", data.code?.substring(0, 200));
-          console.log("==============================");
-
-          try {
-            const compiled = {
-              code: data.code,
-              timestamp: Date.now(),
-              entryPoint: data.entryPoint,
-            };
-
-            // IMPORTANT: Store with the SAME key format used to retrieve
-            const stored = JSON.parse(
-              localStorage.getItem("compiled-code") || "{}",
-            );
-
-            // Store with original entry point (as received from worker)
-            stored[data.entryPoint] = compiled;
-
-            // ALSO store without leading slash if present
-            if (data.entryPoint.startsWith("/")) {
-              stored[data.entryPoint.substring(1)] = compiled;
-            } else {
-              stored["/" + data.entryPoint] = compiled;
-            }
-
-            localStorage.setItem("compiled-code", JSON.stringify(stored));
-
-            console.log("Saved compiled code with keys:", [data.entryPoint]);
-            console.log("All stored keys:", Object.keys(stored));
-
-            // Persist bundle for the latest saved remote version (if available).
-            // This lets the server run the exact bundled output by version.
-            void (async () => {
-              try {
-                const slug = workspaceSlugRef.current;
-                const ver = remoteCurrentVersionRef.current;
-                if (!slug || !ver) return;
-                if (!data.code || typeof data.code !== "string") return;
-
-                const res = await fetch(
-                  `/api/process/code-workspaces/${encodeURIComponent(slug)}/versions/${encodeURIComponent(String(ver))}/bundle`,
-                  {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({
-                      entryPath: data.entryPoint,
-                      code: data.code,
-                    }),
-                  },
-                );
-                const json = await res.json().catch(() => null);
-                if (!res.ok) {
-                  console.warn("Failed to store bundle:", res.status, json);
-                  setLogs((prev) => [
-                    ...prev,
-                    `⚠️ Bundle save failed (v${ver}): ${json?.error || `HTTP ${res.status}`}`,
-                  ]);
-                } else {
-                  setLogs((prev) => [
-                    ...prev,
-                    `📦 Stored bundle for v${ver} (${data.entryPoint})`,
-                  ]);
-                }
-              } catch (err: any) {
-                console.warn("Bundle save error:", err);
-                setLogs((prev) => [
-                  ...prev,
-                  `⚠️ Bundle save error: ${err?.message || "unknown error"}`,
-                ]);
-              }
-            })();
-
-            // ... rest of build result handling (logs, etc.)
-          } catch (err) {
-            console.error("Failed to store compiled code:", err);
-          }
-        }
-      };
-
-      worker.onerror = (error) => {
-        console.error("Worker error:", error);
-        setIsBuilding(false);
-        setLogs((prev) => [
-          ...prev,
-          `❌ Worker error: ${error.message || "Unknown"}`,
-          `📍 File: ${error.filename || "unknown"}`,
-          `📍 Line: ${error.lineno || "unknown"}`,
-        ]);
-      };
-
-      // Initialize worker
-      worker.postMessage({ type: "initialize" });
-    } catch (error: any) {
-      console.error("Failed to create worker:", error);
-      setLogs((prev) => [
-        ...prev,
-        `❌ Failed to create build worker: ${error.message}`,
-      ]);
-    }
-
-    return () => {
-      if (worker) {
-        worker.terminate();
-      }
-    };
-  }, []);
-
-  // Cleanup Monaco models on unmount
-  useEffect(() => {
-    return () => {
-      editorDisposedRef.current = true;
-      editorRef.current = null;
-
-      // Dispose all models
-      Object.values(modelsRef.current).forEach((model) => {
-        try {
-          model.dispose();
-        } catch (e) {
-          console.log(e);
-          // Ignore dispose errors
-        }
-      });
-      modelsRef.current = {};
-
-      // Dispose other disposables
-      disposablesRef.current.forEach((d) => d.dispose());
-      disposablesRef.current = [];
-    };
-  }, []);
-
-  // ── Formatting Function ─────────────────────────────────────────────────
-
-  function formatDocument(): Promise<void> {
-    return new Promise((resolve) => {
-      if (!editorRef.current) {
-        resolve();
-        return;
-      }
-
-      const { editor } = editorRef.current;
-      const model = editor.getModel();
-
-      if (!model) {
-        resolve();
-        return;
-      }
-
-      // Use Monaco's built-in formatting
-      editor
-        .getAction("editor.action.formatDocument")
-        ?.run()
-        .then(() => {
-          console.log("✅ Document formatted");
-          resolve();
-        })
-        .catch((error) => {
-          console.warn("Formatting failed:", error);
-          // Resolve anyway to not block saving
-          resolve();
-        });
-    });
-  }
-
-  // ── Helper Functions ──────────────────────────────────────────────────
-
-  function getFilePath(fileId: FileId): string {
-    const parts: string[] = [];
-    let current: FileId | null = fileId;
-
-    while (current) {
-      const node = fsRef.current.nodes[current];
-      if (!node) break;
-      parts.unshift(node.name);
-      current = node.parentId;
-    }
-
-    return "/" + parts.join("/");
-  }
-  // ── Local Evaluation Function ─────────────────────────────────────────
-
-  function localEval(code: string): string {
-    try {
-      // Create a sandboxed environment for execution
-      const consoleLogs: string[] = [];
-
-      // Mock console.log to capture output
-      const mockConsole = {
-        log: (...args: any[]) => {
-          const formatted = args
-            .map((arg) => {
-              if (typeof arg === "object" && arg !== null) {
-                try {
-                  return JSON.stringify(arg, null, 2);
-                } catch {
-                  return String(arg);
-                }
-              }
-              return String(arg);
-            })
-            .join(" ");
-          consoleLogs.push(formatted);
-          // Also log to actual console for debugging
-          console.log("[Eval]", ...args);
-        },
-        error: (...args: any[]) => {
-          const formatted = args.map((arg) => String(arg)).join(" ");
-          consoleLogs.push(`[ERROR] ${formatted}`);
-          console.error("[Eval]", ...args);
-        },
-        warn: (...args: any[]) => {
-          const formatted = args.map((arg) => String(arg)).join(" ");
-          consoleLogs.push(`[WARN] ${formatted}`);
-          console.warn("[Eval]", ...args);
-        },
-        info: (...args: any[]) => {
-          const formatted = args.map((arg) => String(arg)).join(" ");
-          consoleLogs.push(`[INFO] ${formatted}`);
-          console.info("[Eval]", ...args);
-        },
-      };
-
-      // Create a sandbox with limited globals
-      const sandbox = {
-        console: mockConsole,
-        Date,
-        Math,
-        JSON,
-        Promise,
-        setTimeout,
-        clearTimeout,
-        setInterval,
-        clearInterval,
-        Array,
-        Object,
-        String,
-        Number,
-        Boolean,
-        Map,
-        Set,
-        Error,
-        // Add any other safe globals you want to expose
-      };
-
-      // Extract exports or return value from the code
-      const wrappedCode = `
-        (function() {
-          const module = { exports: {} };
-          const exports = module.exports;
-          ${code}
-          return module.exports || exports;
-        })()
-      `;
-
-      // Use Function constructor for evaluation (safer than eval)
-      const fn = new Function(
-        ...Object.keys(sandbox),
-        `"use strict"; ${wrappedCode}`,
-      );
-      const result = fn(...Object.values(sandbox));
-
-      // Format the result
-      let output = "";
-
-      // Add console logs
-      if (consoleLogs.length > 0) {
-        output += consoleLogs.join("\n") + "\n";
-      }
-
-      // Add return value
-      if (result !== undefined && result !== null) {
-        if (typeof result === "object") {
-          try {
-            output += JSON.stringify(result, null, 2);
-          } catch {
-            output += String(result);
-          }
-        } else {
-          output += String(result);
-        }
-      }
-
-      return output || "✅ Code executed successfully (no output)";
-    } catch (error: any) {
-      console.error("Eval error:", error);
-      return `❌ Runtime Error: ${error.message}\n${error.stack || ""}`;
-    }
-  }
-
-  // ── Monaco Configuration ──────────────────────────────────────────────
-
-  function configureMonaco(m: typeof monaco) {
-    // Configure TypeScript with proper module resolution
-    m.languages.typescript.typescriptDefaults.setCompilerOptions({
-      target: m.languages.typescript.ScriptTarget.ES2020,
-      allowNonTsExtensions: true,
-      moduleResolution: m.languages.typescript.ModuleResolutionKind.NodeJs,
-      module: m.languages.typescript.ModuleKind.ESNext,
-      strict: true,
-      noEmit: true,
-      jsx: m.languages.typescript.JsxEmit.React,
-      esModuleInterop: true,
-      allowJs: true,
-      typeRoots: ["node_modules/@types"],
-      lib: ["ES2020", "DOM", "DOM.Iterable"],
-      isolatedModules: true,
-    });
-
-    m.languages.typescript.typescriptDefaults.setDiagnosticsOptions({
-      noSemanticValidation: false, // Enable semantic validation
-      noSyntaxValidation: false, // Enable syntax validation
-      noSuggestionDiagnostics: false, // Enable suggestions
-      onlyVisible: false,
-      diagnosticCodesToIgnore: [], // Don't ignore any diagnostics
-    });
-
-    m.languages.typescript.typescriptDefaults.setEagerModelSync(true);
-    // Force re-check all models
-    const models = m.editor.getModels();
-    models.forEach((model) => {
-      if (
-        model.getLanguageId() === "typescript" ||
-        model.getLanguageId() === "javascript"
-      ) {
-        m.editor.setModelLanguage(model, model.getLanguageId());
-      }
-    });
-
-    // Add extra lib declarations for type imports
-    m.languages.typescript.typescriptDefaults.setExtraLibs([
-      {
-        content: `declare module "*.ts" { const content: any; export default content; }`,
-        filePath: "file:///node_modules/@types/ambient.d.ts",
-      },
-    ]);
-
-    m.editor.defineTheme("vscode-dark", {
-      base: "vs-dark",
-      inherit: true,
-      rules: [
-        { token: "comment", foreground: "6A9955", fontStyle: "italic" },
-        { token: "keyword", foreground: "569CD6" },
-        { token: "string", foreground: "CE9178" },
-        { token: "number", foreground: "B5CEA8" },
-        { token: "type", foreground: "4EC9B0" },
-      ],
-      colors: {
-        "editor.background": "#1e1e1e",
-        "editor.foreground": "#D4D4D4",
-        "editorLineNumber.foreground": "#858585",
-        "editorLineNumber.activeForeground": "#C6C6C6",
-        "editor.lineHighlightBackground": "#2A2D2E",
-        "editorCursor.foreground": "#FFDB58",
-        "editor.selectionBackground": "#264F78",
-        "editorWidget.background": "#252526",
-        "editorSuggestWidget.background": "#252526",
-        "editorSuggestWidget.border": "#454545",
-        "editorSuggestWidget.selectedBackground": "#062F4A",
-      },
-    });
-  }
-
-  function getOrCreateModel(
-    fileId: FileId,
-    content: string,
-    lang: string,
-    m: typeof monaco,
-  ) {
-    // Check if model exists and is not disposed
-    if (modelsRef.current[fileId]) {
-      try {
-        // Verify model is still valid
-        if (!modelsRef.current[fileId].isDisposed()) {
-          return modelsRef.current[fileId];
-        }
-      } catch (e) {
-        console.log(e);
-        // Model was disposed, remove reference
-        delete modelsRef.current[fileId];
-      }
-    }
-
-    const uri = m.Uri.parse(`file:///${fileId}`);
-    let model = m.editor.getModel(uri);
-
-    // If model exists but is disposed, remove it
-    if (model && model.isDisposed()) {
-      model = null;
-    }
-
-    if (!model) {
-      model = m.editor.createModel(content, lang, uri);
-    }
-
-    modelsRef.current[fileId] = model;
-    return model;
-  }
-
-  function handleEditorDidMount(
-    editor: monaco.editor.IStandaloneCodeEditor,
-    m: typeof monaco,
-  ) {
-    editorDisposedRef.current = false;
-    editorRef.current = { editor, monaco: m };
-    configureMonaco(m);
-    m.editor.setTheme("vscode-dark");
-
-    // Track disposal to avoid calling into a dead editor instance.
-    disposablesRef.current.push(
-      editor.onDidDispose(() => {
-        editorDisposedRef.current = true;
-        if (editorRef.current?.editor === editor) {
-          editorRef.current = null;
-        }
-      }),
-    );
-
-    // Optimize typing performance
-    editor.updateOptions({
-      showUnused: true, // Show unused variables
-      showDeprecated: true, // Show deprecated items
-      renderValidationDecorations: "on",
-      suggestOnTriggerCharacters: true,
-      quickSuggestions: {
-        other: true,
-        comments: true,
-        strings: true,
-      },
-      quickSuggestionsDelay: 10,
-      parameterHints: {
-        enabled: true,
-        cycle: true,
-      },
-      suggest: {
-        showWords: true,
-        showSnippets: true,
-        showClasses: true,
-        showFunctions: true,
-        showConstructors: true,
-        showFields: true,
-        showVariables: true,
-        showEvents: true,
-        showOperators: true,
-        showUnits: true,
-        showValues: true,
-        showConstants: true,
-        showEnums: true,
-        showInterfaces: true,
-        showIssues: true,
-        showModules: true,
-        showProperties: true,
-        showReferences: true,
-        showStructs: true,
-        showTypeParameters: true,
-      },
-      fontSize: 18,
-      lineHeight: 32,
-      fontFamily: "'JetBrains Mono', monospace",
-      fontLigatures: true,
-      cursorStyle: "block",
-      lineNumbers: "on",
-      lineNumbersMinChars: 1,
-      renderLineHighlight: "all",
-      automaticLayout: true,
-      wordWrap: "off",
-      minimap: { enabled: true, scale: 50 },
-      scrollBeyondLastLine: false,
-      glyphMargin: true,
-      folding: true,
-      tabSize: 2,
-      insertSpaces: true,
-      snippetSuggestions: "top",
-      formatOnPaste: true,
-      formatOnType: true,
-      bracketPairColorization: { enabled: true },
-      guides: { bracketPairs: true, indentation: true },
-      stickyScroll: { enabled: true },
-      smoothScrolling: true,
-      cursorBlinking: "smooth",
-      cursorSmoothCaretAnimation: "on",
-      // Performance optimizations
-      renderWhitespace: "selection",
-      renderControlCharacters: false,
-      occurrencesHighlight: "singleFile",
-      selectionHighlight: true,
-      codeLens: false,
-      links: false,
-      // NEW: Enhanced formatting options
-      autoIndent: "full",
-      autoClosingBrackets: "always",
-      autoClosingQuotes: "always",
-      autoSurround: "languageDefined",
-      // Add TypeScript-specific formatting
-      tabCompletion: "on",
-      acceptSuggestionOnCommitCharacter: true,
-      acceptSuggestionOnEnter: "on",
-    });
-
-    // Ctrl+S → save
-    editor.addCommand(m.KeyMod.CtrlCmd | m.KeyCode.KeyS, () => handleSave());
-
-    // Ctrl+Shift+F → Format document
-    editor.addCommand(
-      m.KeyMod.CtrlCmd | m.KeyMod.Shift | m.KeyCode.KeyF,
-      () => {
-        formatDocument().then(() => {
-          setLogs((prev) => [...prev, `🎨 Formatted document`]);
-        });
-      },
-    );
-
-    // Ctrl+Q → close active tab
-    editor.addCommand(m.KeyMod.CtrlCmd | m.KeyCode.Period, () => {
-      if (activeTabId) {
-        setTabs((prev) => {
-          const next = prev.filter((t) => t.fileId !== activeTabId);
-          const idx = prev.findIndex((t) => t.fileId === activeTabId);
-          const fallback = next[idx] ?? next[idx - 1] ?? null;
-          setActiveTabId(fallback?.fileId ?? null);
-          return next;
-        });
-        return null;
-      }
-    });
-
-    window.addEventListener("keydown", handleGlobalKeys, true);
-    disposablesRef.current.push({
-      dispose: () => window.removeEventListener("keydown", handleGlobalKeys),
-    });
-
-    // Open initial file
-    if (activeTabId) {
-      const node = fsRef.current.nodes[activeTabId];
-      if (node?.type === "file") {
-        const model = getOrCreateModel(
-          activeTabId,
-          node.content ?? "",
-          langFromName(node.name),
-          m,
-        );
-        editor.setModel(model);
-      }
-    }
-  }
-
-  function handleGlobalKeys(e: KeyboardEvent) {
-    if ((e.ctrlKey || e.metaKey) && e.key === "s") {
-      e.preventDefault();
-    }
-    if ((e.ctrlKey || e.metaKey) && e.key === "q") {
-      e.preventDefault();
-    }
-    if ((e.ctrlKey || e.metaKey) && e.key === ".") {
-      e.preventDefault();
-    }
-    if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === "q") {
-      e.preventDefault();
-    }
-  }
-
-  // ── File Operations ───────────────────────────────────────────────────
-
-  function openFile(fileId: FileId) {
-    const node = fs.nodes[fileId];
-    if (!node || node.type !== "file") return;
-
-    setTabs((prev) => {
-      if (prev.find((t) => t.fileId === fileId)) return prev;
-      return [...prev, { fileId, dirty: false }];
-    });
-    setActiveTabId(fileId);
-    setSelectedId(fileId);
-
-    const { editor, monaco: m } = editorRef.current ?? {};
-    if (editor && m) {
-      try {
-        if (editorDisposedRef.current) return;
-        const model = getOrCreateModel(
-          fileId,
-          node.content ?? "",
-          langFromName(node.name),
-          m,
-        );
-        editor.setModel(model);
-        editor.focus();
-      } catch (err) {
-        console.error("Error opening file:", err);
-      }
-    }
-  }
-
-  // Sync tab switch with model
-  useEffect(() => {
-    if (!activeTabId || !editorRef.current) return;
-    const { editor, monaco: m } = editorRef.current;
-    if (editorDisposedRef.current) return;
-    const node = fs.nodes[activeTabId];
-    if (!node || node.type !== "file") return;
-
-    try {
-      const model = getOrCreateModel(
-        activeTabId,
-        node.content ?? "",
-        langFromName(node.name),
-        m,
-      );
-      if (editorDisposedRef.current) return;
-      if (editor.getModel() !== model) editor.setModel(model);
-      const model2 = editor.getModel();
-      if (
-        model2 &&
-        (model2.getLanguageId() === "typescript" ||
-          model2.getLanguageId() === "javascript")
-      ) {
-        // Trigger a manual validation
-      }
-    } catch (err) {
-      console.error("Error switching model:", err);
-    }
-  }, [activeTabId, fs]);
-
-  // Handle save with build
-  // Handle save with formatting and build
-  async function handleSave() {
-    if (!activeTabId || !editorRef.current) return;
-
-    // Format the document before saving
-    setLogs((prev) => [...prev, `🎨 Formatting document...`]);
-    await formatDocument();
-
-    // Now get the formatted content
-    const content = editorRef.current.editor.getValue();
-    const currentFs = fsRef.current;
-    const filePath = getFilePath(activeTabId);
-    const activeName = currentFs.nodes[activeTabId]?.name ?? "file";
-
-    // Compute next FS snapshot synchronously (so remote save uses the same data).
-    const nextFs = (() => {
-      const node = currentFs.nodes[activeTabId];
-      if (!node) return currentFs;
-      return {
-        ...currentFs,
-        nodes: {
-          ...currentFs.nodes,
-          [activeTabId]: { ...node, content },
-        },
-      };
-    })();
-
-    // Update filesystem with formatted content
-    setFs(nextFs);
-
-    setTabs((prev) =>
-      prev.map((t) => (t.fileId === activeTabId ? { ...t, dirty: false } : t)),
-    );
-
-    setLogs((prev) => [
-      ...prev,
-      `💾 Saved ${activeName} at ${new Date().toLocaleTimeString()}`,
-    ]);
-
-    // Persist snapshot to DB as a new version.
-    if (workspaceSlugRef.current) {
-      try {
-        setIsRemoteBusy(true);
-        const saved = await saveWorkspaceVersion({
-          slug: workspaceSlugRef.current,
-          snapshot: nextFs,
-          message: `save: ${activeName}`,
-          isAutosave: false,
-          clientRequestId: crypto.randomUUID(),
-        });
-        setRemoteCurrentVersion(saved.version);
-        setVersions((prev) => [
           {
-            id: saved.id,
-            version: saved.version,
-            message: saved.message ?? "",
-            isAutosave: saved.isAutosave,
-            createdAt: saved.createdAt,
-            snapshotHash: saved.snapshotHash,
-            sizeBytes: saved.sizeBytes,
+            id: crypto.randomUUID(),
+            level,
+            message,
+            at: new Date().toISOString(),
           },
-          ...prev,
-        ]);
-        setLogs((prev) => [
-          ...prev,
-          `🗄️ Stored workspace version v${saved.version}`,
-        ]);
-      } catch (e: any) {
-        setLogs((prev) => [
-          ...prev,
-          `⚠️ Remote save failed: ${e?.message || "unknown error"}`,
-        ]);
-      } finally {
-        setIsRemoteBusy(false);
-      }
-    }
+        ]
 
-    // Build after save
-    try {
-      setLogs((prev) => [...prev, `🔨 Building ${filePath}...`]);
-      await buildFile(filePath);
-    } catch (error: any) {
-      console.error("Build failed:", error);
-      setLogs((prev) => [...prev, `❌ Build failed: ${error.message}`]);
-    }
-  }
-
-  // Build a file using the worker and the latest in-memory FS snapshot.
-  async function buildFile(filePath: string) {
-      if (!buildWorkerRef.current) {
-        console.warn("Build worker not created");
-        setLogs((prev) => [...prev, "❌ Build system not available"]);
-        return;
-      }
-
-      if (!isBuildReady) {
-        console.warn("Build system not ready yet");
-        setLogs((prev) => [
-          ...prev,
-          "⏳ Build system initializing... Please wait",
-        ]);
-
-        await new Promise<void>((resolve) => {
-          const checkInterval = setInterval(() => {
-            if (isBuildReady) {
-              clearInterval(checkInterval);
-              resolve();
-            }
-          }, 100);
-
-          setTimeout(() => {
-            clearInterval(checkInterval);
-            resolve();
-          }, 5000);
-        });
-
-        if (!isBuildReady) {
-          setLogs((prev) => [...prev, "❌ Build system failed to initialize"]);
-          return;
+        if (next.length > MAX_LOG_LINES) {
+          return next.slice(next.length - MAX_LOG_LINES)
         }
-      }
 
-      setIsBuilding(true);
+        return next
+      })
+    },
+    []
+  )
 
-      // IMPORTANT: Use fsRef.current to get the LATEST filesystem state
-      const currentFs = fsRef.current;
-      const allFiles = gatherAllFilesFromFS(currentFs);
-
-      // Log the current state
-      console.log("Building with latest filesystem state:");
-      Object.entries(allFiles).forEach(([path, content]) => {
-        console.log(`  ${path}: ${content.length} chars`);
-      });
-
-      setLogs((prev) => [
-        ...prev,
-        `🎯 Building: ${filePath}`,
-        `📦 Available files in workspace: ${Object.keys(allFiles).length}`,
-      ]);
-
-      // Send to worker with LATEST files
-      buildWorkerRef.current.postMessage({
-        type: "build",
-        data: {
-          entryPoint: filePath,
-          files: allFiles,
-        },
-      });
-  }
-
-  // Add this helper function to gather files from a specific FS state
-  function gatherAllFilesFromFS(fsState: FileSystem): Record<string, string> {
-    const allFiles: Record<string, string> = {};
-
-    Object.entries(fsState.nodes).forEach(([id, node]) => {
-      if (node.type === "file" && node.content !== undefined) {
-        const path = getFilePathFromFS(id, fsState);
-        allFiles[path] = node.content;
-      }
-    });
-
-    return allFiles;
-  }
-
-  // Update getFilePath to accept optional fs parameter
-  function getFilePathFromFS(fileId: FileId, fsState?: FileSystem): string {
-    const parts: string[] = [];
-    let current: FileId | null = fileId;
-    const fs = fsState || fsRef.current;
-
-    while (current) {
-      const node = fs.nodes[current];
-      if (!node) break;
-      parts.unshift(node.name);
-      current = node.parentId;
+  const disposeModels = useCallback(() => {
+    for (const disposable of modelListenersRef.current.values()) {
+      disposable.dispose()
     }
 
-    return "/" + parts.join("/");
-  }
-  // Debounced editor change handler
-  const handleEditorChange = useCallback(
-    (fileId: string, value: string | undefined) => {
-      if (value === undefined) return;
+    for (const model of modelsRef.current.values()) {
+      model.dispose()
+    }
 
-      // Mark tab as dirty
-      setTabs((prev) =>
-        prev.map((t) => (t.fileId === fileId ? { ...t, dirty: true } : t)),
-      );
+    modelListenersRef.current.clear()
+    modelsRef.current.clear()
+    viewStateByPathRef.current.clear()
+  }, [])
 
-      // Save content to filesystem immediately
-      setFs((prev) => {
-        const node = prev.nodes[fileId];
-        if (!node || node.type !== "file") return prev;
+  const ensureBuildWorker = useCallback(() => {
+    if (workerRef.current) return workerRef.current
+
+    const worker = new Worker(
+      new URL('../../workers/esbuild.worker.ts', import.meta.url),
+      {
+        type: 'module',
+        name: 'workspace-esbuild',
+      }
+    )
+
+    worker.onmessage = (event: MessageEvent<BuildWorkerResponse>) => {
+      const payload = event.data
+      const pending = pendingBuildsRef.current.get(payload.requestId)
+      if (!pending) return
+
+      clearTimeout(pending.timeoutId)
+      pendingBuildsRef.current.delete(payload.requestId)
+      pending.resolve(payload)
+    }
+
+    worker.onerror = (event) => {
+      for (const [requestId, pending] of pendingBuildsRef.current.entries()) {
+        clearTimeout(pending.timeoutId)
+        pendingBuildsRef.current.delete(requestId)
+        pending.reject(new Error(event.message || 'Build worker error'))
+      }
+    }
+
+    workerRef.current = worker
+    return worker
+  }, [])
+
+  const runBuild = useCallback(
+    async (request: BuildWorkerRequest): Promise<BuildWorkerResponse> => {
+      const worker = ensureBuildWorker()
+      return await new Promise<BuildWorkerResponse>((resolve, reject) => {
+        const timeoutId = setTimeout(() => {
+          pendingBuildsRef.current.delete(request.requestId)
+          reject(new Error('Build timeout'))
+        }, 15_000)
+
+        pendingBuildsRef.current.set(request.requestId, {
+          resolve,
+          reject,
+          timeoutId,
+        })
+
+        worker.postMessage(request)
+      })
+    },
+    [ensureBuildWorker]
+  )
+
+  const updateDirtyForPath = useCallback((path: string) => {
+    const model = modelsRef.current.get(path)
+    if (!model) return
+
+    const savedValue = savedContentsRef.current[path] ?? ''
+    const currentValue = model.getValue()
+    const nextDirty = currentValue !== savedValue
+
+    setDirtyPaths((prev) => {
+      const alreadyDirty = Boolean(prev[path])
+      if (alreadyDirty === nextDirty) return prev
+
+      if (nextDirty) {
         return {
           ...prev,
-          nodes: { ...prev.nodes, [fileId]: { ...node, content: value } },
-        };
-      });
+          [path]: true,
+        }
+      }
+
+      const next = { ...prev }
+      delete next[path]
+      return next
+    })
+  }, [])
+
+  const ensureModel = useCallback(
+    (path: string, initialContent: string) => {
+      const m = monacoRef.current
+      if (!m) return null
+
+      const normalizedPath = normalizeWorkspacePath(path)
+      const existing = modelsRef.current.get(normalizedPath)
+      if (existing) return existing
+
+      const uri = m.Uri.parse(`file://${normalizedPath}`)
+      const model = m.editor.createModel(
+        initialContent,
+        monacoLanguageForPath(normalizedPath),
+        uri
+      )
+
+      modelsRef.current.set(normalizedPath, model)
+      const disposable = model.onDidChangeContent(() => {
+        updateDirtyForPath(normalizedPath)
+      })
+      modelListenersRef.current.set(normalizedPath, disposable)
+      return model
     },
-    [],
-  );
+    [updateDirtyForPath]
+  )
 
-  // Handle run with compiled code - UPDATED to use local eval
-  async function handleRun() {
-    if (!activeTabId) return;
+  const removeModel = useCallback((path: string) => {
+    const normalizedPath = normalizeWorkspacePath(path)
+    const listener = modelListenersRef.current.get(normalizedPath)
+    if (listener) {
+      listener.dispose()
+      modelListenersRef.current.delete(normalizedPath)
+    }
 
-    const currentFs = fsRef.current;
-    const filePath = getFilePath(activeTabId);
-    const fileName = currentFs.nodes[activeTabId]?.name || "unknown";
+    const model = modelsRef.current.get(normalizedPath)
+    if (model) {
+      model.dispose()
+      modelsRef.current.delete(normalizedPath)
+    }
 
-    setLogs((prev) => [
-      ...prev,
-      `\n${"=".repeat(50)}`,
-      `▶️ RUN: ${fileName}`,
-      `⏰ Time: ${new Date().toLocaleTimeString()}`,
-      `${"=".repeat(50)}`,
-    ]);
+    viewStateByPathRef.current.delete(normalizedPath)
+  }, [])
+
+  const hydrateSnapshotFromModels = useCallback(
+    (baseSnapshot: WorkspaceSnapshotV1) => {
+      let next = baseSnapshot
+
+      for (const file of baseSnapshot.files) {
+        const model = modelsRef.current.get(file.path)
+        if (!model) continue
+        const value = model.getValue()
+        if (value !== file.content) {
+          next = applyFileContent(next, file.path, value)
+        }
+      }
+
+      return {
+        ...next,
+        entryPath: normalizeWorkspacePath(entryPathInput || next.entryPath),
+      }
+    },
+    [entryPathInput]
+  )
+
+  const openFile = useCallback(
+    (path: string) => {
+      const normalized = normalizeWorkspacePath(path)
+      const file = snapshotRef.current.files.find(
+        (item) => item.path === normalized
+      )
+      if (!file) return
+
+      const editor = editorRef.current
+      if (editor && activePathRef.current) {
+        const state = editor.saveViewState()
+        viewStateByPathRef.current.set(activePathRef.current, state)
+      }
+
+      const model = ensureModel(normalized, file.content)
+      if (!model || !editor) {
+        setActivePath(normalized)
+        setTabs((prev) =>
+          prev.includes(normalized) ? prev : [...prev, normalized]
+        )
+        return
+      }
+
+      editor.setModel(model)
+      const savedState = viewStateByPathRef.current.get(normalized)
+      if (savedState) {
+        editor.restoreViewState(savedState)
+      }
+      editor.focus()
+
+      setTabs((prev) =>
+        prev.includes(normalized) ? prev : [...prev, normalized]
+      )
+      setActivePath(normalized)
+    },
+    [ensureModel]
+  )
+
+  const applyLoadedSnapshot = useCallback(
+    (nextSnapshot: WorkspaceSnapshotV1) => {
+      const normalizedEntry = normalizeWorkspacePath(nextSnapshot.entryPath)
+      const files = nextSnapshot.files
+      const normalizedSnapshot: WorkspaceSnapshotV1 = {
+        ...nextSnapshot,
+        entryPath: normalizedEntry,
+        files,
+      }
+      snapshotRef.current = normalizedSnapshot
+
+      savedContentsRef.current = Object.fromEntries(
+        files.map((file) => [file.path, file.content])
+      )
+
+      disposeModels()
+      setDirtyPaths({})
+      setSnapshot(normalizedSnapshot)
+      setEntryPathInput(normalizedEntry)
+
+      const tabTargets = ensureTabTargetsExist(
+        normalizedSnapshot,
+        [],
+        normalizedEntry
+      )
+      setTabs(tabTargets.tabs)
+      setActivePath(tabTargets.activePath)
+    },
+    [disposeModels]
+  )
+
+  const loadProject = useCallback(
+    async (slug: string) => {
+      const nonce = loadingNonceRef.current + 1
+      loadingNonceRef.current = nonce
+      setIsLoading(true)
+
+      try {
+        const payload = await fetchWorkspace(slug)
+        if (loadingNonceRef.current !== nonce) return
+
+        const parsedSnapshot = payload.latest?.snapshot
+          ? parseWorkspaceSnapshot(JSON.parse(payload.latest.snapshot))
+          : createDefaultSnapshot(slug)
+
+        applyLoadedSnapshot(parsedSnapshot)
+        setVersions(payload.versions)
+        setSelectedVersion(payload.latest?.version ?? null)
+        addLog('info', `Loaded project "${slug}"`)
+      } catch (error) {
+        if (loadingNonceRef.current !== nonce) return
+        addLog(
+          'error',
+          error instanceof Error ? error.message : 'Failed to load project'
+        )
+      } finally {
+        if (loadingNonceRef.current === nonce) {
+          setIsLoading(false)
+        }
+      }
+    },
+    [addLog, applyLoadedSnapshot]
+  )
+
+  const refreshProjects = useCallback(async () => {
+    const response = await listCodeWorkspaces()
+    setProjects(response.workspaces)
+    return response.workspaces
+  }, [])
+
+  const bootstrap = useCallback(async () => {
+    setIsBootstrapping(true)
 
     try {
-      // Step 1: Save all files before building
-      if (editorRef.current) {
-        try {
-          // Save current editor content
-          const editorContent = editorRef.current.editor.getValue();
-          setFs((prev) => {
-            const node = prev.nodes[activeTabId];
-            if (!node || node.type !== "file") return prev;
-            return {
-              ...prev,
-              nodes: {
-                ...prev.nodes,
-                [activeTabId]: { ...node, content: editorContent },
-              },
-            };
-          });
+      const listed = await refreshProjects()
+      const preferredSlug = workspaceSlug || DEFAULT_WORKSPACE_SLUG
 
-          // Save all other dirty tabs
-          for (const tab of tabs) {
-            if (tab.fileId !== activeTabId && tab.dirty) {
-              const model = modelsRef.current[tab.fileId];
-              if (model && !model.isDisposed()) {
-                const content = model.getValue();
-                setFs((prev) => {
-                  const node = prev.nodes[tab.fileId];
-                  if (!node || node.type !== "file") return prev;
-                  return {
-                    ...prev,
-                    nodes: {
-                      ...prev.nodes,
-                      [tab.fileId]: { ...node, content },
-                    },
-                  };
-                });
-              }
+      if (listed.length === 0) {
+        const defaultSnapshot = createDefaultSnapshot(preferredSlug)
+        const created = await createCodeWorkspace({
+          slug: preferredSlug,
+          name: preferredSlug,
+          initialSnapshot: defaultSnapshot,
+        })
+
+        setProjects([created.workspace])
+        setSelectedProjectSlug(created.workspace.slug)
+        await loadProject(created.workspace.slug)
+        return
+      }
+
+      const selected =
+        listed.find((item) => item.slug === preferredSlug) ?? listed[0]
+
+      setSelectedProjectSlug(selected.slug)
+      await loadProject(selected.slug)
+    } catch (error) {
+      addLog(
+        'error',
+        error instanceof Error ? error.message : 'Failed to initialize editor'
+      )
+      setIsLoading(false)
+    } finally {
+      setIsBootstrapping(false)
+    }
+  }, [addLog, loadProject, refreshProjects, workspaceSlug])
+
+  const handleSave = useCallback(async () => {
+    const slug = selectedProjectSlugRef.current
+    if (!slug) return
+    if (!snapshotRef.current) return
+
+    const snapshotForSave = hydrateSnapshotFromModels(snapshotRef.current)
+    snapshotRef.current = snapshotForSave
+    setSnapshot(snapshotForSave)
+
+    setIsSaving(true)
+    try {
+      const saved = await saveWorkspaceVersion({
+        slug,
+        snapshot: snapshotForSave,
+        clientRequestId: crypto.randomUUID(),
+      })
+
+      const buildTarget = pickBuildTarget(
+        snapshotForSave,
+        activePathRef.current
+      )
+      if (buildTarget) {
+        addLog('info', `Bundling ${buildTarget}...`)
+
+        const buildResponse = await runBuild({
+          requestId: crypto.randomUUID(),
+          entryPath: buildTarget,
+          files: snapshotToFileMap(snapshotForSave),
+        })
+
+        if (buildResponse.ok) {
+          if (buildResponse.warnings.length > 0) {
+            for (const warning of buildResponse.warnings) {
+              addLog('info', warning)
             }
           }
 
-          setLogs((prev) => [...prev, `💾 All files saved`]);
-        } catch (err) {
-          console.error("Error saving before run:", err);
-        }
-      }
+          await saveWorkspaceBundle({
+            slug,
+            version: saved.version,
+            entryPath: buildResponse.entryPath,
+            code: buildResponse.output,
+          })
 
-      // Step 2: Wait for React state to update
-      await new Promise((resolve) => setTimeout(resolve, 300));
-
-      // Step 3: Clear old cache for this file
-      try {
-        const stored = JSON.parse(
-          localStorage.getItem("compiled-code") || "{}",
-        );
-        if (stored[filePath]) {
-          delete stored[filePath];
-          localStorage.setItem("compiled-code", JSON.stringify(stored));
-          console.log("Cleared old cache for:", filePath);
-        }
-      } catch (err) {
-        console.error("Error clearing cache:", err);
-      }
-
-      // Step 4: Build the file
-      setLogs((prev) => [...prev, `🔨 Building with latest content...`]);
-      await buildFile(filePath);
-
-      // Step 5: Wait for build to complete by polling isBuilding
-      await new Promise((resolve) => {
-        const startTime = Date.now();
-        const checkBuild = setInterval(() => {
-          // Check if building is done
-          if (!isBuilding) {
-            clearInterval(checkBuild);
-            console.log("Build completed after:", Date.now() - startTime, "ms");
-            resolve(null);
-          }
-          // Timeout after 15 seconds
-          if (Date.now() - startTime > 15000) {
-            clearInterval(checkBuild);
-            console.warn("Build timeout after 15 seconds");
-            resolve(null);
-          }
-        }, 50);
-      });
-
-      // Step 6: Small additional delay to ensure localStorage is updated
-      await new Promise((resolve) => setTimeout(resolve, 200));
-
-      // Step 7: Get the compiled code
-      let codeToRun = "";
-
-      try {
-        const stored = JSON.parse(
-          localStorage.getItem("compiled-code") || "{}",
-        );
-        console.log("All compiled code entries:", Object.keys(stored));
-
-        const compiled = stored[filePath];
-        console.log("Looking for compiled code at:", filePath);
-        console.log("Compiled code found:", compiled ? "YES" : "NO");
-
-        if (compiled && compiled.code && compiled.code.length > 0) {
-          const age = ((Date.now() - compiled.timestamp) / 1000).toFixed(1);
-          const isRecent = Date.now() - compiled.timestamp < 30000; // 30 seconds
-
-          console.log("Compiled code age:", age, "seconds");
-          console.log("Compiled code length:", compiled.code.length);
-          console.log(
-            "Compiled code preview:",
-            compiled.code.substring(0, 200),
-          );
-
-          if (isRecent) {
-            codeToRun = compiled.code;
-            setLogs((prev) => [
-              ...prev,
-              `✅ Using compiled code (${compiled.code.length} chars, built ${age}s ago)`,
-            ]);
-          } else {
-            console.warn("Compiled code is too old:", age, "seconds");
-            setLogs((prev) => [
-              ...prev,
-              `⚠️ Compiled code is ${age}s old, rebuilding...`,
-            ]);
-
-            // Force rebuild
-            await buildFile(filePath);
-            await new Promise((resolve) => {
-              const checkBuild = setInterval(() => {
-                if (!isBuilding) {
-                  clearInterval(checkBuild);
-                  resolve(null);
-                }
-              }, 50);
-              setTimeout(() => {
-                clearInterval(checkBuild);
-                resolve(null);
-              }, 15000);
-            });
-            await new Promise((resolve) => setTimeout(resolve, 200));
-
-            // Try again
-            const freshStored = JSON.parse(
-              localStorage.getItem("compiled-code") || "{}",
-            );
-            const freshCompiled = freshStored[filePath];
-
-            if (
-              freshCompiled &&
-              freshCompiled.code &&
-              freshCompiled.code.length > 0
-            ) {
-              codeToRun = freshCompiled.code;
-              setLogs((prev) => [
-                ...prev,
-                `✅ Using fresh compiled code (${freshCompiled.code.length} chars)`,
-              ]);
+          addLog(
+            'success',
+            `Saved v${saved.version} with bundle for ${buildResponse.entryPath}`
+          )
+        } else {
+          addLog('error', buildResponse.error)
+          if (buildResponse.warnings.length > 0) {
+            for (const warning of buildResponse.warnings) {
+              addLog('info', warning)
             }
           }
-        } else {
-          console.warn("No compiled code found in localStorage");
-
-          // Try alternative paths (with/without leading slash)
-          const altPath = filePath.startsWith("/")
-            ? filePath.substring(1)
-            : "/" + filePath;
-          const altCompiled = stored[altPath];
-
-          if (altCompiled && altCompiled.code && altCompiled.code.length > 0) {
-            console.log("Found compiled code at alternate path:", altPath);
-            codeToRun = altCompiled.code;
-            setLogs((prev) => [
-              ...prev,
-              `✅ Found compiled code at alternate path`,
-            ]);
-          } else {
-            console.warn("No compiled code at alternate path either:", altPath);
-          }
         }
-      } catch (err) {
-        console.error("Error reading compiled code:", err);
-      }
-
-      // Step 8: If no compiled code, use source as fallback
-      if (!codeToRun || codeToRun.length === 0) {
-        const fsNow = fsRef.current;
-        codeToRun = fsNow.nodes[activeTabId]?.content || "";
-        setLogs((prev) => [
-          ...prev,
-          `⚠️ No compiled code available, using source (${codeToRun.length} chars)`,
-        ]);
-        console.log("Using source code:", codeToRun.substring(0, 200));
-      }
-
-      // Step 9: Check if code still contains imports
-      if (codeToRun.includes("import ") || codeToRun.includes("export ")) {
-        console.error("Code still contains imports/exports!");
-        setLogs((prev) => [
-          ...prev,
-          `⚠️ Code contains imports! Build may have failed.`,
-          `📝 Code preview: ${codeToRun.substring(0, 100)}...`,
-        ]);
-
-        // Try to run anyway if it's a simple import
-        if (codeToRun.trim().startsWith("import ")) {
-          setLogs((prev) => [
-            ...prev,
-            `🔄 Attempting to extract code after imports...`,
-          ]);
-          // Try to extract code after imports for simple cases
-          const lines = codeToRun.split("\n");
-          const nonImportLines = lines.filter(
-            (line) =>
-              !line.trim().startsWith("import ") &&
-              !line.trim().startsWith("export "),
-          );
-          if (nonImportLines.length > 0) {
-            codeToRun = nonImportLines.join("\n");
-            setLogs((prev) => [
-              ...prev,
-              `✅ Extracted ${nonImportLines.length} lines of executable code`,
-            ]);
-          }
-        }
-      }
-
-      // Step 10: Execute the code
-      setLogs((prev) => [...prev, `🔄 Executing...`]);
-
-      try {
-        const response = await runCode({
-          Code: codeToRun,
-        });
-
-        if (response.success) {
-          const resultStr =
-            typeof response.result === "string"
-              ? response.result
-              : JSON.stringify(response.result, null, 2);
-          setLogs((prev) => [
-            ...prev,
-            `✅ Execution successful`,
-            `📤 Result: ${resultStr}`,
-            `${"=".repeat(50)}\n`,
-          ]);
-        } else {
-          setLogs((prev) => [
-            ...prev,
-            `❌ API Error: ${response.error ?? "Unknown error"}`,
-          ]);
-          setLogs((prev) => [
-            ...prev,
-            `🔄 Falling back to local evaluation...`,
-          ]);
-          const localResult = localEval(codeToRun);
-          setLogs((prev) => [...prev, ` Local Result: \n ${localResult}`]);
-        }
-      } catch (apiError: any) {
-        setLogs((prev) => [
-          ...prev,
-          `⚠️ API unavailable: ${apiError.message}`,
-          `🔄 Running locally...`,
-        ]);
-        const localResult = localEval(codeToRun);
-        setLogs((prev) => [...prev, `🔧 Local Result: ${localResult}`]);
-      }
-    } catch (err: any) {
-      setLogs((prev) => [
-        ...prev,
-        `🔥 Error: ${err.message || "Unknown error"}`,
-        `${"=".repeat(50)}\n`,
-      ]);
-
-      try {
-        const sourceCode = fsRef.current.nodes[activeTabId]?.content || "";
-        const localResult = localEval(sourceCode);
-        setLogs((prev) => [...prev, `🔧 Fallback Result: ${localResult}`]);
-      } catch (evalError: any) {
-        setLogs((prev) => [
-          ...prev,
-          `❌ Complete failure: ${evalError.message}`,
-        ]);
-      }
-    }
-  }
-
-  function closeTab(fileId: FileId, e: React.MouseEvent) {
-    e.stopPropagation();
-
-    // If this is the active tab and editor exists, get current content
-    if (fileId === activeTabId && editorRef.current) {
-      try {
-        const content = editorRef.current.editor.getValue();
-        setFs((prev) => {
-          const node = prev.nodes[fileId];
-          if (!node || node.type !== "file") return prev;
-          return {
-            ...prev,
-            nodes: { ...prev.nodes, [fileId]: { ...node, content } },
-          };
-        });
-      } catch (err) {
-        console.error("Error saving before close:", err);
-      }
-    }
-
-    setTabs((prev) => {
-      const next = prev.filter((t) => t.fileId !== fileId);
-      if (activeTabId === fileId) {
-        const idx = prev.findIndex((t) => t.fileId === fileId);
-        const fallback = next[idx] ?? next[idx - 1] ?? null;
-        setActiveTabId(fallback?.fileId ?? null);
-      }
-      return next;
-    });
-  }
-
-  function handleReorderTabs(newTabs: Tab[]) {
-    setTabs(newTabs);
-  }
-
-  // ── Tree Operations ───────────────────────────────────────────────────
-  function toggleExpand(id: FileId) {
-    setExpanded((prev) => {
-      const next = new Set(prev);
-      if (next.has(id)) {
-        next.delete(id);
       } else {
-        next.add(id);
+        addLog(
+          'info',
+          `Saved v${saved.version} (no TypeScript entry found to bundle)`
+        )
       }
-      return next;
-    });
-  }
 
-  function collapseAll() {
-    setExpanded(new Set());
-  }
+      savedContentsRef.current = Object.fromEntries(
+        snapshotForSave.files.map((file) => [file.path, file.content])
+      )
+      setDirtyPaths({})
 
-  function handleMoveNode(nodeId: FileId, newParentId: FileId | null) {
-    setFs((prev) => {
-      const newFs = moveNode(prev, nodeId, newParentId);
-      // If moving to a folder, auto-expand it
-      if (newParentId) {
-        setExpanded((prev) => new Set(prev).add(newParentId));
+      const versionsPayload = await fetchWorkspaceVersions(slug)
+      setVersions(versionsPayload.versions)
+      setSelectedVersion(saved.version)
+    } catch (error) {
+      addLog('error', error instanceof Error ? error.message : 'Save failed')
+    } finally {
+      setIsSaving(false)
+    }
+  }, [addLog, hydrateSnapshotFromModels, runBuild])
+
+  const handleCheckoutVersion = useCallback(
+    async (version: number) => {
+      const slug = selectedProjectSlugRef.current
+      if (!slug) return
+
+      if (isDirty) {
+        const confirmed = window.confirm(
+          'You have unsaved changes. Checkout will discard local edits. Continue?'
+        )
+        if (!confirmed) return
       }
-      return newFs;
-    });
-  }
 
-  // ── Context Menu ──────────────────────────────────────────────────────
-
-  function openCtxMenu(e: React.MouseEvent, nodeId: FileId | null) {
-    ctxNodeRef.current = nodeId;
-    setCtxMenu({ x: e.clientX, y: e.clientY, nodeId });
-  }
-
-  function ctxNewFile() {
-    const nodeId = ctxNodeRef.current;
-    const node = nodeId ? fs.nodes[nodeId] : null;
-
-    const parentId = !node
-      ? null
-      : node.type === "folder"
-        ? node.id
-        : node.parentId;
-
-    const depth = parentId ? getDepth(fs, parentId) + 1 : 0;
-
-    if (parentId) {
-      setExpanded((prev) => new Set(prev).add(parentId));
-    }
-
-    setCreating({ parentId, type: "file", depth });
-  }
-
-  function ctxNewFolder() {
-    const nodeId = ctxNodeRef.current;
-    const node = nodeId ? fs.nodes[nodeId] : null;
-
-    const parentId = !node
-      ? null
-      : node.type === "folder"
-        ? node.id
-        : node.parentId;
-
-    const depth = parentId ? getDepth(fs, parentId) + 1 : 0;
-
-    if (parentId) {
-      setExpanded((prev) => new Set(prev).add(parentId));
-    }
-
-    setCreating({ parentId, type: "folder", depth });
-  }
-
-  function ctxRename() {
-    const nodeId = ctxNodeRef.current;
-    if (nodeId) setEditingId(nodeId);
-  }
-
-  function ctxDelete() {
-    const nodeId = ctxNodeRef.current;
-    if (!nodeId) return;
-    setFs((prev) => deleteNode(prev, nodeId));
-    setTabs((prev) => prev.filter((t) => t.fileId !== nodeId));
-    if (activeTabId === nodeId) setActiveTabId(null);
-  }
-
-  function commitCreate(name: string) {
-    if (!creating || !name) {
-      setCreating(null);
-      return;
-    }
-    const id = uid();
-    const node: FileNode = {
-      id,
-      name,
-      type: creating.type,
-      parentId: creating.parentId,
-      content: creating.type === "file" ? "" : undefined,
-    };
-    setFs((prev) => {
-      const nodes = { ...prev.nodes, [id]: node };
-      const rootIds =
-        creating.parentId === null ? [...prev.rootIds, id] : prev.rootIds;
-      return { nodes, rootIds };
-    });
-    setCreating(null);
-    if (creating.type === "file") {
-      setTimeout(() => openFile(id), 50);
-    }
-  }
-
-  function commitRename(id: FileId, name: string) {
-    if (!name) {
-      setEditingId(null);
-      return;
-    }
-    setFs((prev) => ({
-      ...prev,
-      nodes: { ...prev.nodes, [id]: { ...prev.nodes[id], name } },
-    }));
-    setEditingId(null);
-    const { monaco: m } = editorRef.current ?? {};
-    if (m && modelsRef.current[id]) {
       try {
-        if (!modelsRef.current[id].isDisposed()) {
-          m.editor.setModelLanguage(modelsRef.current[id], langFromName(name));
+        setIsLoading(true)
+        const data = await fetchWorkspaceVersionSnapshot(slug, version)
+        const parsed = parseWorkspaceSnapshot(JSON.parse(data.snapshot))
+        applyLoadedSnapshot(parsed)
+        setSelectedVersion(version)
+        addLog('success', `Checked out version ${version}`)
+      } catch (error) {
+        addLog(
+          'error',
+          error instanceof Error ? error.message : 'Checkout failed'
+        )
+      } finally {
+        setIsLoading(false)
+      }
+    },
+    [addLog, applyLoadedSnapshot, isDirty]
+  )
+
+  const handleCreateProject = useCallback(async () => {
+    const name = projectNameInput.trim()
+    const slug = asSlug(projectSlugInput || projectNameInput)
+
+    if (!name || !slug) {
+      addLog('error', 'Project name and slug are required')
+      return
+    }
+
+    try {
+      const snapshotTemplate = createDefaultSnapshot(name)
+      const created = await createCodeWorkspace({
+        slug,
+        name,
+        initialSnapshot: snapshotTemplate,
+      })
+
+      const nextProjects = await refreshProjects()
+      setSelectedProjectSlug(created.workspace.slug)
+      setProjectNameInput('')
+      setProjectSlugInput('')
+
+      if (!nextProjects.find((item) => item.slug === created.workspace.slug)) {
+        setProjects((prev) => [created.workspace, ...prev])
+      }
+
+      await loadProject(created.workspace.slug)
+      addLog('success', `Project created: ${created.workspace.slug}`)
+    } catch (error) {
+      addLog(
+        'error',
+        error instanceof Error ? error.message : 'Failed to create project'
+      )
+    }
+  }, [addLog, loadProject, projectNameInput, projectSlugInput, refreshProjects])
+
+  const handleCreateFile = useCallback(() => {
+    const rawPath = newFileInput.trim()
+    if (!rawPath) return
+
+    const normalizedPath = normalizeWorkspacePath(rawPath)
+    if (normalizedPath === '/') {
+      addLog('error', 'Invalid file path')
+      return
+    }
+
+    if (
+      snapshotRef.current.files.some((file) => file.path === normalizedPath)
+    ) {
+      addLog('error', `File already exists: ${normalizedPath}`)
+      return
+    }
+
+    const nextSnapshot = upsertFile(snapshotRef.current, {
+      path: normalizedPath,
+      content: pickDefaultContent(normalizedPath),
+    })
+
+    setSnapshot(nextSnapshot)
+    snapshotRef.current = nextSnapshot
+    setNewFileInput('')
+
+    setDirtyPaths((prev) => ({
+      ...prev,
+      [normalizedPath]: true,
+    }))
+
+    setTabs((prev) =>
+      prev.includes(normalizedPath) ? prev : [...prev, normalizedPath]
+    )
+    setActivePath(normalizedPath)
+
+    addLog('success', `Added file ${normalizedPath}`)
+  }, [addLog, newFileInput])
+
+  const handleRenameFile = useCallback(() => {
+    const path = activePathRef.current
+    if (!path) return
+
+    const suggested = path
+    const nextPathRaw = window.prompt('Rename file path', suggested)
+    if (!nextPathRaw) return
+
+    const nextPath = normalizeWorkspacePath(nextPathRaw)
+    if (nextPath === path) return
+
+    if (snapshotRef.current.files.some((file) => file.path === nextPath)) {
+      addLog('error', `Target path already exists: ${nextPath}`)
+      return
+    }
+
+    const nextSnapshot = renameFile(snapshotRef.current, path, nextPath)
+    setSnapshot(nextSnapshot)
+    snapshotRef.current = nextSnapshot
+
+    const existingSaved = savedContentsRef.current[path]
+    if (typeof existingSaved === 'string') {
+      savedContentsRef.current[nextPath] = existingSaved
+      delete savedContentsRef.current[path]
+    }
+
+    const model = modelsRef.current.get(path)
+    if (model) {
+      const content = model.getValue()
+      removeModel(path)
+      ensureModel(nextPath, content)
+    }
+
+    setTabs((prev) =>
+      prev.map((tabPath) => (tabPath === path ? nextPath : tabPath))
+    )
+    setActivePath(nextPath)
+
+    setDirtyPaths((prev) => {
+      const next = { ...prev }
+      if (next[path]) {
+        delete next[path]
+        next[nextPath] = true
+      }
+      return next
+    })
+
+    addLog('success', `Renamed ${path} -> ${nextPath}`)
+  }, [addLog, ensureModel, removeModel])
+
+  const handleDeleteFile = useCallback(() => {
+    const path = activePathRef.current
+    if (!path) return
+
+    const confirmed = window.confirm(`Delete file ${path}?`)
+    if (!confirmed) return
+
+    const nextSnapshot = removeFile(snapshotRef.current, path)
+    setSnapshot(nextSnapshot)
+    snapshotRef.current = nextSnapshot
+
+    delete savedContentsRef.current[path]
+    removeModel(path)
+
+    setDirtyPaths((prev) => {
+      const next = { ...prev }
+      delete next[path]
+      return next
+    })
+
+    const nextTabs = tabs.filter((tabPath) => tabPath !== path)
+    const nextActive = nextTabs[0] ?? nextSnapshot.files[0]?.path ?? null
+
+    setTabs(nextTabs)
+    setActivePath(nextActive)
+    addLog('success', `Deleted ${path}`)
+  }, [addLog, removeModel, tabs])
+
+  useEffect(() => {
+    snapshotRef.current = snapshot
+    activePathRef.current = activePath
+    selectedProjectSlugRef.current = selectedProjectSlug
+  }, [activePath, selectedProjectSlug, snapshot])
+
+  useEffect(() => {
+    configureMonacoWorkers()
+    const pendingBuildsMap = pendingBuildsRef.current
+
+    let cancelled = false
+    void loader.init().then((monaco) => {
+      if (cancelled) return
+      monacoRef.current = monaco
+      configureTypeScriptLanguageService(monaco)
+
+      if (!containerRef.current || editorRef.current) return
+
+      editorRef.current = monaco.editor.create(containerRef.current, {
+        automaticLayout: true,
+        minimap: { enabled: true },
+        fontSize: 14,
+        fontFamily:
+          'JetBrains Mono, ui-monospace, SFMono-Regular, Menlo, monospace',
+        tabSize: 2,
+        insertSpaces: true,
+        renderWhitespace: 'selection',
+        wordWrap: 'on',
+        smoothScrolling: true,
+      })
+
+      if (activePathRef.current) {
+        const file = snapshotRef.current.files.find(
+          (item) => item.path === activePathRef.current
+        )
+        if (file) {
+          const model = ensureModel(file.path, file.content)
+          if (model) {
+            editorRef.current.setModel(model)
+          }
         }
-      } catch (e) {
-        console.log(e);
-        // Model might be disposed, ignore
+      }
+    })
+
+    return () => {
+      cancelled = true
+
+      if (workerRef.current) {
+        workerRef.current.terminate()
+        workerRef.current = null
+      }
+
+      const pendingBuilds = Array.from(pendingBuildsMap.values())
+      for (const pending of pendingBuilds) {
+        clearTimeout(pending.timeoutId)
+        pending.reject(new Error('Build cancelled'))
+      }
+      pendingBuildsMap.clear()
+
+      disposeModels()
+      editorRef.current?.dispose()
+      editorRef.current = null
+    }
+  }, [disposeModels, ensureModel])
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    void bootstrap()
+  }, [bootstrap])
+
+  useEffect(() => {
+    if (!activePath) return
+
+    const file = snapshot.files.find((item) => item.path === activePath)
+    if (!file) return
+
+    const model = ensureModel(activePath, file.content)
+    const editor = editorRef.current
+    if (!model || !editor) return
+
+    const currentModel = editor.getModel()
+    if (currentModel !== model) {
+      if (activePathRef.current) {
+        const state = editor.saveViewState()
+        viewStateByPathRef.current.set(activePathRef.current, state)
+      }
+
+      editor.setModel(model)
+      const state = viewStateByPathRef.current.get(activePath)
+      if (state) editor.restoreViewState(state)
+      editor.focus()
+    }
+  }, [activePath, ensureModel, snapshot.files])
+
+  useEffect(() => {
+    const onKeyDown = (event: KeyboardEvent) => {
+      if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 's') {
+        event.preventDefault()
+        if (!isSaving) {
+          void handleSave()
+        }
       }
     }
+
+    window.addEventListener('keydown', onKeyDown)
+    return () => window.removeEventListener('keydown', onKeyDown)
+  }, [handleSave, isSaving])
+
+  const selectedProject = useMemo(
+    () =>
+      projects.find((project) => project.slug === selectedProjectSlug) ?? null,
+    [projects, selectedProjectSlug]
+  )
+
+  const fileTree = useMemo(
+    () => buildTree(snapshot.files.map((file) => file.path)),
+    [snapshot.files]
+  )
+
+  const logLevelClass = useCallback((level: BuildLogEntry['level']) => {
+    if (level === 'error') return 'text-destructive'
+    if (level === 'success') return 'text-emerald-600 dark:text-emerald-400'
+    return 'text-muted-foreground'
+  }, [])
+
+  function renderTree(nodes: FileTreeNode[], depth = 0): ReactNode[] {
+    return nodes.map((node) => {
+      const collapsed = Boolean(collapsedFolders[node.fullPath])
+      const style = {
+        paddingInlineStart: `${depth * 14 + 8}px`,
+      } as CSSProperties
+
+      if (node.type === 'folder') {
+        return (
+          <div key={node.fullPath}>
+            <button
+              type="button"
+              className="text-muted-foreground hover:bg-muted flex w-full items-center py-1 text-left text-xs"
+              style={style}
+              onClick={() => {
+                setCollapsedFolders((prev) => ({
+                  ...prev,
+                  [node.fullPath]: !prev[node.fullPath],
+                }))
+              }}
+            >
+              <span className="inline-block w-4">{collapsed ? '▸' : '▾'}</span>
+              <span>{node.name}</span>
+            </button>
+            {!collapsed && renderTree(node.children, depth + 1)}
+          </div>
+        )
+      }
+
+      const dirty = Boolean(dirtyPaths[node.fullPath])
+      const active = node.fullPath === activePath
+
+      return (
+        <button
+          key={node.fullPath}
+          type="button"
+          className={cn(
+            'hover:bg-muted flex w-full items-center gap-2 py-1 text-left text-xs',
+            active && 'bg-muted/80 text-foreground font-medium'
+          )}
+          style={style}
+          onClick={() => openFile(node.fullPath)}
+        >
+          <span className="text-muted-foreground inline-block w-4">•</span>
+          <span className="truncate">{node.name}</span>
+          {dirty ? (
+            <span className="ms-auto text-[10px] text-amber-600">●</span>
+          ) : null}
+        </button>
+      )
+    })
   }
-
-  // ── Derived State ─────────────────────────────────────────────────────
-
-  const ctxNodeType: "file" | "folder" | "root" = ctxMenu?.nodeId
-    ? (fs.nodes[ctxMenu.nodeId]?.type ?? "file")
-    : "root";
-
-  // ── Render ────────────────────────────────────────────────────────────
 
   return (
     <div
       dir="ltr"
-      className="flex w-full overflow-hidden font-mono"
-      style={{
-        height: "calc(100vh - 7rem)",
-        background: "#1e1e1e",
-        color: "#cccccc",
-      }}
-      onContextMenu={(e) => {
-        if ((e.target as HTMLElement).closest(".explorer-tree")) {
-          e.preventDefault();
-          openCtxMenu(e, null);
-        }
-      }}
+      className="bg-background text-foreground flex h-full min-h-[600px] w-full flex-col"
     >
-      <ActivityBar
-        explorerOpen={explorerOpen}
-        onToggleExplorer={() => setExplorerOpen((v) => !v)}
-      />
+      <div className="flex flex-wrap items-center gap-2 border-b p-2">
+        <select
+          className="bg-background h-9 min-w-[180px] rounded-md border px-2 text-sm"
+          value={selectedProjectSlug}
+          onChange={(event) => {
+            const nextSlug = event.target.value
+            setSelectedProjectSlug(nextSlug)
+            void loadProject(nextSlug)
+          }}
+          disabled={isBootstrapping}
+        >
+          {projects.map((project) => (
+            <option key={project.id} value={project.slug}>
+              {project.name} ({project.slug})
+            </option>
+          ))}
+        </select>
 
-      <AnimatePresence initial={false}>
-        {explorerOpen && (
-          <motion.div
-            initial={{ width: 0, opacity: 0 }}
-            animate={{ width: 220, opacity: 1 }}
-            exit={{ width: 0, opacity: 0 }}
-            transition={{ duration: 0.15 }}
-            className="flex flex-col bg-[#252526] border-r border-[#1e1e1e] shrink-0 overflow-hidden"
-            style={{ width: 220 }}
+        <Input
+          value={projectNameInput}
+          onChange={(event) => {
+            const value = event.target.value
+            setProjectNameInput(value)
+            if (!projectSlugInput) {
+              setProjectSlugInput(asSlug(value))
+            }
+          }}
+          placeholder="Project name"
+          className="h-9 w-40"
+        />
+
+        <Input
+          value={projectSlugInput}
+          onChange={(event) => setProjectSlugInput(asSlug(event.target.value))}
+          placeholder="project-slug"
+          className="h-9 w-40"
+        />
+
+        <Button
+          type="button"
+          variant="secondary"
+          className="h-9"
+          onClick={() => void handleCreateProject()}
+        >
+          New Project
+        </Button>
+
+        <div className="ms-auto flex items-center gap-2">
+          <span className="text-muted-foreground text-xs">Entry</span>
+          <Input
+            value={entryPathInput}
+            onChange={(event) =>
+              setEntryPathInput(normalizeWorkspacePath(event.target.value))
+            }
+            className="h-9 w-52"
+          />
+
+          <select
+            className="bg-background h-9 min-w-[120px] rounded-md border px-2 text-sm"
+            value={selectedVersion ?? ''}
+            onChange={(event) => {
+              const value = Number(event.target.value)
+              if (Number.isFinite(value) && value > 0) {
+                void handleCheckoutVersion(value)
+              }
+            }}
           >
-            <div className="flex items-center justify-between px-3 py-2 border-b border-[#3c3c3c]">
-              <span className="text-[11px] font-bold tracking-widest text-[#bbbbbb] uppercase">
-                Explorer
-              </span>
-              <div className="flex items-center gap-0.5">
-                <ActionBtn
-                  title="New File"
-                  onClick={() => {
-                    ctxNodeRef.current = null;
-                    setCreating({ parentId: null, type: "file", depth: 0 });
-                  }}
-                >
-                  <Icon.NewFile />
-                </ActionBtn>
-                <ActionBtn
-                  title="New Folder"
-                  onClick={() => {
-                    ctxNodeRef.current = null;
-                    setCreating({ parentId: null, type: "folder", depth: 0 });
-                  }}
-                >
-                  <Icon.NewFolder />
-                </ActionBtn>
-                <ActionBtn title="Collapse All" onClick={collapseAll}>
-                  <Icon.CollapseAll />
-                </ActionBtn>
-              </div>
-            </div>
+            <option value="">Latest</option>
+            {versions.map((version) => (
+              <option key={version.id} value={version.version}>
+                v{version.version}
+              </option>
+            ))}
+          </select>
 
-            <div className="px-3 py-1 text-[11px] text-[#bbb] uppercase tracking-widest font-semibold">
-              Project
-            </div>
-
-            <FileTree
-              fs={fs}
-              expanded={expanded}
-              selectedId={selectedId}
-              editingId={editingId}
-              creating={creating}
-              onToggle={toggleExpand}
-              onSelect={openFile}
-              onContextMenu={(e, id) => {
-                e.preventDefault();
-                e.stopPropagation();
-                openCtxMenu(e, id);
-              }}
-              onRenameCommit={commitRename}
-              onRenameCancel={() => setEditingId(null)}
-              onCommitCreate={commitCreate}
-              onCancelCreate={() => setCreating(null)}
-              onMove={handleMoveNode}
-              onCollapseAll={collapseAll}
-            />
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      <div className="relative flex flex-col flex-1 min-w-0">
-        <TabBar
-          tabs={tabs}
-          activeTabId={activeTabId}
-          fs={fs}
-          onSelectTab={openFile}
-          onCloseTab={closeTab}
-          onSave={handleSave}
-          onToggleVersions={() => setVersionsOpen((v) => !v)}
-          onRun={handleRun}
-          onToggleConsole={() => setShowConsole((v) => !v)}
-        />
-
-        {/* Build status indicator */}
-        {isBuilding && (
-          <div className="flex items-center gap-2 px-3 py-1 bg-yellow-600/20 text-yellow-400 text-xs border-b border-yellow-600/30">
-            <div className="animate-spin rounded-full h-3 w-3 border-2 border-yellow-400 border-t-transparent" />
-            <span>Building...</span>
-          </div>
-        )}
-
-        <EditorPanel
-          tabs={tabs}
-          activeTabId={activeTabId}
-          fs={fs}
-          showConsole={showConsole}
-          logs={logs}
-          onClearConsole={() => setLogs([])}
-          onEditorDidMount={handleEditorDidMount}
-          onEditorChange={handleEditorChange}
-        />
-
-        {versionsOpen && (
-          <div className="absolute right-0 top-9 bottom-0 w-[340px] border-l border-[#1e1e1e] bg-[#1e1e1e] text-[#cccccc] z-30 flex flex-col">
-            <div className="flex items-center justify-between px-3 py-2 border-b border-[#252526]">
-              <div className="text-xs">
-                <div className="font-semibold">Versions</div>
-                <div className="text-[#858585]">Current: v{remoteCurrentVersion}</div>
-              </div>
-              <button
-                className="text-[#858585] hover:text-[#cccccc] text-xs"
-                onClick={() => setVersionsOpen(false)}
-              >
-                Close
-              </button>
-            </div>
-            <div className="flex-1 overflow-auto">
-              {versions.length === 0 ? (
-                <div className="p-3 text-xs text-[#858585]">No saved versions yet.</div>
-              ) : (
-                <div className="divide-y divide-[#252526]">
-                  {versions.map((v) => (
-                    <button
-                      key={v.id}
-                      className="w-full text-left px-3 py-2 hover:bg-[#252526] transition-colors"
-                      onClick={async () => {
-                        try {
-                          setIsRemoteBusy(true);
-                          const data = await fetchWorkspaceVersionSnapshot(
-                            workspaceSlugRef.current,
-                            v.version,
-                          );
-                          const parsed = JSON.parse(data.snapshot);
-                          setFs(parsed);
-                          setTabs([]);
-                          setActiveTabId(null);
-                          setSelectedId(null);
-                          setExpanded(new Set(Array.isArray(parsed.rootIds) ? parsed.rootIds : []));
-                          setRemoteCurrentVersion(v.version);
-                          setVersionsOpen(false);
-                          setLogs((prev) => [
-                            ...prev,
-                            `⏪ Checked out workspace version v${v.version}`,
-                          ]);
-                        } catch (e: any) {
-                          setLogs((prev) => [
-                            ...prev,
-                            `❌ Checkout failed: ${e?.message || "unknown error"}`,
-                          ]);
-                        } finally {
-                          setIsRemoteBusy(false);
-                        }
-                      }}
-                    >
-                      <div className="flex items-center justify-between gap-2">
-                        <div className="text-xs font-semibold">v{v.version}</div>
-                        <div className="text-[11px] text-[#858585]">
-                          {new Date(v.createdAt).toLocaleString()}
-                        </div>
-                      </div>
-                      <div className="text-[11px] text-[#858585] truncate">
-                        {v.message || (v.isAutosave ? "autosave" : "save")}
-                      </div>
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
-            <div className="px-3 py-2 border-t border-[#252526] text-[11px] text-[#858585]">
-              {isRemoteBusy ? "Syncing..." : " "}
-            </div>
-          </div>
-        )}
+          <Button
+            type="button"
+            className="h-9"
+            onClick={() => void handleSave()}
+            disabled={isSaving || isLoading || isBootstrapping}
+          >
+            {isSaving ? 'Saving...' : isDirty ? 'Save Changes' : 'Save Version'}
+          </Button>
+        </div>
       </div>
 
-      {ctxMenu && (
-        <ContextMenu
-          menu={ctxMenu}
-          nodeType={ctxNodeType}
-          onClose={() => setCtxMenu(null)}
-          onNewFile={ctxNewFile}
-          onNewFolder={ctxNewFolder}
-          onRename={ctxRename}
-          onDelete={ctxDelete}
-        />
-      )}
+      <div className="grid min-h-0 flex-1 grid-cols-[260px_1fr]">
+        <aside className="flex min-h-0 flex-col border-e">
+          <div className="flex items-center gap-2 border-b p-2">
+            <Input
+              value={newFileInput}
+              onChange={(event) => setNewFileInput(event.target.value)}
+              placeholder="/api/service.ts or /README.md"
+              className="h-8"
+            />
+            <Button
+              type="button"
+              variant="secondary"
+              className="h-8 px-2"
+              onClick={handleCreateFile}
+            >
+              Add
+            </Button>
+          </div>
+
+          <div className="flex items-center gap-2 border-b p-2">
+            <Button
+              type="button"
+              variant="outline"
+              className="h-8 flex-1"
+              onClick={handleRenameFile}
+              disabled={!activePath}
+            >
+              Rename
+            </Button>
+            <Button
+              type="button"
+              variant="outline"
+              className="h-8 flex-1"
+              onClick={handleDeleteFile}
+              disabled={!activePath}
+            >
+              Delete
+            </Button>
+          </div>
+
+          <div className="min-h-0 flex-1 overflow-auto">
+            {renderTree(fileTree)}
+          </div>
+        </aside>
+
+        <section className="flex min-h-0 flex-col">
+          <div className="flex items-center gap-1 border-b px-2 py-1">
+            {tabs.map((tabPath) => {
+              const active = tabPath === activePath
+              const dirty = Boolean(dirtyPaths[tabPath])
+              const fileName =
+                tabPath.split('/').filter(Boolean).pop() ?? tabPath
+
+              return (
+                <div
+                  key={tabPath}
+                  className={cn(
+                    'group flex items-center gap-2 rounded-md border px-2 py-1 text-xs',
+                    active
+                      ? 'border-primary/40 bg-primary/10 text-foreground'
+                      : 'bg-muted/40 text-muted-foreground hover:bg-muted border-transparent'
+                  )}
+                >
+                  <button
+                    type="button"
+                    className="max-w-[180px] truncate text-left"
+                    onClick={() => openFile(tabPath)}
+                  >
+                    {fileName}
+                  </button>
+                  {dirty ? <span className="text-amber-600">●</span> : null}
+                  <button
+                    type="button"
+                    className="hover:bg-muted rounded px-1 text-[10px] opacity-60 hover:opacity-100"
+                    onClick={() => {
+                      const nextTabs = tabs.filter(
+                        (candidate) => candidate !== tabPath
+                      )
+                      setTabs(nextTabs)
+
+                      if (activePath === tabPath) {
+                        const nextActive =
+                          nextTabs[nextTabs.length - 1] ??
+                          snapshot.files[0]?.path ??
+                          null
+                        setActivePath(nextActive)
+                      }
+                    }}
+                  >
+                    x
+                  </button>
+                </div>
+              )
+            })}
+          </div>
+
+          <div className="min-h-0 flex-1">
+            <div ref={containerRef} className="h-full w-full" />
+          </div>
+
+          <div className="bg-muted/20 h-36 border-t">
+            <div className="flex items-center justify-between border-b px-3 py-1">
+              <p className="text-muted-foreground text-xs">Build / Save Logs</p>
+              <div className="text-muted-foreground flex items-center gap-2 text-[11px]">
+                <span>Project: {selectedProject?.slug ?? '-'}</span>
+                <span>Version: {selectedVersion ?? 'latest'}</span>
+              </div>
+            </div>
+            <div className="h-[calc(100%-29px)] overflow-auto px-3 py-2">
+              {logs.length === 0 ? (
+                <p className="text-muted-foreground text-xs">No logs yet</p>
+              ) : (
+                logs.map((entry) => (
+                  <p
+                    key={entry.id}
+                    className={cn(
+                      'font-mono text-[11px]',
+                      logLevelClass(entry.level)
+                    )}
+                  >
+                    {entry.message}
+                  </p>
+                ))
+              )}
+            </div>
+          </div>
+        </section>
+      </div>
+
+      {isLoading ? (
+        <div className="text-muted-foreground border-t px-3 py-2 text-xs">
+          Loading project data from remote...
+        </div>
+      ) : null}
     </div>
-  );
+  )
 }

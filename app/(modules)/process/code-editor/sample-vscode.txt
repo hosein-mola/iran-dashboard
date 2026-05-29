@@ -1,0 +1,13 @@
+import { damCalc } from './shared/dam.ts'
+
+export function main(a: number, b: number, data: any) {
+  return damCalc(a, b, data)
+}
+
+export function main2(a: number, b: number, data: any) {
+  return data
+}
+
+export function damCalc(a: number, b: number, data: any) {
+  return { a: a, b: b, data: data }
+}
