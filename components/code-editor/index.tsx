@@ -116,6 +116,7 @@ const KNOWN_IMPORT_EXTENSIONS = [
   '.md',
   '.mdx',
 ]
+const IMPORT_DIAGNOSTIC_CODES_TO_IGNORE = [2307, 7016]
 
 let monacoWorkersConfigured = false
 
@@ -208,6 +209,7 @@ function configureTypeScriptLanguageService(m: MonacoApi) {
     noSyntaxValidation: false,
     noSuggestionDiagnostics: false,
     onlyVisible: false,
+    diagnosticCodesToIgnore: IMPORT_DIAGNOSTIC_CODES_TO_IGNORE,
   })
 
   m.languages.typescript.javascriptDefaults.setDiagnosticsOptions({
@@ -215,6 +217,7 @@ function configureTypeScriptLanguageService(m: MonacoApi) {
     noSyntaxValidation: false,
     noSuggestionDiagnostics: false,
     onlyVisible: false,
+    diagnosticCodesToIgnore: IMPORT_DIAGNOSTIC_CODES_TO_IGNORE,
   })
 
   m.languages.typescript.typescriptDefaults.setEagerModelSync(true)
@@ -501,6 +504,21 @@ function matchImportStringContext(linePrefix: string): ImportContext | null {
     typedPath,
     startColumn,
   }
+}
+
+function stripImportPathPrefix(path: string) {
+  return path.replace(/^(\.\.\/|\.\/|\/)+/, '')
+}
+
+function matchesImportCandidate(candidate: string, typedPath: string) {
+  if (!typedPath) return true
+  if (candidate.startsWith(typedPath)) return true
+
+  const typedSansPrefix = stripImportPathPrefix(typedPath)
+  if (!typedSansPrefix) return true
+
+  const candidateSansPrefix = stripImportPathPrefix(candidate)
+  return candidateSansPrefix.startsWith(typedSansPrefix)
 }
 
 export default function CodeEditor({
@@ -1615,7 +1633,7 @@ export default function CodeEditor({
             for (const candidate of candidates) {
               if (!candidate) continue
               if (candidate === '.') continue
-              if (context.typedPath && !candidate.startsWith(context.typedPath))
+              if (!matchesImportCandidate(candidate, context.typedPath))
                 continue
               suggestionsSet.add(candidate)
             }
