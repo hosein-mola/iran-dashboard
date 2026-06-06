@@ -24,12 +24,13 @@ export function DashboardShell({ children }: DashboardShellProps) {
   return (
     <Fragment>
       <HolyLoader
-        color={loaderColor}
+        color={'#facc15'}
         height="0.8rem"
         speed={1000}
         easing="cubic-bezier(0.4, 0, 0.2, 1)"
         boxShadow="0px 4px 6px rgba(0, 0, 0, 0.1)"
         showSpinner
+        zIndex={999999999}
         dir="rtl"
       />
       <SidebarProvider>

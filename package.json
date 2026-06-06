@@ -2,6 +2,10 @@
   "name": "ai-data",
   "version": "0.1.0",
   "private": true,
+  "aiDatabase": {
+    "connectionString": "Data Source=SURFACE;Initial Catalog=DGTDB;Persist Security Info=False;User ID=hadmin;Password=123456;Pooling=False;MultipleActiveResultSets=False;Connect Timeout=30;Encrypt=False;TrustServerCertificate=True;Packet Size=4096;Application Name=\"SQL Server Management Studio\";Command Timeout=0;",
+    "tableName": "[DGTDB].[dbo].[vwRptPersonelInfo]"
+  },
   "scripts": {
     "dev": "next dev --turbopack -p 3000",
     "build": "next build",
@@ -52,13 +56,15 @@
     "cookie": "^1.0.2",
     "date-fns": "^3.3.1",
     "embla-carousel-react": "^8.0.0-rc22",
+    "esbuild-wasm": "^0.25.10",
     "framer-motion": "^12.6.2",
     "holy-loader": "^2.3.13",
     "imask": "^7.6.1",
     "lucide-react": "^0.484.0",
     "mathjs": "^15.2.0",
     "monaco-editor": "^0.52.2",
-    "esbuild-wasm": "^0.25.10",
+    "msnodesqlv8": "^5.2.0",
+    "mssql": "^12.5.5",
     "nanoid": "^3.3.4",
     "next": "^16.2.6",
     "next-persian-fonts": "^1.0.0",

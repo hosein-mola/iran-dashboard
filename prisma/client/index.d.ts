@@ -78,6 +78,21 @@ export type CodeWorkspace = $Result.DefaultSelection<Prisma.$CodeWorkspacePayloa
  * 
  */
 export type CodeWorkspaceVersion = $Result.DefaultSelection<Prisma.$CodeWorkspaceVersionPayload>
+/**
+ * Model AiDatabaseSchema
+ * 
+ */
+export type AiDatabaseSchema = $Result.DefaultSelection<Prisma.$AiDatabaseSchemaPayload>
+/**
+ * Model AiDbChatConversation
+ * 
+ */
+export type AiDbChatConversation = $Result.DefaultSelection<Prisma.$AiDbChatConversationPayload>
+/**
+ * Model AiDbChatMessage
+ * 
+ */
+export type AiDbChatMessage = $Result.DefaultSelection<Prisma.$AiDbChatMessagePayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -326,6 +341,36 @@ export class PrismaClient<
     * ```
     */
   get codeWorkspaceVersion(): Prisma.CodeWorkspaceVersionDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.aiDatabaseSchema`: Exposes CRUD operations for the **AiDatabaseSchema** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more AiDatabaseSchemas
+    * const aiDatabaseSchemas = await prisma.aiDatabaseSchema.findMany()
+    * ```
+    */
+  get aiDatabaseSchema(): Prisma.AiDatabaseSchemaDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.aiDbChatConversation`: Exposes CRUD operations for the **AiDbChatConversation** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more AiDbChatConversations
+    * const aiDbChatConversations = await prisma.aiDbChatConversation.findMany()
+    * ```
+    */
+  get aiDbChatConversation(): Prisma.AiDbChatConversationDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.aiDbChatMessage`: Exposes CRUD operations for the **AiDbChatMessage** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more AiDbChatMessages
+    * const aiDbChatMessages = await prisma.aiDbChatMessage.findMany()
+    * ```
+    */
+  get aiDbChatMessage(): Prisma.AiDbChatMessageDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -779,7 +824,10 @@ export namespace Prisma {
     Role: 'Role',
     AppUser: 'AppUser',
     CodeWorkspace: 'CodeWorkspace',
-    CodeWorkspaceVersion: 'CodeWorkspaceVersion'
+    CodeWorkspaceVersion: 'CodeWorkspaceVersion',
+    AiDatabaseSchema: 'AiDatabaseSchema',
+    AiDbChatConversation: 'AiDbChatConversation',
+    AiDbChatMessage: 'AiDbChatMessage'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -798,7 +846,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "form" | "formSubmission" | "formVersion" | "formSubmissionValue" | "formEvent" | "formAssignment" | "submodule" | "formTemplate" | "formTemplateVersion" | "role" | "appUser" | "codeWorkspace" | "codeWorkspaceVersion"
+      modelProps: "form" | "formSubmission" | "formVersion" | "formSubmissionValue" | "formEvent" | "formAssignment" | "submodule" | "formTemplate" | "formTemplateVersion" | "role" | "appUser" | "codeWorkspace" | "codeWorkspaceVersion" | "aiDatabaseSchema" | "aiDbChatConversation" | "aiDbChatMessage"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1764,6 +1812,228 @@ export namespace Prisma {
           }
         }
       }
+      AiDatabaseSchema: {
+        payload: Prisma.$AiDatabaseSchemaPayload<ExtArgs>
+        fields: Prisma.AiDatabaseSchemaFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.AiDatabaseSchemaFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AiDatabaseSchemaPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.AiDatabaseSchemaFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AiDatabaseSchemaPayload>
+          }
+          findFirst: {
+            args: Prisma.AiDatabaseSchemaFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AiDatabaseSchemaPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.AiDatabaseSchemaFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AiDatabaseSchemaPayload>
+          }
+          findMany: {
+            args: Prisma.AiDatabaseSchemaFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AiDatabaseSchemaPayload>[]
+          }
+          create: {
+            args: Prisma.AiDatabaseSchemaCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AiDatabaseSchemaPayload>
+          }
+          createMany: {
+            args: Prisma.AiDatabaseSchemaCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.AiDatabaseSchemaCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AiDatabaseSchemaPayload>[]
+          }
+          delete: {
+            args: Prisma.AiDatabaseSchemaDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AiDatabaseSchemaPayload>
+          }
+          update: {
+            args: Prisma.AiDatabaseSchemaUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AiDatabaseSchemaPayload>
+          }
+          deleteMany: {
+            args: Prisma.AiDatabaseSchemaDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.AiDatabaseSchemaUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.AiDatabaseSchemaUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AiDatabaseSchemaPayload>[]
+          }
+          upsert: {
+            args: Prisma.AiDatabaseSchemaUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AiDatabaseSchemaPayload>
+          }
+          aggregate: {
+            args: Prisma.AiDatabaseSchemaAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateAiDatabaseSchema>
+          }
+          groupBy: {
+            args: Prisma.AiDatabaseSchemaGroupByArgs<ExtArgs>
+            result: $Utils.Optional<AiDatabaseSchemaGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.AiDatabaseSchemaCountArgs<ExtArgs>
+            result: $Utils.Optional<AiDatabaseSchemaCountAggregateOutputType> | number
+          }
+        }
+      }
+      AiDbChatConversation: {
+        payload: Prisma.$AiDbChatConversationPayload<ExtArgs>
+        fields: Prisma.AiDbChatConversationFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.AiDbChatConversationFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AiDbChatConversationPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.AiDbChatConversationFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AiDbChatConversationPayload>
+          }
+          findFirst: {
+            args: Prisma.AiDbChatConversationFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AiDbChatConversationPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.AiDbChatConversationFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AiDbChatConversationPayload>
+          }
+          findMany: {
+            args: Prisma.AiDbChatConversationFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AiDbChatConversationPayload>[]
+          }
+          create: {
+            args: Prisma.AiDbChatConversationCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AiDbChatConversationPayload>
+          }
+          createMany: {
+            args: Prisma.AiDbChatConversationCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.AiDbChatConversationCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AiDbChatConversationPayload>[]
+          }
+          delete: {
+            args: Prisma.AiDbChatConversationDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AiDbChatConversationPayload>
+          }
+          update: {
+            args: Prisma.AiDbChatConversationUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AiDbChatConversationPayload>
+          }
+          deleteMany: {
+            args: Prisma.AiDbChatConversationDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.AiDbChatConversationUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.AiDbChatConversationUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AiDbChatConversationPayload>[]
+          }
+          upsert: {
+            args: Prisma.AiDbChatConversationUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AiDbChatConversationPayload>
+          }
+          aggregate: {
+            args: Prisma.AiDbChatConversationAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateAiDbChatConversation>
+          }
+          groupBy: {
+            args: Prisma.AiDbChatConversationGroupByArgs<ExtArgs>
+            result: $Utils.Optional<AiDbChatConversationGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.AiDbChatConversationCountArgs<ExtArgs>
+            result: $Utils.Optional<AiDbChatConversationCountAggregateOutputType> | number
+          }
+        }
+      }
+      AiDbChatMessage: {
+        payload: Prisma.$AiDbChatMessagePayload<ExtArgs>
+        fields: Prisma.AiDbChatMessageFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.AiDbChatMessageFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AiDbChatMessagePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.AiDbChatMessageFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AiDbChatMessagePayload>
+          }
+          findFirst: {
+            args: Prisma.AiDbChatMessageFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AiDbChatMessagePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.AiDbChatMessageFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AiDbChatMessagePayload>
+          }
+          findMany: {
+            args: Prisma.AiDbChatMessageFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AiDbChatMessagePayload>[]
+          }
+          create: {
+            args: Prisma.AiDbChatMessageCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AiDbChatMessagePayload>
+          }
+          createMany: {
+            args: Prisma.AiDbChatMessageCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.AiDbChatMessageCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AiDbChatMessagePayload>[]
+          }
+          delete: {
+            args: Prisma.AiDbChatMessageDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AiDbChatMessagePayload>
+          }
+          update: {
+            args: Prisma.AiDbChatMessageUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AiDbChatMessagePayload>
+          }
+          deleteMany: {
+            args: Prisma.AiDbChatMessageDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.AiDbChatMessageUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.AiDbChatMessageUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AiDbChatMessagePayload>[]
+          }
+          upsert: {
+            args: Prisma.AiDbChatMessageUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AiDbChatMessagePayload>
+          }
+          aggregate: {
+            args: Prisma.AiDbChatMessageAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateAiDbChatMessage>
+          }
+          groupBy: {
+            args: Prisma.AiDbChatMessageGroupByArgs<ExtArgs>
+            result: $Utils.Optional<AiDbChatMessageGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.AiDbChatMessageCountArgs<ExtArgs>
+            result: $Utils.Optional<AiDbChatMessageCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1873,6 +2143,9 @@ export namespace Prisma {
     appUser?: AppUserOmit
     codeWorkspace?: CodeWorkspaceOmit
     codeWorkspaceVersion?: CodeWorkspaceVersionOmit
+    aiDatabaseSchema?: AiDatabaseSchemaOmit
+    aiDbChatConversation?: AiDbChatConversationOmit
+    aiDbChatMessage?: AiDbChatMessageOmit
   }
 
   /* Types for Logging */
@@ -2261,6 +2534,68 @@ export namespace Prisma {
    */
   export type CodeWorkspaceCountOutputTypeCountVersionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: CodeWorkspaceVersionWhereInput
+  }
+
+
+  /**
+   * Count Type AiDatabaseSchemaCountOutputType
+   */
+
+  export type AiDatabaseSchemaCountOutputType = {
+    conversations: number
+  }
+
+  export type AiDatabaseSchemaCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    conversations?: boolean | AiDatabaseSchemaCountOutputTypeCountConversationsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * AiDatabaseSchemaCountOutputType without action
+   */
+  export type AiDatabaseSchemaCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AiDatabaseSchemaCountOutputType
+     */
+    select?: AiDatabaseSchemaCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * AiDatabaseSchemaCountOutputType without action
+   */
+  export type AiDatabaseSchemaCountOutputTypeCountConversationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AiDbChatConversationWhereInput
+  }
+
+
+  /**
+   * Count Type AiDbChatConversationCountOutputType
+   */
+
+  export type AiDbChatConversationCountOutputType = {
+    messages: number
+  }
+
+  export type AiDbChatConversationCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    messages?: boolean | AiDbChatConversationCountOutputTypeCountMessagesArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * AiDbChatConversationCountOutputType without action
+   */
+  export type AiDbChatConversationCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AiDbChatConversationCountOutputType
+     */
+    select?: AiDbChatConversationCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * AiDbChatConversationCountOutputType without action
+   */
+  export type AiDbChatConversationCountOutputTypeCountMessagesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AiDbChatMessageWhereInput
   }
 
 
@@ -18526,6 +18861,3366 @@ export namespace Prisma {
 
 
   /**
+   * Model AiDatabaseSchema
+   */
+
+  export type AggregateAiDatabaseSchema = {
+    _count: AiDatabaseSchemaCountAggregateOutputType | null
+    _avg: AiDatabaseSchemaAvgAggregateOutputType | null
+    _sum: AiDatabaseSchemaSumAggregateOutputType | null
+    _min: AiDatabaseSchemaMinAggregateOutputType | null
+    _max: AiDatabaseSchemaMaxAggregateOutputType | null
+  }
+
+  export type AiDatabaseSchemaAvgAggregateOutputType = {
+    rowLimit: number | null
+    messageQuota: number | null
+  }
+
+  export type AiDatabaseSchemaSumAggregateOutputType = {
+    rowLimit: number | null
+    messageQuota: number | null
+  }
+
+  export type AiDatabaseSchemaMinAggregateOutputType = {
+    id: string | null
+    name: string | null
+    description: string | null
+    schemaJson: string | null
+    rowLimit: number | null
+    messageQuota: number | null
+    active: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type AiDatabaseSchemaMaxAggregateOutputType = {
+    id: string | null
+    name: string | null
+    description: string | null
+    schemaJson: string | null
+    rowLimit: number | null
+    messageQuota: number | null
+    active: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type AiDatabaseSchemaCountAggregateOutputType = {
+    id: number
+    name: number
+    description: number
+    schemaJson: number
+    rowLimit: number
+    messageQuota: number
+    active: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type AiDatabaseSchemaAvgAggregateInputType = {
+    rowLimit?: true
+    messageQuota?: true
+  }
+
+  export type AiDatabaseSchemaSumAggregateInputType = {
+    rowLimit?: true
+    messageQuota?: true
+  }
+
+  export type AiDatabaseSchemaMinAggregateInputType = {
+    id?: true
+    name?: true
+    description?: true
+    schemaJson?: true
+    rowLimit?: true
+    messageQuota?: true
+    active?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type AiDatabaseSchemaMaxAggregateInputType = {
+    id?: true
+    name?: true
+    description?: true
+    schemaJson?: true
+    rowLimit?: true
+    messageQuota?: true
+    active?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type AiDatabaseSchemaCountAggregateInputType = {
+    id?: true
+    name?: true
+    description?: true
+    schemaJson?: true
+    rowLimit?: true
+    messageQuota?: true
+    active?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type AiDatabaseSchemaAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AiDatabaseSchema to aggregate.
+     */
+    where?: AiDatabaseSchemaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AiDatabaseSchemas to fetch.
+     */
+    orderBy?: AiDatabaseSchemaOrderByWithRelationInput | AiDatabaseSchemaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: AiDatabaseSchemaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AiDatabaseSchemas from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AiDatabaseSchemas.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned AiDatabaseSchemas
+    **/
+    _count?: true | AiDatabaseSchemaCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: AiDatabaseSchemaAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: AiDatabaseSchemaSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: AiDatabaseSchemaMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: AiDatabaseSchemaMaxAggregateInputType
+  }
+
+  export type GetAiDatabaseSchemaAggregateType<T extends AiDatabaseSchemaAggregateArgs> = {
+        [P in keyof T & keyof AggregateAiDatabaseSchema]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateAiDatabaseSchema[P]>
+      : GetScalarType<T[P], AggregateAiDatabaseSchema[P]>
+  }
+
+
+
+
+  export type AiDatabaseSchemaGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AiDatabaseSchemaWhereInput
+    orderBy?: AiDatabaseSchemaOrderByWithAggregationInput | AiDatabaseSchemaOrderByWithAggregationInput[]
+    by: AiDatabaseSchemaScalarFieldEnum[] | AiDatabaseSchemaScalarFieldEnum
+    having?: AiDatabaseSchemaScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: AiDatabaseSchemaCountAggregateInputType | true
+    _avg?: AiDatabaseSchemaAvgAggregateInputType
+    _sum?: AiDatabaseSchemaSumAggregateInputType
+    _min?: AiDatabaseSchemaMinAggregateInputType
+    _max?: AiDatabaseSchemaMaxAggregateInputType
+  }
+
+  export type AiDatabaseSchemaGroupByOutputType = {
+    id: string
+    name: string
+    description: string
+    schemaJson: string
+    rowLimit: number
+    messageQuota: number
+    active: boolean
+    createdAt: Date
+    updatedAt: Date
+    _count: AiDatabaseSchemaCountAggregateOutputType | null
+    _avg: AiDatabaseSchemaAvgAggregateOutputType | null
+    _sum: AiDatabaseSchemaSumAggregateOutputType | null
+    _min: AiDatabaseSchemaMinAggregateOutputType | null
+    _max: AiDatabaseSchemaMaxAggregateOutputType | null
+  }
+
+  type GetAiDatabaseSchemaGroupByPayload<T extends AiDatabaseSchemaGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<AiDatabaseSchemaGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof AiDatabaseSchemaGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], AiDatabaseSchemaGroupByOutputType[P]>
+            : GetScalarType<T[P], AiDatabaseSchemaGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type AiDatabaseSchemaSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    description?: boolean
+    schemaJson?: boolean
+    rowLimit?: boolean
+    messageQuota?: boolean
+    active?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    conversations?: boolean | AiDatabaseSchema$conversationsArgs<ExtArgs>
+    _count?: boolean | AiDatabaseSchemaCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["aiDatabaseSchema"]>
+
+  export type AiDatabaseSchemaSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    description?: boolean
+    schemaJson?: boolean
+    rowLimit?: boolean
+    messageQuota?: boolean
+    active?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["aiDatabaseSchema"]>
+
+  export type AiDatabaseSchemaSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    description?: boolean
+    schemaJson?: boolean
+    rowLimit?: boolean
+    messageQuota?: boolean
+    active?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["aiDatabaseSchema"]>
+
+  export type AiDatabaseSchemaSelectScalar = {
+    id?: boolean
+    name?: boolean
+    description?: boolean
+    schemaJson?: boolean
+    rowLimit?: boolean
+    messageQuota?: boolean
+    active?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type AiDatabaseSchemaOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "description" | "schemaJson" | "rowLimit" | "messageQuota" | "active" | "createdAt" | "updatedAt", ExtArgs["result"]["aiDatabaseSchema"]>
+  export type AiDatabaseSchemaInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    conversations?: boolean | AiDatabaseSchema$conversationsArgs<ExtArgs>
+    _count?: boolean | AiDatabaseSchemaCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type AiDatabaseSchemaIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type AiDatabaseSchemaIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $AiDatabaseSchemaPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "AiDatabaseSchema"
+    objects: {
+      conversations: Prisma.$AiDbChatConversationPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      name: string
+      description: string
+      schemaJson: string
+      rowLimit: number
+      messageQuota: number
+      active: boolean
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["aiDatabaseSchema"]>
+    composites: {}
+  }
+
+  type AiDatabaseSchemaGetPayload<S extends boolean | null | undefined | AiDatabaseSchemaDefaultArgs> = $Result.GetResult<Prisma.$AiDatabaseSchemaPayload, S>
+
+  type AiDatabaseSchemaCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<AiDatabaseSchemaFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: AiDatabaseSchemaCountAggregateInputType | true
+    }
+
+  export interface AiDatabaseSchemaDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['AiDatabaseSchema'], meta: { name: 'AiDatabaseSchema' } }
+    /**
+     * Find zero or one AiDatabaseSchema that matches the filter.
+     * @param {AiDatabaseSchemaFindUniqueArgs} args - Arguments to find a AiDatabaseSchema
+     * @example
+     * // Get one AiDatabaseSchema
+     * const aiDatabaseSchema = await prisma.aiDatabaseSchema.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends AiDatabaseSchemaFindUniqueArgs>(args: SelectSubset<T, AiDatabaseSchemaFindUniqueArgs<ExtArgs>>): Prisma__AiDatabaseSchemaClient<$Result.GetResult<Prisma.$AiDatabaseSchemaPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one AiDatabaseSchema that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {AiDatabaseSchemaFindUniqueOrThrowArgs} args - Arguments to find a AiDatabaseSchema
+     * @example
+     * // Get one AiDatabaseSchema
+     * const aiDatabaseSchema = await prisma.aiDatabaseSchema.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends AiDatabaseSchemaFindUniqueOrThrowArgs>(args: SelectSubset<T, AiDatabaseSchemaFindUniqueOrThrowArgs<ExtArgs>>): Prisma__AiDatabaseSchemaClient<$Result.GetResult<Prisma.$AiDatabaseSchemaPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first AiDatabaseSchema that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AiDatabaseSchemaFindFirstArgs} args - Arguments to find a AiDatabaseSchema
+     * @example
+     * // Get one AiDatabaseSchema
+     * const aiDatabaseSchema = await prisma.aiDatabaseSchema.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends AiDatabaseSchemaFindFirstArgs>(args?: SelectSubset<T, AiDatabaseSchemaFindFirstArgs<ExtArgs>>): Prisma__AiDatabaseSchemaClient<$Result.GetResult<Prisma.$AiDatabaseSchemaPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first AiDatabaseSchema that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AiDatabaseSchemaFindFirstOrThrowArgs} args - Arguments to find a AiDatabaseSchema
+     * @example
+     * // Get one AiDatabaseSchema
+     * const aiDatabaseSchema = await prisma.aiDatabaseSchema.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends AiDatabaseSchemaFindFirstOrThrowArgs>(args?: SelectSubset<T, AiDatabaseSchemaFindFirstOrThrowArgs<ExtArgs>>): Prisma__AiDatabaseSchemaClient<$Result.GetResult<Prisma.$AiDatabaseSchemaPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more AiDatabaseSchemas that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AiDatabaseSchemaFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all AiDatabaseSchemas
+     * const aiDatabaseSchemas = await prisma.aiDatabaseSchema.findMany()
+     * 
+     * // Get first 10 AiDatabaseSchemas
+     * const aiDatabaseSchemas = await prisma.aiDatabaseSchema.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const aiDatabaseSchemaWithIdOnly = await prisma.aiDatabaseSchema.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends AiDatabaseSchemaFindManyArgs>(args?: SelectSubset<T, AiDatabaseSchemaFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AiDatabaseSchemaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a AiDatabaseSchema.
+     * @param {AiDatabaseSchemaCreateArgs} args - Arguments to create a AiDatabaseSchema.
+     * @example
+     * // Create one AiDatabaseSchema
+     * const AiDatabaseSchema = await prisma.aiDatabaseSchema.create({
+     *   data: {
+     *     // ... data to create a AiDatabaseSchema
+     *   }
+     * })
+     * 
+     */
+    create<T extends AiDatabaseSchemaCreateArgs>(args: SelectSubset<T, AiDatabaseSchemaCreateArgs<ExtArgs>>): Prisma__AiDatabaseSchemaClient<$Result.GetResult<Prisma.$AiDatabaseSchemaPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many AiDatabaseSchemas.
+     * @param {AiDatabaseSchemaCreateManyArgs} args - Arguments to create many AiDatabaseSchemas.
+     * @example
+     * // Create many AiDatabaseSchemas
+     * const aiDatabaseSchema = await prisma.aiDatabaseSchema.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends AiDatabaseSchemaCreateManyArgs>(args?: SelectSubset<T, AiDatabaseSchemaCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many AiDatabaseSchemas and returns the data saved in the database.
+     * @param {AiDatabaseSchemaCreateManyAndReturnArgs} args - Arguments to create many AiDatabaseSchemas.
+     * @example
+     * // Create many AiDatabaseSchemas
+     * const aiDatabaseSchema = await prisma.aiDatabaseSchema.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many AiDatabaseSchemas and only return the `id`
+     * const aiDatabaseSchemaWithIdOnly = await prisma.aiDatabaseSchema.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends AiDatabaseSchemaCreateManyAndReturnArgs>(args?: SelectSubset<T, AiDatabaseSchemaCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AiDatabaseSchemaPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a AiDatabaseSchema.
+     * @param {AiDatabaseSchemaDeleteArgs} args - Arguments to delete one AiDatabaseSchema.
+     * @example
+     * // Delete one AiDatabaseSchema
+     * const AiDatabaseSchema = await prisma.aiDatabaseSchema.delete({
+     *   where: {
+     *     // ... filter to delete one AiDatabaseSchema
+     *   }
+     * })
+     * 
+     */
+    delete<T extends AiDatabaseSchemaDeleteArgs>(args: SelectSubset<T, AiDatabaseSchemaDeleteArgs<ExtArgs>>): Prisma__AiDatabaseSchemaClient<$Result.GetResult<Prisma.$AiDatabaseSchemaPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one AiDatabaseSchema.
+     * @param {AiDatabaseSchemaUpdateArgs} args - Arguments to update one AiDatabaseSchema.
+     * @example
+     * // Update one AiDatabaseSchema
+     * const aiDatabaseSchema = await prisma.aiDatabaseSchema.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends AiDatabaseSchemaUpdateArgs>(args: SelectSubset<T, AiDatabaseSchemaUpdateArgs<ExtArgs>>): Prisma__AiDatabaseSchemaClient<$Result.GetResult<Prisma.$AiDatabaseSchemaPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more AiDatabaseSchemas.
+     * @param {AiDatabaseSchemaDeleteManyArgs} args - Arguments to filter AiDatabaseSchemas to delete.
+     * @example
+     * // Delete a few AiDatabaseSchemas
+     * const { count } = await prisma.aiDatabaseSchema.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends AiDatabaseSchemaDeleteManyArgs>(args?: SelectSubset<T, AiDatabaseSchemaDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AiDatabaseSchemas.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AiDatabaseSchemaUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many AiDatabaseSchemas
+     * const aiDatabaseSchema = await prisma.aiDatabaseSchema.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends AiDatabaseSchemaUpdateManyArgs>(args: SelectSubset<T, AiDatabaseSchemaUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AiDatabaseSchemas and returns the data updated in the database.
+     * @param {AiDatabaseSchemaUpdateManyAndReturnArgs} args - Arguments to update many AiDatabaseSchemas.
+     * @example
+     * // Update many AiDatabaseSchemas
+     * const aiDatabaseSchema = await prisma.aiDatabaseSchema.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more AiDatabaseSchemas and only return the `id`
+     * const aiDatabaseSchemaWithIdOnly = await prisma.aiDatabaseSchema.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends AiDatabaseSchemaUpdateManyAndReturnArgs>(args: SelectSubset<T, AiDatabaseSchemaUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AiDatabaseSchemaPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one AiDatabaseSchema.
+     * @param {AiDatabaseSchemaUpsertArgs} args - Arguments to update or create a AiDatabaseSchema.
+     * @example
+     * // Update or create a AiDatabaseSchema
+     * const aiDatabaseSchema = await prisma.aiDatabaseSchema.upsert({
+     *   create: {
+     *     // ... data to create a AiDatabaseSchema
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the AiDatabaseSchema we want to update
+     *   }
+     * })
+     */
+    upsert<T extends AiDatabaseSchemaUpsertArgs>(args: SelectSubset<T, AiDatabaseSchemaUpsertArgs<ExtArgs>>): Prisma__AiDatabaseSchemaClient<$Result.GetResult<Prisma.$AiDatabaseSchemaPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of AiDatabaseSchemas.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AiDatabaseSchemaCountArgs} args - Arguments to filter AiDatabaseSchemas to count.
+     * @example
+     * // Count the number of AiDatabaseSchemas
+     * const count = await prisma.aiDatabaseSchema.count({
+     *   where: {
+     *     // ... the filter for the AiDatabaseSchemas we want to count
+     *   }
+     * })
+    **/
+    count<T extends AiDatabaseSchemaCountArgs>(
+      args?: Subset<T, AiDatabaseSchemaCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], AiDatabaseSchemaCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a AiDatabaseSchema.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AiDatabaseSchemaAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends AiDatabaseSchemaAggregateArgs>(args: Subset<T, AiDatabaseSchemaAggregateArgs>): Prisma.PrismaPromise<GetAiDatabaseSchemaAggregateType<T>>
+
+    /**
+     * Group by AiDatabaseSchema.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AiDatabaseSchemaGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends AiDatabaseSchemaGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: AiDatabaseSchemaGroupByArgs['orderBy'] }
+        : { orderBy?: AiDatabaseSchemaGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, AiDatabaseSchemaGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAiDatabaseSchemaGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the AiDatabaseSchema model
+   */
+  readonly fields: AiDatabaseSchemaFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for AiDatabaseSchema.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__AiDatabaseSchemaClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    conversations<T extends AiDatabaseSchema$conversationsArgs<ExtArgs> = {}>(args?: Subset<T, AiDatabaseSchema$conversationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AiDbChatConversationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the AiDatabaseSchema model
+   */
+  interface AiDatabaseSchemaFieldRefs {
+    readonly id: FieldRef<"AiDatabaseSchema", 'String'>
+    readonly name: FieldRef<"AiDatabaseSchema", 'String'>
+    readonly description: FieldRef<"AiDatabaseSchema", 'String'>
+    readonly schemaJson: FieldRef<"AiDatabaseSchema", 'String'>
+    readonly rowLimit: FieldRef<"AiDatabaseSchema", 'Int'>
+    readonly messageQuota: FieldRef<"AiDatabaseSchema", 'Int'>
+    readonly active: FieldRef<"AiDatabaseSchema", 'Boolean'>
+    readonly createdAt: FieldRef<"AiDatabaseSchema", 'DateTime'>
+    readonly updatedAt: FieldRef<"AiDatabaseSchema", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * AiDatabaseSchema findUnique
+   */
+  export type AiDatabaseSchemaFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AiDatabaseSchema
+     */
+    select?: AiDatabaseSchemaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AiDatabaseSchema
+     */
+    omit?: AiDatabaseSchemaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AiDatabaseSchemaInclude<ExtArgs> | null
+    /**
+     * Filter, which AiDatabaseSchema to fetch.
+     */
+    where: AiDatabaseSchemaWhereUniqueInput
+  }
+
+  /**
+   * AiDatabaseSchema findUniqueOrThrow
+   */
+  export type AiDatabaseSchemaFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AiDatabaseSchema
+     */
+    select?: AiDatabaseSchemaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AiDatabaseSchema
+     */
+    omit?: AiDatabaseSchemaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AiDatabaseSchemaInclude<ExtArgs> | null
+    /**
+     * Filter, which AiDatabaseSchema to fetch.
+     */
+    where: AiDatabaseSchemaWhereUniqueInput
+  }
+
+  /**
+   * AiDatabaseSchema findFirst
+   */
+  export type AiDatabaseSchemaFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AiDatabaseSchema
+     */
+    select?: AiDatabaseSchemaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AiDatabaseSchema
+     */
+    omit?: AiDatabaseSchemaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AiDatabaseSchemaInclude<ExtArgs> | null
+    /**
+     * Filter, which AiDatabaseSchema to fetch.
+     */
+    where?: AiDatabaseSchemaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AiDatabaseSchemas to fetch.
+     */
+    orderBy?: AiDatabaseSchemaOrderByWithRelationInput | AiDatabaseSchemaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AiDatabaseSchemas.
+     */
+    cursor?: AiDatabaseSchemaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AiDatabaseSchemas from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AiDatabaseSchemas.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AiDatabaseSchemas.
+     */
+    distinct?: AiDatabaseSchemaScalarFieldEnum | AiDatabaseSchemaScalarFieldEnum[]
+  }
+
+  /**
+   * AiDatabaseSchema findFirstOrThrow
+   */
+  export type AiDatabaseSchemaFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AiDatabaseSchema
+     */
+    select?: AiDatabaseSchemaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AiDatabaseSchema
+     */
+    omit?: AiDatabaseSchemaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AiDatabaseSchemaInclude<ExtArgs> | null
+    /**
+     * Filter, which AiDatabaseSchema to fetch.
+     */
+    where?: AiDatabaseSchemaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AiDatabaseSchemas to fetch.
+     */
+    orderBy?: AiDatabaseSchemaOrderByWithRelationInput | AiDatabaseSchemaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AiDatabaseSchemas.
+     */
+    cursor?: AiDatabaseSchemaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AiDatabaseSchemas from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AiDatabaseSchemas.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AiDatabaseSchemas.
+     */
+    distinct?: AiDatabaseSchemaScalarFieldEnum | AiDatabaseSchemaScalarFieldEnum[]
+  }
+
+  /**
+   * AiDatabaseSchema findMany
+   */
+  export type AiDatabaseSchemaFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AiDatabaseSchema
+     */
+    select?: AiDatabaseSchemaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AiDatabaseSchema
+     */
+    omit?: AiDatabaseSchemaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AiDatabaseSchemaInclude<ExtArgs> | null
+    /**
+     * Filter, which AiDatabaseSchemas to fetch.
+     */
+    where?: AiDatabaseSchemaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AiDatabaseSchemas to fetch.
+     */
+    orderBy?: AiDatabaseSchemaOrderByWithRelationInput | AiDatabaseSchemaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing AiDatabaseSchemas.
+     */
+    cursor?: AiDatabaseSchemaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AiDatabaseSchemas from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AiDatabaseSchemas.
+     */
+    skip?: number
+    distinct?: AiDatabaseSchemaScalarFieldEnum | AiDatabaseSchemaScalarFieldEnum[]
+  }
+
+  /**
+   * AiDatabaseSchema create
+   */
+  export type AiDatabaseSchemaCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AiDatabaseSchema
+     */
+    select?: AiDatabaseSchemaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AiDatabaseSchema
+     */
+    omit?: AiDatabaseSchemaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AiDatabaseSchemaInclude<ExtArgs> | null
+    /**
+     * The data needed to create a AiDatabaseSchema.
+     */
+    data: XOR<AiDatabaseSchemaCreateInput, AiDatabaseSchemaUncheckedCreateInput>
+  }
+
+  /**
+   * AiDatabaseSchema createMany
+   */
+  export type AiDatabaseSchemaCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many AiDatabaseSchemas.
+     */
+    data: AiDatabaseSchemaCreateManyInput | AiDatabaseSchemaCreateManyInput[]
+  }
+
+  /**
+   * AiDatabaseSchema createManyAndReturn
+   */
+  export type AiDatabaseSchemaCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AiDatabaseSchema
+     */
+    select?: AiDatabaseSchemaSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AiDatabaseSchema
+     */
+    omit?: AiDatabaseSchemaOmit<ExtArgs> | null
+    /**
+     * The data used to create many AiDatabaseSchemas.
+     */
+    data: AiDatabaseSchemaCreateManyInput | AiDatabaseSchemaCreateManyInput[]
+  }
+
+  /**
+   * AiDatabaseSchema update
+   */
+  export type AiDatabaseSchemaUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AiDatabaseSchema
+     */
+    select?: AiDatabaseSchemaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AiDatabaseSchema
+     */
+    omit?: AiDatabaseSchemaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AiDatabaseSchemaInclude<ExtArgs> | null
+    /**
+     * The data needed to update a AiDatabaseSchema.
+     */
+    data: XOR<AiDatabaseSchemaUpdateInput, AiDatabaseSchemaUncheckedUpdateInput>
+    /**
+     * Choose, which AiDatabaseSchema to update.
+     */
+    where: AiDatabaseSchemaWhereUniqueInput
+  }
+
+  /**
+   * AiDatabaseSchema updateMany
+   */
+  export type AiDatabaseSchemaUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update AiDatabaseSchemas.
+     */
+    data: XOR<AiDatabaseSchemaUpdateManyMutationInput, AiDatabaseSchemaUncheckedUpdateManyInput>
+    /**
+     * Filter which AiDatabaseSchemas to update
+     */
+    where?: AiDatabaseSchemaWhereInput
+    /**
+     * Limit how many AiDatabaseSchemas to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * AiDatabaseSchema updateManyAndReturn
+   */
+  export type AiDatabaseSchemaUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AiDatabaseSchema
+     */
+    select?: AiDatabaseSchemaSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AiDatabaseSchema
+     */
+    omit?: AiDatabaseSchemaOmit<ExtArgs> | null
+    /**
+     * The data used to update AiDatabaseSchemas.
+     */
+    data: XOR<AiDatabaseSchemaUpdateManyMutationInput, AiDatabaseSchemaUncheckedUpdateManyInput>
+    /**
+     * Filter which AiDatabaseSchemas to update
+     */
+    where?: AiDatabaseSchemaWhereInput
+    /**
+     * Limit how many AiDatabaseSchemas to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * AiDatabaseSchema upsert
+   */
+  export type AiDatabaseSchemaUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AiDatabaseSchema
+     */
+    select?: AiDatabaseSchemaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AiDatabaseSchema
+     */
+    omit?: AiDatabaseSchemaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AiDatabaseSchemaInclude<ExtArgs> | null
+    /**
+     * The filter to search for the AiDatabaseSchema to update in case it exists.
+     */
+    where: AiDatabaseSchemaWhereUniqueInput
+    /**
+     * In case the AiDatabaseSchema found by the `where` argument doesn't exist, create a new AiDatabaseSchema with this data.
+     */
+    create: XOR<AiDatabaseSchemaCreateInput, AiDatabaseSchemaUncheckedCreateInput>
+    /**
+     * In case the AiDatabaseSchema was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<AiDatabaseSchemaUpdateInput, AiDatabaseSchemaUncheckedUpdateInput>
+  }
+
+  /**
+   * AiDatabaseSchema delete
+   */
+  export type AiDatabaseSchemaDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AiDatabaseSchema
+     */
+    select?: AiDatabaseSchemaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AiDatabaseSchema
+     */
+    omit?: AiDatabaseSchemaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AiDatabaseSchemaInclude<ExtArgs> | null
+    /**
+     * Filter which AiDatabaseSchema to delete.
+     */
+    where: AiDatabaseSchemaWhereUniqueInput
+  }
+
+  /**
+   * AiDatabaseSchema deleteMany
+   */
+  export type AiDatabaseSchemaDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AiDatabaseSchemas to delete
+     */
+    where?: AiDatabaseSchemaWhereInput
+    /**
+     * Limit how many AiDatabaseSchemas to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * AiDatabaseSchema.conversations
+   */
+  export type AiDatabaseSchema$conversationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AiDbChatConversation
+     */
+    select?: AiDbChatConversationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AiDbChatConversation
+     */
+    omit?: AiDbChatConversationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AiDbChatConversationInclude<ExtArgs> | null
+    where?: AiDbChatConversationWhereInput
+    orderBy?: AiDbChatConversationOrderByWithRelationInput | AiDbChatConversationOrderByWithRelationInput[]
+    cursor?: AiDbChatConversationWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: AiDbChatConversationScalarFieldEnum | AiDbChatConversationScalarFieldEnum[]
+  }
+
+  /**
+   * AiDatabaseSchema without action
+   */
+  export type AiDatabaseSchemaDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AiDatabaseSchema
+     */
+    select?: AiDatabaseSchemaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AiDatabaseSchema
+     */
+    omit?: AiDatabaseSchemaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AiDatabaseSchemaInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model AiDbChatConversation
+   */
+
+  export type AggregateAiDbChatConversation = {
+    _count: AiDbChatConversationCountAggregateOutputType | null
+    _min: AiDbChatConversationMinAggregateOutputType | null
+    _max: AiDbChatConversationMaxAggregateOutputType | null
+  }
+
+  export type AiDbChatConversationMinAggregateOutputType = {
+    id: string | null
+    title: string | null
+    schemaId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type AiDbChatConversationMaxAggregateOutputType = {
+    id: string | null
+    title: string | null
+    schemaId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type AiDbChatConversationCountAggregateOutputType = {
+    id: number
+    title: number
+    schemaId: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type AiDbChatConversationMinAggregateInputType = {
+    id?: true
+    title?: true
+    schemaId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type AiDbChatConversationMaxAggregateInputType = {
+    id?: true
+    title?: true
+    schemaId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type AiDbChatConversationCountAggregateInputType = {
+    id?: true
+    title?: true
+    schemaId?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type AiDbChatConversationAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AiDbChatConversation to aggregate.
+     */
+    where?: AiDbChatConversationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AiDbChatConversations to fetch.
+     */
+    orderBy?: AiDbChatConversationOrderByWithRelationInput | AiDbChatConversationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: AiDbChatConversationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AiDbChatConversations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AiDbChatConversations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned AiDbChatConversations
+    **/
+    _count?: true | AiDbChatConversationCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: AiDbChatConversationMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: AiDbChatConversationMaxAggregateInputType
+  }
+
+  export type GetAiDbChatConversationAggregateType<T extends AiDbChatConversationAggregateArgs> = {
+        [P in keyof T & keyof AggregateAiDbChatConversation]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateAiDbChatConversation[P]>
+      : GetScalarType<T[P], AggregateAiDbChatConversation[P]>
+  }
+
+
+
+
+  export type AiDbChatConversationGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AiDbChatConversationWhereInput
+    orderBy?: AiDbChatConversationOrderByWithAggregationInput | AiDbChatConversationOrderByWithAggregationInput[]
+    by: AiDbChatConversationScalarFieldEnum[] | AiDbChatConversationScalarFieldEnum
+    having?: AiDbChatConversationScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: AiDbChatConversationCountAggregateInputType | true
+    _min?: AiDbChatConversationMinAggregateInputType
+    _max?: AiDbChatConversationMaxAggregateInputType
+  }
+
+  export type AiDbChatConversationGroupByOutputType = {
+    id: string
+    title: string
+    schemaId: string
+    createdAt: Date
+    updatedAt: Date
+    _count: AiDbChatConversationCountAggregateOutputType | null
+    _min: AiDbChatConversationMinAggregateOutputType | null
+    _max: AiDbChatConversationMaxAggregateOutputType | null
+  }
+
+  type GetAiDbChatConversationGroupByPayload<T extends AiDbChatConversationGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<AiDbChatConversationGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof AiDbChatConversationGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], AiDbChatConversationGroupByOutputType[P]>
+            : GetScalarType<T[P], AiDbChatConversationGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type AiDbChatConversationSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    schemaId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    schema?: boolean | AiDatabaseSchemaDefaultArgs<ExtArgs>
+    messages?: boolean | AiDbChatConversation$messagesArgs<ExtArgs>
+    _count?: boolean | AiDbChatConversationCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["aiDbChatConversation"]>
+
+  export type AiDbChatConversationSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    schemaId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    schema?: boolean | AiDatabaseSchemaDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["aiDbChatConversation"]>
+
+  export type AiDbChatConversationSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    schemaId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    schema?: boolean | AiDatabaseSchemaDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["aiDbChatConversation"]>
+
+  export type AiDbChatConversationSelectScalar = {
+    id?: boolean
+    title?: boolean
+    schemaId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type AiDbChatConversationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "schemaId" | "createdAt" | "updatedAt", ExtArgs["result"]["aiDbChatConversation"]>
+  export type AiDbChatConversationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    schema?: boolean | AiDatabaseSchemaDefaultArgs<ExtArgs>
+    messages?: boolean | AiDbChatConversation$messagesArgs<ExtArgs>
+    _count?: boolean | AiDbChatConversationCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type AiDbChatConversationIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    schema?: boolean | AiDatabaseSchemaDefaultArgs<ExtArgs>
+  }
+  export type AiDbChatConversationIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    schema?: boolean | AiDatabaseSchemaDefaultArgs<ExtArgs>
+  }
+
+  export type $AiDbChatConversationPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "AiDbChatConversation"
+    objects: {
+      schema: Prisma.$AiDatabaseSchemaPayload<ExtArgs>
+      messages: Prisma.$AiDbChatMessagePayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      title: string
+      schemaId: string
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["aiDbChatConversation"]>
+    composites: {}
+  }
+
+  type AiDbChatConversationGetPayload<S extends boolean | null | undefined | AiDbChatConversationDefaultArgs> = $Result.GetResult<Prisma.$AiDbChatConversationPayload, S>
+
+  type AiDbChatConversationCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<AiDbChatConversationFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: AiDbChatConversationCountAggregateInputType | true
+    }
+
+  export interface AiDbChatConversationDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['AiDbChatConversation'], meta: { name: 'AiDbChatConversation' } }
+    /**
+     * Find zero or one AiDbChatConversation that matches the filter.
+     * @param {AiDbChatConversationFindUniqueArgs} args - Arguments to find a AiDbChatConversation
+     * @example
+     * // Get one AiDbChatConversation
+     * const aiDbChatConversation = await prisma.aiDbChatConversation.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends AiDbChatConversationFindUniqueArgs>(args: SelectSubset<T, AiDbChatConversationFindUniqueArgs<ExtArgs>>): Prisma__AiDbChatConversationClient<$Result.GetResult<Prisma.$AiDbChatConversationPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one AiDbChatConversation that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {AiDbChatConversationFindUniqueOrThrowArgs} args - Arguments to find a AiDbChatConversation
+     * @example
+     * // Get one AiDbChatConversation
+     * const aiDbChatConversation = await prisma.aiDbChatConversation.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends AiDbChatConversationFindUniqueOrThrowArgs>(args: SelectSubset<T, AiDbChatConversationFindUniqueOrThrowArgs<ExtArgs>>): Prisma__AiDbChatConversationClient<$Result.GetResult<Prisma.$AiDbChatConversationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first AiDbChatConversation that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AiDbChatConversationFindFirstArgs} args - Arguments to find a AiDbChatConversation
+     * @example
+     * // Get one AiDbChatConversation
+     * const aiDbChatConversation = await prisma.aiDbChatConversation.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends AiDbChatConversationFindFirstArgs>(args?: SelectSubset<T, AiDbChatConversationFindFirstArgs<ExtArgs>>): Prisma__AiDbChatConversationClient<$Result.GetResult<Prisma.$AiDbChatConversationPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first AiDbChatConversation that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AiDbChatConversationFindFirstOrThrowArgs} args - Arguments to find a AiDbChatConversation
+     * @example
+     * // Get one AiDbChatConversation
+     * const aiDbChatConversation = await prisma.aiDbChatConversation.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends AiDbChatConversationFindFirstOrThrowArgs>(args?: SelectSubset<T, AiDbChatConversationFindFirstOrThrowArgs<ExtArgs>>): Prisma__AiDbChatConversationClient<$Result.GetResult<Prisma.$AiDbChatConversationPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more AiDbChatConversations that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AiDbChatConversationFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all AiDbChatConversations
+     * const aiDbChatConversations = await prisma.aiDbChatConversation.findMany()
+     * 
+     * // Get first 10 AiDbChatConversations
+     * const aiDbChatConversations = await prisma.aiDbChatConversation.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const aiDbChatConversationWithIdOnly = await prisma.aiDbChatConversation.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends AiDbChatConversationFindManyArgs>(args?: SelectSubset<T, AiDbChatConversationFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AiDbChatConversationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a AiDbChatConversation.
+     * @param {AiDbChatConversationCreateArgs} args - Arguments to create a AiDbChatConversation.
+     * @example
+     * // Create one AiDbChatConversation
+     * const AiDbChatConversation = await prisma.aiDbChatConversation.create({
+     *   data: {
+     *     // ... data to create a AiDbChatConversation
+     *   }
+     * })
+     * 
+     */
+    create<T extends AiDbChatConversationCreateArgs>(args: SelectSubset<T, AiDbChatConversationCreateArgs<ExtArgs>>): Prisma__AiDbChatConversationClient<$Result.GetResult<Prisma.$AiDbChatConversationPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many AiDbChatConversations.
+     * @param {AiDbChatConversationCreateManyArgs} args - Arguments to create many AiDbChatConversations.
+     * @example
+     * // Create many AiDbChatConversations
+     * const aiDbChatConversation = await prisma.aiDbChatConversation.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends AiDbChatConversationCreateManyArgs>(args?: SelectSubset<T, AiDbChatConversationCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many AiDbChatConversations and returns the data saved in the database.
+     * @param {AiDbChatConversationCreateManyAndReturnArgs} args - Arguments to create many AiDbChatConversations.
+     * @example
+     * // Create many AiDbChatConversations
+     * const aiDbChatConversation = await prisma.aiDbChatConversation.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many AiDbChatConversations and only return the `id`
+     * const aiDbChatConversationWithIdOnly = await prisma.aiDbChatConversation.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends AiDbChatConversationCreateManyAndReturnArgs>(args?: SelectSubset<T, AiDbChatConversationCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AiDbChatConversationPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a AiDbChatConversation.
+     * @param {AiDbChatConversationDeleteArgs} args - Arguments to delete one AiDbChatConversation.
+     * @example
+     * // Delete one AiDbChatConversation
+     * const AiDbChatConversation = await prisma.aiDbChatConversation.delete({
+     *   where: {
+     *     // ... filter to delete one AiDbChatConversation
+     *   }
+     * })
+     * 
+     */
+    delete<T extends AiDbChatConversationDeleteArgs>(args: SelectSubset<T, AiDbChatConversationDeleteArgs<ExtArgs>>): Prisma__AiDbChatConversationClient<$Result.GetResult<Prisma.$AiDbChatConversationPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one AiDbChatConversation.
+     * @param {AiDbChatConversationUpdateArgs} args - Arguments to update one AiDbChatConversation.
+     * @example
+     * // Update one AiDbChatConversation
+     * const aiDbChatConversation = await prisma.aiDbChatConversation.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends AiDbChatConversationUpdateArgs>(args: SelectSubset<T, AiDbChatConversationUpdateArgs<ExtArgs>>): Prisma__AiDbChatConversationClient<$Result.GetResult<Prisma.$AiDbChatConversationPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more AiDbChatConversations.
+     * @param {AiDbChatConversationDeleteManyArgs} args - Arguments to filter AiDbChatConversations to delete.
+     * @example
+     * // Delete a few AiDbChatConversations
+     * const { count } = await prisma.aiDbChatConversation.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends AiDbChatConversationDeleteManyArgs>(args?: SelectSubset<T, AiDbChatConversationDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AiDbChatConversations.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AiDbChatConversationUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many AiDbChatConversations
+     * const aiDbChatConversation = await prisma.aiDbChatConversation.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends AiDbChatConversationUpdateManyArgs>(args: SelectSubset<T, AiDbChatConversationUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AiDbChatConversations and returns the data updated in the database.
+     * @param {AiDbChatConversationUpdateManyAndReturnArgs} args - Arguments to update many AiDbChatConversations.
+     * @example
+     * // Update many AiDbChatConversations
+     * const aiDbChatConversation = await prisma.aiDbChatConversation.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more AiDbChatConversations and only return the `id`
+     * const aiDbChatConversationWithIdOnly = await prisma.aiDbChatConversation.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends AiDbChatConversationUpdateManyAndReturnArgs>(args: SelectSubset<T, AiDbChatConversationUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AiDbChatConversationPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one AiDbChatConversation.
+     * @param {AiDbChatConversationUpsertArgs} args - Arguments to update or create a AiDbChatConversation.
+     * @example
+     * // Update or create a AiDbChatConversation
+     * const aiDbChatConversation = await prisma.aiDbChatConversation.upsert({
+     *   create: {
+     *     // ... data to create a AiDbChatConversation
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the AiDbChatConversation we want to update
+     *   }
+     * })
+     */
+    upsert<T extends AiDbChatConversationUpsertArgs>(args: SelectSubset<T, AiDbChatConversationUpsertArgs<ExtArgs>>): Prisma__AiDbChatConversationClient<$Result.GetResult<Prisma.$AiDbChatConversationPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of AiDbChatConversations.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AiDbChatConversationCountArgs} args - Arguments to filter AiDbChatConversations to count.
+     * @example
+     * // Count the number of AiDbChatConversations
+     * const count = await prisma.aiDbChatConversation.count({
+     *   where: {
+     *     // ... the filter for the AiDbChatConversations we want to count
+     *   }
+     * })
+    **/
+    count<T extends AiDbChatConversationCountArgs>(
+      args?: Subset<T, AiDbChatConversationCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], AiDbChatConversationCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a AiDbChatConversation.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AiDbChatConversationAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends AiDbChatConversationAggregateArgs>(args: Subset<T, AiDbChatConversationAggregateArgs>): Prisma.PrismaPromise<GetAiDbChatConversationAggregateType<T>>
+
+    /**
+     * Group by AiDbChatConversation.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AiDbChatConversationGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends AiDbChatConversationGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: AiDbChatConversationGroupByArgs['orderBy'] }
+        : { orderBy?: AiDbChatConversationGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, AiDbChatConversationGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAiDbChatConversationGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the AiDbChatConversation model
+   */
+  readonly fields: AiDbChatConversationFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for AiDbChatConversation.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__AiDbChatConversationClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    schema<T extends AiDatabaseSchemaDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AiDatabaseSchemaDefaultArgs<ExtArgs>>): Prisma__AiDatabaseSchemaClient<$Result.GetResult<Prisma.$AiDatabaseSchemaPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    messages<T extends AiDbChatConversation$messagesArgs<ExtArgs> = {}>(args?: Subset<T, AiDbChatConversation$messagesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AiDbChatMessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the AiDbChatConversation model
+   */
+  interface AiDbChatConversationFieldRefs {
+    readonly id: FieldRef<"AiDbChatConversation", 'String'>
+    readonly title: FieldRef<"AiDbChatConversation", 'String'>
+    readonly schemaId: FieldRef<"AiDbChatConversation", 'String'>
+    readonly createdAt: FieldRef<"AiDbChatConversation", 'DateTime'>
+    readonly updatedAt: FieldRef<"AiDbChatConversation", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * AiDbChatConversation findUnique
+   */
+  export type AiDbChatConversationFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AiDbChatConversation
+     */
+    select?: AiDbChatConversationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AiDbChatConversation
+     */
+    omit?: AiDbChatConversationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AiDbChatConversationInclude<ExtArgs> | null
+    /**
+     * Filter, which AiDbChatConversation to fetch.
+     */
+    where: AiDbChatConversationWhereUniqueInput
+  }
+
+  /**
+   * AiDbChatConversation findUniqueOrThrow
+   */
+  export type AiDbChatConversationFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AiDbChatConversation
+     */
+    select?: AiDbChatConversationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AiDbChatConversation
+     */
+    omit?: AiDbChatConversationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AiDbChatConversationInclude<ExtArgs> | null
+    /**
+     * Filter, which AiDbChatConversation to fetch.
+     */
+    where: AiDbChatConversationWhereUniqueInput
+  }
+
+  /**
+   * AiDbChatConversation findFirst
+   */
+  export type AiDbChatConversationFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AiDbChatConversation
+     */
+    select?: AiDbChatConversationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AiDbChatConversation
+     */
+    omit?: AiDbChatConversationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AiDbChatConversationInclude<ExtArgs> | null
+    /**
+     * Filter, which AiDbChatConversation to fetch.
+     */
+    where?: AiDbChatConversationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AiDbChatConversations to fetch.
+     */
+    orderBy?: AiDbChatConversationOrderByWithRelationInput | AiDbChatConversationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AiDbChatConversations.
+     */
+    cursor?: AiDbChatConversationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AiDbChatConversations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AiDbChatConversations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AiDbChatConversations.
+     */
+    distinct?: AiDbChatConversationScalarFieldEnum | AiDbChatConversationScalarFieldEnum[]
+  }
+
+  /**
+   * AiDbChatConversation findFirstOrThrow
+   */
+  export type AiDbChatConversationFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AiDbChatConversation
+     */
+    select?: AiDbChatConversationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AiDbChatConversation
+     */
+    omit?: AiDbChatConversationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AiDbChatConversationInclude<ExtArgs> | null
+    /**
+     * Filter, which AiDbChatConversation to fetch.
+     */
+    where?: AiDbChatConversationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AiDbChatConversations to fetch.
+     */
+    orderBy?: AiDbChatConversationOrderByWithRelationInput | AiDbChatConversationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AiDbChatConversations.
+     */
+    cursor?: AiDbChatConversationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AiDbChatConversations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AiDbChatConversations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AiDbChatConversations.
+     */
+    distinct?: AiDbChatConversationScalarFieldEnum | AiDbChatConversationScalarFieldEnum[]
+  }
+
+  /**
+   * AiDbChatConversation findMany
+   */
+  export type AiDbChatConversationFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AiDbChatConversation
+     */
+    select?: AiDbChatConversationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AiDbChatConversation
+     */
+    omit?: AiDbChatConversationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AiDbChatConversationInclude<ExtArgs> | null
+    /**
+     * Filter, which AiDbChatConversations to fetch.
+     */
+    where?: AiDbChatConversationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AiDbChatConversations to fetch.
+     */
+    orderBy?: AiDbChatConversationOrderByWithRelationInput | AiDbChatConversationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing AiDbChatConversations.
+     */
+    cursor?: AiDbChatConversationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AiDbChatConversations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AiDbChatConversations.
+     */
+    skip?: number
+    distinct?: AiDbChatConversationScalarFieldEnum | AiDbChatConversationScalarFieldEnum[]
+  }
+
+  /**
+   * AiDbChatConversation create
+   */
+  export type AiDbChatConversationCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AiDbChatConversation
+     */
+    select?: AiDbChatConversationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AiDbChatConversation
+     */
+    omit?: AiDbChatConversationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AiDbChatConversationInclude<ExtArgs> | null
+    /**
+     * The data needed to create a AiDbChatConversation.
+     */
+    data: XOR<AiDbChatConversationCreateInput, AiDbChatConversationUncheckedCreateInput>
+  }
+
+  /**
+   * AiDbChatConversation createMany
+   */
+  export type AiDbChatConversationCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many AiDbChatConversations.
+     */
+    data: AiDbChatConversationCreateManyInput | AiDbChatConversationCreateManyInput[]
+  }
+
+  /**
+   * AiDbChatConversation createManyAndReturn
+   */
+  export type AiDbChatConversationCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AiDbChatConversation
+     */
+    select?: AiDbChatConversationSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AiDbChatConversation
+     */
+    omit?: AiDbChatConversationOmit<ExtArgs> | null
+    /**
+     * The data used to create many AiDbChatConversations.
+     */
+    data: AiDbChatConversationCreateManyInput | AiDbChatConversationCreateManyInput[]
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AiDbChatConversationIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * AiDbChatConversation update
+   */
+  export type AiDbChatConversationUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AiDbChatConversation
+     */
+    select?: AiDbChatConversationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AiDbChatConversation
+     */
+    omit?: AiDbChatConversationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AiDbChatConversationInclude<ExtArgs> | null
+    /**
+     * The data needed to update a AiDbChatConversation.
+     */
+    data: XOR<AiDbChatConversationUpdateInput, AiDbChatConversationUncheckedUpdateInput>
+    /**
+     * Choose, which AiDbChatConversation to update.
+     */
+    where: AiDbChatConversationWhereUniqueInput
+  }
+
+  /**
+   * AiDbChatConversation updateMany
+   */
+  export type AiDbChatConversationUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update AiDbChatConversations.
+     */
+    data: XOR<AiDbChatConversationUpdateManyMutationInput, AiDbChatConversationUncheckedUpdateManyInput>
+    /**
+     * Filter which AiDbChatConversations to update
+     */
+    where?: AiDbChatConversationWhereInput
+    /**
+     * Limit how many AiDbChatConversations to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * AiDbChatConversation updateManyAndReturn
+   */
+  export type AiDbChatConversationUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AiDbChatConversation
+     */
+    select?: AiDbChatConversationSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AiDbChatConversation
+     */
+    omit?: AiDbChatConversationOmit<ExtArgs> | null
+    /**
+     * The data used to update AiDbChatConversations.
+     */
+    data: XOR<AiDbChatConversationUpdateManyMutationInput, AiDbChatConversationUncheckedUpdateManyInput>
+    /**
+     * Filter which AiDbChatConversations to update
+     */
+    where?: AiDbChatConversationWhereInput
+    /**
+     * Limit how many AiDbChatConversations to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AiDbChatConversationIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * AiDbChatConversation upsert
+   */
+  export type AiDbChatConversationUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AiDbChatConversation
+     */
+    select?: AiDbChatConversationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AiDbChatConversation
+     */
+    omit?: AiDbChatConversationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AiDbChatConversationInclude<ExtArgs> | null
+    /**
+     * The filter to search for the AiDbChatConversation to update in case it exists.
+     */
+    where: AiDbChatConversationWhereUniqueInput
+    /**
+     * In case the AiDbChatConversation found by the `where` argument doesn't exist, create a new AiDbChatConversation with this data.
+     */
+    create: XOR<AiDbChatConversationCreateInput, AiDbChatConversationUncheckedCreateInput>
+    /**
+     * In case the AiDbChatConversation was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<AiDbChatConversationUpdateInput, AiDbChatConversationUncheckedUpdateInput>
+  }
+
+  /**
+   * AiDbChatConversation delete
+   */
+  export type AiDbChatConversationDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AiDbChatConversation
+     */
+    select?: AiDbChatConversationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AiDbChatConversation
+     */
+    omit?: AiDbChatConversationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AiDbChatConversationInclude<ExtArgs> | null
+    /**
+     * Filter which AiDbChatConversation to delete.
+     */
+    where: AiDbChatConversationWhereUniqueInput
+  }
+
+  /**
+   * AiDbChatConversation deleteMany
+   */
+  export type AiDbChatConversationDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AiDbChatConversations to delete
+     */
+    where?: AiDbChatConversationWhereInput
+    /**
+     * Limit how many AiDbChatConversations to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * AiDbChatConversation.messages
+   */
+  export type AiDbChatConversation$messagesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AiDbChatMessage
+     */
+    select?: AiDbChatMessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AiDbChatMessage
+     */
+    omit?: AiDbChatMessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AiDbChatMessageInclude<ExtArgs> | null
+    where?: AiDbChatMessageWhereInput
+    orderBy?: AiDbChatMessageOrderByWithRelationInput | AiDbChatMessageOrderByWithRelationInput[]
+    cursor?: AiDbChatMessageWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: AiDbChatMessageScalarFieldEnum | AiDbChatMessageScalarFieldEnum[]
+  }
+
+  /**
+   * AiDbChatConversation without action
+   */
+  export type AiDbChatConversationDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AiDbChatConversation
+     */
+    select?: AiDbChatConversationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AiDbChatConversation
+     */
+    omit?: AiDbChatConversationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AiDbChatConversationInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model AiDbChatMessage
+   */
+
+  export type AggregateAiDbChatMessage = {
+    _count: AiDbChatMessageCountAggregateOutputType | null
+    _avg: AiDbChatMessageAvgAggregateOutputType | null
+    _sum: AiDbChatMessageSumAggregateOutputType | null
+    _min: AiDbChatMessageMinAggregateOutputType | null
+    _max: AiDbChatMessageMaxAggregateOutputType | null
+  }
+
+  export type AiDbChatMessageAvgAggregateOutputType = {
+    rowCount: number | null
+  }
+
+  export type AiDbChatMessageSumAggregateOutputType = {
+    rowCount: number | null
+  }
+
+  export type AiDbChatMessageMinAggregateOutputType = {
+    id: string | null
+    conversationId: string | null
+    role: string | null
+    content: string | null
+    sql: string | null
+    rowCount: number | null
+    createdAt: Date | null
+  }
+
+  export type AiDbChatMessageMaxAggregateOutputType = {
+    id: string | null
+    conversationId: string | null
+    role: string | null
+    content: string | null
+    sql: string | null
+    rowCount: number | null
+    createdAt: Date | null
+  }
+
+  export type AiDbChatMessageCountAggregateOutputType = {
+    id: number
+    conversationId: number
+    role: number
+    content: number
+    sql: number
+    rowCount: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type AiDbChatMessageAvgAggregateInputType = {
+    rowCount?: true
+  }
+
+  export type AiDbChatMessageSumAggregateInputType = {
+    rowCount?: true
+  }
+
+  export type AiDbChatMessageMinAggregateInputType = {
+    id?: true
+    conversationId?: true
+    role?: true
+    content?: true
+    sql?: true
+    rowCount?: true
+    createdAt?: true
+  }
+
+  export type AiDbChatMessageMaxAggregateInputType = {
+    id?: true
+    conversationId?: true
+    role?: true
+    content?: true
+    sql?: true
+    rowCount?: true
+    createdAt?: true
+  }
+
+  export type AiDbChatMessageCountAggregateInputType = {
+    id?: true
+    conversationId?: true
+    role?: true
+    content?: true
+    sql?: true
+    rowCount?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type AiDbChatMessageAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AiDbChatMessage to aggregate.
+     */
+    where?: AiDbChatMessageWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AiDbChatMessages to fetch.
+     */
+    orderBy?: AiDbChatMessageOrderByWithRelationInput | AiDbChatMessageOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: AiDbChatMessageWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AiDbChatMessages from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AiDbChatMessages.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned AiDbChatMessages
+    **/
+    _count?: true | AiDbChatMessageCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: AiDbChatMessageAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: AiDbChatMessageSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: AiDbChatMessageMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: AiDbChatMessageMaxAggregateInputType
+  }
+
+  export type GetAiDbChatMessageAggregateType<T extends AiDbChatMessageAggregateArgs> = {
+        [P in keyof T & keyof AggregateAiDbChatMessage]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateAiDbChatMessage[P]>
+      : GetScalarType<T[P], AggregateAiDbChatMessage[P]>
+  }
+
+
+
+
+  export type AiDbChatMessageGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AiDbChatMessageWhereInput
+    orderBy?: AiDbChatMessageOrderByWithAggregationInput | AiDbChatMessageOrderByWithAggregationInput[]
+    by: AiDbChatMessageScalarFieldEnum[] | AiDbChatMessageScalarFieldEnum
+    having?: AiDbChatMessageScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: AiDbChatMessageCountAggregateInputType | true
+    _avg?: AiDbChatMessageAvgAggregateInputType
+    _sum?: AiDbChatMessageSumAggregateInputType
+    _min?: AiDbChatMessageMinAggregateInputType
+    _max?: AiDbChatMessageMaxAggregateInputType
+  }
+
+  export type AiDbChatMessageGroupByOutputType = {
+    id: string
+    conversationId: string
+    role: string
+    content: string
+    sql: string | null
+    rowCount: number | null
+    createdAt: Date
+    _count: AiDbChatMessageCountAggregateOutputType | null
+    _avg: AiDbChatMessageAvgAggregateOutputType | null
+    _sum: AiDbChatMessageSumAggregateOutputType | null
+    _min: AiDbChatMessageMinAggregateOutputType | null
+    _max: AiDbChatMessageMaxAggregateOutputType | null
+  }
+
+  type GetAiDbChatMessageGroupByPayload<T extends AiDbChatMessageGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<AiDbChatMessageGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof AiDbChatMessageGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], AiDbChatMessageGroupByOutputType[P]>
+            : GetScalarType<T[P], AiDbChatMessageGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type AiDbChatMessageSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    conversationId?: boolean
+    role?: boolean
+    content?: boolean
+    sql?: boolean
+    rowCount?: boolean
+    createdAt?: boolean
+    conversation?: boolean | AiDbChatConversationDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["aiDbChatMessage"]>
+
+  export type AiDbChatMessageSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    conversationId?: boolean
+    role?: boolean
+    content?: boolean
+    sql?: boolean
+    rowCount?: boolean
+    createdAt?: boolean
+    conversation?: boolean | AiDbChatConversationDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["aiDbChatMessage"]>
+
+  export type AiDbChatMessageSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    conversationId?: boolean
+    role?: boolean
+    content?: boolean
+    sql?: boolean
+    rowCount?: boolean
+    createdAt?: boolean
+    conversation?: boolean | AiDbChatConversationDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["aiDbChatMessage"]>
+
+  export type AiDbChatMessageSelectScalar = {
+    id?: boolean
+    conversationId?: boolean
+    role?: boolean
+    content?: boolean
+    sql?: boolean
+    rowCount?: boolean
+    createdAt?: boolean
+  }
+
+  export type AiDbChatMessageOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "conversationId" | "role" | "content" | "sql" | "rowCount" | "createdAt", ExtArgs["result"]["aiDbChatMessage"]>
+  export type AiDbChatMessageInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    conversation?: boolean | AiDbChatConversationDefaultArgs<ExtArgs>
+  }
+  export type AiDbChatMessageIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    conversation?: boolean | AiDbChatConversationDefaultArgs<ExtArgs>
+  }
+  export type AiDbChatMessageIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    conversation?: boolean | AiDbChatConversationDefaultArgs<ExtArgs>
+  }
+
+  export type $AiDbChatMessagePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "AiDbChatMessage"
+    objects: {
+      conversation: Prisma.$AiDbChatConversationPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      conversationId: string
+      role: string
+      content: string
+      sql: string | null
+      rowCount: number | null
+      createdAt: Date
+    }, ExtArgs["result"]["aiDbChatMessage"]>
+    composites: {}
+  }
+
+  type AiDbChatMessageGetPayload<S extends boolean | null | undefined | AiDbChatMessageDefaultArgs> = $Result.GetResult<Prisma.$AiDbChatMessagePayload, S>
+
+  type AiDbChatMessageCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<AiDbChatMessageFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: AiDbChatMessageCountAggregateInputType | true
+    }
+
+  export interface AiDbChatMessageDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['AiDbChatMessage'], meta: { name: 'AiDbChatMessage' } }
+    /**
+     * Find zero or one AiDbChatMessage that matches the filter.
+     * @param {AiDbChatMessageFindUniqueArgs} args - Arguments to find a AiDbChatMessage
+     * @example
+     * // Get one AiDbChatMessage
+     * const aiDbChatMessage = await prisma.aiDbChatMessage.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends AiDbChatMessageFindUniqueArgs>(args: SelectSubset<T, AiDbChatMessageFindUniqueArgs<ExtArgs>>): Prisma__AiDbChatMessageClient<$Result.GetResult<Prisma.$AiDbChatMessagePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one AiDbChatMessage that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {AiDbChatMessageFindUniqueOrThrowArgs} args - Arguments to find a AiDbChatMessage
+     * @example
+     * // Get one AiDbChatMessage
+     * const aiDbChatMessage = await prisma.aiDbChatMessage.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends AiDbChatMessageFindUniqueOrThrowArgs>(args: SelectSubset<T, AiDbChatMessageFindUniqueOrThrowArgs<ExtArgs>>): Prisma__AiDbChatMessageClient<$Result.GetResult<Prisma.$AiDbChatMessagePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first AiDbChatMessage that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AiDbChatMessageFindFirstArgs} args - Arguments to find a AiDbChatMessage
+     * @example
+     * // Get one AiDbChatMessage
+     * const aiDbChatMessage = await prisma.aiDbChatMessage.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends AiDbChatMessageFindFirstArgs>(args?: SelectSubset<T, AiDbChatMessageFindFirstArgs<ExtArgs>>): Prisma__AiDbChatMessageClient<$Result.GetResult<Prisma.$AiDbChatMessagePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first AiDbChatMessage that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AiDbChatMessageFindFirstOrThrowArgs} args - Arguments to find a AiDbChatMessage
+     * @example
+     * // Get one AiDbChatMessage
+     * const aiDbChatMessage = await prisma.aiDbChatMessage.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends AiDbChatMessageFindFirstOrThrowArgs>(args?: SelectSubset<T, AiDbChatMessageFindFirstOrThrowArgs<ExtArgs>>): Prisma__AiDbChatMessageClient<$Result.GetResult<Prisma.$AiDbChatMessagePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more AiDbChatMessages that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AiDbChatMessageFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all AiDbChatMessages
+     * const aiDbChatMessages = await prisma.aiDbChatMessage.findMany()
+     * 
+     * // Get first 10 AiDbChatMessages
+     * const aiDbChatMessages = await prisma.aiDbChatMessage.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const aiDbChatMessageWithIdOnly = await prisma.aiDbChatMessage.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends AiDbChatMessageFindManyArgs>(args?: SelectSubset<T, AiDbChatMessageFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AiDbChatMessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a AiDbChatMessage.
+     * @param {AiDbChatMessageCreateArgs} args - Arguments to create a AiDbChatMessage.
+     * @example
+     * // Create one AiDbChatMessage
+     * const AiDbChatMessage = await prisma.aiDbChatMessage.create({
+     *   data: {
+     *     // ... data to create a AiDbChatMessage
+     *   }
+     * })
+     * 
+     */
+    create<T extends AiDbChatMessageCreateArgs>(args: SelectSubset<T, AiDbChatMessageCreateArgs<ExtArgs>>): Prisma__AiDbChatMessageClient<$Result.GetResult<Prisma.$AiDbChatMessagePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many AiDbChatMessages.
+     * @param {AiDbChatMessageCreateManyArgs} args - Arguments to create many AiDbChatMessages.
+     * @example
+     * // Create many AiDbChatMessages
+     * const aiDbChatMessage = await prisma.aiDbChatMessage.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends AiDbChatMessageCreateManyArgs>(args?: SelectSubset<T, AiDbChatMessageCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many AiDbChatMessages and returns the data saved in the database.
+     * @param {AiDbChatMessageCreateManyAndReturnArgs} args - Arguments to create many AiDbChatMessages.
+     * @example
+     * // Create many AiDbChatMessages
+     * const aiDbChatMessage = await prisma.aiDbChatMessage.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many AiDbChatMessages and only return the `id`
+     * const aiDbChatMessageWithIdOnly = await prisma.aiDbChatMessage.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends AiDbChatMessageCreateManyAndReturnArgs>(args?: SelectSubset<T, AiDbChatMessageCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AiDbChatMessagePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a AiDbChatMessage.
+     * @param {AiDbChatMessageDeleteArgs} args - Arguments to delete one AiDbChatMessage.
+     * @example
+     * // Delete one AiDbChatMessage
+     * const AiDbChatMessage = await prisma.aiDbChatMessage.delete({
+     *   where: {
+     *     // ... filter to delete one AiDbChatMessage
+     *   }
+     * })
+     * 
+     */
+    delete<T extends AiDbChatMessageDeleteArgs>(args: SelectSubset<T, AiDbChatMessageDeleteArgs<ExtArgs>>): Prisma__AiDbChatMessageClient<$Result.GetResult<Prisma.$AiDbChatMessagePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one AiDbChatMessage.
+     * @param {AiDbChatMessageUpdateArgs} args - Arguments to update one AiDbChatMessage.
+     * @example
+     * // Update one AiDbChatMessage
+     * const aiDbChatMessage = await prisma.aiDbChatMessage.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends AiDbChatMessageUpdateArgs>(args: SelectSubset<T, AiDbChatMessageUpdateArgs<ExtArgs>>): Prisma__AiDbChatMessageClient<$Result.GetResult<Prisma.$AiDbChatMessagePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more AiDbChatMessages.
+     * @param {AiDbChatMessageDeleteManyArgs} args - Arguments to filter AiDbChatMessages to delete.
+     * @example
+     * // Delete a few AiDbChatMessages
+     * const { count } = await prisma.aiDbChatMessage.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends AiDbChatMessageDeleteManyArgs>(args?: SelectSubset<T, AiDbChatMessageDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AiDbChatMessages.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AiDbChatMessageUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many AiDbChatMessages
+     * const aiDbChatMessage = await prisma.aiDbChatMessage.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends AiDbChatMessageUpdateManyArgs>(args: SelectSubset<T, AiDbChatMessageUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AiDbChatMessages and returns the data updated in the database.
+     * @param {AiDbChatMessageUpdateManyAndReturnArgs} args - Arguments to update many AiDbChatMessages.
+     * @example
+     * // Update many AiDbChatMessages
+     * const aiDbChatMessage = await prisma.aiDbChatMessage.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more AiDbChatMessages and only return the `id`
+     * const aiDbChatMessageWithIdOnly = await prisma.aiDbChatMessage.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends AiDbChatMessageUpdateManyAndReturnArgs>(args: SelectSubset<T, AiDbChatMessageUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AiDbChatMessagePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one AiDbChatMessage.
+     * @param {AiDbChatMessageUpsertArgs} args - Arguments to update or create a AiDbChatMessage.
+     * @example
+     * // Update or create a AiDbChatMessage
+     * const aiDbChatMessage = await prisma.aiDbChatMessage.upsert({
+     *   create: {
+     *     // ... data to create a AiDbChatMessage
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the AiDbChatMessage we want to update
+     *   }
+     * })
+     */
+    upsert<T extends AiDbChatMessageUpsertArgs>(args: SelectSubset<T, AiDbChatMessageUpsertArgs<ExtArgs>>): Prisma__AiDbChatMessageClient<$Result.GetResult<Prisma.$AiDbChatMessagePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of AiDbChatMessages.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AiDbChatMessageCountArgs} args - Arguments to filter AiDbChatMessages to count.
+     * @example
+     * // Count the number of AiDbChatMessages
+     * const count = await prisma.aiDbChatMessage.count({
+     *   where: {
+     *     // ... the filter for the AiDbChatMessages we want to count
+     *   }
+     * })
+    **/
+    count<T extends AiDbChatMessageCountArgs>(
+      args?: Subset<T, AiDbChatMessageCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], AiDbChatMessageCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a AiDbChatMessage.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AiDbChatMessageAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends AiDbChatMessageAggregateArgs>(args: Subset<T, AiDbChatMessageAggregateArgs>): Prisma.PrismaPromise<GetAiDbChatMessageAggregateType<T>>
+
+    /**
+     * Group by AiDbChatMessage.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AiDbChatMessageGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends AiDbChatMessageGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: AiDbChatMessageGroupByArgs['orderBy'] }
+        : { orderBy?: AiDbChatMessageGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, AiDbChatMessageGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAiDbChatMessageGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the AiDbChatMessage model
+   */
+  readonly fields: AiDbChatMessageFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for AiDbChatMessage.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__AiDbChatMessageClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    conversation<T extends AiDbChatConversationDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AiDbChatConversationDefaultArgs<ExtArgs>>): Prisma__AiDbChatConversationClient<$Result.GetResult<Prisma.$AiDbChatConversationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the AiDbChatMessage model
+   */
+  interface AiDbChatMessageFieldRefs {
+    readonly id: FieldRef<"AiDbChatMessage", 'String'>
+    readonly conversationId: FieldRef<"AiDbChatMessage", 'String'>
+    readonly role: FieldRef<"AiDbChatMessage", 'String'>
+    readonly content: FieldRef<"AiDbChatMessage", 'String'>
+    readonly sql: FieldRef<"AiDbChatMessage", 'String'>
+    readonly rowCount: FieldRef<"AiDbChatMessage", 'Int'>
+    readonly createdAt: FieldRef<"AiDbChatMessage", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * AiDbChatMessage findUnique
+   */
+  export type AiDbChatMessageFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AiDbChatMessage
+     */
+    select?: AiDbChatMessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AiDbChatMessage
+     */
+    omit?: AiDbChatMessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AiDbChatMessageInclude<ExtArgs> | null
+    /**
+     * Filter, which AiDbChatMessage to fetch.
+     */
+    where: AiDbChatMessageWhereUniqueInput
+  }
+
+  /**
+   * AiDbChatMessage findUniqueOrThrow
+   */
+  export type AiDbChatMessageFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AiDbChatMessage
+     */
+    select?: AiDbChatMessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AiDbChatMessage
+     */
+    omit?: AiDbChatMessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AiDbChatMessageInclude<ExtArgs> | null
+    /**
+     * Filter, which AiDbChatMessage to fetch.
+     */
+    where: AiDbChatMessageWhereUniqueInput
+  }
+
+  /**
+   * AiDbChatMessage findFirst
+   */
+  export type AiDbChatMessageFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AiDbChatMessage
+     */
+    select?: AiDbChatMessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AiDbChatMessage
+     */
+    omit?: AiDbChatMessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AiDbChatMessageInclude<ExtArgs> | null
+    /**
+     * Filter, which AiDbChatMessage to fetch.
+     */
+    where?: AiDbChatMessageWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AiDbChatMessages to fetch.
+     */
+    orderBy?: AiDbChatMessageOrderByWithRelationInput | AiDbChatMessageOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AiDbChatMessages.
+     */
+    cursor?: AiDbChatMessageWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AiDbChatMessages from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AiDbChatMessages.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AiDbChatMessages.
+     */
+    distinct?: AiDbChatMessageScalarFieldEnum | AiDbChatMessageScalarFieldEnum[]
+  }
+
+  /**
+   * AiDbChatMessage findFirstOrThrow
+   */
+  export type AiDbChatMessageFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AiDbChatMessage
+     */
+    select?: AiDbChatMessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AiDbChatMessage
+     */
+    omit?: AiDbChatMessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AiDbChatMessageInclude<ExtArgs> | null
+    /**
+     * Filter, which AiDbChatMessage to fetch.
+     */
+    where?: AiDbChatMessageWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AiDbChatMessages to fetch.
+     */
+    orderBy?: AiDbChatMessageOrderByWithRelationInput | AiDbChatMessageOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AiDbChatMessages.
+     */
+    cursor?: AiDbChatMessageWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AiDbChatMessages from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AiDbChatMessages.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AiDbChatMessages.
+     */
+    distinct?: AiDbChatMessageScalarFieldEnum | AiDbChatMessageScalarFieldEnum[]
+  }
+
+  /**
+   * AiDbChatMessage findMany
+   */
+  export type AiDbChatMessageFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AiDbChatMessage
+     */
+    select?: AiDbChatMessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AiDbChatMessage
+     */
+    omit?: AiDbChatMessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AiDbChatMessageInclude<ExtArgs> | null
+    /**
+     * Filter, which AiDbChatMessages to fetch.
+     */
+    where?: AiDbChatMessageWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AiDbChatMessages to fetch.
+     */
+    orderBy?: AiDbChatMessageOrderByWithRelationInput | AiDbChatMessageOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing AiDbChatMessages.
+     */
+    cursor?: AiDbChatMessageWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AiDbChatMessages from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AiDbChatMessages.
+     */
+    skip?: number
+    distinct?: AiDbChatMessageScalarFieldEnum | AiDbChatMessageScalarFieldEnum[]
+  }
+
+  /**
+   * AiDbChatMessage create
+   */
+  export type AiDbChatMessageCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AiDbChatMessage
+     */
+    select?: AiDbChatMessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AiDbChatMessage
+     */
+    omit?: AiDbChatMessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AiDbChatMessageInclude<ExtArgs> | null
+    /**
+     * The data needed to create a AiDbChatMessage.
+     */
+    data: XOR<AiDbChatMessageCreateInput, AiDbChatMessageUncheckedCreateInput>
+  }
+
+  /**
+   * AiDbChatMessage createMany
+   */
+  export type AiDbChatMessageCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many AiDbChatMessages.
+     */
+    data: AiDbChatMessageCreateManyInput | AiDbChatMessageCreateManyInput[]
+  }
+
+  /**
+   * AiDbChatMessage createManyAndReturn
+   */
+  export type AiDbChatMessageCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AiDbChatMessage
+     */
+    select?: AiDbChatMessageSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AiDbChatMessage
+     */
+    omit?: AiDbChatMessageOmit<ExtArgs> | null
+    /**
+     * The data used to create many AiDbChatMessages.
+     */
+    data: AiDbChatMessageCreateManyInput | AiDbChatMessageCreateManyInput[]
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AiDbChatMessageIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * AiDbChatMessage update
+   */
+  export type AiDbChatMessageUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AiDbChatMessage
+     */
+    select?: AiDbChatMessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AiDbChatMessage
+     */
+    omit?: AiDbChatMessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AiDbChatMessageInclude<ExtArgs> | null
+    /**
+     * The data needed to update a AiDbChatMessage.
+     */
+    data: XOR<AiDbChatMessageUpdateInput, AiDbChatMessageUncheckedUpdateInput>
+    /**
+     * Choose, which AiDbChatMessage to update.
+     */
+    where: AiDbChatMessageWhereUniqueInput
+  }
+
+  /**
+   * AiDbChatMessage updateMany
+   */
+  export type AiDbChatMessageUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update AiDbChatMessages.
+     */
+    data: XOR<AiDbChatMessageUpdateManyMutationInput, AiDbChatMessageUncheckedUpdateManyInput>
+    /**
+     * Filter which AiDbChatMessages to update
+     */
+    where?: AiDbChatMessageWhereInput
+    /**
+     * Limit how many AiDbChatMessages to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * AiDbChatMessage updateManyAndReturn
+   */
+  export type AiDbChatMessageUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AiDbChatMessage
+     */
+    select?: AiDbChatMessageSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AiDbChatMessage
+     */
+    omit?: AiDbChatMessageOmit<ExtArgs> | null
+    /**
+     * The data used to update AiDbChatMessages.
+     */
+    data: XOR<AiDbChatMessageUpdateManyMutationInput, AiDbChatMessageUncheckedUpdateManyInput>
+    /**
+     * Filter which AiDbChatMessages to update
+     */
+    where?: AiDbChatMessageWhereInput
+    /**
+     * Limit how many AiDbChatMessages to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AiDbChatMessageIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * AiDbChatMessage upsert
+   */
+  export type AiDbChatMessageUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AiDbChatMessage
+     */
+    select?: AiDbChatMessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AiDbChatMessage
+     */
+    omit?: AiDbChatMessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AiDbChatMessageInclude<ExtArgs> | null
+    /**
+     * The filter to search for the AiDbChatMessage to update in case it exists.
+     */
+    where: AiDbChatMessageWhereUniqueInput
+    /**
+     * In case the AiDbChatMessage found by the `where` argument doesn't exist, create a new AiDbChatMessage with this data.
+     */
+    create: XOR<AiDbChatMessageCreateInput, AiDbChatMessageUncheckedCreateInput>
+    /**
+     * In case the AiDbChatMessage was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<AiDbChatMessageUpdateInput, AiDbChatMessageUncheckedUpdateInput>
+  }
+
+  /**
+   * AiDbChatMessage delete
+   */
+  export type AiDbChatMessageDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AiDbChatMessage
+     */
+    select?: AiDbChatMessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AiDbChatMessage
+     */
+    omit?: AiDbChatMessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AiDbChatMessageInclude<ExtArgs> | null
+    /**
+     * Filter which AiDbChatMessage to delete.
+     */
+    where: AiDbChatMessageWhereUniqueInput
+  }
+
+  /**
+   * AiDbChatMessage deleteMany
+   */
+  export type AiDbChatMessageDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AiDbChatMessages to delete
+     */
+    where?: AiDbChatMessageWhereInput
+    /**
+     * Limit how many AiDbChatMessages to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * AiDbChatMessage without action
+   */
+  export type AiDbChatMessageDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AiDbChatMessage
+     */
+    select?: AiDbChatMessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AiDbChatMessage
+     */
+    omit?: AiDbChatMessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AiDbChatMessageInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -18775,6 +22470,45 @@ export namespace Prisma {
   };
 
   export type CodeWorkspaceVersionScalarFieldEnum = (typeof CodeWorkspaceVersionScalarFieldEnum)[keyof typeof CodeWorkspaceVersionScalarFieldEnum]
+
+
+  export const AiDatabaseSchemaScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    description: 'description',
+    schemaJson: 'schemaJson',
+    rowLimit: 'rowLimit',
+    messageQuota: 'messageQuota',
+    active: 'active',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type AiDatabaseSchemaScalarFieldEnum = (typeof AiDatabaseSchemaScalarFieldEnum)[keyof typeof AiDatabaseSchemaScalarFieldEnum]
+
+
+  export const AiDbChatConversationScalarFieldEnum: {
+    id: 'id',
+    title: 'title',
+    schemaId: 'schemaId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type AiDbChatConversationScalarFieldEnum = (typeof AiDbChatConversationScalarFieldEnum)[keyof typeof AiDbChatConversationScalarFieldEnum]
+
+
+  export const AiDbChatMessageScalarFieldEnum: {
+    id: 'id',
+    conversationId: 'conversationId',
+    role: 'role',
+    content: 'content',
+    sql: 'sql',
+    rowCount: 'rowCount',
+    createdAt: 'createdAt'
+  };
+
+  export type AiDbChatMessageScalarFieldEnum = (typeof AiDbChatMessageScalarFieldEnum)[keyof typeof AiDbChatMessageScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -20142,6 +23876,208 @@ export namespace Prisma {
     sizeBytes?: IntWithAggregatesFilter<"CodeWorkspaceVersion"> | number
     createdAt?: DateTimeWithAggregatesFilter<"CodeWorkspaceVersion"> | Date | string
     createdByUserId?: StringWithAggregatesFilter<"CodeWorkspaceVersion"> | string
+  }
+
+  export type AiDatabaseSchemaWhereInput = {
+    AND?: AiDatabaseSchemaWhereInput | AiDatabaseSchemaWhereInput[]
+    OR?: AiDatabaseSchemaWhereInput[]
+    NOT?: AiDatabaseSchemaWhereInput | AiDatabaseSchemaWhereInput[]
+    id?: StringFilter<"AiDatabaseSchema"> | string
+    name?: StringFilter<"AiDatabaseSchema"> | string
+    description?: StringFilter<"AiDatabaseSchema"> | string
+    schemaJson?: StringFilter<"AiDatabaseSchema"> | string
+    rowLimit?: IntFilter<"AiDatabaseSchema"> | number
+    messageQuota?: IntFilter<"AiDatabaseSchema"> | number
+    active?: BoolFilter<"AiDatabaseSchema"> | boolean
+    createdAt?: DateTimeFilter<"AiDatabaseSchema"> | Date | string
+    updatedAt?: DateTimeFilter<"AiDatabaseSchema"> | Date | string
+    conversations?: AiDbChatConversationListRelationFilter
+  }
+
+  export type AiDatabaseSchemaOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    schemaJson?: SortOrder
+    rowLimit?: SortOrder
+    messageQuota?: SortOrder
+    active?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    conversations?: AiDbChatConversationOrderByRelationAggregateInput
+  }
+
+  export type AiDatabaseSchemaWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: AiDatabaseSchemaWhereInput | AiDatabaseSchemaWhereInput[]
+    OR?: AiDatabaseSchemaWhereInput[]
+    NOT?: AiDatabaseSchemaWhereInput | AiDatabaseSchemaWhereInput[]
+    name?: StringFilter<"AiDatabaseSchema"> | string
+    description?: StringFilter<"AiDatabaseSchema"> | string
+    schemaJson?: StringFilter<"AiDatabaseSchema"> | string
+    rowLimit?: IntFilter<"AiDatabaseSchema"> | number
+    messageQuota?: IntFilter<"AiDatabaseSchema"> | number
+    active?: BoolFilter<"AiDatabaseSchema"> | boolean
+    createdAt?: DateTimeFilter<"AiDatabaseSchema"> | Date | string
+    updatedAt?: DateTimeFilter<"AiDatabaseSchema"> | Date | string
+    conversations?: AiDbChatConversationListRelationFilter
+  }, "id">
+
+  export type AiDatabaseSchemaOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    schemaJson?: SortOrder
+    rowLimit?: SortOrder
+    messageQuota?: SortOrder
+    active?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: AiDatabaseSchemaCountOrderByAggregateInput
+    _avg?: AiDatabaseSchemaAvgOrderByAggregateInput
+    _max?: AiDatabaseSchemaMaxOrderByAggregateInput
+    _min?: AiDatabaseSchemaMinOrderByAggregateInput
+    _sum?: AiDatabaseSchemaSumOrderByAggregateInput
+  }
+
+  export type AiDatabaseSchemaScalarWhereWithAggregatesInput = {
+    AND?: AiDatabaseSchemaScalarWhereWithAggregatesInput | AiDatabaseSchemaScalarWhereWithAggregatesInput[]
+    OR?: AiDatabaseSchemaScalarWhereWithAggregatesInput[]
+    NOT?: AiDatabaseSchemaScalarWhereWithAggregatesInput | AiDatabaseSchemaScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"AiDatabaseSchema"> | string
+    name?: StringWithAggregatesFilter<"AiDatabaseSchema"> | string
+    description?: StringWithAggregatesFilter<"AiDatabaseSchema"> | string
+    schemaJson?: StringWithAggregatesFilter<"AiDatabaseSchema"> | string
+    rowLimit?: IntWithAggregatesFilter<"AiDatabaseSchema"> | number
+    messageQuota?: IntWithAggregatesFilter<"AiDatabaseSchema"> | number
+    active?: BoolWithAggregatesFilter<"AiDatabaseSchema"> | boolean
+    createdAt?: DateTimeWithAggregatesFilter<"AiDatabaseSchema"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"AiDatabaseSchema"> | Date | string
+  }
+
+  export type AiDbChatConversationWhereInput = {
+    AND?: AiDbChatConversationWhereInput | AiDbChatConversationWhereInput[]
+    OR?: AiDbChatConversationWhereInput[]
+    NOT?: AiDbChatConversationWhereInput | AiDbChatConversationWhereInput[]
+    id?: StringFilter<"AiDbChatConversation"> | string
+    title?: StringFilter<"AiDbChatConversation"> | string
+    schemaId?: StringFilter<"AiDbChatConversation"> | string
+    createdAt?: DateTimeFilter<"AiDbChatConversation"> | Date | string
+    updatedAt?: DateTimeFilter<"AiDbChatConversation"> | Date | string
+    schema?: XOR<AiDatabaseSchemaScalarRelationFilter, AiDatabaseSchemaWhereInput>
+    messages?: AiDbChatMessageListRelationFilter
+  }
+
+  export type AiDbChatConversationOrderByWithRelationInput = {
+    id?: SortOrder
+    title?: SortOrder
+    schemaId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    schema?: AiDatabaseSchemaOrderByWithRelationInput
+    messages?: AiDbChatMessageOrderByRelationAggregateInput
+  }
+
+  export type AiDbChatConversationWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: AiDbChatConversationWhereInput | AiDbChatConversationWhereInput[]
+    OR?: AiDbChatConversationWhereInput[]
+    NOT?: AiDbChatConversationWhereInput | AiDbChatConversationWhereInput[]
+    title?: StringFilter<"AiDbChatConversation"> | string
+    schemaId?: StringFilter<"AiDbChatConversation"> | string
+    createdAt?: DateTimeFilter<"AiDbChatConversation"> | Date | string
+    updatedAt?: DateTimeFilter<"AiDbChatConversation"> | Date | string
+    schema?: XOR<AiDatabaseSchemaScalarRelationFilter, AiDatabaseSchemaWhereInput>
+    messages?: AiDbChatMessageListRelationFilter
+  }, "id">
+
+  export type AiDbChatConversationOrderByWithAggregationInput = {
+    id?: SortOrder
+    title?: SortOrder
+    schemaId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: AiDbChatConversationCountOrderByAggregateInput
+    _max?: AiDbChatConversationMaxOrderByAggregateInput
+    _min?: AiDbChatConversationMinOrderByAggregateInput
+  }
+
+  export type AiDbChatConversationScalarWhereWithAggregatesInput = {
+    AND?: AiDbChatConversationScalarWhereWithAggregatesInput | AiDbChatConversationScalarWhereWithAggregatesInput[]
+    OR?: AiDbChatConversationScalarWhereWithAggregatesInput[]
+    NOT?: AiDbChatConversationScalarWhereWithAggregatesInput | AiDbChatConversationScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"AiDbChatConversation"> | string
+    title?: StringWithAggregatesFilter<"AiDbChatConversation"> | string
+    schemaId?: StringWithAggregatesFilter<"AiDbChatConversation"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"AiDbChatConversation"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"AiDbChatConversation"> | Date | string
+  }
+
+  export type AiDbChatMessageWhereInput = {
+    AND?: AiDbChatMessageWhereInput | AiDbChatMessageWhereInput[]
+    OR?: AiDbChatMessageWhereInput[]
+    NOT?: AiDbChatMessageWhereInput | AiDbChatMessageWhereInput[]
+    id?: StringFilter<"AiDbChatMessage"> | string
+    conversationId?: StringFilter<"AiDbChatMessage"> | string
+    role?: StringFilter<"AiDbChatMessage"> | string
+    content?: StringFilter<"AiDbChatMessage"> | string
+    sql?: StringNullableFilter<"AiDbChatMessage"> | string | null
+    rowCount?: IntNullableFilter<"AiDbChatMessage"> | number | null
+    createdAt?: DateTimeFilter<"AiDbChatMessage"> | Date | string
+    conversation?: XOR<AiDbChatConversationScalarRelationFilter, AiDbChatConversationWhereInput>
+  }
+
+  export type AiDbChatMessageOrderByWithRelationInput = {
+    id?: SortOrder
+    conversationId?: SortOrder
+    role?: SortOrder
+    content?: SortOrder
+    sql?: SortOrderInput | SortOrder
+    rowCount?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    conversation?: AiDbChatConversationOrderByWithRelationInput
+  }
+
+  export type AiDbChatMessageWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: AiDbChatMessageWhereInput | AiDbChatMessageWhereInput[]
+    OR?: AiDbChatMessageWhereInput[]
+    NOT?: AiDbChatMessageWhereInput | AiDbChatMessageWhereInput[]
+    conversationId?: StringFilter<"AiDbChatMessage"> | string
+    role?: StringFilter<"AiDbChatMessage"> | string
+    content?: StringFilter<"AiDbChatMessage"> | string
+    sql?: StringNullableFilter<"AiDbChatMessage"> | string | null
+    rowCount?: IntNullableFilter<"AiDbChatMessage"> | number | null
+    createdAt?: DateTimeFilter<"AiDbChatMessage"> | Date | string
+    conversation?: XOR<AiDbChatConversationScalarRelationFilter, AiDbChatConversationWhereInput>
+  }, "id">
+
+  export type AiDbChatMessageOrderByWithAggregationInput = {
+    id?: SortOrder
+    conversationId?: SortOrder
+    role?: SortOrder
+    content?: SortOrder
+    sql?: SortOrderInput | SortOrder
+    rowCount?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    _count?: AiDbChatMessageCountOrderByAggregateInput
+    _avg?: AiDbChatMessageAvgOrderByAggregateInput
+    _max?: AiDbChatMessageMaxOrderByAggregateInput
+    _min?: AiDbChatMessageMinOrderByAggregateInput
+    _sum?: AiDbChatMessageSumOrderByAggregateInput
+  }
+
+  export type AiDbChatMessageScalarWhereWithAggregatesInput = {
+    AND?: AiDbChatMessageScalarWhereWithAggregatesInput | AiDbChatMessageScalarWhereWithAggregatesInput[]
+    OR?: AiDbChatMessageScalarWhereWithAggregatesInput[]
+    NOT?: AiDbChatMessageScalarWhereWithAggregatesInput | AiDbChatMessageScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"AiDbChatMessage"> | string
+    conversationId?: StringWithAggregatesFilter<"AiDbChatMessage"> | string
+    role?: StringWithAggregatesFilter<"AiDbChatMessage"> | string
+    content?: StringWithAggregatesFilter<"AiDbChatMessage"> | string
+    sql?: StringNullableWithAggregatesFilter<"AiDbChatMessage"> | string | null
+    rowCount?: IntNullableWithAggregatesFilter<"AiDbChatMessage"> | number | null
+    createdAt?: DateTimeWithAggregatesFilter<"AiDbChatMessage"> | Date | string
   }
 
   export type FormCreateInput = {
@@ -21582,6 +25518,222 @@ export namespace Prisma {
     createdByUserId?: StringFieldUpdateOperationsInput | string
   }
 
+  export type AiDatabaseSchemaCreateInput = {
+    id?: string
+    name: string
+    description?: string
+    schemaJson: string
+    rowLimit?: number
+    messageQuota?: number
+    active?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    conversations?: AiDbChatConversationCreateNestedManyWithoutSchemaInput
+  }
+
+  export type AiDatabaseSchemaUncheckedCreateInput = {
+    id?: string
+    name: string
+    description?: string
+    schemaJson: string
+    rowLimit?: number
+    messageQuota?: number
+    active?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    conversations?: AiDbChatConversationUncheckedCreateNestedManyWithoutSchemaInput
+  }
+
+  export type AiDatabaseSchemaUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    schemaJson?: StringFieldUpdateOperationsInput | string
+    rowLimit?: IntFieldUpdateOperationsInput | number
+    messageQuota?: IntFieldUpdateOperationsInput | number
+    active?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    conversations?: AiDbChatConversationUpdateManyWithoutSchemaNestedInput
+  }
+
+  export type AiDatabaseSchemaUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    schemaJson?: StringFieldUpdateOperationsInput | string
+    rowLimit?: IntFieldUpdateOperationsInput | number
+    messageQuota?: IntFieldUpdateOperationsInput | number
+    active?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    conversations?: AiDbChatConversationUncheckedUpdateManyWithoutSchemaNestedInput
+  }
+
+  export type AiDatabaseSchemaCreateManyInput = {
+    id?: string
+    name: string
+    description?: string
+    schemaJson: string
+    rowLimit?: number
+    messageQuota?: number
+    active?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type AiDatabaseSchemaUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    schemaJson?: StringFieldUpdateOperationsInput | string
+    rowLimit?: IntFieldUpdateOperationsInput | number
+    messageQuota?: IntFieldUpdateOperationsInput | number
+    active?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AiDatabaseSchemaUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    schemaJson?: StringFieldUpdateOperationsInput | string
+    rowLimit?: IntFieldUpdateOperationsInput | number
+    messageQuota?: IntFieldUpdateOperationsInput | number
+    active?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AiDbChatConversationCreateInput = {
+    id?: string
+    title?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    schema: AiDatabaseSchemaCreateNestedOneWithoutConversationsInput
+    messages?: AiDbChatMessageCreateNestedManyWithoutConversationInput
+  }
+
+  export type AiDbChatConversationUncheckedCreateInput = {
+    id?: string
+    title?: string
+    schemaId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    messages?: AiDbChatMessageUncheckedCreateNestedManyWithoutConversationInput
+  }
+
+  export type AiDbChatConversationUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    schema?: AiDatabaseSchemaUpdateOneRequiredWithoutConversationsNestedInput
+    messages?: AiDbChatMessageUpdateManyWithoutConversationNestedInput
+  }
+
+  export type AiDbChatConversationUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    schemaId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    messages?: AiDbChatMessageUncheckedUpdateManyWithoutConversationNestedInput
+  }
+
+  export type AiDbChatConversationCreateManyInput = {
+    id?: string
+    title?: string
+    schemaId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type AiDbChatConversationUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AiDbChatConversationUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    schemaId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AiDbChatMessageCreateInput = {
+    id?: string
+    role: string
+    content: string
+    sql?: string | null
+    rowCount?: number | null
+    createdAt?: Date | string
+    conversation: AiDbChatConversationCreateNestedOneWithoutMessagesInput
+  }
+
+  export type AiDbChatMessageUncheckedCreateInput = {
+    id?: string
+    conversationId: string
+    role: string
+    content: string
+    sql?: string | null
+    rowCount?: number | null
+    createdAt?: Date | string
+  }
+
+  export type AiDbChatMessageUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    sql?: NullableStringFieldUpdateOperationsInput | string | null
+    rowCount?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    conversation?: AiDbChatConversationUpdateOneRequiredWithoutMessagesNestedInput
+  }
+
+  export type AiDbChatMessageUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    conversationId?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    sql?: NullableStringFieldUpdateOperationsInput | string | null
+    rowCount?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AiDbChatMessageCreateManyInput = {
+    id?: string
+    conversationId: string
+    role: string
+    content: string
+    sql?: string | null
+    rowCount?: number | null
+    createdAt?: Date | string
+  }
+
+  export type AiDbChatMessageUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    sql?: NullableStringFieldUpdateOperationsInput | string | null
+    rowCount?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AiDbChatMessageUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    conversationId?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    sql?: NullableStringFieldUpdateOperationsInput | string | null
+    rowCount?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type IntFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[]
@@ -22755,6 +26907,144 @@ export namespace Prisma {
     sizeBytes?: SortOrder
   }
 
+  export type AiDbChatConversationListRelationFilter = {
+    every?: AiDbChatConversationWhereInput
+    some?: AiDbChatConversationWhereInput
+    none?: AiDbChatConversationWhereInput
+  }
+
+  export type AiDbChatConversationOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type AiDatabaseSchemaCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    schemaJson?: SortOrder
+    rowLimit?: SortOrder
+    messageQuota?: SortOrder
+    active?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type AiDatabaseSchemaAvgOrderByAggregateInput = {
+    rowLimit?: SortOrder
+    messageQuota?: SortOrder
+  }
+
+  export type AiDatabaseSchemaMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    schemaJson?: SortOrder
+    rowLimit?: SortOrder
+    messageQuota?: SortOrder
+    active?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type AiDatabaseSchemaMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    schemaJson?: SortOrder
+    rowLimit?: SortOrder
+    messageQuota?: SortOrder
+    active?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type AiDatabaseSchemaSumOrderByAggregateInput = {
+    rowLimit?: SortOrder
+    messageQuota?: SortOrder
+  }
+
+  export type AiDatabaseSchemaScalarRelationFilter = {
+    is?: AiDatabaseSchemaWhereInput
+    isNot?: AiDatabaseSchemaWhereInput
+  }
+
+  export type AiDbChatMessageListRelationFilter = {
+    every?: AiDbChatMessageWhereInput
+    some?: AiDbChatMessageWhereInput
+    none?: AiDbChatMessageWhereInput
+  }
+
+  export type AiDbChatMessageOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type AiDbChatConversationCountOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    schemaId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type AiDbChatConversationMaxOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    schemaId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type AiDbChatConversationMinOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    schemaId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type AiDbChatConversationScalarRelationFilter = {
+    is?: AiDbChatConversationWhereInput
+    isNot?: AiDbChatConversationWhereInput
+  }
+
+  export type AiDbChatMessageCountOrderByAggregateInput = {
+    id?: SortOrder
+    conversationId?: SortOrder
+    role?: SortOrder
+    content?: SortOrder
+    sql?: SortOrder
+    rowCount?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type AiDbChatMessageAvgOrderByAggregateInput = {
+    rowCount?: SortOrder
+  }
+
+  export type AiDbChatMessageMaxOrderByAggregateInput = {
+    id?: SortOrder
+    conversationId?: SortOrder
+    role?: SortOrder
+    content?: SortOrder
+    sql?: SortOrder
+    rowCount?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type AiDbChatMessageMinOrderByAggregateInput = {
+    id?: SortOrder
+    conversationId?: SortOrder
+    role?: SortOrder
+    content?: SortOrder
+    sql?: SortOrder
+    rowCount?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type AiDbChatMessageSumOrderByAggregateInput = {
+    rowCount?: SortOrder
+  }
+
   export type RoleCreateNestedOneWithoutFormsInput = {
     create?: XOR<RoleCreateWithoutFormsInput, RoleUncheckedCreateWithoutFormsInput>
     connectOrCreate?: RoleCreateOrConnectWithoutFormsInput
@@ -23827,6 +28117,118 @@ export namespace Prisma {
     upsert?: CodeWorkspaceUpsertWithoutVersionsInput
     connect?: CodeWorkspaceWhereUniqueInput
     update?: XOR<XOR<CodeWorkspaceUpdateToOneWithWhereWithoutVersionsInput, CodeWorkspaceUpdateWithoutVersionsInput>, CodeWorkspaceUncheckedUpdateWithoutVersionsInput>
+  }
+
+  export type AiDbChatConversationCreateNestedManyWithoutSchemaInput = {
+    create?: XOR<AiDbChatConversationCreateWithoutSchemaInput, AiDbChatConversationUncheckedCreateWithoutSchemaInput> | AiDbChatConversationCreateWithoutSchemaInput[] | AiDbChatConversationUncheckedCreateWithoutSchemaInput[]
+    connectOrCreate?: AiDbChatConversationCreateOrConnectWithoutSchemaInput | AiDbChatConversationCreateOrConnectWithoutSchemaInput[]
+    createMany?: AiDbChatConversationCreateManySchemaInputEnvelope
+    connect?: AiDbChatConversationWhereUniqueInput | AiDbChatConversationWhereUniqueInput[]
+  }
+
+  export type AiDbChatConversationUncheckedCreateNestedManyWithoutSchemaInput = {
+    create?: XOR<AiDbChatConversationCreateWithoutSchemaInput, AiDbChatConversationUncheckedCreateWithoutSchemaInput> | AiDbChatConversationCreateWithoutSchemaInput[] | AiDbChatConversationUncheckedCreateWithoutSchemaInput[]
+    connectOrCreate?: AiDbChatConversationCreateOrConnectWithoutSchemaInput | AiDbChatConversationCreateOrConnectWithoutSchemaInput[]
+    createMany?: AiDbChatConversationCreateManySchemaInputEnvelope
+    connect?: AiDbChatConversationWhereUniqueInput | AiDbChatConversationWhereUniqueInput[]
+  }
+
+  export type AiDbChatConversationUpdateManyWithoutSchemaNestedInput = {
+    create?: XOR<AiDbChatConversationCreateWithoutSchemaInput, AiDbChatConversationUncheckedCreateWithoutSchemaInput> | AiDbChatConversationCreateWithoutSchemaInput[] | AiDbChatConversationUncheckedCreateWithoutSchemaInput[]
+    connectOrCreate?: AiDbChatConversationCreateOrConnectWithoutSchemaInput | AiDbChatConversationCreateOrConnectWithoutSchemaInput[]
+    upsert?: AiDbChatConversationUpsertWithWhereUniqueWithoutSchemaInput | AiDbChatConversationUpsertWithWhereUniqueWithoutSchemaInput[]
+    createMany?: AiDbChatConversationCreateManySchemaInputEnvelope
+    set?: AiDbChatConversationWhereUniqueInput | AiDbChatConversationWhereUniqueInput[]
+    disconnect?: AiDbChatConversationWhereUniqueInput | AiDbChatConversationWhereUniqueInput[]
+    delete?: AiDbChatConversationWhereUniqueInput | AiDbChatConversationWhereUniqueInput[]
+    connect?: AiDbChatConversationWhereUniqueInput | AiDbChatConversationWhereUniqueInput[]
+    update?: AiDbChatConversationUpdateWithWhereUniqueWithoutSchemaInput | AiDbChatConversationUpdateWithWhereUniqueWithoutSchemaInput[]
+    updateMany?: AiDbChatConversationUpdateManyWithWhereWithoutSchemaInput | AiDbChatConversationUpdateManyWithWhereWithoutSchemaInput[]
+    deleteMany?: AiDbChatConversationScalarWhereInput | AiDbChatConversationScalarWhereInput[]
+  }
+
+  export type AiDbChatConversationUncheckedUpdateManyWithoutSchemaNestedInput = {
+    create?: XOR<AiDbChatConversationCreateWithoutSchemaInput, AiDbChatConversationUncheckedCreateWithoutSchemaInput> | AiDbChatConversationCreateWithoutSchemaInput[] | AiDbChatConversationUncheckedCreateWithoutSchemaInput[]
+    connectOrCreate?: AiDbChatConversationCreateOrConnectWithoutSchemaInput | AiDbChatConversationCreateOrConnectWithoutSchemaInput[]
+    upsert?: AiDbChatConversationUpsertWithWhereUniqueWithoutSchemaInput | AiDbChatConversationUpsertWithWhereUniqueWithoutSchemaInput[]
+    createMany?: AiDbChatConversationCreateManySchemaInputEnvelope
+    set?: AiDbChatConversationWhereUniqueInput | AiDbChatConversationWhereUniqueInput[]
+    disconnect?: AiDbChatConversationWhereUniqueInput | AiDbChatConversationWhereUniqueInput[]
+    delete?: AiDbChatConversationWhereUniqueInput | AiDbChatConversationWhereUniqueInput[]
+    connect?: AiDbChatConversationWhereUniqueInput | AiDbChatConversationWhereUniqueInput[]
+    update?: AiDbChatConversationUpdateWithWhereUniqueWithoutSchemaInput | AiDbChatConversationUpdateWithWhereUniqueWithoutSchemaInput[]
+    updateMany?: AiDbChatConversationUpdateManyWithWhereWithoutSchemaInput | AiDbChatConversationUpdateManyWithWhereWithoutSchemaInput[]
+    deleteMany?: AiDbChatConversationScalarWhereInput | AiDbChatConversationScalarWhereInput[]
+  }
+
+  export type AiDatabaseSchemaCreateNestedOneWithoutConversationsInput = {
+    create?: XOR<AiDatabaseSchemaCreateWithoutConversationsInput, AiDatabaseSchemaUncheckedCreateWithoutConversationsInput>
+    connectOrCreate?: AiDatabaseSchemaCreateOrConnectWithoutConversationsInput
+    connect?: AiDatabaseSchemaWhereUniqueInput
+  }
+
+  export type AiDbChatMessageCreateNestedManyWithoutConversationInput = {
+    create?: XOR<AiDbChatMessageCreateWithoutConversationInput, AiDbChatMessageUncheckedCreateWithoutConversationInput> | AiDbChatMessageCreateWithoutConversationInput[] | AiDbChatMessageUncheckedCreateWithoutConversationInput[]
+    connectOrCreate?: AiDbChatMessageCreateOrConnectWithoutConversationInput | AiDbChatMessageCreateOrConnectWithoutConversationInput[]
+    createMany?: AiDbChatMessageCreateManyConversationInputEnvelope
+    connect?: AiDbChatMessageWhereUniqueInput | AiDbChatMessageWhereUniqueInput[]
+  }
+
+  export type AiDbChatMessageUncheckedCreateNestedManyWithoutConversationInput = {
+    create?: XOR<AiDbChatMessageCreateWithoutConversationInput, AiDbChatMessageUncheckedCreateWithoutConversationInput> | AiDbChatMessageCreateWithoutConversationInput[] | AiDbChatMessageUncheckedCreateWithoutConversationInput[]
+    connectOrCreate?: AiDbChatMessageCreateOrConnectWithoutConversationInput | AiDbChatMessageCreateOrConnectWithoutConversationInput[]
+    createMany?: AiDbChatMessageCreateManyConversationInputEnvelope
+    connect?: AiDbChatMessageWhereUniqueInput | AiDbChatMessageWhereUniqueInput[]
+  }
+
+  export type AiDatabaseSchemaUpdateOneRequiredWithoutConversationsNestedInput = {
+    create?: XOR<AiDatabaseSchemaCreateWithoutConversationsInput, AiDatabaseSchemaUncheckedCreateWithoutConversationsInput>
+    connectOrCreate?: AiDatabaseSchemaCreateOrConnectWithoutConversationsInput
+    upsert?: AiDatabaseSchemaUpsertWithoutConversationsInput
+    connect?: AiDatabaseSchemaWhereUniqueInput
+    update?: XOR<XOR<AiDatabaseSchemaUpdateToOneWithWhereWithoutConversationsInput, AiDatabaseSchemaUpdateWithoutConversationsInput>, AiDatabaseSchemaUncheckedUpdateWithoutConversationsInput>
+  }
+
+  export type AiDbChatMessageUpdateManyWithoutConversationNestedInput = {
+    create?: XOR<AiDbChatMessageCreateWithoutConversationInput, AiDbChatMessageUncheckedCreateWithoutConversationInput> | AiDbChatMessageCreateWithoutConversationInput[] | AiDbChatMessageUncheckedCreateWithoutConversationInput[]
+    connectOrCreate?: AiDbChatMessageCreateOrConnectWithoutConversationInput | AiDbChatMessageCreateOrConnectWithoutConversationInput[]
+    upsert?: AiDbChatMessageUpsertWithWhereUniqueWithoutConversationInput | AiDbChatMessageUpsertWithWhereUniqueWithoutConversationInput[]
+    createMany?: AiDbChatMessageCreateManyConversationInputEnvelope
+    set?: AiDbChatMessageWhereUniqueInput | AiDbChatMessageWhereUniqueInput[]
+    disconnect?: AiDbChatMessageWhereUniqueInput | AiDbChatMessageWhereUniqueInput[]
+    delete?: AiDbChatMessageWhereUniqueInput | AiDbChatMessageWhereUniqueInput[]
+    connect?: AiDbChatMessageWhereUniqueInput | AiDbChatMessageWhereUniqueInput[]
+    update?: AiDbChatMessageUpdateWithWhereUniqueWithoutConversationInput | AiDbChatMessageUpdateWithWhereUniqueWithoutConversationInput[]
+    updateMany?: AiDbChatMessageUpdateManyWithWhereWithoutConversationInput | AiDbChatMessageUpdateManyWithWhereWithoutConversationInput[]
+    deleteMany?: AiDbChatMessageScalarWhereInput | AiDbChatMessageScalarWhereInput[]
+  }
+
+  export type AiDbChatMessageUncheckedUpdateManyWithoutConversationNestedInput = {
+    create?: XOR<AiDbChatMessageCreateWithoutConversationInput, AiDbChatMessageUncheckedCreateWithoutConversationInput> | AiDbChatMessageCreateWithoutConversationInput[] | AiDbChatMessageUncheckedCreateWithoutConversationInput[]
+    connectOrCreate?: AiDbChatMessageCreateOrConnectWithoutConversationInput | AiDbChatMessageCreateOrConnectWithoutConversationInput[]
+    upsert?: AiDbChatMessageUpsertWithWhereUniqueWithoutConversationInput | AiDbChatMessageUpsertWithWhereUniqueWithoutConversationInput[]
+    createMany?: AiDbChatMessageCreateManyConversationInputEnvelope
+    set?: AiDbChatMessageWhereUniqueInput | AiDbChatMessageWhereUniqueInput[]
+    disconnect?: AiDbChatMessageWhereUniqueInput | AiDbChatMessageWhereUniqueInput[]
+    delete?: AiDbChatMessageWhereUniqueInput | AiDbChatMessageWhereUniqueInput[]
+    connect?: AiDbChatMessageWhereUniqueInput | AiDbChatMessageWhereUniqueInput[]
+    update?: AiDbChatMessageUpdateWithWhereUniqueWithoutConversationInput | AiDbChatMessageUpdateWithWhereUniqueWithoutConversationInput[]
+    updateMany?: AiDbChatMessageUpdateManyWithWhereWithoutConversationInput | AiDbChatMessageUpdateManyWithWhereWithoutConversationInput[]
+    deleteMany?: AiDbChatMessageScalarWhereInput | AiDbChatMessageScalarWhereInput[]
+  }
+
+  export type AiDbChatConversationCreateNestedOneWithoutMessagesInput = {
+    create?: XOR<AiDbChatConversationCreateWithoutMessagesInput, AiDbChatConversationUncheckedCreateWithoutMessagesInput>
+    connectOrCreate?: AiDbChatConversationCreateOrConnectWithoutMessagesInput
+    connect?: AiDbChatConversationWhereUniqueInput
+  }
+
+  export type AiDbChatConversationUpdateOneRequiredWithoutMessagesNestedInput = {
+    create?: XOR<AiDbChatConversationCreateWithoutMessagesInput, AiDbChatConversationUncheckedCreateWithoutMessagesInput>
+    connectOrCreate?: AiDbChatConversationCreateOrConnectWithoutMessagesInput
+    upsert?: AiDbChatConversationUpsertWithoutMessagesInput
+    connect?: AiDbChatConversationWhereUniqueInput
+    update?: XOR<XOR<AiDbChatConversationUpdateToOneWithWhereWithoutMessagesInput, AiDbChatConversationUpdateWithoutMessagesInput>, AiDbChatConversationUncheckedUpdateWithoutMessagesInput>
   }
 
   export type NestedIntFilter<$PrismaModel = never> = {
@@ -26913,6 +31315,226 @@ export namespace Prisma {
     updatedByUserId?: StringFieldUpdateOperationsInput | string
   }
 
+  export type AiDbChatConversationCreateWithoutSchemaInput = {
+    id?: string
+    title?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    messages?: AiDbChatMessageCreateNestedManyWithoutConversationInput
+  }
+
+  export type AiDbChatConversationUncheckedCreateWithoutSchemaInput = {
+    id?: string
+    title?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    messages?: AiDbChatMessageUncheckedCreateNestedManyWithoutConversationInput
+  }
+
+  export type AiDbChatConversationCreateOrConnectWithoutSchemaInput = {
+    where: AiDbChatConversationWhereUniqueInput
+    create: XOR<AiDbChatConversationCreateWithoutSchemaInput, AiDbChatConversationUncheckedCreateWithoutSchemaInput>
+  }
+
+  export type AiDbChatConversationCreateManySchemaInputEnvelope = {
+    data: AiDbChatConversationCreateManySchemaInput | AiDbChatConversationCreateManySchemaInput[]
+  }
+
+  export type AiDbChatConversationUpsertWithWhereUniqueWithoutSchemaInput = {
+    where: AiDbChatConversationWhereUniqueInput
+    update: XOR<AiDbChatConversationUpdateWithoutSchemaInput, AiDbChatConversationUncheckedUpdateWithoutSchemaInput>
+    create: XOR<AiDbChatConversationCreateWithoutSchemaInput, AiDbChatConversationUncheckedCreateWithoutSchemaInput>
+  }
+
+  export type AiDbChatConversationUpdateWithWhereUniqueWithoutSchemaInput = {
+    where: AiDbChatConversationWhereUniqueInput
+    data: XOR<AiDbChatConversationUpdateWithoutSchemaInput, AiDbChatConversationUncheckedUpdateWithoutSchemaInput>
+  }
+
+  export type AiDbChatConversationUpdateManyWithWhereWithoutSchemaInput = {
+    where: AiDbChatConversationScalarWhereInput
+    data: XOR<AiDbChatConversationUpdateManyMutationInput, AiDbChatConversationUncheckedUpdateManyWithoutSchemaInput>
+  }
+
+  export type AiDbChatConversationScalarWhereInput = {
+    AND?: AiDbChatConversationScalarWhereInput | AiDbChatConversationScalarWhereInput[]
+    OR?: AiDbChatConversationScalarWhereInput[]
+    NOT?: AiDbChatConversationScalarWhereInput | AiDbChatConversationScalarWhereInput[]
+    id?: StringFilter<"AiDbChatConversation"> | string
+    title?: StringFilter<"AiDbChatConversation"> | string
+    schemaId?: StringFilter<"AiDbChatConversation"> | string
+    createdAt?: DateTimeFilter<"AiDbChatConversation"> | Date | string
+    updatedAt?: DateTimeFilter<"AiDbChatConversation"> | Date | string
+  }
+
+  export type AiDatabaseSchemaCreateWithoutConversationsInput = {
+    id?: string
+    name: string
+    description?: string
+    schemaJson: string
+    rowLimit?: number
+    messageQuota?: number
+    active?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type AiDatabaseSchemaUncheckedCreateWithoutConversationsInput = {
+    id?: string
+    name: string
+    description?: string
+    schemaJson: string
+    rowLimit?: number
+    messageQuota?: number
+    active?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type AiDatabaseSchemaCreateOrConnectWithoutConversationsInput = {
+    where: AiDatabaseSchemaWhereUniqueInput
+    create: XOR<AiDatabaseSchemaCreateWithoutConversationsInput, AiDatabaseSchemaUncheckedCreateWithoutConversationsInput>
+  }
+
+  export type AiDbChatMessageCreateWithoutConversationInput = {
+    id?: string
+    role: string
+    content: string
+    sql?: string | null
+    rowCount?: number | null
+    createdAt?: Date | string
+  }
+
+  export type AiDbChatMessageUncheckedCreateWithoutConversationInput = {
+    id?: string
+    role: string
+    content: string
+    sql?: string | null
+    rowCount?: number | null
+    createdAt?: Date | string
+  }
+
+  export type AiDbChatMessageCreateOrConnectWithoutConversationInput = {
+    where: AiDbChatMessageWhereUniqueInput
+    create: XOR<AiDbChatMessageCreateWithoutConversationInput, AiDbChatMessageUncheckedCreateWithoutConversationInput>
+  }
+
+  export type AiDbChatMessageCreateManyConversationInputEnvelope = {
+    data: AiDbChatMessageCreateManyConversationInput | AiDbChatMessageCreateManyConversationInput[]
+  }
+
+  export type AiDatabaseSchemaUpsertWithoutConversationsInput = {
+    update: XOR<AiDatabaseSchemaUpdateWithoutConversationsInput, AiDatabaseSchemaUncheckedUpdateWithoutConversationsInput>
+    create: XOR<AiDatabaseSchemaCreateWithoutConversationsInput, AiDatabaseSchemaUncheckedCreateWithoutConversationsInput>
+    where?: AiDatabaseSchemaWhereInput
+  }
+
+  export type AiDatabaseSchemaUpdateToOneWithWhereWithoutConversationsInput = {
+    where?: AiDatabaseSchemaWhereInput
+    data: XOR<AiDatabaseSchemaUpdateWithoutConversationsInput, AiDatabaseSchemaUncheckedUpdateWithoutConversationsInput>
+  }
+
+  export type AiDatabaseSchemaUpdateWithoutConversationsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    schemaJson?: StringFieldUpdateOperationsInput | string
+    rowLimit?: IntFieldUpdateOperationsInput | number
+    messageQuota?: IntFieldUpdateOperationsInput | number
+    active?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AiDatabaseSchemaUncheckedUpdateWithoutConversationsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    schemaJson?: StringFieldUpdateOperationsInput | string
+    rowLimit?: IntFieldUpdateOperationsInput | number
+    messageQuota?: IntFieldUpdateOperationsInput | number
+    active?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AiDbChatMessageUpsertWithWhereUniqueWithoutConversationInput = {
+    where: AiDbChatMessageWhereUniqueInput
+    update: XOR<AiDbChatMessageUpdateWithoutConversationInput, AiDbChatMessageUncheckedUpdateWithoutConversationInput>
+    create: XOR<AiDbChatMessageCreateWithoutConversationInput, AiDbChatMessageUncheckedCreateWithoutConversationInput>
+  }
+
+  export type AiDbChatMessageUpdateWithWhereUniqueWithoutConversationInput = {
+    where: AiDbChatMessageWhereUniqueInput
+    data: XOR<AiDbChatMessageUpdateWithoutConversationInput, AiDbChatMessageUncheckedUpdateWithoutConversationInput>
+  }
+
+  export type AiDbChatMessageUpdateManyWithWhereWithoutConversationInput = {
+    where: AiDbChatMessageScalarWhereInput
+    data: XOR<AiDbChatMessageUpdateManyMutationInput, AiDbChatMessageUncheckedUpdateManyWithoutConversationInput>
+  }
+
+  export type AiDbChatMessageScalarWhereInput = {
+    AND?: AiDbChatMessageScalarWhereInput | AiDbChatMessageScalarWhereInput[]
+    OR?: AiDbChatMessageScalarWhereInput[]
+    NOT?: AiDbChatMessageScalarWhereInput | AiDbChatMessageScalarWhereInput[]
+    id?: StringFilter<"AiDbChatMessage"> | string
+    conversationId?: StringFilter<"AiDbChatMessage"> | string
+    role?: StringFilter<"AiDbChatMessage"> | string
+    content?: StringFilter<"AiDbChatMessage"> | string
+    sql?: StringNullableFilter<"AiDbChatMessage"> | string | null
+    rowCount?: IntNullableFilter<"AiDbChatMessage"> | number | null
+    createdAt?: DateTimeFilter<"AiDbChatMessage"> | Date | string
+  }
+
+  export type AiDbChatConversationCreateWithoutMessagesInput = {
+    id?: string
+    title?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    schema: AiDatabaseSchemaCreateNestedOneWithoutConversationsInput
+  }
+
+  export type AiDbChatConversationUncheckedCreateWithoutMessagesInput = {
+    id?: string
+    title?: string
+    schemaId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type AiDbChatConversationCreateOrConnectWithoutMessagesInput = {
+    where: AiDbChatConversationWhereUniqueInput
+    create: XOR<AiDbChatConversationCreateWithoutMessagesInput, AiDbChatConversationUncheckedCreateWithoutMessagesInput>
+  }
+
+  export type AiDbChatConversationUpsertWithoutMessagesInput = {
+    update: XOR<AiDbChatConversationUpdateWithoutMessagesInput, AiDbChatConversationUncheckedUpdateWithoutMessagesInput>
+    create: XOR<AiDbChatConversationCreateWithoutMessagesInput, AiDbChatConversationUncheckedCreateWithoutMessagesInput>
+    where?: AiDbChatConversationWhereInput
+  }
+
+  export type AiDbChatConversationUpdateToOneWithWhereWithoutMessagesInput = {
+    where?: AiDbChatConversationWhereInput
+    data: XOR<AiDbChatConversationUpdateWithoutMessagesInput, AiDbChatConversationUncheckedUpdateWithoutMessagesInput>
+  }
+
+  export type AiDbChatConversationUpdateWithoutMessagesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    schema?: AiDatabaseSchemaUpdateOneRequiredWithoutConversationsNestedInput
+  }
+
+  export type AiDbChatConversationUncheckedUpdateWithoutMessagesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    schemaId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type FormSubmissionCreateManyFormInput = {
     id?: number
     published?: boolean
@@ -28077,6 +32699,72 @@ export namespace Prisma {
     sizeBytes?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdByUserId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type AiDbChatConversationCreateManySchemaInput = {
+    id?: string
+    title?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type AiDbChatConversationUpdateWithoutSchemaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    messages?: AiDbChatMessageUpdateManyWithoutConversationNestedInput
+  }
+
+  export type AiDbChatConversationUncheckedUpdateWithoutSchemaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    messages?: AiDbChatMessageUncheckedUpdateManyWithoutConversationNestedInput
+  }
+
+  export type AiDbChatConversationUncheckedUpdateManyWithoutSchemaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AiDbChatMessageCreateManyConversationInput = {
+    id?: string
+    role: string
+    content: string
+    sql?: string | null
+    rowCount?: number | null
+    createdAt?: Date | string
+  }
+
+  export type AiDbChatMessageUpdateWithoutConversationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    sql?: NullableStringFieldUpdateOperationsInput | string | null
+    rowCount?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AiDbChatMessageUncheckedUpdateWithoutConversationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    sql?: NullableStringFieldUpdateOperationsInput | string | null
+    rowCount?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AiDbChatMessageUncheckedUpdateManyWithoutConversationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    sql?: NullableStringFieldUpdateOperationsInput | string | null
+    rowCount?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 

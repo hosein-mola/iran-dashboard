@@ -320,6 +320,36 @@ exports.Prisma.CodeWorkspaceVersionScalarFieldEnum = {
   createdByUserId: 'createdByUserId'
 };
 
+exports.Prisma.AiDatabaseSchemaScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  schemaJson: 'schemaJson',
+  rowLimit: 'rowLimit',
+  messageQuota: 'messageQuota',
+  active: 'active',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.AiDbChatConversationScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  schemaId: 'schemaId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.AiDbChatMessageScalarFieldEnum = {
+  id: 'id',
+  conversationId: 'conversationId',
+  role: 'role',
+  content: 'content',
+  sql: 'sql',
+  rowCount: 'rowCount',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -344,7 +374,10 @@ exports.Prisma.ModelName = {
   Role: 'Role',
   AppUser: 'AppUser',
   CodeWorkspace: 'CodeWorkspace',
-  CodeWorkspaceVersion: 'CodeWorkspaceVersion'
+  CodeWorkspaceVersion: 'CodeWorkspaceVersion',
+  AiDatabaseSchema: 'AiDatabaseSchema',
+  AiDbChatConversation: 'AiDbChatConversation',
+  AiDbChatMessage: 'AiDbChatMessage'
 };
 
 /**

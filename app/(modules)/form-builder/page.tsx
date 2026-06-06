@@ -88,7 +88,10 @@ export default async function FormBuilderHome(props: {
   const draftCount = catalog.forms.length - publishedCount
 
   return (
-    <div className="relative flex min-h-screen flex-1 flex-col gap-6 overflow-y-auto px-4 py-4">
+    <div
+      dir="ltr"
+      className="relative flex min-h-screen flex-1 flex-col gap-6 overflow-y-auto px-4 py-4"
+    >
       <div className="from-background via-background to-primary/5 pointer-events-none absolute inset-0 bg-gradient-to-br" />
       <div className="relative z-0 space-y-6">
         <div className="bg-background/98 sticky top-0 z-[220] space-y-4 pb-2 shadow-[0_12px_32px_-18px_rgba(0,0,0,0.35)] backdrop-blur">

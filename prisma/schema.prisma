@@ -267,3 +267,43 @@ model CodeWorkspaceVersion {
   @@index([workspaceId, createdAt])
   @@index([snapshotHash])
 }
+
+model AiDatabaseSchema {
+  id           String                   @id @default(cuid())
+  name         String
+  description  String                   @default("")
+  schemaJson   String
+  rowLimit     Int                      @default(100)
+  messageQuota Int                      @default(100)
+  active       Boolean                  @default(true)
+  createdAt    DateTime                 @default(now())
+  updatedAt    DateTime                 @updatedAt
+  conversations AiDbChatConversation[]
+
+  @@index([active, updatedAt])
+}
+
+model AiDbChatConversation {
+  id        String            @id @default(cuid())
+  title     String            @default("گفتگوی جدید")
+  schemaId  String
+  createdAt DateTime          @default(now())
+  updatedAt DateTime          @updatedAt
+  schema    AiDatabaseSchema  @relation(fields: [schemaId], references: [id], onDelete: Restrict)
+  messages  AiDbChatMessage[]
+
+  @@index([schemaId, updatedAt])
+}
+
+model AiDbChatMessage {
+  id             String               @id @default(cuid())
+  conversationId String
+  role           String
+  content        String
+  sql            String?
+  rowCount       Int?
+  createdAt      DateTime             @default(now())
+  conversation   AiDbChatConversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+
+  @@index([conversationId, createdAt])
+}
