@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 
 import prisma from '@/lib/prisma'
+import { normalizeRowLimit } from '@/lib/ai-database-chat'
 
 type RouteContext = {
   params: Promise<{ id: string }>
@@ -47,7 +48,7 @@ export async function GET(_req: Request, context: RouteContext) {
         title: conversation.title,
         schemaId: conversation.schemaId,
         schemaName: conversation.schema.name,
-        rowLimit: conversation.schema.rowLimit,
+        rowLimit: normalizeRowLimit(conversation.schema.rowLimit),
         messageQuota: conversation.schema.messageQuota,
         messageCount: conversation._count.messages,
         updatedAt: conversation.updatedAt.toISOString(),

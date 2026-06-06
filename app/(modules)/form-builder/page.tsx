@@ -89,7 +89,7 @@ export default async function FormBuilderHome(props: {
 
   return (
     <div
-      dir="ltr"
+      dir="rtl"
       className="relative flex min-h-screen flex-1 flex-col gap-6 overflow-y-auto px-4 py-4"
     >
       <div className="from-background via-background to-primary/5 pointer-events-none absolute inset-0 bg-gradient-to-br" />
@@ -454,7 +454,9 @@ function TemplateCards({
                   </Badge>
                 </CardTitle>
                 <CardDescription className="text-muted-foreground flex items-center justify-between gap-3 text-sm">
-                  <span className="truncate">{template.slug}</span>
+                  <span dir="ltr" className="truncate text-left">
+                    {template.slug}
+                  </span>
                   <span className="text-xs">
                     {template.updatedAt.toLocaleDateString('fa-IR')}
                   </span>

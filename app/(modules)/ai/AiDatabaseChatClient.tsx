@@ -1,7 +1,14 @@
 'use client'
 
 import { FormEvent, useEffect, useMemo, useState } from 'react'
-import { Bot, MessageSquarePlus, Save, Send, Settings, User } from 'lucide-react'
+import {
+  Bot,
+  MessageSquarePlus,
+  Save,
+  Send,
+  Settings,
+  User,
+} from 'lucide-react'
 
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -54,13 +61,21 @@ type ChatMessage = {
   content: string
   sql?: string | null
   rowCount?: number | null
+  model?: string | null
+  modelLabel?: string | null
   createdAt: string
 }
 
 type ChatStreamEvent =
   | { type: 'status'; message: string }
   | { type: 'message'; message: ChatMessage }
-  | { type: 'assistantMeta'; sql: string; rowCount: number }
+  | {
+      type: 'assistantMeta'
+      sql: string
+      rowCount: number
+      model?: string | null
+      modelLabel?: string | null
+    }
   | { type: 'assistantDelta'; content: string }
   | { type: 'done' }
   | { type: 'error'; message: string }
@@ -93,12 +108,21 @@ type SchemaForm = {
   messageQuota: string
 }
 
+type AiModelOption = {
+  id: string
+  label: string
+  description: string
+}
+
+const DEFAULT_ROW_LIMIT = '50'
+const MAX_ROW_LIMIT = 50
+
 function createEmptySchemaForm(defaultSchemaJson: string): SchemaForm {
   return {
     name: '',
     description: '',
     schemaJson: defaultSchemaJson,
-    rowLimit: '100',
+    rowLimit: DEFAULT_ROW_LIMIT,
     messageQuota: '100',
   }
 }
@@ -145,7 +169,12 @@ function upsertStreamMessage(
   if (index < 0) return [...messages, message]
 
   const next = [...messages]
-  next[index] = message
+  const existing = next[index]
+  next[index] = {
+    ...message,
+    model: message.model ?? existing?.model,
+    modelLabel: message.modelLabel ?? existing?.modelLabel,
+  }
   return next
 }
 
@@ -163,10 +192,12 @@ export function AiDatabaseChatClient({
   initialSchemas,
   initialConversations,
   defaultSchemaJson,
+  modelOptions,
 }: {
   initialSchemas: DbSchema[]
   initialConversations: ConversationListItem[]
   defaultSchemaJson: string
+  modelOptions: AiModelOption[]
 }) {
   const emptySchemaForm = useMemo(
     () => createEmptySchemaForm(defaultSchemaJson),
@@ -183,6 +214,9 @@ export function AiDatabaseChatClient({
     initialSchemas[0] ? schemaToForm(initialSchemas[0]) : emptySchemaForm
   )
   const [message, setMessage] = useState('')
+  const [selectedModelId, setSelectedModelId] = useState(
+    modelOptions[0]?.id ?? ''
+  )
   const [status, setStatus] = useState('')
   const [inlineStatus, setInlineStatus] = useState('')
   const [isSending, setIsSending] = useState(false)
@@ -199,6 +233,10 @@ export function AiDatabaseChatClient({
   const usedMessages = activeConversation?.messageCount ?? 0
   const messageQuota =
     selectedSchema?.messageQuota ?? activeConversation?.messageQuota ?? 0
+  const selectedModel = useMemo(
+    () => modelOptions.find((option) => option.id === selectedModelId),
+    [modelOptions, selectedModelId]
+  )
 
   useEffect(() => {
     let isMounted = true
@@ -383,6 +421,8 @@ export function AiDatabaseChatClient({
         id: pendingAssistantId,
         role: 'assistant',
         content: '',
+        model: selectedModelId || null,
+        modelLabel: selectedModel?.label ?? selectedModelId ?? null,
         createdAt,
       }
       setActiveConversation((current) =>
@@ -403,7 +443,10 @@ export function AiDatabaseChatClient({
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ content: trimmed }),
+          body: JSON.stringify({
+            content: trimmed,
+            modelOptionId: selectedModelId,
+          }),
         }
       )
 
@@ -454,12 +497,15 @@ export function AiDatabaseChatClient({
                   ...current,
                   messages: current.messages.map((item) =>
                     item.id === pendingAssistantId
-                      ? {
-                          ...item,
-                          sql: streamEvent.sql,
-                          rowCount: streamEvent.rowCount,
-                        }
-                      : item
+                        ? {
+                            ...item,
+                            sql: streamEvent.sql,
+                            rowCount: streamEvent.rowCount,
+                            model: streamEvent.model ?? item.model,
+                            modelLabel:
+                              streamEvent.modelLabel ?? item.modelLabel,
+                          }
+                        : item
                   ),
                 }
               : current
@@ -552,12 +598,15 @@ export function AiDatabaseChatClient({
 
   return (
     <div
-      className="relative flex h-full min-h-0 flex-1 flex-col gap-3 overflow-hidden px-4 py-4"
+      className="relative flex h-[calc(100svh-9rem)] max-h-[calc(100svh-9rem)] min-h-0 w-full min-w-0 flex-1 flex-col gap-3 overflow-hidden px-4 py-4"
       dir="ltr"
     >
       <div className="from-background via-background to-primary/5 pointer-events-none absolute inset-0 bg-gradient-to-br" />
-      <div className="relative z-10 flex min-h-0 flex-1 flex-col gap-3">
-        <Tabs defaultValue="chat" className="flex min-h-0 flex-1 flex-col gap-3">
+      <div className="relative z-10 flex min-h-0 w-full min-w-0 flex-1 flex-col gap-3 overflow-hidden">
+        <Tabs
+          defaultValue="chat"
+          className="flex min-h-0 w-full min-w-0 flex-1 flex-col gap-3 overflow-hidden"
+        >
           <TabsList className="grid w-full max-w-md grid-cols-2">
             <TabsTrigger value="chat" className="gap-2">
               <Bot className="size-4" />
@@ -569,9 +618,16 @@ export function AiDatabaseChatClient({
             </TabsTrigger>
           </TabsList>
 
-          <TabsContent dir="rtl" value="chat" className="m-0 min-h-0 flex-1">
-            <section className="grid h-full min-h-0 grid-rows-[220px_minmax(0,1fr)] gap-4 lg:grid-cols-[280px_minmax(0,1fr)] lg:grid-rows-1">
-              <aside className="flex min-h-0 flex-col gap-3" dir="rtl">
+          <TabsContent
+            dir="rtl"
+            value="chat"
+            className="m-0 min-h-0 w-full min-w-0 flex-1 overflow-hidden"
+          >
+            <section className="grid h-full min-h-0 w-full min-w-0 grid-rows-[minmax(0,220px)_minmax(0,1fr)] gap-4 overflow-hidden lg:grid-cols-[280px_minmax(0,1fr)] lg:grid-rows-1">
+              <aside
+                className="flex min-h-0 min-w-0 flex-col gap-3 overflow-hidden"
+                dir="rtl"
+              >
                 <div className="border-border/60 bg-card/90 rounded-lg border p-3 shadow-sm">
                   <Label className="text-muted-foreground text-xs">
                     اسکیما
@@ -592,6 +648,30 @@ export function AiDatabaseChatClient({
                       ))}
                     </SelectContent>
                   </Select>
+                  <Label className="text-muted-foreground mt-4 block text-xs">
+                    مدل
+                  </Label>
+                  <Select
+                    value={selectedModelId}
+                    onValueChange={setSelectedModelId}
+                    disabled={!modelOptions.length || isSending}
+                  >
+                    <SelectTrigger className="mt-2 w-full">
+                      <SelectValue placeholder="انتخاب مدل" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {modelOptions.map((option) => (
+                        <SelectItem key={option.id} value={option.id}>
+                          {option.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  {selectedModel?.description ? (
+                    <p className="text-muted-foreground mt-2 text-xs leading-5">
+                      {selectedModel.description}
+                    </p>
+                  ) : null}
                   <Button
                     className="mt-3 w-full gap-2"
                     onClick={createConversation}
@@ -602,7 +682,7 @@ export function AiDatabaseChatClient({
                   </Button>
                 </div>
 
-                <ScrollArea className="min-h-0 flex-1">
+                <ScrollArea className="min-h-0 min-w-0 flex-1 overflow-hidden [&_[data-slot=scroll-area-viewport]]:overflow-x-hidden">
                   <div className="space-y-2 pl-3">
                     {conversations.map((conversation) => (
                       <button
@@ -635,8 +715,8 @@ export function AiDatabaseChatClient({
                 </ScrollArea>
               </aside>
 
-              <Card className="border-border/60 bg-card/90 flex h-full min-h-0 flex-col rounded-lg border shadow-sm">
-                <CardHeader className="space-y-3">
+              <Card className="border-border/60 bg-card/90 flex h-full min-h-0 w-full min-w-0 flex-col gap-0 overflow-hidden rounded-lg border py-0 shadow-sm">
+                <CardHeader className="shrink-0 space-y-3 p-4">
                   <div className="flex flex-wrap items-center justify-between gap-3">
                     <div>
                       <CardTitle className="text-xl">
@@ -658,92 +738,106 @@ export function AiDatabaseChatClient({
                       <Badge variant="outline">
                         سهمیه: {usedMessages}/{messageQuota}
                       </Badge>
+                      {selectedModel ? (
+                        <Badge variant="secondary">{selectedModel.label}</Badge>
+                      ) : null}
                     </div>
                   </div>
                 </CardHeader>
                 <Separator />
                 <CardContent
                   dir="ltr"
-                  className="flex min-h-0 flex-1 flex-col gap-4 p-4"
+                  className="flex min-h-0 w-full min-w-0 flex-1 flex-col gap-4 overflow-hidden p-4"
                 >
-                  <ScrollArea className="border-border/60 bg-background/50 min-h-0 flex-1 rounded-lg border">
-                    <div className="space-y-3 p-3">
-                    {!activeConversation?.messages.length ? (
-                      <div className="text-muted-foreground flex h-full min-h-[420px] items-center justify-center text-center text-sm">
-                        پیام‌های این گفتگو اینجا نمایش داده می‌شود.
-                      </div>
-                    ) : (
-                      activeConversation.messages.map((item) => (
-                        <div
-                          key={item.id}
-                          className={cn(
-                            'flex gap-2',
-                            item.role === 'user'
-                              ? 'justify-end'
-                              : 'justify-start'
-                          )}
-                        >
+                  <ScrollArea className="border-border/60 bg-background/50 min-h-0 min-w-0 flex-1 overflow-hidden rounded-lg border [&_[data-slot=scroll-area-viewport]]:overflow-x-hidden">
+                    <div className="flex min-h-full min-w-0 flex-col gap-3 overflow-x-hidden p-3">
+                      {!activeConversation?.messages.length ? (
+                        <div className="text-muted-foreground flex min-h-full items-center justify-center text-center text-sm">
+                          پیام‌های این گفتگو اینجا نمایش داده می‌شود.
+                        </div>
+                      ) : (
+                        activeConversation.messages.map((item) => (
                           <div
+                            key={item.id}
                             className={cn(
-                              'max-w-[82%] rounded-lg border px-3 py-2 text-sm leading-7 shadow-sm',
+                              'flex w-full min-w-0 gap-2',
                               item.role === 'user'
-                                ? 'border-primary/20 bg-primary/10'
-                                : 'border-border/60 bg-card'
+                                ? 'justify-end'
+                                : 'justify-start'
                             )}
-                            dir={item.role === 'assistant' ? 'rtl' : 'ltr'}
                           >
-                            <div className="text-muted-foreground mb-1 flex items-center gap-2 text-xs">
-                              {item.role === 'user' ? (
-                                <User className="size-3.5" />
-                              ) : (
-                                <Bot className="size-3.5" />
+                            <div
+                              className={cn(
+                                'w-[min(42rem,82%)] max-w-full min-w-0 overflow-hidden rounded-lg border px-3 py-2 text-sm leading-7 [overflow-wrap:anywhere] break-words shadow-sm',
+                                item.role === 'user'
+                                  ? 'border-primary/20 bg-primary/10'
+                                  : 'border-border/60 bg-card'
                               )}
-                              <span>
-                                {item.role === 'user' ? 'شما' : 'دستیار'}
-                              </span>
-                              {item.rowCount !== null &&
-                              item.rowCount !== undefined ? (
-                                <span>{item.rowCount} ردیف</span>
+                              dir={item.role === 'assistant' ? 'rtl' : 'rtl'}
+                            >
+                              <div className="text-muted-foreground mb-1 flex min-w-0 flex-wrap items-center gap-2 text-xs">
+                                {item.role === 'user' ? (
+                                  <User className="size-3.5" />
+                                ) : (
+                                  <Bot className="size-3.5" />
+                                )}
+                                <span>
+                                  {item.role === 'user' ? 'شما' : 'دستیار'}
+                                </span>
+                                {item.role === 'assistant' &&
+                                (item.modelLabel || item.model) ? (
+                                  <span className="bg-muted/70 text-foreground/80 rounded px-1.5 py-0.5 font-medium">
+                                    مدل:{' '}
+                                    <span dir="ltr" className="inline-block">
+                                      {item.modelLabel ?? item.model}
+                                    </span>
+                                  </span>
+                                ) : null}
+                                {item.rowCount !== null &&
+                                item.rowCount !== undefined ? (
+                                  <span>{item.rowCount} ردیف</span>
+                                ) : null}
+                              </div>
+                              {item.id.startsWith('pending-assistant') &&
+                              inlineStatus ? (
+                                <div className="text-muted-foreground mb-2 text-xs">
+                                  {inlineStatus}
+                                </div>
+                              ) : null}
+                              {item.content ? (
+                                <p
+                                  className={cn(
+                                    'max-w-full [overflow-wrap:anywhere] break-words whitespace-pre-wrap',
+                                    item.role === 'assistant'
+                                      ? 'text-right'
+                                      : 'text-right'
+                                  )}
+                                  dir={
+                                    item.role === 'assistant' ? 'rtl' : 'rtl'
+                                  }
+                                >
+                                  {item.content}
+                                </p>
+                              ) : item.id.startsWith('pending-assistant') ? (
+                                <p
+                                  className="text-muted-foreground max-w-full text-right [overflow-wrap:anywhere] break-words whitespace-pre-wrap"
+                                  dir="rtl"
+                                >
+                                  {inlineStatus || 'در حال آماده‌سازی پاسخ...'}
+                                </p>
+                              ) : null}
+                              {item.sql ? (
+                                <pre
+                                  className="border-border/70 bg-muted/70 mt-3 max-w-full overflow-x-hidden rounded-md border p-2 text-left text-xs leading-5 [overflow-wrap:anywhere] break-words whitespace-pre-wrap shadow-inner"
+                                  dir="ltr"
+                                >
+                                  {item.sql}
+                                </pre>
                               ) : null}
                             </div>
-                            {item.id.startsWith('pending-assistant') &&
-                            inlineStatus ? (
-                              <div className="text-muted-foreground mb-2 text-xs">
-                                {inlineStatus}
-                              </div>
-                            ) : null}
-                            {item.content ? (
-                              <p
-                                className={cn(
-                                  'whitespace-pre-wrap',
-                                  item.role === 'assistant'
-                                    ? 'text-right'
-                                    : 'text-left'
-                                )}
-                                dir={item.role === 'assistant' ? 'rtl' : 'ltr'}
-                              >
-                                {item.content}
-                              </p>
-                            ) : item.id.startsWith('pending-assistant') ? (
-                              <p
-                                className="text-muted-foreground whitespace-pre-wrap text-right"
-                                dir="rtl"
-                              >
-                                {inlineStatus || 'در حال آماده‌سازی پاسخ...'}
-                              </p>
-                            ) : null}
-                            {item.sql ? (
-                              <pre
-                                className="border-border/70 bg-muted/70 mt-3 overflow-x-auto rounded-md border p-2 text-left text-xs leading-5 shadow-inner"
-                                dir="ltr"
-                              >
-                                {item.sql}
-                              </pre>
-                            ) : null}
                           </div>
-                        </div>
-                      ))
-                    )}
+                        ))
+                      )}
                     </div>
                   </ScrollArea>
 
@@ -774,143 +868,143 @@ export function AiDatabaseChatClient({
           <TabsContent value="settings" className="m-0 min-h-0 flex-1">
             <ScrollArea className="h-full min-h-0">
               <section className="grid gap-4 pl-3 lg:grid-cols-[minmax(0,1fr)_320px]">
-              <Card className="border-border/60 bg-card/90 rounded-lg border shadow-sm">
-                <CardHeader>
-                  <CardTitle>تنظیمات اسکیمای پایگاه داده</CardTitle>
-                  <CardDescription>
-                    JSON اسکیما، سقف ردیف‌های برگشتی و سهمیه پیام هر گفتگو را
-                    ذخیره کنید.
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <form onSubmit={saveSchema} className="space-y-4">
-                    <div className="grid gap-3 md:grid-cols-2">
+                <Card className="border-border/60 bg-card/90 rounded-lg border shadow-sm">
+                  <CardHeader>
+                    <CardTitle>تنظیمات اسکیمای پایگاه داده</CardTitle>
+                    <CardDescription>
+                      JSON اسکیما، سقف ردیف‌های برگشتی و سهمیه پیام هر گفتگو را
+                      ذخیره کنید.
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <form onSubmit={saveSchema} className="space-y-4">
+                      <div className="grid gap-3 md:grid-cols-2">
+                        <div className="space-y-2">
+                          <Label htmlFor="schema-name">نام اسکیما</Label>
+                          <Input
+                            id="schema-name"
+                            value={schemaForm.name}
+                            onChange={(event) =>
+                              setSchemaForm((current) => ({
+                                ...current,
+                                name: event.target.value,
+                              }))
+                            }
+                            required
+                          />
+                        </div>
+                        <div className="space-y-2">
+                          <Label htmlFor="schema-description">توضیح</Label>
+                          <Input
+                            id="schema-description"
+                            value={schemaForm.description}
+                            onChange={(event) =>
+                              setSchemaForm((current) => ({
+                                ...current,
+                                description: event.target.value,
+                              }))
+                            }
+                          />
+                        </div>
+                      </div>
+
+                      <div className="grid gap-3 md:grid-cols-2">
+                        <div className="space-y-2">
+                          <Label htmlFor="row-limit">سقف ردیف برگشتی</Label>
+                          <Input
+                            id="row-limit"
+                            type="number"
+                            min={1}
+                            max={MAX_ROW_LIMIT}
+                            value={schemaForm.rowLimit}
+                            onChange={(event) =>
+                              setSchemaForm((current) => ({
+                                ...current,
+                                rowLimit: event.target.value,
+                              }))
+                            }
+                          />
+                        </div>
+                        <div className="space-y-2">
+                          <Label htmlFor="message-quota">
+                            سهمیه پیام هر گفتگو
+                          </Label>
+                          <Input
+                            id="message-quota"
+                            type="number"
+                            min={1}
+                            max={1000}
+                            value={schemaForm.messageQuota}
+                            onChange={(event) =>
+                              setSchemaForm((current) => ({
+                                ...current,
+                                messageQuota: event.target.value,
+                              }))
+                            }
+                          />
+                        </div>
+                      </div>
+
                       <div className="space-y-2">
-                        <Label htmlFor="schema-name">نام اسکیما</Label>
-                        <Input
-                          id="schema-name"
-                          value={schemaForm.name}
+                        <Label htmlFor="schema-json">JSON اسکیما</Label>
+                        <Textarea
+                          id="schema-json"
+                          dir="ltr"
+                          className="min-h-[360px] font-mono text-sm"
+                          value={schemaForm.schemaJson}
                           onChange={(event) =>
                             setSchemaForm((current) => ({
                               ...current,
-                              name: event.target.value,
-                            }))
-                          }
-                          required
-                        />
-                      </div>
-                      <div className="space-y-2">
-                        <Label htmlFor="schema-description">توضیح</Label>
-                        <Input
-                          id="schema-description"
-                          value={schemaForm.description}
-                          onChange={(event) =>
-                            setSchemaForm((current) => ({
-                              ...current,
-                              description: event.target.value,
+                              schemaJson: event.target.value,
                             }))
                           }
                         />
                       </div>
-                    </div>
 
-                    <div className="grid gap-3 md:grid-cols-2">
-                      <div className="space-y-2">
-                        <Label htmlFor="row-limit">سقف ردیف برگشتی</Label>
-                        <Input
-                          id="row-limit"
-                          type="number"
-                          min={1}
-                          max={100}
-                          value={schemaForm.rowLimit}
-                          onChange={(event) =>
-                            setSchemaForm((current) => ({
-                              ...current,
-                              rowLimit: event.target.value,
-                            }))
-                          }
-                        />
+                      <div className="flex flex-wrap gap-2">
+                        <Button
+                          type="submit"
+                          className="gap-2"
+                          disabled={isSavingSchema}
+                        >
+                          <Save className="size-4" />
+                          ذخیره اسکیما
+                        </Button>
+                        <Button
+                          type="button"
+                          variant="outline"
+                          onClick={() => setSchemaForm(emptySchemaForm)}
+                        >
+                          اسکیمای جدید
+                        </Button>
                       </div>
-                      <div className="space-y-2">
-                        <Label htmlFor="message-quota">
-                          سهمیه پیام هر گفتگو
-                        </Label>
-                        <Input
-                          id="message-quota"
-                          type="number"
-                          min={1}
-                          max={1000}
-                          value={schemaForm.messageQuota}
-                          onChange={(event) =>
-                            setSchemaForm((current) => ({
-                              ...current,
-                              messageQuota: event.target.value,
-                            }))
-                          }
-                        />
-                      </div>
-                    </div>
+                    </form>
+                  </CardContent>
+                </Card>
 
-                    <div className="space-y-2">
-                      <Label htmlFor="schema-json">JSON اسکیما</Label>
-                      <Textarea
-                        id="schema-json"
-                        dir="ltr"
-                        className="min-h-[360px] font-mono text-sm"
-                        value={schemaForm.schemaJson}
-                        onChange={(event) =>
-                          setSchemaForm((current) => ({
-                            ...current,
-                            schemaJson: event.target.value,
-                          }))
-                        }
-                      />
-                    </div>
-
-                    <div className="flex flex-wrap gap-2">
-                      <Button
-                        type="submit"
-                        className="gap-2"
-                        disabled={isSavingSchema}
-                      >
-                        <Save className="size-4" />
-                        ذخیره اسکیما
-                      </Button>
-                      <Button
-                        type="button"
-                        variant="outline"
-                        onClick={() => setSchemaForm(emptySchemaForm)}
-                      >
-                        اسکیمای جدید
-                      </Button>
-                    </div>
-                  </form>
-                </CardContent>
-              </Card>
-
-              <div className="space-y-2">
-                {schemas.map((schema) => (
-                  <button
-                    key={schema.id}
-                    type="button"
-                    onClick={() => {
-                      setSchemaForm(schemaToForm(schema))
-                      setSelectedSchemaId(schema.id)
-                    }}
-                    className={cn(
-                      'border-border/60 bg-card/90 hover:bg-accent w-full rounded-lg border p-3 text-left text-sm shadow-sm transition',
-                      schemaForm.id === schema.id &&
-                        'border-primary/60 bg-accent'
-                    )}
-                  >
-                    <span className="block font-semibold">{schema.name}</span>
-                    <span className="text-muted-foreground mt-1 block text-xs">
-                      سقف {schema.rowLimit} ردیف، سهمیه {schema.messageQuota}{' '}
-                      پیام
-                    </span>
-                  </button>
-                ))}
-              </div>
+                <div className="space-y-2">
+                  {schemas.map((schema) => (
+                    <button
+                      key={schema.id}
+                      type="button"
+                      onClick={() => {
+                        setSchemaForm(schemaToForm(schema))
+                        setSelectedSchemaId(schema.id)
+                      }}
+                      className={cn(
+                        'border-border/60 bg-card/90 hover:bg-accent w-full rounded-lg border p-3 text-left text-sm shadow-sm transition',
+                        schemaForm.id === schema.id &&
+                          'border-primary/60 bg-accent'
+                      )}
+                    >
+                      <span className="block font-semibold">{schema.name}</span>
+                      <span className="text-muted-foreground mt-1 block text-xs">
+                        سقف {schema.rowLimit} ردیف، سهمیه {schema.messageQuota}{' '}
+                        پیام
+                      </span>
+                    </button>
+                  ))}
+                </div>
               </section>
             </ScrollArea>
           </TabsContent>

@@ -63,6 +63,7 @@ export async function PATCH(req: Request, context: RouteContext) {
     return NextResponse.json({
       schema: {
         ...updated,
+        rowLimit: normalizeRowLimit(updated.rowLimit),
         updatedAt: updated.updatedAt.toISOString(),
       },
     })

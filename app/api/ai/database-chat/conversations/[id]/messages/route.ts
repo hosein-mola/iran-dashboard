@@ -2,10 +2,18 @@ import { NextResponse } from 'next/server'
 import { z } from 'zod'
 
 import prisma from '@/lib/prisma'
-import { answerDatabaseQuestion } from '@/lib/ai-database-chat'
+import {
+  DATABASE_CHAT_HISTORY_LIMIT,
+  answerDatabaseQuestion,
+} from '@/lib/ai-database-chat'
+import {
+  AI_MODEL_OPTION_IDS,
+  normalizeAiModelOptionId,
+} from '@/lib/ai-model-options'
 
 const sendMessagePayload = z.object({
   content: z.string().trim().min(1),
+  modelOptionId: z.enum(AI_MODEL_OPTION_IDS).optional(),
 })
 
 type SerializedChatMessage = {
@@ -14,13 +22,21 @@ type SerializedChatMessage = {
   content: string
   sql?: string | null
   rowCount?: number | null
+  model?: string | null
+  modelLabel?: string | null
   createdAt: string
 }
 
 type ChatStreamEvent =
   | { type: 'status'; message: string }
   | { type: 'message'; message: SerializedChatMessage }
-  | { type: 'assistantMeta'; sql: string; rowCount: number }
+  | {
+      type: 'assistantMeta'
+      sql: string
+      rowCount: number
+      model: string
+      modelLabel: string
+    }
   | { type: 'assistantDelta'; content: string }
   | { type: 'done' }
   | { type: 'error'; message: string }
@@ -36,6 +52,9 @@ function serializeChatMessage(message: {
   sql?: string | null
   rowCount?: number | null
   createdAt: Date
+}, metadata?: {
+  model?: string | null
+  modelLabel?: string | null
 }): SerializedChatMessage {
   return {
     id: message.id,
@@ -43,6 +62,8 @@ function serializeChatMessage(message: {
     content: message.content,
     sql: message.sql,
     rowCount: message.rowCount,
+    model: metadata?.model,
+    modelLabel: metadata?.modelLabel,
     createdAt: message.createdAt.toISOString(),
   }
 }
@@ -65,7 +86,8 @@ export async function POST(req: Request, context: RouteContext) {
       include: {
         schema: true,
         messages: {
-          orderBy: { createdAt: 'asc' },
+          orderBy: [{ createdAt: 'desc' }, { id: 'desc' }],
+          take: DATABASE_CHAT_HISTORY_LIMIT,
           select: {
             role: true,
             content: true,
@@ -121,10 +143,15 @@ export async function POST(req: Request, context: RouteContext) {
             message: serializeChatMessage(userMessage),
           })
 
+          const historyMessages = [...conversation.messages].reverse()
+
           const result = await answerDatabaseQuestion({
+            modelOptionId: normalizeAiModelOptionId(
+              parsed.data.modelOptionId
+            ),
             schemaJson: conversation.schema.schemaJson,
             rowLimit: conversation.schema.rowLimit,
-            history: conversation.messages
+            history: historyMessages
               .filter(
                 (message) =>
                   message.role === 'user' || message.role === 'assistant'
@@ -144,6 +171,8 @@ export async function POST(req: Request, context: RouteContext) {
                   type: 'assistantMeta',
                   sql: meta.sql,
                   rowCount: meta.rowCount,
+                  model: meta.model,
+                  modelLabel: meta.modelLabel,
                 }),
               onAnswerDelta: (content) =>
                 send({ type: 'assistantDelta', content }),
@@ -164,7 +193,10 @@ export async function POST(req: Request, context: RouteContext) {
 
           send({
             type: 'message',
-            message: serializeChatMessage(assistantMessage),
+            message: serializeChatMessage(assistantMessage, {
+              model: result.model,
+              modelLabel: result.modelLabel,
+            }),
           })
           send({ type: 'done' })
         } catch (error) {

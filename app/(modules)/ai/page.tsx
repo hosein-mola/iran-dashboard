@@ -1,5 +1,9 @@
 import prisma from '@/lib/prisma'
-import { getDefaultDatabaseSchemaJson } from '@/lib/ai-database-chat'
+import {
+  getDefaultDatabaseSchemaJson,
+  normalizeRowLimit,
+} from '@/lib/ai-database-chat'
+import { getAiModelSelectOptions } from '@/lib/ai-model-options'
 
 import { AiDatabaseChatClient } from './AiDatabaseChatClient'
 
@@ -41,6 +45,7 @@ export default async function AIPage() {
     <AiDatabaseChatClient
       initialSchemas={schemas.map((schema) => ({
         ...schema,
+        rowLimit: normalizeRowLimit(schema.rowLimit),
         updatedAt: schema.updatedAt.toISOString(),
       }))}
       defaultSchemaJson={getDefaultDatabaseSchemaJson()}
@@ -49,11 +54,12 @@ export default async function AIPage() {
         title: conversation.title,
         schemaId: conversation.schemaId,
         schemaName: conversation.schema.name,
-        rowLimit: conversation.schema.rowLimit,
+        rowLimit: normalizeRowLimit(conversation.schema.rowLimit),
         messageQuota: conversation.schema.messageQuota,
         messageCount: conversation._count.messages,
         updatedAt: conversation.updatedAt.toISOString(),
       }))}
+      modelOptions={getAiModelSelectOptions()}
     />
   )
 }

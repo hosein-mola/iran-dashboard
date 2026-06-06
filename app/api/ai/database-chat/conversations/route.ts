@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import { z } from 'zod'
 
 import prisma from '@/lib/prisma'
+import { normalizeRowLimit } from '@/lib/ai-database-chat'
 
 const createConversationPayload = z.object({
   schemaId: z.string().min(1),
@@ -33,7 +34,7 @@ export async function GET() {
         title: conversation.title,
         schemaId: conversation.schemaId,
         schemaName: conversation.schema.name,
-        rowLimit: conversation.schema.rowLimit,
+        rowLimit: normalizeRowLimit(conversation.schema.rowLimit),
         messageQuota: conversation.schema.messageQuota,
         messageCount: conversation._count.messages,
         updatedAt: conversation.updatedAt.toISOString(),

@@ -3,6 +3,7 @@ import { z } from 'zod'
 
 import prisma from '@/lib/prisma'
 import {
+  DATABASE_QUERY_ROW_LIMIT,
   normalizeMessageQuota,
   normalizeRowLimit,
 } from '@/lib/ai-database-chat'
@@ -38,6 +39,7 @@ export async function GET() {
     return NextResponse.json({
       schemas: schemas.map((schema) => ({
         ...schema,
+        rowLimit: normalizeRowLimit(schema.rowLimit),
         updatedAt: schema.updatedAt.toISOString(),
       })),
     })
@@ -75,7 +77,9 @@ export async function POST(req: Request) {
         name: parsed.data.name,
         description: parsed.data.description ?? '',
         schemaJson: parsed.data.schemaJson,
-        rowLimit: normalizeRowLimit(parsed.data.rowLimit ?? 100),
+        rowLimit: normalizeRowLimit(
+          parsed.data.rowLimit ?? DATABASE_QUERY_ROW_LIMIT
+        ),
         messageQuota: normalizeMessageQuota(parsed.data.messageQuota ?? 100),
       },
     })

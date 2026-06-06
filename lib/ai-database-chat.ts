@@ -1,10 +1,18 @@
 import sqlServer from 'mssql'
 
 import appPackage from '@/package.json'
+import {
+  DEFAULT_AI_MODEL_OPTION_ID,
+  getAiModelOption,
+  normalizeAiModelOptionId,
+  type AiModelOptionId,
+  type AiModelProvider,
+} from '@/lib/ai-model-options'
 
 export type ChatRole = 'user' | 'assistant'
 
-export const DATABASE_QUERY_ROW_LIMIT = 100
+export const DATABASE_QUERY_ROW_LIMIT = 50
+export const DATABASE_CHAT_HISTORY_LIMIT = 20
 
 export type DatabaseQuestionHistoryMessage = {
   role: ChatRole
@@ -18,9 +26,25 @@ type OpenAIMessage = {
   content: string
 }
 
-const DEFAULT_MODEL = process.env.OPENAI_MODEL || 'gpt-4o-mini'
+const DEFAULT_OPENAI_BASE_URL = 'https://api.openai.com/v1'
 const MAX_ROW_LIMIT = DATABASE_QUERY_ROW_LIMIT
-const MAX_HISTORY_MESSAGES = 20
+const MAX_HISTORY_MESSAGES = DATABASE_CHAT_HISTORY_LIMIT
+
+type AiProviderConfig = {
+  provider: AiModelProvider
+  model: string
+  modelLabel: string
+  baseUrl: string
+  apiKey: string | undefined
+  disableAuthHeader: boolean
+  reasoningEffort: string
+  missingApiKeyMessage: string
+  errorLabel: string
+}
+
+type AiProviderConfigOptions = {
+  allowEnvModelOverride?: boolean
+}
 
 type AnswerDatabaseQuestionCallbacks = {
   onStatus?: (message: string) => void | Promise<void>
@@ -28,6 +52,8 @@ type AnswerDatabaseQuestionCallbacks = {
   onAnswerMeta?: (meta: {
     sql: string
     rowCount: number
+    model: string
+    modelLabel: string
   }) => void | Promise<void>
 }
 
@@ -304,6 +330,56 @@ function createSqlServerPool(
   }
 }
 
+type SqlServerPoolCache = {
+  connectionString: string
+  pool: InstanceType<typeof sqlServer.ConnectionPool>
+  connectPromise: Promise<InstanceType<typeof sqlServer.ConnectionPool>>
+}
+
+let cachedSqlServerPool: SqlServerPoolCache | null = null
+
+async function closeCachedSqlServerPool() {
+  const current = cachedSqlServerPool
+  cachedSqlServerPool = null
+  await current?.pool.close().catch(() => undefined)
+}
+
+async function resetSharedSqlServerPool(
+  pool: InstanceType<typeof sqlServer.ConnectionPool>
+) {
+  if (cachedSqlServerPool?.pool === pool) {
+    cachedSqlServerPool = null
+  }
+
+  await pool.close().catch(() => undefined)
+}
+
+async function getSharedSqlServerPool(connectionString: string) {
+  if (cachedSqlServerPool?.connectionString === connectionString) {
+    return cachedSqlServerPool.connectPromise
+  }
+
+  await closeCachedSqlServerPool()
+
+  const { pool } = createSqlServerPool(connectionString)
+  const cache: SqlServerPoolCache = {
+    connectionString,
+    pool,
+    connectPromise: Promise.resolve(pool),
+  }
+
+  cache.connectPromise = pool
+    .connect()
+    .then(() => pool)
+    .catch(async (error) => {
+      await resetSharedSqlServerPool(pool)
+      throw error
+    })
+  cachedSqlServerPool = cache
+
+  return cache.connectPromise
+}
+
 export async function checkSqlServerConnection(): Promise<DatabaseConnectionHealth> {
   const connectionString = getSqlServerConnectionString()
 
@@ -401,33 +477,138 @@ function normalizeGeneratedSql(query: string) {
     .trim()
 }
 
-async function callOpenAI(
-  messages: OpenAIMessage[],
-  temperature = 0.1,
-  responseFormat?: 'json_object'
+function trimBaseUrl(value: string) {
+  return value.replace(/\/+$/, '')
+}
+
+function isEnabled(value: string | undefined) {
+  return /^true$/i.test(value ?? '')
+}
+
+function formatProviderModelLabel(
+  providerLabel: string,
+  model: string,
+  option: ReturnType<typeof getAiModelOption>
 ) {
-  const apiKey = process.env.OPENAI_API_KEY
-  if (!apiKey) {
-    throw new Error('OPENAI_API_KEY is not configured.')
+  return model === option.model ? option.label : `${providerLabel} ${model}`
+}
+
+function getProviderConfig(
+  modelOptionId: AiModelOptionId = DEFAULT_AI_MODEL_OPTION_ID,
+  options: AiProviderConfigOptions = {}
+): AiProviderConfig {
+  const option = getAiModelOption(modelOptionId)
+
+  if (option.provider === 'arvan') {
+    const model =
+      options.allowEnvModelOverride && process.env.ARVAN_MODEL?.trim()
+        ? process.env.ARVAN_MODEL.trim()
+        : option.model
+    const disableThinking = isEnabled(
+      process.env.ARVAN_DISABLE_THINKING ?? process.env.OPENAI_DISABLE_THINKING
+    )
+    const reasoningEffort =
+      process.env.ARVAN_REASONING_EFFORT?.trim() ||
+      process.env.OPENAI_REASONING_EFFORT?.trim() ||
+      (disableThinking && /gpt-?oss|oss/i.test(model) ? 'low' : '')
+
+    return {
+      provider: option.provider,
+      model,
+      modelLabel: formatProviderModelLabel('Arvan', model, option),
+      baseUrl: trimBaseUrl(process.env.ARVAN_BASE_URL?.trim() || ''),
+      apiKey: process.env.ARVAN_API_KEY,
+      disableAuthHeader: isEnabled(
+        process.env.ARVAN_DISABLE_AUTH_HEADER ??
+          process.env.OPENAI_DISABLE_AUTH_HEADER
+      ),
+      reasoningEffort,
+      missingApiKeyMessage: 'ARVAN_API_KEY is not configured.',
+      errorLabel: 'Arvan',
+    }
   }
 
-  const response = await fetch('https://api.openai.com/v1/chat/completions', {
+  const model =
+    options.allowEnvModelOverride && process.env.OPENAI_MODEL?.trim()
+      ? process.env.OPENAI_MODEL.trim()
+      : option.model
+
+  return {
+    provider: option.provider,
+    model,
+    modelLabel: formatProviderModelLabel('OpenAI', model, option),
+    baseUrl: trimBaseUrl(
+      process.env.OPENAI_BASE_URL?.trim() || DEFAULT_OPENAI_BASE_URL
+    ),
+    apiKey: process.env.OPENAI_API_KEY,
+    disableAuthHeader: isEnabled(process.env.OPENAI_DISABLE_AUTH_HEADER),
+    reasoningEffort: process.env.OPENAI_REASONING_EFFORT?.trim() || '',
+    missingApiKeyMessage: 'OPENAI_API_KEY is not configured.',
+    errorLabel: 'OpenAI',
+  }
+}
+
+function getChatCompletionsUrl(config: AiProviderConfig) {
+  if (!config.baseUrl) {
+    throw new Error(`${config.errorLabel} base URL is not configured.`)
+  }
+
+  return `${config.baseUrl}/chat/completions`
+}
+
+function getAiHeaders(config: AiProviderConfig) {
+  return {
+    ...(config.disableAuthHeader || !config.apiKey
+      ? {}
+      : { Authorization: `Bearer ${config.apiKey}` }),
+    'Content-Type': 'application/json',
+  }
+}
+
+function shouldOmitTemperature(config: AiProviderConfig) {
+  const model = config.model.toLowerCase()
+
+  return (
+    config.provider === 'openai' &&
+    (model.startsWith('gpt-5') || /^o\d/.test(model))
+  )
+}
+
+function getAiRequestOptions(config: AiProviderConfig, temperature: number) {
+  return {
+    ...(shouldOmitTemperature(config) ? {} : { temperature }),
+    ...(config.reasoningEffort
+      ? { reasoning_effort: config.reasoningEffort }
+      : {}),
+  }
+}
+
+async function callAiChat(
+  messages: OpenAIMessage[],
+  modelOptionId: AiModelOptionId,
+  temperature = 1,
+  responseFormat?: 'json_object',
+  configOptions: AiProviderConfigOptions = {}
+) {
+  const config = getProviderConfig(modelOptionId, configOptions)
+  if (!config.apiKey && !config.disableAuthHeader) {
+    throw new Error(config.missingApiKeyMessage)
+  }
+
+  const response = await fetch(getChatCompletionsUrl(config), {
     method: 'POST',
-    headers: {
-      Authorization: `Bearer ${apiKey}`,
-      'Content-Type': 'application/json',
-    },
+    headers: getAiHeaders(config),
     body: JSON.stringify({
-      model: DEFAULT_MODEL,
+      model: config.model,
       messages,
-      temperature,
+      ...getAiRequestOptions(config, temperature),
       ...(responseFormat ? { response_format: { type: responseFormat } } : {}),
     }),
   })
 
   if (!response.ok) {
     const details = await response.text()
-    throw new Error(`OpenAI request failed: ${details}`)
+    throw new Error(`${config.errorLabel} request failed: ${details}`)
   }
 
   const payload = (await response.json()) as {
@@ -437,33 +618,32 @@ async function callOpenAI(
   return payload.choices?.[0]?.message?.content?.trim() ?? ''
 }
 
-async function streamOpenAI(
+async function streamAiChat(
   messages: OpenAIMessage[],
+  modelOptionId: AiModelOptionId,
   onDelta: (delta: string) => void | Promise<void>,
-  temperature = 0.2
+  temperature = 1,
+  configOptions: AiProviderConfigOptions = {}
 ) {
-  const apiKey = process.env.OPENAI_API_KEY
-  if (!apiKey) {
-    throw new Error('OPENAI_API_KEY is not configured.')
+  const config = getProviderConfig(modelOptionId, configOptions)
+  if (!config.apiKey && !config.disableAuthHeader) {
+    throw new Error(config.missingApiKeyMessage)
   }
 
-  const response = await fetch('https://api.openai.com/v1/chat/completions', {
+  const response = await fetch(getChatCompletionsUrl(config), {
     method: 'POST',
-    headers: {
-      Authorization: `Bearer ${apiKey}`,
-      'Content-Type': 'application/json',
-    },
+    headers: getAiHeaders(config),
     body: JSON.stringify({
-      model: DEFAULT_MODEL,
+      model: config.model,
       messages,
-      temperature,
+      ...getAiRequestOptions(config, temperature),
       stream: true,
     }),
   })
 
   if (!response.ok) {
     const details = await response.text()
-    throw new Error(`OpenAI request failed: ${details}`)
+    throw new Error(`${config.errorLabel} request failed: ${details}`)
   }
 
   if (!response.body) {
@@ -533,17 +713,20 @@ async function executeSqlServerQuery(query: string, rowLimit: number) {
   }
 
   const limit = normalizeRowLimit(rowLimit)
-  const { pool } = createSqlServerPool(connectionString)
+  const pool = await getSharedSqlServerPool(connectionString)
 
   try {
-    await pool.connect()
     const result = await pool
       .request()
       .query(`SET ROWCOUNT ${limit}\n${query}\nSET ROWCOUNT 0`)
 
     return (result.recordset ?? []).slice(0, limit)
-  } finally {
-    await pool.close()
+  } catch (error) {
+    if (!pool.connected) {
+      await resetSharedSqlServerPool(pool)
+    }
+
+    throw error
   }
 }
 
@@ -570,6 +753,7 @@ function buildSystemPrompt(schemaJson: string, rowLimit: number) {
 }
 
 export async function answerDatabaseQuestion(input: {
+  modelOptionId?: AiModelOptionId
   schemaJson: string
   rowLimit: number
   history: DatabaseQuestionHistoryMessage[]
@@ -581,9 +765,15 @@ export async function answerDatabaseQuestion(input: {
   const schemaJson = normalizeSchemaJsonForPrompt(input.schemaJson)
   const systemPrompt = buildSystemPrompt(schemaJson, rowLimit)
   const recentHistory = input.history.slice(-MAX_HISTORY_MESSAGES)
+  const modelOptionId = normalizeAiModelOptionId(input.modelOptionId)
+  const configOptions = {
+    allowEnvModelOverride: !input.modelOptionId,
+  }
+  const providerConfig = getProviderConfig(modelOptionId, configOptions)
+  const providerLabel = providerConfig.errorLabel
 
   await input.callbacks?.onStatus?.('در حال ساخت کوئری SQL...')
-  const sqlDraft = await callOpenAI(
+  const sqlDraft = await callAiChat(
     [
       { role: 'system', content: systemPrompt },
       ...recentHistory.map((message) => ({
@@ -592,8 +782,10 @@ export async function answerDatabaseQuestion(input: {
       })),
       { role: 'user', content: input.question },
     ],
+    modelOptionId,
     0.1,
-    'json_object'
+    'json_object',
+    configOptions
   )
 
   let parsed: { sql?: string; reason?: string }
@@ -603,7 +795,7 @@ export async function answerDatabaseQuestion(input: {
       reason?: string
     }
   } catch {
-    throw new Error('OpenAI did not return valid SQL JSON.')
+    throw new Error(`${providerLabel} did not return valid SQL JSON.`)
   }
 
   const query = parsed.sql ? normalizeGeneratedSql(parsed.sql) : ''
@@ -618,7 +810,12 @@ export async function answerDatabaseQuestion(input: {
     `در حال اجرای کوئری با سقف ${rowLimit} ردیف...`
   )
   const rows = await executeSqlServerQuery(query, rowLimit)
-  await input.callbacks?.onAnswerMeta?.({ sql: query, rowCount: rows.length })
+  await input.callbacks?.onAnswerMeta?.({
+    sql: query,
+    rowCount: rows.length,
+    model: providerConfig.model,
+    modelLabel: providerConfig.modelLabel,
+  })
 
   const answerMessages: OpenAIMessage[] = [
     {
@@ -626,10 +823,13 @@ export async function answerDatabaseQuestion(input: {
       content: [
         'You answer database questions in Persian for an RTL chat UI.',
         'Use only the user question, SQL, and returned rows below.',
+        'Start with a direct answer in one short sentence, then add structured details only when useful.',
+        'For one-row or single-value results, answer inline without a table.',
+        'For simple lists, use short bullet or numbered lists with one fact per item.',
+        'For multi-row comparisons or records with several useful fields, use a compact Markdown table with Persian column labels when possible.',
+        'Keep tables narrow: include only columns that answer the question, and summarize first if there are more than 10 rows.',
         'If the rows are empty, say that no matching records were found.',
-        'make sure not get more 100 record',
-        'make sure its query generated compatible with t-sql and sql-server',
-        'Be concise and include useful numbers, names, or dates from the rows.',
+        'Do not output raw JSON or code fences. Preserve names, numbers, and dates exactly from the rows.',
       ].join('\n'),
     },
     { role: 'user', content: `پرسش: ${input.question}` },
@@ -642,17 +842,27 @@ export async function answerDatabaseQuestion(input: {
 
   await input.callbacks?.onStatus?.('در حال آماده‌سازی پاسخ...')
   const answer = input.streamAnswer
-    ? await streamOpenAI(
+    ? await streamAiChat(
         answerMessages,
+        modelOptionId,
         (delta) => input.callbacks?.onAnswerDelta?.(delta),
-        0.2
+        0.2,
+        configOptions
       )
-    : await callOpenAI(answerMessages, 0.2)
+    : await callAiChat(
+        answerMessages,
+        modelOptionId,
+        0.2,
+        undefined,
+        configOptions
+      )
 
   return {
     answer,
     sql: query,
     rowCount: rows.length,
     reason: parsed.reason ?? '',
+    model: providerConfig.model,
+    modelLabel: providerConfig.modelLabel,
   }
 }
