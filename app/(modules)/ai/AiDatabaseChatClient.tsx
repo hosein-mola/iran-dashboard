@@ -944,10 +944,10 @@ export function AiDatabaseChatClient({
                           >
                             <div
                               className={cn(
-                                'w-[min(42rem,82%)] max-w-full min-w-0 overflow-hidden rounded-lg border px-3 py-2 text-sm leading-7 [overflow-wrap:anywhere] break-words shadow-sm',
+                                'w-fit max-w-[min(34rem,78%)] min-w-0 overflow-hidden rounded-2xl border px-3 py-2 text-sm leading-6 [overflow-wrap:anywhere] break-words shadow-sm sm:max-w-[min(34rem,70%)]',
                                 item.role === 'user'
-                                  ? 'border-primary/40 bg-primary/40'
-                                  : 'border-border/70 bg-card'
+                                  ? 'border-primary/25 bg-primary/15 rounded-br-sm dark:bg-primary/20'
+                                  : 'border-border/70 bg-card/95 rounded-bl-sm'
                               )}
                               dir={item.role === 'assistant' ? 'rtl' : 'rtl'}
                             >
