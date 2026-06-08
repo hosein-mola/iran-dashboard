@@ -731,9 +731,9 @@ export function AiDatabaseChatClient({
           defaultValue="chat"
           className="flex min-h-0 w-full min-w-0 flex-1 flex-col gap-3 overflow-hidden"
         >
-          <div className="flex w-full flex-wrap items-center justify-end gap-3">
+          <div className="flex w-full flex-wrap items-center justify-end gap-2 sm:gap-3">
             <div
-              className="border-border/60 bg-card/90 flex h-10 items-center gap-2 rounded-md border px-3 text-sm shadow-sm"
+              className="border-border/60 bg-card/90 flex h-10 items-center justify-center gap-2 rounded-lg border px-3 py-1 text-sm leading-none shadow-sm"
               dir="rtl"
             >
               <Switch
@@ -746,17 +746,20 @@ export function AiDatabaseChatClient({
               />
               <Label
                 htmlFor="include-previous-messages"
-                className="text-muted-foreground cursor-pointer text-xs"
+                className="text-muted-foreground cursor-pointer text-xs leading-none"
               >
                 پیام‌های قبلی
               </Label>
             </div>
-            <TabsList className="grid w-full max-w-md grid-cols-2">
-              <TabsTrigger value="chat" className="gap-2">
+            <TabsList className="border-border/60 bg-card/90 grid h-10 w-full max-w-md grid-cols-2 rounded-lg border p-1 shadow-sm">
+              <TabsTrigger value="chat" className="h-full gap-2 px-3 py-1">
                 <Bot className="size-4" />
                 گفتگو
               </TabsTrigger>
-              <TabsTrigger value="settings" className="gap-2">
+              <TabsTrigger
+                value="settings"
+                className="h-full gap-2 px-3 py-1"
+              >
                 <Settings className="size-4" />
                 تنظیمات اسکیما
               </TabsTrigger>
@@ -895,7 +898,7 @@ export function AiDatabaseChatClient({
                   className="flex min-h-0 w-full min-w-0 flex-1 flex-col gap-4 overflow-hidden p-4"
                 >
                   <ScrollArea
-                    className="border-border/60 bg-background/80 dark:bg-background/60 min-h-0 min-w-0 flex-1 overflow-hidden rounded-lg border [background-image:var(--chat-bg-pattern)] [background-size:112px_112px] [background-repeat:repeat] dark:[background-image:var(--chat-bg-pattern-dark)] [&_[data-slot=scroll-area-viewport]]:overflow-x-hidden"
+                    className="border-border/60 bg-background/80 dark:bg-background/60 min-h-0 min-w-0 flex-1 overflow-hidden rounded-lg border [background-image:var(--chat-bg-pattern)] [background-size:112px_112px] [background-repeat:repeat] dark:[background-image:var(--chat-bg-pattern-dark)] [&_[data-slot=scroll-area-viewport]>div]:!h-full [&_[data-slot=scroll-area-viewport]]:overflow-x-hidden"
                     style={
                       {
                         '--chat-bg-pattern': CHAT_BACKGROUND_PATTERN,
@@ -903,10 +906,15 @@ export function AiDatabaseChatClient({
                       } as CSSProperties
                     }
                   >
-                    <div className="flex min-h-full min-w-0 flex-col gap-3 overflow-x-hidden p-3">
+                    <div
+                      className={cn(
+                        'flex h-full min-h-full min-w-0 flex-col gap-3 overflow-x-hidden',
+                        !activeConversation?.messages.length ? 'p-0' : 'p-3'
+                      )}
+                    >
                       {!activeConversation?.messages.length ? (
                         <div
-                          className="flex min-h-full flex-1 items-center justify-center px-4 py-10 text-center"
+                          className="grid h-full min-h-full flex-1 place-items-center px-4 text-center"
                           dir="rtl"
                         >
                           <div className="flex max-w-80 flex-col items-center justify-center gap-4">
