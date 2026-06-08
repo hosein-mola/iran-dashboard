@@ -49,6 +49,7 @@ type AiProviderConfigOptions = {
 type AnswerDatabaseQuestionCallbacks = {
   onStatus?: (message: string) => void | Promise<void>
   onAnswerDelta?: (delta: string) => void | Promise<void>
+  onReasoningDelta?: (delta: string) => void | Promise<void>
   onAnswerMeta?: (meta: {
     sql: string
     rowCount: number
@@ -470,6 +471,79 @@ function isReadOnlySql(query: string) {
   )
 }
 
+function hasBalancedSqlStringLiterals(query: string) {
+  let inString = false
+
+  for (let index = 0; index < query.length; index += 1) {
+    if (query[index] !== "'") continue
+
+    if (inString && query[index + 1] === "'") {
+      index += 1
+      continue
+    }
+
+    inString = !inString
+  }
+
+  return !inString
+}
+
+function hasFieldIntentLabelInSqlLiteral(query: string) {
+  const stringLiterals = query.match(/\bN?'(?:''|[^'])*'/gi) ?? []
+  const fieldLabelPattern =
+    /نام\s*خانوادگی|نام\s*خانوداگی|خانوادگی|خانوداگی|نام\s*کوچک|کد\s*ملی|شماره\s*ملی|شماره\s*پرسنلی|فامیل/
+
+  return stringLiterals.some((literal) => fieldLabelPattern.test(literal))
+}
+
+function stripSqlStringsAndComments(query: string) {
+  return query
+    .replace(/N?'(?:''|[^'])*'/gi, "''")
+    .replace(/--.*$/gm, '')
+    .replace(/\/\*[\s\S]*?\*\//g, '')
+}
+
+function isAggregateSqlQuery(query: string) {
+  const normalized = stripSqlStringsAndComments(query).toLowerCase()
+
+  return (
+    /\b(count|sum|avg|min|max|stdev|stdevp|var|varp)\s*\(/.test(
+      normalized
+    ) || /\b(group\s+by|having)\b/.test(normalized)
+  )
+}
+
+function asksForLimitedAggregate(question: string) {
+  return /\b(top|bottom|first|last|rank|ranking)\b|تاپ|برترین|بیشترین|کمترین|اولین|آخرین|رتبه|رده|نفر\s+اول|\b\d+\s*(تا|مورد|ردیف|گروه)/i.test(
+    question
+  )
+}
+
+function getSqlRejectionReason(query: string, question = '') {
+  if (!query) return 'SQL is empty.'
+  if (!isReadOnlySql(query)) {
+    return 'SQL must be one read-only SELECT or WITH query, with no semicolon.'
+  }
+  if (!hasBalancedSqlStringLiterals(query)) {
+    return 'SQL has an unclosed quoted string. Escape single quotes by doubling them.'
+  }
+  if (hasFieldIntentLabelInSqlLiteral(query)) {
+    return 'SQL search literal includes a Persian field label. Remove labels like نام خانوادگی or کد ملی from the literal and keep only the search value.'
+  }
+  if (
+    isAggregateSqlQuery(query) &&
+    /\btop\s*\(?\s*\d+/i.test(stripSqlStringsAndComments(query)) &&
+    !asksForLimitedAggregate(question)
+  ) {
+    return 'Aggregate SQL must not use TOP or default row limits unless the user explicitly asks for top/bottom N.'
+  }
+  if (/```|…|\?\?/.test(query)) {
+    return 'SQL contains markdown, ellipses, or placeholder marks.'
+  }
+
+  return ''
+}
+
 function normalizeGeneratedSql(query: string) {
   return query
     .trim()
@@ -483,6 +557,11 @@ function trimBaseUrl(value: string) {
 
 function isEnabled(value: string | undefined) {
   return /^true$/i.test(value ?? '')
+}
+
+function getDefaultReasoningEffort(model: string, disableThinking = false) {
+  if (/gpt-?oss|oss/i.test(model)) return 'medium'
+  return disableThinking ? 'low' : ''
 }
 
 function formatProviderModelLabel(
@@ -510,7 +589,7 @@ function getProviderConfig(
     const reasoningEffort =
       process.env.ARVAN_REASONING_EFFORT?.trim() ||
       process.env.OPENAI_REASONING_EFFORT?.trim() ||
-      (disableThinking && /gpt-?oss|oss/i.test(model) ? 'low' : '')
+      getDefaultReasoningEffort(model, disableThinking)
 
     return {
       provider: option.provider,
@@ -542,7 +621,9 @@ function getProviderConfig(
     ),
     apiKey: process.env.OPENAI_API_KEY,
     disableAuthHeader: isEnabled(process.env.OPENAI_DISABLE_AUTH_HEADER),
-    reasoningEffort: process.env.OPENAI_REASONING_EFFORT?.trim() || '',
+    reasoningEffort:
+      process.env.OPENAI_REASONING_EFFORT?.trim() ||
+      getDefaultReasoningEffort(model),
     missingApiKeyMessage: 'OPENAI_API_KEY is not configured.',
     errorLabel: 'OpenAI',
   }
@@ -622,6 +703,7 @@ async function streamAiChat(
   messages: OpenAIMessage[],
   modelOptionId: AiModelOptionId,
   onDelta: (delta: string) => void | Promise<void>,
+  onReasoningDelta?: (delta: string) => void | Promise<void>,
   temperature = 1,
   configOptions: AiProviderConfigOptions = {}
 ) {
@@ -654,6 +736,7 @@ async function streamAiChat(
   const decoder = new TextDecoder()
   let buffer = ''
   let answer = ''
+  let reasoning = ''
 
   while (true) {
     const { done, value } = await reader.read()
@@ -668,18 +751,45 @@ async function streamAiChat(
       if (!trimmed.startsWith('data:')) continue
 
       const data = trimmed.slice(5).trim()
-      if (data === '[DONE]') return answer
+      if (data === '[DONE]') return { answer, reasoning }
 
-      let payload: { choices?: Array<{ delta?: { content?: string } }> }
+      let payload: {
+        choices?: Array<{
+          delta?: {
+            content?: string | null
+            reasoning?: string | null
+            reasoning_content?: string | null
+            reasoningContent?: string | null
+          }
+        }>
+      }
       try {
         payload = JSON.parse(data) as {
-          choices?: Array<{ delta?: { content?: string } }>
+          choices?: Array<{
+            delta?: {
+              content?: string | null
+              reasoning?: string | null
+              reasoning_content?: string | null
+              reasoningContent?: string | null
+            }
+          }>
         }
       } catch {
         throw new Error('OpenAI stream returned invalid JSON.')
       }
 
-      const delta = payload.choices?.[0]?.delta?.content ?? ''
+      const streamDelta = payload.choices?.[0]?.delta
+      const reasoningDelta =
+        streamDelta?.reasoning ??
+        streamDelta?.reasoning_content ??
+        streamDelta?.reasoningContent ??
+        ''
+      if (reasoningDelta) {
+        reasoning += reasoningDelta
+        await onReasoningDelta?.(reasoningDelta)
+      }
+
+      const delta = streamDelta?.content ?? ''
       if (delta) {
         answer += delta
         await onDelta(delta)
@@ -687,7 +797,7 @@ async function streamAiChat(
     }
   }
 
-  return answer
+  return { answer, reasoning }
 }
 
 function formatHistoryMessage(message: DatabaseQuestionHistoryMessage) {
@@ -713,14 +823,18 @@ async function executeSqlServerQuery(query: string, rowLimit: number) {
   }
 
   const limit = normalizeRowLimit(rowLimit)
+  const shouldApplyRowLimit = !isAggregateSqlQuery(query)
   const pool = await getSharedSqlServerPool(connectionString)
 
   try {
-    const result = await pool
-      .request()
-      .query(`SET ROWCOUNT ${limit}\n${query}\nSET ROWCOUNT 0`)
+    const result = await pool.request().query(
+      shouldApplyRowLimit
+        ? `SET ROWCOUNT ${limit}\n${query}\nSET ROWCOUNT 0`
+        : query
+    )
 
-    return (result.recordset ?? []).slice(0, limit)
+    const rows = result.recordset ?? []
+    return shouldApplyRowLimit ? rows.slice(0, limit) : rows
   } catch (error) {
     if (!pool.connected) {
       await resetSharedSqlServerPool(pool)
@@ -732,22 +846,33 @@ async function executeSqlServerQuery(query: string, rowLimit: number) {
 
 function buildSystemPrompt(schemaJson: string, rowLimit: number) {
   const defaultObject = getConfiguredSqlServerTableName()
+  const targetRows = Math.min(rowLimit, 25)
 
   return [
-    'You are a data analyst for a Persian RTL dashboard.',
-    'The user writes in Persian. Answer in Persian, right-to-left friendly prose.',
-    'Use the provided database schema JSON as the only source of schema truth.',
-    `Primary SQL Server view: ${defaultObject}.`,
-    `Every generated query must read from ${defaultObject} unless the schema JSON explicitly names another full table or view.`,
-    'Column names are not table names. Never put a column name after FROM or JOIN.',
-    'If schema JSON is an array, treat it as the column list for the primary SQL Server view.',
-    'If the configured object has no column list, use SELECT TOP with * for broad lookups instead of inventing column names.',
-    'Generate SQL Server SELECT queries only. Never modify data or schema.',
-    `Never return more than ${rowLimit} rows. Prefer TOP or narrow filters when possible.`,
-    'When asked for data, first produce the SQL needed as strict JSON with this shape: {"sql":"SELECT ...","reason":"short Persian reason"}.',
-    'Do not include markdown in the SQL JSON response.',
+    'ROLE: SQL Server database agent for a Persian database chat.',
+    'TASK: Convert the user question into one safe SQL Server query.',
+    'OUTPUT: valid JSON only, exactly {"sql":"...","reason":"..."}',
     '',
-    'Database schema JSON:',
+    'SQL RULES:',
+    '- sql must contain SQL only and start with SELECT or WITH.',
+    `- Query ${defaultObject} unless schema JSON explicitly names another table/view.`,
+    '- Use only table, view, and column names present in the schema. Never invent names.',
+    '- Column names are not table names. Never put a column name after FROM or JOIN.',
+    `- Use TOP (${targetRows}) for normal detail/list queries. Hard cap is ${rowLimit} rows.`,
+    '- Do not apply TOP or row-limit behavior to aggregate queries.',
+    '- For counts, totals, averages, min/max, and grouped summaries, return all aggregate/group rows instead of raw detail rows.',
+    '- Select only columns needed for the answer. Use SELECT * only if the schema has no column list.',
+    '- Prefer simple WHERE filters. Avoid joins unless the schema and question require them.',
+    '- Persian field words are intent labels, not search values. Remove labels such as نام, نام خانوادگی, فامیل, نام کوچک, کد ملی, شماره پرسنلی from text literals.',
+    '- For personnel schemas, map intent when those columns exist: نام/full name -> vcFarsiFullName, نام کوچک/first name -> vcFarsiFName, نام خانوادگی/فامیل/last name -> vcFarsiLName, کد ملی/national code -> vcNationalCode.',
+    '- Example: "نام خانوادگی حسین" means search vcFarsiLName for only N\'%حسین%\', not N\'%نام خانوادگی حسین%\'.',
+    '- For IDs, codes, dates, and numbers use exact comparisons.',
+    '- Database text may store Arabic ي/ك while users type Persian ی/ک. For Persian/Arabic text LIKE, normalize both sides: REPLACE(REPLACE(column, N\'ي\', N\'ی\'), N\'ك\', N\'ک\') LIKE REPLACE(REPLACE(N\'%term%\', N\'ي\', N\'ی\'), N\'ك\', N\'ک\').',
+    '- Correct last-name example: REPLACE(REPLACE(vcFarsiLName, N\'ي\', N\'ی\'), N\'ك\', N\'ک\') LIKE REPLACE(REPLACE(N\'%حسین%\', N\'ي\', N\'ی\'), N\'ك\', N\'ک\').',
+    '- Escape single quotes in SQL strings by doubling them. Close every string literal.',
+    '- Forbidden in sql: semicolons, comments, markdown, ellipses, ??, placeholders, JSON fragments, Persian explanation, and mutation commands.',
+    '',
+    'SCHEMA JSON:',
     schemaJson,
   ].join('\n')
 }
@@ -772,42 +897,67 @@ export async function answerDatabaseQuestion(input: {
   const providerConfig = getProviderConfig(modelOptionId, configOptions)
   const providerLabel = providerConfig.errorLabel
 
-  await input.callbacks?.onStatus?.('در حال ساخت کوئری SQL...')
-  const sqlDraft = await callAiChat(
-    [
-      { role: 'system', content: systemPrompt },
-      ...recentHistory.map((message) => ({
-        role: message.role,
-        content: formatHistoryMessage(message),
-      })),
-      { role: 'user', content: input.question },
-    ],
-    modelOptionId,
-    0.1,
-    'json_object',
-    configOptions
-  )
+  await input.callbacks?.onStatus?.('در حال تحلیل سوال و ساخت کوئری SQL...')
+  let parsed: { sql?: string; reason?: string } = {}
+  let query = ''
+  let rejectionReason = ''
 
-  let parsed: { sql?: string; reason?: string }
-  try {
-    parsed = JSON.parse(extractJsonObject(sqlDraft)) as {
-      sql?: string
-      reason?: string
+  for (let attempt = 0; attempt < 2; attempt += 1) {
+    if (attempt > 0) {
+      await input.callbacks?.onStatus?.('کوئری اول معتبر نبود؛ در حال اصلاح SQL...')
     }
-  } catch {
-    throw new Error(`${providerLabel} did not return valid SQL JSON.`)
-  }
 
-  const query = parsed.sql ? normalizeGeneratedSql(parsed.sql) : ''
-
-  if (!query || !isReadOnlySql(query)) {
-    throw new Error(
-      'Generated SQL was rejected because it is not a single read-only SELECT query.'
+    const sqlDraft = await callAiChat(
+      [
+        { role: 'system', content: systemPrompt },
+        ...recentHistory.map((message) => ({
+          role: message.role,
+          content: formatHistoryMessage(message),
+        })),
+        {
+          role: 'user',
+          content:
+            attempt === 0
+              ? input.question
+              : [
+                  'Regenerate the SQL JSON for the same question.',
+                  `Previous output was rejected: ${rejectionReason}`,
+                  'Return exactly one JSON object with sql and reason. The sql value must be valid SQL Server SELECT/WITH only.',
+                  `Question: ${input.question}`,
+                ].join('\n'),
+        },
+      ],
+      modelOptionId,
+      attempt === 0 ? 0.1 : 0,
+      'json_object',
+      configOptions
     )
+
+    try {
+      parsed = JSON.parse(extractJsonObject(sqlDraft)) as {
+        sql?: string
+        reason?: string
+      }
+    } catch {
+      rejectionReason = `${providerLabel} did not return valid SQL JSON.`
+      continue
+    }
+
+    query = parsed.sql ? normalizeGeneratedSql(parsed.sql) : ''
+    rejectionReason = getSqlRejectionReason(query, input.question)
+    if (!rejectionReason) break
   }
+
+  if (rejectionReason) {
+    throw new Error(`Generated SQL was rejected: ${rejectionReason}`)
+  }
+
+  const isAggregateQuery = isAggregateSqlQuery(query)
 
   await input.callbacks?.onStatus?.(
-    `در حال اجرای کوئری با سقف ${rowLimit} ردیف...`
+    isAggregateQuery
+      ? 'در حال اجرای کوئری تجمیعی روی پایگاه داده...'
+      : 'در حال اجرای کوئری روی پایگاه داده...'
   )
   const rows = await executeSqlServerQuery(query, rowLimit)
   await input.callbacks?.onAnswerMeta?.({
@@ -821,44 +971,62 @@ export async function answerDatabaseQuestion(input: {
     {
       role: 'system',
       content: [
-        'You answer database questions in Persian for an RTL chat UI.',
-        'Use only the user question, SQL, and returned rows below.',
-        'Start with a direct answer in one short sentence, then add structured details only when useful.',
-        'For one-row or single-value results, answer inline without a table.',
-        'For simple lists, use short bullet or numbered lists with one fact per item.',
-        'For multi-row comparisons or records with several useful fields, use a compact Markdown table with Persian column labels when possible.',
-        'Keep tables narrow: include only columns that answer the question, and summarize first if there are more than 10 rows.',
-        'If the rows are empty, say that no matching records were found.',
-        'Do not output raw JSON or code fences. Preserve names, numbers, and dates exactly from the rows.',
+        'ROLE: Persian answer writer for an RTL database chat.',
+        'Use only the user question, relevant prior context, SQL, and returned rows.',
+        'Prior context is only for follow-up references; facts must come from returned rows.',
+        'Answer fast and directly in Persian.',
+        'First sentence must answer the question.',
+        'For one value or one row, use one short paragraph.',
+        'For lists, use short bullets and include only useful fields.',
+        'For comparisons, use a compact Markdown table with at most 6 columns.',
+        'If many rows are returned, summarize first and show the most relevant rows.',
+        'If rows are empty, say no matching records were found.',
+        'If row count reaches the cap, mention that the result is capped.',
+        'Do not output raw JSON, code fences, or unsupported claims.',
       ].join('\n'),
     },
+    ...recentHistory.map((message) => ({
+      role: message.role,
+      content: formatHistoryMessage(message),
+    })),
     { role: 'user', content: `پرسش: ${input.question}` },
     { role: 'user', content: `SQL:\n${query}` },
     {
       role: 'user',
-      content: `Rows JSON, capped at ${rowLimit} rows:\n${JSON.stringify(rows)}`,
+      content: isAggregateQuery
+        ? `Rows JSON, aggregate results are not row-capped:\n${JSON.stringify(rows)}`
+        : `Rows JSON, capped at ${rowLimit} rows:\n${JSON.stringify(rows)}`,
     },
   ]
 
-  await input.callbacks?.onStatus?.('در حال آماده‌سازی پاسخ...')
-  const answer = input.streamAnswer
-    ? await streamAiChat(
-        answerMessages,
-        modelOptionId,
-        (delta) => input.callbacks?.onAnswerDelta?.(delta),
-        0.2,
-        configOptions
-      )
-    : await callAiChat(
-        answerMessages,
-        modelOptionId,
-        0.2,
-        undefined,
-        configOptions
-      )
+  await input.callbacks?.onStatus?.('در حال استدلال و آماده‌سازی پاسخ...')
+  let answer = ''
+  let reasoning = ''
+
+  if (input.streamAnswer) {
+    const streamed = await streamAiChat(
+      answerMessages,
+      modelOptionId,
+      (delta) => input.callbacks?.onAnswerDelta?.(delta),
+      (delta) => input.callbacks?.onReasoningDelta?.(delta),
+      0.2,
+      configOptions
+    )
+    answer = streamed.answer
+    reasoning = streamed.reasoning
+  } else {
+    answer = await callAiChat(
+      answerMessages,
+      modelOptionId,
+      0.2,
+      undefined,
+      configOptions
+    )
+  }
 
   return {
     answer,
+    reasoning,
     sql: query,
     rowCount: rows.length,
     reason: parsed.reason ?? '',

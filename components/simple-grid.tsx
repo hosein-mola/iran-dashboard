@@ -49,7 +49,7 @@ const lightTheme = themeQuartz.withParams({
 
 const darkTheme = themeQuartz.withPart(colorSchemeDarkBlue).withParams({
   backgroundColor: '#000000',
-  accentColor: 'oklch(0.414 0.121 273.2)',
+  accentColor: 'oklch(0.48 0.18 245)',
 })
 
 const woodTheme = themeQuartz.withParams({

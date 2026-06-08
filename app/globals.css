@@ -157,13 +157,13 @@
   --card-foreground: oklch(90% 0 0);
   --popover: oklch(20% 0 0);
   --popover-foreground: oklch(90% 0 0);
-  --primary: oklch(0.414 0.121 273.2);
+  --primary: oklch(0.48 0.18 245);
   --primary-foreground: oklch(96% 0 0);
   --secondary: oklch(0.268 0.003 38.8);
   --secondary-foreground: oklch(96% 0 0);
   --muted: oklch(0.204 0 0);
   --muted-foreground: oklch(70% 0 0);
-  --accent: oklch(0.414 0.121 273.2);
+  --accent: oklch(0.48 0.18 245);
   --accent-foreground: oklch(96% 0 0);
   --destructive: oklch(40% 0.2 31);
   --destructive-foreground: oklch(98% 0.2 31);
@@ -253,7 +253,7 @@
 }
 
 .dark .dashboard-iran-map {
-  --map-region: oklch(52% 0.17 268);
+  --map-region: oklch(52% 0.17 245);
   --map-region-hover: oklch(66% 0.15 235);
   --map-region-selected: oklch(73% 0.18 190);
   --map-region-disabled: oklch(36% 0.02 260);

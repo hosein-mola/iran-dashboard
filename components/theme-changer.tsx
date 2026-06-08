@@ -2,7 +2,7 @@
 import { useTheme } from './providers/ThemeProvider'
 import { useEffect, useState } from 'react'
 import { Tabs, TabsList, TabsTrigger } from './ui/tabs'
-import { SunIcon, MoonIcon, ComputerIcon, TreePine } from 'lucide-react'
+import { SunIcon, MoonIcon, ComputerIcon, Bean } from 'lucide-react'
 
 const ThemeChanger = () => {
   const { theme, setTheme } = useTheme()
@@ -39,7 +39,7 @@ const ThemeChanger = () => {
           value={'wood'}
           onClick={() => setTheme('wood')}
         >
-          <TreePine className="h-[1.2rem] w-[1.2rem] text-amber-700" />
+          <Bean className="h-[1.2rem] w-[1.2rem] text-amber-800" />
         </TabsTrigger>
         <TabsTrigger
           className={'cursor-pointer'}

@@ -1,13 +1,22 @@
 'use client'
 
-import { FormEvent, useEffect, useMemo, useState } from 'react'
+import {
+  type CSSProperties,
+  type FormEvent,
+  type SVGProps,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react'
 import {
   Bot,
   MessageSquarePlus,
+  Pencil,
   Save,
   Send,
   Settings,
   User,
+  X,
 } from 'lucide-react'
 
 import { Badge } from '@/components/ui/badge'
@@ -30,6 +39,7 @@ import {
 } from '@/components/ui/select'
 import { Separator } from '@/components/ui/separator'
 import { ScrollArea } from '@/components/ui/scroll-area'
+import { Switch } from '@/components/ui/switch'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Textarea } from '@/components/ui/textarea'
 import { cn } from '@/lib/utils'
@@ -63,6 +73,7 @@ type ChatMessage = {
   rowCount?: number | null
   model?: string | null
   modelLabel?: string | null
+  reasoning?: string | null
   createdAt: string
 }
 
@@ -76,6 +87,7 @@ type ChatStreamEvent =
       model?: string | null
       modelLabel?: string | null
     }
+  | { type: 'assistantReasoningDelta'; content: string }
   | { type: 'assistantDelta'; content: string }
   | { type: 'done' }
   | { type: 'error'; message: string }
@@ -116,6 +128,39 @@ type AiModelOption = {
 
 const DEFAULT_ROW_LIMIT = '50'
 const MAX_ROW_LIMIT = 50
+const CHAT_BACKGROUND_PATTERN =
+  "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='112' height='112' viewBox='0 0 112 112'%3E%3Cg fill='none' stroke='%23806f57' stroke-opacity='.18' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cellipse cx='22' cy='24' rx='5.5' ry='10' transform='rotate(-28 22 24)'/%3E%3Cpath d='M21 15c-2.5 5-1.5 11 2 18'/%3E%3Cellipse cx='82' cy='18' rx='4.8' ry='8.5' transform='rotate(32 82 18)'/%3E%3Cpath d='M84 11c1.5 4.8.4 10-3.4 15'/%3E%3Cellipse cx='56' cy='58' rx='5.2' ry='9.6' transform='rotate(18 56 58)'/%3E%3Cpath d='M58 50c1 5-.3 10.6-4 16'/%3E%3Cellipse cx='24' cy='90' rx='4.8' ry='8.8' transform='rotate(35 24 90)'/%3E%3Cpath d='M27 83c.8 4.8-.9 10-5 15'/%3E%3Cellipse cx='92' cy='86' rx='5.4' ry='9.5' transform='rotate(-22 92 86)'/%3E%3Cpath d='M91 78c-2 5-1.2 10.8 2.4 16'/%3E%3Cpath d='M43 20c3-4 7-4 10 0M41 23c5 3 10 3 15 0M72 52c2.5-3 6.5-3 9 0M70 55c4 2.8 8.5 2.8 13 0M42 86c3.2-3.8 7.4-3.8 10.6 0M40 89c4.8 2.8 9.8 2.8 14.6 0'/%3E%3Ccircle cx='8' cy='55' r='1.4'/%3E%3Ccircle cx='101' cy='42' r='1.2'/%3E%3Ccircle cx='63' cy='101' r='1.3'/%3E%3C/g%3E%3C/svg%3E\")"
+const CHAT_BACKGROUND_PATTERN_DARK = CHAT_BACKGROUND_PATTERN.replace(
+  '%23806f57',
+  '%23c7b99e'
+).replace("stroke-opacity='.18'", "stroke-opacity='.16'")
+
+function NoConversationSelectedIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 128 128" fill="none" aria-hidden="true" {...props}>
+      <path
+        d="M26 41c0-12.2 9.8-22 22-22h37c12.2 0 22 9.8 22 22v29c0 12.2-9.8 22-22 22H66l-19.8 15.5c-2.6 2-6.2.2-6.2-3.1V91.1C31.9 88 26 80.2 26 71V41Z"
+        className="fill-primary/10 stroke-primary/35"
+        strokeWidth="3"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M44 47h42M44 61h32M44 75h22"
+        className="stroke-foreground/50"
+        strokeWidth="5"
+        strokeLinecap="round"
+      />
+      <path
+        d="M93 28c5 1.8 8.8 5.9 10.1 11M21.8 62.5c-3.7 2.4-6.1 6.6-6.1 11.4M88.6 101.5c4.7-.2 8.9-2.5 11.6-6.1"
+        className="stroke-muted-foreground/35"
+        strokeWidth="3"
+        strokeLinecap="round"
+      />
+      <circle cx="92" cy="39" r="4" className="fill-primary/35" />
+      <circle cx="25" cy="78" r="3.5" className="fill-muted-foreground/30" />
+    </svg>
+  )
+}
 
 function createEmptySchemaForm(defaultSchemaJson: string): SchemaForm {
   return {
@@ -174,6 +219,7 @@ function upsertStreamMessage(
     ...message,
     model: message.model ?? existing?.model,
     modelLabel: message.modelLabel ?? existing?.modelLabel,
+    reasoning: message.reasoning ?? existing?.reasoning,
   }
   return next
 }
@@ -217,6 +263,8 @@ export function AiDatabaseChatClient({
   const [selectedModelId, setSelectedModelId] = useState(
     modelOptions[0]?.id ?? ''
   )
+  const [includePreviousMessages, setIncludePreviousMessages] = useState(true)
+  const [editingMessageId, setEditingMessageId] = useState<string | null>(null)
   const [status, setStatus] = useState('')
   const [inlineStatus, setInlineStatus] = useState('')
   const [isSending, setIsSending] = useState(false)
@@ -319,6 +367,7 @@ export function AiDatabaseChatClient({
       )
       setActiveConversation(payload.conversation)
       setSelectedSchemaId(payload.conversation.schemaId)
+      setEditingMessageId(null)
       setStatus('')
     } catch (error) {
       setStatus(
@@ -393,12 +442,44 @@ export function AiDatabaseChatClient({
     }
   }
 
+  function startEditingMessage(messageToEdit: ChatMessage) {
+    if (messageToEdit.role !== 'user' || isSending) return
+
+    setEditingMessageId(messageToEdit.id)
+    setMessage(messageToEdit.content)
+    setStatus(
+      'ویرایش فعال است؛ با ارسال، این پیام و پاسخ‌های بعد از آن دوباره ساخته می‌شوند.'
+    )
+  }
+
+  function cancelEditingMessage() {
+    setEditingMessageId(null)
+    setMessage('')
+    setStatus('')
+  }
+
   async function sendMessage(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
     const trimmed = message.trim()
     if (!trimmed || !activeConversation || isSending) return
 
     const conversationId = activeConversation.id
+    const editMessageId = editingMessageId
+    const previousMessages = activeConversation.messages
+    const editIndex = editMessageId
+      ? previousMessages.findIndex(
+          (item) => item.id === editMessageId && item.role === 'user'
+        )
+      : -1
+
+    if (editMessageId && editIndex < 0) {
+      setStatus('پیام قابل ویرایش پیدا نشد.')
+      return
+    }
+
+    const branchMessages = editMessageId
+      ? previousMessages.slice(0, editIndex)
+      : previousMessages
     const pendingTimestamp = Date.now()
     const pendingUserId = `pending-user-${pendingTimestamp}`
     const pendingAssistantId = `pending-assistant-${pendingTimestamp}`
@@ -408,6 +489,7 @@ export function AiDatabaseChatClient({
     setStatus('')
     setInlineStatus('در حال ارسال پیام...')
     setMessage('')
+    setEditingMessageId(null)
 
     try {
       const createdAt = new Date().toISOString()
@@ -426,11 +508,11 @@ export function AiDatabaseChatClient({
         createdAt,
       }
       setActiveConversation((current) =>
-        current
+        current?.id === conversationId
           ? {
               ...current,
               messages: [
-                ...current.messages,
+                ...branchMessages,
                 optimisticUser,
                 optimisticAssistant,
               ],
@@ -446,6 +528,8 @@ export function AiDatabaseChatClient({
           body: JSON.stringify({
             content: trimmed,
             modelOptionId: selectedModelId,
+            includePreviousMessages,
+            editMessageId: editMessageId ?? undefined,
           }),
         }
       )
@@ -497,15 +581,14 @@ export function AiDatabaseChatClient({
                   ...current,
                   messages: current.messages.map((item) =>
                     item.id === pendingAssistantId
-                        ? {
-                            ...item,
-                            sql: streamEvent.sql,
-                            rowCount: streamEvent.rowCount,
-                            model: streamEvent.model ?? item.model,
-                            modelLabel:
-                              streamEvent.modelLabel ?? item.modelLabel,
-                          }
-                        : item
+                      ? {
+                          ...item,
+                          sql: streamEvent.sql,
+                          rowCount: streamEvent.rowCount,
+                          model: streamEvent.model ?? item.model,
+                          modelLabel: streamEvent.modelLabel ?? item.modelLabel,
+                        }
+                      : item
                   ),
                 }
               : current
@@ -514,6 +597,7 @@ export function AiDatabaseChatClient({
         }
 
         if (streamEvent.type === 'assistantDelta') {
+          setInlineStatus('در حال دریافت پاسخ...')
           setActiveConversation((current) =>
             current
               ? {
@@ -523,6 +607,26 @@ export function AiDatabaseChatClient({
                       ? {
                           ...item,
                           content: `${item.content}${streamEvent.content}`,
+                        }
+                      : item
+                  ),
+                }
+              : current
+          )
+          return
+        }
+
+        if (streamEvent.type === 'assistantReasoningDelta') {
+          setInlineStatus('در حال دریافت روند استدلال...')
+          setActiveConversation((current) =>
+            current
+              ? {
+                  ...current,
+                  messages: current.messages.map((item) =>
+                    item.id === pendingAssistantId
+                      ? {
+                          ...item,
+                          reasoning: `${item.reasoning ?? ''}${streamEvent.content}`,
                         }
                       : item
                   ),
@@ -577,14 +681,20 @@ export function AiDatabaseChatClient({
     } catch (error) {
       if (!streamCompleted) {
         setMessage(trimmed)
+        if (editMessageId) {
+          setEditingMessageId(editMessageId)
+        }
         setActiveConversation((current) =>
-          current
+          current?.id === conversationId
             ? {
                 ...current,
-                messages: current.messages.filter(
-                  (item) =>
-                    item.id !== pendingUserId && item.id !== pendingAssistantId
-                ),
+                messages: editMessageId
+                  ? previousMessages
+                  : current.messages.filter(
+                      (item) =>
+                        item.id !== pendingUserId &&
+                        item.id !== pendingAssistantId
+                    ),
               }
             : current
         )
@@ -602,21 +712,49 @@ export function AiDatabaseChatClient({
       dir="ltr"
     >
       <div className="from-background via-background to-primary/5 pointer-events-none absolute inset-0 bg-gradient-to-br" />
+      <div
+        className="pointer-events-none absolute inset-0 bg-repeat opacity-70 mix-blend-multiply dark:opacity-25 dark:mix-blend-screen"
+        style={{
+          backgroundImage: CHAT_BACKGROUND_PATTERN,
+          backgroundSize: '112px 112px',
+        }}
+      />
       <div className="relative z-10 flex min-h-0 w-full min-w-0 flex-1 flex-col gap-3 overflow-hidden">
         <Tabs
           defaultValue="chat"
           className="flex min-h-0 w-full min-w-0 flex-1 flex-col gap-3 overflow-hidden"
         >
-          <TabsList className="grid w-full max-w-md grid-cols-2">
-            <TabsTrigger value="chat" className="gap-2">
-              <Bot className="size-4" />
-              گفتگو
-            </TabsTrigger>
-            <TabsTrigger value="settings" className="gap-2">
-              <Settings className="size-4" />
-              تنظیمات اسکیما
-            </TabsTrigger>
-          </TabsList>
+          <div className="flex w-full flex-wrap items-center justify-end gap-3">
+            <div
+              className="border-border/60 bg-card/90 flex h-10 items-center gap-2 rounded-md border px-3 text-sm shadow-sm"
+              dir="rtl"
+            >
+              <Switch
+                id="include-previous-messages"
+                checked={includePreviousMessages}
+                onCheckedChange={setIncludePreviousMessages}
+                disabled={isSending}
+                aria-label="استفاده از پیام‌های قبلی"
+                dir="ltr"
+              />
+              <Label
+                htmlFor="include-previous-messages"
+                className="text-muted-foreground cursor-pointer text-xs"
+              >
+                پیام‌های قبلی
+              </Label>
+            </div>
+            <TabsList className="grid w-full max-w-md grid-cols-2">
+              <TabsTrigger value="chat" className="gap-2">
+                <Bot className="size-4" />
+                گفتگو
+              </TabsTrigger>
+              <TabsTrigger value="settings" className="gap-2">
+                <Settings className="size-4" />
+                تنظیمات اسکیما
+              </TabsTrigger>
+            </TabsList>
+          </div>
 
           <TabsContent
             dir="rtl"
@@ -695,7 +833,7 @@ export function AiDatabaseChatClient({
                             'border-primary/60 bg-accent'
                         )}
                       >
-                        <span className="block truncate font-semibold">
+                        <span className="block font-semibold">
                           {conversation.title}
                         </span>
                         <span className="text-muted-foreground mt-1 block truncate text-xs">
@@ -749,11 +887,34 @@ export function AiDatabaseChatClient({
                   dir="ltr"
                   className="flex min-h-0 w-full min-w-0 flex-1 flex-col gap-4 overflow-hidden p-4"
                 >
-                  <ScrollArea className="border-border/60 bg-background/50 min-h-0 min-w-0 flex-1 overflow-hidden rounded-lg border [&_[data-slot=scroll-area-viewport]]:overflow-x-hidden">
+                  <ScrollArea
+                    className="border-border/60 bg-background/80 dark:bg-background/60 min-h-0 min-w-0 flex-1 overflow-hidden rounded-lg border [background-image:var(--chat-bg-pattern)] [background-size:112px_112px] [background-repeat:repeat] dark:[background-image:var(--chat-bg-pattern-dark)] [&_[data-slot=scroll-area-viewport]]:overflow-x-hidden"
+                    style={
+                      {
+                        '--chat-bg-pattern': CHAT_BACKGROUND_PATTERN,
+                        '--chat-bg-pattern-dark': CHAT_BACKGROUND_PATTERN_DARK,
+                      } as CSSProperties
+                    }
+                  >
                     <div className="flex min-h-full min-w-0 flex-col gap-3 overflow-x-hidden p-3">
                       {!activeConversation?.messages.length ? (
-                        <div className="text-muted-foreground flex min-h-full items-center justify-center text-center text-sm">
-                          پیام‌های این گفتگو اینجا نمایش داده می‌شود.
+                        <div
+                          className="flex min-h-full flex-1 items-center justify-center px-4 py-10 text-center"
+                          dir="rtl"
+                        >
+                          <div className="flex max-w-80 flex-col items-center justify-center gap-4">
+                            <NoConversationSelectedIcon className="text-primary/85 size-28" />
+                            <div className="space-y-1.5">
+                              <p className="text-foreground text-base font-semibold">
+                                {activeConversation
+                                  ? 'هنوز پیامی ثبت نشده است'
+                                  : 'گفتگویی انتخاب نشده است'}
+                              </p>
+                              <p className="text-muted-foreground text-sm leading-6">
+                                پیام‌های این گفتگو اینجا نمایش داده می‌شود.
+                              </p>
+                            </div>
+                          </div>
                         </div>
                       ) : (
                         activeConversation.messages.map((item) => (
@@ -770,8 +931,8 @@ export function AiDatabaseChatClient({
                               className={cn(
                                 'w-[min(42rem,82%)] max-w-full min-w-0 overflow-hidden rounded-lg border px-3 py-2 text-sm leading-7 [overflow-wrap:anywhere] break-words shadow-sm',
                                 item.role === 'user'
-                                  ? 'border-primary/20 bg-primary/10'
-                                  : 'border-border/60 bg-card'
+                                  ? 'border-primary/40 bg-primary/40'
+                                  : 'border-border/70 bg-card'
                               )}
                               dir={item.role === 'assistant' ? 'rtl' : 'rtl'}
                             >
@@ -784,6 +945,20 @@ export function AiDatabaseChatClient({
                                 <span>
                                   {item.role === 'user' ? 'شما' : 'دستیار'}
                                 </span>
+                                {item.role === 'user' ? (
+                                  <Button
+                                    type="button"
+                                    variant="ghost"
+                                    size="icon"
+                                    className="text-muted-foreground h-6 w-6"
+                                    onClick={() => startEditingMessage(item)}
+                                    disabled={isSending}
+                                    title="ویرایش از این پیام"
+                                    aria-label="ویرایش از این پیام"
+                                  >
+                                    <Pencil className="size-3.5" />
+                                  </Button>
+                                ) : null}
                                 {item.role === 'assistant' &&
                                 (item.modelLabel || item.model) ? (
                                   <span className="bg-muted/70 text-foreground/80 rounded px-1.5 py-0.5 font-medium">
@@ -802,6 +977,22 @@ export function AiDatabaseChatClient({
                               inlineStatus ? (
                                 <div className="text-muted-foreground mb-2 text-xs">
                                   {inlineStatus}
+                                </div>
+                              ) : null}
+                              {item.role === 'assistant' && item.reasoning ? (
+                                <div
+                                  className="border-border/60 bg-muted/40 mb-3 max-h-36 overflow-y-auto rounded-md border p-2 text-right text-xs leading-5"
+                                  dir="rtl"
+                                >
+                                  <div className="text-muted-foreground mb-1 font-medium">
+                                    روند استدلال
+                                  </div>
+                                  <p
+                                    className="text-muted-foreground [overflow-wrap:anywhere] break-words whitespace-pre-wrap"
+                                    dir="auto"
+                                  >
+                                    {item.reasoning}
+                                  </p>
                                 </div>
                               ) : null}
                               {item.content ? (
@@ -841,11 +1032,38 @@ export function AiDatabaseChatClient({
                     </div>
                   </ScrollArea>
 
+                  {editingMessageId ? (
+                    <div
+                      className="border-primary/30 bg-primary/5 flex items-center justify-between gap-3 rounded-md border px-3 py-2 text-sm"
+                      dir="rtl"
+                    >
+                      <span className="text-muted-foreground">
+                        ویرایش از این پیام فعال است؛ پیام‌های بعدی دوباره ساخته
+                        می‌شوند.
+                      </span>
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="sm"
+                        className="h-8 gap-1"
+                        onClick={cancelEditingMessage}
+                        disabled={isSending}
+                      >
+                        <X className="size-4" />
+                        لغو
+                      </Button>
+                    </div>
+                  ) : null}
+
                   <form dir="rtl" onSubmit={sendMessage} className="flex gap-2">
                     <Textarea
                       value={message}
                       onChange={(event) => setMessage(event.target.value)}
-                      placeholder="سوال خود را درباره داده‌ها بنویسید..."
+                      placeholder={
+                        editingMessageId
+                          ? 'متن ویرایش‌شده را بنویسید...'
+                          : 'سوال خود را درباره داده‌ها بنویسید...'
+                      }
                       className="min-h-12 flex-1 resize-none"
                       disabled={!activeConversation || isSending}
                     />
@@ -857,7 +1075,7 @@ export function AiDatabaseChatClient({
                       }
                     >
                       <Send className="size-4" />
-                      ارسال
+                      {editingMessageId ? 'به‌روزرسانی' : 'ارسال'}
                     </Button>
                   </form>
                 </CardContent>

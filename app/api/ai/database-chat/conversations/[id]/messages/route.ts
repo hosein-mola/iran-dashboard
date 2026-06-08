@@ -14,6 +14,8 @@ import {
 const sendMessagePayload = z.object({
   content: z.string().trim().min(1),
   modelOptionId: z.enum(AI_MODEL_OPTION_IDS).optional(),
+  includePreviousMessages: z.boolean().optional().default(true),
+  editMessageId: z.string().optional(),
 })
 
 type SerializedChatMessage = {
@@ -24,6 +26,7 @@ type SerializedChatMessage = {
   rowCount?: number | null
   model?: string | null
   modelLabel?: string | null
+  reasoning?: string | null
   createdAt: string
 }
 
@@ -37,6 +40,7 @@ type ChatStreamEvent =
       model: string
       modelLabel: string
     }
+  | { type: 'assistantReasoningDelta'; content: string }
   | { type: 'assistantDelta'; content: string }
   | { type: 'done' }
   | { type: 'error'; message: string }
@@ -55,6 +59,7 @@ function serializeChatMessage(message: {
 }, metadata?: {
   model?: string | null
   modelLabel?: string | null
+  reasoning?: string | null
 }): SerializedChatMessage {
   return {
     id: message.id,
@@ -64,6 +69,7 @@ function serializeChatMessage(message: {
     rowCount: message.rowCount,
     model: metadata?.model,
     modelLabel: metadata?.modelLabel,
+    reasoning: metadata?.reasoning,
     createdAt: message.createdAt.toISOString(),
   }
 }
@@ -105,7 +111,46 @@ export async function POST(req: Request, context: RouteContext) {
       return NextResponse.json({ error: 'گفتگو پیدا نشد.' }, { status: 404 })
     }
 
-    if (conversation._count.messages + 2 > conversation.schema.messageQuota) {
+    let branchHistoryMessages = [...conversation.messages].reverse()
+    let deleteFromEditMessageIds: string[] = []
+    let remainingMessageCount = conversation._count.messages
+
+    if (parsed.data.editMessageId) {
+      const conversationMessages = await prisma.aiDbChatMessage.findMany({
+        where: { conversationId: conversation.id },
+        orderBy: [{ createdAt: 'asc' }, { id: 'asc' }],
+        select: {
+          id: true,
+          role: true,
+          content: true,
+          sql: true,
+          rowCount: true,
+          createdAt: true,
+        },
+      })
+      const editIndex = conversationMessages.findIndex(
+        (message) => message.id === parsed.data.editMessageId
+      )
+      const editMessage = conversationMessages[editIndex]
+
+      if (!editMessage || editMessage.role !== 'user') {
+        return NextResponse.json(
+          { error: 'پیام قابل ویرایش پیدا نشد.' },
+          { status: 404 }
+        )
+      }
+
+      deleteFromEditMessageIds = conversationMessages
+        .slice(editIndex)
+        .map((message) => message.id)
+      remainingMessageCount =
+        conversation._count.messages - deleteFromEditMessageIds.length
+      branchHistoryMessages = conversationMessages
+        .slice(0, editIndex)
+        .slice(-DATABASE_CHAT_HISTORY_LIMIT)
+    }
+
+    if (remainingMessageCount + 2 > conversation.schema.messageQuota) {
       return NextResponse.json(
         { error: 'سهمیه پیام این گفتگو تمام شده است.' },
         { status: 429 }
@@ -121,7 +166,20 @@ export async function POST(req: Request, context: RouteContext) {
         }
 
         try {
-          send({ type: 'status', message: 'در حال ثبت پیام...' })
+          if (deleteFromEditMessageIds.length) {
+            send({
+              type: 'status',
+              message: 'در حال حذف پیام‌های بعد از نقطه ویرایش...',
+            })
+            await prisma.aiDbChatMessage.deleteMany({
+              where: {
+                conversationId: conversation.id,
+                id: { in: deleteFromEditMessageIds },
+              },
+            })
+          }
+
+          send({ type: 'status', message: 'در حال ثبت پیام شما...' })
 
           const userMessage = await prisma.aiDbChatMessage.create({
             data: {
@@ -131,7 +189,10 @@ export async function POST(req: Request, context: RouteContext) {
             },
           })
 
-          if (conversation.title === 'گفتگوی جدید') {
+          if (
+            conversation.title === 'گفتگوی جدید' ||
+            remainingMessageCount === 0
+          ) {
             await prisma.aiDbChatConversation.update({
               where: { id: conversation.id },
               data: { title: parsed.data.content.slice(0, 64) },
@@ -143,7 +204,9 @@ export async function POST(req: Request, context: RouteContext) {
             message: serializeChatMessage(userMessage),
           })
 
-          const historyMessages = [...conversation.messages].reverse()
+          const historyMessages = parsed.data.includePreviousMessages
+            ? branchHistoryMessages
+            : []
 
           const result = await answerDatabaseQuestion({
             modelOptionId: normalizeAiModelOptionId(
@@ -174,12 +237,14 @@ export async function POST(req: Request, context: RouteContext) {
                   model: meta.model,
                   modelLabel: meta.modelLabel,
                 }),
+              onReasoningDelta: (content) =>
+                send({ type: 'assistantReasoningDelta', content }),
               onAnswerDelta: (content) =>
                 send({ type: 'assistantDelta', content }),
             },
           })
 
-          send({ type: 'status', message: 'در حال ذخیره پاسخ...' })
+          send({ type: 'status', message: 'در حال ذخیره پاسخ نهایی...' })
 
           const assistantMessage = await prisma.aiDbChatMessage.create({
             data: {
@@ -196,6 +261,7 @@ export async function POST(req: Request, context: RouteContext) {
             message: serializeChatMessage(assistantMessage, {
               model: result.model,
               modelLabel: result.modelLabel,
+              reasoning: result.reasoning,
             }),
           })
           send({ type: 'done' })

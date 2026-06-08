@@ -1,6 +1,6 @@
 "use client"
 import { DesktopIcon, MoonIcon, SunIcon } from '@radix-ui/react-icons'
-import { TreePine } from 'lucide-react'
+import { Bean } from 'lucide-react'
 import { useTheme } from './providers/ThemeProvider'
 import React, { useEffect, useState } from 'react'
 import { Tabs, TabsList, TabsTrigger } from './ui/tabs'
@@ -28,7 +28,7 @@ function ThemeSwitcher() {
           <MoonIcon className="h-[1.2rem] w-[1.2rem]" />
         </TabsTrigger>
         <TabsTrigger value={'wood'} onClick={() => setTheme('wood')}>
-          <TreePine className="h-[1.2rem] w-[1.2rem]" />
+          <Bean className="h-[1.2rem] w-[1.2rem]" />
         </TabsTrigger>
         <TabsTrigger value={'system'} onClick={() => setTheme('system')}>
           <DesktopIcon className="h-[1.2rem] w-[1.2rem]" />
