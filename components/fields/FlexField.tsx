@@ -53,7 +53,7 @@ const extraAttributes = {
   alignItems: 'stretch',
   alignContent: 'stretch',
   state: [],
-  border: '0.05rem solid hsl(var(--border)',
+  border: '0.05rem solid var(--border)',
   padding: '0.5',
   paddingUnit: 'rem',
   gap: '0',
@@ -104,7 +104,7 @@ function DesignerComponent({
   elementInstance: FormElementInstance
 }) {
   const { elements } = useDesigner()
-  const droppble = useDroppable({
+  const { setNodeRef } = useDroppable({
     id: elementInstance.id + '-flex',
     data: {
       type: 'flex',
@@ -119,7 +119,7 @@ function DesignerComponent({
   return (
     <div
       dir="rtl"
-      ref={droppble.setNodeRef}
+      ref={setNodeRef}
       className={cn('flex')}
       style={{
         ...elementInstance.extraAttributes,
@@ -236,8 +236,7 @@ function PropertiesComponent({
   )
 
   React.useEffect(() => {
-    formData.id = element.id
-    applyChanges(formData)
+    applyChanges({ ...formData, id: element.id })
   }, [formData, element.id, applyChanges])
 
   return (

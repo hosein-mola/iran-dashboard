@@ -238,13 +238,19 @@ export function AiDatabaseChatClient({
   initialSchemas,
   initialConversations,
   defaultSchemaJson,
+  defaultModelOptionId,
   modelOptions,
 }: {
   initialSchemas: DbSchema[]
   initialConversations: ConversationListItem[]
   defaultSchemaJson: string
+  defaultModelOptionId: string
   modelOptions: AiModelOption[]
 }) {
+  const normalizedDefaultModelId =
+    modelOptions.find((option) => option.id === defaultModelOptionId)?.id ??
+    modelOptions[0]?.id ??
+    ''
   const emptySchemaForm = useMemo(
     () => createEmptySchemaForm(defaultSchemaJson),
     [defaultSchemaJson]
@@ -261,7 +267,7 @@ export function AiDatabaseChatClient({
   )
   const [message, setMessage] = useState('')
   const [selectedModelId, setSelectedModelId] = useState(
-    modelOptions[0]?.id ?? ''
+    normalizedDefaultModelId
   )
   const [includePreviousMessages, setIncludePreviousMessages] = useState(true)
   const [editingMessageId, setEditingMessageId] = useState<string | null>(null)
@@ -384,6 +390,7 @@ export function AiDatabaseChatClient({
 
     try {
       setStatus('در حال ساخت گفتگوی جدید...')
+      setSelectedModelId(normalizedDefaultModelId)
       const payload = await fetch('/api/ai/database-chat/conversations', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

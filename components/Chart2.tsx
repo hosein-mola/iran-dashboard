@@ -22,11 +22,11 @@ const chartData = [{ month: 'january', desktop: 400, mobile: 40 }]
 const chartConfig = {
   desktop: {
     label: 'Desktop',
-    color: 'hsl(var(--chart-7))',
+    color: 'var(--chart-7)',
   },
   mobile: {
     label: 'Mobile',
-    color: 'hsl(var(--chart-2))',
+    color: 'var(--chart-2)',
   },
 } satisfies ChartConfig
 
@@ -52,12 +52,12 @@ export function Chart2() {
           >
             <defs>
               <linearGradient id="desktopGradient" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0%" stopColor="var(--chart-7)" />
-                <stop offset="100%" stopColor="var(--chart-7)" />
+                <stop offset="0%" stopColor="var(--color-desktop)" />
+                <stop offset="100%" stopColor="var(--color-desktop)" />
               </linearGradient>
               <linearGradient id="mobileGradient" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0%" stopColor="var(--chart-2)" />
-                <stop offset="100%" stopColor="var(--chart-2)" />
+                <stop offset="0%" stopColor="var(--color-mobile)" />
+                <stop offset="100%" stopColor="var(--color-mobile)" />
               </linearGradient>
             </defs>
             <ChartTooltip cursor={false} content={<ChartTooltipContent />} />

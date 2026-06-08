@@ -15,7 +15,7 @@ export type AiModelOption = {
   description: string
 }
 
-export const DEFAULT_AI_MODEL_OPTION_ID: AiModelOptionId = 'openai:gpt-4'
+export const DEFAULT_AI_MODEL_OPTION_ID: AiModelOptionId = 'arvan:gpt-oss-20b'
 
 export const AI_MODEL_OPTIONS: readonly AiModelOption[] = [
   {

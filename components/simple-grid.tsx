@@ -41,27 +41,37 @@ import { useRouter } from 'next/navigation'
 
 // Theme setup
 const lightTheme = themeQuartz.withParams({
-  backgroundColor: 'oklch(1 0.012 258)',
-  accentColor: 'oklch(0.16546762589928057 0.13333333333333336 258)',
-  borderColor:
-    'oklch(0.9447590760599487 0.026183672181971585 262.70494790451886)',
+  backgroundColor: 'oklch(1 0 0)',
+  foregroundColor: 'oklch(0.2 0.018 245)',
+  headerBackgroundColor: 'oklch(0.94 0.012 245)',
+  oddRowBackgroundColor: 'oklch(0.975 0.006 245)',
+  rowHoverColor: 'oklch(0.91 0.034 245)',
+  accentColor: 'oklch(0.48 0.18 245)',
+  borderColor: 'oklch(0.86 0.018 245)',
+  rowBorder: 'oklch(0.86 0.018 245)',
 })
 
 const darkTheme = themeQuartz.withPart(colorSchemeDarkBlue).withParams({
-  backgroundColor: '#000000',
-  accentColor: 'oklch(0.48 0.18 245)',
+  backgroundColor: 'oklch(0.135 0.013 245)',
+  foregroundColor: 'oklch(0.94 0.006 245)',
+  headerBackgroundColor: 'oklch(0.19 0.018 245)',
+  oddRowBackgroundColor: 'oklch(0.165 0.015 245)',
+  rowHoverColor: 'oklch(0.24 0.055 245)',
+  accentColor: 'oklch(0.6 0.17 245)',
+  borderColor: 'oklch(0.305 0.025 245)',
+  rowBorder: 'oklch(0.305 0.025 245)',
 })
 
 const woodTheme = themeQuartz.withParams({
-  backgroundColor: '#1f1812',
-  foregroundColor: '#f4ecdf',
-  headerBackgroundColor: '#2b2119',
-  oddRowBackgroundColor: '#231b14',
-  headerCellHoverBackgroundColor: '#352a21',
-  rowHoverColor: '#352a21',
-  accentColor: '#c1a47d',
-  borderColor: '#352a21',
-  rowBorder: '#352a21',
+  backgroundColor: '#1d1711',
+  foregroundColor: '#f5ecdf',
+  headerBackgroundColor: '#30261c',
+  oddRowBackgroundColor: '#241b14',
+  headerCellHoverBackgroundColor: '#3b2e22',
+  rowHoverColor: '#4a3828',
+  accentColor: '#c6a36e',
+  borderColor: '#4a382a',
+  rowBorder: '#4a382a',
 })
 
 // Register modules

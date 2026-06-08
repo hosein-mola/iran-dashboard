@@ -1,12 +1,11 @@
 'use client'
 
-import { Fragment, ReactNode, useMemo } from 'react'
+import { Fragment, ReactNode } from 'react'
 
 import Breadcrumbs from '@/components/breadcrumbs'
 import { AppSidebar } from '@/components/app-sidebar'
 import HeaderDropdown from '@/components/header-dropdown'
 import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar'
-import { useTheme } from './providers/ThemeProvider'
 import HolyLoader from 'holy-loader'
 
 interface DashboardShellProps {
@@ -14,17 +13,10 @@ interface DashboardShellProps {
 }
 
 export function DashboardShell({ children }: DashboardShellProps) {
-  const { resolvedTheme, theme } = useTheme()
-  const loaderColor = useMemo(() => {
-    const isWood = theme === 'wood'
-    if (resolvedTheme === 'dark' || isWood) return '#facc15' // yellow for dark/wood
-    return 'hsl(var(--primary))' // primary color for light/system
-  }, [resolvedTheme, theme])
-
   return (
     <Fragment>
       <HolyLoader
-        color={'#facc15'}
+        color="var(--primary)"
         height="0.8rem"
         speed={1000}
         easing="cubic-bezier(0.4, 0, 0.2, 1)"
