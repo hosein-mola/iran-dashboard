@@ -56,7 +56,7 @@ export function createDefaultSnapshot(projectName = 'project'): WorkspaceSnapsho
         path: '/api/index.ts',
         language: 'typescript',
         updatedAt: nowIso(),
-        content: `export function main(a: number, b: number) {\n  return a + b\n}\n`,
+        content: `export function main(data: { a: number; b: number }) {\n  return data.a + data.b\n}\n`,
       },
       {
         path: '/README.md',

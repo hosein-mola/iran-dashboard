@@ -18,6 +18,14 @@ pm2 start app.js --name "website"
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
+Set `CODE_RUNNER_API_BASE_URL` for code execution. The Process code editor
+stores versions in Next.js, but runs saved bundles through that remote runner
+service, for example:
+
+```bash
+CODE_RUNNER_API_BASE_URL=http://127.0.0.1:3001
+```
+
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.

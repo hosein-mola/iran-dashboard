@@ -261,6 +261,7 @@ model CodeWorkspaceVersion {
   createdAt       DateTime      @default(now())
   createdByUserId String
   workspace       CodeWorkspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  jobs            CodeJob[]
 
   @@unique([workspaceId, version])
   @@unique([workspaceId, clientRequestId])
@@ -268,12 +269,97 @@ model CodeWorkspaceVersion {
   @@index([snapshotHash])
 }
 
+model CodeWorker {
+  id            String       @id @default(cuid())
+  name          String
+  kind          String       @default("deno")
+  queue         String       @default("default")
+  status        String       @default("offline")
+  desiredStatus String       @default("running")
+  concurrency   Int          @default(1)
+  currentJobId  String?
+  heartbeatAt   DateTime?
+  startedAt     DateTime?
+  stoppedAt     DateTime?
+  pid           Int?
+  metadata      String       @default("{}")
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+  jobs          CodeJob[]
+  logs          CodeJobLog[]
+
+  @@index([queue, status])
+  @@index([status, heartbeatAt])
+}
+
+model CodeJob {
+  id                 String               @id @default(cuid())
+  workspaceVersionId String
+  workspaceSlug      String
+  version            Int
+  entryPath          String
+  functionName       String
+  args               String               @default("[]")
+  data               String               @default("null")
+  checkpoint         String               @default("null")
+  result             String?
+  error              String?
+  status             String               @default("queued")
+  priority           Int                  @default(0)
+  queue              String               @default("default")
+  runtime            String               @default("deno")
+  orchestrator       String               @default("database")
+  timeoutMs          Int                  @default(30000)
+  maxAttempts        Int                  @default(3)
+  attempt            Int                  @default(0)
+  progress           Int                  @default(0)
+  requestedAction    String?
+  leaseToken         String?
+  lockedAt           DateTime?
+  leaseExpiresAt     DateTime?
+  nextRunAt          DateTime             @default(now())
+  startedAt          DateTime?
+  completedAt        DateTime?
+  createdAt          DateTime             @default(now())
+  updatedAt          DateTime             @updatedAt
+  createdByUserId    String               @default("local-dev")
+  workerId           String?
+  temporalWorkflowId String?
+  temporalRunId      String?
+  metadata           String               @default("{}")
+  workspaceVersion   CodeWorkspaceVersion @relation(fields: [workspaceVersionId], references: [id], onDelete: Cascade)
+  worker             CodeWorker?          @relation(fields: [workerId], references: [id], onDelete: SetNull)
+  logs               CodeJobLog[]
+
+  @@index([queue, status, nextRunAt])
+  @@index([status, nextRunAt, priority])
+  @@index([workerId, status])
+  @@index([workspaceVersionId, createdAt])
+  @@index([leaseExpiresAt])
+}
+
+model CodeJobLog {
+  id        Int         @id @default(autoincrement())
+  jobId     String
+  workerId  String?
+  level     String      @default("info")
+  message   String
+  sequence  Int         @default(0)
+  meta      String      @default("{}")
+  createdAt DateTime    @default(now())
+  job       CodeJob     @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  worker    CodeWorker? @relation(fields: [workerId], references: [id], onDelete: SetNull)
+
+  @@index([jobId, createdAt])
+  @@index([level, createdAt])
+}
+
 model AiDatabaseSchema {
   id            String                 @id @default(cuid())
   name          String
   description   String                 @default("")
   schemaJson    String
-  rowLimit      Int                    @default(50)
+  rowLimit      Int                    @default(100)
   messageQuota  Int                    @default(100)
   active        Boolean                @default(true)
   createdAt     DateTime               @default(now())

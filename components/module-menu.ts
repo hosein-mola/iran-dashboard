@@ -9,6 +9,7 @@ import {
   FolderDot,
   FormInputIcon,
   Layers3,
+  Server,
   ShieldCheckIcon,
   User2,
   type LucideIcon,
@@ -126,6 +127,11 @@ export const moduleMenuConfig: ModuleMenuConfig[] = [
         title: 'جریان های فرایندی',
         url: '/process',
         icon: CodeSquareIcon,
+      },
+      {
+        title: 'Worker Pool',
+        url: '/process/workers',
+        icon: Server,
       },
     ],
     projects: [

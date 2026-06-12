@@ -2,6 +2,7 @@
 
 import { loader } from '@monaco-editor/react'
 import {
+  Activity,
   ChevronDown,
   ChevronRight,
   File as FileIcon,
@@ -33,7 +34,18 @@ import {
   useState,
 } from 'react'
 import { Button } from '@/components/ui/button'
+import { Badge } from '@/components/ui/badge'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { CodeEditorJobPanel } from '@/components/code-jobs/CodeEditorJobPanel'
 import { Input } from '@/components/ui/input'
+import { useTheme } from '@/components/providers/ThemeProvider'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 import { cn } from '@/lib/utils'
 import {
   createCodeWorkspace,
@@ -103,9 +115,14 @@ type ImportContext = {
   startColumn: number
 }
 
+type ActivityPanel = 'explorer' | 'jobs' | 'console' | 'endpoints'
+type EditorThemeName =
+  | 'iran-dashboard-editor-light'
+  | 'iran-dashboard-editor-dark'
+  | 'iran-dashboard-editor-wood'
+
 const MAX_LOG_LINES = 80
 const DEFAULT_WORKSPACE_SLUG = 'process'
-const CONSOLE_HEIGHT = 900
 
 const KNOWN_IMPORT_EXTENSIONS = [
   '.ts',
@@ -242,7 +259,7 @@ declare module '*.mdx' {
     'file:///__types__/vfs-modules-js.d.ts'
   )
 
-  m.editor.defineTheme('vscode-deep-dark', {
+  m.editor.defineTheme('iran-dashboard-editor-dark', {
     base: 'vs-dark',
     inherit: true,
     rules: [
@@ -275,7 +292,81 @@ declare module '*.mdx' {
     },
   })
 
-  m.editor.setTheme('vscode-deep-dark')
+  m.editor.defineTheme('iran-dashboard-editor-light', {
+    base: 'vs',
+    inherit: true,
+    rules: [
+      { token: '', foreground: '18181b', background: 'ffffff' },
+      { token: 'comment', foreground: '71717a' },
+      { token: 'keyword', foreground: '2563eb' },
+      { token: 'string', foreground: '047857' },
+      { token: 'number', foreground: 'a16207' },
+      { token: 'type.identifier', foreground: '7c3aed' },
+      { token: 'identifier', foreground: '0f172a' },
+    ],
+    colors: {
+      'editor.background': '#ffffff',
+      'editor.foreground': '#18181b',
+      'editorLineNumber.foreground': '#a1a1aa',
+      'editorLineNumber.activeForeground': '#3f3f46',
+      'editorCursor.foreground': '#2563eb',
+      'editor.selectionBackground': '#bfdbfe',
+      'editor.inactiveSelectionBackground': '#e4e4e7',
+      'editor.lineHighlightBackground': '#f4f4f5',
+      'editorIndentGuide.background1': '#e4e4e7',
+      'editorIndentGuide.activeBackground1': '#a1a1aa',
+      'editorWidget.background': '#ffffff',
+      'editorSuggestWidget.background': '#ffffff',
+      'editorSuggestWidget.border': '#e4e4e7',
+      'editorSuggestWidget.foreground': '#18181b',
+      'editorSuggestWidget.selectedBackground': '#e0f2fe',
+      'editorHoverWidget.background': '#ffffff',
+      'editorHoverWidget.border': '#e4e4e7',
+    },
+  })
+
+  m.editor.defineTheme('iran-dashboard-editor-wood', {
+    base: 'vs',
+    inherit: true,
+    rules: [
+      { token: '', foreground: '33251a', background: 'fbf3e5' },
+      { token: 'comment', foreground: '7c6a58' },
+      { token: 'keyword', foreground: '8a4f25' },
+      { token: 'string', foreground: '496c39' },
+      { token: 'number', foreground: '9a5b1f' },
+      { token: 'type.identifier', foreground: '76512c' },
+      { token: 'identifier', foreground: '33251a' },
+    ],
+    colors: {
+      'editor.background': '#fbf3e5',
+      'editor.foreground': '#33251a',
+      'editorLineNumber.foreground': '#9d8a73',
+      'editorLineNumber.activeForeground': '#5f452f',
+      'editorCursor.foreground': '#8a4f25',
+      'editor.selectionBackground': '#ead2af',
+      'editor.inactiveSelectionBackground': '#f0dfc4',
+      'editor.lineHighlightBackground': '#f5ead8',
+      'editorIndentGuide.background1': '#e2cda9',
+      'editorIndentGuide.activeBackground1': '#b8966b',
+      'editorWidget.background': '#fff8ee',
+      'editorSuggestWidget.background': '#fff8ee',
+      'editorSuggestWidget.border': '#e2cda9',
+      'editorSuggestWidget.foreground': '#33251a',
+      'editorSuggestWidget.selectedBackground': '#f0dfc4',
+      'editorHoverWidget.background': '#fff8ee',
+      'editorHoverWidget.border': '#e2cda9',
+    },
+  })
+}
+
+function getMonacoThemeName(
+  theme: 'light' | 'dark' | 'system' | 'wood',
+  resolvedTheme: 'light' | 'dark'
+): EditorThemeName {
+  if (theme === 'wood') return 'iran-dashboard-editor-wood'
+  return resolvedTheme === 'dark'
+    ? 'iran-dashboard-editor-dark'
+    : 'iran-dashboard-editor-light'
 }
 
 function asSlug(input: string) {
@@ -532,6 +623,11 @@ export default function CodeEditor({
 }: {
   workspaceSlug?: string
 }) {
+  const { theme, resolvedTheme } = useTheme()
+  const monacoThemeName = useMemo(
+    () => getMonacoThemeName(theme, resolvedTheme),
+    [resolvedTheme, theme]
+  )
   const [projects, setProjects] = useState<WorkspaceProject[]>([])
   const [selectedProjectSlug, setSelectedProjectSlug] = useState(workspaceSlug)
   const [snapshot, setSnapshot] = useState<WorkspaceSnapshotV1>(() =>
@@ -547,9 +643,8 @@ export default function CodeEditor({
   const [isLoading, setIsLoading] = useState(true)
   const [isSaving, setIsSaving] = useState(false)
   const [isBootstrapping, setIsBootstrapping] = useState(true)
-  const [isExplorerOpen, setIsExplorerOpen] = useState(true)
-  const [isConsoleOpen, setIsConsoleOpen] = useState(false)
-  const [isEndpointsOpen, setIsEndpointsOpen] = useState(false)
+  const [activeActivityPanel, setActiveActivityPanel] =
+    useState<ActivityPanel>('explorer')
   const [fileContextMenu, setFileContextMenu] =
     useState<FileContextMenuState | null>(null)
   const [projectNameInput, setProjectNameInput] = useState('')
@@ -589,6 +684,10 @@ export default function CodeEditor({
     () => Object.keys(dirtyPaths).length > 0,
     [dirtyPaths]
   )
+  const isExplorerOpen = activeActivityPanel === 'explorer'
+  const isJobsOpen = activeActivityPanel === 'jobs'
+  const isConsoleOpen = activeActivityPanel === 'console'
+  const isEndpointsOpen = activeActivityPanel === 'endpoints'
 
   const addLog = useCallback(
     (level: BuildLogEntry['level'], message: string) => {
@@ -760,7 +859,7 @@ export default function CodeEditor({
   const ensureEditorInstance = useCallback(() => {
     const monaco = monacoRef.current
     if (!monaco) return
-    if (editorRef.current || !containerRef.current || isEndpointsOpen) return
+    if (editorRef.current || !containerRef.current || !isExplorerOpen) return
 
     const container = containerRef.current
     const rect = container.getBoundingClientRect()
@@ -768,6 +867,7 @@ export default function CodeEditor({
     if (rect.width < 2 || rect.height < 2) return
 
     editorRef.current = monaco.editor.create(container, {
+      theme: monacoThemeName,
       automaticLayout: true,
       minimap: { enabled: true },
       fontSize: 20,
@@ -799,7 +899,25 @@ export default function CodeEditor({
         }
       }
     }
-  }, [ensureModel, isEndpointsOpen])
+  }, [ensureModel, isExplorerOpen, monacoThemeName])
+
+  useEffect(() => {
+    monacoRef.current?.editor.setTheme(monacoThemeName)
+  }, [monacoThemeName])
+
+  useEffect(() => {
+    if (isExplorerOpen || !editorRef.current) return
+
+    if (activePathRef.current) {
+      viewStateByPathRef.current.set(
+        activePathRef.current,
+        editorRef.current.saveViewState()
+      )
+    }
+
+    editorRef.current.dispose()
+    editorRef.current = null
+  }, [isExplorerOpen])
 
   const createFileAtPath = useCallback(
     (rawPath: string) => {
@@ -828,7 +946,7 @@ export default function CodeEditor({
         prev.includes(normalizedPath) ? prev : [...prev, normalizedPath]
       )
       setActivePath(normalizedPath)
-      setIsEndpointsOpen(false)
+      setActiveActivityPanel('explorer')
       addLog('success', `Added file ${normalizedPath}`)
 
       return true
@@ -936,7 +1054,9 @@ export default function CodeEditor({
       }
 
       setTabs((prev) =>
-        prev.map((path) => (path === normalizedSource ? normalizedTarget : path))
+        prev.map((path) =>
+          path === normalizedSource ? normalizedTarget : path
+        )
       )
       setActivePath((prev) =>
         prev === normalizedSource ? normalizedTarget : prev
@@ -1340,7 +1460,7 @@ export default function CodeEditor({
           prev.includes(normalizedPath) ? prev : [...prev, normalizedPath]
         )
         setActivePath(normalizedPath)
-        setIsEndpointsOpen(false)
+        setActiveActivityPanel('explorer')
         return
       }
 
@@ -1355,7 +1475,7 @@ export default function CodeEditor({
         prev.includes(normalizedPath) ? prev : [...prev, normalizedPath]
       )
       setActivePath(normalizedPath)
-      setIsEndpointsOpen(false)
+      setActiveActivityPanel('explorer')
     },
     [ensureModel]
   )
@@ -1399,7 +1519,7 @@ export default function CodeEditor({
         hasAppliedInitialLayoutRef.current = true
         setTabs([])
         setActivePath(null)
-        setIsEndpointsOpen(true)
+        setActiveActivityPanel('endpoints')
         return
       }
 
@@ -1672,10 +1792,6 @@ export default function CodeEditor({
     deleteFilePath(path)
   }, [deleteFilePath])
 
-  const toggleEndpointsPanel = useCallback(() => {
-    setIsEndpointsOpen((prev) => !prev)
-  }, [])
-
   const openEntryFile = useCallback(() => {
     const targetPath = normalizeWorkspacePath(
       entryPathInput || snapshotRef.current.entryPath || '/api/index.ts'
@@ -1856,12 +1972,11 @@ export default function CodeEditor({
 
   useEffect(() => {
     ensureEditorInstance()
-  }, [ensureEditorInstance, isConsoleOpen, isEndpointsOpen, tabs.length])
+  }, [ensureEditorInstance, isExplorerOpen, tabs.length])
 
   useEffect(() => {
     if (hasBootstrappedRef.current) return
     hasBootstrappedRef.current = true
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     void bootstrap()
   }, [bootstrap])
 
@@ -1928,7 +2043,9 @@ export default function CodeEditor({
 
   const activeVersionForExamples =
     selectedVersion ?? selectedProject?.currentVersion ?? 1
-  const endpointBasePath = `/api/process/code-workspaces/${selectedProjectSlug || DEFAULT_WORKSPACE_SLUG}`
+  const endpointProjectSlug = selectedProjectSlug || DEFAULT_WORKSPACE_SLUG
+  const runnerOrigin = 'http://localhost:3001'
+  const endpointBasePath = `/api/process/code-workspaces/${endpointProjectSlug}`
   const endpointRunPath = `${endpointBasePath}/versions/${activeVersionForExamples}/run`
   const endpointBundlePath = `${endpointBasePath}/versions/${activeVersionForExamples}/bundle`
   const endpointVersionPath = `${endpointBasePath}/versions/${activeVersionForExamples}`
@@ -1936,24 +2053,165 @@ export default function CodeEditor({
   const endpointEntryPath = normalizeWorkspacePath(
     entryPathInput || snapshot.entryPath || '/api/index.ts'
   )
-  const runPayloadExample = JSON.stringify(
-    {
-      entryPath: endpointEntryPath,
-      functionName: 'main',
-      args: [1, 2],
-      data: {
-        x: 1,
-      },
-      timeoutMs: 2000,
+  const runnerRunUrl = `${runnerOrigin}/run`
+  const runnerBundleCode = [
+    `export function main(data, ctx) {`,
+    `  ctx.log('workspace: ${endpointProjectSlug}')`,
+    `  return { ok: true, entryPath: '${endpointEntryPath}', data }`,
+    `}`,
+  ].join('\n')
+  const runnerRunPayload = {
+    jobId: `${endpointProjectSlug}-v${activeVersionForExamples}-main`,
+    bundle: {
+      name: endpointProjectSlug,
+      version: String(activeVersionForExamples),
+      code: runnerBundleCode,
     },
-    null,
-    2
-  )
+    functionName: 'main',
+    data: {
+      a: 1,
+      b: 2,
+    },
+    permissions: 'none',
+    timeoutMs: 5000,
+    metadata: {
+      workspaceSlug: endpointProjectSlug,
+      entryPath: endpointEntryPath,
+      source: 'process-code-editor',
+    },
+  }
+  const runnerCodeRefPayload = {
+    codeRef: {
+      name: endpointProjectSlug,
+      version: String(activeVersionForExamples),
+    },
+    functionName: 'main',
+    data: {
+      a: 1,
+      b: 2,
+    },
+    permissions: 'none',
+    timeoutMs: 5000,
+  }
+  const runPayloadExample = JSON.stringify(runnerRunPayload, null, 2)
+  const codeRefPayloadExample = JSON.stringify(runnerCodeRefPayload, null, 2)
   const runCurlExample = [
-    `curl -sS -X POST 'http://localhost:3000${endpointRunPath}' \\`,
+    `curl -sS -X POST '${runnerRunUrl}' \\`,
     `  -H 'Content-Type: application/json' \\`,
     `  -d '${runPayloadExample}'`,
   ].join('\n')
+  const endpointItems = [
+    {
+      method: 'GET',
+      path: endpointBasePath,
+      description: 'Load workspace metadata, latest snapshot, and versions.',
+    },
+    {
+      method: 'GET',
+      path: endpointVersionsPath,
+      description: 'List saved versions for the active workspace.',
+    },
+    {
+      method: 'GET',
+      path: endpointVersionPath,
+      description: 'Fetch the selected version snapshot.',
+    },
+    {
+      method: 'POST',
+      path: endpointBundlePath,
+      description: 'Store the compiled ESM bundle for an entry file.',
+    },
+    {
+      method: 'POST',
+      path: `${runnerOrigin}/run`,
+      description:
+        'Runner service endpoint from Swagger. Send exactly one of bundle or codeRef.',
+    },
+    {
+      method: 'POST',
+      path: endpointRunPath,
+      description:
+        'Dashboard proxy endpoint. The dashboard resolves the saved bundle before calling the runner.',
+    },
+  ]
+  const runClientExamples = [
+    {
+      label: 'Fetch',
+      description: 'Browser or Node 18+',
+      code: [
+        `const payload = ${runPayloadExample.replace(/\n/g, '\n')}`,
+        ``,
+        `const response = await fetch('${runnerRunUrl}', {`,
+        `  method: 'POST',`,
+        `  headers: { 'Content-Type': 'application/json' },`,
+        `  body: JSON.stringify(payload),`,
+        `})`,
+        ``,
+        `const result = await response.json()`,
+      ].join('\n'),
+    },
+    {
+      label: 'Axios',
+      description: 'Web or Node client',
+      code: [
+        `import axios from 'axios'`,
+        ``,
+        `const payload = ${runPayloadExample.replace(/\n/g, '\n')}`,
+        ``,
+        `const { data } = await axios.post('${runnerRunUrl}', payload)`,
+      ].join('\n'),
+    },
+    {
+      label: 'curl',
+      description: 'Terminal and CI scripts',
+      code: runCurlExample,
+    },
+    {
+      label: 'Postman',
+      description: 'Import as raw curl',
+      code: [
+        `curl --location '${runnerRunUrl}' \\`,
+        `  --header 'Content-Type: application/json' \\`,
+        `  --data '${runPayloadExample}'`,
+      ].join('\n'),
+    },
+    {
+      label: '.NET',
+      description: 'HttpClient',
+      code: [
+        `using System.Net.Http.Json;`,
+        ``,
+        `var payload = new`,
+        `{`,
+        `    jobId = "${endpointProjectSlug}-v${activeVersionForExamples}-main",`,
+        `    bundle = new`,
+        `    {`,
+        `        name = "${endpointProjectSlug}",`,
+        `        version = "${activeVersionForExamples}",`,
+        `        code = "export function main(data, ctx) { return { ok: true, data }; }"`,
+        `    },`,
+        `    functionName = "main",`,
+        `    data = new { a = 1, b = 2 },`,
+        `    permissions = "none",`,
+        `    timeoutMs = 2000`,
+        `};`,
+        ``,
+        `var result = await httpClient.PostAsJsonAsync("${runnerRunUrl}", payload);`,
+        `var json = await result.Content.ReadAsStringAsync();`,
+      ].join('\n'),
+    },
+    {
+      label: 'Python',
+      description: 'requests',
+      code: [
+        `import requests`,
+        ``,
+        `payload = ${JSON.stringify(runnerRunPayload)}`,
+        `response = requests.post("${runnerRunUrl}", json=payload)`,
+        `print(response.json())`,
+      ].join('\n'),
+    },
+  ]
   const hasOpenTabs = tabs.length > 0
   const activeTabPath =
     activePath && tabs.includes(activePath) ? activePath : null
@@ -1962,9 +2220,9 @@ export default function CodeEditor({
     : (activeTabPath ?? 'No file selected')
 
   const logLevelClass = useCallback((level: BuildLogEntry['level']) => {
-    if (level === 'error') return 'text-[#f48771]'
-    if (level === 'success') return 'text-[#89d185]'
-    return 'text-[#9da5b4]'
+    if (level === 'error') return 'text-destructive'
+    if (level === 'success') return 'text-primary'
+    return 'text-muted-foreground'
   }, [])
 
   function renderTree(nodes: FileTreeNode[], depth = 0): ReactNode[] {
@@ -1982,8 +2240,8 @@ export default function CodeEditor({
             <button
               type="button"
               className={cn(
-                'flex w-full items-center gap-1 py-1 text-left text-xs text-[#c7c7c7] hover:bg-[#2a2d2e]',
-                folderDropActive && 'bg-[#094771] text-white'
+                'text-muted-foreground hover:bg-accent hover:text-accent-foreground flex w-full items-center gap-1 py-1 text-left text-xs',
+                folderDropActive && 'bg-primary/15 text-primary'
               )}
               style={style}
               onClick={() => {
@@ -1999,14 +2257,14 @@ export default function CodeEditor({
               }
             >
               {collapsed ? (
-                <ChevronRight className="h-3.5 w-3.5 text-[#8c8c8c]" />
+                <ChevronRight className="text-muted-foreground h-3.5 w-3.5" />
               ) : (
-                <ChevronDown className="h-3.5 w-3.5 text-[#8c8c8c]" />
+                <ChevronDown className="text-muted-foreground h-3.5 w-3.5" />
               )}
               {collapsed ? (
-                <Folder className="h-3.5 w-3.5 text-[#dcb67a]" />
+                <Folder className="text-primary h-3.5 w-3.5" />
               ) : (
-                <FolderOpen className="h-3.5 w-3.5 text-[#dcb67a]" />
+                <FolderOpen className="text-primary h-3.5 w-3.5" />
               )}
               <span className="truncate">{node.name}</span>
             </button>
@@ -2024,8 +2282,8 @@ export default function CodeEditor({
           key={node.fullPath}
           type="button"
           className={cn(
-            'flex w-full cursor-grab items-center gap-2 py-1 text-left text-xs text-[#c7c7c7] hover:bg-[#2a2d2e] active:cursor-grabbing',
-            active && 'bg-[#37373d] text-white'
+            'text-muted-foreground hover:bg-accent hover:text-accent-foreground flex w-full cursor-grab items-center gap-2 py-1 text-left text-xs active:cursor-grabbing',
+            active && 'bg-primary/15 text-primary'
           )}
           style={style}
           draggable
@@ -2038,10 +2296,10 @@ export default function CodeEditor({
             openFileContextMenu(event, node.fullPath, 'file')
           }
         >
-          <Icon className="h-3.5 w-3.5 text-[#8ac6f2]" />
+          <Icon className="text-primary h-3.5 w-3.5" />
           <span className="truncate">{node.name}</span>
           {dirty ? (
-            <span className="ms-auto text-[10px] text-[#e2c08d]">●</span>
+            <span className="ms-auto text-[10px] text-amber-500">●</span>
           ) : null}
         </button>
       )
@@ -2051,26 +2309,29 @@ export default function CodeEditor({
   return (
     <div
       dir="ltr"
-      className="relative flex h-full min-h-0 w-full overflow-hidden bg-[#1e1e1e] text-[#d4d4d4]"
+      className="bg-background text-foreground relative flex h-full min-h-0 w-full overflow-hidden"
     >
       <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
-        <div className="flex h-10 items-center gap-2 border-b border-[#2d2d2d] bg-[#181818] px-2">
-          <select
-            className="h-8 min-w-[190px] rounded border border-[#3a3a3a] bg-[#252526] px-2 text-xs text-[#d4d4d4] outline-none"
+        <div className="bg-card flex h-12 items-center gap-2 border-b px-2">
+          <Select
             value={selectedProjectSlug}
-            onChange={(event) => {
-              const nextSlug = event.target.value
+            onValueChange={(nextSlug) => {
               setSelectedProjectSlug(nextSlug)
               void loadProject(nextSlug)
             }}
             disabled={isBootstrapping}
           >
-            {projects.map((project) => (
-              <option key={project.id} value={project.slug}>
-                {project.name} ({project.slug})
-              </option>
-            ))}
-          </select>
+            <SelectTrigger size="sm" className="min-w-[220px] text-xs">
+              <SelectValue placeholder="Project" />
+            </SelectTrigger>
+            <SelectContent>
+              {projects.map((project) => (
+                <SelectItem key={project.id} value={project.slug}>
+                  {project.name} ({project.slug})
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
 
           <Input
             value={projectNameInput}
@@ -2082,7 +2343,7 @@ export default function CodeEditor({
               }
             }}
             placeholder="Project name"
-            className="h-8 w-36 border-[#3a3a3a] bg-[#252526] text-xs text-[#d4d4d4]"
+            className="h-8 w-36 text-xs"
           />
 
           <Input
@@ -2091,12 +2352,14 @@ export default function CodeEditor({
               setProjectSlugInput(asSlug(event.target.value))
             }
             placeholder="project-slug"
-            className="h-8 w-36 border-[#3a3a3a] bg-[#252526] text-xs text-[#d4d4d4]"
+            className="h-8 w-36 text-xs"
           />
 
           <Button
             type="button"
-            className="h-8 bg-[#2d2d2d] px-3 text-xs text-[#d4d4d4] hover:bg-[#3a3a3a]"
+            size="sm"
+            variant="secondary"
+            className="h-8 px-3 text-xs"
             onClick={() => void handleCreateProject()}
           >
             <Plus className="me-1 h-3.5 w-3.5" />
@@ -2104,36 +2367,40 @@ export default function CodeEditor({
           </Button>
 
           <div className="ms-auto flex items-center gap-2">
-            <span className="text-[11px] text-[#9da5b4]">Entry</span>
+            <span className="text-muted-foreground text-[11px]">Entry</span>
             <Input
               value={entryPathInput}
               onChange={(event) =>
                 setEntryPathInput(normalizeWorkspacePath(event.target.value))
               }
-              className="h-8 w-56 border-[#3a3a3a] bg-[#252526] text-xs text-[#d4d4d4]"
+              className="h-8 w-56 text-xs"
             />
 
-            <select
-              className="h-8 min-w-[120px] rounded border border-[#3a3a3a] bg-[#252526] px-2 text-xs text-[#d4d4d4] outline-none"
-              value={selectedVersion ?? ''}
-              onChange={(event) => {
-                const value = Number(event.target.value)
+            <Select
+              value={selectedVersion ? String(selectedVersion) : undefined}
+              onValueChange={(nextValue) => {
+                const value = Number(nextValue)
                 if (Number.isFinite(value) && value > 0) {
                   void handleCheckoutVersion(value)
                 }
               }}
             >
-              <option value="">Latest</option>
-              {versions.map((version) => (
-                <option key={version.id} value={version.version}>
-                  v{version.version}
-                </option>
-              ))}
-            </select>
+              <SelectTrigger size="sm" className="min-w-[120px] text-xs">
+                <SelectValue placeholder="Latest" />
+              </SelectTrigger>
+              <SelectContent>
+                {versions.map((version) => (
+                  <SelectItem key={version.id} value={String(version.version)}>
+                    v{version.version}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
 
             <Button
               type="button"
-              className="h-8 bg-[#0e639c] px-3 text-xs text-white hover:bg-[#1177bb]"
+              size="sm"
+              className="h-8 px-3 text-xs"
               onClick={() => void handleSave()}
               disabled={isSaving || isLoading || isBootstrapping}
             >
@@ -2148,14 +2415,14 @@ export default function CodeEditor({
         </div>
 
         <div className="flex min-h-0 flex-1 overflow-hidden">
-          <aside className="flex w-12 flex-col items-center border-r border-[#2d2d2d] bg-[#333333] py-2">
+          <aside className="bg-muted/50 flex w-12 flex-col items-center border-r py-2">
             <button
               type="button"
               className={cn(
-                'mb-1 flex h-9 w-9 items-center justify-center rounded text-[#c5c5c5] hover:bg-[#454545]',
-                isExplorerOpen && 'bg-[#4c4c4c] text-white'
+                'text-muted-foreground hover:bg-accent hover:text-accent-foreground mb-1 flex h-9 w-9 items-center justify-center rounded-md',
+                isExplorerOpen && 'bg-primary/15 text-primary'
               )}
-              onClick={() => setIsExplorerOpen((prev) => !prev)}
+              onClick={() => setActiveActivityPanel('explorer')}
               title="Explorer"
             >
               {isExplorerOpen ? (
@@ -2167,10 +2434,21 @@ export default function CodeEditor({
             <button
               type="button"
               className={cn(
-                'mb-1 flex h-9 w-9 items-center justify-center rounded text-[#c5c5c5] hover:bg-[#454545]',
-                isConsoleOpen && 'bg-[#4c4c4c] text-white'
+                'text-muted-foreground hover:bg-accent hover:text-accent-foreground mb-1 flex h-9 w-9 items-center justify-center rounded-md',
+                isJobsOpen && 'bg-primary/15 text-primary'
               )}
-              onClick={() => setIsConsoleOpen((prev) => !prev)}
+              onClick={() => setActiveActivityPanel('jobs')}
+              title="Jobs"
+            >
+              <Activity className="h-4 w-4" />
+            </button>
+            <button
+              type="button"
+              className={cn(
+                'text-muted-foreground hover:bg-accent hover:text-accent-foreground mb-1 flex h-9 w-9 items-center justify-center rounded-md',
+                isConsoleOpen && 'bg-primary/15 text-primary'
+              )}
+              onClick={() => setActiveActivityPanel('console')}
               title="Console"
             >
               <TerminalSquare className="h-4 w-4" />
@@ -2178,10 +2456,10 @@ export default function CodeEditor({
             <button
               type="button"
               className={cn(
-                'mb-1 flex h-9 w-9 items-center justify-center rounded text-[#c5c5c5] hover:bg-[#454545]',
-                isEndpointsOpen && 'bg-[#4c4c4c] text-white'
+                'text-muted-foreground hover:bg-accent hover:text-accent-foreground mb-1 flex h-9 w-9 items-center justify-center rounded-md',
+                isEndpointsOpen && 'bg-primary/15 text-primary'
               )}
-              onClick={toggleEndpointsPanel}
+              onClick={() => setActiveActivityPanel('endpoints')}
               title="API Endpoints"
             >
               <FileJson className="h-4 w-4" />
@@ -2189,16 +2467,16 @@ export default function CodeEditor({
           </aside>
 
           {isExplorerOpen ? (
-            <aside className="flex min-h-0 w-72 flex-col border-r border-[#2d2d2d] bg-[#252526]">
-              <div className="flex h-9 items-center justify-between border-b border-[#2d2d2d] px-2">
-                <div className="flex items-center gap-1 text-[11px] font-semibold tracking-wide text-[#cccccc]">
+            <aside className="bg-card flex min-h-0 w-72 flex-col border-r">
+              <div className="flex h-9 items-center justify-between border-b px-2">
+                <div className="text-muted-foreground flex items-center gap-1 text-[11px] font-semibold tracking-wide">
                   <Files className="h-3.5 w-3.5" />
                   Explorer
                 </div>
                 <div className="flex items-center gap-1">
                   <button
                     type="button"
-                    className="rounded p-1 text-[#bdbdbd] hover:bg-[#2f2f2f] hover:text-white"
+                    className="text-muted-foreground hover:bg-accent hover:text-accent-foreground rounded-md p-1"
                     onClick={() => {
                       const basePath = activePath
                         ? dirnamePath(activePath)
@@ -2211,7 +2489,7 @@ export default function CodeEditor({
                   </button>
                   <button
                     type="button"
-                    className="rounded p-1 text-[#bdbdbd] hover:bg-[#2f2f2f] hover:text-white"
+                    className="text-muted-foreground hover:bg-accent hover:text-accent-foreground rounded-md p-1"
                     onClick={() => {
                       const basePath = activePath
                         ? dirnamePath(activePath)
@@ -2225,26 +2503,30 @@ export default function CodeEditor({
                 </div>
               </div>
 
-              <div className="flex items-center gap-2 border-b border-[#2d2d2d] p-2">
+              <div className="flex items-center gap-2 border-b p-2">
                 <Input
                   value={newFileInput}
                   onChange={(event) => setNewFileInput(event.target.value)}
                   placeholder="/api/service.ts"
-                  className="h-7 border-[#3a3a3a] bg-[#1f1f1f] text-xs text-[#d4d4d4]"
+                  className="h-7 text-xs"
                 />
                 <Button
                   type="button"
-                  className="h-7 bg-[#2d2d2d] px-2 text-xs text-[#d4d4d4] hover:bg-[#3a3a3a]"
+                  size="sm"
+                  variant="secondary"
+                  className="h-7 px-2 text-xs"
                   onClick={handleCreateFile}
                 >
                   <Plus className="h-3.5 w-3.5" />
                 </Button>
               </div>
 
-              <div className="flex items-center gap-2 border-b border-[#2d2d2d] px-2 py-1">
+              <div className="flex items-center gap-2 border-b px-2 py-1">
                 <Button
                   type="button"
-                  className="h-7 flex-1 bg-[#2d2d2d] px-2 text-xs text-[#d4d4d4] hover:bg-[#3a3a3a]"
+                  size="sm"
+                  variant="secondary"
+                  className="h-7 flex-1 px-2 text-xs"
                   onClick={handleRenameFile}
                   disabled={!activePath}
                 >
@@ -2253,7 +2535,9 @@ export default function CodeEditor({
                 </Button>
                 <Button
                   type="button"
-                  className="h-7 flex-1 bg-[#2d2d2d] px-2 text-xs text-[#d4d4d4] hover:bg-[#3a3a3a]"
+                  size="sm"
+                  variant="secondary"
+                  className="h-7 flex-1 px-2 text-xs"
                   onClick={handleDeleteFile}
                   disabled={!activePath}
                 >
@@ -2265,7 +2549,7 @@ export default function CodeEditor({
               <div
                 className={cn(
                   'min-h-0 flex-1 overflow-auto py-1',
-                  draggedFilePath && dropFolderPath === '/' && 'bg-[#203343]'
+                  draggedFilePath && dropFolderPath === '/' && 'bg-primary/10'
                 )}
                 onDragOver={handleExplorerDragOver}
                 onDrop={handleExplorerDrop}
@@ -2275,256 +2559,359 @@ export default function CodeEditor({
             </aside>
           ) : null}
 
-          <section className="relative flex min-h-0 flex-1 flex-col overflow-hidden bg-[#1e1e1e]">
-            <div className="h-9 overflow-x-auto border-b border-[#2d2d2d] bg-[#2d2d2d] [scrollbar-gutter:stable]">
-              <div className="flex h-full min-w-full items-center gap-1 px-2">
-                {!hasOpenTabs ? (
-                  <span className="px-2 text-xs text-[#9da5b4]">
-                    No open tabs
-                  </span>
-                ) : null}
-                {tabs.map((tabPath) => {
-                  const active = tabPath === activePath
-                  const dirty = Boolean(dirtyPaths[tabPath])
-                  const fileName =
-                    tabPath.split('/').filter(Boolean).pop() ?? tabPath
-                  const Icon = pickFileIcon(tabPath)
+          {isJobsOpen ? (
+            <section className="bg-background flex min-h-0 flex-1 flex-col overflow-hidden">
+              <CodeEditorJobPanel
+                preferredWorkspaceSlug={selectedProjectSlug}
+              />
+            </section>
+          ) : null}
 
-                  return (
-                    <div
-                      key={tabPath}
-                      className={cn(
-                        'group flex h-7 shrink-0 items-center gap-2 rounded border border-transparent px-2 text-xs',
-                        active
-                          ? 'border-[#3f3f46] bg-[#1e1e1e] text-white'
-                          : 'bg-[#2d2d2d] text-[#cccccc] hover:bg-[#383838]'
-                      )}
-                    >
-                      <button
-                        type="button"
-                        className="flex max-w-[180px] items-center gap-1.5 truncate"
-                        onClick={() => openFile(tabPath)}
-                        onContextMenu={(event) =>
-                          openFileContextMenu(event, tabPath, 'file')
-                        }
-                      >
-                        <Icon className="h-3.5 w-3.5 text-[#8ac6f2]" />
-                        <span className="truncate">{fileName}</span>
-                      </button>
-                      {dirty ? (
-                        <span className="text-[10px] text-[#e2c08d]">●</span>
-                      ) : null}
-                      <button
-                        type="button"
-                        className="rounded p-0.5 text-[#9da5b4] opacity-70 hover:bg-[#444] hover:text-white hover:opacity-100"
-                        onClick={() => {
-                          const nextTabs = tabs.filter(
-                            (candidate) => candidate !== tabPath
-                          )
-                          setTabs(nextTabs)
-
-                          if (activePath === tabPath) {
-                            const nextActive =
-                              nextTabs[nextTabs.length - 1] ?? null
-                            setActivePath(nextActive)
-                          }
-                        }}
-                      >
-                        <X className="h-3 w-3" />
-                      </button>
-                    </div>
-                  )
-                })}
-              </div>
-            </div>
-
-            <div className="relative min-h-0 flex-1 overflow-hidden">
-              <div
-                className="absolute inset-x-0 top-0 transition-[bottom] duration-200"
-                style={{
-                  bottom: isConsoleOpen ? `${CONSOLE_HEIGHT}px` : '0px',
-                }}
-              >
-                {isEndpointsOpen ? (
-                  <div className="h-full w-full overflow-auto px-4 py-4">
-                    <div className="mx-auto flex max-w-5xl flex-col gap-4">
-                      <div className="rounded border border-[#2d2d2d] bg-[#1a1a1a] p-4">
-                        <p className="text-sm font-semibold text-[#e5e5e5]">
-                          API Endpoints
-                        </p>
-                        <p className="mt-2 text-xs text-[#9da5b4]">
-                          Use the active project slug and a saved version when
-                          running code from the database.
-                        </p>
-                        <div className="mt-3 grid gap-2 text-xs text-[#d4d4d4]">
-                          <p>
-                            Project slug:{' '}
-                            <code className="rounded bg-[#2d2d2d] px-1.5 py-0.5 text-[#c9d1d9]">
-                              {selectedProjectSlug || DEFAULT_WORKSPACE_SLUG}
-                            </code>
-                          </p>
-                          <p>
-                            Selected version:{' '}
-                            <code className="rounded bg-[#2d2d2d] px-1.5 py-0.5 text-[#c9d1d9]">
-                              {activeVersionForExamples}
-                            </code>
-                          </p>
-                        </div>
-                      </div>
-
-                      <div className="rounded border border-[#2d2d2d] bg-[#1a1a1a] p-4">
-                        <p className="text-xs font-semibold tracking-wide text-[#9da5b4] uppercase">
-                          Endpoints
-                        </p>
-                        <ul className="mt-3 space-y-2 text-xs text-[#d4d4d4]">
-                          <li>
-                            <code className="rounded bg-[#2d2d2d] px-1.5 py-0.5 text-[#c9d1d9]">
-                              GET {endpointBasePath}
-                            </code>{' '}
-                            Load workspace and latest version.
-                          </li>
-                          <li>
-                            <code className="rounded bg-[#2d2d2d] px-1.5 py-0.5 text-[#c9d1d9]">
-                              GET {endpointVersionsPath}
-                            </code>{' '}
-                            List saved versions.
-                          </li>
-                          <li>
-                            <code className="rounded bg-[#2d2d2d] px-1.5 py-0.5 text-[#c9d1d9]">
-                              GET {endpointVersionPath}
-                            </code>{' '}
-                            Fetch one version snapshot.
-                          </li>
-                          <li>
-                            <code className="rounded bg-[#2d2d2d] px-1.5 py-0.5 text-[#c9d1d9]">
-                              POST {endpointBundlePath}
-                            </code>{' '}
-                            Store a compiled bundle for an entry file.
-                          </li>
-                          <li>
-                            <code className="rounded bg-[#2d2d2d] px-1.5 py-0.5 text-[#c9d1d9]">
-                              POST {endpointRunPath}
-                            </code>{' '}
-                            Execute stored bundle by entry path.
-                          </li>
-                        </ul>
-                      </div>
-
-                      <div className="rounded border border-[#2d2d2d] bg-[#1a1a1a] p-4">
-                        <p className="text-xs font-semibold tracking-wide text-[#9da5b4] uppercase">
-                          Run Request Example
-                        </p>
-                        <p className="mt-2 text-xs text-[#9da5b4]">
-                          If you get <code>Workspace not found</code>, confirm
-                          the slug in the URL matches the selected project.
-                        </p>
-                        <pre className="mt-3 overflow-x-auto rounded border border-[#2d2d2d] bg-[#111111] p-3 font-mono text-[11px] leading-5 text-[#d7e3f4]">
-                          {runCurlExample}
-                        </pre>
-                      </div>
-                    </div>
-                  </div>
-                ) : (
-                  <div className="relative h-full w-full">
-                    <div ref={containerRef} className="h-full w-full" />
-                    {!hasOpenTabs ? (
-                      <div className="absolute inset-0 flex items-center justify-center bg-[#1e1e1e] px-5">
-                        <div className="w-full max-w-xl rounded border border-[#2d2d2d] bg-[#1a1a1a] p-5 text-center">
-                          <p className="text-sm font-semibold text-[#e5e5e5]">
-                            No open editors
-                          </p>
-                          <p className="mt-2 text-xs text-[#9da5b4]">
-                            Open a file from Explorer or reopen the current
-                            entry file to continue coding.
-                          </p>
-                          <div className="mt-4 flex items-center justify-center gap-2">
-                            <Button
-                              type="button"
-                              className="h-8 bg-[#0e639c] px-3 text-xs text-white hover:bg-[#1177bb]"
-                              onClick={openEntryFile}
-                            >
-                              Open Entry File
-                            </Button>
-                            <Button
-                              type="button"
-                              className="h-8 bg-[#2d2d2d] px-3 text-xs text-[#d4d4d4] hover:bg-[#3a3a3a]"
-                              onClick={() => setIsEndpointsOpen(true)}
-                            >
-                              Show API Endpoints
-                            </Button>
-                          </div>
-                        </div>
-                      </div>
-                    ) : null}
-                  </div>
-                )}
-              </div>
-
-              <div
-                className={cn(
-                  'absolute inset-x-0 bottom-0 border-t border-[#2d2d2d] bg-[#181818] transition-transform duration-200',
-                  isConsoleOpen
-                    ? 'translate-y-0'
-                    : 'pointer-events-none translate-y-full'
-                )}
-                style={{ height: `${CONSOLE_HEIGHT}px` }}
-              >
-                <div className="flex h-8 items-center justify-between border-b border-[#2d2d2d] px-3">
-                  <p className="text-xs text-[#cccccc]">Console</p>
-                  <div className="flex items-center gap-2 text-[11px] text-[#9da5b4]">
-                    <span>Project: {selectedProject?.slug ?? '-'}</span>
-                    <span>Version: {selectedVersion ?? 'latest'}</span>
-                  </div>
+          {isConsoleOpen ? (
+            <section className="bg-background flex min-h-0 flex-1 flex-col overflow-hidden">
+              <div className="flex h-10 items-center justify-between border-b px-3">
+                <p className="text-sm font-semibold">Console</p>
+                <div className="text-muted-foreground flex items-center gap-3 text-xs">
+                  <span>Project: {selectedProject?.slug ?? '-'}</span>
+                  <span>Version: {selectedVersion ?? 'latest'}</span>
                 </div>
-                <div className="h-[calc(100%-32px)] overflow-auto px-3 py-2">
-                  {logs.length === 0 ? (
-                    <p className="text-xs text-[#9da5b4]">No logs yet</p>
-                  ) : (
-                    logs.map((entry) => (
+              </div>
+              <div className="min-h-0 flex-1 overflow-auto p-4">
+                {logs.length === 0 ? (
+                  <p className="text-muted-foreground text-sm">No logs yet</p>
+                ) : (
+                  <div className="space-y-1">
+                    {logs.map((entry) => (
                       <p
                         key={entry.id}
                         className={cn(
-                          'font-mono text-[1rem]',
+                          'font-mono text-sm',
                           logLevelClass(entry.level)
                         )}
                       >
                         {entry.message}
                       </p>
-                    ))
-                  )}
+                    ))}
+                  </div>
+                )}
+              </div>
+            </section>
+          ) : null}
+
+          {isEndpointsOpen ? (
+            <section className="bg-background min-h-0 flex-1 overflow-auto px-4 py-4">
+              <div className="mx-auto flex max-w-5xl flex-col gap-4">
+                <Card className="overflow-hidden">
+                  <CardHeader className="border-b p-4">
+                    <div className="flex flex-wrap items-start justify-between gap-3">
+                      <div className="space-y-1">
+                        <CardTitle className="text-base">API Endpoints</CardTitle>
+                        <p className="text-muted-foreground text-xs">
+                          Mirrors the runner Swagger operation{' '}
+                          <code>POST /run</code>. The examples below inject the
+                          active workspace, version, entry path, and runtime
+                          data from this editor context.
+                        </p>
+                      </div>
+                      <Badge variant="outline" className="rounded-full">
+                        Swagger /run
+                      </Badge>
+                    </div>
+                  </CardHeader>
+                  <CardContent className="grid gap-3 p-4 sm:grid-cols-3">
+                    <div className="rounded-md border bg-muted/30 p-3">
+                      <p className="text-muted-foreground text-[11px] uppercase tracking-wide">
+                        Workspace
+                      </p>
+                      <p
+                        dir="ltr"
+                        className="mt-1 truncate text-left font-mono text-sm"
+                      >
+                        {endpointProjectSlug}
+                      </p>
+                    </div>
+                    <div className="rounded-md border bg-muted/30 p-3">
+                      <p className="text-muted-foreground text-[11px] uppercase tracking-wide">
+                        Version
+                      </p>
+                      <p className="mt-1 font-mono text-sm">
+                        v{activeVersionForExamples}
+                      </p>
+                    </div>
+                    <div className="rounded-md border bg-muted/30 p-3">
+                      <p className="text-muted-foreground text-[11px] uppercase tracking-wide">
+                        Entry
+                      </p>
+                      <p
+                        dir="ltr"
+                        className="mt-1 truncate text-left font-mono text-sm"
+                      >
+                        {endpointEntryPath}
+                      </p>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                <Card>
+                  <CardHeader className="p-4 pb-3">
+                    <CardTitle className="text-sm">Endpoint Catalog</CardTitle>
+                  </CardHeader>
+                  <CardContent className="p-4 pt-0">
+                    <div className="divide-y rounded-md border">
+                      {endpointItems.map((item) => (
+                        <div
+                          key={`${item.method}-${item.path}`}
+                          className="grid gap-2 p-3 sm:grid-cols-[92px_minmax(0,1fr)]"
+                        >
+                          <Badge
+                            variant={item.method === 'POST' ? 'default' : 'outline'}
+                            className="w-fit rounded-full font-mono"
+                          >
+                            {item.method}
+                          </Badge>
+                          <div className="min-w-0">
+                            <p
+                              dir="ltr"
+                              className="truncate text-left font-mono text-xs"
+                            >
+                              {item.path}
+                            </p>
+                            <p className="text-muted-foreground mt-1 text-xs">
+                              {item.description}
+                            </p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+
+                <Card>
+                  <CardHeader className="p-4 pb-3">
+                    <CardTitle className="text-sm">Runner Request Schema</CardTitle>
+                  </CardHeader>
+                  <CardContent className="p-4 pt-0">
+                    <div className="grid gap-3 lg:grid-cols-[minmax(0,1fr)_320px]">
+                      <pre
+                        dir="ltr"
+                        className="bg-muted/50 text-muted-foreground overflow-x-auto rounded-md border p-3 text-left font-mono text-[11px] leading-5"
+                      >
+                        {runPayloadExample}
+                      </pre>
+                      <div className="grid content-start gap-2 text-xs">
+                        <div className="rounded-md border bg-muted/30 p-3">
+                          <p className="font-medium">Required</p>
+                          <p className="text-muted-foreground mt-1">
+                            <code>data</code> plus exactly one of{' '}
+                            <code>bundle</code> or <code>codeRef</code>.
+                          </p>
+                        </div>
+                        <div className="rounded-md border bg-muted/30 p-3">
+                          <p className="font-medium">Bundle</p>
+                          <p className="text-muted-foreground mt-1">
+                            Use <code>bundle.code</code> for the compiled ESM
+                            code saved from this editor.
+                          </p>
+                        </div>
+                        <div className="rounded-md border bg-muted/30 p-3">
+                          <p className="font-medium">Context</p>
+                          <p className="text-muted-foreground mt-1">
+                            Keep editor-only fields in <code>metadata</code>;
+                            runtime input belongs in <code>data</code>.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="mt-3 rounded-md border bg-muted/20 p-3">
+                      <p className="text-muted-foreground text-xs">
+                        Stored-code alternative after the runner already has the
+                        version:
+                      </p>
+                      <pre
+                        dir="ltr"
+                        className="mt-2 overflow-x-auto text-left font-mono text-[11px] leading-5"
+                      >
+                        {codeRefPayloadExample}
+                      </pre>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                <Card>
+                  <CardHeader className="p-4 pb-3">
+                    <CardTitle className="text-sm">Client Examples</CardTitle>
+                    <p className="text-muted-foreground text-xs">
+                      These examples use the current editor context. For
+                      Postman, import the curl block or set the body to raw JSON.
+                    </p>
+                  </CardHeader>
+                  <CardContent className="grid gap-3 p-4 pt-0 lg:grid-cols-2">
+                    {runClientExamples.map((example) => (
+                      <div
+                        key={example.label}
+                        className="overflow-hidden rounded-md border bg-muted/20"
+                      >
+                        <div className="flex items-center justify-between gap-2 border-b px-3 py-2">
+                          <div>
+                            <p className="text-sm font-medium">
+                              {example.label}
+                            </p>
+                            <p className="text-muted-foreground text-[11px]">
+                              {example.description}
+                            </p>
+                          </div>
+                          <Badge variant="outline" className="rounded-full">
+                            POST
+                          </Badge>
+                        </div>
+                        <pre
+                          dir="ltr"
+                          className="max-h-80 overflow-auto p-3 text-left font-mono text-[11px] leading-5"
+                        >
+                          {example.code}
+                        </pre>
+                      </div>
+                    ))}
+                  </CardContent>
+                </Card>
+              </div>
+            </section>
+          ) : null}
+
+          {isExplorerOpen ? (
+            <section className="bg-background relative flex min-h-0 flex-1 flex-col overflow-hidden">
+              <div className="bg-muted/40 h-9 overflow-x-auto border-b [scrollbar-gutter:stable]">
+                <div className="flex h-full min-w-full items-center gap-1 px-2">
+                  {!hasOpenTabs ? (
+                    <span className="text-muted-foreground px-2 text-xs">
+                      No open tabs
+                    </span>
+                  ) : null}
+                  {tabs.map((tabPath) => {
+                    const active = tabPath === activePath
+                    const dirty = Boolean(dirtyPaths[tabPath])
+                    const fileName =
+                      tabPath.split('/').filter(Boolean).pop() ?? tabPath
+                    const Icon = pickFileIcon(tabPath)
+
+                    return (
+                      <div
+                        key={tabPath}
+                        className={cn(
+                          'group flex h-7 shrink-0 items-center gap-2 rounded-md border border-transparent px-2 text-xs',
+                          active
+                            ? 'border-border bg-background text-foreground shadow-xs'
+                            : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground bg-transparent'
+                        )}
+                      >
+                        <button
+                          type="button"
+                          className="flex max-w-[180px] items-center gap-1.5 truncate"
+                          onClick={() => openFile(tabPath)}
+                          onContextMenu={(event) =>
+                            openFileContextMenu(event, tabPath, 'file')
+                          }
+                        >
+                          <Icon className="text-primary h-3.5 w-3.5" />
+                          <span className="truncate">{fileName}</span>
+                        </button>
+                        {dirty ? (
+                          <span className="text-[10px] text-amber-500">●</span>
+                        ) : null}
+                        <button
+                          type="button"
+                          className="text-muted-foreground hover:bg-accent hover:text-accent-foreground rounded p-0.5 opacity-70 hover:opacity-100"
+                          onClick={() => {
+                            const nextTabs = tabs.filter(
+                              (candidate) => candidate !== tabPath
+                            )
+                            setTabs(nextTabs)
+
+                            if (activePath === tabPath) {
+                              const nextActive =
+                                nextTabs[nextTabs.length - 1] ?? null
+                              setActivePath(nextActive)
+                            }
+                          }}
+                        >
+                          <X className="h-3 w-3" />
+                        </button>
+                      </div>
+                    )
+                  })}
                 </div>
               </div>
-            </div>
 
-            <div className="flex h-7 items-center justify-between bg-[#007acc] px-2 text-[11px] text-white">
-              <div className="flex items-center gap-3">
-                <span>{selectedProject?.name ?? 'No Project'}</span>
-                <span>{activePathLabel}</span>
+              <div className="relative min-h-0 flex-1 overflow-hidden">
+                <div ref={containerRef} className="h-full w-full" />
+                {!hasOpenTabs ? (
+                  <div className="bg-background absolute inset-0 flex items-center justify-center px-5">
+                    <Card className="w-full max-w-xl text-center">
+                      <CardHeader className="pb-2">
+                        <CardTitle className="text-sm">
+                          No open editors
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <p className="text-muted-foreground text-xs">
+                          Open a file from Explorer or reopen the current entry
+                          file to continue coding.
+                        </p>
+                        <div className="mt-4 flex items-center justify-center gap-2">
+                          <Button
+                            type="button"
+                            size="sm"
+                            className="h-8 px-3 text-xs"
+                            onClick={openEntryFile}
+                          >
+                            Open Entry File
+                          </Button>
+                          <Button
+                            type="button"
+                            size="sm"
+                            variant="secondary"
+                            className="h-8 px-3 text-xs"
+                            onClick={() => setActiveActivityPanel('endpoints')}
+                          >
+                            Show API Endpoints
+                          </Button>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </div>
+                ) : null}
               </div>
-              <div className="flex items-center gap-3">
-                <button
-                  type="button"
-                  className="rounded px-1.5 hover:bg-[#0b86d4]"
-                  onClick={() => setIsConsoleOpen((prev) => !prev)}
-                >
-                  {isConsoleOpen ? 'Hide Console' : 'Show Console'}
-                </button>
-                <span>{isDirty ? 'Unsaved changes' : 'Saved'}</span>
+
+              <div className="bg-primary text-primary-foreground flex h-7 items-center justify-between border-t px-2 text-[11px]">
+                <div className="flex items-center gap-3">
+                  <span>{selectedProject?.name ?? 'No Project'}</span>
+                  <span>{activePathLabel}</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <button
+                    type="button"
+                    className="hover:bg-primary-foreground/15 rounded px-1.5"
+                    onClick={() => setActiveActivityPanel('console')}
+                  >
+                    Show Console
+                  </button>
+                  <span>{isDirty ? 'Unsaved changes' : 'Saved'}</span>
+                </div>
               </div>
-            </div>
-          </section>
+            </section>
+          ) : null}
         </div>
       </div>
 
       {fileContextMenu ? (
         <div
           ref={fileContextMenuRef}
-          className="fixed z-50 min-w-[170px] rounded border border-[#454545] bg-[#252526] py-1 shadow-2xl"
+          className="bg-popover text-popover-foreground fixed z-50 min-w-[170px] rounded-md border py-1 shadow-2xl"
           style={{ left: fileContextMenu.x, top: fileContextMenu.y }}
         >
           <button
             type="button"
-            className="flex w-full items-center gap-2 px-3 py-1.5 text-left text-xs text-[#d4d4d4] hover:bg-[#094771]"
+            className="hover:bg-accent hover:text-accent-foreground flex w-full items-center gap-2 px-3 py-1.5 text-left text-xs"
             onClick={() => {
               const context = fileContextMenu
               setFileContextMenu(null)
@@ -2543,7 +2930,7 @@ export default function CodeEditor({
 
           <button
             type="button"
-            className="flex w-full items-center gap-2 px-3 py-1.5 text-left text-xs text-[#d4d4d4] hover:bg-[#094771]"
+            className="hover:bg-accent hover:text-accent-foreground flex w-full items-center gap-2 px-3 py-1.5 text-left text-xs"
             onClick={() => {
               const context = fileContextMenu
               setFileContextMenu(null)
@@ -2561,7 +2948,7 @@ export default function CodeEditor({
 
           <button
             type="button"
-            className="flex w-full items-center gap-2 px-3 py-1.5 text-left text-xs text-[#d4d4d4] hover:bg-[#094771]"
+            className="hover:bg-accent hover:text-accent-foreground flex w-full items-center gap-2 px-3 py-1.5 text-left text-xs"
             onClick={() => {
               const context = fileContextMenu
               setFileContextMenu(null)
@@ -2579,7 +2966,7 @@ export default function CodeEditor({
 
           <button
             type="button"
-            className="flex w-full items-center gap-2 px-3 py-1.5 text-left text-xs text-[#d4d4d4] hover:bg-[#094771]"
+            className="text-destructive hover:bg-destructive/10 flex w-full items-center gap-2 px-3 py-1.5 text-left text-xs"
             onClick={() => {
               const context = fileContextMenu
               setFileContextMenu(null)
@@ -2598,7 +2985,7 @@ export default function CodeEditor({
       ) : null}
 
       {isLoading ? (
-        <div className="absolute inset-x-0 bottom-0 border-t border-[#2d2d2d] bg-[#111111cc] px-3 py-1.5 text-xs text-[#d4d4d4]">
+        <div className="bg-background/90 text-muted-foreground absolute inset-x-0 bottom-0 border-t px-3 py-1.5 text-xs backdrop-blur">
           Loading project data from remote...
         </div>
       ) : null}
