@@ -39,6 +39,9 @@ export const createCodeWorkspaceSchema = z.object({
 export const saveCodeWorkspaceVersionSchema = z.object({
   snapshot: codeWorkspaceSnapshotSchema,
   message: z.string().trim().max(2000).optional(),
+  description: z.string().trim().max(2000).optional(),
+  saveMode: z.enum(['draft', 'publish']).optional(),
+  targetVersion: z.number().int().positive().optional(),
   isAutosave: z.boolean().optional(),
   clientRequestId: z.string().min(8).max(128).optional(),
 })

@@ -13,6 +13,7 @@ import {
   Folder,
   FolderOpen,
   FolderPlus,
+  History,
   PanelLeftClose,
   PanelLeftOpen,
   Pencil,
@@ -39,6 +40,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { CodeEditorJobPanel } from '@/components/code-jobs/CodeEditorJobPanel'
 import { CodeSnippet } from '@/components/code-snippet'
 import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
 import { useTheme } from '@/components/providers/ThemeProvider'
 import {
   Select,
@@ -48,6 +50,8 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { Switch } from '@/components/ui/switch'
+import { Textarea } from '@/components/ui/textarea'
 import { cn } from '@/lib/utils'
 import {
   buildWorkspaceBundle,
@@ -109,7 +113,7 @@ type ImportContext = {
   startColumn: number
 }
 
-type ActivityPanel = 'explorer' | 'jobs' | 'console' | 'endpoints'
+type ActivityPanel = 'explorer' | 'versions' | 'jobs' | 'console' | 'endpoints'
 type EditorThemeName =
   | 'iran-dashboard-editor-light'
   | 'iran-dashboard-editor-dark'
@@ -133,59 +137,59 @@ let monacoWorkersConfigured = false
 
 function configureMonacoWorkers() {
   if (monacoWorkersConfigured || typeof window === 'undefined') return
-  ;(
-    self as Window & typeof globalThis & { MonacoEnvironment?: unknown }
-  ).MonacoEnvironment = {
-    getWorker(_: unknown, label: string) {
-      if (label === 'json') {
+    ; (
+      self as Window & typeof globalThis & { MonacoEnvironment?: unknown }
+    ).MonacoEnvironment = {
+      getWorker(_: unknown, label: string) {
+        if (label === 'json') {
+          return new Worker(
+            new URL(
+              'monaco-editor/esm/vs/language/json/json.worker.js',
+              import.meta.url
+            ),
+            { type: 'module' }
+          )
+        }
+
+        if (label === 'css' || label === 'scss' || label === 'less') {
+          return new Worker(
+            new URL(
+              'monaco-editor/esm/vs/language/css/css.worker.js',
+              import.meta.url
+            ),
+            { type: 'module' }
+          )
+        }
+
+        if (label === 'html' || label === 'handlebars' || label === 'razor') {
+          return new Worker(
+            new URL(
+              'monaco-editor/esm/vs/language/html/html.worker.js',
+              import.meta.url
+            ),
+            { type: 'module' }
+          )
+        }
+
+        if (label === 'typescript' || label === 'javascript') {
+          return new Worker(
+            new URL(
+              'monaco-editor/esm/vs/language/typescript/ts.worker.js',
+              import.meta.url
+            ),
+            { type: 'module' }
+          )
+        }
+
         return new Worker(
           new URL(
-            'monaco-editor/esm/vs/language/json/json.worker.js',
+            'monaco-editor/esm/vs/editor/editor.worker.js',
             import.meta.url
           ),
           { type: 'module' }
         )
-      }
-
-      if (label === 'css' || label === 'scss' || label === 'less') {
-        return new Worker(
-          new URL(
-            'monaco-editor/esm/vs/language/css/css.worker.js',
-            import.meta.url
-          ),
-          { type: 'module' }
-        )
-      }
-
-      if (label === 'html' || label === 'handlebars' || label === 'razor') {
-        return new Worker(
-          new URL(
-            'monaco-editor/esm/vs/language/html/html.worker.js',
-            import.meta.url
-          ),
-          { type: 'module' }
-        )
-      }
-
-      if (label === 'typescript' || label === 'javascript') {
-        return new Worker(
-          new URL(
-            'monaco-editor/esm/vs/language/typescript/ts.worker.js',
-            import.meta.url
-          ),
-          { type: 'module' }
-        )
-      }
-
-      return new Worker(
-        new URL(
-          'monaco-editor/esm/vs/editor/editor.worker.js',
-          import.meta.url
-        ),
-        { type: 'module' }
-      )
-    },
-  }
+      },
+    }
 
   monacoWorkersConfigured = true
 }
@@ -649,6 +653,9 @@ export default function CodeEditor({
   const [projectNameInput, setProjectNameInput] = useState('')
   const [projectSlugInput, setProjectSlugInput] = useState('')
   const [newFileInput, setNewFileInput] = useState('')
+  const [publishEnabled, setPublishEnabled] = useState(false)
+  const [publishMessage, setPublishMessage] = useState('')
+  const [publishDescription, setPublishDescription] = useState('')
   const [collapsedFolders, setCollapsedFolders] = useState<
     Record<string, boolean>
   >({})
@@ -1546,9 +1553,19 @@ export default function CodeEditor({
     }
   }, [addLog, loadProject, refreshProjects, workspaceSlug])
 
-  const handleSave = useCallback(async () => {
+  const persistCurrentSnapshot = useCallback(async (saveMode: 'draft' | 'publish') => {
     const slug = selectedProjectSlugRef.current
     if (!slug || !snapshotRef.current) return
+
+    const isPublish = saveMode === 'publish'
+    const trimmedMessage = publishMessage.trim()
+    const trimmedDescription = publishDescription.trim()
+
+    if (isPublish && !trimmedMessage) {
+      setActiveActivityPanel('versions')
+      addLog('error', 'Commit message is required to publish a version')
+      return
+    }
 
     const snapshotForSave = hydrateSnapshotFromModels(snapshotRef.current)
     snapshotRef.current = snapshotForSave
@@ -1559,7 +1576,11 @@ export default function CodeEditor({
       const saved = await saveWorkspaceVersion({
         slug,
         snapshot: snapshotForSave,
-        clientRequestId: crypto.randomUUID(),
+        saveMode,
+        targetVersion: isPublish ? undefined : (selectedVersion ?? undefined),
+        message: isPublish ? trimmedMessage : undefined,
+        description: isPublish ? trimmedDescription : undefined,
+        clientRequestId: isPublish ? crypto.randomUUID() : undefined,
       })
 
       const normalizedEntryPath = normalizeWorkspacePath(
@@ -1604,7 +1625,7 @@ export default function CodeEditor({
 
           addLog(
             'success',
-            `Saved v${saved.version} with bundle for ${buildResponse.entryPath}`
+            `${isPublish ? 'Published' : 'Updated'} v${saved.version} with bundle for ${buildResponse.entryPath}`
           )
         } else {
           addLog('error', buildResponse.error)
@@ -1615,7 +1636,7 @@ export default function CodeEditor({
       } else {
         addLog(
           'info',
-          `Saved v${saved.version} (no TypeScript entry found to bundle)`
+          `${isPublish ? 'Published' : 'Updated'} v${saved.version} (no TypeScript entry found to bundle)`
         )
       }
 
@@ -1627,12 +1648,44 @@ export default function CodeEditor({
       const versionsPayload = await fetchWorkspaceVersions(slug)
       setVersions(versionsPayload.versions)
       setSelectedVersion(saved.version)
+      setProjects((prev) =>
+        prev.map((project) =>
+          project.slug === slug
+            ? {
+              ...project,
+              currentVersion:
+                isPublish || project.currentVersion === 0
+                  ? saved.version
+                  : project.currentVersion,
+            }
+            : project
+        )
+      )
+      if (isPublish) {
+        setPublishEnabled(false)
+        setPublishMessage('')
+        setPublishDescription('')
+      }
     } catch (error) {
       addLog('error', error instanceof Error ? error.message : 'Save failed')
     } finally {
       setIsSaving(false)
     }
-  }, [addLog, hydrateSnapshotFromModels])
+  }, [
+    addLog,
+    hydrateSnapshotFromModels,
+    publishDescription,
+    publishMessage,
+    selectedVersion,
+  ])
+
+  const handleSave = useCallback(async () => {
+    await persistCurrentSnapshot('draft')
+  }, [persistCurrentSnapshot])
+
+  const handlePublish = useCallback(async () => {
+    await persistCurrentSnapshot('publish')
+  }, [persistCurrentSnapshot])
 
   const handleCheckoutVersion = useCallback(
     async (version: number) => {
@@ -1936,6 +1989,11 @@ export default function CodeEditor({
     () =>
       projects.find((project) => project.slug === selectedProjectSlug) ?? null,
     [projects, selectedProjectSlug]
+  )
+
+  const selectedVersionRecord = useMemo(
+    () => versions.find((version) => version.version === selectedVersion) ?? null,
+    [selectedVersion, versions]
   )
 
   const fileTree = useMemo(
@@ -2285,26 +2343,16 @@ export default function CodeEditor({
               className="h-8 w-56 text-xs"
             />
 
-            <Select
-              value={selectedVersion ? String(selectedVersion) : undefined}
-              onValueChange={(nextValue) => {
-                const value = Number(nextValue)
-                if (Number.isFinite(value) && value > 0) {
-                  void handleCheckoutVersion(value)
-                }
-              }}
+            <Button
+              type="button"
+              size="sm"
+              variant="secondary"
+              className="h-8 px-3 text-xs"
+              onClick={() => setActiveActivityPanel('versions')}
             >
-              <SelectTrigger size="sm" className="min-w-[120px] text-xs">
-                <SelectValue placeholder="Latest" />
-              </SelectTrigger>
-              <SelectContent>
-                {versions.map((version) => (
-                  <SelectItem key={version.id} value={String(version.version)}>
-                    v{version.version}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+              <History className="me-1 h-3.5 w-3.5" />
+              v{selectedVersion ?? selectedProject?.currentVersion ?? 1}
+            </Button>
 
             <Button
               type="button"
@@ -2318,7 +2366,7 @@ export default function CodeEditor({
                 ? 'Saving...'
                 : isDirty
                   ? 'Save Changes'
-                  : 'Save Version'}
+                  : 'Update Version'}
             </Button>
           </div>
         </div>
@@ -2341,6 +2389,13 @@ export default function CodeEditor({
               ) : (
                 <PanelLeftOpen className="h-4 w-4" />
               )}
+            </TabsTrigger>
+            <TabsTrigger
+              value="versions"
+              className="data-[state=active]:bg-primary/15 data-[state=active]:text-primary h-9 w-9 flex-none p-0"
+              title="Versions"
+            >
+              <History className="h-4 w-4" />
             </TabsTrigger>
             <TabsTrigger
               value="jobs"
@@ -2550,6 +2605,190 @@ export default function CodeEditor({
                 </div>
               </section>
             </div>
+          </div>
+
+          <div
+            className={cn(
+              'm-0 min-h-0 flex-1 overflow-hidden',
+              activeActivityPanel !== 'versions' && 'hidden'
+            )}
+          >
+            <section className="bg-background flex h-full min-h-0 flex-col overflow-hidden">
+              <div className="flex h-10 items-center justify-between border-b px-3">
+                <p className="text-sm font-semibold">Versions</p>
+                <div className="text-muted-foreground flex items-center gap-3 text-xs">
+                  <span>Active: v{selectedVersion ?? '-'}</span>
+                  <span>{versions.length} total</span>
+                </div>
+              </div>
+
+              <div className="grid min-h-0 flex-1 grid-cols-[320px_minmax(0,1fr)] overflow-hidden">
+                <aside className="bg-card flex min-h-0 flex-col border-r">
+                  <div className="space-y-3 border-b p-3">
+                    <div className="flex items-center justify-between gap-3">
+                      <Label
+                        htmlFor="publish-version-toggle"
+                        className="text-xs"
+                      >
+                        Publish version
+                      </Label>
+                      <Switch
+                        id="publish-version-toggle"
+                        checked={publishEnabled}
+                        onCheckedChange={setPublishEnabled}
+                      />
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="publish-message" className="text-xs">
+                        Commit message
+                      </Label>
+                      <Input
+                        id="publish-message"
+                        value={publishMessage}
+                        onChange={(event) =>
+                          setPublishMessage(event.target.value)
+                        }
+                        disabled={!publishEnabled}
+                        placeholder="Release scheduler workflow"
+                        className="h-8 text-xs"
+                      />
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="publish-description" className="text-xs">
+                        Description
+                      </Label>
+                      <Textarea
+                        id="publish-description"
+                        value={publishDescription}
+                        onChange={(event) =>
+                          setPublishDescription(event.target.value)
+                        }
+                        disabled={!publishEnabled}
+                        placeholder="Changed inputs, runner behavior, or deployment notes"
+                        className="min-h-20 resize-none text-xs"
+                      />
+                    </div>
+
+                    <div className="flex items-center gap-2">
+                      <Button
+                        type="button"
+                        size="sm"
+                        className="h-8 flex-1 text-xs"
+                        onClick={() => void handlePublish()}
+                        disabled={
+                          !publishEnabled ||
+                          isSaving ||
+                          isLoading ||
+                          isBootstrapping
+                        }
+                      >
+                        <Save className="me-1 h-3.5 w-3.5" />
+                        New Version
+                      </Button>
+                      <Button
+                        type="button"
+                        size="sm"
+                        variant="secondary"
+                        className="h-8 flex-1 text-xs"
+                        onClick={() => void handleSave()}
+                        disabled={isSaving || isLoading || isBootstrapping}
+                      >
+                        Update v{selectedVersion ?? selectedProject?.currentVersion ?? 1}
+                      </Button>
+                    </div>
+                  </div>
+
+                  <div className="min-h-0 flex-1 overflow-auto">
+                    {versions.length === 0 ? (
+                      <p className="text-muted-foreground p-3 text-xs">
+                        No versions
+                      </p>
+                    ) : (
+                      <div className="divide-y">
+                        {versions.map((version) => {
+                          const active = version.version === selectedVersion
+                          return (
+                            <button
+                              key={version.id}
+                              type="button"
+                              className={cn(
+                                'hover:bg-accent flex w-full items-start gap-3 px-3 py-3 text-left text-xs',
+                                active && 'bg-primary/10 text-primary'
+                              )}
+                              onClick={() =>
+                                void handleCheckoutVersion(version.version)
+                              }
+                            >
+                              <span className="bg-muted text-foreground mt-0.5 rounded px-1.5 py-0.5 font-mono">
+                                v{version.version}
+                              </span>
+                              <span className="min-w-0 flex-1">
+                                <span className="block truncate font-medium">
+                                  {version.message || `Version ${version.version}`}
+                                </span>
+                                <span className="text-muted-foreground mt-1 block truncate">
+                                  {new Date(version.createdAt).toLocaleString()}
+                                </span>
+                              </span>
+                            </button>
+                          )
+                        })}
+                      </div>
+                    )}
+                  </div>
+                </aside>
+
+                <div className="min-h-0 overflow-auto p-4">
+                  <div className="mx-auto max-w-3xl space-y-3">
+                    <div className="rounded-md border p-4">
+                      <div className="flex items-start justify-between gap-3">
+                        <div className="min-w-0">
+                          <p className="font-mono text-sm">
+                            v{selectedVersionRecord?.version ?? '-'}
+                          </p>
+                          <p className="mt-1 truncate text-sm font-medium">
+                            {selectedVersionRecord?.message ||
+                              (selectedVersionRecord
+                                ? `Version ${selectedVersionRecord.version}`
+                                : '-')}
+                          </p>
+                        </div>
+                        <Badge variant="outline">
+                          {selectedVersionRecord?.isAutosave
+                            ? 'Autosave'
+                            : 'Manual'}
+                        </Badge>
+                      </div>
+                      <p className="text-muted-foreground mt-3 whitespace-pre-wrap text-sm">
+                        {selectedVersionRecord?.description ||
+                          'No description'}
+                      </p>
+                      <div className="text-muted-foreground mt-4 grid gap-2 text-xs sm:grid-cols-3">
+                        <span>
+                          Size:{' '}
+                          {selectedVersionRecord
+                            ? `${selectedVersionRecord.sizeBytes.toLocaleString()} bytes`
+                            : '-'}
+                        </span>
+                        <span className="truncate">
+                          Hash: {selectedVersionRecord?.snapshotHash ?? '-'}
+                        </span>
+                        <span>
+                          Created:{' '}
+                          {selectedVersionRecord
+                            ? new Date(
+                              selectedVersionRecord.createdAt
+                            ).toLocaleString()
+                            : '-'}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
           </div>
 
           <div

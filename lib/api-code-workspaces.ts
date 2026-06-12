@@ -71,6 +71,9 @@ export async function saveWorkspaceVersion(opts: {
   slug: string
   snapshot: WorkspaceSnapshotV1
   message?: string
+  description?: string
+  saveMode?: 'draft' | 'publish'
+  targetVersion?: number
   isAutosave?: boolean
   clientRequestId?: string
 }) {
@@ -80,6 +83,9 @@ export async function saveWorkspaceVersion(opts: {
     body: JSON.stringify({
       snapshot: opts.snapshot,
       message: opts.message,
+      description: opts.description,
+      saveMode: opts.saveMode,
+      targetVersion: opts.targetVersion,
       isAutosave: opts.isAutosave,
       clientRequestId: opts.clientRequestId,
     }),
@@ -187,6 +193,7 @@ export async function fetchWorkspaceVersionSnapshot(slug: string, version: numbe
     version: number
     snapshot: string
     message: string
+    description?: string
     createdAt: string
     snapshotHash: string
     sizeBytes: number

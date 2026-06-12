@@ -32,6 +32,7 @@ export type WorkspaceVersionSummary = {
   id: string
   version: number
   message: string
+  description?: string
   isAutosave: boolean
   createdAt: string
   snapshotHash: string
@@ -45,6 +46,7 @@ export type WorkspaceLoadResponse = {
     version: number
     snapshot: string
     message: string
+    description?: string
     createdAt: string
   } | null
   versions: WorkspaceVersionSummary[]
@@ -56,6 +58,7 @@ export type SaveVersionResponse = {
   version: number
   createdAt: string
   message: string
+  description?: string
   snapshotHash: string
   sizeBytes: number
   isAutosave: boolean
