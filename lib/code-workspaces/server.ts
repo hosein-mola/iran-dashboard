@@ -1,5 +1,3 @@
-import prisma from '@/lib/prisma'
-
 export function getClientIp(req: Request) {
   const forwarded = req.headers.get('x-forwarded-for')
   if (forwarded) {
@@ -43,40 +41,7 @@ export async function sha256Hex(input: string) {
     .join('')
 }
 
-export async function findWorkspaceBySlugForUser(slug: string, userId: string) {
-  const direct = await prisma.codeWorkspace.findUnique({
-    where: {
-      createdByUserId_slug: {
-        createdByUserId: userId,
-        slug,
-      },
-    },
-  })
-
-  if (direct) return direct
-  if (userId === 'public') return null
-
-  // Backward compatibility for legacy workspaces saved before user scoping.
-  const legacyPublic = await prisma.codeWorkspace.findUnique({
-    where: {
-      createdByUserId_slug: {
-        createdByUserId: 'public',
-        slug,
-      },
-    },
-  })
-  if (legacyPublic) return legacyPublic
-
-  // Dev/CLI compatibility: anonymous curl calls have no session cookie, so
-  // they resolve as local-dev. In that case, fall back to latest workspace
-  // by slug regardless of owner.
-  if (userId === 'local-dev') {
-    return await prisma.codeWorkspace.findFirst({
-      where: { slug, active: true },
-      orderBy: { updatedAt: 'desc' },
-    })
-  }
-
+export async function findWorkspaceBySlugForUser() {
   return null
 }
 

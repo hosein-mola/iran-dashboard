@@ -288,104 +288,6 @@ exports.Prisma.AppUserScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
-exports.Prisma.CodeWorkspaceScalarFieldEnum = {
-  id: 'id',
-  slug: 'slug',
-  name: 'name',
-  description: 'description',
-  language: 'language',
-  currentVersion: 'currentVersion',
-  active: 'active',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
-  createdByUserId: 'createdByUserId',
-  updatedByUserId: 'updatedByUserId'
-};
-
-exports.Prisma.CodeWorkspaceVersionScalarFieldEnum = {
-  id: 'id',
-  workspaceId: 'workspaceId',
-  version: 'version',
-  snapshot: 'snapshot',
-  snapshotHash: 'snapshotHash',
-  message: 'message',
-  isAutosave: 'isAutosave',
-  clientRequestId: 'clientRequestId',
-  ip: 'ip',
-  userAgent: 'userAgent',
-  referer: 'referer',
-  meta: 'meta',
-  sizeBytes: 'sizeBytes',
-  createdAt: 'createdAt',
-  createdByUserId: 'createdByUserId'
-};
-
-exports.Prisma.CodeWorkerScalarFieldEnum = {
-  id: 'id',
-  name: 'name',
-  kind: 'kind',
-  queue: 'queue',
-  status: 'status',
-  desiredStatus: 'desiredStatus',
-  concurrency: 'concurrency',
-  currentJobId: 'currentJobId',
-  heartbeatAt: 'heartbeatAt',
-  startedAt: 'startedAt',
-  stoppedAt: 'stoppedAt',
-  pid: 'pid',
-  metadata: 'metadata',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-};
-
-exports.Prisma.CodeJobScalarFieldEnum = {
-  id: 'id',
-  workspaceVersionId: 'workspaceVersionId',
-  workspaceSlug: 'workspaceSlug',
-  version: 'version',
-  entryPath: 'entryPath',
-  functionName: 'functionName',
-  args: 'args',
-  data: 'data',
-  checkpoint: 'checkpoint',
-  result: 'result',
-  error: 'error',
-  status: 'status',
-  priority: 'priority',
-  queue: 'queue',
-  runtime: 'runtime',
-  orchestrator: 'orchestrator',
-  timeoutMs: 'timeoutMs',
-  maxAttempts: 'maxAttempts',
-  attempt: 'attempt',
-  progress: 'progress',
-  requestedAction: 'requestedAction',
-  leaseToken: 'leaseToken',
-  lockedAt: 'lockedAt',
-  leaseExpiresAt: 'leaseExpiresAt',
-  nextRunAt: 'nextRunAt',
-  startedAt: 'startedAt',
-  completedAt: 'completedAt',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
-  createdByUserId: 'createdByUserId',
-  workerId: 'workerId',
-  temporalWorkflowId: 'temporalWorkflowId',
-  temporalRunId: 'temporalRunId',
-  metadata: 'metadata'
-};
-
-exports.Prisma.CodeJobLogScalarFieldEnum = {
-  id: 'id',
-  jobId: 'jobId',
-  workerId: 'workerId',
-  level: 'level',
-  message: 'message',
-  sequence: 'sequence',
-  meta: 'meta',
-  createdAt: 'createdAt'
-};
-
 exports.Prisma.AiDatabaseSchemaScalarFieldEnum = {
   id: 'id',
   name: 'name',
@@ -439,11 +341,6 @@ exports.Prisma.ModelName = {
   FormTemplateVersion: 'FormTemplateVersion',
   Role: 'Role',
   AppUser: 'AppUser',
-  CodeWorkspace: 'CodeWorkspace',
-  CodeWorkspaceVersion: 'CodeWorkspaceVersion',
-  CodeWorker: 'CodeWorker',
-  CodeJob: 'CodeJob',
-  CodeJobLog: 'CodeJobLog',
   AiDatabaseSchema: 'AiDatabaseSchema',
   AiDbChatConversation: 'AiDbChatConversation',
   AiDbChatMessage: 'AiDbChatMessage'

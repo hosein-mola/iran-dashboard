@@ -15,97 +15,72 @@ export type PrismaPromise<T> = $Public.PrismaPromise<T>
 
 /**
  * Model Form
- *
+ * 
  */
 export type Form = $Result.DefaultSelection<Prisma.$FormPayload>
 /**
  * Model FormSubmission
- *
+ * 
  */
 export type FormSubmission = $Result.DefaultSelection<Prisma.$FormSubmissionPayload>
 /**
  * Model FormVersion
- *
+ * 
  */
 export type FormVersion = $Result.DefaultSelection<Prisma.$FormVersionPayload>
 /**
  * Model FormSubmissionValue
- *
+ * 
  */
 export type FormSubmissionValue = $Result.DefaultSelection<Prisma.$FormSubmissionValuePayload>
 /**
  * Model FormEvent
- *
+ * 
  */
 export type FormEvent = $Result.DefaultSelection<Prisma.$FormEventPayload>
 /**
  * Model FormAssignment
- *
+ * 
  */
 export type FormAssignment = $Result.DefaultSelection<Prisma.$FormAssignmentPayload>
 /**
  * Model Submodule
- *
+ * 
  */
 export type Submodule = $Result.DefaultSelection<Prisma.$SubmodulePayload>
 /**
  * Model FormTemplate
- *
+ * 
  */
 export type FormTemplate = $Result.DefaultSelection<Prisma.$FormTemplatePayload>
 /**
  * Model FormTemplateVersion
- *
+ * 
  */
 export type FormTemplateVersion = $Result.DefaultSelection<Prisma.$FormTemplateVersionPayload>
 /**
  * Model Role
- *
+ * 
  */
 export type Role = $Result.DefaultSelection<Prisma.$RolePayload>
 /**
  * Model AppUser
- *
+ * 
  */
 export type AppUser = $Result.DefaultSelection<Prisma.$AppUserPayload>
 /**
- * Model CodeWorkspace
- *
- */
-export type CodeWorkspace = $Result.DefaultSelection<Prisma.$CodeWorkspacePayload>
-/**
- * Model CodeWorkspaceVersion
- *
- */
-export type CodeWorkspaceVersion = $Result.DefaultSelection<Prisma.$CodeWorkspaceVersionPayload>
-/**
- * Model CodeWorker
- *
- */
-export type CodeWorker = $Result.DefaultSelection<Prisma.$CodeWorkerPayload>
-/**
- * Model CodeJob
- *
- */
-export type CodeJob = $Result.DefaultSelection<Prisma.$CodeJobPayload>
-/**
- * Model CodeJobLog
- *
- */
-export type CodeJobLog = $Result.DefaultSelection<Prisma.$CodeJobLogPayload>
-/**
  * Model AiDatabaseSchema
- *
+ * 
  */
 export type AiDatabaseSchema = $Result.DefaultSelection<Prisma.$AiDatabaseSchemaPayload>
 /**
  * Model AiDbChatConversation
- *
+ * 
  */
 export type AiDbChatConversation = $Result.DefaultSelection<Prisma.$AiDbChatConversationPayload>
 /**
  * Model AiDbChatMessage
- *
+ * 
  */
 export type AiDbChatMessage = $Result.DefaultSelection<Prisma.$AiDbChatMessagePayload>
 
@@ -215,7 +190,7 @@ export class PrismaClient<
    *   prisma.user.create({ data: { name: 'Alice' } }),
    * ])
    * ```
-   *
+   * 
    * Read more in our [docs](https://www.prisma.io/docs/concepts/components/prisma-client/transactions).
    */
   $transaction<P extends Prisma.PrismaPromise<any>[]>(arg: [...P], options?: { isolationLevel?: Prisma.TransactionIsolationLevel }): $Utils.JsPromise<runtime.Types.Utils.UnwrapTuple<P>>
@@ -336,56 +311,6 @@ export class PrismaClient<
     * ```
     */
   get appUser(): Prisma.AppUserDelegate<ExtArgs, ClientOptions>;
-
-  /**
-   * `prisma.codeWorkspace`: Exposes CRUD operations for the **CodeWorkspace** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more CodeWorkspaces
-    * const codeWorkspaces = await prisma.codeWorkspace.findMany()
-    * ```
-    */
-  get codeWorkspace(): Prisma.CodeWorkspaceDelegate<ExtArgs, ClientOptions>;
-
-  /**
-   * `prisma.codeWorkspaceVersion`: Exposes CRUD operations for the **CodeWorkspaceVersion** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more CodeWorkspaceVersions
-    * const codeWorkspaceVersions = await prisma.codeWorkspaceVersion.findMany()
-    * ```
-    */
-  get codeWorkspaceVersion(): Prisma.CodeWorkspaceVersionDelegate<ExtArgs, ClientOptions>;
-
-  /**
-   * `prisma.codeWorker`: Exposes CRUD operations for the **CodeWorker** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more CodeWorkers
-    * const codeWorkers = await prisma.codeWorker.findMany()
-    * ```
-    */
-  get codeWorker(): Prisma.CodeWorkerDelegate<ExtArgs, ClientOptions>;
-
-  /**
-   * `prisma.codeJob`: Exposes CRUD operations for the **CodeJob** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more CodeJobs
-    * const codeJobs = await prisma.codeJob.findMany()
-    * ```
-    */
-  get codeJob(): Prisma.CodeJobDelegate<ExtArgs, ClientOptions>;
-
-  /**
-   * `prisma.codeJobLog`: Exposes CRUD operations for the **CodeJobLog** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more CodeJobLogs
-    * const codeJobLogs = await prisma.codeJobLog.findMany()
-    * ```
-    */
-  get codeJobLog(): Prisma.CodeJobLogDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.aiDatabaseSchema`: Exposes CRUD operations for the **AiDatabaseSchema** model.
@@ -868,11 +793,6 @@ export namespace Prisma {
     FormTemplateVersion: 'FormTemplateVersion',
     Role: 'Role',
     AppUser: 'AppUser',
-    CodeWorkspace: 'CodeWorkspace',
-    CodeWorkspaceVersion: 'CodeWorkspaceVersion',
-    CodeWorker: 'CodeWorker',
-    CodeJob: 'CodeJob',
-    CodeJobLog: 'CodeJobLog',
     AiDatabaseSchema: 'AiDatabaseSchema',
     AiDbChatConversation: 'AiDbChatConversation',
     AiDbChatMessage: 'AiDbChatMessage'
@@ -894,7 +814,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "form" | "formSubmission" | "formVersion" | "formSubmissionValue" | "formEvent" | "formAssignment" | "submodule" | "formTemplate" | "formTemplateVersion" | "role" | "appUser" | "codeWorkspace" | "codeWorkspaceVersion" | "codeWorker" | "codeJob" | "codeJobLog" | "aiDatabaseSchema" | "aiDbChatConversation" | "aiDbChatMessage"
+      modelProps: "form" | "formSubmission" | "formVersion" | "formSubmissionValue" | "formEvent" | "formAssignment" | "submodule" | "formTemplate" | "formTemplateVersion" | "role" | "appUser" | "aiDatabaseSchema" | "aiDbChatConversation" | "aiDbChatMessage"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1712,376 +1632,6 @@ export namespace Prisma {
           }
         }
       }
-      CodeWorkspace: {
-        payload: Prisma.$CodeWorkspacePayload<ExtArgs>
-        fields: Prisma.CodeWorkspaceFieldRefs
-        operations: {
-          findUnique: {
-            args: Prisma.CodeWorkspaceFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CodeWorkspacePayload> | null
-          }
-          findUniqueOrThrow: {
-            args: Prisma.CodeWorkspaceFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CodeWorkspacePayload>
-          }
-          findFirst: {
-            args: Prisma.CodeWorkspaceFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CodeWorkspacePayload> | null
-          }
-          findFirstOrThrow: {
-            args: Prisma.CodeWorkspaceFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CodeWorkspacePayload>
-          }
-          findMany: {
-            args: Prisma.CodeWorkspaceFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CodeWorkspacePayload>[]
-          }
-          create: {
-            args: Prisma.CodeWorkspaceCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CodeWorkspacePayload>
-          }
-          createMany: {
-            args: Prisma.CodeWorkspaceCreateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          createManyAndReturn: {
-            args: Prisma.CodeWorkspaceCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CodeWorkspacePayload>[]
-          }
-          delete: {
-            args: Prisma.CodeWorkspaceDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CodeWorkspacePayload>
-          }
-          update: {
-            args: Prisma.CodeWorkspaceUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CodeWorkspacePayload>
-          }
-          deleteMany: {
-            args: Prisma.CodeWorkspaceDeleteManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateMany: {
-            args: Prisma.CodeWorkspaceUpdateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateManyAndReturn: {
-            args: Prisma.CodeWorkspaceUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CodeWorkspacePayload>[]
-          }
-          upsert: {
-            args: Prisma.CodeWorkspaceUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CodeWorkspacePayload>
-          }
-          aggregate: {
-            args: Prisma.CodeWorkspaceAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateCodeWorkspace>
-          }
-          groupBy: {
-            args: Prisma.CodeWorkspaceGroupByArgs<ExtArgs>
-            result: $Utils.Optional<CodeWorkspaceGroupByOutputType>[]
-          }
-          count: {
-            args: Prisma.CodeWorkspaceCountArgs<ExtArgs>
-            result: $Utils.Optional<CodeWorkspaceCountAggregateOutputType> | number
-          }
-        }
-      }
-      CodeWorkspaceVersion: {
-        payload: Prisma.$CodeWorkspaceVersionPayload<ExtArgs>
-        fields: Prisma.CodeWorkspaceVersionFieldRefs
-        operations: {
-          findUnique: {
-            args: Prisma.CodeWorkspaceVersionFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CodeWorkspaceVersionPayload> | null
-          }
-          findUniqueOrThrow: {
-            args: Prisma.CodeWorkspaceVersionFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CodeWorkspaceVersionPayload>
-          }
-          findFirst: {
-            args: Prisma.CodeWorkspaceVersionFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CodeWorkspaceVersionPayload> | null
-          }
-          findFirstOrThrow: {
-            args: Prisma.CodeWorkspaceVersionFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CodeWorkspaceVersionPayload>
-          }
-          findMany: {
-            args: Prisma.CodeWorkspaceVersionFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CodeWorkspaceVersionPayload>[]
-          }
-          create: {
-            args: Prisma.CodeWorkspaceVersionCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CodeWorkspaceVersionPayload>
-          }
-          createMany: {
-            args: Prisma.CodeWorkspaceVersionCreateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          createManyAndReturn: {
-            args: Prisma.CodeWorkspaceVersionCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CodeWorkspaceVersionPayload>[]
-          }
-          delete: {
-            args: Prisma.CodeWorkspaceVersionDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CodeWorkspaceVersionPayload>
-          }
-          update: {
-            args: Prisma.CodeWorkspaceVersionUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CodeWorkspaceVersionPayload>
-          }
-          deleteMany: {
-            args: Prisma.CodeWorkspaceVersionDeleteManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateMany: {
-            args: Prisma.CodeWorkspaceVersionUpdateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateManyAndReturn: {
-            args: Prisma.CodeWorkspaceVersionUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CodeWorkspaceVersionPayload>[]
-          }
-          upsert: {
-            args: Prisma.CodeWorkspaceVersionUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CodeWorkspaceVersionPayload>
-          }
-          aggregate: {
-            args: Prisma.CodeWorkspaceVersionAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateCodeWorkspaceVersion>
-          }
-          groupBy: {
-            args: Prisma.CodeWorkspaceVersionGroupByArgs<ExtArgs>
-            result: $Utils.Optional<CodeWorkspaceVersionGroupByOutputType>[]
-          }
-          count: {
-            args: Prisma.CodeWorkspaceVersionCountArgs<ExtArgs>
-            result: $Utils.Optional<CodeWorkspaceVersionCountAggregateOutputType> | number
-          }
-        }
-      }
-      CodeWorker: {
-        payload: Prisma.$CodeWorkerPayload<ExtArgs>
-        fields: Prisma.CodeWorkerFieldRefs
-        operations: {
-          findUnique: {
-            args: Prisma.CodeWorkerFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CodeWorkerPayload> | null
-          }
-          findUniqueOrThrow: {
-            args: Prisma.CodeWorkerFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CodeWorkerPayload>
-          }
-          findFirst: {
-            args: Prisma.CodeWorkerFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CodeWorkerPayload> | null
-          }
-          findFirstOrThrow: {
-            args: Prisma.CodeWorkerFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CodeWorkerPayload>
-          }
-          findMany: {
-            args: Prisma.CodeWorkerFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CodeWorkerPayload>[]
-          }
-          create: {
-            args: Prisma.CodeWorkerCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CodeWorkerPayload>
-          }
-          createMany: {
-            args: Prisma.CodeWorkerCreateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          createManyAndReturn: {
-            args: Prisma.CodeWorkerCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CodeWorkerPayload>[]
-          }
-          delete: {
-            args: Prisma.CodeWorkerDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CodeWorkerPayload>
-          }
-          update: {
-            args: Prisma.CodeWorkerUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CodeWorkerPayload>
-          }
-          deleteMany: {
-            args: Prisma.CodeWorkerDeleteManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateMany: {
-            args: Prisma.CodeWorkerUpdateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateManyAndReturn: {
-            args: Prisma.CodeWorkerUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CodeWorkerPayload>[]
-          }
-          upsert: {
-            args: Prisma.CodeWorkerUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CodeWorkerPayload>
-          }
-          aggregate: {
-            args: Prisma.CodeWorkerAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateCodeWorker>
-          }
-          groupBy: {
-            args: Prisma.CodeWorkerGroupByArgs<ExtArgs>
-            result: $Utils.Optional<CodeWorkerGroupByOutputType>[]
-          }
-          count: {
-            args: Prisma.CodeWorkerCountArgs<ExtArgs>
-            result: $Utils.Optional<CodeWorkerCountAggregateOutputType> | number
-          }
-        }
-      }
-      CodeJob: {
-        payload: Prisma.$CodeJobPayload<ExtArgs>
-        fields: Prisma.CodeJobFieldRefs
-        operations: {
-          findUnique: {
-            args: Prisma.CodeJobFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CodeJobPayload> | null
-          }
-          findUniqueOrThrow: {
-            args: Prisma.CodeJobFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CodeJobPayload>
-          }
-          findFirst: {
-            args: Prisma.CodeJobFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CodeJobPayload> | null
-          }
-          findFirstOrThrow: {
-            args: Prisma.CodeJobFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CodeJobPayload>
-          }
-          findMany: {
-            args: Prisma.CodeJobFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CodeJobPayload>[]
-          }
-          create: {
-            args: Prisma.CodeJobCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CodeJobPayload>
-          }
-          createMany: {
-            args: Prisma.CodeJobCreateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          createManyAndReturn: {
-            args: Prisma.CodeJobCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CodeJobPayload>[]
-          }
-          delete: {
-            args: Prisma.CodeJobDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CodeJobPayload>
-          }
-          update: {
-            args: Prisma.CodeJobUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CodeJobPayload>
-          }
-          deleteMany: {
-            args: Prisma.CodeJobDeleteManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateMany: {
-            args: Prisma.CodeJobUpdateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateManyAndReturn: {
-            args: Prisma.CodeJobUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CodeJobPayload>[]
-          }
-          upsert: {
-            args: Prisma.CodeJobUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CodeJobPayload>
-          }
-          aggregate: {
-            args: Prisma.CodeJobAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateCodeJob>
-          }
-          groupBy: {
-            args: Prisma.CodeJobGroupByArgs<ExtArgs>
-            result: $Utils.Optional<CodeJobGroupByOutputType>[]
-          }
-          count: {
-            args: Prisma.CodeJobCountArgs<ExtArgs>
-            result: $Utils.Optional<CodeJobCountAggregateOutputType> | number
-          }
-        }
-      }
-      CodeJobLog: {
-        payload: Prisma.$CodeJobLogPayload<ExtArgs>
-        fields: Prisma.CodeJobLogFieldRefs
-        operations: {
-          findUnique: {
-            args: Prisma.CodeJobLogFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CodeJobLogPayload> | null
-          }
-          findUniqueOrThrow: {
-            args: Prisma.CodeJobLogFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CodeJobLogPayload>
-          }
-          findFirst: {
-            args: Prisma.CodeJobLogFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CodeJobLogPayload> | null
-          }
-          findFirstOrThrow: {
-            args: Prisma.CodeJobLogFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CodeJobLogPayload>
-          }
-          findMany: {
-            args: Prisma.CodeJobLogFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CodeJobLogPayload>[]
-          }
-          create: {
-            args: Prisma.CodeJobLogCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CodeJobLogPayload>
-          }
-          createMany: {
-            args: Prisma.CodeJobLogCreateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          createManyAndReturn: {
-            args: Prisma.CodeJobLogCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CodeJobLogPayload>[]
-          }
-          delete: {
-            args: Prisma.CodeJobLogDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CodeJobLogPayload>
-          }
-          update: {
-            args: Prisma.CodeJobLogUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CodeJobLogPayload>
-          }
-          deleteMany: {
-            args: Prisma.CodeJobLogDeleteManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateMany: {
-            args: Prisma.CodeJobLogUpdateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateManyAndReturn: {
-            args: Prisma.CodeJobLogUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CodeJobLogPayload>[]
-          }
-          upsert: {
-            args: Prisma.CodeJobLogUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CodeJobLogPayload>
-          }
-          aggregate: {
-            args: Prisma.CodeJobLogAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateCodeJobLog>
-          }
-          groupBy: {
-            args: Prisma.CodeJobLogGroupByArgs<ExtArgs>
-            result: $Utils.Optional<CodeJobLogGroupByOutputType>[]
-          }
-          count: {
-            args: Prisma.CodeJobLogCountArgs<ExtArgs>
-            result: $Utils.Optional<CodeJobLogCountAggregateOutputType> | number
-          }
-        }
-      }
       AiDatabaseSchema: {
         payload: Prisma.$AiDatabaseSchemaPayload<ExtArgs>
         fields: Prisma.AiDatabaseSchemaFieldRefs
@@ -2349,7 +1899,7 @@ export namespace Prisma {
      * ```
      * // Shorthand for `emit: 'stdout'`
      * log: ['query', 'info', 'warn', 'error']
-     *
+     * 
      * // Emit as events only
      * log: [
      *   { emit: 'event', level: 'query' },
@@ -2357,14 +1907,14 @@ export namespace Prisma {
      *   { emit: 'event', level: 'warn' }
      *   { emit: 'event', level: 'error' }
      * ]
-     *
+     * 
      * / Emit as events and log to stdout
      * og: [
      *  { emit: 'stdout', level: 'query' },
      *  { emit: 'stdout', level: 'info' },
      *  { emit: 'stdout', level: 'warn' }
      *  { emit: 'stdout', level: 'error' }
-     *
+     * 
      * ```
      * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/logging#the-log-option).
      */
@@ -2385,7 +1935,7 @@ export namespace Prisma {
     adapter?: runtime.SqlDriverAdapterFactory | null
     /**
      * Global configuration for omitting model fields by default.
-     *
+     * 
      * @example
      * ```
      * const prisma = new PrismaClient({
@@ -2411,11 +1961,6 @@ export namespace Prisma {
     formTemplateVersion?: FormTemplateVersionOmit
     role?: RoleOmit
     appUser?: AppUserOmit
-    codeWorkspace?: CodeWorkspaceOmit
-    codeWorkspaceVersion?: CodeWorkspaceVersionOmit
-    codeWorker?: CodeWorkerOmit
-    codeJob?: CodeJobOmit
-    codeJobLog?: CodeJobLogOmit
     aiDatabaseSchema?: AiDatabaseSchemaOmit
     aiDbChatConversation?: AiDbChatConversationOmit
     aiDbChatMessage?: AiDbChatMessageOmit
@@ -2780,139 +2325,6 @@ export namespace Prisma {
 
 
   /**
-   * Count Type CodeWorkspaceCountOutputType
-   */
-
-  export type CodeWorkspaceCountOutputType = {
-    versions: number
-  }
-
-  export type CodeWorkspaceCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    versions?: boolean | CodeWorkspaceCountOutputTypeCountVersionsArgs
-  }
-
-  // Custom InputTypes
-  /**
-   * CodeWorkspaceCountOutputType without action
-   */
-  export type CodeWorkspaceCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the CodeWorkspaceCountOutputType
-     */
-    select?: CodeWorkspaceCountOutputTypeSelect<ExtArgs> | null
-  }
-
-  /**
-   * CodeWorkspaceCountOutputType without action
-   */
-  export type CodeWorkspaceCountOutputTypeCountVersionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: CodeWorkspaceVersionWhereInput
-  }
-
-
-  /**
-   * Count Type CodeWorkspaceVersionCountOutputType
-   */
-
-  export type CodeWorkspaceVersionCountOutputType = {
-    jobs: number
-  }
-
-  export type CodeWorkspaceVersionCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    jobs?: boolean | CodeWorkspaceVersionCountOutputTypeCountJobsArgs
-  }
-
-  // Custom InputTypes
-  /**
-   * CodeWorkspaceVersionCountOutputType without action
-   */
-  export type CodeWorkspaceVersionCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the CodeWorkspaceVersionCountOutputType
-     */
-    select?: CodeWorkspaceVersionCountOutputTypeSelect<ExtArgs> | null
-  }
-
-  /**
-   * CodeWorkspaceVersionCountOutputType without action
-   */
-  export type CodeWorkspaceVersionCountOutputTypeCountJobsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: CodeJobWhereInput
-  }
-
-
-  /**
-   * Count Type CodeWorkerCountOutputType
-   */
-
-  export type CodeWorkerCountOutputType = {
-    jobs: number
-    logs: number
-  }
-
-  export type CodeWorkerCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    jobs?: boolean | CodeWorkerCountOutputTypeCountJobsArgs
-    logs?: boolean | CodeWorkerCountOutputTypeCountLogsArgs
-  }
-
-  // Custom InputTypes
-  /**
-   * CodeWorkerCountOutputType without action
-   */
-  export type CodeWorkerCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the CodeWorkerCountOutputType
-     */
-    select?: CodeWorkerCountOutputTypeSelect<ExtArgs> | null
-  }
-
-  /**
-   * CodeWorkerCountOutputType without action
-   */
-  export type CodeWorkerCountOutputTypeCountJobsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: CodeJobWhereInput
-  }
-
-  /**
-   * CodeWorkerCountOutputType without action
-   */
-  export type CodeWorkerCountOutputTypeCountLogsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: CodeJobLogWhereInput
-  }
-
-
-  /**
-   * Count Type CodeJobCountOutputType
-   */
-
-  export type CodeJobCountOutputType = {
-    logs: number
-  }
-
-  export type CodeJobCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    logs?: boolean | CodeJobCountOutputTypeCountLogsArgs
-  }
-
-  // Custom InputTypes
-  /**
-   * CodeJobCountOutputType without action
-   */
-  export type CodeJobCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the CodeJobCountOutputType
-     */
-    select?: CodeJobCountOutputTypeSelect<ExtArgs> | null
-  }
-
-  /**
-   * CodeJobCountOutputType without action
-   */
-  export type CodeJobCountOutputTypeCountLogsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: CodeJobLogWhereInput
-  }
-
-
-  /**
    * Count Type AiDatabaseSchemaCountOutputType
    */
 
@@ -3204,55 +2616,55 @@ export namespace Prisma {
     where?: FormWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     *
+     * 
      * Determine the order of Forms to fetch.
      */
     orderBy?: FormOrderByWithRelationInput | FormOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     *
+     * 
      * Sets the start position
      */
     cursor?: FormWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Take `±n` Forms from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Skip the first `n` Forms.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     *
+     * 
      * Count returned Forms
     **/
     _count?: true | FormCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     *
+     * 
      * Select which fields to average
     **/
     _avg?: FormAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     *
+     * 
      * Select which fields to sum
     **/
     _sum?: FormSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     *
+     * 
      * Select which fields to find the minimum value
     **/
     _min?: FormMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     *
+     * 
      * Select which fields to find the maximum value
     **/
     _max?: FormMaxAggregateInputType
@@ -3585,13 +2997,13 @@ export namespace Prisma {
      * @example
      * // Get all Forms
      * const forms = await prisma.form.findMany()
-     *
+     * 
      * // Get first 10 Forms
      * const forms = await prisma.form.findMany({ take: 10 })
-     *
+     * 
      * // Only select the `id`
      * const formWithIdOnly = await prisma.form.findMany({ select: { id: true } })
-     *
+     * 
      */
     findMany<T extends FormFindManyArgs>(args?: SelectSubset<T, FormFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FormPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
 
@@ -3605,7 +3017,7 @@ export namespace Prisma {
      *     // ... data to create a Form
      *   }
      * })
-     *
+     * 
      */
     create<T extends FormCreateArgs>(args: SelectSubset<T, FormCreateArgs<ExtArgs>>): Prisma__FormClient<$Result.GetResult<Prisma.$FormPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
@@ -3619,7 +3031,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *
+     *     
      */
     createMany<T extends FormCreateManyArgs>(args?: SelectSubset<T, FormCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -3633,7 +3045,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *
+     * 
      * // Create many Forms and only return the `id`
      * const formWithIdOnly = await prisma.form.createManyAndReturn({
      *   select: { id: true },
@@ -3643,7 +3055,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     *
+     * 
      */
     createManyAndReturn<T extends FormCreateManyAndReturnArgs>(args?: SelectSubset<T, FormCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FormPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
 
@@ -3657,7 +3069,7 @@ export namespace Prisma {
      *     // ... filter to delete one Form
      *   }
      * })
-     *
+     * 
      */
     delete<T extends FormDeleteArgs>(args: SelectSubset<T, FormDeleteArgs<ExtArgs>>): Prisma__FormClient<$Result.GetResult<Prisma.$FormPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
@@ -3674,7 +3086,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     *
+     * 
      */
     update<T extends FormUpdateArgs>(args: SelectSubset<T, FormUpdateArgs<ExtArgs>>): Prisma__FormClient<$Result.GetResult<Prisma.$FormPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
@@ -3688,7 +3100,7 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-     *
+     * 
      */
     deleteMany<T extends FormDeleteManyArgs>(args?: SelectSubset<T, FormDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -3707,7 +3119,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     *
+     * 
      */
     updateMany<T extends FormUpdateManyArgs>(args: SelectSubset<T, FormUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -3724,7 +3136,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *
+     * 
      * // Update zero or more Forms and only return the `id`
      * const formWithIdOnly = await prisma.form.updateManyAndReturn({
      *   select: { id: true },
@@ -3737,7 +3149,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     *
+     * 
      */
     updateManyAndReturn<T extends FormUpdateManyAndReturnArgs>(args: SelectSubset<T, FormUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FormPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
@@ -3826,7 +3238,7 @@ export namespace Prisma {
      *     _all: true
      *   },
      * })
-     *
+     * 
     **/
     groupBy<
       T extends FormGroupByArgs,
@@ -3961,7 +3373,7 @@ export namespace Prisma {
     readonly templateId: FieldRef<"Form", 'Int'>
     readonly templateVersion: FieldRef<"Form", 'Int'>
   }
-
+    
 
   // Custom InputTypes
   /**
@@ -4030,31 +3442,31 @@ export namespace Prisma {
     where?: FormWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     *
+     * 
      * Determine the order of Forms to fetch.
      */
     orderBy?: FormOrderByWithRelationInput | FormOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     *
+     * 
      * Sets the position for searching for Forms.
      */
     cursor?: FormWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Take `±n` Forms from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Skip the first `n` Forms.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     *
+     * 
      * Filter by unique combinations of Forms.
      */
     distinct?: FormScalarFieldEnum | FormScalarFieldEnum[]
@@ -4082,31 +3494,31 @@ export namespace Prisma {
     where?: FormWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     *
+     * 
      * Determine the order of Forms to fetch.
      */
     orderBy?: FormOrderByWithRelationInput | FormOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     *
+     * 
      * Sets the position for searching for Forms.
      */
     cursor?: FormWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Take `±n` Forms from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Skip the first `n` Forms.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     *
+     * 
      * Filter by unique combinations of Forms.
      */
     distinct?: FormScalarFieldEnum | FormScalarFieldEnum[]
@@ -4134,25 +3546,25 @@ export namespace Prisma {
     where?: FormWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     *
+     * 
      * Determine the order of Forms to fetch.
      */
     orderBy?: FormOrderByWithRelationInput | FormOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     *
+     * 
      * Sets the position for listing Forms.
      */
     cursor?: FormWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Take `±n` Forms from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Skip the first `n` Forms.
      */
     skip?: number
@@ -4691,55 +4103,55 @@ export namespace Prisma {
     where?: FormSubmissionWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     *
+     * 
      * Determine the order of FormSubmissions to fetch.
      */
     orderBy?: FormSubmissionOrderByWithRelationInput | FormSubmissionOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     *
+     * 
      * Sets the start position
      */
     cursor?: FormSubmissionWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Take `±n` FormSubmissions from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Skip the first `n` FormSubmissions.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     *
+     * 
      * Count returned FormSubmissions
     **/
     _count?: true | FormSubmissionCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     *
+     * 
      * Select which fields to average
     **/
     _avg?: FormSubmissionAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     *
+     * 
      * Select which fields to sum
     **/
     _sum?: FormSubmissionSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     *
+     * 
      * Select which fields to find the minimum value
     **/
     _min?: FormSubmissionMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     *
+     * 
      * Select which fields to find the maximum value
     **/
     _max?: FormSubmissionMaxAggregateInputType
@@ -4995,13 +4407,13 @@ export namespace Prisma {
      * @example
      * // Get all FormSubmissions
      * const formSubmissions = await prisma.formSubmission.findMany()
-     *
+     * 
      * // Get first 10 FormSubmissions
      * const formSubmissions = await prisma.formSubmission.findMany({ take: 10 })
-     *
+     * 
      * // Only select the `id`
      * const formSubmissionWithIdOnly = await prisma.formSubmission.findMany({ select: { id: true } })
-     *
+     * 
      */
     findMany<T extends FormSubmissionFindManyArgs>(args?: SelectSubset<T, FormSubmissionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FormSubmissionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
 
@@ -5015,7 +4427,7 @@ export namespace Prisma {
      *     // ... data to create a FormSubmission
      *   }
      * })
-     *
+     * 
      */
     create<T extends FormSubmissionCreateArgs>(args: SelectSubset<T, FormSubmissionCreateArgs<ExtArgs>>): Prisma__FormSubmissionClient<$Result.GetResult<Prisma.$FormSubmissionPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
@@ -5029,7 +4441,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *
+     *     
      */
     createMany<T extends FormSubmissionCreateManyArgs>(args?: SelectSubset<T, FormSubmissionCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -5043,7 +4455,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *
+     * 
      * // Create many FormSubmissions and only return the `id`
      * const formSubmissionWithIdOnly = await prisma.formSubmission.createManyAndReturn({
      *   select: { id: true },
@@ -5053,7 +4465,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     *
+     * 
      */
     createManyAndReturn<T extends FormSubmissionCreateManyAndReturnArgs>(args?: SelectSubset<T, FormSubmissionCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FormSubmissionPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
 
@@ -5067,7 +4479,7 @@ export namespace Prisma {
      *     // ... filter to delete one FormSubmission
      *   }
      * })
-     *
+     * 
      */
     delete<T extends FormSubmissionDeleteArgs>(args: SelectSubset<T, FormSubmissionDeleteArgs<ExtArgs>>): Prisma__FormSubmissionClient<$Result.GetResult<Prisma.$FormSubmissionPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
@@ -5084,7 +4496,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     *
+     * 
      */
     update<T extends FormSubmissionUpdateArgs>(args: SelectSubset<T, FormSubmissionUpdateArgs<ExtArgs>>): Prisma__FormSubmissionClient<$Result.GetResult<Prisma.$FormSubmissionPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
@@ -5098,7 +4510,7 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-     *
+     * 
      */
     deleteMany<T extends FormSubmissionDeleteManyArgs>(args?: SelectSubset<T, FormSubmissionDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -5117,7 +4529,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     *
+     * 
      */
     updateMany<T extends FormSubmissionUpdateManyArgs>(args: SelectSubset<T, FormSubmissionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -5134,7 +4546,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *
+     * 
      * // Update zero or more FormSubmissions and only return the `id`
      * const formSubmissionWithIdOnly = await prisma.formSubmission.updateManyAndReturn({
      *   select: { id: true },
@@ -5147,7 +4559,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     *
+     * 
      */
     updateManyAndReturn<T extends FormSubmissionUpdateManyAndReturnArgs>(args: SelectSubset<T, FormSubmissionUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FormSubmissionPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
@@ -5236,7 +4648,7 @@ export namespace Prisma {
      *     _all: true
      *   },
      * })
-     *
+     * 
     **/
     groupBy<
       T extends FormSubmissionGroupByArgs,
@@ -5356,7 +4768,7 @@ export namespace Prisma {
     readonly computedContent: FieldRef<"FormSubmission", 'String'>
     readonly submittedAt: FieldRef<"FormSubmission", 'DateTime'>
   }
-
+    
 
   // Custom InputTypes
   /**
@@ -5425,31 +4837,31 @@ export namespace Prisma {
     where?: FormSubmissionWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     *
+     * 
      * Determine the order of FormSubmissions to fetch.
      */
     orderBy?: FormSubmissionOrderByWithRelationInput | FormSubmissionOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     *
+     * 
      * Sets the position for searching for FormSubmissions.
      */
     cursor?: FormSubmissionWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Take `±n` FormSubmissions from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Skip the first `n` FormSubmissions.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     *
+     * 
      * Filter by unique combinations of FormSubmissions.
      */
     distinct?: FormSubmissionScalarFieldEnum | FormSubmissionScalarFieldEnum[]
@@ -5477,31 +4889,31 @@ export namespace Prisma {
     where?: FormSubmissionWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     *
+     * 
      * Determine the order of FormSubmissions to fetch.
      */
     orderBy?: FormSubmissionOrderByWithRelationInput | FormSubmissionOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     *
+     * 
      * Sets the position for searching for FormSubmissions.
      */
     cursor?: FormSubmissionWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Take `±n` FormSubmissions from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Skip the first `n` FormSubmissions.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     *
+     * 
      * Filter by unique combinations of FormSubmissions.
      */
     distinct?: FormSubmissionScalarFieldEnum | FormSubmissionScalarFieldEnum[]
@@ -5529,25 +4941,25 @@ export namespace Prisma {
     where?: FormSubmissionWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     *
+     * 
      * Determine the order of FormSubmissions to fetch.
      */
     orderBy?: FormSubmissionOrderByWithRelationInput | FormSubmissionOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     *
+     * 
      * Sets the position for listing FormSubmissions.
      */
     cursor?: FormSubmissionWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Take `±n` FormSubmissions from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Skip the first `n` FormSubmissions.
      */
     skip?: number
@@ -6000,55 +5412,55 @@ export namespace Prisma {
     where?: FormVersionWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     *
+     * 
      * Determine the order of FormVersions to fetch.
      */
     orderBy?: FormVersionOrderByWithRelationInput | FormVersionOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     *
+     * 
      * Sets the start position
      */
     cursor?: FormVersionWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Take `±n` FormVersions from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Skip the first `n` FormVersions.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     *
+     * 
      * Count returned FormVersions
     **/
     _count?: true | FormVersionCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     *
+     * 
      * Select which fields to average
     **/
     _avg?: FormVersionAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     *
+     * 
      * Select which fields to sum
     **/
     _sum?: FormVersionSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     *
+     * 
      * Select which fields to find the minimum value
     **/
     _min?: FormVersionMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     *
+     * 
      * Select which fields to find the maximum value
     **/
     _max?: FormVersionMaxAggregateInputType
@@ -6304,13 +5716,13 @@ export namespace Prisma {
      * @example
      * // Get all FormVersions
      * const formVersions = await prisma.formVersion.findMany()
-     *
+     * 
      * // Get first 10 FormVersions
      * const formVersions = await prisma.formVersion.findMany({ take: 10 })
-     *
+     * 
      * // Only select the `id`
      * const formVersionWithIdOnly = await prisma.formVersion.findMany({ select: { id: true } })
-     *
+     * 
      */
     findMany<T extends FormVersionFindManyArgs>(args?: SelectSubset<T, FormVersionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FormVersionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
 
@@ -6324,7 +5736,7 @@ export namespace Prisma {
      *     // ... data to create a FormVersion
      *   }
      * })
-     *
+     * 
      */
     create<T extends FormVersionCreateArgs>(args: SelectSubset<T, FormVersionCreateArgs<ExtArgs>>): Prisma__FormVersionClient<$Result.GetResult<Prisma.$FormVersionPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
@@ -6338,7 +5750,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *
+     *     
      */
     createMany<T extends FormVersionCreateManyArgs>(args?: SelectSubset<T, FormVersionCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -6352,7 +5764,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *
+     * 
      * // Create many FormVersions and only return the `id`
      * const formVersionWithIdOnly = await prisma.formVersion.createManyAndReturn({
      *   select: { id: true },
@@ -6362,7 +5774,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     *
+     * 
      */
     createManyAndReturn<T extends FormVersionCreateManyAndReturnArgs>(args?: SelectSubset<T, FormVersionCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FormVersionPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
 
@@ -6376,7 +5788,7 @@ export namespace Prisma {
      *     // ... filter to delete one FormVersion
      *   }
      * })
-     *
+     * 
      */
     delete<T extends FormVersionDeleteArgs>(args: SelectSubset<T, FormVersionDeleteArgs<ExtArgs>>): Prisma__FormVersionClient<$Result.GetResult<Prisma.$FormVersionPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
@@ -6393,7 +5805,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     *
+     * 
      */
     update<T extends FormVersionUpdateArgs>(args: SelectSubset<T, FormVersionUpdateArgs<ExtArgs>>): Prisma__FormVersionClient<$Result.GetResult<Prisma.$FormVersionPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
@@ -6407,7 +5819,7 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-     *
+     * 
      */
     deleteMany<T extends FormVersionDeleteManyArgs>(args?: SelectSubset<T, FormVersionDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -6426,7 +5838,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     *
+     * 
      */
     updateMany<T extends FormVersionUpdateManyArgs>(args: SelectSubset<T, FormVersionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -6443,7 +5855,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *
+     * 
      * // Update zero or more FormVersions and only return the `id`
      * const formVersionWithIdOnly = await prisma.formVersion.updateManyAndReturn({
      *   select: { id: true },
@@ -6456,7 +5868,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     *
+     * 
      */
     updateManyAndReturn<T extends FormVersionUpdateManyAndReturnArgs>(args: SelectSubset<T, FormVersionUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FormVersionPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
@@ -6545,7 +5957,7 @@ export namespace Prisma {
      *     _all: true
      *   },
      * })
-     *
+     * 
     **/
     groupBy<
       T extends FormVersionGroupByArgs,
@@ -6666,7 +6078,7 @@ export namespace Prisma {
     readonly published: FieldRef<"FormVersion", 'Boolean'>
     readonly createdAt: FieldRef<"FormVersion", 'DateTime'>
   }
-
+    
 
   // Custom InputTypes
   /**
@@ -6735,31 +6147,31 @@ export namespace Prisma {
     where?: FormVersionWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     *
+     * 
      * Determine the order of FormVersions to fetch.
      */
     orderBy?: FormVersionOrderByWithRelationInput | FormVersionOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     *
+     * 
      * Sets the position for searching for FormVersions.
      */
     cursor?: FormVersionWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Take `±n` FormVersions from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Skip the first `n` FormVersions.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     *
+     * 
      * Filter by unique combinations of FormVersions.
      */
     distinct?: FormVersionScalarFieldEnum | FormVersionScalarFieldEnum[]
@@ -6787,31 +6199,31 @@ export namespace Prisma {
     where?: FormVersionWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     *
+     * 
      * Determine the order of FormVersions to fetch.
      */
     orderBy?: FormVersionOrderByWithRelationInput | FormVersionOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     *
+     * 
      * Sets the position for searching for FormVersions.
      */
     cursor?: FormVersionWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Take `±n` FormVersions from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Skip the first `n` FormVersions.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     *
+     * 
      * Filter by unique combinations of FormVersions.
      */
     distinct?: FormVersionScalarFieldEnum | FormVersionScalarFieldEnum[]
@@ -6839,25 +6251,25 @@ export namespace Prisma {
     where?: FormVersionWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     *
+     * 
      * Determine the order of FormVersions to fetch.
      */
     orderBy?: FormVersionOrderByWithRelationInput | FormVersionOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     *
+     * 
      * Sets the position for listing FormVersions.
      */
     cursor?: FormVersionWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Take `±n` FormVersions from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Skip the first `n` FormVersions.
      */
     skip?: number
@@ -7299,55 +6711,55 @@ export namespace Prisma {
     where?: FormSubmissionValueWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     *
+     * 
      * Determine the order of FormSubmissionValues to fetch.
      */
     orderBy?: FormSubmissionValueOrderByWithRelationInput | FormSubmissionValueOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     *
+     * 
      * Sets the start position
      */
     cursor?: FormSubmissionValueWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Take `±n` FormSubmissionValues from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Skip the first `n` FormSubmissionValues.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     *
+     * 
      * Count returned FormSubmissionValues
     **/
     _count?: true | FormSubmissionValueCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     *
+     * 
      * Select which fields to average
     **/
     _avg?: FormSubmissionValueAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     *
+     * 
      * Select which fields to sum
     **/
     _sum?: FormSubmissionValueSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     *
+     * 
      * Select which fields to find the minimum value
     **/
     _min?: FormSubmissionValueMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     *
+     * 
      * Select which fields to find the maximum value
     **/
     _max?: FormSubmissionValueMaxAggregateInputType
@@ -7627,13 +7039,13 @@ export namespace Prisma {
      * @example
      * // Get all FormSubmissionValues
      * const formSubmissionValues = await prisma.formSubmissionValue.findMany()
-     *
+     * 
      * // Get first 10 FormSubmissionValues
      * const formSubmissionValues = await prisma.formSubmissionValue.findMany({ take: 10 })
-     *
+     * 
      * // Only select the `id`
      * const formSubmissionValueWithIdOnly = await prisma.formSubmissionValue.findMany({ select: { id: true } })
-     *
+     * 
      */
     findMany<T extends FormSubmissionValueFindManyArgs>(args?: SelectSubset<T, FormSubmissionValueFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FormSubmissionValuePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
 
@@ -7647,7 +7059,7 @@ export namespace Prisma {
      *     // ... data to create a FormSubmissionValue
      *   }
      * })
-     *
+     * 
      */
     create<T extends FormSubmissionValueCreateArgs>(args: SelectSubset<T, FormSubmissionValueCreateArgs<ExtArgs>>): Prisma__FormSubmissionValueClient<$Result.GetResult<Prisma.$FormSubmissionValuePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
@@ -7661,7 +7073,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *
+     *     
      */
     createMany<T extends FormSubmissionValueCreateManyArgs>(args?: SelectSubset<T, FormSubmissionValueCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -7675,7 +7087,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *
+     * 
      * // Create many FormSubmissionValues and only return the `id`
      * const formSubmissionValueWithIdOnly = await prisma.formSubmissionValue.createManyAndReturn({
      *   select: { id: true },
@@ -7685,7 +7097,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     *
+     * 
      */
     createManyAndReturn<T extends FormSubmissionValueCreateManyAndReturnArgs>(args?: SelectSubset<T, FormSubmissionValueCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FormSubmissionValuePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
 
@@ -7699,7 +7111,7 @@ export namespace Prisma {
      *     // ... filter to delete one FormSubmissionValue
      *   }
      * })
-     *
+     * 
      */
     delete<T extends FormSubmissionValueDeleteArgs>(args: SelectSubset<T, FormSubmissionValueDeleteArgs<ExtArgs>>): Prisma__FormSubmissionValueClient<$Result.GetResult<Prisma.$FormSubmissionValuePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
@@ -7716,7 +7128,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     *
+     * 
      */
     update<T extends FormSubmissionValueUpdateArgs>(args: SelectSubset<T, FormSubmissionValueUpdateArgs<ExtArgs>>): Prisma__FormSubmissionValueClient<$Result.GetResult<Prisma.$FormSubmissionValuePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
@@ -7730,7 +7142,7 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-     *
+     * 
      */
     deleteMany<T extends FormSubmissionValueDeleteManyArgs>(args?: SelectSubset<T, FormSubmissionValueDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -7749,7 +7161,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     *
+     * 
      */
     updateMany<T extends FormSubmissionValueUpdateManyArgs>(args: SelectSubset<T, FormSubmissionValueUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -7766,7 +7178,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *
+     * 
      * // Update zero or more FormSubmissionValues and only return the `id`
      * const formSubmissionValueWithIdOnly = await prisma.formSubmissionValue.updateManyAndReturn({
      *   select: { id: true },
@@ -7779,7 +7191,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     *
+     * 
      */
     updateManyAndReturn<T extends FormSubmissionValueUpdateManyAndReturnArgs>(args: SelectSubset<T, FormSubmissionValueUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FormSubmissionValuePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
@@ -7868,7 +7280,7 @@ export namespace Prisma {
      *     _all: true
      *   },
      * })
-     *
+     * 
     **/
     groupBy<
       T extends FormSubmissionValueGroupByArgs,
@@ -7992,7 +7404,7 @@ export namespace Prisma {
     readonly rawValue: FieldRef<"FormSubmissionValue", 'String'>
     readonly createdAt: FieldRef<"FormSubmissionValue", 'DateTime'>
   }
-
+    
 
   // Custom InputTypes
   /**
@@ -8061,31 +7473,31 @@ export namespace Prisma {
     where?: FormSubmissionValueWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     *
+     * 
      * Determine the order of FormSubmissionValues to fetch.
      */
     orderBy?: FormSubmissionValueOrderByWithRelationInput | FormSubmissionValueOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     *
+     * 
      * Sets the position for searching for FormSubmissionValues.
      */
     cursor?: FormSubmissionValueWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Take `±n` FormSubmissionValues from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Skip the first `n` FormSubmissionValues.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     *
+     * 
      * Filter by unique combinations of FormSubmissionValues.
      */
     distinct?: FormSubmissionValueScalarFieldEnum | FormSubmissionValueScalarFieldEnum[]
@@ -8113,31 +7525,31 @@ export namespace Prisma {
     where?: FormSubmissionValueWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     *
+     * 
      * Determine the order of FormSubmissionValues to fetch.
      */
     orderBy?: FormSubmissionValueOrderByWithRelationInput | FormSubmissionValueOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     *
+     * 
      * Sets the position for searching for FormSubmissionValues.
      */
     cursor?: FormSubmissionValueWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Take `±n` FormSubmissionValues from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Skip the first `n` FormSubmissionValues.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     *
+     * 
      * Filter by unique combinations of FormSubmissionValues.
      */
     distinct?: FormSubmissionValueScalarFieldEnum | FormSubmissionValueScalarFieldEnum[]
@@ -8165,25 +7577,25 @@ export namespace Prisma {
     where?: FormSubmissionValueWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     *
+     * 
      * Determine the order of FormSubmissionValues to fetch.
      */
     orderBy?: FormSubmissionValueOrderByWithRelationInput | FormSubmissionValueOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     *
+     * 
      * Sets the position for listing FormSubmissionValues.
      */
     cursor?: FormSubmissionValueWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Take `±n` FormSubmissionValues from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Skip the first `n` FormSubmissionValues.
      */
     skip?: number
@@ -8552,55 +7964,55 @@ export namespace Prisma {
     where?: FormEventWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     *
+     * 
      * Determine the order of FormEvents to fetch.
      */
     orderBy?: FormEventOrderByWithRelationInput | FormEventOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     *
+     * 
      * Sets the start position
      */
     cursor?: FormEventWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Take `±n` FormEvents from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Skip the first `n` FormEvents.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     *
+     * 
      * Count returned FormEvents
     **/
     _count?: true | FormEventCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     *
+     * 
      * Select which fields to average
     **/
     _avg?: FormEventAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     *
+     * 
      * Select which fields to sum
     **/
     _sum?: FormEventSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     *
+     * 
      * Select which fields to find the minimum value
     **/
     _min?: FormEventMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     *
+     * 
      * Select which fields to find the maximum value
     **/
     _max?: FormEventMaxAggregateInputType
@@ -8830,13 +8242,13 @@ export namespace Prisma {
      * @example
      * // Get all FormEvents
      * const formEvents = await prisma.formEvent.findMany()
-     *
+     * 
      * // Get first 10 FormEvents
      * const formEvents = await prisma.formEvent.findMany({ take: 10 })
-     *
+     * 
      * // Only select the `id`
      * const formEventWithIdOnly = await prisma.formEvent.findMany({ select: { id: true } })
-     *
+     * 
      */
     findMany<T extends FormEventFindManyArgs>(args?: SelectSubset<T, FormEventFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FormEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
 
@@ -8850,7 +8262,7 @@ export namespace Prisma {
      *     // ... data to create a FormEvent
      *   }
      * })
-     *
+     * 
      */
     create<T extends FormEventCreateArgs>(args: SelectSubset<T, FormEventCreateArgs<ExtArgs>>): Prisma__FormEventClient<$Result.GetResult<Prisma.$FormEventPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
@@ -8864,7 +8276,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *
+     *     
      */
     createMany<T extends FormEventCreateManyArgs>(args?: SelectSubset<T, FormEventCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -8878,7 +8290,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *
+     * 
      * // Create many FormEvents and only return the `id`
      * const formEventWithIdOnly = await prisma.formEvent.createManyAndReturn({
      *   select: { id: true },
@@ -8888,7 +8300,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     *
+     * 
      */
     createManyAndReturn<T extends FormEventCreateManyAndReturnArgs>(args?: SelectSubset<T, FormEventCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FormEventPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
 
@@ -8902,7 +8314,7 @@ export namespace Prisma {
      *     // ... filter to delete one FormEvent
      *   }
      * })
-     *
+     * 
      */
     delete<T extends FormEventDeleteArgs>(args: SelectSubset<T, FormEventDeleteArgs<ExtArgs>>): Prisma__FormEventClient<$Result.GetResult<Prisma.$FormEventPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
@@ -8919,7 +8331,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     *
+     * 
      */
     update<T extends FormEventUpdateArgs>(args: SelectSubset<T, FormEventUpdateArgs<ExtArgs>>): Prisma__FormEventClient<$Result.GetResult<Prisma.$FormEventPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
@@ -8933,7 +8345,7 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-     *
+     * 
      */
     deleteMany<T extends FormEventDeleteManyArgs>(args?: SelectSubset<T, FormEventDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -8952,7 +8364,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     *
+     * 
      */
     updateMany<T extends FormEventUpdateManyArgs>(args: SelectSubset<T, FormEventUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -8969,7 +8381,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *
+     * 
      * // Update zero or more FormEvents and only return the `id`
      * const formEventWithIdOnly = await prisma.formEvent.updateManyAndReturn({
      *   select: { id: true },
@@ -8982,7 +8394,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     *
+     * 
      */
     updateManyAndReturn<T extends FormEventUpdateManyAndReturnArgs>(args: SelectSubset<T, FormEventUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FormEventPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
@@ -9071,7 +8483,7 @@ export namespace Prisma {
      *     _all: true
      *   },
      * })
-     *
+     * 
     **/
     groupBy<
       T extends FormEventGroupByArgs,
@@ -9187,7 +8599,7 @@ export namespace Prisma {
     readonly createdAt: FieldRef<"FormEvent", 'DateTime'>
     readonly updatedAt: FieldRef<"FormEvent", 'DateTime'>
   }
-
+    
 
   // Custom InputTypes
   /**
@@ -9256,31 +8668,31 @@ export namespace Prisma {
     where?: FormEventWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     *
+     * 
      * Determine the order of FormEvents to fetch.
      */
     orderBy?: FormEventOrderByWithRelationInput | FormEventOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     *
+     * 
      * Sets the position for searching for FormEvents.
      */
     cursor?: FormEventWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Take `±n` FormEvents from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Skip the first `n` FormEvents.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     *
+     * 
      * Filter by unique combinations of FormEvents.
      */
     distinct?: FormEventScalarFieldEnum | FormEventScalarFieldEnum[]
@@ -9308,31 +8720,31 @@ export namespace Prisma {
     where?: FormEventWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     *
+     * 
      * Determine the order of FormEvents to fetch.
      */
     orderBy?: FormEventOrderByWithRelationInput | FormEventOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     *
+     * 
      * Sets the position for searching for FormEvents.
      */
     cursor?: FormEventWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Take `±n` FormEvents from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Skip the first `n` FormEvents.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     *
+     * 
      * Filter by unique combinations of FormEvents.
      */
     distinct?: FormEventScalarFieldEnum | FormEventScalarFieldEnum[]
@@ -9360,25 +8772,25 @@ export namespace Prisma {
     where?: FormEventWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     *
+     * 
      * Determine the order of FormEvents to fetch.
      */
     orderBy?: FormEventOrderByWithRelationInput | FormEventOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     *
+     * 
      * Sets the position for listing FormEvents.
      */
     cursor?: FormEventWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Take `±n` FormEvents from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Skip the first `n` FormEvents.
      */
     skip?: number
@@ -9714,55 +9126,55 @@ export namespace Prisma {
     where?: FormAssignmentWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     *
+     * 
      * Determine the order of FormAssignments to fetch.
      */
     orderBy?: FormAssignmentOrderByWithRelationInput | FormAssignmentOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     *
+     * 
      * Sets the start position
      */
     cursor?: FormAssignmentWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Take `±n` FormAssignments from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Skip the first `n` FormAssignments.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     *
+     * 
      * Count returned FormAssignments
     **/
     _count?: true | FormAssignmentCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     *
+     * 
      * Select which fields to average
     **/
     _avg?: FormAssignmentAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     *
+     * 
      * Select which fields to sum
     **/
     _sum?: FormAssignmentSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     *
+     * 
      * Select which fields to find the minimum value
     **/
     _min?: FormAssignmentMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     *
+     * 
      * Select which fields to find the maximum value
     **/
     _max?: FormAssignmentMaxAggregateInputType
@@ -9988,13 +9400,13 @@ export namespace Prisma {
      * @example
      * // Get all FormAssignments
      * const formAssignments = await prisma.formAssignment.findMany()
-     *
+     * 
      * // Get first 10 FormAssignments
      * const formAssignments = await prisma.formAssignment.findMany({ take: 10 })
-     *
+     * 
      * // Only select the `id`
      * const formAssignmentWithIdOnly = await prisma.formAssignment.findMany({ select: { id: true } })
-     *
+     * 
      */
     findMany<T extends FormAssignmentFindManyArgs>(args?: SelectSubset<T, FormAssignmentFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FormAssignmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
 
@@ -10008,7 +9420,7 @@ export namespace Prisma {
      *     // ... data to create a FormAssignment
      *   }
      * })
-     *
+     * 
      */
     create<T extends FormAssignmentCreateArgs>(args: SelectSubset<T, FormAssignmentCreateArgs<ExtArgs>>): Prisma__FormAssignmentClient<$Result.GetResult<Prisma.$FormAssignmentPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
@@ -10022,7 +9434,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *
+     *     
      */
     createMany<T extends FormAssignmentCreateManyArgs>(args?: SelectSubset<T, FormAssignmentCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -10036,7 +9448,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *
+     * 
      * // Create many FormAssignments and only return the `id`
      * const formAssignmentWithIdOnly = await prisma.formAssignment.createManyAndReturn({
      *   select: { id: true },
@@ -10046,7 +9458,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     *
+     * 
      */
     createManyAndReturn<T extends FormAssignmentCreateManyAndReturnArgs>(args?: SelectSubset<T, FormAssignmentCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FormAssignmentPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
 
@@ -10060,7 +9472,7 @@ export namespace Prisma {
      *     // ... filter to delete one FormAssignment
      *   }
      * })
-     *
+     * 
      */
     delete<T extends FormAssignmentDeleteArgs>(args: SelectSubset<T, FormAssignmentDeleteArgs<ExtArgs>>): Prisma__FormAssignmentClient<$Result.GetResult<Prisma.$FormAssignmentPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
@@ -10077,7 +9489,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     *
+     * 
      */
     update<T extends FormAssignmentUpdateArgs>(args: SelectSubset<T, FormAssignmentUpdateArgs<ExtArgs>>): Prisma__FormAssignmentClient<$Result.GetResult<Prisma.$FormAssignmentPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
@@ -10091,7 +9503,7 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-     *
+     * 
      */
     deleteMany<T extends FormAssignmentDeleteManyArgs>(args?: SelectSubset<T, FormAssignmentDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -10110,7 +9522,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     *
+     * 
      */
     updateMany<T extends FormAssignmentUpdateManyArgs>(args: SelectSubset<T, FormAssignmentUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -10127,7 +9539,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *
+     * 
      * // Update zero or more FormAssignments and only return the `id`
      * const formAssignmentWithIdOnly = await prisma.formAssignment.updateManyAndReturn({
      *   select: { id: true },
@@ -10140,7 +9552,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     *
+     * 
      */
     updateManyAndReturn<T extends FormAssignmentUpdateManyAndReturnArgs>(args: SelectSubset<T, FormAssignmentUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FormAssignmentPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
@@ -10229,7 +9641,7 @@ export namespace Prisma {
      *     _all: true
      *   },
      * })
-     *
+     * 
     **/
     groupBy<
       T extends FormAssignmentGroupByArgs,
@@ -10344,7 +9756,7 @@ export namespace Prisma {
     readonly createdAt: FieldRef<"FormAssignment", 'DateTime'>
     readonly updatedAt: FieldRef<"FormAssignment", 'DateTime'>
   }
-
+    
 
   // Custom InputTypes
   /**
@@ -10413,31 +9825,31 @@ export namespace Prisma {
     where?: FormAssignmentWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     *
+     * 
      * Determine the order of FormAssignments to fetch.
      */
     orderBy?: FormAssignmentOrderByWithRelationInput | FormAssignmentOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     *
+     * 
      * Sets the position for searching for FormAssignments.
      */
     cursor?: FormAssignmentWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Take `±n` FormAssignments from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Skip the first `n` FormAssignments.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     *
+     * 
      * Filter by unique combinations of FormAssignments.
      */
     distinct?: FormAssignmentScalarFieldEnum | FormAssignmentScalarFieldEnum[]
@@ -10465,31 +9877,31 @@ export namespace Prisma {
     where?: FormAssignmentWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     *
+     * 
      * Determine the order of FormAssignments to fetch.
      */
     orderBy?: FormAssignmentOrderByWithRelationInput | FormAssignmentOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     *
+     * 
      * Sets the position for searching for FormAssignments.
      */
     cursor?: FormAssignmentWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Take `±n` FormAssignments from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Skip the first `n` FormAssignments.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     *
+     * 
      * Filter by unique combinations of FormAssignments.
      */
     distinct?: FormAssignmentScalarFieldEnum | FormAssignmentScalarFieldEnum[]
@@ -10517,25 +9929,25 @@ export namespace Prisma {
     where?: FormAssignmentWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     *
+     * 
      * Determine the order of FormAssignments to fetch.
      */
     orderBy?: FormAssignmentOrderByWithRelationInput | FormAssignmentOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     *
+     * 
      * Sets the position for listing FormAssignments.
      */
     cursor?: FormAssignmentWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Take `±n` FormAssignments from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Skip the first `n` FormAssignments.
      */
     skip?: number
@@ -10890,55 +10302,55 @@ export namespace Prisma {
     where?: SubmoduleWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     *
+     * 
      * Determine the order of Submodules to fetch.
      */
     orderBy?: SubmoduleOrderByWithRelationInput | SubmoduleOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     *
+     * 
      * Sets the start position
      */
     cursor?: SubmoduleWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Take `±n` Submodules from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Skip the first `n` Submodules.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     *
+     * 
      * Count returned Submodules
     **/
     _count?: true | SubmoduleCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     *
+     * 
      * Select which fields to average
     **/
     _avg?: SubmoduleAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     *
+     * 
      * Select which fields to sum
     **/
     _sum?: SubmoduleSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     *
+     * 
      * Select which fields to find the minimum value
     **/
     _min?: SubmoduleMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     *
+     * 
      * Select which fields to find the maximum value
     **/
     _max?: SubmoduleMaxAggregateInputType
@@ -11164,13 +10576,13 @@ export namespace Prisma {
      * @example
      * // Get all Submodules
      * const submodules = await prisma.submodule.findMany()
-     *
+     * 
      * // Get first 10 Submodules
      * const submodules = await prisma.submodule.findMany({ take: 10 })
-     *
+     * 
      * // Only select the `id`
      * const submoduleWithIdOnly = await prisma.submodule.findMany({ select: { id: true } })
-     *
+     * 
      */
     findMany<T extends SubmoduleFindManyArgs>(args?: SelectSubset<T, SubmoduleFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SubmodulePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
 
@@ -11184,7 +10596,7 @@ export namespace Prisma {
      *     // ... data to create a Submodule
      *   }
      * })
-     *
+     * 
      */
     create<T extends SubmoduleCreateArgs>(args: SelectSubset<T, SubmoduleCreateArgs<ExtArgs>>): Prisma__SubmoduleClient<$Result.GetResult<Prisma.$SubmodulePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
@@ -11198,7 +10610,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *
+     *     
      */
     createMany<T extends SubmoduleCreateManyArgs>(args?: SelectSubset<T, SubmoduleCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -11212,7 +10624,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *
+     * 
      * // Create many Submodules and only return the `id`
      * const submoduleWithIdOnly = await prisma.submodule.createManyAndReturn({
      *   select: { id: true },
@@ -11222,7 +10634,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     *
+     * 
      */
     createManyAndReturn<T extends SubmoduleCreateManyAndReturnArgs>(args?: SelectSubset<T, SubmoduleCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SubmodulePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
 
@@ -11236,7 +10648,7 @@ export namespace Prisma {
      *     // ... filter to delete one Submodule
      *   }
      * })
-     *
+     * 
      */
     delete<T extends SubmoduleDeleteArgs>(args: SelectSubset<T, SubmoduleDeleteArgs<ExtArgs>>): Prisma__SubmoduleClient<$Result.GetResult<Prisma.$SubmodulePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
@@ -11253,7 +10665,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     *
+     * 
      */
     update<T extends SubmoduleUpdateArgs>(args: SelectSubset<T, SubmoduleUpdateArgs<ExtArgs>>): Prisma__SubmoduleClient<$Result.GetResult<Prisma.$SubmodulePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
@@ -11267,7 +10679,7 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-     *
+     * 
      */
     deleteMany<T extends SubmoduleDeleteManyArgs>(args?: SelectSubset<T, SubmoduleDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -11286,7 +10698,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     *
+     * 
      */
     updateMany<T extends SubmoduleUpdateManyArgs>(args: SelectSubset<T, SubmoduleUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -11303,7 +10715,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *
+     * 
      * // Update zero or more Submodules and only return the `id`
      * const submoduleWithIdOnly = await prisma.submodule.updateManyAndReturn({
      *   select: { id: true },
@@ -11316,7 +10728,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     *
+     * 
      */
     updateManyAndReturn<T extends SubmoduleUpdateManyAndReturnArgs>(args: SelectSubset<T, SubmoduleUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SubmodulePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
@@ -11405,7 +10817,7 @@ export namespace Prisma {
      *     _all: true
      *   },
      * })
-     *
+     * 
     **/
     groupBy<
       T extends SubmoduleGroupByArgs,
@@ -11522,7 +10934,7 @@ export namespace Prisma {
     readonly createdAt: FieldRef<"Submodule", 'DateTime'>
     readonly updatedAt: FieldRef<"Submodule", 'DateTime'>
   }
-
+    
 
   // Custom InputTypes
   /**
@@ -11591,31 +11003,31 @@ export namespace Prisma {
     where?: SubmoduleWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     *
+     * 
      * Determine the order of Submodules to fetch.
      */
     orderBy?: SubmoduleOrderByWithRelationInput | SubmoduleOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     *
+     * 
      * Sets the position for searching for Submodules.
      */
     cursor?: SubmoduleWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Take `±n` Submodules from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Skip the first `n` Submodules.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     *
+     * 
      * Filter by unique combinations of Submodules.
      */
     distinct?: SubmoduleScalarFieldEnum | SubmoduleScalarFieldEnum[]
@@ -11643,31 +11055,31 @@ export namespace Prisma {
     where?: SubmoduleWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     *
+     * 
      * Determine the order of Submodules to fetch.
      */
     orderBy?: SubmoduleOrderByWithRelationInput | SubmoduleOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     *
+     * 
      * Sets the position for searching for Submodules.
      */
     cursor?: SubmoduleWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Take `±n` Submodules from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Skip the first `n` Submodules.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     *
+     * 
      * Filter by unique combinations of Submodules.
      */
     distinct?: SubmoduleScalarFieldEnum | SubmoduleScalarFieldEnum[]
@@ -11695,25 +11107,25 @@ export namespace Prisma {
     where?: SubmoduleWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     *
+     * 
      * Determine the order of Submodules to fetch.
      */
     orderBy?: SubmoduleOrderByWithRelationInput | SubmoduleOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     *
+     * 
      * Sets the position for listing Submodules.
      */
     cursor?: SubmoduleWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Take `±n` Submodules from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Skip the first `n` Submodules.
      */
     skip?: number
@@ -12163,55 +11575,55 @@ export namespace Prisma {
     where?: FormTemplateWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     *
+     * 
      * Determine the order of FormTemplates to fetch.
      */
     orderBy?: FormTemplateOrderByWithRelationInput | FormTemplateOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     *
+     * 
      * Sets the start position
      */
     cursor?: FormTemplateWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Take `±n` FormTemplates from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Skip the first `n` FormTemplates.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     *
+     * 
      * Count returned FormTemplates
     **/
     _count?: true | FormTemplateCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     *
+     * 
      * Select which fields to average
     **/
     _avg?: FormTemplateAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     *
+     * 
      * Select which fields to sum
     **/
     _sum?: FormTemplateSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     *
+     * 
      * Select which fields to find the minimum value
     **/
     _min?: FormTemplateMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     *
+     * 
      * Select which fields to find the maximum value
     **/
     _max?: FormTemplateMaxAggregateInputType
@@ -12476,13 +11888,13 @@ export namespace Prisma {
      * @example
      * // Get all FormTemplates
      * const formTemplates = await prisma.formTemplate.findMany()
-     *
+     * 
      * // Get first 10 FormTemplates
      * const formTemplates = await prisma.formTemplate.findMany({ take: 10 })
-     *
+     * 
      * // Only select the `id`
      * const formTemplateWithIdOnly = await prisma.formTemplate.findMany({ select: { id: true } })
-     *
+     * 
      */
     findMany<T extends FormTemplateFindManyArgs>(args?: SelectSubset<T, FormTemplateFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FormTemplatePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
 
@@ -12496,7 +11908,7 @@ export namespace Prisma {
      *     // ... data to create a FormTemplate
      *   }
      * })
-     *
+     * 
      */
     create<T extends FormTemplateCreateArgs>(args: SelectSubset<T, FormTemplateCreateArgs<ExtArgs>>): Prisma__FormTemplateClient<$Result.GetResult<Prisma.$FormTemplatePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
@@ -12510,7 +11922,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *
+     *     
      */
     createMany<T extends FormTemplateCreateManyArgs>(args?: SelectSubset<T, FormTemplateCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -12524,7 +11936,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *
+     * 
      * // Create many FormTemplates and only return the `id`
      * const formTemplateWithIdOnly = await prisma.formTemplate.createManyAndReturn({
      *   select: { id: true },
@@ -12534,7 +11946,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     *
+     * 
      */
     createManyAndReturn<T extends FormTemplateCreateManyAndReturnArgs>(args?: SelectSubset<T, FormTemplateCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FormTemplatePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
 
@@ -12548,7 +11960,7 @@ export namespace Prisma {
      *     // ... filter to delete one FormTemplate
      *   }
      * })
-     *
+     * 
      */
     delete<T extends FormTemplateDeleteArgs>(args: SelectSubset<T, FormTemplateDeleteArgs<ExtArgs>>): Prisma__FormTemplateClient<$Result.GetResult<Prisma.$FormTemplatePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
@@ -12565,7 +11977,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     *
+     * 
      */
     update<T extends FormTemplateUpdateArgs>(args: SelectSubset<T, FormTemplateUpdateArgs<ExtArgs>>): Prisma__FormTemplateClient<$Result.GetResult<Prisma.$FormTemplatePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
@@ -12579,7 +11991,7 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-     *
+     * 
      */
     deleteMany<T extends FormTemplateDeleteManyArgs>(args?: SelectSubset<T, FormTemplateDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -12598,7 +12010,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     *
+     * 
      */
     updateMany<T extends FormTemplateUpdateManyArgs>(args: SelectSubset<T, FormTemplateUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -12615,7 +12027,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *
+     * 
      * // Update zero or more FormTemplates and only return the `id`
      * const formTemplateWithIdOnly = await prisma.formTemplate.updateManyAndReturn({
      *   select: { id: true },
@@ -12628,7 +12040,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     *
+     * 
      */
     updateManyAndReturn<T extends FormTemplateUpdateManyAndReturnArgs>(args: SelectSubset<T, FormTemplateUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FormTemplatePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
@@ -12717,7 +12129,7 @@ export namespace Prisma {
      *     _all: true
      *   },
      * })
-     *
+     * 
     **/
     groupBy<
       T extends FormTemplateGroupByArgs,
@@ -12840,7 +12252,7 @@ export namespace Prisma {
     readonly createdAt: FieldRef<"FormTemplate", 'DateTime'>
     readonly updatedAt: FieldRef<"FormTemplate", 'DateTime'>
   }
-
+    
 
   // Custom InputTypes
   /**
@@ -12909,31 +12321,31 @@ export namespace Prisma {
     where?: FormTemplateWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     *
+     * 
      * Determine the order of FormTemplates to fetch.
      */
     orderBy?: FormTemplateOrderByWithRelationInput | FormTemplateOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     *
+     * 
      * Sets the position for searching for FormTemplates.
      */
     cursor?: FormTemplateWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Take `±n` FormTemplates from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Skip the first `n` FormTemplates.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     *
+     * 
      * Filter by unique combinations of FormTemplates.
      */
     distinct?: FormTemplateScalarFieldEnum | FormTemplateScalarFieldEnum[]
@@ -12961,31 +12373,31 @@ export namespace Prisma {
     where?: FormTemplateWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     *
+     * 
      * Determine the order of FormTemplates to fetch.
      */
     orderBy?: FormTemplateOrderByWithRelationInput | FormTemplateOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     *
+     * 
      * Sets the position for searching for FormTemplates.
      */
     cursor?: FormTemplateWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Take `±n` FormTemplates from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Skip the first `n` FormTemplates.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     *
+     * 
      * Filter by unique combinations of FormTemplates.
      */
     distinct?: FormTemplateScalarFieldEnum | FormTemplateScalarFieldEnum[]
@@ -13013,25 +12425,25 @@ export namespace Prisma {
     where?: FormTemplateWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     *
+     * 
      * Determine the order of FormTemplates to fetch.
      */
     orderBy?: FormTemplateOrderByWithRelationInput | FormTemplateOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     *
+     * 
      * Sets the position for listing FormTemplates.
      */
     cursor?: FormTemplateWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Take `±n` FormTemplates from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Skip the first `n` FormTemplates.
      */
     skip?: number
@@ -13449,55 +12861,55 @@ export namespace Prisma {
     where?: FormTemplateVersionWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     *
+     * 
      * Determine the order of FormTemplateVersions to fetch.
      */
     orderBy?: FormTemplateVersionOrderByWithRelationInput | FormTemplateVersionOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     *
+     * 
      * Sets the start position
      */
     cursor?: FormTemplateVersionWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Take `±n` FormTemplateVersions from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Skip the first `n` FormTemplateVersions.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     *
+     * 
      * Count returned FormTemplateVersions
     **/
     _count?: true | FormTemplateVersionCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     *
+     * 
      * Select which fields to average
     **/
     _avg?: FormTemplateVersionAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     *
+     * 
      * Select which fields to sum
     **/
     _sum?: FormTemplateVersionSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     *
+     * 
      * Select which fields to find the minimum value
     **/
     _min?: FormTemplateVersionMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     *
+     * 
      * Select which fields to find the maximum value
     **/
     _max?: FormTemplateVersionMaxAggregateInputType
@@ -13751,13 +13163,13 @@ export namespace Prisma {
      * @example
      * // Get all FormTemplateVersions
      * const formTemplateVersions = await prisma.formTemplateVersion.findMany()
-     *
+     * 
      * // Get first 10 FormTemplateVersions
      * const formTemplateVersions = await prisma.formTemplateVersion.findMany({ take: 10 })
-     *
+     * 
      * // Only select the `id`
      * const formTemplateVersionWithIdOnly = await prisma.formTemplateVersion.findMany({ select: { id: true } })
-     *
+     * 
      */
     findMany<T extends FormTemplateVersionFindManyArgs>(args?: SelectSubset<T, FormTemplateVersionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FormTemplateVersionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
 
@@ -13771,7 +13183,7 @@ export namespace Prisma {
      *     // ... data to create a FormTemplateVersion
      *   }
      * })
-     *
+     * 
      */
     create<T extends FormTemplateVersionCreateArgs>(args: SelectSubset<T, FormTemplateVersionCreateArgs<ExtArgs>>): Prisma__FormTemplateVersionClient<$Result.GetResult<Prisma.$FormTemplateVersionPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
@@ -13785,7 +13197,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *
+     *     
      */
     createMany<T extends FormTemplateVersionCreateManyArgs>(args?: SelectSubset<T, FormTemplateVersionCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -13799,7 +13211,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *
+     * 
      * // Create many FormTemplateVersions and only return the `id`
      * const formTemplateVersionWithIdOnly = await prisma.formTemplateVersion.createManyAndReturn({
      *   select: { id: true },
@@ -13809,7 +13221,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     *
+     * 
      */
     createManyAndReturn<T extends FormTemplateVersionCreateManyAndReturnArgs>(args?: SelectSubset<T, FormTemplateVersionCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FormTemplateVersionPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
 
@@ -13823,7 +13235,7 @@ export namespace Prisma {
      *     // ... filter to delete one FormTemplateVersion
      *   }
      * })
-     *
+     * 
      */
     delete<T extends FormTemplateVersionDeleteArgs>(args: SelectSubset<T, FormTemplateVersionDeleteArgs<ExtArgs>>): Prisma__FormTemplateVersionClient<$Result.GetResult<Prisma.$FormTemplateVersionPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
@@ -13840,7 +13252,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     *
+     * 
      */
     update<T extends FormTemplateVersionUpdateArgs>(args: SelectSubset<T, FormTemplateVersionUpdateArgs<ExtArgs>>): Prisma__FormTemplateVersionClient<$Result.GetResult<Prisma.$FormTemplateVersionPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
@@ -13854,7 +13266,7 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-     *
+     * 
      */
     deleteMany<T extends FormTemplateVersionDeleteManyArgs>(args?: SelectSubset<T, FormTemplateVersionDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -13873,7 +13285,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     *
+     * 
      */
     updateMany<T extends FormTemplateVersionUpdateManyArgs>(args: SelectSubset<T, FormTemplateVersionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -13890,7 +13302,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *
+     * 
      * // Update zero or more FormTemplateVersions and only return the `id`
      * const formTemplateVersionWithIdOnly = await prisma.formTemplateVersion.updateManyAndReturn({
      *   select: { id: true },
@@ -13903,7 +13315,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     *
+     * 
      */
     updateManyAndReturn<T extends FormTemplateVersionUpdateManyAndReturnArgs>(args: SelectSubset<T, FormTemplateVersionUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FormTemplateVersionPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
@@ -13992,7 +13404,7 @@ export namespace Prisma {
      *     _all: true
      *   },
      * })
-     *
+     * 
     **/
     groupBy<
       T extends FormTemplateVersionGroupByArgs,
@@ -14112,7 +13524,7 @@ export namespace Prisma {
     readonly scheduleConfig: FieldRef<"FormTemplateVersion", 'String'>
     readonly createdAt: FieldRef<"FormTemplateVersion", 'DateTime'>
   }
-
+    
 
   // Custom InputTypes
   /**
@@ -14181,31 +13593,31 @@ export namespace Prisma {
     where?: FormTemplateVersionWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     *
+     * 
      * Determine the order of FormTemplateVersions to fetch.
      */
     orderBy?: FormTemplateVersionOrderByWithRelationInput | FormTemplateVersionOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     *
+     * 
      * Sets the position for searching for FormTemplateVersions.
      */
     cursor?: FormTemplateVersionWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Take `±n` FormTemplateVersions from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Skip the first `n` FormTemplateVersions.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     *
+     * 
      * Filter by unique combinations of FormTemplateVersions.
      */
     distinct?: FormTemplateVersionScalarFieldEnum | FormTemplateVersionScalarFieldEnum[]
@@ -14233,31 +13645,31 @@ export namespace Prisma {
     where?: FormTemplateVersionWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     *
+     * 
      * Determine the order of FormTemplateVersions to fetch.
      */
     orderBy?: FormTemplateVersionOrderByWithRelationInput | FormTemplateVersionOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     *
+     * 
      * Sets the position for searching for FormTemplateVersions.
      */
     cursor?: FormTemplateVersionWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Take `±n` FormTemplateVersions from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Skip the first `n` FormTemplateVersions.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     *
+     * 
      * Filter by unique combinations of FormTemplateVersions.
      */
     distinct?: FormTemplateVersionScalarFieldEnum | FormTemplateVersionScalarFieldEnum[]
@@ -14285,25 +13697,25 @@ export namespace Prisma {
     where?: FormTemplateVersionWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     *
+     * 
      * Determine the order of FormTemplateVersions to fetch.
      */
     orderBy?: FormTemplateVersionOrderByWithRelationInput | FormTemplateVersionOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     *
+     * 
      * Sets the position for listing FormTemplateVersions.
      */
     cursor?: FormTemplateVersionWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Take `±n` FormTemplateVersions from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Skip the first `n` FormTemplateVersions.
      */
     skip?: number
@@ -14609,55 +14021,55 @@ export namespace Prisma {
     where?: RoleWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     *
+     * 
      * Determine the order of Roles to fetch.
      */
     orderBy?: RoleOrderByWithRelationInput | RoleOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     *
+     * 
      * Sets the start position
      */
     cursor?: RoleWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Take `±n` Roles from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Skip the first `n` Roles.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     *
+     * 
      * Count returned Roles
     **/
     _count?: true | RoleCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     *
+     * 
      * Select which fields to average
     **/
     _avg?: RoleAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     *
+     * 
      * Select which fields to sum
     **/
     _sum?: RoleSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     *
+     * 
      * Select which fields to find the minimum value
     **/
     _min?: RoleMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     *
+     * 
      * Select which fields to find the maximum value
     **/
     _max?: RoleMaxAggregateInputType
@@ -14856,13 +14268,13 @@ export namespace Prisma {
      * @example
      * // Get all Roles
      * const roles = await prisma.role.findMany()
-     *
+     * 
      * // Get first 10 Roles
      * const roles = await prisma.role.findMany({ take: 10 })
-     *
+     * 
      * // Only select the `id`
      * const roleWithIdOnly = await prisma.role.findMany({ select: { id: true } })
-     *
+     * 
      */
     findMany<T extends RoleFindManyArgs>(args?: SelectSubset<T, RoleFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RolePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
 
@@ -14876,7 +14288,7 @@ export namespace Prisma {
      *     // ... data to create a Role
      *   }
      * })
-     *
+     * 
      */
     create<T extends RoleCreateArgs>(args: SelectSubset<T, RoleCreateArgs<ExtArgs>>): Prisma__RoleClient<$Result.GetResult<Prisma.$RolePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
@@ -14890,7 +14302,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *
+     *     
      */
     createMany<T extends RoleCreateManyArgs>(args?: SelectSubset<T, RoleCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -14904,7 +14316,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *
+     * 
      * // Create many Roles and only return the `id`
      * const roleWithIdOnly = await prisma.role.createManyAndReturn({
      *   select: { id: true },
@@ -14914,7 +14326,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     *
+     * 
      */
     createManyAndReturn<T extends RoleCreateManyAndReturnArgs>(args?: SelectSubset<T, RoleCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RolePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
 
@@ -14928,7 +14340,7 @@ export namespace Prisma {
      *     // ... filter to delete one Role
      *   }
      * })
-     *
+     * 
      */
     delete<T extends RoleDeleteArgs>(args: SelectSubset<T, RoleDeleteArgs<ExtArgs>>): Prisma__RoleClient<$Result.GetResult<Prisma.$RolePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
@@ -14945,7 +14357,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     *
+     * 
      */
     update<T extends RoleUpdateArgs>(args: SelectSubset<T, RoleUpdateArgs<ExtArgs>>): Prisma__RoleClient<$Result.GetResult<Prisma.$RolePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
@@ -14959,7 +14371,7 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-     *
+     * 
      */
     deleteMany<T extends RoleDeleteManyArgs>(args?: SelectSubset<T, RoleDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -14978,7 +14390,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     *
+     * 
      */
     updateMany<T extends RoleUpdateManyArgs>(args: SelectSubset<T, RoleUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -14995,7 +14407,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *
+     * 
      * // Update zero or more Roles and only return the `id`
      * const roleWithIdOnly = await prisma.role.updateManyAndReturn({
      *   select: { id: true },
@@ -15008,7 +14420,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     *
+     * 
      */
     updateManyAndReturn<T extends RoleUpdateManyAndReturnArgs>(args: SelectSubset<T, RoleUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RolePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
@@ -15097,7 +14509,7 @@ export namespace Prisma {
      *     _all: true
      *   },
      * })
-     *
+     * 
     **/
     groupBy<
       T extends RoleGroupByArgs,
@@ -15210,7 +14622,7 @@ export namespace Prisma {
     readonly createdAt: FieldRef<"Role", 'DateTime'>
     readonly updatedAt: FieldRef<"Role", 'DateTime'>
   }
-
+    
 
   // Custom InputTypes
   /**
@@ -15279,31 +14691,31 @@ export namespace Prisma {
     where?: RoleWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     *
+     * 
      * Determine the order of Roles to fetch.
      */
     orderBy?: RoleOrderByWithRelationInput | RoleOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     *
+     * 
      * Sets the position for searching for Roles.
      */
     cursor?: RoleWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Take `±n` Roles from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Skip the first `n` Roles.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     *
+     * 
      * Filter by unique combinations of Roles.
      */
     distinct?: RoleScalarFieldEnum | RoleScalarFieldEnum[]
@@ -15331,31 +14743,31 @@ export namespace Prisma {
     where?: RoleWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     *
+     * 
      * Determine the order of Roles to fetch.
      */
     orderBy?: RoleOrderByWithRelationInput | RoleOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     *
+     * 
      * Sets the position for searching for Roles.
      */
     cursor?: RoleWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Take `±n` Roles from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Skip the first `n` Roles.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     *
+     * 
      * Filter by unique combinations of Roles.
      */
     distinct?: RoleScalarFieldEnum | RoleScalarFieldEnum[]
@@ -15383,25 +14795,25 @@ export namespace Prisma {
     where?: RoleWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     *
+     * 
      * Determine the order of Roles to fetch.
      */
     orderBy?: RoleOrderByWithRelationInput | RoleOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     *
+     * 
      * Sets the position for listing Roles.
      */
     cursor?: RoleWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Take `±n` Roles from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Skip the first `n` Roles.
      */
     skip?: number
@@ -15801,55 +15213,55 @@ export namespace Prisma {
     where?: AppUserWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     *
+     * 
      * Determine the order of AppUsers to fetch.
      */
     orderBy?: AppUserOrderByWithRelationInput | AppUserOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     *
+     * 
      * Sets the start position
      */
     cursor?: AppUserWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Take `±n` AppUsers from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Skip the first `n` AppUsers.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     *
+     * 
      * Count returned AppUsers
     **/
     _count?: true | AppUserCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     *
+     * 
      * Select which fields to average
     **/
     _avg?: AppUserAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     *
+     * 
      * Select which fields to sum
     **/
     _sum?: AppUserSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     *
+     * 
      * Select which fields to find the minimum value
     **/
     _min?: AppUserMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     *
+     * 
      * Select which fields to find the maximum value
     **/
     _max?: AppUserMaxAggregateInputType
@@ -16049,13 +15461,13 @@ export namespace Prisma {
      * @example
      * // Get all AppUsers
      * const appUsers = await prisma.appUser.findMany()
-     *
+     * 
      * // Get first 10 AppUsers
      * const appUsers = await prisma.appUser.findMany({ take: 10 })
-     *
+     * 
      * // Only select the `id`
      * const appUserWithIdOnly = await prisma.appUser.findMany({ select: { id: true } })
-     *
+     * 
      */
     findMany<T extends AppUserFindManyArgs>(args?: SelectSubset<T, AppUserFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AppUserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
 
@@ -16069,7 +15481,7 @@ export namespace Prisma {
      *     // ... data to create a AppUser
      *   }
      * })
-     *
+     * 
      */
     create<T extends AppUserCreateArgs>(args: SelectSubset<T, AppUserCreateArgs<ExtArgs>>): Prisma__AppUserClient<$Result.GetResult<Prisma.$AppUserPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
@@ -16083,7 +15495,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *
+     *     
      */
     createMany<T extends AppUserCreateManyArgs>(args?: SelectSubset<T, AppUserCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -16097,7 +15509,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *
+     * 
      * // Create many AppUsers and only return the `id`
      * const appUserWithIdOnly = await prisma.appUser.createManyAndReturn({
      *   select: { id: true },
@@ -16107,7 +15519,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     *
+     * 
      */
     createManyAndReturn<T extends AppUserCreateManyAndReturnArgs>(args?: SelectSubset<T, AppUserCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AppUserPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
 
@@ -16121,7 +15533,7 @@ export namespace Prisma {
      *     // ... filter to delete one AppUser
      *   }
      * })
-     *
+     * 
      */
     delete<T extends AppUserDeleteArgs>(args: SelectSubset<T, AppUserDeleteArgs<ExtArgs>>): Prisma__AppUserClient<$Result.GetResult<Prisma.$AppUserPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
@@ -16138,7 +15550,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     *
+     * 
      */
     update<T extends AppUserUpdateArgs>(args: SelectSubset<T, AppUserUpdateArgs<ExtArgs>>): Prisma__AppUserClient<$Result.GetResult<Prisma.$AppUserPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
@@ -16152,7 +15564,7 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-     *
+     * 
      */
     deleteMany<T extends AppUserDeleteManyArgs>(args?: SelectSubset<T, AppUserDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -16171,7 +15583,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     *
+     * 
      */
     updateMany<T extends AppUserUpdateManyArgs>(args: SelectSubset<T, AppUserUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -16188,7 +15600,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *
+     * 
      * // Update zero or more AppUsers and only return the `id`
      * const appUserWithIdOnly = await prisma.appUser.updateManyAndReturn({
      *   select: { id: true },
@@ -16201,7 +15613,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     *
+     * 
      */
     updateManyAndReturn<T extends AppUserUpdateManyAndReturnArgs>(args: SelectSubset<T, AppUserUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AppUserPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
@@ -16290,7 +15702,7 @@ export namespace Prisma {
      *     _all: true
      *   },
      * })
-     *
+     * 
     **/
     groupBy<
       T extends AppUserGroupByArgs,
@@ -16401,7 +15813,7 @@ export namespace Prisma {
     readonly createdAt: FieldRef<"AppUser", 'DateTime'>
     readonly updatedAt: FieldRef<"AppUser", 'DateTime'>
   }
-
+    
 
   // Custom InputTypes
   /**
@@ -16470,31 +15882,31 @@ export namespace Prisma {
     where?: AppUserWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     *
+     * 
      * Determine the order of AppUsers to fetch.
      */
     orderBy?: AppUserOrderByWithRelationInput | AppUserOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     *
+     * 
      * Sets the position for searching for AppUsers.
      */
     cursor?: AppUserWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Take `±n` AppUsers from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Skip the first `n` AppUsers.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     *
+     * 
      * Filter by unique combinations of AppUsers.
      */
     distinct?: AppUserScalarFieldEnum | AppUserScalarFieldEnum[]
@@ -16522,31 +15934,31 @@ export namespace Prisma {
     where?: AppUserWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     *
+     * 
      * Determine the order of AppUsers to fetch.
      */
     orderBy?: AppUserOrderByWithRelationInput | AppUserOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     *
+     * 
      * Sets the position for searching for AppUsers.
      */
     cursor?: AppUserWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Take `±n` AppUsers from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Skip the first `n` AppUsers.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     *
+     * 
      * Filter by unique combinations of AppUsers.
      */
     distinct?: AppUserScalarFieldEnum | AppUserScalarFieldEnum[]
@@ -16574,25 +15986,25 @@ export namespace Prisma {
     where?: AppUserWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     *
+     * 
      * Determine the order of AppUsers to fetch.
      */
     orderBy?: AppUserOrderByWithRelationInput | AppUserOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     *
+     * 
      * Sets the position for listing AppUsers.
      */
     cursor?: AppUserWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Take `±n` AppUsers from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Skip the first `n` AppUsers.
      */
     skip?: number
@@ -16832,6408 +16244,6 @@ export namespace Prisma {
 
 
   /**
-   * Model CodeWorkspace
-   */
-
-  export type AggregateCodeWorkspace = {
-    _count: CodeWorkspaceCountAggregateOutputType | null
-    _avg: CodeWorkspaceAvgAggregateOutputType | null
-    _sum: CodeWorkspaceSumAggregateOutputType | null
-    _min: CodeWorkspaceMinAggregateOutputType | null
-    _max: CodeWorkspaceMaxAggregateOutputType | null
-  }
-
-  export type CodeWorkspaceAvgAggregateOutputType = {
-    currentVersion: number | null
-  }
-
-  export type CodeWorkspaceSumAggregateOutputType = {
-    currentVersion: number | null
-  }
-
-  export type CodeWorkspaceMinAggregateOutputType = {
-    id: string | null
-    slug: string | null
-    name: string | null
-    description: string | null
-    language: string | null
-    currentVersion: number | null
-    active: boolean | null
-    createdAt: Date | null
-    updatedAt: Date | null
-    createdByUserId: string | null
-    updatedByUserId: string | null
-  }
-
-  export type CodeWorkspaceMaxAggregateOutputType = {
-    id: string | null
-    slug: string | null
-    name: string | null
-    description: string | null
-    language: string | null
-    currentVersion: number | null
-    active: boolean | null
-    createdAt: Date | null
-    updatedAt: Date | null
-    createdByUserId: string | null
-    updatedByUserId: string | null
-  }
-
-  export type CodeWorkspaceCountAggregateOutputType = {
-    id: number
-    slug: number
-    name: number
-    description: number
-    language: number
-    currentVersion: number
-    active: number
-    createdAt: number
-    updatedAt: number
-    createdByUserId: number
-    updatedByUserId: number
-    _all: number
-  }
-
-
-  export type CodeWorkspaceAvgAggregateInputType = {
-    currentVersion?: true
-  }
-
-  export type CodeWorkspaceSumAggregateInputType = {
-    currentVersion?: true
-  }
-
-  export type CodeWorkspaceMinAggregateInputType = {
-    id?: true
-    slug?: true
-    name?: true
-    description?: true
-    language?: true
-    currentVersion?: true
-    active?: true
-    createdAt?: true
-    updatedAt?: true
-    createdByUserId?: true
-    updatedByUserId?: true
-  }
-
-  export type CodeWorkspaceMaxAggregateInputType = {
-    id?: true
-    slug?: true
-    name?: true
-    description?: true
-    language?: true
-    currentVersion?: true
-    active?: true
-    createdAt?: true
-    updatedAt?: true
-    createdByUserId?: true
-    updatedByUserId?: true
-  }
-
-  export type CodeWorkspaceCountAggregateInputType = {
-    id?: true
-    slug?: true
-    name?: true
-    description?: true
-    language?: true
-    currentVersion?: true
-    active?: true
-    createdAt?: true
-    updatedAt?: true
-    createdByUserId?: true
-    updatedByUserId?: true
-    _all?: true
-  }
-
-  export type CodeWorkspaceAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which CodeWorkspace to aggregate.
-     */
-    where?: CodeWorkspaceWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     *
-     * Determine the order of CodeWorkspaces to fetch.
-     */
-    orderBy?: CodeWorkspaceOrderByWithRelationInput | CodeWorkspaceOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     *
-     * Sets the start position
-     */
-    cursor?: CodeWorkspaceWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
-     * Take `±n` CodeWorkspaces from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
-     * Skip the first `n` CodeWorkspaces.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     *
-     * Count returned CodeWorkspaces
-    **/
-    _count?: true | CodeWorkspaceCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     *
-     * Select which fields to average
-    **/
-    _avg?: CodeWorkspaceAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     *
-     * Select which fields to sum
-    **/
-    _sum?: CodeWorkspaceSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     *
-     * Select which fields to find the minimum value
-    **/
-    _min?: CodeWorkspaceMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     *
-     * Select which fields to find the maximum value
-    **/
-    _max?: CodeWorkspaceMaxAggregateInputType
-  }
-
-  export type GetCodeWorkspaceAggregateType<T extends CodeWorkspaceAggregateArgs> = {
-        [P in keyof T & keyof AggregateCodeWorkspace]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateCodeWorkspace[P]>
-      : GetScalarType<T[P], AggregateCodeWorkspace[P]>
-  }
-
-
-
-
-  export type CodeWorkspaceGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: CodeWorkspaceWhereInput
-    orderBy?: CodeWorkspaceOrderByWithAggregationInput | CodeWorkspaceOrderByWithAggregationInput[]
-    by: CodeWorkspaceScalarFieldEnum[] | CodeWorkspaceScalarFieldEnum
-    having?: CodeWorkspaceScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: CodeWorkspaceCountAggregateInputType | true
-    _avg?: CodeWorkspaceAvgAggregateInputType
-    _sum?: CodeWorkspaceSumAggregateInputType
-    _min?: CodeWorkspaceMinAggregateInputType
-    _max?: CodeWorkspaceMaxAggregateInputType
-  }
-
-  export type CodeWorkspaceGroupByOutputType = {
-    id: string
-    slug: string
-    name: string
-    description: string
-    language: string
-    currentVersion: number
-    active: boolean
-    createdAt: Date
-    updatedAt: Date
-    createdByUserId: string
-    updatedByUserId: string
-    _count: CodeWorkspaceCountAggregateOutputType | null
-    _avg: CodeWorkspaceAvgAggregateOutputType | null
-    _sum: CodeWorkspaceSumAggregateOutputType | null
-    _min: CodeWorkspaceMinAggregateOutputType | null
-    _max: CodeWorkspaceMaxAggregateOutputType | null
-  }
-
-  type GetCodeWorkspaceGroupByPayload<T extends CodeWorkspaceGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickEnumerable<CodeWorkspaceGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof CodeWorkspaceGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], CodeWorkspaceGroupByOutputType[P]>
-            : GetScalarType<T[P], CodeWorkspaceGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type CodeWorkspaceSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    slug?: boolean
-    name?: boolean
-    description?: boolean
-    language?: boolean
-    currentVersion?: boolean
-    active?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-    createdByUserId?: boolean
-    updatedByUserId?: boolean
-    versions?: boolean | CodeWorkspace$versionsArgs<ExtArgs>
-    _count?: boolean | CodeWorkspaceCountOutputTypeDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["codeWorkspace"]>
-
-  export type CodeWorkspaceSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    slug?: boolean
-    name?: boolean
-    description?: boolean
-    language?: boolean
-    currentVersion?: boolean
-    active?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-    createdByUserId?: boolean
-    updatedByUserId?: boolean
-  }, ExtArgs["result"]["codeWorkspace"]>
-
-  export type CodeWorkspaceSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    slug?: boolean
-    name?: boolean
-    description?: boolean
-    language?: boolean
-    currentVersion?: boolean
-    active?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-    createdByUserId?: boolean
-    updatedByUserId?: boolean
-  }, ExtArgs["result"]["codeWorkspace"]>
-
-  export type CodeWorkspaceSelectScalar = {
-    id?: boolean
-    slug?: boolean
-    name?: boolean
-    description?: boolean
-    language?: boolean
-    currentVersion?: boolean
-    active?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-    createdByUserId?: boolean
-    updatedByUserId?: boolean
-  }
-
-  export type CodeWorkspaceOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "slug" | "name" | "description" | "language" | "currentVersion" | "active" | "createdAt" | "updatedAt" | "createdByUserId" | "updatedByUserId", ExtArgs["result"]["codeWorkspace"]>
-  export type CodeWorkspaceInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    versions?: boolean | CodeWorkspace$versionsArgs<ExtArgs>
-    _count?: boolean | CodeWorkspaceCountOutputTypeDefaultArgs<ExtArgs>
-  }
-  export type CodeWorkspaceIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-  export type CodeWorkspaceIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-
-  export type $CodeWorkspacePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "CodeWorkspace"
-    objects: {
-      versions: Prisma.$CodeWorkspaceVersionPayload<ExtArgs>[]
-    }
-    scalars: $Extensions.GetPayloadResult<{
-      id: string
-      slug: string
-      name: string
-      description: string
-      language: string
-      currentVersion: number
-      active: boolean
-      createdAt: Date
-      updatedAt: Date
-      createdByUserId: string
-      updatedByUserId: string
-    }, ExtArgs["result"]["codeWorkspace"]>
-    composites: {}
-  }
-
-  type CodeWorkspaceGetPayload<S extends boolean | null | undefined | CodeWorkspaceDefaultArgs> = $Result.GetResult<Prisma.$CodeWorkspacePayload, S>
-
-  type CodeWorkspaceCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<CodeWorkspaceFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: CodeWorkspaceCountAggregateInputType | true
-    }
-
-  export interface CodeWorkspaceDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['CodeWorkspace'], meta: { name: 'CodeWorkspace' } }
-    /**
-     * Find zero or one CodeWorkspace that matches the filter.
-     * @param {CodeWorkspaceFindUniqueArgs} args - Arguments to find a CodeWorkspace
-     * @example
-     * // Get one CodeWorkspace
-     * const codeWorkspace = await prisma.codeWorkspace.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUnique<T extends CodeWorkspaceFindUniqueArgs>(args: SelectSubset<T, CodeWorkspaceFindUniqueArgs<ExtArgs>>): Prisma__CodeWorkspaceClient<$Result.GetResult<Prisma.$CodeWorkspacePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find one CodeWorkspace that matches the filter or throw an error with `error.code='P2025'`
-     * if no matches were found.
-     * @param {CodeWorkspaceFindUniqueOrThrowArgs} args - Arguments to find a CodeWorkspace
-     * @example
-     * // Get one CodeWorkspace
-     * const codeWorkspace = await prisma.codeWorkspace.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUniqueOrThrow<T extends CodeWorkspaceFindUniqueOrThrowArgs>(args: SelectSubset<T, CodeWorkspaceFindUniqueOrThrowArgs<ExtArgs>>): Prisma__CodeWorkspaceClient<$Result.GetResult<Prisma.$CodeWorkspacePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first CodeWorkspace that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {CodeWorkspaceFindFirstArgs} args - Arguments to find a CodeWorkspace
-     * @example
-     * // Get one CodeWorkspace
-     * const codeWorkspace = await prisma.codeWorkspace.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirst<T extends CodeWorkspaceFindFirstArgs>(args?: SelectSubset<T, CodeWorkspaceFindFirstArgs<ExtArgs>>): Prisma__CodeWorkspaceClient<$Result.GetResult<Prisma.$CodeWorkspacePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first CodeWorkspace that matches the filter or
-     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {CodeWorkspaceFindFirstOrThrowArgs} args - Arguments to find a CodeWorkspace
-     * @example
-     * // Get one CodeWorkspace
-     * const codeWorkspace = await prisma.codeWorkspace.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirstOrThrow<T extends CodeWorkspaceFindFirstOrThrowArgs>(args?: SelectSubset<T, CodeWorkspaceFindFirstOrThrowArgs<ExtArgs>>): Prisma__CodeWorkspaceClient<$Result.GetResult<Prisma.$CodeWorkspacePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find zero or more CodeWorkspaces that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {CodeWorkspaceFindManyArgs} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all CodeWorkspaces
-     * const codeWorkspaces = await prisma.codeWorkspace.findMany()
-     *
-     * // Get first 10 CodeWorkspaces
-     * const codeWorkspaces = await prisma.codeWorkspace.findMany({ take: 10 })
-     *
-     * // Only select the `id`
-     * const codeWorkspaceWithIdOnly = await prisma.codeWorkspace.findMany({ select: { id: true } })
-     *
-     */
-    findMany<T extends CodeWorkspaceFindManyArgs>(args?: SelectSubset<T, CodeWorkspaceFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CodeWorkspacePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
-
-    /**
-     * Create a CodeWorkspace.
-     * @param {CodeWorkspaceCreateArgs} args - Arguments to create a CodeWorkspace.
-     * @example
-     * // Create one CodeWorkspace
-     * const CodeWorkspace = await prisma.codeWorkspace.create({
-     *   data: {
-     *     // ... data to create a CodeWorkspace
-     *   }
-     * })
-     *
-     */
-    create<T extends CodeWorkspaceCreateArgs>(args: SelectSubset<T, CodeWorkspaceCreateArgs<ExtArgs>>): Prisma__CodeWorkspaceClient<$Result.GetResult<Prisma.$CodeWorkspacePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Create many CodeWorkspaces.
-     * @param {CodeWorkspaceCreateManyArgs} args - Arguments to create many CodeWorkspaces.
-     * @example
-     * // Create many CodeWorkspaces
-     * const codeWorkspace = await prisma.codeWorkspace.createMany({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     *
-     */
-    createMany<T extends CodeWorkspaceCreateManyArgs>(args?: SelectSubset<T, CodeWorkspaceCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create many CodeWorkspaces and returns the data saved in the database.
-     * @param {CodeWorkspaceCreateManyAndReturnArgs} args - Arguments to create many CodeWorkspaces.
-     * @example
-     * // Create many CodeWorkspaces
-     * const codeWorkspace = await prisma.codeWorkspace.createManyAndReturn({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     *
-     * // Create many CodeWorkspaces and only return the `id`
-     * const codeWorkspaceWithIdOnly = await prisma.codeWorkspace.createManyAndReturn({
-     *   select: { id: true },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     *
-     */
-    createManyAndReturn<T extends CodeWorkspaceCreateManyAndReturnArgs>(args?: SelectSubset<T, CodeWorkspaceCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CodeWorkspacePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Delete a CodeWorkspace.
-     * @param {CodeWorkspaceDeleteArgs} args - Arguments to delete one CodeWorkspace.
-     * @example
-     * // Delete one CodeWorkspace
-     * const CodeWorkspace = await prisma.codeWorkspace.delete({
-     *   where: {
-     *     // ... filter to delete one CodeWorkspace
-     *   }
-     * })
-     *
-     */
-    delete<T extends CodeWorkspaceDeleteArgs>(args: SelectSubset<T, CodeWorkspaceDeleteArgs<ExtArgs>>): Prisma__CodeWorkspaceClient<$Result.GetResult<Prisma.$CodeWorkspacePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Update one CodeWorkspace.
-     * @param {CodeWorkspaceUpdateArgs} args - Arguments to update one CodeWorkspace.
-     * @example
-     * // Update one CodeWorkspace
-     * const codeWorkspace = await prisma.codeWorkspace.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     *
-     */
-    update<T extends CodeWorkspaceUpdateArgs>(args: SelectSubset<T, CodeWorkspaceUpdateArgs<ExtArgs>>): Prisma__CodeWorkspaceClient<$Result.GetResult<Prisma.$CodeWorkspacePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Delete zero or more CodeWorkspaces.
-     * @param {CodeWorkspaceDeleteManyArgs} args - Arguments to filter CodeWorkspaces to delete.
-     * @example
-     * // Delete a few CodeWorkspaces
-     * const { count } = await prisma.codeWorkspace.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     *
-     */
-    deleteMany<T extends CodeWorkspaceDeleteManyArgs>(args?: SelectSubset<T, CodeWorkspaceDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more CodeWorkspaces.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {CodeWorkspaceUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many CodeWorkspaces
-     * const codeWorkspace = await prisma.codeWorkspace.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     *
-     */
-    updateMany<T extends CodeWorkspaceUpdateManyArgs>(args: SelectSubset<T, CodeWorkspaceUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more CodeWorkspaces and returns the data updated in the database.
-     * @param {CodeWorkspaceUpdateManyAndReturnArgs} args - Arguments to update many CodeWorkspaces.
-     * @example
-     * // Update many CodeWorkspaces
-     * const codeWorkspace = await prisma.codeWorkspace.updateManyAndReturn({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     *
-     * // Update zero or more CodeWorkspaces and only return the `id`
-     * const codeWorkspaceWithIdOnly = await prisma.codeWorkspace.updateManyAndReturn({
-     *   select: { id: true },
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     *
-     */
-    updateManyAndReturn<T extends CodeWorkspaceUpdateManyAndReturnArgs>(args: SelectSubset<T, CodeWorkspaceUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CodeWorkspacePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Create or update one CodeWorkspace.
-     * @param {CodeWorkspaceUpsertArgs} args - Arguments to update or create a CodeWorkspace.
-     * @example
-     * // Update or create a CodeWorkspace
-     * const codeWorkspace = await prisma.codeWorkspace.upsert({
-     *   create: {
-     *     // ... data to create a CodeWorkspace
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the CodeWorkspace we want to update
-     *   }
-     * })
-     */
-    upsert<T extends CodeWorkspaceUpsertArgs>(args: SelectSubset<T, CodeWorkspaceUpsertArgs<ExtArgs>>): Prisma__CodeWorkspaceClient<$Result.GetResult<Prisma.$CodeWorkspacePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-
-    /**
-     * Count the number of CodeWorkspaces.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {CodeWorkspaceCountArgs} args - Arguments to filter CodeWorkspaces to count.
-     * @example
-     * // Count the number of CodeWorkspaces
-     * const count = await prisma.codeWorkspace.count({
-     *   where: {
-     *     // ... the filter for the CodeWorkspaces we want to count
-     *   }
-     * })
-    **/
-    count<T extends CodeWorkspaceCountArgs>(
-      args?: Subset<T, CodeWorkspaceCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends $Utils.Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], CodeWorkspaceCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a CodeWorkspace.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {CodeWorkspaceAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends CodeWorkspaceAggregateArgs>(args: Subset<T, CodeWorkspaceAggregateArgs>): Prisma.PrismaPromise<GetCodeWorkspaceAggregateType<T>>
-
-    /**
-     * Group by CodeWorkspace.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {CodeWorkspaceGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     *
-    **/
-    groupBy<
-      T extends CodeWorkspaceGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: CodeWorkspaceGroupByArgs['orderBy'] }
-        : { orderBy?: CodeWorkspaceGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends MaybeTupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, CodeWorkspaceGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetCodeWorkspaceGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the CodeWorkspace model
-   */
-  readonly fields: CodeWorkspaceFieldRefs;
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for CodeWorkspace.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export interface Prisma__CodeWorkspaceClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
-    versions<T extends CodeWorkspace$versionsArgs<ExtArgs> = {}>(args?: Subset<T, CodeWorkspace$versionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CodeWorkspaceVersionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
-  }
-
-
-
-
-  /**
-   * Fields of the CodeWorkspace model
-   */
-  interface CodeWorkspaceFieldRefs {
-    readonly id: FieldRef<"CodeWorkspace", 'String'>
-    readonly slug: FieldRef<"CodeWorkspace", 'String'>
-    readonly name: FieldRef<"CodeWorkspace", 'String'>
-    readonly description: FieldRef<"CodeWorkspace", 'String'>
-    readonly language: FieldRef<"CodeWorkspace", 'String'>
-    readonly currentVersion: FieldRef<"CodeWorkspace", 'Int'>
-    readonly active: FieldRef<"CodeWorkspace", 'Boolean'>
-    readonly createdAt: FieldRef<"CodeWorkspace", 'DateTime'>
-    readonly updatedAt: FieldRef<"CodeWorkspace", 'DateTime'>
-    readonly createdByUserId: FieldRef<"CodeWorkspace", 'String'>
-    readonly updatedByUserId: FieldRef<"CodeWorkspace", 'String'>
-  }
-
-
-  // Custom InputTypes
-  /**
-   * CodeWorkspace findUnique
-   */
-  export type CodeWorkspaceFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the CodeWorkspace
-     */
-    select?: CodeWorkspaceSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the CodeWorkspace
-     */
-    omit?: CodeWorkspaceOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CodeWorkspaceInclude<ExtArgs> | null
-    /**
-     * Filter, which CodeWorkspace to fetch.
-     */
-    where: CodeWorkspaceWhereUniqueInput
-  }
-
-  /**
-   * CodeWorkspace findUniqueOrThrow
-   */
-  export type CodeWorkspaceFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the CodeWorkspace
-     */
-    select?: CodeWorkspaceSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the CodeWorkspace
-     */
-    omit?: CodeWorkspaceOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CodeWorkspaceInclude<ExtArgs> | null
-    /**
-     * Filter, which CodeWorkspace to fetch.
-     */
-    where: CodeWorkspaceWhereUniqueInput
-  }
-
-  /**
-   * CodeWorkspace findFirst
-   */
-  export type CodeWorkspaceFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the CodeWorkspace
-     */
-    select?: CodeWorkspaceSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the CodeWorkspace
-     */
-    omit?: CodeWorkspaceOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CodeWorkspaceInclude<ExtArgs> | null
-    /**
-     * Filter, which CodeWorkspace to fetch.
-     */
-    where?: CodeWorkspaceWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     *
-     * Determine the order of CodeWorkspaces to fetch.
-     */
-    orderBy?: CodeWorkspaceOrderByWithRelationInput | CodeWorkspaceOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     *
-     * Sets the position for searching for CodeWorkspaces.
-     */
-    cursor?: CodeWorkspaceWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
-     * Take `±n` CodeWorkspaces from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
-     * Skip the first `n` CodeWorkspaces.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     *
-     * Filter by unique combinations of CodeWorkspaces.
-     */
-    distinct?: CodeWorkspaceScalarFieldEnum | CodeWorkspaceScalarFieldEnum[]
-  }
-
-  /**
-   * CodeWorkspace findFirstOrThrow
-   */
-  export type CodeWorkspaceFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the CodeWorkspace
-     */
-    select?: CodeWorkspaceSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the CodeWorkspace
-     */
-    omit?: CodeWorkspaceOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CodeWorkspaceInclude<ExtArgs> | null
-    /**
-     * Filter, which CodeWorkspace to fetch.
-     */
-    where?: CodeWorkspaceWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     *
-     * Determine the order of CodeWorkspaces to fetch.
-     */
-    orderBy?: CodeWorkspaceOrderByWithRelationInput | CodeWorkspaceOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     *
-     * Sets the position for searching for CodeWorkspaces.
-     */
-    cursor?: CodeWorkspaceWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
-     * Take `±n` CodeWorkspaces from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
-     * Skip the first `n` CodeWorkspaces.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     *
-     * Filter by unique combinations of CodeWorkspaces.
-     */
-    distinct?: CodeWorkspaceScalarFieldEnum | CodeWorkspaceScalarFieldEnum[]
-  }
-
-  /**
-   * CodeWorkspace findMany
-   */
-  export type CodeWorkspaceFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the CodeWorkspace
-     */
-    select?: CodeWorkspaceSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the CodeWorkspace
-     */
-    omit?: CodeWorkspaceOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CodeWorkspaceInclude<ExtArgs> | null
-    /**
-     * Filter, which CodeWorkspaces to fetch.
-     */
-    where?: CodeWorkspaceWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     *
-     * Determine the order of CodeWorkspaces to fetch.
-     */
-    orderBy?: CodeWorkspaceOrderByWithRelationInput | CodeWorkspaceOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     *
-     * Sets the position for listing CodeWorkspaces.
-     */
-    cursor?: CodeWorkspaceWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
-     * Take `±n` CodeWorkspaces from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
-     * Skip the first `n` CodeWorkspaces.
-     */
-    skip?: number
-    distinct?: CodeWorkspaceScalarFieldEnum | CodeWorkspaceScalarFieldEnum[]
-  }
-
-  /**
-   * CodeWorkspace create
-   */
-  export type CodeWorkspaceCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the CodeWorkspace
-     */
-    select?: CodeWorkspaceSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the CodeWorkspace
-     */
-    omit?: CodeWorkspaceOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CodeWorkspaceInclude<ExtArgs> | null
-    /**
-     * The data needed to create a CodeWorkspace.
-     */
-    data: XOR<CodeWorkspaceCreateInput, CodeWorkspaceUncheckedCreateInput>
-  }
-
-  /**
-   * CodeWorkspace createMany
-   */
-  export type CodeWorkspaceCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to create many CodeWorkspaces.
-     */
-    data: CodeWorkspaceCreateManyInput | CodeWorkspaceCreateManyInput[]
-  }
-
-  /**
-   * CodeWorkspace createManyAndReturn
-   */
-  export type CodeWorkspaceCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the CodeWorkspace
-     */
-    select?: CodeWorkspaceSelectCreateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the CodeWorkspace
-     */
-    omit?: CodeWorkspaceOmit<ExtArgs> | null
-    /**
-     * The data used to create many CodeWorkspaces.
-     */
-    data: CodeWorkspaceCreateManyInput | CodeWorkspaceCreateManyInput[]
-  }
-
-  /**
-   * CodeWorkspace update
-   */
-  export type CodeWorkspaceUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the CodeWorkspace
-     */
-    select?: CodeWorkspaceSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the CodeWorkspace
-     */
-    omit?: CodeWorkspaceOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CodeWorkspaceInclude<ExtArgs> | null
-    /**
-     * The data needed to update a CodeWorkspace.
-     */
-    data: XOR<CodeWorkspaceUpdateInput, CodeWorkspaceUncheckedUpdateInput>
-    /**
-     * Choose, which CodeWorkspace to update.
-     */
-    where: CodeWorkspaceWhereUniqueInput
-  }
-
-  /**
-   * CodeWorkspace updateMany
-   */
-  export type CodeWorkspaceUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to update CodeWorkspaces.
-     */
-    data: XOR<CodeWorkspaceUpdateManyMutationInput, CodeWorkspaceUncheckedUpdateManyInput>
-    /**
-     * Filter which CodeWorkspaces to update
-     */
-    where?: CodeWorkspaceWhereInput
-    /**
-     * Limit how many CodeWorkspaces to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * CodeWorkspace updateManyAndReturn
-   */
-  export type CodeWorkspaceUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the CodeWorkspace
-     */
-    select?: CodeWorkspaceSelectUpdateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the CodeWorkspace
-     */
-    omit?: CodeWorkspaceOmit<ExtArgs> | null
-    /**
-     * The data used to update CodeWorkspaces.
-     */
-    data: XOR<CodeWorkspaceUpdateManyMutationInput, CodeWorkspaceUncheckedUpdateManyInput>
-    /**
-     * Filter which CodeWorkspaces to update
-     */
-    where?: CodeWorkspaceWhereInput
-    /**
-     * Limit how many CodeWorkspaces to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * CodeWorkspace upsert
-   */
-  export type CodeWorkspaceUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the CodeWorkspace
-     */
-    select?: CodeWorkspaceSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the CodeWorkspace
-     */
-    omit?: CodeWorkspaceOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CodeWorkspaceInclude<ExtArgs> | null
-    /**
-     * The filter to search for the CodeWorkspace to update in case it exists.
-     */
-    where: CodeWorkspaceWhereUniqueInput
-    /**
-     * In case the CodeWorkspace found by the `where` argument doesn't exist, create a new CodeWorkspace with this data.
-     */
-    create: XOR<CodeWorkspaceCreateInput, CodeWorkspaceUncheckedCreateInput>
-    /**
-     * In case the CodeWorkspace was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<CodeWorkspaceUpdateInput, CodeWorkspaceUncheckedUpdateInput>
-  }
-
-  /**
-   * CodeWorkspace delete
-   */
-  export type CodeWorkspaceDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the CodeWorkspace
-     */
-    select?: CodeWorkspaceSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the CodeWorkspace
-     */
-    omit?: CodeWorkspaceOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CodeWorkspaceInclude<ExtArgs> | null
-    /**
-     * Filter which CodeWorkspace to delete.
-     */
-    where: CodeWorkspaceWhereUniqueInput
-  }
-
-  /**
-   * CodeWorkspace deleteMany
-   */
-  export type CodeWorkspaceDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which CodeWorkspaces to delete
-     */
-    where?: CodeWorkspaceWhereInput
-    /**
-     * Limit how many CodeWorkspaces to delete.
-     */
-    limit?: number
-  }
-
-  /**
-   * CodeWorkspace.versions
-   */
-  export type CodeWorkspace$versionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the CodeWorkspaceVersion
-     */
-    select?: CodeWorkspaceVersionSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the CodeWorkspaceVersion
-     */
-    omit?: CodeWorkspaceVersionOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CodeWorkspaceVersionInclude<ExtArgs> | null
-    where?: CodeWorkspaceVersionWhereInput
-    orderBy?: CodeWorkspaceVersionOrderByWithRelationInput | CodeWorkspaceVersionOrderByWithRelationInput[]
-    cursor?: CodeWorkspaceVersionWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: CodeWorkspaceVersionScalarFieldEnum | CodeWorkspaceVersionScalarFieldEnum[]
-  }
-
-  /**
-   * CodeWorkspace without action
-   */
-  export type CodeWorkspaceDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the CodeWorkspace
-     */
-    select?: CodeWorkspaceSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the CodeWorkspace
-     */
-    omit?: CodeWorkspaceOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CodeWorkspaceInclude<ExtArgs> | null
-  }
-
-
-  /**
-   * Model CodeWorkspaceVersion
-   */
-
-  export type AggregateCodeWorkspaceVersion = {
-    _count: CodeWorkspaceVersionCountAggregateOutputType | null
-    _avg: CodeWorkspaceVersionAvgAggregateOutputType | null
-    _sum: CodeWorkspaceVersionSumAggregateOutputType | null
-    _min: CodeWorkspaceVersionMinAggregateOutputType | null
-    _max: CodeWorkspaceVersionMaxAggregateOutputType | null
-  }
-
-  export type CodeWorkspaceVersionAvgAggregateOutputType = {
-    version: number | null
-    sizeBytes: number | null
-  }
-
-  export type CodeWorkspaceVersionSumAggregateOutputType = {
-    version: number | null
-    sizeBytes: number | null
-  }
-
-  export type CodeWorkspaceVersionMinAggregateOutputType = {
-    id: string | null
-    workspaceId: string | null
-    version: number | null
-    snapshot: string | null
-    snapshotHash: string | null
-    message: string | null
-    isAutosave: boolean | null
-    clientRequestId: string | null
-    ip: string | null
-    userAgent: string | null
-    referer: string | null
-    meta: string | null
-    sizeBytes: number | null
-    createdAt: Date | null
-    createdByUserId: string | null
-  }
-
-  export type CodeWorkspaceVersionMaxAggregateOutputType = {
-    id: string | null
-    workspaceId: string | null
-    version: number | null
-    snapshot: string | null
-    snapshotHash: string | null
-    message: string | null
-    isAutosave: boolean | null
-    clientRequestId: string | null
-    ip: string | null
-    userAgent: string | null
-    referer: string | null
-    meta: string | null
-    sizeBytes: number | null
-    createdAt: Date | null
-    createdByUserId: string | null
-  }
-
-  export type CodeWorkspaceVersionCountAggregateOutputType = {
-    id: number
-    workspaceId: number
-    version: number
-    snapshot: number
-    snapshotHash: number
-    message: number
-    isAutosave: number
-    clientRequestId: number
-    ip: number
-    userAgent: number
-    referer: number
-    meta: number
-    sizeBytes: number
-    createdAt: number
-    createdByUserId: number
-    _all: number
-  }
-
-
-  export type CodeWorkspaceVersionAvgAggregateInputType = {
-    version?: true
-    sizeBytes?: true
-  }
-
-  export type CodeWorkspaceVersionSumAggregateInputType = {
-    version?: true
-    sizeBytes?: true
-  }
-
-  export type CodeWorkspaceVersionMinAggregateInputType = {
-    id?: true
-    workspaceId?: true
-    version?: true
-    snapshot?: true
-    snapshotHash?: true
-    message?: true
-    isAutosave?: true
-    clientRequestId?: true
-    ip?: true
-    userAgent?: true
-    referer?: true
-    meta?: true
-    sizeBytes?: true
-    createdAt?: true
-    createdByUserId?: true
-  }
-
-  export type CodeWorkspaceVersionMaxAggregateInputType = {
-    id?: true
-    workspaceId?: true
-    version?: true
-    snapshot?: true
-    snapshotHash?: true
-    message?: true
-    isAutosave?: true
-    clientRequestId?: true
-    ip?: true
-    userAgent?: true
-    referer?: true
-    meta?: true
-    sizeBytes?: true
-    createdAt?: true
-    createdByUserId?: true
-  }
-
-  export type CodeWorkspaceVersionCountAggregateInputType = {
-    id?: true
-    workspaceId?: true
-    version?: true
-    snapshot?: true
-    snapshotHash?: true
-    message?: true
-    isAutosave?: true
-    clientRequestId?: true
-    ip?: true
-    userAgent?: true
-    referer?: true
-    meta?: true
-    sizeBytes?: true
-    createdAt?: true
-    createdByUserId?: true
-    _all?: true
-  }
-
-  export type CodeWorkspaceVersionAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which CodeWorkspaceVersion to aggregate.
-     */
-    where?: CodeWorkspaceVersionWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     *
-     * Determine the order of CodeWorkspaceVersions to fetch.
-     */
-    orderBy?: CodeWorkspaceVersionOrderByWithRelationInput | CodeWorkspaceVersionOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     *
-     * Sets the start position
-     */
-    cursor?: CodeWorkspaceVersionWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
-     * Take `±n` CodeWorkspaceVersions from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
-     * Skip the first `n` CodeWorkspaceVersions.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     *
-     * Count returned CodeWorkspaceVersions
-    **/
-    _count?: true | CodeWorkspaceVersionCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     *
-     * Select which fields to average
-    **/
-    _avg?: CodeWorkspaceVersionAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     *
-     * Select which fields to sum
-    **/
-    _sum?: CodeWorkspaceVersionSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     *
-     * Select which fields to find the minimum value
-    **/
-    _min?: CodeWorkspaceVersionMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     *
-     * Select which fields to find the maximum value
-    **/
-    _max?: CodeWorkspaceVersionMaxAggregateInputType
-  }
-
-  export type GetCodeWorkspaceVersionAggregateType<T extends CodeWorkspaceVersionAggregateArgs> = {
-        [P in keyof T & keyof AggregateCodeWorkspaceVersion]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateCodeWorkspaceVersion[P]>
-      : GetScalarType<T[P], AggregateCodeWorkspaceVersion[P]>
-  }
-
-
-
-
-  export type CodeWorkspaceVersionGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: CodeWorkspaceVersionWhereInput
-    orderBy?: CodeWorkspaceVersionOrderByWithAggregationInput | CodeWorkspaceVersionOrderByWithAggregationInput[]
-    by: CodeWorkspaceVersionScalarFieldEnum[] | CodeWorkspaceVersionScalarFieldEnum
-    having?: CodeWorkspaceVersionScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: CodeWorkspaceVersionCountAggregateInputType | true
-    _avg?: CodeWorkspaceVersionAvgAggregateInputType
-    _sum?: CodeWorkspaceVersionSumAggregateInputType
-    _min?: CodeWorkspaceVersionMinAggregateInputType
-    _max?: CodeWorkspaceVersionMaxAggregateInputType
-  }
-
-  export type CodeWorkspaceVersionGroupByOutputType = {
-    id: string
-    workspaceId: string
-    version: number
-    snapshot: string
-    snapshotHash: string
-    message: string
-    isAutosave: boolean
-    clientRequestId: string | null
-    ip: string | null
-    userAgent: string | null
-    referer: string | null
-    meta: string
-    sizeBytes: number
-    createdAt: Date
-    createdByUserId: string
-    _count: CodeWorkspaceVersionCountAggregateOutputType | null
-    _avg: CodeWorkspaceVersionAvgAggregateOutputType | null
-    _sum: CodeWorkspaceVersionSumAggregateOutputType | null
-    _min: CodeWorkspaceVersionMinAggregateOutputType | null
-    _max: CodeWorkspaceVersionMaxAggregateOutputType | null
-  }
-
-  type GetCodeWorkspaceVersionGroupByPayload<T extends CodeWorkspaceVersionGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickEnumerable<CodeWorkspaceVersionGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof CodeWorkspaceVersionGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], CodeWorkspaceVersionGroupByOutputType[P]>
-            : GetScalarType<T[P], CodeWorkspaceVersionGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type CodeWorkspaceVersionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    workspaceId?: boolean
-    version?: boolean
-    snapshot?: boolean
-    snapshotHash?: boolean
-    message?: boolean
-    isAutosave?: boolean
-    clientRequestId?: boolean
-    ip?: boolean
-    userAgent?: boolean
-    referer?: boolean
-    meta?: boolean
-    sizeBytes?: boolean
-    createdAt?: boolean
-    createdByUserId?: boolean
-    workspace?: boolean | CodeWorkspaceDefaultArgs<ExtArgs>
-    jobs?: boolean | CodeWorkspaceVersion$jobsArgs<ExtArgs>
-    _count?: boolean | CodeWorkspaceVersionCountOutputTypeDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["codeWorkspaceVersion"]>
-
-  export type CodeWorkspaceVersionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    workspaceId?: boolean
-    version?: boolean
-    snapshot?: boolean
-    snapshotHash?: boolean
-    message?: boolean
-    isAutosave?: boolean
-    clientRequestId?: boolean
-    ip?: boolean
-    userAgent?: boolean
-    referer?: boolean
-    meta?: boolean
-    sizeBytes?: boolean
-    createdAt?: boolean
-    createdByUserId?: boolean
-    workspace?: boolean | CodeWorkspaceDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["codeWorkspaceVersion"]>
-
-  export type CodeWorkspaceVersionSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    workspaceId?: boolean
-    version?: boolean
-    snapshot?: boolean
-    snapshotHash?: boolean
-    message?: boolean
-    isAutosave?: boolean
-    clientRequestId?: boolean
-    ip?: boolean
-    userAgent?: boolean
-    referer?: boolean
-    meta?: boolean
-    sizeBytes?: boolean
-    createdAt?: boolean
-    createdByUserId?: boolean
-    workspace?: boolean | CodeWorkspaceDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["codeWorkspaceVersion"]>
-
-  export type CodeWorkspaceVersionSelectScalar = {
-    id?: boolean
-    workspaceId?: boolean
-    version?: boolean
-    snapshot?: boolean
-    snapshotHash?: boolean
-    message?: boolean
-    isAutosave?: boolean
-    clientRequestId?: boolean
-    ip?: boolean
-    userAgent?: boolean
-    referer?: boolean
-    meta?: boolean
-    sizeBytes?: boolean
-    createdAt?: boolean
-    createdByUserId?: boolean
-  }
-
-  export type CodeWorkspaceVersionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "workspaceId" | "version" | "snapshot" | "snapshotHash" | "message" | "isAutosave" | "clientRequestId" | "ip" | "userAgent" | "referer" | "meta" | "sizeBytes" | "createdAt" | "createdByUserId", ExtArgs["result"]["codeWorkspaceVersion"]>
-  export type CodeWorkspaceVersionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    workspace?: boolean | CodeWorkspaceDefaultArgs<ExtArgs>
-    jobs?: boolean | CodeWorkspaceVersion$jobsArgs<ExtArgs>
-    _count?: boolean | CodeWorkspaceVersionCountOutputTypeDefaultArgs<ExtArgs>
-  }
-  export type CodeWorkspaceVersionIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    workspace?: boolean | CodeWorkspaceDefaultArgs<ExtArgs>
-  }
-  export type CodeWorkspaceVersionIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    workspace?: boolean | CodeWorkspaceDefaultArgs<ExtArgs>
-  }
-
-  export type $CodeWorkspaceVersionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "CodeWorkspaceVersion"
-    objects: {
-      workspace: Prisma.$CodeWorkspacePayload<ExtArgs>
-      jobs: Prisma.$CodeJobPayload<ExtArgs>[]
-    }
-    scalars: $Extensions.GetPayloadResult<{
-      id: string
-      workspaceId: string
-      version: number
-      snapshot: string
-      snapshotHash: string
-      message: string
-      isAutosave: boolean
-      clientRequestId: string | null
-      ip: string | null
-      userAgent: string | null
-      referer: string | null
-      meta: string
-      sizeBytes: number
-      createdAt: Date
-      createdByUserId: string
-    }, ExtArgs["result"]["codeWorkspaceVersion"]>
-    composites: {}
-  }
-
-  type CodeWorkspaceVersionGetPayload<S extends boolean | null | undefined | CodeWorkspaceVersionDefaultArgs> = $Result.GetResult<Prisma.$CodeWorkspaceVersionPayload, S>
-
-  type CodeWorkspaceVersionCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<CodeWorkspaceVersionFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: CodeWorkspaceVersionCountAggregateInputType | true
-    }
-
-  export interface CodeWorkspaceVersionDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['CodeWorkspaceVersion'], meta: { name: 'CodeWorkspaceVersion' } }
-    /**
-     * Find zero or one CodeWorkspaceVersion that matches the filter.
-     * @param {CodeWorkspaceVersionFindUniqueArgs} args - Arguments to find a CodeWorkspaceVersion
-     * @example
-     * // Get one CodeWorkspaceVersion
-     * const codeWorkspaceVersion = await prisma.codeWorkspaceVersion.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUnique<T extends CodeWorkspaceVersionFindUniqueArgs>(args: SelectSubset<T, CodeWorkspaceVersionFindUniqueArgs<ExtArgs>>): Prisma__CodeWorkspaceVersionClient<$Result.GetResult<Prisma.$CodeWorkspaceVersionPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find one CodeWorkspaceVersion that matches the filter or throw an error with `error.code='P2025'`
-     * if no matches were found.
-     * @param {CodeWorkspaceVersionFindUniqueOrThrowArgs} args - Arguments to find a CodeWorkspaceVersion
-     * @example
-     * // Get one CodeWorkspaceVersion
-     * const codeWorkspaceVersion = await prisma.codeWorkspaceVersion.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUniqueOrThrow<T extends CodeWorkspaceVersionFindUniqueOrThrowArgs>(args: SelectSubset<T, CodeWorkspaceVersionFindUniqueOrThrowArgs<ExtArgs>>): Prisma__CodeWorkspaceVersionClient<$Result.GetResult<Prisma.$CodeWorkspaceVersionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first CodeWorkspaceVersion that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {CodeWorkspaceVersionFindFirstArgs} args - Arguments to find a CodeWorkspaceVersion
-     * @example
-     * // Get one CodeWorkspaceVersion
-     * const codeWorkspaceVersion = await prisma.codeWorkspaceVersion.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirst<T extends CodeWorkspaceVersionFindFirstArgs>(args?: SelectSubset<T, CodeWorkspaceVersionFindFirstArgs<ExtArgs>>): Prisma__CodeWorkspaceVersionClient<$Result.GetResult<Prisma.$CodeWorkspaceVersionPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first CodeWorkspaceVersion that matches the filter or
-     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {CodeWorkspaceVersionFindFirstOrThrowArgs} args - Arguments to find a CodeWorkspaceVersion
-     * @example
-     * // Get one CodeWorkspaceVersion
-     * const codeWorkspaceVersion = await prisma.codeWorkspaceVersion.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirstOrThrow<T extends CodeWorkspaceVersionFindFirstOrThrowArgs>(args?: SelectSubset<T, CodeWorkspaceVersionFindFirstOrThrowArgs<ExtArgs>>): Prisma__CodeWorkspaceVersionClient<$Result.GetResult<Prisma.$CodeWorkspaceVersionPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find zero or more CodeWorkspaceVersions that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {CodeWorkspaceVersionFindManyArgs} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all CodeWorkspaceVersions
-     * const codeWorkspaceVersions = await prisma.codeWorkspaceVersion.findMany()
-     *
-     * // Get first 10 CodeWorkspaceVersions
-     * const codeWorkspaceVersions = await prisma.codeWorkspaceVersion.findMany({ take: 10 })
-     *
-     * // Only select the `id`
-     * const codeWorkspaceVersionWithIdOnly = await prisma.codeWorkspaceVersion.findMany({ select: { id: true } })
-     *
-     */
-    findMany<T extends CodeWorkspaceVersionFindManyArgs>(args?: SelectSubset<T, CodeWorkspaceVersionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CodeWorkspaceVersionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
-
-    /**
-     * Create a CodeWorkspaceVersion.
-     * @param {CodeWorkspaceVersionCreateArgs} args - Arguments to create a CodeWorkspaceVersion.
-     * @example
-     * // Create one CodeWorkspaceVersion
-     * const CodeWorkspaceVersion = await prisma.codeWorkspaceVersion.create({
-     *   data: {
-     *     // ... data to create a CodeWorkspaceVersion
-     *   }
-     * })
-     *
-     */
-    create<T extends CodeWorkspaceVersionCreateArgs>(args: SelectSubset<T, CodeWorkspaceVersionCreateArgs<ExtArgs>>): Prisma__CodeWorkspaceVersionClient<$Result.GetResult<Prisma.$CodeWorkspaceVersionPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Create many CodeWorkspaceVersions.
-     * @param {CodeWorkspaceVersionCreateManyArgs} args - Arguments to create many CodeWorkspaceVersions.
-     * @example
-     * // Create many CodeWorkspaceVersions
-     * const codeWorkspaceVersion = await prisma.codeWorkspaceVersion.createMany({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     *
-     */
-    createMany<T extends CodeWorkspaceVersionCreateManyArgs>(args?: SelectSubset<T, CodeWorkspaceVersionCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create many CodeWorkspaceVersions and returns the data saved in the database.
-     * @param {CodeWorkspaceVersionCreateManyAndReturnArgs} args - Arguments to create many CodeWorkspaceVersions.
-     * @example
-     * // Create many CodeWorkspaceVersions
-     * const codeWorkspaceVersion = await prisma.codeWorkspaceVersion.createManyAndReturn({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     *
-     * // Create many CodeWorkspaceVersions and only return the `id`
-     * const codeWorkspaceVersionWithIdOnly = await prisma.codeWorkspaceVersion.createManyAndReturn({
-     *   select: { id: true },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     *
-     */
-    createManyAndReturn<T extends CodeWorkspaceVersionCreateManyAndReturnArgs>(args?: SelectSubset<T, CodeWorkspaceVersionCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CodeWorkspaceVersionPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Delete a CodeWorkspaceVersion.
-     * @param {CodeWorkspaceVersionDeleteArgs} args - Arguments to delete one CodeWorkspaceVersion.
-     * @example
-     * // Delete one CodeWorkspaceVersion
-     * const CodeWorkspaceVersion = await prisma.codeWorkspaceVersion.delete({
-     *   where: {
-     *     // ... filter to delete one CodeWorkspaceVersion
-     *   }
-     * })
-     *
-     */
-    delete<T extends CodeWorkspaceVersionDeleteArgs>(args: SelectSubset<T, CodeWorkspaceVersionDeleteArgs<ExtArgs>>): Prisma__CodeWorkspaceVersionClient<$Result.GetResult<Prisma.$CodeWorkspaceVersionPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Update one CodeWorkspaceVersion.
-     * @param {CodeWorkspaceVersionUpdateArgs} args - Arguments to update one CodeWorkspaceVersion.
-     * @example
-     * // Update one CodeWorkspaceVersion
-     * const codeWorkspaceVersion = await prisma.codeWorkspaceVersion.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     *
-     */
-    update<T extends CodeWorkspaceVersionUpdateArgs>(args: SelectSubset<T, CodeWorkspaceVersionUpdateArgs<ExtArgs>>): Prisma__CodeWorkspaceVersionClient<$Result.GetResult<Prisma.$CodeWorkspaceVersionPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Delete zero or more CodeWorkspaceVersions.
-     * @param {CodeWorkspaceVersionDeleteManyArgs} args - Arguments to filter CodeWorkspaceVersions to delete.
-     * @example
-     * // Delete a few CodeWorkspaceVersions
-     * const { count } = await prisma.codeWorkspaceVersion.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     *
-     */
-    deleteMany<T extends CodeWorkspaceVersionDeleteManyArgs>(args?: SelectSubset<T, CodeWorkspaceVersionDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more CodeWorkspaceVersions.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {CodeWorkspaceVersionUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many CodeWorkspaceVersions
-     * const codeWorkspaceVersion = await prisma.codeWorkspaceVersion.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     *
-     */
-    updateMany<T extends CodeWorkspaceVersionUpdateManyArgs>(args: SelectSubset<T, CodeWorkspaceVersionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more CodeWorkspaceVersions and returns the data updated in the database.
-     * @param {CodeWorkspaceVersionUpdateManyAndReturnArgs} args - Arguments to update many CodeWorkspaceVersions.
-     * @example
-     * // Update many CodeWorkspaceVersions
-     * const codeWorkspaceVersion = await prisma.codeWorkspaceVersion.updateManyAndReturn({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     *
-     * // Update zero or more CodeWorkspaceVersions and only return the `id`
-     * const codeWorkspaceVersionWithIdOnly = await prisma.codeWorkspaceVersion.updateManyAndReturn({
-     *   select: { id: true },
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     *
-     */
-    updateManyAndReturn<T extends CodeWorkspaceVersionUpdateManyAndReturnArgs>(args: SelectSubset<T, CodeWorkspaceVersionUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CodeWorkspaceVersionPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Create or update one CodeWorkspaceVersion.
-     * @param {CodeWorkspaceVersionUpsertArgs} args - Arguments to update or create a CodeWorkspaceVersion.
-     * @example
-     * // Update or create a CodeWorkspaceVersion
-     * const codeWorkspaceVersion = await prisma.codeWorkspaceVersion.upsert({
-     *   create: {
-     *     // ... data to create a CodeWorkspaceVersion
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the CodeWorkspaceVersion we want to update
-     *   }
-     * })
-     */
-    upsert<T extends CodeWorkspaceVersionUpsertArgs>(args: SelectSubset<T, CodeWorkspaceVersionUpsertArgs<ExtArgs>>): Prisma__CodeWorkspaceVersionClient<$Result.GetResult<Prisma.$CodeWorkspaceVersionPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-
-    /**
-     * Count the number of CodeWorkspaceVersions.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {CodeWorkspaceVersionCountArgs} args - Arguments to filter CodeWorkspaceVersions to count.
-     * @example
-     * // Count the number of CodeWorkspaceVersions
-     * const count = await prisma.codeWorkspaceVersion.count({
-     *   where: {
-     *     // ... the filter for the CodeWorkspaceVersions we want to count
-     *   }
-     * })
-    **/
-    count<T extends CodeWorkspaceVersionCountArgs>(
-      args?: Subset<T, CodeWorkspaceVersionCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends $Utils.Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], CodeWorkspaceVersionCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a CodeWorkspaceVersion.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {CodeWorkspaceVersionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends CodeWorkspaceVersionAggregateArgs>(args: Subset<T, CodeWorkspaceVersionAggregateArgs>): Prisma.PrismaPromise<GetCodeWorkspaceVersionAggregateType<T>>
-
-    /**
-     * Group by CodeWorkspaceVersion.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {CodeWorkspaceVersionGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     *
-    **/
-    groupBy<
-      T extends CodeWorkspaceVersionGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: CodeWorkspaceVersionGroupByArgs['orderBy'] }
-        : { orderBy?: CodeWorkspaceVersionGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends MaybeTupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, CodeWorkspaceVersionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetCodeWorkspaceVersionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the CodeWorkspaceVersion model
-   */
-  readonly fields: CodeWorkspaceVersionFieldRefs;
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for CodeWorkspaceVersion.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export interface Prisma__CodeWorkspaceVersionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
-    workspace<T extends CodeWorkspaceDefaultArgs<ExtArgs> = {}>(args?: Subset<T, CodeWorkspaceDefaultArgs<ExtArgs>>): Prisma__CodeWorkspaceClient<$Result.GetResult<Prisma.$CodeWorkspacePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    jobs<T extends CodeWorkspaceVersion$jobsArgs<ExtArgs> = {}>(args?: Subset<T, CodeWorkspaceVersion$jobsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CodeJobPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
-  }
-
-
-
-
-  /**
-   * Fields of the CodeWorkspaceVersion model
-   */
-  interface CodeWorkspaceVersionFieldRefs {
-    readonly id: FieldRef<"CodeWorkspaceVersion", 'String'>
-    readonly workspaceId: FieldRef<"CodeWorkspaceVersion", 'String'>
-    readonly version: FieldRef<"CodeWorkspaceVersion", 'Int'>
-    readonly snapshot: FieldRef<"CodeWorkspaceVersion", 'String'>
-    readonly snapshotHash: FieldRef<"CodeWorkspaceVersion", 'String'>
-    readonly message: FieldRef<"CodeWorkspaceVersion", 'String'>
-    readonly isAutosave: FieldRef<"CodeWorkspaceVersion", 'Boolean'>
-    readonly clientRequestId: FieldRef<"CodeWorkspaceVersion", 'String'>
-    readonly ip: FieldRef<"CodeWorkspaceVersion", 'String'>
-    readonly userAgent: FieldRef<"CodeWorkspaceVersion", 'String'>
-    readonly referer: FieldRef<"CodeWorkspaceVersion", 'String'>
-    readonly meta: FieldRef<"CodeWorkspaceVersion", 'String'>
-    readonly sizeBytes: FieldRef<"CodeWorkspaceVersion", 'Int'>
-    readonly createdAt: FieldRef<"CodeWorkspaceVersion", 'DateTime'>
-    readonly createdByUserId: FieldRef<"CodeWorkspaceVersion", 'String'>
-  }
-
-
-  // Custom InputTypes
-  /**
-   * CodeWorkspaceVersion findUnique
-   */
-  export type CodeWorkspaceVersionFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the CodeWorkspaceVersion
-     */
-    select?: CodeWorkspaceVersionSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the CodeWorkspaceVersion
-     */
-    omit?: CodeWorkspaceVersionOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CodeWorkspaceVersionInclude<ExtArgs> | null
-    /**
-     * Filter, which CodeWorkspaceVersion to fetch.
-     */
-    where: CodeWorkspaceVersionWhereUniqueInput
-  }
-
-  /**
-   * CodeWorkspaceVersion findUniqueOrThrow
-   */
-  export type CodeWorkspaceVersionFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the CodeWorkspaceVersion
-     */
-    select?: CodeWorkspaceVersionSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the CodeWorkspaceVersion
-     */
-    omit?: CodeWorkspaceVersionOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CodeWorkspaceVersionInclude<ExtArgs> | null
-    /**
-     * Filter, which CodeWorkspaceVersion to fetch.
-     */
-    where: CodeWorkspaceVersionWhereUniqueInput
-  }
-
-  /**
-   * CodeWorkspaceVersion findFirst
-   */
-  export type CodeWorkspaceVersionFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the CodeWorkspaceVersion
-     */
-    select?: CodeWorkspaceVersionSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the CodeWorkspaceVersion
-     */
-    omit?: CodeWorkspaceVersionOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CodeWorkspaceVersionInclude<ExtArgs> | null
-    /**
-     * Filter, which CodeWorkspaceVersion to fetch.
-     */
-    where?: CodeWorkspaceVersionWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     *
-     * Determine the order of CodeWorkspaceVersions to fetch.
-     */
-    orderBy?: CodeWorkspaceVersionOrderByWithRelationInput | CodeWorkspaceVersionOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     *
-     * Sets the position for searching for CodeWorkspaceVersions.
-     */
-    cursor?: CodeWorkspaceVersionWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
-     * Take `±n` CodeWorkspaceVersions from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
-     * Skip the first `n` CodeWorkspaceVersions.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     *
-     * Filter by unique combinations of CodeWorkspaceVersions.
-     */
-    distinct?: CodeWorkspaceVersionScalarFieldEnum | CodeWorkspaceVersionScalarFieldEnum[]
-  }
-
-  /**
-   * CodeWorkspaceVersion findFirstOrThrow
-   */
-  export type CodeWorkspaceVersionFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the CodeWorkspaceVersion
-     */
-    select?: CodeWorkspaceVersionSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the CodeWorkspaceVersion
-     */
-    omit?: CodeWorkspaceVersionOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CodeWorkspaceVersionInclude<ExtArgs> | null
-    /**
-     * Filter, which CodeWorkspaceVersion to fetch.
-     */
-    where?: CodeWorkspaceVersionWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     *
-     * Determine the order of CodeWorkspaceVersions to fetch.
-     */
-    orderBy?: CodeWorkspaceVersionOrderByWithRelationInput | CodeWorkspaceVersionOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     *
-     * Sets the position for searching for CodeWorkspaceVersions.
-     */
-    cursor?: CodeWorkspaceVersionWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
-     * Take `±n` CodeWorkspaceVersions from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
-     * Skip the first `n` CodeWorkspaceVersions.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     *
-     * Filter by unique combinations of CodeWorkspaceVersions.
-     */
-    distinct?: CodeWorkspaceVersionScalarFieldEnum | CodeWorkspaceVersionScalarFieldEnum[]
-  }
-
-  /**
-   * CodeWorkspaceVersion findMany
-   */
-  export type CodeWorkspaceVersionFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the CodeWorkspaceVersion
-     */
-    select?: CodeWorkspaceVersionSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the CodeWorkspaceVersion
-     */
-    omit?: CodeWorkspaceVersionOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CodeWorkspaceVersionInclude<ExtArgs> | null
-    /**
-     * Filter, which CodeWorkspaceVersions to fetch.
-     */
-    where?: CodeWorkspaceVersionWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     *
-     * Determine the order of CodeWorkspaceVersions to fetch.
-     */
-    orderBy?: CodeWorkspaceVersionOrderByWithRelationInput | CodeWorkspaceVersionOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     *
-     * Sets the position for listing CodeWorkspaceVersions.
-     */
-    cursor?: CodeWorkspaceVersionWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
-     * Take `±n` CodeWorkspaceVersions from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
-     * Skip the first `n` CodeWorkspaceVersions.
-     */
-    skip?: number
-    distinct?: CodeWorkspaceVersionScalarFieldEnum | CodeWorkspaceVersionScalarFieldEnum[]
-  }
-
-  /**
-   * CodeWorkspaceVersion create
-   */
-  export type CodeWorkspaceVersionCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the CodeWorkspaceVersion
-     */
-    select?: CodeWorkspaceVersionSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the CodeWorkspaceVersion
-     */
-    omit?: CodeWorkspaceVersionOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CodeWorkspaceVersionInclude<ExtArgs> | null
-    /**
-     * The data needed to create a CodeWorkspaceVersion.
-     */
-    data: XOR<CodeWorkspaceVersionCreateInput, CodeWorkspaceVersionUncheckedCreateInput>
-  }
-
-  /**
-   * CodeWorkspaceVersion createMany
-   */
-  export type CodeWorkspaceVersionCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to create many CodeWorkspaceVersions.
-     */
-    data: CodeWorkspaceVersionCreateManyInput | CodeWorkspaceVersionCreateManyInput[]
-  }
-
-  /**
-   * CodeWorkspaceVersion createManyAndReturn
-   */
-  export type CodeWorkspaceVersionCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the CodeWorkspaceVersion
-     */
-    select?: CodeWorkspaceVersionSelectCreateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the CodeWorkspaceVersion
-     */
-    omit?: CodeWorkspaceVersionOmit<ExtArgs> | null
-    /**
-     * The data used to create many CodeWorkspaceVersions.
-     */
-    data: CodeWorkspaceVersionCreateManyInput | CodeWorkspaceVersionCreateManyInput[]
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CodeWorkspaceVersionIncludeCreateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * CodeWorkspaceVersion update
-   */
-  export type CodeWorkspaceVersionUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the CodeWorkspaceVersion
-     */
-    select?: CodeWorkspaceVersionSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the CodeWorkspaceVersion
-     */
-    omit?: CodeWorkspaceVersionOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CodeWorkspaceVersionInclude<ExtArgs> | null
-    /**
-     * The data needed to update a CodeWorkspaceVersion.
-     */
-    data: XOR<CodeWorkspaceVersionUpdateInput, CodeWorkspaceVersionUncheckedUpdateInput>
-    /**
-     * Choose, which CodeWorkspaceVersion to update.
-     */
-    where: CodeWorkspaceVersionWhereUniqueInput
-  }
-
-  /**
-   * CodeWorkspaceVersion updateMany
-   */
-  export type CodeWorkspaceVersionUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to update CodeWorkspaceVersions.
-     */
-    data: XOR<CodeWorkspaceVersionUpdateManyMutationInput, CodeWorkspaceVersionUncheckedUpdateManyInput>
-    /**
-     * Filter which CodeWorkspaceVersions to update
-     */
-    where?: CodeWorkspaceVersionWhereInput
-    /**
-     * Limit how many CodeWorkspaceVersions to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * CodeWorkspaceVersion updateManyAndReturn
-   */
-  export type CodeWorkspaceVersionUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the CodeWorkspaceVersion
-     */
-    select?: CodeWorkspaceVersionSelectUpdateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the CodeWorkspaceVersion
-     */
-    omit?: CodeWorkspaceVersionOmit<ExtArgs> | null
-    /**
-     * The data used to update CodeWorkspaceVersions.
-     */
-    data: XOR<CodeWorkspaceVersionUpdateManyMutationInput, CodeWorkspaceVersionUncheckedUpdateManyInput>
-    /**
-     * Filter which CodeWorkspaceVersions to update
-     */
-    where?: CodeWorkspaceVersionWhereInput
-    /**
-     * Limit how many CodeWorkspaceVersions to update.
-     */
-    limit?: number
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CodeWorkspaceVersionIncludeUpdateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * CodeWorkspaceVersion upsert
-   */
-  export type CodeWorkspaceVersionUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the CodeWorkspaceVersion
-     */
-    select?: CodeWorkspaceVersionSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the CodeWorkspaceVersion
-     */
-    omit?: CodeWorkspaceVersionOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CodeWorkspaceVersionInclude<ExtArgs> | null
-    /**
-     * The filter to search for the CodeWorkspaceVersion to update in case it exists.
-     */
-    where: CodeWorkspaceVersionWhereUniqueInput
-    /**
-     * In case the CodeWorkspaceVersion found by the `where` argument doesn't exist, create a new CodeWorkspaceVersion with this data.
-     */
-    create: XOR<CodeWorkspaceVersionCreateInput, CodeWorkspaceVersionUncheckedCreateInput>
-    /**
-     * In case the CodeWorkspaceVersion was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<CodeWorkspaceVersionUpdateInput, CodeWorkspaceVersionUncheckedUpdateInput>
-  }
-
-  /**
-   * CodeWorkspaceVersion delete
-   */
-  export type CodeWorkspaceVersionDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the CodeWorkspaceVersion
-     */
-    select?: CodeWorkspaceVersionSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the CodeWorkspaceVersion
-     */
-    omit?: CodeWorkspaceVersionOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CodeWorkspaceVersionInclude<ExtArgs> | null
-    /**
-     * Filter which CodeWorkspaceVersion to delete.
-     */
-    where: CodeWorkspaceVersionWhereUniqueInput
-  }
-
-  /**
-   * CodeWorkspaceVersion deleteMany
-   */
-  export type CodeWorkspaceVersionDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which CodeWorkspaceVersions to delete
-     */
-    where?: CodeWorkspaceVersionWhereInput
-    /**
-     * Limit how many CodeWorkspaceVersions to delete.
-     */
-    limit?: number
-  }
-
-  /**
-   * CodeWorkspaceVersion.jobs
-   */
-  export type CodeWorkspaceVersion$jobsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the CodeJob
-     */
-    select?: CodeJobSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the CodeJob
-     */
-    omit?: CodeJobOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CodeJobInclude<ExtArgs> | null
-    where?: CodeJobWhereInput
-    orderBy?: CodeJobOrderByWithRelationInput | CodeJobOrderByWithRelationInput[]
-    cursor?: CodeJobWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: CodeJobScalarFieldEnum | CodeJobScalarFieldEnum[]
-  }
-
-  /**
-   * CodeWorkspaceVersion without action
-   */
-  export type CodeWorkspaceVersionDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the CodeWorkspaceVersion
-     */
-    select?: CodeWorkspaceVersionSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the CodeWorkspaceVersion
-     */
-    omit?: CodeWorkspaceVersionOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CodeWorkspaceVersionInclude<ExtArgs> | null
-  }
-
-
-  /**
-   * Model CodeWorker
-   */
-
-  export type AggregateCodeWorker = {
-    _count: CodeWorkerCountAggregateOutputType | null
-    _avg: CodeWorkerAvgAggregateOutputType | null
-    _sum: CodeWorkerSumAggregateOutputType | null
-    _min: CodeWorkerMinAggregateOutputType | null
-    _max: CodeWorkerMaxAggregateOutputType | null
-  }
-
-  export type CodeWorkerAvgAggregateOutputType = {
-    concurrency: number | null
-    pid: number | null
-  }
-
-  export type CodeWorkerSumAggregateOutputType = {
-    concurrency: number | null
-    pid: number | null
-  }
-
-  export type CodeWorkerMinAggregateOutputType = {
-    id: string | null
-    name: string | null
-    kind: string | null
-    queue: string | null
-    status: string | null
-    desiredStatus: string | null
-    concurrency: number | null
-    currentJobId: string | null
-    heartbeatAt: Date | null
-    startedAt: Date | null
-    stoppedAt: Date | null
-    pid: number | null
-    metadata: string | null
-    createdAt: Date | null
-    updatedAt: Date | null
-  }
-
-  export type CodeWorkerMaxAggregateOutputType = {
-    id: string | null
-    name: string | null
-    kind: string | null
-    queue: string | null
-    status: string | null
-    desiredStatus: string | null
-    concurrency: number | null
-    currentJobId: string | null
-    heartbeatAt: Date | null
-    startedAt: Date | null
-    stoppedAt: Date | null
-    pid: number | null
-    metadata: string | null
-    createdAt: Date | null
-    updatedAt: Date | null
-  }
-
-  export type CodeWorkerCountAggregateOutputType = {
-    id: number
-    name: number
-    kind: number
-    queue: number
-    status: number
-    desiredStatus: number
-    concurrency: number
-    currentJobId: number
-    heartbeatAt: number
-    startedAt: number
-    stoppedAt: number
-    pid: number
-    metadata: number
-    createdAt: number
-    updatedAt: number
-    _all: number
-  }
-
-
-  export type CodeWorkerAvgAggregateInputType = {
-    concurrency?: true
-    pid?: true
-  }
-
-  export type CodeWorkerSumAggregateInputType = {
-    concurrency?: true
-    pid?: true
-  }
-
-  export type CodeWorkerMinAggregateInputType = {
-    id?: true
-    name?: true
-    kind?: true
-    queue?: true
-    status?: true
-    desiredStatus?: true
-    concurrency?: true
-    currentJobId?: true
-    heartbeatAt?: true
-    startedAt?: true
-    stoppedAt?: true
-    pid?: true
-    metadata?: true
-    createdAt?: true
-    updatedAt?: true
-  }
-
-  export type CodeWorkerMaxAggregateInputType = {
-    id?: true
-    name?: true
-    kind?: true
-    queue?: true
-    status?: true
-    desiredStatus?: true
-    concurrency?: true
-    currentJobId?: true
-    heartbeatAt?: true
-    startedAt?: true
-    stoppedAt?: true
-    pid?: true
-    metadata?: true
-    createdAt?: true
-    updatedAt?: true
-  }
-
-  export type CodeWorkerCountAggregateInputType = {
-    id?: true
-    name?: true
-    kind?: true
-    queue?: true
-    status?: true
-    desiredStatus?: true
-    concurrency?: true
-    currentJobId?: true
-    heartbeatAt?: true
-    startedAt?: true
-    stoppedAt?: true
-    pid?: true
-    metadata?: true
-    createdAt?: true
-    updatedAt?: true
-    _all?: true
-  }
-
-  export type CodeWorkerAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which CodeWorker to aggregate.
-     */
-    where?: CodeWorkerWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     *
-     * Determine the order of CodeWorkers to fetch.
-     */
-    orderBy?: CodeWorkerOrderByWithRelationInput | CodeWorkerOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     *
-     * Sets the start position
-     */
-    cursor?: CodeWorkerWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
-     * Take `±n` CodeWorkers from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
-     * Skip the first `n` CodeWorkers.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     *
-     * Count returned CodeWorkers
-    **/
-    _count?: true | CodeWorkerCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     *
-     * Select which fields to average
-    **/
-    _avg?: CodeWorkerAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     *
-     * Select which fields to sum
-    **/
-    _sum?: CodeWorkerSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     *
-     * Select which fields to find the minimum value
-    **/
-    _min?: CodeWorkerMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     *
-     * Select which fields to find the maximum value
-    **/
-    _max?: CodeWorkerMaxAggregateInputType
-  }
-
-  export type GetCodeWorkerAggregateType<T extends CodeWorkerAggregateArgs> = {
-        [P in keyof T & keyof AggregateCodeWorker]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateCodeWorker[P]>
-      : GetScalarType<T[P], AggregateCodeWorker[P]>
-  }
-
-
-
-
-  export type CodeWorkerGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: CodeWorkerWhereInput
-    orderBy?: CodeWorkerOrderByWithAggregationInput | CodeWorkerOrderByWithAggregationInput[]
-    by: CodeWorkerScalarFieldEnum[] | CodeWorkerScalarFieldEnum
-    having?: CodeWorkerScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: CodeWorkerCountAggregateInputType | true
-    _avg?: CodeWorkerAvgAggregateInputType
-    _sum?: CodeWorkerSumAggregateInputType
-    _min?: CodeWorkerMinAggregateInputType
-    _max?: CodeWorkerMaxAggregateInputType
-  }
-
-  export type CodeWorkerGroupByOutputType = {
-    id: string
-    name: string
-    kind: string
-    queue: string
-    status: string
-    desiredStatus: string
-    concurrency: number
-    currentJobId: string | null
-    heartbeatAt: Date | null
-    startedAt: Date | null
-    stoppedAt: Date | null
-    pid: number | null
-    metadata: string
-    createdAt: Date
-    updatedAt: Date
-    _count: CodeWorkerCountAggregateOutputType | null
-    _avg: CodeWorkerAvgAggregateOutputType | null
-    _sum: CodeWorkerSumAggregateOutputType | null
-    _min: CodeWorkerMinAggregateOutputType | null
-    _max: CodeWorkerMaxAggregateOutputType | null
-  }
-
-  type GetCodeWorkerGroupByPayload<T extends CodeWorkerGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickEnumerable<CodeWorkerGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof CodeWorkerGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], CodeWorkerGroupByOutputType[P]>
-            : GetScalarType<T[P], CodeWorkerGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type CodeWorkerSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    name?: boolean
-    kind?: boolean
-    queue?: boolean
-    status?: boolean
-    desiredStatus?: boolean
-    concurrency?: boolean
-    currentJobId?: boolean
-    heartbeatAt?: boolean
-    startedAt?: boolean
-    stoppedAt?: boolean
-    pid?: boolean
-    metadata?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-    jobs?: boolean | CodeWorker$jobsArgs<ExtArgs>
-    logs?: boolean | CodeWorker$logsArgs<ExtArgs>
-    _count?: boolean | CodeWorkerCountOutputTypeDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["codeWorker"]>
-
-  export type CodeWorkerSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    name?: boolean
-    kind?: boolean
-    queue?: boolean
-    status?: boolean
-    desiredStatus?: boolean
-    concurrency?: boolean
-    currentJobId?: boolean
-    heartbeatAt?: boolean
-    startedAt?: boolean
-    stoppedAt?: boolean
-    pid?: boolean
-    metadata?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-  }, ExtArgs["result"]["codeWorker"]>
-
-  export type CodeWorkerSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    name?: boolean
-    kind?: boolean
-    queue?: boolean
-    status?: boolean
-    desiredStatus?: boolean
-    concurrency?: boolean
-    currentJobId?: boolean
-    heartbeatAt?: boolean
-    startedAt?: boolean
-    stoppedAt?: boolean
-    pid?: boolean
-    metadata?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-  }, ExtArgs["result"]["codeWorker"]>
-
-  export type CodeWorkerSelectScalar = {
-    id?: boolean
-    name?: boolean
-    kind?: boolean
-    queue?: boolean
-    status?: boolean
-    desiredStatus?: boolean
-    concurrency?: boolean
-    currentJobId?: boolean
-    heartbeatAt?: boolean
-    startedAt?: boolean
-    stoppedAt?: boolean
-    pid?: boolean
-    metadata?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-  }
-
-  export type CodeWorkerOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "kind" | "queue" | "status" | "desiredStatus" | "concurrency" | "currentJobId" | "heartbeatAt" | "startedAt" | "stoppedAt" | "pid" | "metadata" | "createdAt" | "updatedAt", ExtArgs["result"]["codeWorker"]>
-  export type CodeWorkerInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    jobs?: boolean | CodeWorker$jobsArgs<ExtArgs>
-    logs?: boolean | CodeWorker$logsArgs<ExtArgs>
-    _count?: boolean | CodeWorkerCountOutputTypeDefaultArgs<ExtArgs>
-  }
-  export type CodeWorkerIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-  export type CodeWorkerIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-
-  export type $CodeWorkerPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "CodeWorker"
-    objects: {
-      jobs: Prisma.$CodeJobPayload<ExtArgs>[]
-      logs: Prisma.$CodeJobLogPayload<ExtArgs>[]
-    }
-    scalars: $Extensions.GetPayloadResult<{
-      id: string
-      name: string
-      kind: string
-      queue: string
-      status: string
-      desiredStatus: string
-      concurrency: number
-      currentJobId: string | null
-      heartbeatAt: Date | null
-      startedAt: Date | null
-      stoppedAt: Date | null
-      pid: number | null
-      metadata: string
-      createdAt: Date
-      updatedAt: Date
-    }, ExtArgs["result"]["codeWorker"]>
-    composites: {}
-  }
-
-  type CodeWorkerGetPayload<S extends boolean | null | undefined | CodeWorkerDefaultArgs> = $Result.GetResult<Prisma.$CodeWorkerPayload, S>
-
-  type CodeWorkerCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<CodeWorkerFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: CodeWorkerCountAggregateInputType | true
-    }
-
-  export interface CodeWorkerDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['CodeWorker'], meta: { name: 'CodeWorker' } }
-    /**
-     * Find zero or one CodeWorker that matches the filter.
-     * @param {CodeWorkerFindUniqueArgs} args - Arguments to find a CodeWorker
-     * @example
-     * // Get one CodeWorker
-     * const codeWorker = await prisma.codeWorker.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUnique<T extends CodeWorkerFindUniqueArgs>(args: SelectSubset<T, CodeWorkerFindUniqueArgs<ExtArgs>>): Prisma__CodeWorkerClient<$Result.GetResult<Prisma.$CodeWorkerPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find one CodeWorker that matches the filter or throw an error with `error.code='P2025'`
-     * if no matches were found.
-     * @param {CodeWorkerFindUniqueOrThrowArgs} args - Arguments to find a CodeWorker
-     * @example
-     * // Get one CodeWorker
-     * const codeWorker = await prisma.codeWorker.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUniqueOrThrow<T extends CodeWorkerFindUniqueOrThrowArgs>(args: SelectSubset<T, CodeWorkerFindUniqueOrThrowArgs<ExtArgs>>): Prisma__CodeWorkerClient<$Result.GetResult<Prisma.$CodeWorkerPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first CodeWorker that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {CodeWorkerFindFirstArgs} args - Arguments to find a CodeWorker
-     * @example
-     * // Get one CodeWorker
-     * const codeWorker = await prisma.codeWorker.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirst<T extends CodeWorkerFindFirstArgs>(args?: SelectSubset<T, CodeWorkerFindFirstArgs<ExtArgs>>): Prisma__CodeWorkerClient<$Result.GetResult<Prisma.$CodeWorkerPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first CodeWorker that matches the filter or
-     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {CodeWorkerFindFirstOrThrowArgs} args - Arguments to find a CodeWorker
-     * @example
-     * // Get one CodeWorker
-     * const codeWorker = await prisma.codeWorker.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirstOrThrow<T extends CodeWorkerFindFirstOrThrowArgs>(args?: SelectSubset<T, CodeWorkerFindFirstOrThrowArgs<ExtArgs>>): Prisma__CodeWorkerClient<$Result.GetResult<Prisma.$CodeWorkerPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find zero or more CodeWorkers that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {CodeWorkerFindManyArgs} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all CodeWorkers
-     * const codeWorkers = await prisma.codeWorker.findMany()
-     *
-     * // Get first 10 CodeWorkers
-     * const codeWorkers = await prisma.codeWorker.findMany({ take: 10 })
-     *
-     * // Only select the `id`
-     * const codeWorkerWithIdOnly = await prisma.codeWorker.findMany({ select: { id: true } })
-     *
-     */
-    findMany<T extends CodeWorkerFindManyArgs>(args?: SelectSubset<T, CodeWorkerFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CodeWorkerPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
-
-    /**
-     * Create a CodeWorker.
-     * @param {CodeWorkerCreateArgs} args - Arguments to create a CodeWorker.
-     * @example
-     * // Create one CodeWorker
-     * const CodeWorker = await prisma.codeWorker.create({
-     *   data: {
-     *     // ... data to create a CodeWorker
-     *   }
-     * })
-     *
-     */
-    create<T extends CodeWorkerCreateArgs>(args: SelectSubset<T, CodeWorkerCreateArgs<ExtArgs>>): Prisma__CodeWorkerClient<$Result.GetResult<Prisma.$CodeWorkerPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Create many CodeWorkers.
-     * @param {CodeWorkerCreateManyArgs} args - Arguments to create many CodeWorkers.
-     * @example
-     * // Create many CodeWorkers
-     * const codeWorker = await prisma.codeWorker.createMany({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     *
-     */
-    createMany<T extends CodeWorkerCreateManyArgs>(args?: SelectSubset<T, CodeWorkerCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create many CodeWorkers and returns the data saved in the database.
-     * @param {CodeWorkerCreateManyAndReturnArgs} args - Arguments to create many CodeWorkers.
-     * @example
-     * // Create many CodeWorkers
-     * const codeWorker = await prisma.codeWorker.createManyAndReturn({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     *
-     * // Create many CodeWorkers and only return the `id`
-     * const codeWorkerWithIdOnly = await prisma.codeWorker.createManyAndReturn({
-     *   select: { id: true },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     *
-     */
-    createManyAndReturn<T extends CodeWorkerCreateManyAndReturnArgs>(args?: SelectSubset<T, CodeWorkerCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CodeWorkerPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Delete a CodeWorker.
-     * @param {CodeWorkerDeleteArgs} args - Arguments to delete one CodeWorker.
-     * @example
-     * // Delete one CodeWorker
-     * const CodeWorker = await prisma.codeWorker.delete({
-     *   where: {
-     *     // ... filter to delete one CodeWorker
-     *   }
-     * })
-     *
-     */
-    delete<T extends CodeWorkerDeleteArgs>(args: SelectSubset<T, CodeWorkerDeleteArgs<ExtArgs>>): Prisma__CodeWorkerClient<$Result.GetResult<Prisma.$CodeWorkerPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Update one CodeWorker.
-     * @param {CodeWorkerUpdateArgs} args - Arguments to update one CodeWorker.
-     * @example
-     * // Update one CodeWorker
-     * const codeWorker = await prisma.codeWorker.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     *
-     */
-    update<T extends CodeWorkerUpdateArgs>(args: SelectSubset<T, CodeWorkerUpdateArgs<ExtArgs>>): Prisma__CodeWorkerClient<$Result.GetResult<Prisma.$CodeWorkerPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Delete zero or more CodeWorkers.
-     * @param {CodeWorkerDeleteManyArgs} args - Arguments to filter CodeWorkers to delete.
-     * @example
-     * // Delete a few CodeWorkers
-     * const { count } = await prisma.codeWorker.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     *
-     */
-    deleteMany<T extends CodeWorkerDeleteManyArgs>(args?: SelectSubset<T, CodeWorkerDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more CodeWorkers.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {CodeWorkerUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many CodeWorkers
-     * const codeWorker = await prisma.codeWorker.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     *
-     */
-    updateMany<T extends CodeWorkerUpdateManyArgs>(args: SelectSubset<T, CodeWorkerUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more CodeWorkers and returns the data updated in the database.
-     * @param {CodeWorkerUpdateManyAndReturnArgs} args - Arguments to update many CodeWorkers.
-     * @example
-     * // Update many CodeWorkers
-     * const codeWorker = await prisma.codeWorker.updateManyAndReturn({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     *
-     * // Update zero or more CodeWorkers and only return the `id`
-     * const codeWorkerWithIdOnly = await prisma.codeWorker.updateManyAndReturn({
-     *   select: { id: true },
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     *
-     */
-    updateManyAndReturn<T extends CodeWorkerUpdateManyAndReturnArgs>(args: SelectSubset<T, CodeWorkerUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CodeWorkerPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Create or update one CodeWorker.
-     * @param {CodeWorkerUpsertArgs} args - Arguments to update or create a CodeWorker.
-     * @example
-     * // Update or create a CodeWorker
-     * const codeWorker = await prisma.codeWorker.upsert({
-     *   create: {
-     *     // ... data to create a CodeWorker
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the CodeWorker we want to update
-     *   }
-     * })
-     */
-    upsert<T extends CodeWorkerUpsertArgs>(args: SelectSubset<T, CodeWorkerUpsertArgs<ExtArgs>>): Prisma__CodeWorkerClient<$Result.GetResult<Prisma.$CodeWorkerPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-
-    /**
-     * Count the number of CodeWorkers.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {CodeWorkerCountArgs} args - Arguments to filter CodeWorkers to count.
-     * @example
-     * // Count the number of CodeWorkers
-     * const count = await prisma.codeWorker.count({
-     *   where: {
-     *     // ... the filter for the CodeWorkers we want to count
-     *   }
-     * })
-    **/
-    count<T extends CodeWorkerCountArgs>(
-      args?: Subset<T, CodeWorkerCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends $Utils.Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], CodeWorkerCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a CodeWorker.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {CodeWorkerAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends CodeWorkerAggregateArgs>(args: Subset<T, CodeWorkerAggregateArgs>): Prisma.PrismaPromise<GetCodeWorkerAggregateType<T>>
-
-    /**
-     * Group by CodeWorker.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {CodeWorkerGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     *
-    **/
-    groupBy<
-      T extends CodeWorkerGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: CodeWorkerGroupByArgs['orderBy'] }
-        : { orderBy?: CodeWorkerGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends MaybeTupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, CodeWorkerGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetCodeWorkerGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the CodeWorker model
-   */
-  readonly fields: CodeWorkerFieldRefs;
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for CodeWorker.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export interface Prisma__CodeWorkerClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
-    jobs<T extends CodeWorker$jobsArgs<ExtArgs> = {}>(args?: Subset<T, CodeWorker$jobsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CodeJobPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    logs<T extends CodeWorker$logsArgs<ExtArgs> = {}>(args?: Subset<T, CodeWorker$logsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CodeJobLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
-  }
-
-
-
-
-  /**
-   * Fields of the CodeWorker model
-   */
-  interface CodeWorkerFieldRefs {
-    readonly id: FieldRef<"CodeWorker", 'String'>
-    readonly name: FieldRef<"CodeWorker", 'String'>
-    readonly kind: FieldRef<"CodeWorker", 'String'>
-    readonly queue: FieldRef<"CodeWorker", 'String'>
-    readonly status: FieldRef<"CodeWorker", 'String'>
-    readonly desiredStatus: FieldRef<"CodeWorker", 'String'>
-    readonly concurrency: FieldRef<"CodeWorker", 'Int'>
-    readonly currentJobId: FieldRef<"CodeWorker", 'String'>
-    readonly heartbeatAt: FieldRef<"CodeWorker", 'DateTime'>
-    readonly startedAt: FieldRef<"CodeWorker", 'DateTime'>
-    readonly stoppedAt: FieldRef<"CodeWorker", 'DateTime'>
-    readonly pid: FieldRef<"CodeWorker", 'Int'>
-    readonly metadata: FieldRef<"CodeWorker", 'String'>
-    readonly createdAt: FieldRef<"CodeWorker", 'DateTime'>
-    readonly updatedAt: FieldRef<"CodeWorker", 'DateTime'>
-  }
-
-
-  // Custom InputTypes
-  /**
-   * CodeWorker findUnique
-   */
-  export type CodeWorkerFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the CodeWorker
-     */
-    select?: CodeWorkerSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the CodeWorker
-     */
-    omit?: CodeWorkerOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CodeWorkerInclude<ExtArgs> | null
-    /**
-     * Filter, which CodeWorker to fetch.
-     */
-    where: CodeWorkerWhereUniqueInput
-  }
-
-  /**
-   * CodeWorker findUniqueOrThrow
-   */
-  export type CodeWorkerFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the CodeWorker
-     */
-    select?: CodeWorkerSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the CodeWorker
-     */
-    omit?: CodeWorkerOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CodeWorkerInclude<ExtArgs> | null
-    /**
-     * Filter, which CodeWorker to fetch.
-     */
-    where: CodeWorkerWhereUniqueInput
-  }
-
-  /**
-   * CodeWorker findFirst
-   */
-  export type CodeWorkerFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the CodeWorker
-     */
-    select?: CodeWorkerSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the CodeWorker
-     */
-    omit?: CodeWorkerOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CodeWorkerInclude<ExtArgs> | null
-    /**
-     * Filter, which CodeWorker to fetch.
-     */
-    where?: CodeWorkerWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     *
-     * Determine the order of CodeWorkers to fetch.
-     */
-    orderBy?: CodeWorkerOrderByWithRelationInput | CodeWorkerOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     *
-     * Sets the position for searching for CodeWorkers.
-     */
-    cursor?: CodeWorkerWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
-     * Take `±n` CodeWorkers from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
-     * Skip the first `n` CodeWorkers.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     *
-     * Filter by unique combinations of CodeWorkers.
-     */
-    distinct?: CodeWorkerScalarFieldEnum | CodeWorkerScalarFieldEnum[]
-  }
-
-  /**
-   * CodeWorker findFirstOrThrow
-   */
-  export type CodeWorkerFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the CodeWorker
-     */
-    select?: CodeWorkerSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the CodeWorker
-     */
-    omit?: CodeWorkerOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CodeWorkerInclude<ExtArgs> | null
-    /**
-     * Filter, which CodeWorker to fetch.
-     */
-    where?: CodeWorkerWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     *
-     * Determine the order of CodeWorkers to fetch.
-     */
-    orderBy?: CodeWorkerOrderByWithRelationInput | CodeWorkerOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     *
-     * Sets the position for searching for CodeWorkers.
-     */
-    cursor?: CodeWorkerWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
-     * Take `±n` CodeWorkers from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
-     * Skip the first `n` CodeWorkers.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     *
-     * Filter by unique combinations of CodeWorkers.
-     */
-    distinct?: CodeWorkerScalarFieldEnum | CodeWorkerScalarFieldEnum[]
-  }
-
-  /**
-   * CodeWorker findMany
-   */
-  export type CodeWorkerFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the CodeWorker
-     */
-    select?: CodeWorkerSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the CodeWorker
-     */
-    omit?: CodeWorkerOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CodeWorkerInclude<ExtArgs> | null
-    /**
-     * Filter, which CodeWorkers to fetch.
-     */
-    where?: CodeWorkerWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     *
-     * Determine the order of CodeWorkers to fetch.
-     */
-    orderBy?: CodeWorkerOrderByWithRelationInput | CodeWorkerOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     *
-     * Sets the position for listing CodeWorkers.
-     */
-    cursor?: CodeWorkerWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
-     * Take `±n` CodeWorkers from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
-     * Skip the first `n` CodeWorkers.
-     */
-    skip?: number
-    distinct?: CodeWorkerScalarFieldEnum | CodeWorkerScalarFieldEnum[]
-  }
-
-  /**
-   * CodeWorker create
-   */
-  export type CodeWorkerCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the CodeWorker
-     */
-    select?: CodeWorkerSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the CodeWorker
-     */
-    omit?: CodeWorkerOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CodeWorkerInclude<ExtArgs> | null
-    /**
-     * The data needed to create a CodeWorker.
-     */
-    data: XOR<CodeWorkerCreateInput, CodeWorkerUncheckedCreateInput>
-  }
-
-  /**
-   * CodeWorker createMany
-   */
-  export type CodeWorkerCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to create many CodeWorkers.
-     */
-    data: CodeWorkerCreateManyInput | CodeWorkerCreateManyInput[]
-  }
-
-  /**
-   * CodeWorker createManyAndReturn
-   */
-  export type CodeWorkerCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the CodeWorker
-     */
-    select?: CodeWorkerSelectCreateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the CodeWorker
-     */
-    omit?: CodeWorkerOmit<ExtArgs> | null
-    /**
-     * The data used to create many CodeWorkers.
-     */
-    data: CodeWorkerCreateManyInput | CodeWorkerCreateManyInput[]
-  }
-
-  /**
-   * CodeWorker update
-   */
-  export type CodeWorkerUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the CodeWorker
-     */
-    select?: CodeWorkerSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the CodeWorker
-     */
-    omit?: CodeWorkerOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CodeWorkerInclude<ExtArgs> | null
-    /**
-     * The data needed to update a CodeWorker.
-     */
-    data: XOR<CodeWorkerUpdateInput, CodeWorkerUncheckedUpdateInput>
-    /**
-     * Choose, which CodeWorker to update.
-     */
-    where: CodeWorkerWhereUniqueInput
-  }
-
-  /**
-   * CodeWorker updateMany
-   */
-  export type CodeWorkerUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to update CodeWorkers.
-     */
-    data: XOR<CodeWorkerUpdateManyMutationInput, CodeWorkerUncheckedUpdateManyInput>
-    /**
-     * Filter which CodeWorkers to update
-     */
-    where?: CodeWorkerWhereInput
-    /**
-     * Limit how many CodeWorkers to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * CodeWorker updateManyAndReturn
-   */
-  export type CodeWorkerUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the CodeWorker
-     */
-    select?: CodeWorkerSelectUpdateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the CodeWorker
-     */
-    omit?: CodeWorkerOmit<ExtArgs> | null
-    /**
-     * The data used to update CodeWorkers.
-     */
-    data: XOR<CodeWorkerUpdateManyMutationInput, CodeWorkerUncheckedUpdateManyInput>
-    /**
-     * Filter which CodeWorkers to update
-     */
-    where?: CodeWorkerWhereInput
-    /**
-     * Limit how many CodeWorkers to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * CodeWorker upsert
-   */
-  export type CodeWorkerUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the CodeWorker
-     */
-    select?: CodeWorkerSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the CodeWorker
-     */
-    omit?: CodeWorkerOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CodeWorkerInclude<ExtArgs> | null
-    /**
-     * The filter to search for the CodeWorker to update in case it exists.
-     */
-    where: CodeWorkerWhereUniqueInput
-    /**
-     * In case the CodeWorker found by the `where` argument doesn't exist, create a new CodeWorker with this data.
-     */
-    create: XOR<CodeWorkerCreateInput, CodeWorkerUncheckedCreateInput>
-    /**
-     * In case the CodeWorker was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<CodeWorkerUpdateInput, CodeWorkerUncheckedUpdateInput>
-  }
-
-  /**
-   * CodeWorker delete
-   */
-  export type CodeWorkerDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the CodeWorker
-     */
-    select?: CodeWorkerSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the CodeWorker
-     */
-    omit?: CodeWorkerOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CodeWorkerInclude<ExtArgs> | null
-    /**
-     * Filter which CodeWorker to delete.
-     */
-    where: CodeWorkerWhereUniqueInput
-  }
-
-  /**
-   * CodeWorker deleteMany
-   */
-  export type CodeWorkerDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which CodeWorkers to delete
-     */
-    where?: CodeWorkerWhereInput
-    /**
-     * Limit how many CodeWorkers to delete.
-     */
-    limit?: number
-  }
-
-  /**
-   * CodeWorker.jobs
-   */
-  export type CodeWorker$jobsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the CodeJob
-     */
-    select?: CodeJobSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the CodeJob
-     */
-    omit?: CodeJobOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CodeJobInclude<ExtArgs> | null
-    where?: CodeJobWhereInput
-    orderBy?: CodeJobOrderByWithRelationInput | CodeJobOrderByWithRelationInput[]
-    cursor?: CodeJobWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: CodeJobScalarFieldEnum | CodeJobScalarFieldEnum[]
-  }
-
-  /**
-   * CodeWorker.logs
-   */
-  export type CodeWorker$logsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the CodeJobLog
-     */
-    select?: CodeJobLogSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the CodeJobLog
-     */
-    omit?: CodeJobLogOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CodeJobLogInclude<ExtArgs> | null
-    where?: CodeJobLogWhereInput
-    orderBy?: CodeJobLogOrderByWithRelationInput | CodeJobLogOrderByWithRelationInput[]
-    cursor?: CodeJobLogWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: CodeJobLogScalarFieldEnum | CodeJobLogScalarFieldEnum[]
-  }
-
-  /**
-   * CodeWorker without action
-   */
-  export type CodeWorkerDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the CodeWorker
-     */
-    select?: CodeWorkerSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the CodeWorker
-     */
-    omit?: CodeWorkerOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CodeWorkerInclude<ExtArgs> | null
-  }
-
-
-  /**
-   * Model CodeJob
-   */
-
-  export type AggregateCodeJob = {
-    _count: CodeJobCountAggregateOutputType | null
-    _avg: CodeJobAvgAggregateOutputType | null
-    _sum: CodeJobSumAggregateOutputType | null
-    _min: CodeJobMinAggregateOutputType | null
-    _max: CodeJobMaxAggregateOutputType | null
-  }
-
-  export type CodeJobAvgAggregateOutputType = {
-    version: number | null
-    priority: number | null
-    timeoutMs: number | null
-    maxAttempts: number | null
-    attempt: number | null
-    progress: number | null
-  }
-
-  export type CodeJobSumAggregateOutputType = {
-    version: number | null
-    priority: number | null
-    timeoutMs: number | null
-    maxAttempts: number | null
-    attempt: number | null
-    progress: number | null
-  }
-
-  export type CodeJobMinAggregateOutputType = {
-    id: string | null
-    workspaceVersionId: string | null
-    workspaceSlug: string | null
-    version: number | null
-    entryPath: string | null
-    functionName: string | null
-    args: string | null
-    data: string | null
-    checkpoint: string | null
-    result: string | null
-    error: string | null
-    status: string | null
-    priority: number | null
-    queue: string | null
-    runtime: string | null
-    orchestrator: string | null
-    timeoutMs: number | null
-    maxAttempts: number | null
-    attempt: number | null
-    progress: number | null
-    requestedAction: string | null
-    leaseToken: string | null
-    lockedAt: Date | null
-    leaseExpiresAt: Date | null
-    nextRunAt: Date | null
-    startedAt: Date | null
-    completedAt: Date | null
-    createdAt: Date | null
-    updatedAt: Date | null
-    createdByUserId: string | null
-    workerId: string | null
-    temporalWorkflowId: string | null
-    temporalRunId: string | null
-    metadata: string | null
-  }
-
-  export type CodeJobMaxAggregateOutputType = {
-    id: string | null
-    workspaceVersionId: string | null
-    workspaceSlug: string | null
-    version: number | null
-    entryPath: string | null
-    functionName: string | null
-    args: string | null
-    data: string | null
-    checkpoint: string | null
-    result: string | null
-    error: string | null
-    status: string | null
-    priority: number | null
-    queue: string | null
-    runtime: string | null
-    orchestrator: string | null
-    timeoutMs: number | null
-    maxAttempts: number | null
-    attempt: number | null
-    progress: number | null
-    requestedAction: string | null
-    leaseToken: string | null
-    lockedAt: Date | null
-    leaseExpiresAt: Date | null
-    nextRunAt: Date | null
-    startedAt: Date | null
-    completedAt: Date | null
-    createdAt: Date | null
-    updatedAt: Date | null
-    createdByUserId: string | null
-    workerId: string | null
-    temporalWorkflowId: string | null
-    temporalRunId: string | null
-    metadata: string | null
-  }
-
-  export type CodeJobCountAggregateOutputType = {
-    id: number
-    workspaceVersionId: number
-    workspaceSlug: number
-    version: number
-    entryPath: number
-    functionName: number
-    args: number
-    data: number
-    checkpoint: number
-    result: number
-    error: number
-    status: number
-    priority: number
-    queue: number
-    runtime: number
-    orchestrator: number
-    timeoutMs: number
-    maxAttempts: number
-    attempt: number
-    progress: number
-    requestedAction: number
-    leaseToken: number
-    lockedAt: number
-    leaseExpiresAt: number
-    nextRunAt: number
-    startedAt: number
-    completedAt: number
-    createdAt: number
-    updatedAt: number
-    createdByUserId: number
-    workerId: number
-    temporalWorkflowId: number
-    temporalRunId: number
-    metadata: number
-    _all: number
-  }
-
-
-  export type CodeJobAvgAggregateInputType = {
-    version?: true
-    priority?: true
-    timeoutMs?: true
-    maxAttempts?: true
-    attempt?: true
-    progress?: true
-  }
-
-  export type CodeJobSumAggregateInputType = {
-    version?: true
-    priority?: true
-    timeoutMs?: true
-    maxAttempts?: true
-    attempt?: true
-    progress?: true
-  }
-
-  export type CodeJobMinAggregateInputType = {
-    id?: true
-    workspaceVersionId?: true
-    workspaceSlug?: true
-    version?: true
-    entryPath?: true
-    functionName?: true
-    args?: true
-    data?: true
-    checkpoint?: true
-    result?: true
-    error?: true
-    status?: true
-    priority?: true
-    queue?: true
-    runtime?: true
-    orchestrator?: true
-    timeoutMs?: true
-    maxAttempts?: true
-    attempt?: true
-    progress?: true
-    requestedAction?: true
-    leaseToken?: true
-    lockedAt?: true
-    leaseExpiresAt?: true
-    nextRunAt?: true
-    startedAt?: true
-    completedAt?: true
-    createdAt?: true
-    updatedAt?: true
-    createdByUserId?: true
-    workerId?: true
-    temporalWorkflowId?: true
-    temporalRunId?: true
-    metadata?: true
-  }
-
-  export type CodeJobMaxAggregateInputType = {
-    id?: true
-    workspaceVersionId?: true
-    workspaceSlug?: true
-    version?: true
-    entryPath?: true
-    functionName?: true
-    args?: true
-    data?: true
-    checkpoint?: true
-    result?: true
-    error?: true
-    status?: true
-    priority?: true
-    queue?: true
-    runtime?: true
-    orchestrator?: true
-    timeoutMs?: true
-    maxAttempts?: true
-    attempt?: true
-    progress?: true
-    requestedAction?: true
-    leaseToken?: true
-    lockedAt?: true
-    leaseExpiresAt?: true
-    nextRunAt?: true
-    startedAt?: true
-    completedAt?: true
-    createdAt?: true
-    updatedAt?: true
-    createdByUserId?: true
-    workerId?: true
-    temporalWorkflowId?: true
-    temporalRunId?: true
-    metadata?: true
-  }
-
-  export type CodeJobCountAggregateInputType = {
-    id?: true
-    workspaceVersionId?: true
-    workspaceSlug?: true
-    version?: true
-    entryPath?: true
-    functionName?: true
-    args?: true
-    data?: true
-    checkpoint?: true
-    result?: true
-    error?: true
-    status?: true
-    priority?: true
-    queue?: true
-    runtime?: true
-    orchestrator?: true
-    timeoutMs?: true
-    maxAttempts?: true
-    attempt?: true
-    progress?: true
-    requestedAction?: true
-    leaseToken?: true
-    lockedAt?: true
-    leaseExpiresAt?: true
-    nextRunAt?: true
-    startedAt?: true
-    completedAt?: true
-    createdAt?: true
-    updatedAt?: true
-    createdByUserId?: true
-    workerId?: true
-    temporalWorkflowId?: true
-    temporalRunId?: true
-    metadata?: true
-    _all?: true
-  }
-
-  export type CodeJobAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which CodeJob to aggregate.
-     */
-    where?: CodeJobWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     *
-     * Determine the order of CodeJobs to fetch.
-     */
-    orderBy?: CodeJobOrderByWithRelationInput | CodeJobOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     *
-     * Sets the start position
-     */
-    cursor?: CodeJobWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
-     * Take `±n` CodeJobs from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
-     * Skip the first `n` CodeJobs.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     *
-     * Count returned CodeJobs
-    **/
-    _count?: true | CodeJobCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     *
-     * Select which fields to average
-    **/
-    _avg?: CodeJobAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     *
-     * Select which fields to sum
-    **/
-    _sum?: CodeJobSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     *
-     * Select which fields to find the minimum value
-    **/
-    _min?: CodeJobMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     *
-     * Select which fields to find the maximum value
-    **/
-    _max?: CodeJobMaxAggregateInputType
-  }
-
-  export type GetCodeJobAggregateType<T extends CodeJobAggregateArgs> = {
-        [P in keyof T & keyof AggregateCodeJob]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateCodeJob[P]>
-      : GetScalarType<T[P], AggregateCodeJob[P]>
-  }
-
-
-
-
-  export type CodeJobGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: CodeJobWhereInput
-    orderBy?: CodeJobOrderByWithAggregationInput | CodeJobOrderByWithAggregationInput[]
-    by: CodeJobScalarFieldEnum[] | CodeJobScalarFieldEnum
-    having?: CodeJobScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: CodeJobCountAggregateInputType | true
-    _avg?: CodeJobAvgAggregateInputType
-    _sum?: CodeJobSumAggregateInputType
-    _min?: CodeJobMinAggregateInputType
-    _max?: CodeJobMaxAggregateInputType
-  }
-
-  export type CodeJobGroupByOutputType = {
-    id: string
-    workspaceVersionId: string
-    workspaceSlug: string
-    version: number
-    entryPath: string
-    functionName: string
-    args: string
-    data: string
-    checkpoint: string
-    result: string | null
-    error: string | null
-    status: string
-    priority: number
-    queue: string
-    runtime: string
-    orchestrator: string
-    timeoutMs: number
-    maxAttempts: number
-    attempt: number
-    progress: number
-    requestedAction: string | null
-    leaseToken: string | null
-    lockedAt: Date | null
-    leaseExpiresAt: Date | null
-    nextRunAt: Date
-    startedAt: Date | null
-    completedAt: Date | null
-    createdAt: Date
-    updatedAt: Date
-    createdByUserId: string
-    workerId: string | null
-    temporalWorkflowId: string | null
-    temporalRunId: string | null
-    metadata: string
-    _count: CodeJobCountAggregateOutputType | null
-    _avg: CodeJobAvgAggregateOutputType | null
-    _sum: CodeJobSumAggregateOutputType | null
-    _min: CodeJobMinAggregateOutputType | null
-    _max: CodeJobMaxAggregateOutputType | null
-  }
-
-  type GetCodeJobGroupByPayload<T extends CodeJobGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickEnumerable<CodeJobGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof CodeJobGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], CodeJobGroupByOutputType[P]>
-            : GetScalarType<T[P], CodeJobGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type CodeJobSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    workspaceVersionId?: boolean
-    workspaceSlug?: boolean
-    version?: boolean
-    entryPath?: boolean
-    functionName?: boolean
-    args?: boolean
-    data?: boolean
-    checkpoint?: boolean
-    result?: boolean
-    error?: boolean
-    status?: boolean
-    priority?: boolean
-    queue?: boolean
-    runtime?: boolean
-    orchestrator?: boolean
-    timeoutMs?: boolean
-    maxAttempts?: boolean
-    attempt?: boolean
-    progress?: boolean
-    requestedAction?: boolean
-    leaseToken?: boolean
-    lockedAt?: boolean
-    leaseExpiresAt?: boolean
-    nextRunAt?: boolean
-    startedAt?: boolean
-    completedAt?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-    createdByUserId?: boolean
-    workerId?: boolean
-    temporalWorkflowId?: boolean
-    temporalRunId?: boolean
-    metadata?: boolean
-    workspaceVersion?: boolean | CodeWorkspaceVersionDefaultArgs<ExtArgs>
-    worker?: boolean | CodeJob$workerArgs<ExtArgs>
-    logs?: boolean | CodeJob$logsArgs<ExtArgs>
-    _count?: boolean | CodeJobCountOutputTypeDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["codeJob"]>
-
-  export type CodeJobSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    workspaceVersionId?: boolean
-    workspaceSlug?: boolean
-    version?: boolean
-    entryPath?: boolean
-    functionName?: boolean
-    args?: boolean
-    data?: boolean
-    checkpoint?: boolean
-    result?: boolean
-    error?: boolean
-    status?: boolean
-    priority?: boolean
-    queue?: boolean
-    runtime?: boolean
-    orchestrator?: boolean
-    timeoutMs?: boolean
-    maxAttempts?: boolean
-    attempt?: boolean
-    progress?: boolean
-    requestedAction?: boolean
-    leaseToken?: boolean
-    lockedAt?: boolean
-    leaseExpiresAt?: boolean
-    nextRunAt?: boolean
-    startedAt?: boolean
-    completedAt?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-    createdByUserId?: boolean
-    workerId?: boolean
-    temporalWorkflowId?: boolean
-    temporalRunId?: boolean
-    metadata?: boolean
-    workspaceVersion?: boolean | CodeWorkspaceVersionDefaultArgs<ExtArgs>
-    worker?: boolean | CodeJob$workerArgs<ExtArgs>
-  }, ExtArgs["result"]["codeJob"]>
-
-  export type CodeJobSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    workspaceVersionId?: boolean
-    workspaceSlug?: boolean
-    version?: boolean
-    entryPath?: boolean
-    functionName?: boolean
-    args?: boolean
-    data?: boolean
-    checkpoint?: boolean
-    result?: boolean
-    error?: boolean
-    status?: boolean
-    priority?: boolean
-    queue?: boolean
-    runtime?: boolean
-    orchestrator?: boolean
-    timeoutMs?: boolean
-    maxAttempts?: boolean
-    attempt?: boolean
-    progress?: boolean
-    requestedAction?: boolean
-    leaseToken?: boolean
-    lockedAt?: boolean
-    leaseExpiresAt?: boolean
-    nextRunAt?: boolean
-    startedAt?: boolean
-    completedAt?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-    createdByUserId?: boolean
-    workerId?: boolean
-    temporalWorkflowId?: boolean
-    temporalRunId?: boolean
-    metadata?: boolean
-    workspaceVersion?: boolean | CodeWorkspaceVersionDefaultArgs<ExtArgs>
-    worker?: boolean | CodeJob$workerArgs<ExtArgs>
-  }, ExtArgs["result"]["codeJob"]>
-
-  export type CodeJobSelectScalar = {
-    id?: boolean
-    workspaceVersionId?: boolean
-    workspaceSlug?: boolean
-    version?: boolean
-    entryPath?: boolean
-    functionName?: boolean
-    args?: boolean
-    data?: boolean
-    checkpoint?: boolean
-    result?: boolean
-    error?: boolean
-    status?: boolean
-    priority?: boolean
-    queue?: boolean
-    runtime?: boolean
-    orchestrator?: boolean
-    timeoutMs?: boolean
-    maxAttempts?: boolean
-    attempt?: boolean
-    progress?: boolean
-    requestedAction?: boolean
-    leaseToken?: boolean
-    lockedAt?: boolean
-    leaseExpiresAt?: boolean
-    nextRunAt?: boolean
-    startedAt?: boolean
-    completedAt?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-    createdByUserId?: boolean
-    workerId?: boolean
-    temporalWorkflowId?: boolean
-    temporalRunId?: boolean
-    metadata?: boolean
-  }
-
-  export type CodeJobOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "workspaceVersionId" | "workspaceSlug" | "version" | "entryPath" | "functionName" | "args" | "data" | "checkpoint" | "result" | "error" | "status" | "priority" | "queue" | "runtime" | "orchestrator" | "timeoutMs" | "maxAttempts" | "attempt" | "progress" | "requestedAction" | "leaseToken" | "lockedAt" | "leaseExpiresAt" | "nextRunAt" | "startedAt" | "completedAt" | "createdAt" | "updatedAt" | "createdByUserId" | "workerId" | "temporalWorkflowId" | "temporalRunId" | "metadata", ExtArgs["result"]["codeJob"]>
-  export type CodeJobInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    workspaceVersion?: boolean | CodeWorkspaceVersionDefaultArgs<ExtArgs>
-    worker?: boolean | CodeJob$workerArgs<ExtArgs>
-    logs?: boolean | CodeJob$logsArgs<ExtArgs>
-    _count?: boolean | CodeJobCountOutputTypeDefaultArgs<ExtArgs>
-  }
-  export type CodeJobIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    workspaceVersion?: boolean | CodeWorkspaceVersionDefaultArgs<ExtArgs>
-    worker?: boolean | CodeJob$workerArgs<ExtArgs>
-  }
-  export type CodeJobIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    workspaceVersion?: boolean | CodeWorkspaceVersionDefaultArgs<ExtArgs>
-    worker?: boolean | CodeJob$workerArgs<ExtArgs>
-  }
-
-  export type $CodeJobPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "CodeJob"
-    objects: {
-      workspaceVersion: Prisma.$CodeWorkspaceVersionPayload<ExtArgs>
-      worker: Prisma.$CodeWorkerPayload<ExtArgs> | null
-      logs: Prisma.$CodeJobLogPayload<ExtArgs>[]
-    }
-    scalars: $Extensions.GetPayloadResult<{
-      id: string
-      workspaceVersionId: string
-      workspaceSlug: string
-      version: number
-      entryPath: string
-      functionName: string
-      args: string
-      data: string
-      checkpoint: string
-      result: string | null
-      error: string | null
-      status: string
-      priority: number
-      queue: string
-      runtime: string
-      orchestrator: string
-      timeoutMs: number
-      maxAttempts: number
-      attempt: number
-      progress: number
-      requestedAction: string | null
-      leaseToken: string | null
-      lockedAt: Date | null
-      leaseExpiresAt: Date | null
-      nextRunAt: Date
-      startedAt: Date | null
-      completedAt: Date | null
-      createdAt: Date
-      updatedAt: Date
-      createdByUserId: string
-      workerId: string | null
-      temporalWorkflowId: string | null
-      temporalRunId: string | null
-      metadata: string
-    }, ExtArgs["result"]["codeJob"]>
-    composites: {}
-  }
-
-  type CodeJobGetPayload<S extends boolean | null | undefined | CodeJobDefaultArgs> = $Result.GetResult<Prisma.$CodeJobPayload, S>
-
-  type CodeJobCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<CodeJobFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: CodeJobCountAggregateInputType | true
-    }
-
-  export interface CodeJobDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['CodeJob'], meta: { name: 'CodeJob' } }
-    /**
-     * Find zero or one CodeJob that matches the filter.
-     * @param {CodeJobFindUniqueArgs} args - Arguments to find a CodeJob
-     * @example
-     * // Get one CodeJob
-     * const codeJob = await prisma.codeJob.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUnique<T extends CodeJobFindUniqueArgs>(args: SelectSubset<T, CodeJobFindUniqueArgs<ExtArgs>>): Prisma__CodeJobClient<$Result.GetResult<Prisma.$CodeJobPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find one CodeJob that matches the filter or throw an error with `error.code='P2025'`
-     * if no matches were found.
-     * @param {CodeJobFindUniqueOrThrowArgs} args - Arguments to find a CodeJob
-     * @example
-     * // Get one CodeJob
-     * const codeJob = await prisma.codeJob.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUniqueOrThrow<T extends CodeJobFindUniqueOrThrowArgs>(args: SelectSubset<T, CodeJobFindUniqueOrThrowArgs<ExtArgs>>): Prisma__CodeJobClient<$Result.GetResult<Prisma.$CodeJobPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first CodeJob that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {CodeJobFindFirstArgs} args - Arguments to find a CodeJob
-     * @example
-     * // Get one CodeJob
-     * const codeJob = await prisma.codeJob.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirst<T extends CodeJobFindFirstArgs>(args?: SelectSubset<T, CodeJobFindFirstArgs<ExtArgs>>): Prisma__CodeJobClient<$Result.GetResult<Prisma.$CodeJobPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first CodeJob that matches the filter or
-     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {CodeJobFindFirstOrThrowArgs} args - Arguments to find a CodeJob
-     * @example
-     * // Get one CodeJob
-     * const codeJob = await prisma.codeJob.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirstOrThrow<T extends CodeJobFindFirstOrThrowArgs>(args?: SelectSubset<T, CodeJobFindFirstOrThrowArgs<ExtArgs>>): Prisma__CodeJobClient<$Result.GetResult<Prisma.$CodeJobPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find zero or more CodeJobs that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {CodeJobFindManyArgs} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all CodeJobs
-     * const codeJobs = await prisma.codeJob.findMany()
-     *
-     * // Get first 10 CodeJobs
-     * const codeJobs = await prisma.codeJob.findMany({ take: 10 })
-     *
-     * // Only select the `id`
-     * const codeJobWithIdOnly = await prisma.codeJob.findMany({ select: { id: true } })
-     *
-     */
-    findMany<T extends CodeJobFindManyArgs>(args?: SelectSubset<T, CodeJobFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CodeJobPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
-
-    /**
-     * Create a CodeJob.
-     * @param {CodeJobCreateArgs} args - Arguments to create a CodeJob.
-     * @example
-     * // Create one CodeJob
-     * const CodeJob = await prisma.codeJob.create({
-     *   data: {
-     *     // ... data to create a CodeJob
-     *   }
-     * })
-     *
-     */
-    create<T extends CodeJobCreateArgs>(args: SelectSubset<T, CodeJobCreateArgs<ExtArgs>>): Prisma__CodeJobClient<$Result.GetResult<Prisma.$CodeJobPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Create many CodeJobs.
-     * @param {CodeJobCreateManyArgs} args - Arguments to create many CodeJobs.
-     * @example
-     * // Create many CodeJobs
-     * const codeJob = await prisma.codeJob.createMany({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     *
-     */
-    createMany<T extends CodeJobCreateManyArgs>(args?: SelectSubset<T, CodeJobCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create many CodeJobs and returns the data saved in the database.
-     * @param {CodeJobCreateManyAndReturnArgs} args - Arguments to create many CodeJobs.
-     * @example
-     * // Create many CodeJobs
-     * const codeJob = await prisma.codeJob.createManyAndReturn({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     *
-     * // Create many CodeJobs and only return the `id`
-     * const codeJobWithIdOnly = await prisma.codeJob.createManyAndReturn({
-     *   select: { id: true },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     *
-     */
-    createManyAndReturn<T extends CodeJobCreateManyAndReturnArgs>(args?: SelectSubset<T, CodeJobCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CodeJobPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Delete a CodeJob.
-     * @param {CodeJobDeleteArgs} args - Arguments to delete one CodeJob.
-     * @example
-     * // Delete one CodeJob
-     * const CodeJob = await prisma.codeJob.delete({
-     *   where: {
-     *     // ... filter to delete one CodeJob
-     *   }
-     * })
-     *
-     */
-    delete<T extends CodeJobDeleteArgs>(args: SelectSubset<T, CodeJobDeleteArgs<ExtArgs>>): Prisma__CodeJobClient<$Result.GetResult<Prisma.$CodeJobPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Update one CodeJob.
-     * @param {CodeJobUpdateArgs} args - Arguments to update one CodeJob.
-     * @example
-     * // Update one CodeJob
-     * const codeJob = await prisma.codeJob.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     *
-     */
-    update<T extends CodeJobUpdateArgs>(args: SelectSubset<T, CodeJobUpdateArgs<ExtArgs>>): Prisma__CodeJobClient<$Result.GetResult<Prisma.$CodeJobPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Delete zero or more CodeJobs.
-     * @param {CodeJobDeleteManyArgs} args - Arguments to filter CodeJobs to delete.
-     * @example
-     * // Delete a few CodeJobs
-     * const { count } = await prisma.codeJob.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     *
-     */
-    deleteMany<T extends CodeJobDeleteManyArgs>(args?: SelectSubset<T, CodeJobDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more CodeJobs.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {CodeJobUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many CodeJobs
-     * const codeJob = await prisma.codeJob.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     *
-     */
-    updateMany<T extends CodeJobUpdateManyArgs>(args: SelectSubset<T, CodeJobUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more CodeJobs and returns the data updated in the database.
-     * @param {CodeJobUpdateManyAndReturnArgs} args - Arguments to update many CodeJobs.
-     * @example
-     * // Update many CodeJobs
-     * const codeJob = await prisma.codeJob.updateManyAndReturn({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     *
-     * // Update zero or more CodeJobs and only return the `id`
-     * const codeJobWithIdOnly = await prisma.codeJob.updateManyAndReturn({
-     *   select: { id: true },
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     *
-     */
-    updateManyAndReturn<T extends CodeJobUpdateManyAndReturnArgs>(args: SelectSubset<T, CodeJobUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CodeJobPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Create or update one CodeJob.
-     * @param {CodeJobUpsertArgs} args - Arguments to update or create a CodeJob.
-     * @example
-     * // Update or create a CodeJob
-     * const codeJob = await prisma.codeJob.upsert({
-     *   create: {
-     *     // ... data to create a CodeJob
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the CodeJob we want to update
-     *   }
-     * })
-     */
-    upsert<T extends CodeJobUpsertArgs>(args: SelectSubset<T, CodeJobUpsertArgs<ExtArgs>>): Prisma__CodeJobClient<$Result.GetResult<Prisma.$CodeJobPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-
-    /**
-     * Count the number of CodeJobs.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {CodeJobCountArgs} args - Arguments to filter CodeJobs to count.
-     * @example
-     * // Count the number of CodeJobs
-     * const count = await prisma.codeJob.count({
-     *   where: {
-     *     // ... the filter for the CodeJobs we want to count
-     *   }
-     * })
-    **/
-    count<T extends CodeJobCountArgs>(
-      args?: Subset<T, CodeJobCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends $Utils.Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], CodeJobCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a CodeJob.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {CodeJobAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends CodeJobAggregateArgs>(args: Subset<T, CodeJobAggregateArgs>): Prisma.PrismaPromise<GetCodeJobAggregateType<T>>
-
-    /**
-     * Group by CodeJob.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {CodeJobGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     *
-    **/
-    groupBy<
-      T extends CodeJobGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: CodeJobGroupByArgs['orderBy'] }
-        : { orderBy?: CodeJobGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends MaybeTupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, CodeJobGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetCodeJobGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the CodeJob model
-   */
-  readonly fields: CodeJobFieldRefs;
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for CodeJob.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export interface Prisma__CodeJobClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
-    workspaceVersion<T extends CodeWorkspaceVersionDefaultArgs<ExtArgs> = {}>(args?: Subset<T, CodeWorkspaceVersionDefaultArgs<ExtArgs>>): Prisma__CodeWorkspaceVersionClient<$Result.GetResult<Prisma.$CodeWorkspaceVersionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    worker<T extends CodeJob$workerArgs<ExtArgs> = {}>(args?: Subset<T, CodeJob$workerArgs<ExtArgs>>): Prisma__CodeWorkerClient<$Result.GetResult<Prisma.$CodeWorkerPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-    logs<T extends CodeJob$logsArgs<ExtArgs> = {}>(args?: Subset<T, CodeJob$logsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CodeJobLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
-  }
-
-
-
-
-  /**
-   * Fields of the CodeJob model
-   */
-  interface CodeJobFieldRefs {
-    readonly id: FieldRef<"CodeJob", 'String'>
-    readonly workspaceVersionId: FieldRef<"CodeJob", 'String'>
-    readonly workspaceSlug: FieldRef<"CodeJob", 'String'>
-    readonly version: FieldRef<"CodeJob", 'Int'>
-    readonly entryPath: FieldRef<"CodeJob", 'String'>
-    readonly functionName: FieldRef<"CodeJob", 'String'>
-    readonly args: FieldRef<"CodeJob", 'String'>
-    readonly data: FieldRef<"CodeJob", 'String'>
-    readonly checkpoint: FieldRef<"CodeJob", 'String'>
-    readonly result: FieldRef<"CodeJob", 'String'>
-    readonly error: FieldRef<"CodeJob", 'String'>
-    readonly status: FieldRef<"CodeJob", 'String'>
-    readonly priority: FieldRef<"CodeJob", 'Int'>
-    readonly queue: FieldRef<"CodeJob", 'String'>
-    readonly runtime: FieldRef<"CodeJob", 'String'>
-    readonly orchestrator: FieldRef<"CodeJob", 'String'>
-    readonly timeoutMs: FieldRef<"CodeJob", 'Int'>
-    readonly maxAttempts: FieldRef<"CodeJob", 'Int'>
-    readonly attempt: FieldRef<"CodeJob", 'Int'>
-    readonly progress: FieldRef<"CodeJob", 'Int'>
-    readonly requestedAction: FieldRef<"CodeJob", 'String'>
-    readonly leaseToken: FieldRef<"CodeJob", 'String'>
-    readonly lockedAt: FieldRef<"CodeJob", 'DateTime'>
-    readonly leaseExpiresAt: FieldRef<"CodeJob", 'DateTime'>
-    readonly nextRunAt: FieldRef<"CodeJob", 'DateTime'>
-    readonly startedAt: FieldRef<"CodeJob", 'DateTime'>
-    readonly completedAt: FieldRef<"CodeJob", 'DateTime'>
-    readonly createdAt: FieldRef<"CodeJob", 'DateTime'>
-    readonly updatedAt: FieldRef<"CodeJob", 'DateTime'>
-    readonly createdByUserId: FieldRef<"CodeJob", 'String'>
-    readonly workerId: FieldRef<"CodeJob", 'String'>
-    readonly temporalWorkflowId: FieldRef<"CodeJob", 'String'>
-    readonly temporalRunId: FieldRef<"CodeJob", 'String'>
-    readonly metadata: FieldRef<"CodeJob", 'String'>
-  }
-
-
-  // Custom InputTypes
-  /**
-   * CodeJob findUnique
-   */
-  export type CodeJobFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the CodeJob
-     */
-    select?: CodeJobSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the CodeJob
-     */
-    omit?: CodeJobOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CodeJobInclude<ExtArgs> | null
-    /**
-     * Filter, which CodeJob to fetch.
-     */
-    where: CodeJobWhereUniqueInput
-  }
-
-  /**
-   * CodeJob findUniqueOrThrow
-   */
-  export type CodeJobFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the CodeJob
-     */
-    select?: CodeJobSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the CodeJob
-     */
-    omit?: CodeJobOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CodeJobInclude<ExtArgs> | null
-    /**
-     * Filter, which CodeJob to fetch.
-     */
-    where: CodeJobWhereUniqueInput
-  }
-
-  /**
-   * CodeJob findFirst
-   */
-  export type CodeJobFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the CodeJob
-     */
-    select?: CodeJobSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the CodeJob
-     */
-    omit?: CodeJobOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CodeJobInclude<ExtArgs> | null
-    /**
-     * Filter, which CodeJob to fetch.
-     */
-    where?: CodeJobWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     *
-     * Determine the order of CodeJobs to fetch.
-     */
-    orderBy?: CodeJobOrderByWithRelationInput | CodeJobOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     *
-     * Sets the position for searching for CodeJobs.
-     */
-    cursor?: CodeJobWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
-     * Take `±n` CodeJobs from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
-     * Skip the first `n` CodeJobs.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     *
-     * Filter by unique combinations of CodeJobs.
-     */
-    distinct?: CodeJobScalarFieldEnum | CodeJobScalarFieldEnum[]
-  }
-
-  /**
-   * CodeJob findFirstOrThrow
-   */
-  export type CodeJobFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the CodeJob
-     */
-    select?: CodeJobSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the CodeJob
-     */
-    omit?: CodeJobOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CodeJobInclude<ExtArgs> | null
-    /**
-     * Filter, which CodeJob to fetch.
-     */
-    where?: CodeJobWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     *
-     * Determine the order of CodeJobs to fetch.
-     */
-    orderBy?: CodeJobOrderByWithRelationInput | CodeJobOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     *
-     * Sets the position for searching for CodeJobs.
-     */
-    cursor?: CodeJobWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
-     * Take `±n` CodeJobs from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
-     * Skip the first `n` CodeJobs.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     *
-     * Filter by unique combinations of CodeJobs.
-     */
-    distinct?: CodeJobScalarFieldEnum | CodeJobScalarFieldEnum[]
-  }
-
-  /**
-   * CodeJob findMany
-   */
-  export type CodeJobFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the CodeJob
-     */
-    select?: CodeJobSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the CodeJob
-     */
-    omit?: CodeJobOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CodeJobInclude<ExtArgs> | null
-    /**
-     * Filter, which CodeJobs to fetch.
-     */
-    where?: CodeJobWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     *
-     * Determine the order of CodeJobs to fetch.
-     */
-    orderBy?: CodeJobOrderByWithRelationInput | CodeJobOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     *
-     * Sets the position for listing CodeJobs.
-     */
-    cursor?: CodeJobWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
-     * Take `±n` CodeJobs from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
-     * Skip the first `n` CodeJobs.
-     */
-    skip?: number
-    distinct?: CodeJobScalarFieldEnum | CodeJobScalarFieldEnum[]
-  }
-
-  /**
-   * CodeJob create
-   */
-  export type CodeJobCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the CodeJob
-     */
-    select?: CodeJobSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the CodeJob
-     */
-    omit?: CodeJobOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CodeJobInclude<ExtArgs> | null
-    /**
-     * The data needed to create a CodeJob.
-     */
-    data: XOR<CodeJobCreateInput, CodeJobUncheckedCreateInput>
-  }
-
-  /**
-   * CodeJob createMany
-   */
-  export type CodeJobCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to create many CodeJobs.
-     */
-    data: CodeJobCreateManyInput | CodeJobCreateManyInput[]
-  }
-
-  /**
-   * CodeJob createManyAndReturn
-   */
-  export type CodeJobCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the CodeJob
-     */
-    select?: CodeJobSelectCreateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the CodeJob
-     */
-    omit?: CodeJobOmit<ExtArgs> | null
-    /**
-     * The data used to create many CodeJobs.
-     */
-    data: CodeJobCreateManyInput | CodeJobCreateManyInput[]
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CodeJobIncludeCreateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * CodeJob update
-   */
-  export type CodeJobUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the CodeJob
-     */
-    select?: CodeJobSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the CodeJob
-     */
-    omit?: CodeJobOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CodeJobInclude<ExtArgs> | null
-    /**
-     * The data needed to update a CodeJob.
-     */
-    data: XOR<CodeJobUpdateInput, CodeJobUncheckedUpdateInput>
-    /**
-     * Choose, which CodeJob to update.
-     */
-    where: CodeJobWhereUniqueInput
-  }
-
-  /**
-   * CodeJob updateMany
-   */
-  export type CodeJobUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to update CodeJobs.
-     */
-    data: XOR<CodeJobUpdateManyMutationInput, CodeJobUncheckedUpdateManyInput>
-    /**
-     * Filter which CodeJobs to update
-     */
-    where?: CodeJobWhereInput
-    /**
-     * Limit how many CodeJobs to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * CodeJob updateManyAndReturn
-   */
-  export type CodeJobUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the CodeJob
-     */
-    select?: CodeJobSelectUpdateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the CodeJob
-     */
-    omit?: CodeJobOmit<ExtArgs> | null
-    /**
-     * The data used to update CodeJobs.
-     */
-    data: XOR<CodeJobUpdateManyMutationInput, CodeJobUncheckedUpdateManyInput>
-    /**
-     * Filter which CodeJobs to update
-     */
-    where?: CodeJobWhereInput
-    /**
-     * Limit how many CodeJobs to update.
-     */
-    limit?: number
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CodeJobIncludeUpdateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * CodeJob upsert
-   */
-  export type CodeJobUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the CodeJob
-     */
-    select?: CodeJobSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the CodeJob
-     */
-    omit?: CodeJobOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CodeJobInclude<ExtArgs> | null
-    /**
-     * The filter to search for the CodeJob to update in case it exists.
-     */
-    where: CodeJobWhereUniqueInput
-    /**
-     * In case the CodeJob found by the `where` argument doesn't exist, create a new CodeJob with this data.
-     */
-    create: XOR<CodeJobCreateInput, CodeJobUncheckedCreateInput>
-    /**
-     * In case the CodeJob was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<CodeJobUpdateInput, CodeJobUncheckedUpdateInput>
-  }
-
-  /**
-   * CodeJob delete
-   */
-  export type CodeJobDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the CodeJob
-     */
-    select?: CodeJobSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the CodeJob
-     */
-    omit?: CodeJobOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CodeJobInclude<ExtArgs> | null
-    /**
-     * Filter which CodeJob to delete.
-     */
-    where: CodeJobWhereUniqueInput
-  }
-
-  /**
-   * CodeJob deleteMany
-   */
-  export type CodeJobDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which CodeJobs to delete
-     */
-    where?: CodeJobWhereInput
-    /**
-     * Limit how many CodeJobs to delete.
-     */
-    limit?: number
-  }
-
-  /**
-   * CodeJob.worker
-   */
-  export type CodeJob$workerArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the CodeWorker
-     */
-    select?: CodeWorkerSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the CodeWorker
-     */
-    omit?: CodeWorkerOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CodeWorkerInclude<ExtArgs> | null
-    where?: CodeWorkerWhereInput
-  }
-
-  /**
-   * CodeJob.logs
-   */
-  export type CodeJob$logsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the CodeJobLog
-     */
-    select?: CodeJobLogSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the CodeJobLog
-     */
-    omit?: CodeJobLogOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CodeJobLogInclude<ExtArgs> | null
-    where?: CodeJobLogWhereInput
-    orderBy?: CodeJobLogOrderByWithRelationInput | CodeJobLogOrderByWithRelationInput[]
-    cursor?: CodeJobLogWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: CodeJobLogScalarFieldEnum | CodeJobLogScalarFieldEnum[]
-  }
-
-  /**
-   * CodeJob without action
-   */
-  export type CodeJobDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the CodeJob
-     */
-    select?: CodeJobSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the CodeJob
-     */
-    omit?: CodeJobOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CodeJobInclude<ExtArgs> | null
-  }
-
-
-  /**
-   * Model CodeJobLog
-   */
-
-  export type AggregateCodeJobLog = {
-    _count: CodeJobLogCountAggregateOutputType | null
-    _avg: CodeJobLogAvgAggregateOutputType | null
-    _sum: CodeJobLogSumAggregateOutputType | null
-    _min: CodeJobLogMinAggregateOutputType | null
-    _max: CodeJobLogMaxAggregateOutputType | null
-  }
-
-  export type CodeJobLogAvgAggregateOutputType = {
-    id: number | null
-    sequence: number | null
-  }
-
-  export type CodeJobLogSumAggregateOutputType = {
-    id: number | null
-    sequence: number | null
-  }
-
-  export type CodeJobLogMinAggregateOutputType = {
-    id: number | null
-    jobId: string | null
-    workerId: string | null
-    level: string | null
-    message: string | null
-    sequence: number | null
-    meta: string | null
-    createdAt: Date | null
-  }
-
-  export type CodeJobLogMaxAggregateOutputType = {
-    id: number | null
-    jobId: string | null
-    workerId: string | null
-    level: string | null
-    message: string | null
-    sequence: number | null
-    meta: string | null
-    createdAt: Date | null
-  }
-
-  export type CodeJobLogCountAggregateOutputType = {
-    id: number
-    jobId: number
-    workerId: number
-    level: number
-    message: number
-    sequence: number
-    meta: number
-    createdAt: number
-    _all: number
-  }
-
-
-  export type CodeJobLogAvgAggregateInputType = {
-    id?: true
-    sequence?: true
-  }
-
-  export type CodeJobLogSumAggregateInputType = {
-    id?: true
-    sequence?: true
-  }
-
-  export type CodeJobLogMinAggregateInputType = {
-    id?: true
-    jobId?: true
-    workerId?: true
-    level?: true
-    message?: true
-    sequence?: true
-    meta?: true
-    createdAt?: true
-  }
-
-  export type CodeJobLogMaxAggregateInputType = {
-    id?: true
-    jobId?: true
-    workerId?: true
-    level?: true
-    message?: true
-    sequence?: true
-    meta?: true
-    createdAt?: true
-  }
-
-  export type CodeJobLogCountAggregateInputType = {
-    id?: true
-    jobId?: true
-    workerId?: true
-    level?: true
-    message?: true
-    sequence?: true
-    meta?: true
-    createdAt?: true
-    _all?: true
-  }
-
-  export type CodeJobLogAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which CodeJobLog to aggregate.
-     */
-    where?: CodeJobLogWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     *
-     * Determine the order of CodeJobLogs to fetch.
-     */
-    orderBy?: CodeJobLogOrderByWithRelationInput | CodeJobLogOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     *
-     * Sets the start position
-     */
-    cursor?: CodeJobLogWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
-     * Take `±n` CodeJobLogs from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
-     * Skip the first `n` CodeJobLogs.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     *
-     * Count returned CodeJobLogs
-    **/
-    _count?: true | CodeJobLogCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     *
-     * Select which fields to average
-    **/
-    _avg?: CodeJobLogAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     *
-     * Select which fields to sum
-    **/
-    _sum?: CodeJobLogSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     *
-     * Select which fields to find the minimum value
-    **/
-    _min?: CodeJobLogMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     *
-     * Select which fields to find the maximum value
-    **/
-    _max?: CodeJobLogMaxAggregateInputType
-  }
-
-  export type GetCodeJobLogAggregateType<T extends CodeJobLogAggregateArgs> = {
-        [P in keyof T & keyof AggregateCodeJobLog]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateCodeJobLog[P]>
-      : GetScalarType<T[P], AggregateCodeJobLog[P]>
-  }
-
-
-
-
-  export type CodeJobLogGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: CodeJobLogWhereInput
-    orderBy?: CodeJobLogOrderByWithAggregationInput | CodeJobLogOrderByWithAggregationInput[]
-    by: CodeJobLogScalarFieldEnum[] | CodeJobLogScalarFieldEnum
-    having?: CodeJobLogScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: CodeJobLogCountAggregateInputType | true
-    _avg?: CodeJobLogAvgAggregateInputType
-    _sum?: CodeJobLogSumAggregateInputType
-    _min?: CodeJobLogMinAggregateInputType
-    _max?: CodeJobLogMaxAggregateInputType
-  }
-
-  export type CodeJobLogGroupByOutputType = {
-    id: number
-    jobId: string
-    workerId: string | null
-    level: string
-    message: string
-    sequence: number
-    meta: string
-    createdAt: Date
-    _count: CodeJobLogCountAggregateOutputType | null
-    _avg: CodeJobLogAvgAggregateOutputType | null
-    _sum: CodeJobLogSumAggregateOutputType | null
-    _min: CodeJobLogMinAggregateOutputType | null
-    _max: CodeJobLogMaxAggregateOutputType | null
-  }
-
-  type GetCodeJobLogGroupByPayload<T extends CodeJobLogGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickEnumerable<CodeJobLogGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof CodeJobLogGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], CodeJobLogGroupByOutputType[P]>
-            : GetScalarType<T[P], CodeJobLogGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type CodeJobLogSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    jobId?: boolean
-    workerId?: boolean
-    level?: boolean
-    message?: boolean
-    sequence?: boolean
-    meta?: boolean
-    createdAt?: boolean
-    job?: boolean | CodeJobDefaultArgs<ExtArgs>
-    worker?: boolean | CodeJobLog$workerArgs<ExtArgs>
-  }, ExtArgs["result"]["codeJobLog"]>
-
-  export type CodeJobLogSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    jobId?: boolean
-    workerId?: boolean
-    level?: boolean
-    message?: boolean
-    sequence?: boolean
-    meta?: boolean
-    createdAt?: boolean
-    job?: boolean | CodeJobDefaultArgs<ExtArgs>
-    worker?: boolean | CodeJobLog$workerArgs<ExtArgs>
-  }, ExtArgs["result"]["codeJobLog"]>
-
-  export type CodeJobLogSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    jobId?: boolean
-    workerId?: boolean
-    level?: boolean
-    message?: boolean
-    sequence?: boolean
-    meta?: boolean
-    createdAt?: boolean
-    job?: boolean | CodeJobDefaultArgs<ExtArgs>
-    worker?: boolean | CodeJobLog$workerArgs<ExtArgs>
-  }, ExtArgs["result"]["codeJobLog"]>
-
-  export type CodeJobLogSelectScalar = {
-    id?: boolean
-    jobId?: boolean
-    workerId?: boolean
-    level?: boolean
-    message?: boolean
-    sequence?: boolean
-    meta?: boolean
-    createdAt?: boolean
-  }
-
-  export type CodeJobLogOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "jobId" | "workerId" | "level" | "message" | "sequence" | "meta" | "createdAt", ExtArgs["result"]["codeJobLog"]>
-  export type CodeJobLogInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    job?: boolean | CodeJobDefaultArgs<ExtArgs>
-    worker?: boolean | CodeJobLog$workerArgs<ExtArgs>
-  }
-  export type CodeJobLogIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    job?: boolean | CodeJobDefaultArgs<ExtArgs>
-    worker?: boolean | CodeJobLog$workerArgs<ExtArgs>
-  }
-  export type CodeJobLogIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    job?: boolean | CodeJobDefaultArgs<ExtArgs>
-    worker?: boolean | CodeJobLog$workerArgs<ExtArgs>
-  }
-
-  export type $CodeJobLogPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "CodeJobLog"
-    objects: {
-      job: Prisma.$CodeJobPayload<ExtArgs>
-      worker: Prisma.$CodeWorkerPayload<ExtArgs> | null
-    }
-    scalars: $Extensions.GetPayloadResult<{
-      id: number
-      jobId: string
-      workerId: string | null
-      level: string
-      message: string
-      sequence: number
-      meta: string
-      createdAt: Date
-    }, ExtArgs["result"]["codeJobLog"]>
-    composites: {}
-  }
-
-  type CodeJobLogGetPayload<S extends boolean | null | undefined | CodeJobLogDefaultArgs> = $Result.GetResult<Prisma.$CodeJobLogPayload, S>
-
-  type CodeJobLogCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<CodeJobLogFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: CodeJobLogCountAggregateInputType | true
-    }
-
-  export interface CodeJobLogDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['CodeJobLog'], meta: { name: 'CodeJobLog' } }
-    /**
-     * Find zero or one CodeJobLog that matches the filter.
-     * @param {CodeJobLogFindUniqueArgs} args - Arguments to find a CodeJobLog
-     * @example
-     * // Get one CodeJobLog
-     * const codeJobLog = await prisma.codeJobLog.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUnique<T extends CodeJobLogFindUniqueArgs>(args: SelectSubset<T, CodeJobLogFindUniqueArgs<ExtArgs>>): Prisma__CodeJobLogClient<$Result.GetResult<Prisma.$CodeJobLogPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find one CodeJobLog that matches the filter or throw an error with `error.code='P2025'`
-     * if no matches were found.
-     * @param {CodeJobLogFindUniqueOrThrowArgs} args - Arguments to find a CodeJobLog
-     * @example
-     * // Get one CodeJobLog
-     * const codeJobLog = await prisma.codeJobLog.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUniqueOrThrow<T extends CodeJobLogFindUniqueOrThrowArgs>(args: SelectSubset<T, CodeJobLogFindUniqueOrThrowArgs<ExtArgs>>): Prisma__CodeJobLogClient<$Result.GetResult<Prisma.$CodeJobLogPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first CodeJobLog that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {CodeJobLogFindFirstArgs} args - Arguments to find a CodeJobLog
-     * @example
-     * // Get one CodeJobLog
-     * const codeJobLog = await prisma.codeJobLog.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirst<T extends CodeJobLogFindFirstArgs>(args?: SelectSubset<T, CodeJobLogFindFirstArgs<ExtArgs>>): Prisma__CodeJobLogClient<$Result.GetResult<Prisma.$CodeJobLogPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first CodeJobLog that matches the filter or
-     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {CodeJobLogFindFirstOrThrowArgs} args - Arguments to find a CodeJobLog
-     * @example
-     * // Get one CodeJobLog
-     * const codeJobLog = await prisma.codeJobLog.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirstOrThrow<T extends CodeJobLogFindFirstOrThrowArgs>(args?: SelectSubset<T, CodeJobLogFindFirstOrThrowArgs<ExtArgs>>): Prisma__CodeJobLogClient<$Result.GetResult<Prisma.$CodeJobLogPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find zero or more CodeJobLogs that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {CodeJobLogFindManyArgs} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all CodeJobLogs
-     * const codeJobLogs = await prisma.codeJobLog.findMany()
-     *
-     * // Get first 10 CodeJobLogs
-     * const codeJobLogs = await prisma.codeJobLog.findMany({ take: 10 })
-     *
-     * // Only select the `id`
-     * const codeJobLogWithIdOnly = await prisma.codeJobLog.findMany({ select: { id: true } })
-     *
-     */
-    findMany<T extends CodeJobLogFindManyArgs>(args?: SelectSubset<T, CodeJobLogFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CodeJobLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
-
-    /**
-     * Create a CodeJobLog.
-     * @param {CodeJobLogCreateArgs} args - Arguments to create a CodeJobLog.
-     * @example
-     * // Create one CodeJobLog
-     * const CodeJobLog = await prisma.codeJobLog.create({
-     *   data: {
-     *     // ... data to create a CodeJobLog
-     *   }
-     * })
-     *
-     */
-    create<T extends CodeJobLogCreateArgs>(args: SelectSubset<T, CodeJobLogCreateArgs<ExtArgs>>): Prisma__CodeJobLogClient<$Result.GetResult<Prisma.$CodeJobLogPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Create many CodeJobLogs.
-     * @param {CodeJobLogCreateManyArgs} args - Arguments to create many CodeJobLogs.
-     * @example
-     * // Create many CodeJobLogs
-     * const codeJobLog = await prisma.codeJobLog.createMany({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     *
-     */
-    createMany<T extends CodeJobLogCreateManyArgs>(args?: SelectSubset<T, CodeJobLogCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create many CodeJobLogs and returns the data saved in the database.
-     * @param {CodeJobLogCreateManyAndReturnArgs} args - Arguments to create many CodeJobLogs.
-     * @example
-     * // Create many CodeJobLogs
-     * const codeJobLog = await prisma.codeJobLog.createManyAndReturn({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     *
-     * // Create many CodeJobLogs and only return the `id`
-     * const codeJobLogWithIdOnly = await prisma.codeJobLog.createManyAndReturn({
-     *   select: { id: true },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     *
-     */
-    createManyAndReturn<T extends CodeJobLogCreateManyAndReturnArgs>(args?: SelectSubset<T, CodeJobLogCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CodeJobLogPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Delete a CodeJobLog.
-     * @param {CodeJobLogDeleteArgs} args - Arguments to delete one CodeJobLog.
-     * @example
-     * // Delete one CodeJobLog
-     * const CodeJobLog = await prisma.codeJobLog.delete({
-     *   where: {
-     *     // ... filter to delete one CodeJobLog
-     *   }
-     * })
-     *
-     */
-    delete<T extends CodeJobLogDeleteArgs>(args: SelectSubset<T, CodeJobLogDeleteArgs<ExtArgs>>): Prisma__CodeJobLogClient<$Result.GetResult<Prisma.$CodeJobLogPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Update one CodeJobLog.
-     * @param {CodeJobLogUpdateArgs} args - Arguments to update one CodeJobLog.
-     * @example
-     * // Update one CodeJobLog
-     * const codeJobLog = await prisma.codeJobLog.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     *
-     */
-    update<T extends CodeJobLogUpdateArgs>(args: SelectSubset<T, CodeJobLogUpdateArgs<ExtArgs>>): Prisma__CodeJobLogClient<$Result.GetResult<Prisma.$CodeJobLogPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Delete zero or more CodeJobLogs.
-     * @param {CodeJobLogDeleteManyArgs} args - Arguments to filter CodeJobLogs to delete.
-     * @example
-     * // Delete a few CodeJobLogs
-     * const { count } = await prisma.codeJobLog.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     *
-     */
-    deleteMany<T extends CodeJobLogDeleteManyArgs>(args?: SelectSubset<T, CodeJobLogDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more CodeJobLogs.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {CodeJobLogUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many CodeJobLogs
-     * const codeJobLog = await prisma.codeJobLog.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     *
-     */
-    updateMany<T extends CodeJobLogUpdateManyArgs>(args: SelectSubset<T, CodeJobLogUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more CodeJobLogs and returns the data updated in the database.
-     * @param {CodeJobLogUpdateManyAndReturnArgs} args - Arguments to update many CodeJobLogs.
-     * @example
-     * // Update many CodeJobLogs
-     * const codeJobLog = await prisma.codeJobLog.updateManyAndReturn({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     *
-     * // Update zero or more CodeJobLogs and only return the `id`
-     * const codeJobLogWithIdOnly = await prisma.codeJobLog.updateManyAndReturn({
-     *   select: { id: true },
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     *
-     */
-    updateManyAndReturn<T extends CodeJobLogUpdateManyAndReturnArgs>(args: SelectSubset<T, CodeJobLogUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CodeJobLogPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Create or update one CodeJobLog.
-     * @param {CodeJobLogUpsertArgs} args - Arguments to update or create a CodeJobLog.
-     * @example
-     * // Update or create a CodeJobLog
-     * const codeJobLog = await prisma.codeJobLog.upsert({
-     *   create: {
-     *     // ... data to create a CodeJobLog
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the CodeJobLog we want to update
-     *   }
-     * })
-     */
-    upsert<T extends CodeJobLogUpsertArgs>(args: SelectSubset<T, CodeJobLogUpsertArgs<ExtArgs>>): Prisma__CodeJobLogClient<$Result.GetResult<Prisma.$CodeJobLogPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-
-    /**
-     * Count the number of CodeJobLogs.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {CodeJobLogCountArgs} args - Arguments to filter CodeJobLogs to count.
-     * @example
-     * // Count the number of CodeJobLogs
-     * const count = await prisma.codeJobLog.count({
-     *   where: {
-     *     // ... the filter for the CodeJobLogs we want to count
-     *   }
-     * })
-    **/
-    count<T extends CodeJobLogCountArgs>(
-      args?: Subset<T, CodeJobLogCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends $Utils.Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], CodeJobLogCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a CodeJobLog.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {CodeJobLogAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends CodeJobLogAggregateArgs>(args: Subset<T, CodeJobLogAggregateArgs>): Prisma.PrismaPromise<GetCodeJobLogAggregateType<T>>
-
-    /**
-     * Group by CodeJobLog.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {CodeJobLogGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     *
-    **/
-    groupBy<
-      T extends CodeJobLogGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: CodeJobLogGroupByArgs['orderBy'] }
-        : { orderBy?: CodeJobLogGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends MaybeTupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, CodeJobLogGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetCodeJobLogGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the CodeJobLog model
-   */
-  readonly fields: CodeJobLogFieldRefs;
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for CodeJobLog.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export interface Prisma__CodeJobLogClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
-    job<T extends CodeJobDefaultArgs<ExtArgs> = {}>(args?: Subset<T, CodeJobDefaultArgs<ExtArgs>>): Prisma__CodeJobClient<$Result.GetResult<Prisma.$CodeJobPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    worker<T extends CodeJobLog$workerArgs<ExtArgs> = {}>(args?: Subset<T, CodeJobLog$workerArgs<ExtArgs>>): Prisma__CodeWorkerClient<$Result.GetResult<Prisma.$CodeWorkerPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
-  }
-
-
-
-
-  /**
-   * Fields of the CodeJobLog model
-   */
-  interface CodeJobLogFieldRefs {
-    readonly id: FieldRef<"CodeJobLog", 'Int'>
-    readonly jobId: FieldRef<"CodeJobLog", 'String'>
-    readonly workerId: FieldRef<"CodeJobLog", 'String'>
-    readonly level: FieldRef<"CodeJobLog", 'String'>
-    readonly message: FieldRef<"CodeJobLog", 'String'>
-    readonly sequence: FieldRef<"CodeJobLog", 'Int'>
-    readonly meta: FieldRef<"CodeJobLog", 'String'>
-    readonly createdAt: FieldRef<"CodeJobLog", 'DateTime'>
-  }
-
-
-  // Custom InputTypes
-  /**
-   * CodeJobLog findUnique
-   */
-  export type CodeJobLogFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the CodeJobLog
-     */
-    select?: CodeJobLogSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the CodeJobLog
-     */
-    omit?: CodeJobLogOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CodeJobLogInclude<ExtArgs> | null
-    /**
-     * Filter, which CodeJobLog to fetch.
-     */
-    where: CodeJobLogWhereUniqueInput
-  }
-
-  /**
-   * CodeJobLog findUniqueOrThrow
-   */
-  export type CodeJobLogFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the CodeJobLog
-     */
-    select?: CodeJobLogSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the CodeJobLog
-     */
-    omit?: CodeJobLogOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CodeJobLogInclude<ExtArgs> | null
-    /**
-     * Filter, which CodeJobLog to fetch.
-     */
-    where: CodeJobLogWhereUniqueInput
-  }
-
-  /**
-   * CodeJobLog findFirst
-   */
-  export type CodeJobLogFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the CodeJobLog
-     */
-    select?: CodeJobLogSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the CodeJobLog
-     */
-    omit?: CodeJobLogOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CodeJobLogInclude<ExtArgs> | null
-    /**
-     * Filter, which CodeJobLog to fetch.
-     */
-    where?: CodeJobLogWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     *
-     * Determine the order of CodeJobLogs to fetch.
-     */
-    orderBy?: CodeJobLogOrderByWithRelationInput | CodeJobLogOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     *
-     * Sets the position for searching for CodeJobLogs.
-     */
-    cursor?: CodeJobLogWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
-     * Take `±n` CodeJobLogs from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
-     * Skip the first `n` CodeJobLogs.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     *
-     * Filter by unique combinations of CodeJobLogs.
-     */
-    distinct?: CodeJobLogScalarFieldEnum | CodeJobLogScalarFieldEnum[]
-  }
-
-  /**
-   * CodeJobLog findFirstOrThrow
-   */
-  export type CodeJobLogFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the CodeJobLog
-     */
-    select?: CodeJobLogSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the CodeJobLog
-     */
-    omit?: CodeJobLogOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CodeJobLogInclude<ExtArgs> | null
-    /**
-     * Filter, which CodeJobLog to fetch.
-     */
-    where?: CodeJobLogWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     *
-     * Determine the order of CodeJobLogs to fetch.
-     */
-    orderBy?: CodeJobLogOrderByWithRelationInput | CodeJobLogOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     *
-     * Sets the position for searching for CodeJobLogs.
-     */
-    cursor?: CodeJobLogWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
-     * Take `±n` CodeJobLogs from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
-     * Skip the first `n` CodeJobLogs.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     *
-     * Filter by unique combinations of CodeJobLogs.
-     */
-    distinct?: CodeJobLogScalarFieldEnum | CodeJobLogScalarFieldEnum[]
-  }
-
-  /**
-   * CodeJobLog findMany
-   */
-  export type CodeJobLogFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the CodeJobLog
-     */
-    select?: CodeJobLogSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the CodeJobLog
-     */
-    omit?: CodeJobLogOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CodeJobLogInclude<ExtArgs> | null
-    /**
-     * Filter, which CodeJobLogs to fetch.
-     */
-    where?: CodeJobLogWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     *
-     * Determine the order of CodeJobLogs to fetch.
-     */
-    orderBy?: CodeJobLogOrderByWithRelationInput | CodeJobLogOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     *
-     * Sets the position for listing CodeJobLogs.
-     */
-    cursor?: CodeJobLogWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
-     * Take `±n` CodeJobLogs from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
-     * Skip the first `n` CodeJobLogs.
-     */
-    skip?: number
-    distinct?: CodeJobLogScalarFieldEnum | CodeJobLogScalarFieldEnum[]
-  }
-
-  /**
-   * CodeJobLog create
-   */
-  export type CodeJobLogCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the CodeJobLog
-     */
-    select?: CodeJobLogSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the CodeJobLog
-     */
-    omit?: CodeJobLogOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CodeJobLogInclude<ExtArgs> | null
-    /**
-     * The data needed to create a CodeJobLog.
-     */
-    data: XOR<CodeJobLogCreateInput, CodeJobLogUncheckedCreateInput>
-  }
-
-  /**
-   * CodeJobLog createMany
-   */
-  export type CodeJobLogCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to create many CodeJobLogs.
-     */
-    data: CodeJobLogCreateManyInput | CodeJobLogCreateManyInput[]
-  }
-
-  /**
-   * CodeJobLog createManyAndReturn
-   */
-  export type CodeJobLogCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the CodeJobLog
-     */
-    select?: CodeJobLogSelectCreateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the CodeJobLog
-     */
-    omit?: CodeJobLogOmit<ExtArgs> | null
-    /**
-     * The data used to create many CodeJobLogs.
-     */
-    data: CodeJobLogCreateManyInput | CodeJobLogCreateManyInput[]
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CodeJobLogIncludeCreateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * CodeJobLog update
-   */
-  export type CodeJobLogUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the CodeJobLog
-     */
-    select?: CodeJobLogSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the CodeJobLog
-     */
-    omit?: CodeJobLogOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CodeJobLogInclude<ExtArgs> | null
-    /**
-     * The data needed to update a CodeJobLog.
-     */
-    data: XOR<CodeJobLogUpdateInput, CodeJobLogUncheckedUpdateInput>
-    /**
-     * Choose, which CodeJobLog to update.
-     */
-    where: CodeJobLogWhereUniqueInput
-  }
-
-  /**
-   * CodeJobLog updateMany
-   */
-  export type CodeJobLogUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to update CodeJobLogs.
-     */
-    data: XOR<CodeJobLogUpdateManyMutationInput, CodeJobLogUncheckedUpdateManyInput>
-    /**
-     * Filter which CodeJobLogs to update
-     */
-    where?: CodeJobLogWhereInput
-    /**
-     * Limit how many CodeJobLogs to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * CodeJobLog updateManyAndReturn
-   */
-  export type CodeJobLogUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the CodeJobLog
-     */
-    select?: CodeJobLogSelectUpdateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the CodeJobLog
-     */
-    omit?: CodeJobLogOmit<ExtArgs> | null
-    /**
-     * The data used to update CodeJobLogs.
-     */
-    data: XOR<CodeJobLogUpdateManyMutationInput, CodeJobLogUncheckedUpdateManyInput>
-    /**
-     * Filter which CodeJobLogs to update
-     */
-    where?: CodeJobLogWhereInput
-    /**
-     * Limit how many CodeJobLogs to update.
-     */
-    limit?: number
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CodeJobLogIncludeUpdateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * CodeJobLog upsert
-   */
-  export type CodeJobLogUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the CodeJobLog
-     */
-    select?: CodeJobLogSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the CodeJobLog
-     */
-    omit?: CodeJobLogOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CodeJobLogInclude<ExtArgs> | null
-    /**
-     * The filter to search for the CodeJobLog to update in case it exists.
-     */
-    where: CodeJobLogWhereUniqueInput
-    /**
-     * In case the CodeJobLog found by the `where` argument doesn't exist, create a new CodeJobLog with this data.
-     */
-    create: XOR<CodeJobLogCreateInput, CodeJobLogUncheckedCreateInput>
-    /**
-     * In case the CodeJobLog was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<CodeJobLogUpdateInput, CodeJobLogUncheckedUpdateInput>
-  }
-
-  /**
-   * CodeJobLog delete
-   */
-  export type CodeJobLogDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the CodeJobLog
-     */
-    select?: CodeJobLogSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the CodeJobLog
-     */
-    omit?: CodeJobLogOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CodeJobLogInclude<ExtArgs> | null
-    /**
-     * Filter which CodeJobLog to delete.
-     */
-    where: CodeJobLogWhereUniqueInput
-  }
-
-  /**
-   * CodeJobLog deleteMany
-   */
-  export type CodeJobLogDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which CodeJobLogs to delete
-     */
-    where?: CodeJobLogWhereInput
-    /**
-     * Limit how many CodeJobLogs to delete.
-     */
-    limit?: number
-  }
-
-  /**
-   * CodeJobLog.worker
-   */
-  export type CodeJobLog$workerArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the CodeWorker
-     */
-    select?: CodeWorkerSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the CodeWorker
-     */
-    omit?: CodeWorkerOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CodeWorkerInclude<ExtArgs> | null
-    where?: CodeWorkerWhereInput
-  }
-
-  /**
-   * CodeJobLog without action
-   */
-  export type CodeJobLogDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the CodeJobLog
-     */
-    select?: CodeJobLogSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the CodeJobLog
-     */
-    omit?: CodeJobLogOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CodeJobLogInclude<ExtArgs> | null
-  }
-
-
-  /**
    * Model AiDatabaseSchema
    */
 
@@ -23347,55 +16357,55 @@ export namespace Prisma {
     where?: AiDatabaseSchemaWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     *
+     * 
      * Determine the order of AiDatabaseSchemas to fetch.
      */
     orderBy?: AiDatabaseSchemaOrderByWithRelationInput | AiDatabaseSchemaOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     *
+     * 
      * Sets the start position
      */
     cursor?: AiDatabaseSchemaWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Take `±n` AiDatabaseSchemas from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Skip the first `n` AiDatabaseSchemas.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     *
+     * 
      * Count returned AiDatabaseSchemas
     **/
     _count?: true | AiDatabaseSchemaCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     *
+     * 
      * Select which fields to average
     **/
     _avg?: AiDatabaseSchemaAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     *
+     * 
      * Select which fields to sum
     **/
     _sum?: AiDatabaseSchemaSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     *
+     * 
      * Select which fields to find the minimum value
     **/
     _min?: AiDatabaseSchemaMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     *
+     * 
      * Select which fields to find the maximum value
     **/
     _max?: AiDatabaseSchemaMaxAggregateInputType
@@ -23609,13 +16619,13 @@ export namespace Prisma {
      * @example
      * // Get all AiDatabaseSchemas
      * const aiDatabaseSchemas = await prisma.aiDatabaseSchema.findMany()
-     *
+     * 
      * // Get first 10 AiDatabaseSchemas
      * const aiDatabaseSchemas = await prisma.aiDatabaseSchema.findMany({ take: 10 })
-     *
+     * 
      * // Only select the `id`
      * const aiDatabaseSchemaWithIdOnly = await prisma.aiDatabaseSchema.findMany({ select: { id: true } })
-     *
+     * 
      */
     findMany<T extends AiDatabaseSchemaFindManyArgs>(args?: SelectSubset<T, AiDatabaseSchemaFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AiDatabaseSchemaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
 
@@ -23629,7 +16639,7 @@ export namespace Prisma {
      *     // ... data to create a AiDatabaseSchema
      *   }
      * })
-     *
+     * 
      */
     create<T extends AiDatabaseSchemaCreateArgs>(args: SelectSubset<T, AiDatabaseSchemaCreateArgs<ExtArgs>>): Prisma__AiDatabaseSchemaClient<$Result.GetResult<Prisma.$AiDatabaseSchemaPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
@@ -23643,7 +16653,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *
+     *     
      */
     createMany<T extends AiDatabaseSchemaCreateManyArgs>(args?: SelectSubset<T, AiDatabaseSchemaCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -23657,7 +16667,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *
+     * 
      * // Create many AiDatabaseSchemas and only return the `id`
      * const aiDatabaseSchemaWithIdOnly = await prisma.aiDatabaseSchema.createManyAndReturn({
      *   select: { id: true },
@@ -23667,7 +16677,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     *
+     * 
      */
     createManyAndReturn<T extends AiDatabaseSchemaCreateManyAndReturnArgs>(args?: SelectSubset<T, AiDatabaseSchemaCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AiDatabaseSchemaPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
 
@@ -23681,7 +16691,7 @@ export namespace Prisma {
      *     // ... filter to delete one AiDatabaseSchema
      *   }
      * })
-     *
+     * 
      */
     delete<T extends AiDatabaseSchemaDeleteArgs>(args: SelectSubset<T, AiDatabaseSchemaDeleteArgs<ExtArgs>>): Prisma__AiDatabaseSchemaClient<$Result.GetResult<Prisma.$AiDatabaseSchemaPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
@@ -23698,7 +16708,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     *
+     * 
      */
     update<T extends AiDatabaseSchemaUpdateArgs>(args: SelectSubset<T, AiDatabaseSchemaUpdateArgs<ExtArgs>>): Prisma__AiDatabaseSchemaClient<$Result.GetResult<Prisma.$AiDatabaseSchemaPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
@@ -23712,7 +16722,7 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-     *
+     * 
      */
     deleteMany<T extends AiDatabaseSchemaDeleteManyArgs>(args?: SelectSubset<T, AiDatabaseSchemaDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -23731,7 +16741,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     *
+     * 
      */
     updateMany<T extends AiDatabaseSchemaUpdateManyArgs>(args: SelectSubset<T, AiDatabaseSchemaUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -23748,7 +16758,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *
+     * 
      * // Update zero or more AiDatabaseSchemas and only return the `id`
      * const aiDatabaseSchemaWithIdOnly = await prisma.aiDatabaseSchema.updateManyAndReturn({
      *   select: { id: true },
@@ -23761,7 +16771,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     *
+     * 
      */
     updateManyAndReturn<T extends AiDatabaseSchemaUpdateManyAndReturnArgs>(args: SelectSubset<T, AiDatabaseSchemaUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AiDatabaseSchemaPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
@@ -23850,7 +16860,7 @@ export namespace Prisma {
      *     _all: true
      *   },
      * })
-     *
+     * 
     **/
     groupBy<
       T extends AiDatabaseSchemaGroupByArgs,
@@ -23964,7 +16974,7 @@ export namespace Prisma {
     readonly createdAt: FieldRef<"AiDatabaseSchema", 'DateTime'>
     readonly updatedAt: FieldRef<"AiDatabaseSchema", 'DateTime'>
   }
-
+    
 
   // Custom InputTypes
   /**
@@ -24033,31 +17043,31 @@ export namespace Prisma {
     where?: AiDatabaseSchemaWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     *
+     * 
      * Determine the order of AiDatabaseSchemas to fetch.
      */
     orderBy?: AiDatabaseSchemaOrderByWithRelationInput | AiDatabaseSchemaOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     *
+     * 
      * Sets the position for searching for AiDatabaseSchemas.
      */
     cursor?: AiDatabaseSchemaWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Take `±n` AiDatabaseSchemas from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Skip the first `n` AiDatabaseSchemas.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     *
+     * 
      * Filter by unique combinations of AiDatabaseSchemas.
      */
     distinct?: AiDatabaseSchemaScalarFieldEnum | AiDatabaseSchemaScalarFieldEnum[]
@@ -24085,31 +17095,31 @@ export namespace Prisma {
     where?: AiDatabaseSchemaWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     *
+     * 
      * Determine the order of AiDatabaseSchemas to fetch.
      */
     orderBy?: AiDatabaseSchemaOrderByWithRelationInput | AiDatabaseSchemaOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     *
+     * 
      * Sets the position for searching for AiDatabaseSchemas.
      */
     cursor?: AiDatabaseSchemaWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Take `±n` AiDatabaseSchemas from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Skip the first `n` AiDatabaseSchemas.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     *
+     * 
      * Filter by unique combinations of AiDatabaseSchemas.
      */
     distinct?: AiDatabaseSchemaScalarFieldEnum | AiDatabaseSchemaScalarFieldEnum[]
@@ -24137,25 +17147,25 @@ export namespace Prisma {
     where?: AiDatabaseSchemaWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     *
+     * 
      * Determine the order of AiDatabaseSchemas to fetch.
      */
     orderBy?: AiDatabaseSchemaOrderByWithRelationInput | AiDatabaseSchemaOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     *
+     * 
      * Sets the position for listing AiDatabaseSchemas.
      */
     cursor?: AiDatabaseSchemaWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Take `±n` AiDatabaseSchemas from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Skip the first `n` AiDatabaseSchemas.
      */
     skip?: number
@@ -24459,43 +17469,43 @@ export namespace Prisma {
     where?: AiDbChatConversationWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     *
+     * 
      * Determine the order of AiDbChatConversations to fetch.
      */
     orderBy?: AiDbChatConversationOrderByWithRelationInput | AiDbChatConversationOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     *
+     * 
      * Sets the start position
      */
     cursor?: AiDbChatConversationWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Take `±n` AiDbChatConversations from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Skip the first `n` AiDbChatConversations.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     *
+     * 
      * Count returned AiDbChatConversations
     **/
     _count?: true | AiDbChatConversationCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     *
+     * 
      * Select which fields to find the minimum value
     **/
     _min?: AiDbChatConversationMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     *
+     * 
      * Select which fields to find the maximum value
     **/
     _max?: AiDbChatConversationMaxAggregateInputType
@@ -24690,13 +17700,13 @@ export namespace Prisma {
      * @example
      * // Get all AiDbChatConversations
      * const aiDbChatConversations = await prisma.aiDbChatConversation.findMany()
-     *
+     * 
      * // Get first 10 AiDbChatConversations
      * const aiDbChatConversations = await prisma.aiDbChatConversation.findMany({ take: 10 })
-     *
+     * 
      * // Only select the `id`
      * const aiDbChatConversationWithIdOnly = await prisma.aiDbChatConversation.findMany({ select: { id: true } })
-     *
+     * 
      */
     findMany<T extends AiDbChatConversationFindManyArgs>(args?: SelectSubset<T, AiDbChatConversationFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AiDbChatConversationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
 
@@ -24710,7 +17720,7 @@ export namespace Prisma {
      *     // ... data to create a AiDbChatConversation
      *   }
      * })
-     *
+     * 
      */
     create<T extends AiDbChatConversationCreateArgs>(args: SelectSubset<T, AiDbChatConversationCreateArgs<ExtArgs>>): Prisma__AiDbChatConversationClient<$Result.GetResult<Prisma.$AiDbChatConversationPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
@@ -24724,7 +17734,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *
+     *     
      */
     createMany<T extends AiDbChatConversationCreateManyArgs>(args?: SelectSubset<T, AiDbChatConversationCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -24738,7 +17748,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *
+     * 
      * // Create many AiDbChatConversations and only return the `id`
      * const aiDbChatConversationWithIdOnly = await prisma.aiDbChatConversation.createManyAndReturn({
      *   select: { id: true },
@@ -24748,7 +17758,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     *
+     * 
      */
     createManyAndReturn<T extends AiDbChatConversationCreateManyAndReturnArgs>(args?: SelectSubset<T, AiDbChatConversationCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AiDbChatConversationPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
 
@@ -24762,7 +17772,7 @@ export namespace Prisma {
      *     // ... filter to delete one AiDbChatConversation
      *   }
      * })
-     *
+     * 
      */
     delete<T extends AiDbChatConversationDeleteArgs>(args: SelectSubset<T, AiDbChatConversationDeleteArgs<ExtArgs>>): Prisma__AiDbChatConversationClient<$Result.GetResult<Prisma.$AiDbChatConversationPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
@@ -24779,7 +17789,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     *
+     * 
      */
     update<T extends AiDbChatConversationUpdateArgs>(args: SelectSubset<T, AiDbChatConversationUpdateArgs<ExtArgs>>): Prisma__AiDbChatConversationClient<$Result.GetResult<Prisma.$AiDbChatConversationPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
@@ -24793,7 +17803,7 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-     *
+     * 
      */
     deleteMany<T extends AiDbChatConversationDeleteManyArgs>(args?: SelectSubset<T, AiDbChatConversationDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -24812,7 +17822,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     *
+     * 
      */
     updateMany<T extends AiDbChatConversationUpdateManyArgs>(args: SelectSubset<T, AiDbChatConversationUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -24829,7 +17839,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *
+     * 
      * // Update zero or more AiDbChatConversations and only return the `id`
      * const aiDbChatConversationWithIdOnly = await prisma.aiDbChatConversation.updateManyAndReturn({
      *   select: { id: true },
@@ -24842,7 +17852,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     *
+     * 
      */
     updateManyAndReturn<T extends AiDbChatConversationUpdateManyAndReturnArgs>(args: SelectSubset<T, AiDbChatConversationUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AiDbChatConversationPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
@@ -24931,7 +17941,7 @@ export namespace Prisma {
      *     _all: true
      *   },
      * })
-     *
+     * 
     **/
     groupBy<
       T extends AiDbChatConversationGroupByArgs,
@@ -25042,7 +18052,7 @@ export namespace Prisma {
     readonly createdAt: FieldRef<"AiDbChatConversation", 'DateTime'>
     readonly updatedAt: FieldRef<"AiDbChatConversation", 'DateTime'>
   }
-
+    
 
   // Custom InputTypes
   /**
@@ -25111,31 +18121,31 @@ export namespace Prisma {
     where?: AiDbChatConversationWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     *
+     * 
      * Determine the order of AiDbChatConversations to fetch.
      */
     orderBy?: AiDbChatConversationOrderByWithRelationInput | AiDbChatConversationOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     *
+     * 
      * Sets the position for searching for AiDbChatConversations.
      */
     cursor?: AiDbChatConversationWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Take `±n` AiDbChatConversations from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Skip the first `n` AiDbChatConversations.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     *
+     * 
      * Filter by unique combinations of AiDbChatConversations.
      */
     distinct?: AiDbChatConversationScalarFieldEnum | AiDbChatConversationScalarFieldEnum[]
@@ -25163,31 +18173,31 @@ export namespace Prisma {
     where?: AiDbChatConversationWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     *
+     * 
      * Determine the order of AiDbChatConversations to fetch.
      */
     orderBy?: AiDbChatConversationOrderByWithRelationInput | AiDbChatConversationOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     *
+     * 
      * Sets the position for searching for AiDbChatConversations.
      */
     cursor?: AiDbChatConversationWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Take `±n` AiDbChatConversations from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Skip the first `n` AiDbChatConversations.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     *
+     * 
      * Filter by unique combinations of AiDbChatConversations.
      */
     distinct?: AiDbChatConversationScalarFieldEnum | AiDbChatConversationScalarFieldEnum[]
@@ -25215,25 +18225,25 @@ export namespace Prisma {
     where?: AiDbChatConversationWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     *
+     * 
      * Determine the order of AiDbChatConversations to fetch.
      */
     orderBy?: AiDbChatConversationOrderByWithRelationInput | AiDbChatConversationOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     *
+     * 
      * Sets the position for listing AiDbChatConversations.
      */
     cursor?: AiDbChatConversationWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Take `±n` AiDbChatConversations from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Skip the first `n` AiDbChatConversations.
      */
     skip?: number
@@ -25575,55 +18585,55 @@ export namespace Prisma {
     where?: AiDbChatMessageWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     *
+     * 
      * Determine the order of AiDbChatMessages to fetch.
      */
     orderBy?: AiDbChatMessageOrderByWithRelationInput | AiDbChatMessageOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     *
+     * 
      * Sets the start position
      */
     cursor?: AiDbChatMessageWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Take `±n` AiDbChatMessages from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Skip the first `n` AiDbChatMessages.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     *
+     * 
      * Count returned AiDbChatMessages
     **/
     _count?: true | AiDbChatMessageCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     *
+     * 
      * Select which fields to average
     **/
     _avg?: AiDbChatMessageAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     *
+     * 
      * Select which fields to sum
     **/
     _sum?: AiDbChatMessageSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     *
+     * 
      * Select which fields to find the minimum value
     **/
     _min?: AiDbChatMessageMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     *
+     * 
      * Select which fields to find the maximum value
     **/
     _max?: AiDbChatMessageMaxAggregateInputType
@@ -25829,13 +18839,13 @@ export namespace Prisma {
      * @example
      * // Get all AiDbChatMessages
      * const aiDbChatMessages = await prisma.aiDbChatMessage.findMany()
-     *
+     * 
      * // Get first 10 AiDbChatMessages
      * const aiDbChatMessages = await prisma.aiDbChatMessage.findMany({ take: 10 })
-     *
+     * 
      * // Only select the `id`
      * const aiDbChatMessageWithIdOnly = await prisma.aiDbChatMessage.findMany({ select: { id: true } })
-     *
+     * 
      */
     findMany<T extends AiDbChatMessageFindManyArgs>(args?: SelectSubset<T, AiDbChatMessageFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AiDbChatMessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
 
@@ -25849,7 +18859,7 @@ export namespace Prisma {
      *     // ... data to create a AiDbChatMessage
      *   }
      * })
-     *
+     * 
      */
     create<T extends AiDbChatMessageCreateArgs>(args: SelectSubset<T, AiDbChatMessageCreateArgs<ExtArgs>>): Prisma__AiDbChatMessageClient<$Result.GetResult<Prisma.$AiDbChatMessagePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
@@ -25863,7 +18873,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *
+     *     
      */
     createMany<T extends AiDbChatMessageCreateManyArgs>(args?: SelectSubset<T, AiDbChatMessageCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -25877,7 +18887,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *
+     * 
      * // Create many AiDbChatMessages and only return the `id`
      * const aiDbChatMessageWithIdOnly = await prisma.aiDbChatMessage.createManyAndReturn({
      *   select: { id: true },
@@ -25887,7 +18897,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     *
+     * 
      */
     createManyAndReturn<T extends AiDbChatMessageCreateManyAndReturnArgs>(args?: SelectSubset<T, AiDbChatMessageCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AiDbChatMessagePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
 
@@ -25901,7 +18911,7 @@ export namespace Prisma {
      *     // ... filter to delete one AiDbChatMessage
      *   }
      * })
-     *
+     * 
      */
     delete<T extends AiDbChatMessageDeleteArgs>(args: SelectSubset<T, AiDbChatMessageDeleteArgs<ExtArgs>>): Prisma__AiDbChatMessageClient<$Result.GetResult<Prisma.$AiDbChatMessagePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
@@ -25918,7 +18928,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     *
+     * 
      */
     update<T extends AiDbChatMessageUpdateArgs>(args: SelectSubset<T, AiDbChatMessageUpdateArgs<ExtArgs>>): Prisma__AiDbChatMessageClient<$Result.GetResult<Prisma.$AiDbChatMessagePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
@@ -25932,7 +18942,7 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-     *
+     * 
      */
     deleteMany<T extends AiDbChatMessageDeleteManyArgs>(args?: SelectSubset<T, AiDbChatMessageDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -25951,7 +18961,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     *
+     * 
      */
     updateMany<T extends AiDbChatMessageUpdateManyArgs>(args: SelectSubset<T, AiDbChatMessageUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -25968,7 +18978,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *
+     * 
      * // Update zero or more AiDbChatMessages and only return the `id`
      * const aiDbChatMessageWithIdOnly = await prisma.aiDbChatMessage.updateManyAndReturn({
      *   select: { id: true },
@@ -25981,7 +18991,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     *
+     * 
      */
     updateManyAndReturn<T extends AiDbChatMessageUpdateManyAndReturnArgs>(args: SelectSubset<T, AiDbChatMessageUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AiDbChatMessagePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
@@ -26070,7 +19080,7 @@ export namespace Prisma {
      *     _all: true
      *   },
      * })
-     *
+     * 
     **/
     groupBy<
       T extends AiDbChatMessageGroupByArgs,
@@ -26182,7 +19192,7 @@ export namespace Prisma {
     readonly rowCount: FieldRef<"AiDbChatMessage", 'Int'>
     readonly createdAt: FieldRef<"AiDbChatMessage", 'DateTime'>
   }
-
+    
 
   // Custom InputTypes
   /**
@@ -26251,31 +19261,31 @@ export namespace Prisma {
     where?: AiDbChatMessageWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     *
+     * 
      * Determine the order of AiDbChatMessages to fetch.
      */
     orderBy?: AiDbChatMessageOrderByWithRelationInput | AiDbChatMessageOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     *
+     * 
      * Sets the position for searching for AiDbChatMessages.
      */
     cursor?: AiDbChatMessageWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Take `±n` AiDbChatMessages from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Skip the first `n` AiDbChatMessages.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     *
+     * 
      * Filter by unique combinations of AiDbChatMessages.
      */
     distinct?: AiDbChatMessageScalarFieldEnum | AiDbChatMessageScalarFieldEnum[]
@@ -26303,31 +19313,31 @@ export namespace Prisma {
     where?: AiDbChatMessageWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     *
+     * 
      * Determine the order of AiDbChatMessages to fetch.
      */
     orderBy?: AiDbChatMessageOrderByWithRelationInput | AiDbChatMessageOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     *
+     * 
      * Sets the position for searching for AiDbChatMessages.
      */
     cursor?: AiDbChatMessageWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Take `±n` AiDbChatMessages from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Skip the first `n` AiDbChatMessages.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     *
+     * 
      * Filter by unique combinations of AiDbChatMessages.
      */
     distinct?: AiDbChatMessageScalarFieldEnum | AiDbChatMessageScalarFieldEnum[]
@@ -26355,25 +19365,25 @@ export namespace Prisma {
     where?: AiDbChatMessageWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     *
+     * 
      * Determine the order of AiDbChatMessages to fetch.
      */
     orderBy?: AiDbChatMessageOrderByWithRelationInput | AiDbChatMessageOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     *
+     * 
      * Sets the position for listing AiDbChatMessages.
      */
     cursor?: AiDbChatMessageWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Take `±n` AiDbChatMessages from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     *
+     * 
      * Skip the first `n` AiDbChatMessages.
      */
     skip?: number
@@ -26807,119 +19817,6 @@ export namespace Prisma {
   export type AppUserScalarFieldEnum = (typeof AppUserScalarFieldEnum)[keyof typeof AppUserScalarFieldEnum]
 
 
-  export const CodeWorkspaceScalarFieldEnum: {
-    id: 'id',
-    slug: 'slug',
-    name: 'name',
-    description: 'description',
-    language: 'language',
-    currentVersion: 'currentVersion',
-    active: 'active',
-    createdAt: 'createdAt',
-    updatedAt: 'updatedAt',
-    createdByUserId: 'createdByUserId',
-    updatedByUserId: 'updatedByUserId'
-  };
-
-  export type CodeWorkspaceScalarFieldEnum = (typeof CodeWorkspaceScalarFieldEnum)[keyof typeof CodeWorkspaceScalarFieldEnum]
-
-
-  export const CodeWorkspaceVersionScalarFieldEnum: {
-    id: 'id',
-    workspaceId: 'workspaceId',
-    version: 'version',
-    snapshot: 'snapshot',
-    snapshotHash: 'snapshotHash',
-    message: 'message',
-    isAutosave: 'isAutosave',
-    clientRequestId: 'clientRequestId',
-    ip: 'ip',
-    userAgent: 'userAgent',
-    referer: 'referer',
-    meta: 'meta',
-    sizeBytes: 'sizeBytes',
-    createdAt: 'createdAt',
-    createdByUserId: 'createdByUserId'
-  };
-
-  export type CodeWorkspaceVersionScalarFieldEnum = (typeof CodeWorkspaceVersionScalarFieldEnum)[keyof typeof CodeWorkspaceVersionScalarFieldEnum]
-
-
-  export const CodeWorkerScalarFieldEnum: {
-    id: 'id',
-    name: 'name',
-    kind: 'kind',
-    queue: 'queue',
-    status: 'status',
-    desiredStatus: 'desiredStatus',
-    concurrency: 'concurrency',
-    currentJobId: 'currentJobId',
-    heartbeatAt: 'heartbeatAt',
-    startedAt: 'startedAt',
-    stoppedAt: 'stoppedAt',
-    pid: 'pid',
-    metadata: 'metadata',
-    createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
-  };
-
-  export type CodeWorkerScalarFieldEnum = (typeof CodeWorkerScalarFieldEnum)[keyof typeof CodeWorkerScalarFieldEnum]
-
-
-  export const CodeJobScalarFieldEnum: {
-    id: 'id',
-    workspaceVersionId: 'workspaceVersionId',
-    workspaceSlug: 'workspaceSlug',
-    version: 'version',
-    entryPath: 'entryPath',
-    functionName: 'functionName',
-    args: 'args',
-    data: 'data',
-    checkpoint: 'checkpoint',
-    result: 'result',
-    error: 'error',
-    status: 'status',
-    priority: 'priority',
-    queue: 'queue',
-    runtime: 'runtime',
-    orchestrator: 'orchestrator',
-    timeoutMs: 'timeoutMs',
-    maxAttempts: 'maxAttempts',
-    attempt: 'attempt',
-    progress: 'progress',
-    requestedAction: 'requestedAction',
-    leaseToken: 'leaseToken',
-    lockedAt: 'lockedAt',
-    leaseExpiresAt: 'leaseExpiresAt',
-    nextRunAt: 'nextRunAt',
-    startedAt: 'startedAt',
-    completedAt: 'completedAt',
-    createdAt: 'createdAt',
-    updatedAt: 'updatedAt',
-    createdByUserId: 'createdByUserId',
-    workerId: 'workerId',
-    temporalWorkflowId: 'temporalWorkflowId',
-    temporalRunId: 'temporalRunId',
-    metadata: 'metadata'
-  };
-
-  export type CodeJobScalarFieldEnum = (typeof CodeJobScalarFieldEnum)[keyof typeof CodeJobScalarFieldEnum]
-
-
-  export const CodeJobLogScalarFieldEnum: {
-    id: 'id',
-    jobId: 'jobId',
-    workerId: 'workerId',
-    level: 'level',
-    message: 'message',
-    sequence: 'sequence',
-    meta: 'meta',
-    createdAt: 'createdAt'
-  };
-
-  export type CodeJobLogScalarFieldEnum = (typeof CodeJobLogScalarFieldEnum)[keyof typeof CodeJobLogScalarFieldEnum]
-
-
   export const AiDatabaseSchemaScalarFieldEnum: {
     id: 'id',
     name: 'name',
@@ -26984,35 +19881,35 @@ export namespace Prisma {
    * Reference to a field of type 'Int'
    */
   export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
-
+    
 
 
   /**
    * Reference to a field of type 'String'
    */
   export type StringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'String'>
-
+    
 
 
   /**
    * Reference to a field of type 'DateTime'
    */
   export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
-
+    
 
 
   /**
    * Reference to a field of type 'Boolean'
    */
   export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
-
+    
 
 
   /**
    * Reference to a field of type 'Float'
    */
   export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
-
+    
   /**
    * Deep Input Types
    */
@@ -28127,599 +21024,6 @@ export namespace Prisma {
     roleId?: IntNullableWithAggregatesFilter<"AppUser"> | number | null
     createdAt?: DateTimeWithAggregatesFilter<"AppUser"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"AppUser"> | Date | string
-  }
-
-  export type CodeWorkspaceWhereInput = {
-    AND?: CodeWorkspaceWhereInput | CodeWorkspaceWhereInput[]
-    OR?: CodeWorkspaceWhereInput[]
-    NOT?: CodeWorkspaceWhereInput | CodeWorkspaceWhereInput[]
-    id?: StringFilter<"CodeWorkspace"> | string
-    slug?: StringFilter<"CodeWorkspace"> | string
-    name?: StringFilter<"CodeWorkspace"> | string
-    description?: StringFilter<"CodeWorkspace"> | string
-    language?: StringFilter<"CodeWorkspace"> | string
-    currentVersion?: IntFilter<"CodeWorkspace"> | number
-    active?: BoolFilter<"CodeWorkspace"> | boolean
-    createdAt?: DateTimeFilter<"CodeWorkspace"> | Date | string
-    updatedAt?: DateTimeFilter<"CodeWorkspace"> | Date | string
-    createdByUserId?: StringFilter<"CodeWorkspace"> | string
-    updatedByUserId?: StringFilter<"CodeWorkspace"> | string
-    versions?: CodeWorkspaceVersionListRelationFilter
-  }
-
-  export type CodeWorkspaceOrderByWithRelationInput = {
-    id?: SortOrder
-    slug?: SortOrder
-    name?: SortOrder
-    description?: SortOrder
-    language?: SortOrder
-    currentVersion?: SortOrder
-    active?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    createdByUserId?: SortOrder
-    updatedByUserId?: SortOrder
-    versions?: CodeWorkspaceVersionOrderByRelationAggregateInput
-  }
-
-  export type CodeWorkspaceWhereUniqueInput = Prisma.AtLeast<{
-    id?: string
-    createdByUserId_slug?: CodeWorkspaceCreatedByUserIdSlugCompoundUniqueInput
-    AND?: CodeWorkspaceWhereInput | CodeWorkspaceWhereInput[]
-    OR?: CodeWorkspaceWhereInput[]
-    NOT?: CodeWorkspaceWhereInput | CodeWorkspaceWhereInput[]
-    slug?: StringFilter<"CodeWorkspace"> | string
-    name?: StringFilter<"CodeWorkspace"> | string
-    description?: StringFilter<"CodeWorkspace"> | string
-    language?: StringFilter<"CodeWorkspace"> | string
-    currentVersion?: IntFilter<"CodeWorkspace"> | number
-    active?: BoolFilter<"CodeWorkspace"> | boolean
-    createdAt?: DateTimeFilter<"CodeWorkspace"> | Date | string
-    updatedAt?: DateTimeFilter<"CodeWorkspace"> | Date | string
-    createdByUserId?: StringFilter<"CodeWorkspace"> | string
-    updatedByUserId?: StringFilter<"CodeWorkspace"> | string
-    versions?: CodeWorkspaceVersionListRelationFilter
-  }, "id" | "createdByUserId_slug">
-
-  export type CodeWorkspaceOrderByWithAggregationInput = {
-    id?: SortOrder
-    slug?: SortOrder
-    name?: SortOrder
-    description?: SortOrder
-    language?: SortOrder
-    currentVersion?: SortOrder
-    active?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    createdByUserId?: SortOrder
-    updatedByUserId?: SortOrder
-    _count?: CodeWorkspaceCountOrderByAggregateInput
-    _avg?: CodeWorkspaceAvgOrderByAggregateInput
-    _max?: CodeWorkspaceMaxOrderByAggregateInput
-    _min?: CodeWorkspaceMinOrderByAggregateInput
-    _sum?: CodeWorkspaceSumOrderByAggregateInput
-  }
-
-  export type CodeWorkspaceScalarWhereWithAggregatesInput = {
-    AND?: CodeWorkspaceScalarWhereWithAggregatesInput | CodeWorkspaceScalarWhereWithAggregatesInput[]
-    OR?: CodeWorkspaceScalarWhereWithAggregatesInput[]
-    NOT?: CodeWorkspaceScalarWhereWithAggregatesInput | CodeWorkspaceScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"CodeWorkspace"> | string
-    slug?: StringWithAggregatesFilter<"CodeWorkspace"> | string
-    name?: StringWithAggregatesFilter<"CodeWorkspace"> | string
-    description?: StringWithAggregatesFilter<"CodeWorkspace"> | string
-    language?: StringWithAggregatesFilter<"CodeWorkspace"> | string
-    currentVersion?: IntWithAggregatesFilter<"CodeWorkspace"> | number
-    active?: BoolWithAggregatesFilter<"CodeWorkspace"> | boolean
-    createdAt?: DateTimeWithAggregatesFilter<"CodeWorkspace"> | Date | string
-    updatedAt?: DateTimeWithAggregatesFilter<"CodeWorkspace"> | Date | string
-    createdByUserId?: StringWithAggregatesFilter<"CodeWorkspace"> | string
-    updatedByUserId?: StringWithAggregatesFilter<"CodeWorkspace"> | string
-  }
-
-  export type CodeWorkspaceVersionWhereInput = {
-    AND?: CodeWorkspaceVersionWhereInput | CodeWorkspaceVersionWhereInput[]
-    OR?: CodeWorkspaceVersionWhereInput[]
-    NOT?: CodeWorkspaceVersionWhereInput | CodeWorkspaceVersionWhereInput[]
-    id?: StringFilter<"CodeWorkspaceVersion"> | string
-    workspaceId?: StringFilter<"CodeWorkspaceVersion"> | string
-    version?: IntFilter<"CodeWorkspaceVersion"> | number
-    snapshot?: StringFilter<"CodeWorkspaceVersion"> | string
-    snapshotHash?: StringFilter<"CodeWorkspaceVersion"> | string
-    message?: StringFilter<"CodeWorkspaceVersion"> | string
-    isAutosave?: BoolFilter<"CodeWorkspaceVersion"> | boolean
-    clientRequestId?: StringNullableFilter<"CodeWorkspaceVersion"> | string | null
-    ip?: StringNullableFilter<"CodeWorkspaceVersion"> | string | null
-    userAgent?: StringNullableFilter<"CodeWorkspaceVersion"> | string | null
-    referer?: StringNullableFilter<"CodeWorkspaceVersion"> | string | null
-    meta?: StringFilter<"CodeWorkspaceVersion"> | string
-    sizeBytes?: IntFilter<"CodeWorkspaceVersion"> | number
-    createdAt?: DateTimeFilter<"CodeWorkspaceVersion"> | Date | string
-    createdByUserId?: StringFilter<"CodeWorkspaceVersion"> | string
-    workspace?: XOR<CodeWorkspaceScalarRelationFilter, CodeWorkspaceWhereInput>
-    jobs?: CodeJobListRelationFilter
-  }
-
-  export type CodeWorkspaceVersionOrderByWithRelationInput = {
-    id?: SortOrder
-    workspaceId?: SortOrder
-    version?: SortOrder
-    snapshot?: SortOrder
-    snapshotHash?: SortOrder
-    message?: SortOrder
-    isAutosave?: SortOrder
-    clientRequestId?: SortOrderInput | SortOrder
-    ip?: SortOrderInput | SortOrder
-    userAgent?: SortOrderInput | SortOrder
-    referer?: SortOrderInput | SortOrder
-    meta?: SortOrder
-    sizeBytes?: SortOrder
-    createdAt?: SortOrder
-    createdByUserId?: SortOrder
-    workspace?: CodeWorkspaceOrderByWithRelationInput
-    jobs?: CodeJobOrderByRelationAggregateInput
-  }
-
-  export type CodeWorkspaceVersionWhereUniqueInput = Prisma.AtLeast<{
-    id?: string
-    workspaceId_version?: CodeWorkspaceVersionWorkspaceIdVersionCompoundUniqueInput
-    workspaceId_clientRequestId?: CodeWorkspaceVersionWorkspaceIdClientRequestIdCompoundUniqueInput
-    AND?: CodeWorkspaceVersionWhereInput | CodeWorkspaceVersionWhereInput[]
-    OR?: CodeWorkspaceVersionWhereInput[]
-    NOT?: CodeWorkspaceVersionWhereInput | CodeWorkspaceVersionWhereInput[]
-    workspaceId?: StringFilter<"CodeWorkspaceVersion"> | string
-    version?: IntFilter<"CodeWorkspaceVersion"> | number
-    snapshot?: StringFilter<"CodeWorkspaceVersion"> | string
-    snapshotHash?: StringFilter<"CodeWorkspaceVersion"> | string
-    message?: StringFilter<"CodeWorkspaceVersion"> | string
-    isAutosave?: BoolFilter<"CodeWorkspaceVersion"> | boolean
-    clientRequestId?: StringNullableFilter<"CodeWorkspaceVersion"> | string | null
-    ip?: StringNullableFilter<"CodeWorkspaceVersion"> | string | null
-    userAgent?: StringNullableFilter<"CodeWorkspaceVersion"> | string | null
-    referer?: StringNullableFilter<"CodeWorkspaceVersion"> | string | null
-    meta?: StringFilter<"CodeWorkspaceVersion"> | string
-    sizeBytes?: IntFilter<"CodeWorkspaceVersion"> | number
-    createdAt?: DateTimeFilter<"CodeWorkspaceVersion"> | Date | string
-    createdByUserId?: StringFilter<"CodeWorkspaceVersion"> | string
-    workspace?: XOR<CodeWorkspaceScalarRelationFilter, CodeWorkspaceWhereInput>
-    jobs?: CodeJobListRelationFilter
-  }, "id" | "workspaceId_version" | "workspaceId_clientRequestId">
-
-  export type CodeWorkspaceVersionOrderByWithAggregationInput = {
-    id?: SortOrder
-    workspaceId?: SortOrder
-    version?: SortOrder
-    snapshot?: SortOrder
-    snapshotHash?: SortOrder
-    message?: SortOrder
-    isAutosave?: SortOrder
-    clientRequestId?: SortOrderInput | SortOrder
-    ip?: SortOrderInput | SortOrder
-    userAgent?: SortOrderInput | SortOrder
-    referer?: SortOrderInput | SortOrder
-    meta?: SortOrder
-    sizeBytes?: SortOrder
-    createdAt?: SortOrder
-    createdByUserId?: SortOrder
-    _count?: CodeWorkspaceVersionCountOrderByAggregateInput
-    _avg?: CodeWorkspaceVersionAvgOrderByAggregateInput
-    _max?: CodeWorkspaceVersionMaxOrderByAggregateInput
-    _min?: CodeWorkspaceVersionMinOrderByAggregateInput
-    _sum?: CodeWorkspaceVersionSumOrderByAggregateInput
-  }
-
-  export type CodeWorkspaceVersionScalarWhereWithAggregatesInput = {
-    AND?: CodeWorkspaceVersionScalarWhereWithAggregatesInput | CodeWorkspaceVersionScalarWhereWithAggregatesInput[]
-    OR?: CodeWorkspaceVersionScalarWhereWithAggregatesInput[]
-    NOT?: CodeWorkspaceVersionScalarWhereWithAggregatesInput | CodeWorkspaceVersionScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"CodeWorkspaceVersion"> | string
-    workspaceId?: StringWithAggregatesFilter<"CodeWorkspaceVersion"> | string
-    version?: IntWithAggregatesFilter<"CodeWorkspaceVersion"> | number
-    snapshot?: StringWithAggregatesFilter<"CodeWorkspaceVersion"> | string
-    snapshotHash?: StringWithAggregatesFilter<"CodeWorkspaceVersion"> | string
-    message?: StringWithAggregatesFilter<"CodeWorkspaceVersion"> | string
-    isAutosave?: BoolWithAggregatesFilter<"CodeWorkspaceVersion"> | boolean
-    clientRequestId?: StringNullableWithAggregatesFilter<"CodeWorkspaceVersion"> | string | null
-    ip?: StringNullableWithAggregatesFilter<"CodeWorkspaceVersion"> | string | null
-    userAgent?: StringNullableWithAggregatesFilter<"CodeWorkspaceVersion"> | string | null
-    referer?: StringNullableWithAggregatesFilter<"CodeWorkspaceVersion"> | string | null
-    meta?: StringWithAggregatesFilter<"CodeWorkspaceVersion"> | string
-    sizeBytes?: IntWithAggregatesFilter<"CodeWorkspaceVersion"> | number
-    createdAt?: DateTimeWithAggregatesFilter<"CodeWorkspaceVersion"> | Date | string
-    createdByUserId?: StringWithAggregatesFilter<"CodeWorkspaceVersion"> | string
-  }
-
-  export type CodeWorkerWhereInput = {
-    AND?: CodeWorkerWhereInput | CodeWorkerWhereInput[]
-    OR?: CodeWorkerWhereInput[]
-    NOT?: CodeWorkerWhereInput | CodeWorkerWhereInput[]
-    id?: StringFilter<"CodeWorker"> | string
-    name?: StringFilter<"CodeWorker"> | string
-    kind?: StringFilter<"CodeWorker"> | string
-    queue?: StringFilter<"CodeWorker"> | string
-    status?: StringFilter<"CodeWorker"> | string
-    desiredStatus?: StringFilter<"CodeWorker"> | string
-    concurrency?: IntFilter<"CodeWorker"> | number
-    currentJobId?: StringNullableFilter<"CodeWorker"> | string | null
-    heartbeatAt?: DateTimeNullableFilter<"CodeWorker"> | Date | string | null
-    startedAt?: DateTimeNullableFilter<"CodeWorker"> | Date | string | null
-    stoppedAt?: DateTimeNullableFilter<"CodeWorker"> | Date | string | null
-    pid?: IntNullableFilter<"CodeWorker"> | number | null
-    metadata?: StringFilter<"CodeWorker"> | string
-    createdAt?: DateTimeFilter<"CodeWorker"> | Date | string
-    updatedAt?: DateTimeFilter<"CodeWorker"> | Date | string
-    jobs?: CodeJobListRelationFilter
-    logs?: CodeJobLogListRelationFilter
-  }
-
-  export type CodeWorkerOrderByWithRelationInput = {
-    id?: SortOrder
-    name?: SortOrder
-    kind?: SortOrder
-    queue?: SortOrder
-    status?: SortOrder
-    desiredStatus?: SortOrder
-    concurrency?: SortOrder
-    currentJobId?: SortOrderInput | SortOrder
-    heartbeatAt?: SortOrderInput | SortOrder
-    startedAt?: SortOrderInput | SortOrder
-    stoppedAt?: SortOrderInput | SortOrder
-    pid?: SortOrderInput | SortOrder
-    metadata?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    jobs?: CodeJobOrderByRelationAggregateInput
-    logs?: CodeJobLogOrderByRelationAggregateInput
-  }
-
-  export type CodeWorkerWhereUniqueInput = Prisma.AtLeast<{
-    id?: string
-    AND?: CodeWorkerWhereInput | CodeWorkerWhereInput[]
-    OR?: CodeWorkerWhereInput[]
-    NOT?: CodeWorkerWhereInput | CodeWorkerWhereInput[]
-    name?: StringFilter<"CodeWorker"> | string
-    kind?: StringFilter<"CodeWorker"> | string
-    queue?: StringFilter<"CodeWorker"> | string
-    status?: StringFilter<"CodeWorker"> | string
-    desiredStatus?: StringFilter<"CodeWorker"> | string
-    concurrency?: IntFilter<"CodeWorker"> | number
-    currentJobId?: StringNullableFilter<"CodeWorker"> | string | null
-    heartbeatAt?: DateTimeNullableFilter<"CodeWorker"> | Date | string | null
-    startedAt?: DateTimeNullableFilter<"CodeWorker"> | Date | string | null
-    stoppedAt?: DateTimeNullableFilter<"CodeWorker"> | Date | string | null
-    pid?: IntNullableFilter<"CodeWorker"> | number | null
-    metadata?: StringFilter<"CodeWorker"> | string
-    createdAt?: DateTimeFilter<"CodeWorker"> | Date | string
-    updatedAt?: DateTimeFilter<"CodeWorker"> | Date | string
-    jobs?: CodeJobListRelationFilter
-    logs?: CodeJobLogListRelationFilter
-  }, "id">
-
-  export type CodeWorkerOrderByWithAggregationInput = {
-    id?: SortOrder
-    name?: SortOrder
-    kind?: SortOrder
-    queue?: SortOrder
-    status?: SortOrder
-    desiredStatus?: SortOrder
-    concurrency?: SortOrder
-    currentJobId?: SortOrderInput | SortOrder
-    heartbeatAt?: SortOrderInput | SortOrder
-    startedAt?: SortOrderInput | SortOrder
-    stoppedAt?: SortOrderInput | SortOrder
-    pid?: SortOrderInput | SortOrder
-    metadata?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    _count?: CodeWorkerCountOrderByAggregateInput
-    _avg?: CodeWorkerAvgOrderByAggregateInput
-    _max?: CodeWorkerMaxOrderByAggregateInput
-    _min?: CodeWorkerMinOrderByAggregateInput
-    _sum?: CodeWorkerSumOrderByAggregateInput
-  }
-
-  export type CodeWorkerScalarWhereWithAggregatesInput = {
-    AND?: CodeWorkerScalarWhereWithAggregatesInput | CodeWorkerScalarWhereWithAggregatesInput[]
-    OR?: CodeWorkerScalarWhereWithAggregatesInput[]
-    NOT?: CodeWorkerScalarWhereWithAggregatesInput | CodeWorkerScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"CodeWorker"> | string
-    name?: StringWithAggregatesFilter<"CodeWorker"> | string
-    kind?: StringWithAggregatesFilter<"CodeWorker"> | string
-    queue?: StringWithAggregatesFilter<"CodeWorker"> | string
-    status?: StringWithAggregatesFilter<"CodeWorker"> | string
-    desiredStatus?: StringWithAggregatesFilter<"CodeWorker"> | string
-    concurrency?: IntWithAggregatesFilter<"CodeWorker"> | number
-    currentJobId?: StringNullableWithAggregatesFilter<"CodeWorker"> | string | null
-    heartbeatAt?: DateTimeNullableWithAggregatesFilter<"CodeWorker"> | Date | string | null
-    startedAt?: DateTimeNullableWithAggregatesFilter<"CodeWorker"> | Date | string | null
-    stoppedAt?: DateTimeNullableWithAggregatesFilter<"CodeWorker"> | Date | string | null
-    pid?: IntNullableWithAggregatesFilter<"CodeWorker"> | number | null
-    metadata?: StringWithAggregatesFilter<"CodeWorker"> | string
-    createdAt?: DateTimeWithAggregatesFilter<"CodeWorker"> | Date | string
-    updatedAt?: DateTimeWithAggregatesFilter<"CodeWorker"> | Date | string
-  }
-
-  export type CodeJobWhereInput = {
-    AND?: CodeJobWhereInput | CodeJobWhereInput[]
-    OR?: CodeJobWhereInput[]
-    NOT?: CodeJobWhereInput | CodeJobWhereInput[]
-    id?: StringFilter<"CodeJob"> | string
-    workspaceVersionId?: StringFilter<"CodeJob"> | string
-    workspaceSlug?: StringFilter<"CodeJob"> | string
-    version?: IntFilter<"CodeJob"> | number
-    entryPath?: StringFilter<"CodeJob"> | string
-    functionName?: StringFilter<"CodeJob"> | string
-    args?: StringFilter<"CodeJob"> | string
-    data?: StringFilter<"CodeJob"> | string
-    checkpoint?: StringFilter<"CodeJob"> | string
-    result?: StringNullableFilter<"CodeJob"> | string | null
-    error?: StringNullableFilter<"CodeJob"> | string | null
-    status?: StringFilter<"CodeJob"> | string
-    priority?: IntFilter<"CodeJob"> | number
-    queue?: StringFilter<"CodeJob"> | string
-    runtime?: StringFilter<"CodeJob"> | string
-    orchestrator?: StringFilter<"CodeJob"> | string
-    timeoutMs?: IntFilter<"CodeJob"> | number
-    maxAttempts?: IntFilter<"CodeJob"> | number
-    attempt?: IntFilter<"CodeJob"> | number
-    progress?: IntFilter<"CodeJob"> | number
-    requestedAction?: StringNullableFilter<"CodeJob"> | string | null
-    leaseToken?: StringNullableFilter<"CodeJob"> | string | null
-    lockedAt?: DateTimeNullableFilter<"CodeJob"> | Date | string | null
-    leaseExpiresAt?: DateTimeNullableFilter<"CodeJob"> | Date | string | null
-    nextRunAt?: DateTimeFilter<"CodeJob"> | Date | string
-    startedAt?: DateTimeNullableFilter<"CodeJob"> | Date | string | null
-    completedAt?: DateTimeNullableFilter<"CodeJob"> | Date | string | null
-    createdAt?: DateTimeFilter<"CodeJob"> | Date | string
-    updatedAt?: DateTimeFilter<"CodeJob"> | Date | string
-    createdByUserId?: StringFilter<"CodeJob"> | string
-    workerId?: StringNullableFilter<"CodeJob"> | string | null
-    temporalWorkflowId?: StringNullableFilter<"CodeJob"> | string | null
-    temporalRunId?: StringNullableFilter<"CodeJob"> | string | null
-    metadata?: StringFilter<"CodeJob"> | string
-    workspaceVersion?: XOR<CodeWorkspaceVersionScalarRelationFilter, CodeWorkspaceVersionWhereInput>
-    worker?: XOR<CodeWorkerNullableScalarRelationFilter, CodeWorkerWhereInput> | null
-    logs?: CodeJobLogListRelationFilter
-  }
-
-  export type CodeJobOrderByWithRelationInput = {
-    id?: SortOrder
-    workspaceVersionId?: SortOrder
-    workspaceSlug?: SortOrder
-    version?: SortOrder
-    entryPath?: SortOrder
-    functionName?: SortOrder
-    args?: SortOrder
-    data?: SortOrder
-    checkpoint?: SortOrder
-    result?: SortOrderInput | SortOrder
-    error?: SortOrderInput | SortOrder
-    status?: SortOrder
-    priority?: SortOrder
-    queue?: SortOrder
-    runtime?: SortOrder
-    orchestrator?: SortOrder
-    timeoutMs?: SortOrder
-    maxAttempts?: SortOrder
-    attempt?: SortOrder
-    progress?: SortOrder
-    requestedAction?: SortOrderInput | SortOrder
-    leaseToken?: SortOrderInput | SortOrder
-    lockedAt?: SortOrderInput | SortOrder
-    leaseExpiresAt?: SortOrderInput | SortOrder
-    nextRunAt?: SortOrder
-    startedAt?: SortOrderInput | SortOrder
-    completedAt?: SortOrderInput | SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    createdByUserId?: SortOrder
-    workerId?: SortOrderInput | SortOrder
-    temporalWorkflowId?: SortOrderInput | SortOrder
-    temporalRunId?: SortOrderInput | SortOrder
-    metadata?: SortOrder
-    workspaceVersion?: CodeWorkspaceVersionOrderByWithRelationInput
-    worker?: CodeWorkerOrderByWithRelationInput
-    logs?: CodeJobLogOrderByRelationAggregateInput
-  }
-
-  export type CodeJobWhereUniqueInput = Prisma.AtLeast<{
-    id?: string
-    AND?: CodeJobWhereInput | CodeJobWhereInput[]
-    OR?: CodeJobWhereInput[]
-    NOT?: CodeJobWhereInput | CodeJobWhereInput[]
-    workspaceVersionId?: StringFilter<"CodeJob"> | string
-    workspaceSlug?: StringFilter<"CodeJob"> | string
-    version?: IntFilter<"CodeJob"> | number
-    entryPath?: StringFilter<"CodeJob"> | string
-    functionName?: StringFilter<"CodeJob"> | string
-    args?: StringFilter<"CodeJob"> | string
-    data?: StringFilter<"CodeJob"> | string
-    checkpoint?: StringFilter<"CodeJob"> | string
-    result?: StringNullableFilter<"CodeJob"> | string | null
-    error?: StringNullableFilter<"CodeJob"> | string | null
-    status?: StringFilter<"CodeJob"> | string
-    priority?: IntFilter<"CodeJob"> | number
-    queue?: StringFilter<"CodeJob"> | string
-    runtime?: StringFilter<"CodeJob"> | string
-    orchestrator?: StringFilter<"CodeJob"> | string
-    timeoutMs?: IntFilter<"CodeJob"> | number
-    maxAttempts?: IntFilter<"CodeJob"> | number
-    attempt?: IntFilter<"CodeJob"> | number
-    progress?: IntFilter<"CodeJob"> | number
-    requestedAction?: StringNullableFilter<"CodeJob"> | string | null
-    leaseToken?: StringNullableFilter<"CodeJob"> | string | null
-    lockedAt?: DateTimeNullableFilter<"CodeJob"> | Date | string | null
-    leaseExpiresAt?: DateTimeNullableFilter<"CodeJob"> | Date | string | null
-    nextRunAt?: DateTimeFilter<"CodeJob"> | Date | string
-    startedAt?: DateTimeNullableFilter<"CodeJob"> | Date | string | null
-    completedAt?: DateTimeNullableFilter<"CodeJob"> | Date | string | null
-    createdAt?: DateTimeFilter<"CodeJob"> | Date | string
-    updatedAt?: DateTimeFilter<"CodeJob"> | Date | string
-    createdByUserId?: StringFilter<"CodeJob"> | string
-    workerId?: StringNullableFilter<"CodeJob"> | string | null
-    temporalWorkflowId?: StringNullableFilter<"CodeJob"> | string | null
-    temporalRunId?: StringNullableFilter<"CodeJob"> | string | null
-    metadata?: StringFilter<"CodeJob"> | string
-    workspaceVersion?: XOR<CodeWorkspaceVersionScalarRelationFilter, CodeWorkspaceVersionWhereInput>
-    worker?: XOR<CodeWorkerNullableScalarRelationFilter, CodeWorkerWhereInput> | null
-    logs?: CodeJobLogListRelationFilter
-  }, "id">
-
-  export type CodeJobOrderByWithAggregationInput = {
-    id?: SortOrder
-    workspaceVersionId?: SortOrder
-    workspaceSlug?: SortOrder
-    version?: SortOrder
-    entryPath?: SortOrder
-    functionName?: SortOrder
-    args?: SortOrder
-    data?: SortOrder
-    checkpoint?: SortOrder
-    result?: SortOrderInput | SortOrder
-    error?: SortOrderInput | SortOrder
-    status?: SortOrder
-    priority?: SortOrder
-    queue?: SortOrder
-    runtime?: SortOrder
-    orchestrator?: SortOrder
-    timeoutMs?: SortOrder
-    maxAttempts?: SortOrder
-    attempt?: SortOrder
-    progress?: SortOrder
-    requestedAction?: SortOrderInput | SortOrder
-    leaseToken?: SortOrderInput | SortOrder
-    lockedAt?: SortOrderInput | SortOrder
-    leaseExpiresAt?: SortOrderInput | SortOrder
-    nextRunAt?: SortOrder
-    startedAt?: SortOrderInput | SortOrder
-    completedAt?: SortOrderInput | SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    createdByUserId?: SortOrder
-    workerId?: SortOrderInput | SortOrder
-    temporalWorkflowId?: SortOrderInput | SortOrder
-    temporalRunId?: SortOrderInput | SortOrder
-    metadata?: SortOrder
-    _count?: CodeJobCountOrderByAggregateInput
-    _avg?: CodeJobAvgOrderByAggregateInput
-    _max?: CodeJobMaxOrderByAggregateInput
-    _min?: CodeJobMinOrderByAggregateInput
-    _sum?: CodeJobSumOrderByAggregateInput
-  }
-
-  export type CodeJobScalarWhereWithAggregatesInput = {
-    AND?: CodeJobScalarWhereWithAggregatesInput | CodeJobScalarWhereWithAggregatesInput[]
-    OR?: CodeJobScalarWhereWithAggregatesInput[]
-    NOT?: CodeJobScalarWhereWithAggregatesInput | CodeJobScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"CodeJob"> | string
-    workspaceVersionId?: StringWithAggregatesFilter<"CodeJob"> | string
-    workspaceSlug?: StringWithAggregatesFilter<"CodeJob"> | string
-    version?: IntWithAggregatesFilter<"CodeJob"> | number
-    entryPath?: StringWithAggregatesFilter<"CodeJob"> | string
-    functionName?: StringWithAggregatesFilter<"CodeJob"> | string
-    args?: StringWithAggregatesFilter<"CodeJob"> | string
-    data?: StringWithAggregatesFilter<"CodeJob"> | string
-    checkpoint?: StringWithAggregatesFilter<"CodeJob"> | string
-    result?: StringNullableWithAggregatesFilter<"CodeJob"> | string | null
-    error?: StringNullableWithAggregatesFilter<"CodeJob"> | string | null
-    status?: StringWithAggregatesFilter<"CodeJob"> | string
-    priority?: IntWithAggregatesFilter<"CodeJob"> | number
-    queue?: StringWithAggregatesFilter<"CodeJob"> | string
-    runtime?: StringWithAggregatesFilter<"CodeJob"> | string
-    orchestrator?: StringWithAggregatesFilter<"CodeJob"> | string
-    timeoutMs?: IntWithAggregatesFilter<"CodeJob"> | number
-    maxAttempts?: IntWithAggregatesFilter<"CodeJob"> | number
-    attempt?: IntWithAggregatesFilter<"CodeJob"> | number
-    progress?: IntWithAggregatesFilter<"CodeJob"> | number
-    requestedAction?: StringNullableWithAggregatesFilter<"CodeJob"> | string | null
-    leaseToken?: StringNullableWithAggregatesFilter<"CodeJob"> | string | null
-    lockedAt?: DateTimeNullableWithAggregatesFilter<"CodeJob"> | Date | string | null
-    leaseExpiresAt?: DateTimeNullableWithAggregatesFilter<"CodeJob"> | Date | string | null
-    nextRunAt?: DateTimeWithAggregatesFilter<"CodeJob"> | Date | string
-    startedAt?: DateTimeNullableWithAggregatesFilter<"CodeJob"> | Date | string | null
-    completedAt?: DateTimeNullableWithAggregatesFilter<"CodeJob"> | Date | string | null
-    createdAt?: DateTimeWithAggregatesFilter<"CodeJob"> | Date | string
-    updatedAt?: DateTimeWithAggregatesFilter<"CodeJob"> | Date | string
-    createdByUserId?: StringWithAggregatesFilter<"CodeJob"> | string
-    workerId?: StringNullableWithAggregatesFilter<"CodeJob"> | string | null
-    temporalWorkflowId?: StringNullableWithAggregatesFilter<"CodeJob"> | string | null
-    temporalRunId?: StringNullableWithAggregatesFilter<"CodeJob"> | string | null
-    metadata?: StringWithAggregatesFilter<"CodeJob"> | string
-  }
-
-  export type CodeJobLogWhereInput = {
-    AND?: CodeJobLogWhereInput | CodeJobLogWhereInput[]
-    OR?: CodeJobLogWhereInput[]
-    NOT?: CodeJobLogWhereInput | CodeJobLogWhereInput[]
-    id?: IntFilter<"CodeJobLog"> | number
-    jobId?: StringFilter<"CodeJobLog"> | string
-    workerId?: StringNullableFilter<"CodeJobLog"> | string | null
-    level?: StringFilter<"CodeJobLog"> | string
-    message?: StringFilter<"CodeJobLog"> | string
-    sequence?: IntFilter<"CodeJobLog"> | number
-    meta?: StringFilter<"CodeJobLog"> | string
-    createdAt?: DateTimeFilter<"CodeJobLog"> | Date | string
-    job?: XOR<CodeJobScalarRelationFilter, CodeJobWhereInput>
-    worker?: XOR<CodeWorkerNullableScalarRelationFilter, CodeWorkerWhereInput> | null
-  }
-
-  export type CodeJobLogOrderByWithRelationInput = {
-    id?: SortOrder
-    jobId?: SortOrder
-    workerId?: SortOrderInput | SortOrder
-    level?: SortOrder
-    message?: SortOrder
-    sequence?: SortOrder
-    meta?: SortOrder
-    createdAt?: SortOrder
-    job?: CodeJobOrderByWithRelationInput
-    worker?: CodeWorkerOrderByWithRelationInput
-  }
-
-  export type CodeJobLogWhereUniqueInput = Prisma.AtLeast<{
-    id?: number
-    AND?: CodeJobLogWhereInput | CodeJobLogWhereInput[]
-    OR?: CodeJobLogWhereInput[]
-    NOT?: CodeJobLogWhereInput | CodeJobLogWhereInput[]
-    jobId?: StringFilter<"CodeJobLog"> | string
-    workerId?: StringNullableFilter<"CodeJobLog"> | string | null
-    level?: StringFilter<"CodeJobLog"> | string
-    message?: StringFilter<"CodeJobLog"> | string
-    sequence?: IntFilter<"CodeJobLog"> | number
-    meta?: StringFilter<"CodeJobLog"> | string
-    createdAt?: DateTimeFilter<"CodeJobLog"> | Date | string
-    job?: XOR<CodeJobScalarRelationFilter, CodeJobWhereInput>
-    worker?: XOR<CodeWorkerNullableScalarRelationFilter, CodeWorkerWhereInput> | null
-  }, "id">
-
-  export type CodeJobLogOrderByWithAggregationInput = {
-    id?: SortOrder
-    jobId?: SortOrder
-    workerId?: SortOrderInput | SortOrder
-    level?: SortOrder
-    message?: SortOrder
-    sequence?: SortOrder
-    meta?: SortOrder
-    createdAt?: SortOrder
-    _count?: CodeJobLogCountOrderByAggregateInput
-    _avg?: CodeJobLogAvgOrderByAggregateInput
-    _max?: CodeJobLogMaxOrderByAggregateInput
-    _min?: CodeJobLogMinOrderByAggregateInput
-    _sum?: CodeJobLogSumOrderByAggregateInput
-  }
-
-  export type CodeJobLogScalarWhereWithAggregatesInput = {
-    AND?: CodeJobLogScalarWhereWithAggregatesInput | CodeJobLogScalarWhereWithAggregatesInput[]
-    OR?: CodeJobLogScalarWhereWithAggregatesInput[]
-    NOT?: CodeJobLogScalarWhereWithAggregatesInput | CodeJobLogScalarWhereWithAggregatesInput[]
-    id?: IntWithAggregatesFilter<"CodeJobLog"> | number
-    jobId?: StringWithAggregatesFilter<"CodeJobLog"> | string
-    workerId?: StringNullableWithAggregatesFilter<"CodeJobLog"> | string | null
-    level?: StringWithAggregatesFilter<"CodeJobLog"> | string
-    message?: StringWithAggregatesFilter<"CodeJobLog"> | string
-    sequence?: IntWithAggregatesFilter<"CodeJobLog"> | number
-    meta?: StringWithAggregatesFilter<"CodeJobLog"> | string
-    createdAt?: DateTimeWithAggregatesFilter<"CodeJobLog"> | Date | string
   }
 
   export type AiDatabaseSchemaWhereInput = {
@@ -30135,704 +22439,6 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type CodeWorkspaceCreateInput = {
-    id?: string
-    slug: string
-    name: string
-    description?: string
-    language?: string
-    currentVersion?: number
-    active?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    createdByUserId: string
-    updatedByUserId: string
-    versions?: CodeWorkspaceVersionCreateNestedManyWithoutWorkspaceInput
-  }
-
-  export type CodeWorkspaceUncheckedCreateInput = {
-    id?: string
-    slug: string
-    name: string
-    description?: string
-    language?: string
-    currentVersion?: number
-    active?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    createdByUserId: string
-    updatedByUserId: string
-    versions?: CodeWorkspaceVersionUncheckedCreateNestedManyWithoutWorkspaceInput
-  }
-
-  export type CodeWorkspaceUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    slug?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    language?: StringFieldUpdateOperationsInput | string
-    currentVersion?: IntFieldUpdateOperationsInput | number
-    active?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    createdByUserId?: StringFieldUpdateOperationsInput | string
-    updatedByUserId?: StringFieldUpdateOperationsInput | string
-    versions?: CodeWorkspaceVersionUpdateManyWithoutWorkspaceNestedInput
-  }
-
-  export type CodeWorkspaceUncheckedUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    slug?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    language?: StringFieldUpdateOperationsInput | string
-    currentVersion?: IntFieldUpdateOperationsInput | number
-    active?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    createdByUserId?: StringFieldUpdateOperationsInput | string
-    updatedByUserId?: StringFieldUpdateOperationsInput | string
-    versions?: CodeWorkspaceVersionUncheckedUpdateManyWithoutWorkspaceNestedInput
-  }
-
-  export type CodeWorkspaceCreateManyInput = {
-    id?: string
-    slug: string
-    name: string
-    description?: string
-    language?: string
-    currentVersion?: number
-    active?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    createdByUserId: string
-    updatedByUserId: string
-  }
-
-  export type CodeWorkspaceUpdateManyMutationInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    slug?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    language?: StringFieldUpdateOperationsInput | string
-    currentVersion?: IntFieldUpdateOperationsInput | number
-    active?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    createdByUserId?: StringFieldUpdateOperationsInput | string
-    updatedByUserId?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type CodeWorkspaceUncheckedUpdateManyInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    slug?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    language?: StringFieldUpdateOperationsInput | string
-    currentVersion?: IntFieldUpdateOperationsInput | number
-    active?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    createdByUserId?: StringFieldUpdateOperationsInput | string
-    updatedByUserId?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type CodeWorkspaceVersionCreateInput = {
-    id?: string
-    version: number
-    snapshot: string
-    snapshotHash: string
-    message?: string
-    isAutosave?: boolean
-    clientRequestId?: string | null
-    ip?: string | null
-    userAgent?: string | null
-    referer?: string | null
-    meta?: string
-    sizeBytes?: number
-    createdAt?: Date | string
-    createdByUserId: string
-    workspace: CodeWorkspaceCreateNestedOneWithoutVersionsInput
-    jobs?: CodeJobCreateNestedManyWithoutWorkspaceVersionInput
-  }
-
-  export type CodeWorkspaceVersionUncheckedCreateInput = {
-    id?: string
-    workspaceId: string
-    version: number
-    snapshot: string
-    snapshotHash: string
-    message?: string
-    isAutosave?: boolean
-    clientRequestId?: string | null
-    ip?: string | null
-    userAgent?: string | null
-    referer?: string | null
-    meta?: string
-    sizeBytes?: number
-    createdAt?: Date | string
-    createdByUserId: string
-    jobs?: CodeJobUncheckedCreateNestedManyWithoutWorkspaceVersionInput
-  }
-
-  export type CodeWorkspaceVersionUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    version?: IntFieldUpdateOperationsInput | number
-    snapshot?: StringFieldUpdateOperationsInput | string
-    snapshotHash?: StringFieldUpdateOperationsInput | string
-    message?: StringFieldUpdateOperationsInput | string
-    isAutosave?: BoolFieldUpdateOperationsInput | boolean
-    clientRequestId?: NullableStringFieldUpdateOperationsInput | string | null
-    ip?: NullableStringFieldUpdateOperationsInput | string | null
-    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
-    referer?: NullableStringFieldUpdateOperationsInput | string | null
-    meta?: StringFieldUpdateOperationsInput | string
-    sizeBytes?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    createdByUserId?: StringFieldUpdateOperationsInput | string
-    workspace?: CodeWorkspaceUpdateOneRequiredWithoutVersionsNestedInput
-    jobs?: CodeJobUpdateManyWithoutWorkspaceVersionNestedInput
-  }
-
-  export type CodeWorkspaceVersionUncheckedUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    workspaceId?: StringFieldUpdateOperationsInput | string
-    version?: IntFieldUpdateOperationsInput | number
-    snapshot?: StringFieldUpdateOperationsInput | string
-    snapshotHash?: StringFieldUpdateOperationsInput | string
-    message?: StringFieldUpdateOperationsInput | string
-    isAutosave?: BoolFieldUpdateOperationsInput | boolean
-    clientRequestId?: NullableStringFieldUpdateOperationsInput | string | null
-    ip?: NullableStringFieldUpdateOperationsInput | string | null
-    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
-    referer?: NullableStringFieldUpdateOperationsInput | string | null
-    meta?: StringFieldUpdateOperationsInput | string
-    sizeBytes?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    createdByUserId?: StringFieldUpdateOperationsInput | string
-    jobs?: CodeJobUncheckedUpdateManyWithoutWorkspaceVersionNestedInput
-  }
-
-  export type CodeWorkspaceVersionCreateManyInput = {
-    id?: string
-    workspaceId: string
-    version: number
-    snapshot: string
-    snapshotHash: string
-    message?: string
-    isAutosave?: boolean
-    clientRequestId?: string | null
-    ip?: string | null
-    userAgent?: string | null
-    referer?: string | null
-    meta?: string
-    sizeBytes?: number
-    createdAt?: Date | string
-    createdByUserId: string
-  }
-
-  export type CodeWorkspaceVersionUpdateManyMutationInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    version?: IntFieldUpdateOperationsInput | number
-    snapshot?: StringFieldUpdateOperationsInput | string
-    snapshotHash?: StringFieldUpdateOperationsInput | string
-    message?: StringFieldUpdateOperationsInput | string
-    isAutosave?: BoolFieldUpdateOperationsInput | boolean
-    clientRequestId?: NullableStringFieldUpdateOperationsInput | string | null
-    ip?: NullableStringFieldUpdateOperationsInput | string | null
-    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
-    referer?: NullableStringFieldUpdateOperationsInput | string | null
-    meta?: StringFieldUpdateOperationsInput | string
-    sizeBytes?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    createdByUserId?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type CodeWorkspaceVersionUncheckedUpdateManyInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    workspaceId?: StringFieldUpdateOperationsInput | string
-    version?: IntFieldUpdateOperationsInput | number
-    snapshot?: StringFieldUpdateOperationsInput | string
-    snapshotHash?: StringFieldUpdateOperationsInput | string
-    message?: StringFieldUpdateOperationsInput | string
-    isAutosave?: BoolFieldUpdateOperationsInput | boolean
-    clientRequestId?: NullableStringFieldUpdateOperationsInput | string | null
-    ip?: NullableStringFieldUpdateOperationsInput | string | null
-    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
-    referer?: NullableStringFieldUpdateOperationsInput | string | null
-    meta?: StringFieldUpdateOperationsInput | string
-    sizeBytes?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    createdByUserId?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type CodeWorkerCreateInput = {
-    id?: string
-    name: string
-    kind?: string
-    queue?: string
-    status?: string
-    desiredStatus?: string
-    concurrency?: number
-    currentJobId?: string | null
-    heartbeatAt?: Date | string | null
-    startedAt?: Date | string | null
-    stoppedAt?: Date | string | null
-    pid?: number | null
-    metadata?: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    jobs?: CodeJobCreateNestedManyWithoutWorkerInput
-    logs?: CodeJobLogCreateNestedManyWithoutWorkerInput
-  }
-
-  export type CodeWorkerUncheckedCreateInput = {
-    id?: string
-    name: string
-    kind?: string
-    queue?: string
-    status?: string
-    desiredStatus?: string
-    concurrency?: number
-    currentJobId?: string | null
-    heartbeatAt?: Date | string | null
-    startedAt?: Date | string | null
-    stoppedAt?: Date | string | null
-    pid?: number | null
-    metadata?: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    jobs?: CodeJobUncheckedCreateNestedManyWithoutWorkerInput
-    logs?: CodeJobLogUncheckedCreateNestedManyWithoutWorkerInput
-  }
-
-  export type CodeWorkerUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    kind?: StringFieldUpdateOperationsInput | string
-    queue?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
-    desiredStatus?: StringFieldUpdateOperationsInput | string
-    concurrency?: IntFieldUpdateOperationsInput | number
-    currentJobId?: NullableStringFieldUpdateOperationsInput | string | null
-    heartbeatAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    stoppedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    pid?: NullableIntFieldUpdateOperationsInput | number | null
-    metadata?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    jobs?: CodeJobUpdateManyWithoutWorkerNestedInput
-    logs?: CodeJobLogUpdateManyWithoutWorkerNestedInput
-  }
-
-  export type CodeWorkerUncheckedUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    kind?: StringFieldUpdateOperationsInput | string
-    queue?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
-    desiredStatus?: StringFieldUpdateOperationsInput | string
-    concurrency?: IntFieldUpdateOperationsInput | number
-    currentJobId?: NullableStringFieldUpdateOperationsInput | string | null
-    heartbeatAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    stoppedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    pid?: NullableIntFieldUpdateOperationsInput | number | null
-    metadata?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    jobs?: CodeJobUncheckedUpdateManyWithoutWorkerNestedInput
-    logs?: CodeJobLogUncheckedUpdateManyWithoutWorkerNestedInput
-  }
-
-  export type CodeWorkerCreateManyInput = {
-    id?: string
-    name: string
-    kind?: string
-    queue?: string
-    status?: string
-    desiredStatus?: string
-    concurrency?: number
-    currentJobId?: string | null
-    heartbeatAt?: Date | string | null
-    startedAt?: Date | string | null
-    stoppedAt?: Date | string | null
-    pid?: number | null
-    metadata?: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type CodeWorkerUpdateManyMutationInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    kind?: StringFieldUpdateOperationsInput | string
-    queue?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
-    desiredStatus?: StringFieldUpdateOperationsInput | string
-    concurrency?: IntFieldUpdateOperationsInput | number
-    currentJobId?: NullableStringFieldUpdateOperationsInput | string | null
-    heartbeatAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    stoppedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    pid?: NullableIntFieldUpdateOperationsInput | number | null
-    metadata?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type CodeWorkerUncheckedUpdateManyInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    kind?: StringFieldUpdateOperationsInput | string
-    queue?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
-    desiredStatus?: StringFieldUpdateOperationsInput | string
-    concurrency?: IntFieldUpdateOperationsInput | number
-    currentJobId?: NullableStringFieldUpdateOperationsInput | string | null
-    heartbeatAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    stoppedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    pid?: NullableIntFieldUpdateOperationsInput | number | null
-    metadata?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type CodeJobCreateInput = {
-    id?: string
-    workspaceSlug: string
-    version: number
-    entryPath: string
-    functionName: string
-    args?: string
-    data?: string
-    checkpoint?: string
-    result?: string | null
-    error?: string | null
-    status?: string
-    priority?: number
-    queue?: string
-    runtime?: string
-    orchestrator?: string
-    timeoutMs?: number
-    maxAttempts?: number
-    attempt?: number
-    progress?: number
-    requestedAction?: string | null
-    leaseToken?: string | null
-    lockedAt?: Date | string | null
-    leaseExpiresAt?: Date | string | null
-    nextRunAt?: Date | string
-    startedAt?: Date | string | null
-    completedAt?: Date | string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    createdByUserId?: string
-    temporalWorkflowId?: string | null
-    temporalRunId?: string | null
-    metadata?: string
-    workspaceVersion: CodeWorkspaceVersionCreateNestedOneWithoutJobsInput
-    worker?: CodeWorkerCreateNestedOneWithoutJobsInput
-    logs?: CodeJobLogCreateNestedManyWithoutJobInput
-  }
-
-  export type CodeJobUncheckedCreateInput = {
-    id?: string
-    workspaceVersionId: string
-    workspaceSlug: string
-    version: number
-    entryPath: string
-    functionName: string
-    args?: string
-    data?: string
-    checkpoint?: string
-    result?: string | null
-    error?: string | null
-    status?: string
-    priority?: number
-    queue?: string
-    runtime?: string
-    orchestrator?: string
-    timeoutMs?: number
-    maxAttempts?: number
-    attempt?: number
-    progress?: number
-    requestedAction?: string | null
-    leaseToken?: string | null
-    lockedAt?: Date | string | null
-    leaseExpiresAt?: Date | string | null
-    nextRunAt?: Date | string
-    startedAt?: Date | string | null
-    completedAt?: Date | string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    createdByUserId?: string
-    workerId?: string | null
-    temporalWorkflowId?: string | null
-    temporalRunId?: string | null
-    metadata?: string
-    logs?: CodeJobLogUncheckedCreateNestedManyWithoutJobInput
-  }
-
-  export type CodeJobUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    workspaceSlug?: StringFieldUpdateOperationsInput | string
-    version?: IntFieldUpdateOperationsInput | number
-    entryPath?: StringFieldUpdateOperationsInput | string
-    functionName?: StringFieldUpdateOperationsInput | string
-    args?: StringFieldUpdateOperationsInput | string
-    data?: StringFieldUpdateOperationsInput | string
-    checkpoint?: StringFieldUpdateOperationsInput | string
-    result?: NullableStringFieldUpdateOperationsInput | string | null
-    error?: NullableStringFieldUpdateOperationsInput | string | null
-    status?: StringFieldUpdateOperationsInput | string
-    priority?: IntFieldUpdateOperationsInput | number
-    queue?: StringFieldUpdateOperationsInput | string
-    runtime?: StringFieldUpdateOperationsInput | string
-    orchestrator?: StringFieldUpdateOperationsInput | string
-    timeoutMs?: IntFieldUpdateOperationsInput | number
-    maxAttempts?: IntFieldUpdateOperationsInput | number
-    attempt?: IntFieldUpdateOperationsInput | number
-    progress?: IntFieldUpdateOperationsInput | number
-    requestedAction?: NullableStringFieldUpdateOperationsInput | string | null
-    leaseToken?: NullableStringFieldUpdateOperationsInput | string | null
-    lockedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    leaseExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    nextRunAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    createdByUserId?: StringFieldUpdateOperationsInput | string
-    temporalWorkflowId?: NullableStringFieldUpdateOperationsInput | string | null
-    temporalRunId?: NullableStringFieldUpdateOperationsInput | string | null
-    metadata?: StringFieldUpdateOperationsInput | string
-    workspaceVersion?: CodeWorkspaceVersionUpdateOneRequiredWithoutJobsNestedInput
-    worker?: CodeWorkerUpdateOneWithoutJobsNestedInput
-    logs?: CodeJobLogUpdateManyWithoutJobNestedInput
-  }
-
-  export type CodeJobUncheckedUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    workspaceVersionId?: StringFieldUpdateOperationsInput | string
-    workspaceSlug?: StringFieldUpdateOperationsInput | string
-    version?: IntFieldUpdateOperationsInput | number
-    entryPath?: StringFieldUpdateOperationsInput | string
-    functionName?: StringFieldUpdateOperationsInput | string
-    args?: StringFieldUpdateOperationsInput | string
-    data?: StringFieldUpdateOperationsInput | string
-    checkpoint?: StringFieldUpdateOperationsInput | string
-    result?: NullableStringFieldUpdateOperationsInput | string | null
-    error?: NullableStringFieldUpdateOperationsInput | string | null
-    status?: StringFieldUpdateOperationsInput | string
-    priority?: IntFieldUpdateOperationsInput | number
-    queue?: StringFieldUpdateOperationsInput | string
-    runtime?: StringFieldUpdateOperationsInput | string
-    orchestrator?: StringFieldUpdateOperationsInput | string
-    timeoutMs?: IntFieldUpdateOperationsInput | number
-    maxAttempts?: IntFieldUpdateOperationsInput | number
-    attempt?: IntFieldUpdateOperationsInput | number
-    progress?: IntFieldUpdateOperationsInput | number
-    requestedAction?: NullableStringFieldUpdateOperationsInput | string | null
-    leaseToken?: NullableStringFieldUpdateOperationsInput | string | null
-    lockedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    leaseExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    nextRunAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    createdByUserId?: StringFieldUpdateOperationsInput | string
-    workerId?: NullableStringFieldUpdateOperationsInput | string | null
-    temporalWorkflowId?: NullableStringFieldUpdateOperationsInput | string | null
-    temporalRunId?: NullableStringFieldUpdateOperationsInput | string | null
-    metadata?: StringFieldUpdateOperationsInput | string
-    logs?: CodeJobLogUncheckedUpdateManyWithoutJobNestedInput
-  }
-
-  export type CodeJobCreateManyInput = {
-    id?: string
-    workspaceVersionId: string
-    workspaceSlug: string
-    version: number
-    entryPath: string
-    functionName: string
-    args?: string
-    data?: string
-    checkpoint?: string
-    result?: string | null
-    error?: string | null
-    status?: string
-    priority?: number
-    queue?: string
-    runtime?: string
-    orchestrator?: string
-    timeoutMs?: number
-    maxAttempts?: number
-    attempt?: number
-    progress?: number
-    requestedAction?: string | null
-    leaseToken?: string | null
-    lockedAt?: Date | string | null
-    leaseExpiresAt?: Date | string | null
-    nextRunAt?: Date | string
-    startedAt?: Date | string | null
-    completedAt?: Date | string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    createdByUserId?: string
-    workerId?: string | null
-    temporalWorkflowId?: string | null
-    temporalRunId?: string | null
-    metadata?: string
-  }
-
-  export type CodeJobUpdateManyMutationInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    workspaceSlug?: StringFieldUpdateOperationsInput | string
-    version?: IntFieldUpdateOperationsInput | number
-    entryPath?: StringFieldUpdateOperationsInput | string
-    functionName?: StringFieldUpdateOperationsInput | string
-    args?: StringFieldUpdateOperationsInput | string
-    data?: StringFieldUpdateOperationsInput | string
-    checkpoint?: StringFieldUpdateOperationsInput | string
-    result?: NullableStringFieldUpdateOperationsInput | string | null
-    error?: NullableStringFieldUpdateOperationsInput | string | null
-    status?: StringFieldUpdateOperationsInput | string
-    priority?: IntFieldUpdateOperationsInput | number
-    queue?: StringFieldUpdateOperationsInput | string
-    runtime?: StringFieldUpdateOperationsInput | string
-    orchestrator?: StringFieldUpdateOperationsInput | string
-    timeoutMs?: IntFieldUpdateOperationsInput | number
-    maxAttempts?: IntFieldUpdateOperationsInput | number
-    attempt?: IntFieldUpdateOperationsInput | number
-    progress?: IntFieldUpdateOperationsInput | number
-    requestedAction?: NullableStringFieldUpdateOperationsInput | string | null
-    leaseToken?: NullableStringFieldUpdateOperationsInput | string | null
-    lockedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    leaseExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    nextRunAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    createdByUserId?: StringFieldUpdateOperationsInput | string
-    temporalWorkflowId?: NullableStringFieldUpdateOperationsInput | string | null
-    temporalRunId?: NullableStringFieldUpdateOperationsInput | string | null
-    metadata?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type CodeJobUncheckedUpdateManyInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    workspaceVersionId?: StringFieldUpdateOperationsInput | string
-    workspaceSlug?: StringFieldUpdateOperationsInput | string
-    version?: IntFieldUpdateOperationsInput | number
-    entryPath?: StringFieldUpdateOperationsInput | string
-    functionName?: StringFieldUpdateOperationsInput | string
-    args?: StringFieldUpdateOperationsInput | string
-    data?: StringFieldUpdateOperationsInput | string
-    checkpoint?: StringFieldUpdateOperationsInput | string
-    result?: NullableStringFieldUpdateOperationsInput | string | null
-    error?: NullableStringFieldUpdateOperationsInput | string | null
-    status?: StringFieldUpdateOperationsInput | string
-    priority?: IntFieldUpdateOperationsInput | number
-    queue?: StringFieldUpdateOperationsInput | string
-    runtime?: StringFieldUpdateOperationsInput | string
-    orchestrator?: StringFieldUpdateOperationsInput | string
-    timeoutMs?: IntFieldUpdateOperationsInput | number
-    maxAttempts?: IntFieldUpdateOperationsInput | number
-    attempt?: IntFieldUpdateOperationsInput | number
-    progress?: IntFieldUpdateOperationsInput | number
-    requestedAction?: NullableStringFieldUpdateOperationsInput | string | null
-    leaseToken?: NullableStringFieldUpdateOperationsInput | string | null
-    lockedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    leaseExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    nextRunAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    createdByUserId?: StringFieldUpdateOperationsInput | string
-    workerId?: NullableStringFieldUpdateOperationsInput | string | null
-    temporalWorkflowId?: NullableStringFieldUpdateOperationsInput | string | null
-    temporalRunId?: NullableStringFieldUpdateOperationsInput | string | null
-    metadata?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type CodeJobLogCreateInput = {
-    level?: string
-    message: string
-    sequence?: number
-    meta?: string
-    createdAt?: Date | string
-    job: CodeJobCreateNestedOneWithoutLogsInput
-    worker?: CodeWorkerCreateNestedOneWithoutLogsInput
-  }
-
-  export type CodeJobLogUncheckedCreateInput = {
-    id?: number
-    jobId: string
-    workerId?: string | null
-    level?: string
-    message: string
-    sequence?: number
-    meta?: string
-    createdAt?: Date | string
-  }
-
-  export type CodeJobLogUpdateInput = {
-    level?: StringFieldUpdateOperationsInput | string
-    message?: StringFieldUpdateOperationsInput | string
-    sequence?: IntFieldUpdateOperationsInput | number
-    meta?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    job?: CodeJobUpdateOneRequiredWithoutLogsNestedInput
-    worker?: CodeWorkerUpdateOneWithoutLogsNestedInput
-  }
-
-  export type CodeJobLogUncheckedUpdateInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    jobId?: StringFieldUpdateOperationsInput | string
-    workerId?: NullableStringFieldUpdateOperationsInput | string | null
-    level?: StringFieldUpdateOperationsInput | string
-    message?: StringFieldUpdateOperationsInput | string
-    sequence?: IntFieldUpdateOperationsInput | number
-    meta?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type CodeJobLogCreateManyInput = {
-    id?: number
-    jobId: string
-    workerId?: string | null
-    level?: string
-    message: string
-    sequence?: number
-    meta?: string
-    createdAt?: Date | string
-  }
-
-  export type CodeJobLogUpdateManyMutationInput = {
-    level?: StringFieldUpdateOperationsInput | string
-    message?: StringFieldUpdateOperationsInput | string
-    sequence?: IntFieldUpdateOperationsInput | number
-    meta?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type CodeJobLogUncheckedUpdateManyInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    jobId?: StringFieldUpdateOperationsInput | string
-    workerId?: NullableStringFieldUpdateOperationsInput | string | null
-    level?: StringFieldUpdateOperationsInput | string
-    message?: StringFieldUpdateOperationsInput | string
-    sequence?: IntFieldUpdateOperationsInput | number
-    meta?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
   export type AiDatabaseSchemaCreateInput = {
     id?: string
     name: string
@@ -32078,421 +23684,6 @@ export namespace Prisma {
     roleId?: SortOrder
   }
 
-  export type CodeWorkspaceVersionListRelationFilter = {
-    every?: CodeWorkspaceVersionWhereInput
-    some?: CodeWorkspaceVersionWhereInput
-    none?: CodeWorkspaceVersionWhereInput
-  }
-
-  export type CodeWorkspaceVersionOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type CodeWorkspaceCreatedByUserIdSlugCompoundUniqueInput = {
-    createdByUserId: string
-    slug: string
-  }
-
-  export type CodeWorkspaceCountOrderByAggregateInput = {
-    id?: SortOrder
-    slug?: SortOrder
-    name?: SortOrder
-    description?: SortOrder
-    language?: SortOrder
-    currentVersion?: SortOrder
-    active?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    createdByUserId?: SortOrder
-    updatedByUserId?: SortOrder
-  }
-
-  export type CodeWorkspaceAvgOrderByAggregateInput = {
-    currentVersion?: SortOrder
-  }
-
-  export type CodeWorkspaceMaxOrderByAggregateInput = {
-    id?: SortOrder
-    slug?: SortOrder
-    name?: SortOrder
-    description?: SortOrder
-    language?: SortOrder
-    currentVersion?: SortOrder
-    active?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    createdByUserId?: SortOrder
-    updatedByUserId?: SortOrder
-  }
-
-  export type CodeWorkspaceMinOrderByAggregateInput = {
-    id?: SortOrder
-    slug?: SortOrder
-    name?: SortOrder
-    description?: SortOrder
-    language?: SortOrder
-    currentVersion?: SortOrder
-    active?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    createdByUserId?: SortOrder
-    updatedByUserId?: SortOrder
-  }
-
-  export type CodeWorkspaceSumOrderByAggregateInput = {
-    currentVersion?: SortOrder
-  }
-
-  export type CodeWorkspaceScalarRelationFilter = {
-    is?: CodeWorkspaceWhereInput
-    isNot?: CodeWorkspaceWhereInput
-  }
-
-  export type CodeJobListRelationFilter = {
-    every?: CodeJobWhereInput
-    some?: CodeJobWhereInput
-    none?: CodeJobWhereInput
-  }
-
-  export type CodeJobOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type CodeWorkspaceVersionWorkspaceIdVersionCompoundUniqueInput = {
-    workspaceId: string
-    version: number
-  }
-
-  export type CodeWorkspaceVersionWorkspaceIdClientRequestIdCompoundUniqueInput = {
-    workspaceId: string
-    clientRequestId: string
-  }
-
-  export type CodeWorkspaceVersionCountOrderByAggregateInput = {
-    id?: SortOrder
-    workspaceId?: SortOrder
-    version?: SortOrder
-    snapshot?: SortOrder
-    snapshotHash?: SortOrder
-    message?: SortOrder
-    isAutosave?: SortOrder
-    clientRequestId?: SortOrder
-    ip?: SortOrder
-    userAgent?: SortOrder
-    referer?: SortOrder
-    meta?: SortOrder
-    sizeBytes?: SortOrder
-    createdAt?: SortOrder
-    createdByUserId?: SortOrder
-  }
-
-  export type CodeWorkspaceVersionAvgOrderByAggregateInput = {
-    version?: SortOrder
-    sizeBytes?: SortOrder
-  }
-
-  export type CodeWorkspaceVersionMaxOrderByAggregateInput = {
-    id?: SortOrder
-    workspaceId?: SortOrder
-    version?: SortOrder
-    snapshot?: SortOrder
-    snapshotHash?: SortOrder
-    message?: SortOrder
-    isAutosave?: SortOrder
-    clientRequestId?: SortOrder
-    ip?: SortOrder
-    userAgent?: SortOrder
-    referer?: SortOrder
-    meta?: SortOrder
-    sizeBytes?: SortOrder
-    createdAt?: SortOrder
-    createdByUserId?: SortOrder
-  }
-
-  export type CodeWorkspaceVersionMinOrderByAggregateInput = {
-    id?: SortOrder
-    workspaceId?: SortOrder
-    version?: SortOrder
-    snapshot?: SortOrder
-    snapshotHash?: SortOrder
-    message?: SortOrder
-    isAutosave?: SortOrder
-    clientRequestId?: SortOrder
-    ip?: SortOrder
-    userAgent?: SortOrder
-    referer?: SortOrder
-    meta?: SortOrder
-    sizeBytes?: SortOrder
-    createdAt?: SortOrder
-    createdByUserId?: SortOrder
-  }
-
-  export type CodeWorkspaceVersionSumOrderByAggregateInput = {
-    version?: SortOrder
-    sizeBytes?: SortOrder
-  }
-
-  export type CodeJobLogListRelationFilter = {
-    every?: CodeJobLogWhereInput
-    some?: CodeJobLogWhereInput
-    none?: CodeJobLogWhereInput
-  }
-
-  export type CodeJobLogOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type CodeWorkerCountOrderByAggregateInput = {
-    id?: SortOrder
-    name?: SortOrder
-    kind?: SortOrder
-    queue?: SortOrder
-    status?: SortOrder
-    desiredStatus?: SortOrder
-    concurrency?: SortOrder
-    currentJobId?: SortOrder
-    heartbeatAt?: SortOrder
-    startedAt?: SortOrder
-    stoppedAt?: SortOrder
-    pid?: SortOrder
-    metadata?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type CodeWorkerAvgOrderByAggregateInput = {
-    concurrency?: SortOrder
-    pid?: SortOrder
-  }
-
-  export type CodeWorkerMaxOrderByAggregateInput = {
-    id?: SortOrder
-    name?: SortOrder
-    kind?: SortOrder
-    queue?: SortOrder
-    status?: SortOrder
-    desiredStatus?: SortOrder
-    concurrency?: SortOrder
-    currentJobId?: SortOrder
-    heartbeatAt?: SortOrder
-    startedAt?: SortOrder
-    stoppedAt?: SortOrder
-    pid?: SortOrder
-    metadata?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type CodeWorkerMinOrderByAggregateInput = {
-    id?: SortOrder
-    name?: SortOrder
-    kind?: SortOrder
-    queue?: SortOrder
-    status?: SortOrder
-    desiredStatus?: SortOrder
-    concurrency?: SortOrder
-    currentJobId?: SortOrder
-    heartbeatAt?: SortOrder
-    startedAt?: SortOrder
-    stoppedAt?: SortOrder
-    pid?: SortOrder
-    metadata?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type CodeWorkerSumOrderByAggregateInput = {
-    concurrency?: SortOrder
-    pid?: SortOrder
-  }
-
-  export type CodeWorkspaceVersionScalarRelationFilter = {
-    is?: CodeWorkspaceVersionWhereInput
-    isNot?: CodeWorkspaceVersionWhereInput
-  }
-
-  export type CodeWorkerNullableScalarRelationFilter = {
-    is?: CodeWorkerWhereInput | null
-    isNot?: CodeWorkerWhereInput | null
-  }
-
-  export type CodeJobCountOrderByAggregateInput = {
-    id?: SortOrder
-    workspaceVersionId?: SortOrder
-    workspaceSlug?: SortOrder
-    version?: SortOrder
-    entryPath?: SortOrder
-    functionName?: SortOrder
-    args?: SortOrder
-    data?: SortOrder
-    checkpoint?: SortOrder
-    result?: SortOrder
-    error?: SortOrder
-    status?: SortOrder
-    priority?: SortOrder
-    queue?: SortOrder
-    runtime?: SortOrder
-    orchestrator?: SortOrder
-    timeoutMs?: SortOrder
-    maxAttempts?: SortOrder
-    attempt?: SortOrder
-    progress?: SortOrder
-    requestedAction?: SortOrder
-    leaseToken?: SortOrder
-    lockedAt?: SortOrder
-    leaseExpiresAt?: SortOrder
-    nextRunAt?: SortOrder
-    startedAt?: SortOrder
-    completedAt?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    createdByUserId?: SortOrder
-    workerId?: SortOrder
-    temporalWorkflowId?: SortOrder
-    temporalRunId?: SortOrder
-    metadata?: SortOrder
-  }
-
-  export type CodeJobAvgOrderByAggregateInput = {
-    version?: SortOrder
-    priority?: SortOrder
-    timeoutMs?: SortOrder
-    maxAttempts?: SortOrder
-    attempt?: SortOrder
-    progress?: SortOrder
-  }
-
-  export type CodeJobMaxOrderByAggregateInput = {
-    id?: SortOrder
-    workspaceVersionId?: SortOrder
-    workspaceSlug?: SortOrder
-    version?: SortOrder
-    entryPath?: SortOrder
-    functionName?: SortOrder
-    args?: SortOrder
-    data?: SortOrder
-    checkpoint?: SortOrder
-    result?: SortOrder
-    error?: SortOrder
-    status?: SortOrder
-    priority?: SortOrder
-    queue?: SortOrder
-    runtime?: SortOrder
-    orchestrator?: SortOrder
-    timeoutMs?: SortOrder
-    maxAttempts?: SortOrder
-    attempt?: SortOrder
-    progress?: SortOrder
-    requestedAction?: SortOrder
-    leaseToken?: SortOrder
-    lockedAt?: SortOrder
-    leaseExpiresAt?: SortOrder
-    nextRunAt?: SortOrder
-    startedAt?: SortOrder
-    completedAt?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    createdByUserId?: SortOrder
-    workerId?: SortOrder
-    temporalWorkflowId?: SortOrder
-    temporalRunId?: SortOrder
-    metadata?: SortOrder
-  }
-
-  export type CodeJobMinOrderByAggregateInput = {
-    id?: SortOrder
-    workspaceVersionId?: SortOrder
-    workspaceSlug?: SortOrder
-    version?: SortOrder
-    entryPath?: SortOrder
-    functionName?: SortOrder
-    args?: SortOrder
-    data?: SortOrder
-    checkpoint?: SortOrder
-    result?: SortOrder
-    error?: SortOrder
-    status?: SortOrder
-    priority?: SortOrder
-    queue?: SortOrder
-    runtime?: SortOrder
-    orchestrator?: SortOrder
-    timeoutMs?: SortOrder
-    maxAttempts?: SortOrder
-    attempt?: SortOrder
-    progress?: SortOrder
-    requestedAction?: SortOrder
-    leaseToken?: SortOrder
-    lockedAt?: SortOrder
-    leaseExpiresAt?: SortOrder
-    nextRunAt?: SortOrder
-    startedAt?: SortOrder
-    completedAt?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    createdByUserId?: SortOrder
-    workerId?: SortOrder
-    temporalWorkflowId?: SortOrder
-    temporalRunId?: SortOrder
-    metadata?: SortOrder
-  }
-
-  export type CodeJobSumOrderByAggregateInput = {
-    version?: SortOrder
-    priority?: SortOrder
-    timeoutMs?: SortOrder
-    maxAttempts?: SortOrder
-    attempt?: SortOrder
-    progress?: SortOrder
-  }
-
-  export type CodeJobScalarRelationFilter = {
-    is?: CodeJobWhereInput
-    isNot?: CodeJobWhereInput
-  }
-
-  export type CodeJobLogCountOrderByAggregateInput = {
-    id?: SortOrder
-    jobId?: SortOrder
-    workerId?: SortOrder
-    level?: SortOrder
-    message?: SortOrder
-    sequence?: SortOrder
-    meta?: SortOrder
-    createdAt?: SortOrder
-  }
-
-  export type CodeJobLogAvgOrderByAggregateInput = {
-    id?: SortOrder
-    sequence?: SortOrder
-  }
-
-  export type CodeJobLogMaxOrderByAggregateInput = {
-    id?: SortOrder
-    jobId?: SortOrder
-    workerId?: SortOrder
-    level?: SortOrder
-    message?: SortOrder
-    sequence?: SortOrder
-    meta?: SortOrder
-    createdAt?: SortOrder
-  }
-
-  export type CodeJobLogMinOrderByAggregateInput = {
-    id?: SortOrder
-    jobId?: SortOrder
-    workerId?: SortOrder
-    level?: SortOrder
-    message?: SortOrder
-    sequence?: SortOrder
-    meta?: SortOrder
-    createdAt?: SortOrder
-  }
-
-  export type CodeJobLogSumOrderByAggregateInput = {
-    id?: SortOrder
-    sequence?: SortOrder
-  }
-
   export type AiDbChatConversationListRelationFilter = {
     every?: AiDbChatConversationWhereInput
     some?: AiDbChatConversationWhereInput
@@ -33647,290 +24838,6 @@ export namespace Prisma {
     delete?: RoleWhereInput | boolean
     connect?: RoleWhereUniqueInput
     update?: XOR<XOR<RoleUpdateToOneWithWhereWithoutUsersInput, RoleUpdateWithoutUsersInput>, RoleUncheckedUpdateWithoutUsersInput>
-  }
-
-  export type CodeWorkspaceVersionCreateNestedManyWithoutWorkspaceInput = {
-    create?: XOR<CodeWorkspaceVersionCreateWithoutWorkspaceInput, CodeWorkspaceVersionUncheckedCreateWithoutWorkspaceInput> | CodeWorkspaceVersionCreateWithoutWorkspaceInput[] | CodeWorkspaceVersionUncheckedCreateWithoutWorkspaceInput[]
-    connectOrCreate?: CodeWorkspaceVersionCreateOrConnectWithoutWorkspaceInput | CodeWorkspaceVersionCreateOrConnectWithoutWorkspaceInput[]
-    createMany?: CodeWorkspaceVersionCreateManyWorkspaceInputEnvelope
-    connect?: CodeWorkspaceVersionWhereUniqueInput | CodeWorkspaceVersionWhereUniqueInput[]
-  }
-
-  export type CodeWorkspaceVersionUncheckedCreateNestedManyWithoutWorkspaceInput = {
-    create?: XOR<CodeWorkspaceVersionCreateWithoutWorkspaceInput, CodeWorkspaceVersionUncheckedCreateWithoutWorkspaceInput> | CodeWorkspaceVersionCreateWithoutWorkspaceInput[] | CodeWorkspaceVersionUncheckedCreateWithoutWorkspaceInput[]
-    connectOrCreate?: CodeWorkspaceVersionCreateOrConnectWithoutWorkspaceInput | CodeWorkspaceVersionCreateOrConnectWithoutWorkspaceInput[]
-    createMany?: CodeWorkspaceVersionCreateManyWorkspaceInputEnvelope
-    connect?: CodeWorkspaceVersionWhereUniqueInput | CodeWorkspaceVersionWhereUniqueInput[]
-  }
-
-  export type CodeWorkspaceVersionUpdateManyWithoutWorkspaceNestedInput = {
-    create?: XOR<CodeWorkspaceVersionCreateWithoutWorkspaceInput, CodeWorkspaceVersionUncheckedCreateWithoutWorkspaceInput> | CodeWorkspaceVersionCreateWithoutWorkspaceInput[] | CodeWorkspaceVersionUncheckedCreateWithoutWorkspaceInput[]
-    connectOrCreate?: CodeWorkspaceVersionCreateOrConnectWithoutWorkspaceInput | CodeWorkspaceVersionCreateOrConnectWithoutWorkspaceInput[]
-    upsert?: CodeWorkspaceVersionUpsertWithWhereUniqueWithoutWorkspaceInput | CodeWorkspaceVersionUpsertWithWhereUniqueWithoutWorkspaceInput[]
-    createMany?: CodeWorkspaceVersionCreateManyWorkspaceInputEnvelope
-    set?: CodeWorkspaceVersionWhereUniqueInput | CodeWorkspaceVersionWhereUniqueInput[]
-    disconnect?: CodeWorkspaceVersionWhereUniqueInput | CodeWorkspaceVersionWhereUniqueInput[]
-    delete?: CodeWorkspaceVersionWhereUniqueInput | CodeWorkspaceVersionWhereUniqueInput[]
-    connect?: CodeWorkspaceVersionWhereUniqueInput | CodeWorkspaceVersionWhereUniqueInput[]
-    update?: CodeWorkspaceVersionUpdateWithWhereUniqueWithoutWorkspaceInput | CodeWorkspaceVersionUpdateWithWhereUniqueWithoutWorkspaceInput[]
-    updateMany?: CodeWorkspaceVersionUpdateManyWithWhereWithoutWorkspaceInput | CodeWorkspaceVersionUpdateManyWithWhereWithoutWorkspaceInput[]
-    deleteMany?: CodeWorkspaceVersionScalarWhereInput | CodeWorkspaceVersionScalarWhereInput[]
-  }
-
-  export type CodeWorkspaceVersionUncheckedUpdateManyWithoutWorkspaceNestedInput = {
-    create?: XOR<CodeWorkspaceVersionCreateWithoutWorkspaceInput, CodeWorkspaceVersionUncheckedCreateWithoutWorkspaceInput> | CodeWorkspaceVersionCreateWithoutWorkspaceInput[] | CodeWorkspaceVersionUncheckedCreateWithoutWorkspaceInput[]
-    connectOrCreate?: CodeWorkspaceVersionCreateOrConnectWithoutWorkspaceInput | CodeWorkspaceVersionCreateOrConnectWithoutWorkspaceInput[]
-    upsert?: CodeWorkspaceVersionUpsertWithWhereUniqueWithoutWorkspaceInput | CodeWorkspaceVersionUpsertWithWhereUniqueWithoutWorkspaceInput[]
-    createMany?: CodeWorkspaceVersionCreateManyWorkspaceInputEnvelope
-    set?: CodeWorkspaceVersionWhereUniqueInput | CodeWorkspaceVersionWhereUniqueInput[]
-    disconnect?: CodeWorkspaceVersionWhereUniqueInput | CodeWorkspaceVersionWhereUniqueInput[]
-    delete?: CodeWorkspaceVersionWhereUniqueInput | CodeWorkspaceVersionWhereUniqueInput[]
-    connect?: CodeWorkspaceVersionWhereUniqueInput | CodeWorkspaceVersionWhereUniqueInput[]
-    update?: CodeWorkspaceVersionUpdateWithWhereUniqueWithoutWorkspaceInput | CodeWorkspaceVersionUpdateWithWhereUniqueWithoutWorkspaceInput[]
-    updateMany?: CodeWorkspaceVersionUpdateManyWithWhereWithoutWorkspaceInput | CodeWorkspaceVersionUpdateManyWithWhereWithoutWorkspaceInput[]
-    deleteMany?: CodeWorkspaceVersionScalarWhereInput | CodeWorkspaceVersionScalarWhereInput[]
-  }
-
-  export type CodeWorkspaceCreateNestedOneWithoutVersionsInput = {
-    create?: XOR<CodeWorkspaceCreateWithoutVersionsInput, CodeWorkspaceUncheckedCreateWithoutVersionsInput>
-    connectOrCreate?: CodeWorkspaceCreateOrConnectWithoutVersionsInput
-    connect?: CodeWorkspaceWhereUniqueInput
-  }
-
-  export type CodeJobCreateNestedManyWithoutWorkspaceVersionInput = {
-    create?: XOR<CodeJobCreateWithoutWorkspaceVersionInput, CodeJobUncheckedCreateWithoutWorkspaceVersionInput> | CodeJobCreateWithoutWorkspaceVersionInput[] | CodeJobUncheckedCreateWithoutWorkspaceVersionInput[]
-    connectOrCreate?: CodeJobCreateOrConnectWithoutWorkspaceVersionInput | CodeJobCreateOrConnectWithoutWorkspaceVersionInput[]
-    createMany?: CodeJobCreateManyWorkspaceVersionInputEnvelope
-    connect?: CodeJobWhereUniqueInput | CodeJobWhereUniqueInput[]
-  }
-
-  export type CodeJobUncheckedCreateNestedManyWithoutWorkspaceVersionInput = {
-    create?: XOR<CodeJobCreateWithoutWorkspaceVersionInput, CodeJobUncheckedCreateWithoutWorkspaceVersionInput> | CodeJobCreateWithoutWorkspaceVersionInput[] | CodeJobUncheckedCreateWithoutWorkspaceVersionInput[]
-    connectOrCreate?: CodeJobCreateOrConnectWithoutWorkspaceVersionInput | CodeJobCreateOrConnectWithoutWorkspaceVersionInput[]
-    createMany?: CodeJobCreateManyWorkspaceVersionInputEnvelope
-    connect?: CodeJobWhereUniqueInput | CodeJobWhereUniqueInput[]
-  }
-
-  export type CodeWorkspaceUpdateOneRequiredWithoutVersionsNestedInput = {
-    create?: XOR<CodeWorkspaceCreateWithoutVersionsInput, CodeWorkspaceUncheckedCreateWithoutVersionsInput>
-    connectOrCreate?: CodeWorkspaceCreateOrConnectWithoutVersionsInput
-    upsert?: CodeWorkspaceUpsertWithoutVersionsInput
-    connect?: CodeWorkspaceWhereUniqueInput
-    update?: XOR<XOR<CodeWorkspaceUpdateToOneWithWhereWithoutVersionsInput, CodeWorkspaceUpdateWithoutVersionsInput>, CodeWorkspaceUncheckedUpdateWithoutVersionsInput>
-  }
-
-  export type CodeJobUpdateManyWithoutWorkspaceVersionNestedInput = {
-    create?: XOR<CodeJobCreateWithoutWorkspaceVersionInput, CodeJobUncheckedCreateWithoutWorkspaceVersionInput> | CodeJobCreateWithoutWorkspaceVersionInput[] | CodeJobUncheckedCreateWithoutWorkspaceVersionInput[]
-    connectOrCreate?: CodeJobCreateOrConnectWithoutWorkspaceVersionInput | CodeJobCreateOrConnectWithoutWorkspaceVersionInput[]
-    upsert?: CodeJobUpsertWithWhereUniqueWithoutWorkspaceVersionInput | CodeJobUpsertWithWhereUniqueWithoutWorkspaceVersionInput[]
-    createMany?: CodeJobCreateManyWorkspaceVersionInputEnvelope
-    set?: CodeJobWhereUniqueInput | CodeJobWhereUniqueInput[]
-    disconnect?: CodeJobWhereUniqueInput | CodeJobWhereUniqueInput[]
-    delete?: CodeJobWhereUniqueInput | CodeJobWhereUniqueInput[]
-    connect?: CodeJobWhereUniqueInput | CodeJobWhereUniqueInput[]
-    update?: CodeJobUpdateWithWhereUniqueWithoutWorkspaceVersionInput | CodeJobUpdateWithWhereUniqueWithoutWorkspaceVersionInput[]
-    updateMany?: CodeJobUpdateManyWithWhereWithoutWorkspaceVersionInput | CodeJobUpdateManyWithWhereWithoutWorkspaceVersionInput[]
-    deleteMany?: CodeJobScalarWhereInput | CodeJobScalarWhereInput[]
-  }
-
-  export type CodeJobUncheckedUpdateManyWithoutWorkspaceVersionNestedInput = {
-    create?: XOR<CodeJobCreateWithoutWorkspaceVersionInput, CodeJobUncheckedCreateWithoutWorkspaceVersionInput> | CodeJobCreateWithoutWorkspaceVersionInput[] | CodeJobUncheckedCreateWithoutWorkspaceVersionInput[]
-    connectOrCreate?: CodeJobCreateOrConnectWithoutWorkspaceVersionInput | CodeJobCreateOrConnectWithoutWorkspaceVersionInput[]
-    upsert?: CodeJobUpsertWithWhereUniqueWithoutWorkspaceVersionInput | CodeJobUpsertWithWhereUniqueWithoutWorkspaceVersionInput[]
-    createMany?: CodeJobCreateManyWorkspaceVersionInputEnvelope
-    set?: CodeJobWhereUniqueInput | CodeJobWhereUniqueInput[]
-    disconnect?: CodeJobWhereUniqueInput | CodeJobWhereUniqueInput[]
-    delete?: CodeJobWhereUniqueInput | CodeJobWhereUniqueInput[]
-    connect?: CodeJobWhereUniqueInput | CodeJobWhereUniqueInput[]
-    update?: CodeJobUpdateWithWhereUniqueWithoutWorkspaceVersionInput | CodeJobUpdateWithWhereUniqueWithoutWorkspaceVersionInput[]
-    updateMany?: CodeJobUpdateManyWithWhereWithoutWorkspaceVersionInput | CodeJobUpdateManyWithWhereWithoutWorkspaceVersionInput[]
-    deleteMany?: CodeJobScalarWhereInput | CodeJobScalarWhereInput[]
-  }
-
-  export type CodeJobCreateNestedManyWithoutWorkerInput = {
-    create?: XOR<CodeJobCreateWithoutWorkerInput, CodeJobUncheckedCreateWithoutWorkerInput> | CodeJobCreateWithoutWorkerInput[] | CodeJobUncheckedCreateWithoutWorkerInput[]
-    connectOrCreate?: CodeJobCreateOrConnectWithoutWorkerInput | CodeJobCreateOrConnectWithoutWorkerInput[]
-    createMany?: CodeJobCreateManyWorkerInputEnvelope
-    connect?: CodeJobWhereUniqueInput | CodeJobWhereUniqueInput[]
-  }
-
-  export type CodeJobLogCreateNestedManyWithoutWorkerInput = {
-    create?: XOR<CodeJobLogCreateWithoutWorkerInput, CodeJobLogUncheckedCreateWithoutWorkerInput> | CodeJobLogCreateWithoutWorkerInput[] | CodeJobLogUncheckedCreateWithoutWorkerInput[]
-    connectOrCreate?: CodeJobLogCreateOrConnectWithoutWorkerInput | CodeJobLogCreateOrConnectWithoutWorkerInput[]
-    createMany?: CodeJobLogCreateManyWorkerInputEnvelope
-    connect?: CodeJobLogWhereUniqueInput | CodeJobLogWhereUniqueInput[]
-  }
-
-  export type CodeJobUncheckedCreateNestedManyWithoutWorkerInput = {
-    create?: XOR<CodeJobCreateWithoutWorkerInput, CodeJobUncheckedCreateWithoutWorkerInput> | CodeJobCreateWithoutWorkerInput[] | CodeJobUncheckedCreateWithoutWorkerInput[]
-    connectOrCreate?: CodeJobCreateOrConnectWithoutWorkerInput | CodeJobCreateOrConnectWithoutWorkerInput[]
-    createMany?: CodeJobCreateManyWorkerInputEnvelope
-    connect?: CodeJobWhereUniqueInput | CodeJobWhereUniqueInput[]
-  }
-
-  export type CodeJobLogUncheckedCreateNestedManyWithoutWorkerInput = {
-    create?: XOR<CodeJobLogCreateWithoutWorkerInput, CodeJobLogUncheckedCreateWithoutWorkerInput> | CodeJobLogCreateWithoutWorkerInput[] | CodeJobLogUncheckedCreateWithoutWorkerInput[]
-    connectOrCreate?: CodeJobLogCreateOrConnectWithoutWorkerInput | CodeJobLogCreateOrConnectWithoutWorkerInput[]
-    createMany?: CodeJobLogCreateManyWorkerInputEnvelope
-    connect?: CodeJobLogWhereUniqueInput | CodeJobLogWhereUniqueInput[]
-  }
-
-  export type CodeJobUpdateManyWithoutWorkerNestedInput = {
-    create?: XOR<CodeJobCreateWithoutWorkerInput, CodeJobUncheckedCreateWithoutWorkerInput> | CodeJobCreateWithoutWorkerInput[] | CodeJobUncheckedCreateWithoutWorkerInput[]
-    connectOrCreate?: CodeJobCreateOrConnectWithoutWorkerInput | CodeJobCreateOrConnectWithoutWorkerInput[]
-    upsert?: CodeJobUpsertWithWhereUniqueWithoutWorkerInput | CodeJobUpsertWithWhereUniqueWithoutWorkerInput[]
-    createMany?: CodeJobCreateManyWorkerInputEnvelope
-    set?: CodeJobWhereUniqueInput | CodeJobWhereUniqueInput[]
-    disconnect?: CodeJobWhereUniqueInput | CodeJobWhereUniqueInput[]
-    delete?: CodeJobWhereUniqueInput | CodeJobWhereUniqueInput[]
-    connect?: CodeJobWhereUniqueInput | CodeJobWhereUniqueInput[]
-    update?: CodeJobUpdateWithWhereUniqueWithoutWorkerInput | CodeJobUpdateWithWhereUniqueWithoutWorkerInput[]
-    updateMany?: CodeJobUpdateManyWithWhereWithoutWorkerInput | CodeJobUpdateManyWithWhereWithoutWorkerInput[]
-    deleteMany?: CodeJobScalarWhereInput | CodeJobScalarWhereInput[]
-  }
-
-  export type CodeJobLogUpdateManyWithoutWorkerNestedInput = {
-    create?: XOR<CodeJobLogCreateWithoutWorkerInput, CodeJobLogUncheckedCreateWithoutWorkerInput> | CodeJobLogCreateWithoutWorkerInput[] | CodeJobLogUncheckedCreateWithoutWorkerInput[]
-    connectOrCreate?: CodeJobLogCreateOrConnectWithoutWorkerInput | CodeJobLogCreateOrConnectWithoutWorkerInput[]
-    upsert?: CodeJobLogUpsertWithWhereUniqueWithoutWorkerInput | CodeJobLogUpsertWithWhereUniqueWithoutWorkerInput[]
-    createMany?: CodeJobLogCreateManyWorkerInputEnvelope
-    set?: CodeJobLogWhereUniqueInput | CodeJobLogWhereUniqueInput[]
-    disconnect?: CodeJobLogWhereUniqueInput | CodeJobLogWhereUniqueInput[]
-    delete?: CodeJobLogWhereUniqueInput | CodeJobLogWhereUniqueInput[]
-    connect?: CodeJobLogWhereUniqueInput | CodeJobLogWhereUniqueInput[]
-    update?: CodeJobLogUpdateWithWhereUniqueWithoutWorkerInput | CodeJobLogUpdateWithWhereUniqueWithoutWorkerInput[]
-    updateMany?: CodeJobLogUpdateManyWithWhereWithoutWorkerInput | CodeJobLogUpdateManyWithWhereWithoutWorkerInput[]
-    deleteMany?: CodeJobLogScalarWhereInput | CodeJobLogScalarWhereInput[]
-  }
-
-  export type CodeJobUncheckedUpdateManyWithoutWorkerNestedInput = {
-    create?: XOR<CodeJobCreateWithoutWorkerInput, CodeJobUncheckedCreateWithoutWorkerInput> | CodeJobCreateWithoutWorkerInput[] | CodeJobUncheckedCreateWithoutWorkerInput[]
-    connectOrCreate?: CodeJobCreateOrConnectWithoutWorkerInput | CodeJobCreateOrConnectWithoutWorkerInput[]
-    upsert?: CodeJobUpsertWithWhereUniqueWithoutWorkerInput | CodeJobUpsertWithWhereUniqueWithoutWorkerInput[]
-    createMany?: CodeJobCreateManyWorkerInputEnvelope
-    set?: CodeJobWhereUniqueInput | CodeJobWhereUniqueInput[]
-    disconnect?: CodeJobWhereUniqueInput | CodeJobWhereUniqueInput[]
-    delete?: CodeJobWhereUniqueInput | CodeJobWhereUniqueInput[]
-    connect?: CodeJobWhereUniqueInput | CodeJobWhereUniqueInput[]
-    update?: CodeJobUpdateWithWhereUniqueWithoutWorkerInput | CodeJobUpdateWithWhereUniqueWithoutWorkerInput[]
-    updateMany?: CodeJobUpdateManyWithWhereWithoutWorkerInput | CodeJobUpdateManyWithWhereWithoutWorkerInput[]
-    deleteMany?: CodeJobScalarWhereInput | CodeJobScalarWhereInput[]
-  }
-
-  export type CodeJobLogUncheckedUpdateManyWithoutWorkerNestedInput = {
-    create?: XOR<CodeJobLogCreateWithoutWorkerInput, CodeJobLogUncheckedCreateWithoutWorkerInput> | CodeJobLogCreateWithoutWorkerInput[] | CodeJobLogUncheckedCreateWithoutWorkerInput[]
-    connectOrCreate?: CodeJobLogCreateOrConnectWithoutWorkerInput | CodeJobLogCreateOrConnectWithoutWorkerInput[]
-    upsert?: CodeJobLogUpsertWithWhereUniqueWithoutWorkerInput | CodeJobLogUpsertWithWhereUniqueWithoutWorkerInput[]
-    createMany?: CodeJobLogCreateManyWorkerInputEnvelope
-    set?: CodeJobLogWhereUniqueInput | CodeJobLogWhereUniqueInput[]
-    disconnect?: CodeJobLogWhereUniqueInput | CodeJobLogWhereUniqueInput[]
-    delete?: CodeJobLogWhereUniqueInput | CodeJobLogWhereUniqueInput[]
-    connect?: CodeJobLogWhereUniqueInput | CodeJobLogWhereUniqueInput[]
-    update?: CodeJobLogUpdateWithWhereUniqueWithoutWorkerInput | CodeJobLogUpdateWithWhereUniqueWithoutWorkerInput[]
-    updateMany?: CodeJobLogUpdateManyWithWhereWithoutWorkerInput | CodeJobLogUpdateManyWithWhereWithoutWorkerInput[]
-    deleteMany?: CodeJobLogScalarWhereInput | CodeJobLogScalarWhereInput[]
-  }
-
-  export type CodeWorkspaceVersionCreateNestedOneWithoutJobsInput = {
-    create?: XOR<CodeWorkspaceVersionCreateWithoutJobsInput, CodeWorkspaceVersionUncheckedCreateWithoutJobsInput>
-    connectOrCreate?: CodeWorkspaceVersionCreateOrConnectWithoutJobsInput
-    connect?: CodeWorkspaceVersionWhereUniqueInput
-  }
-
-  export type CodeWorkerCreateNestedOneWithoutJobsInput = {
-    create?: XOR<CodeWorkerCreateWithoutJobsInput, CodeWorkerUncheckedCreateWithoutJobsInput>
-    connectOrCreate?: CodeWorkerCreateOrConnectWithoutJobsInput
-    connect?: CodeWorkerWhereUniqueInput
-  }
-
-  export type CodeJobLogCreateNestedManyWithoutJobInput = {
-    create?: XOR<CodeJobLogCreateWithoutJobInput, CodeJobLogUncheckedCreateWithoutJobInput> | CodeJobLogCreateWithoutJobInput[] | CodeJobLogUncheckedCreateWithoutJobInput[]
-    connectOrCreate?: CodeJobLogCreateOrConnectWithoutJobInput | CodeJobLogCreateOrConnectWithoutJobInput[]
-    createMany?: CodeJobLogCreateManyJobInputEnvelope
-    connect?: CodeJobLogWhereUniqueInput | CodeJobLogWhereUniqueInput[]
-  }
-
-  export type CodeJobLogUncheckedCreateNestedManyWithoutJobInput = {
-    create?: XOR<CodeJobLogCreateWithoutJobInput, CodeJobLogUncheckedCreateWithoutJobInput> | CodeJobLogCreateWithoutJobInput[] | CodeJobLogUncheckedCreateWithoutJobInput[]
-    connectOrCreate?: CodeJobLogCreateOrConnectWithoutJobInput | CodeJobLogCreateOrConnectWithoutJobInput[]
-    createMany?: CodeJobLogCreateManyJobInputEnvelope
-    connect?: CodeJobLogWhereUniqueInput | CodeJobLogWhereUniqueInput[]
-  }
-
-  export type CodeWorkspaceVersionUpdateOneRequiredWithoutJobsNestedInput = {
-    create?: XOR<CodeWorkspaceVersionCreateWithoutJobsInput, CodeWorkspaceVersionUncheckedCreateWithoutJobsInput>
-    connectOrCreate?: CodeWorkspaceVersionCreateOrConnectWithoutJobsInput
-    upsert?: CodeWorkspaceVersionUpsertWithoutJobsInput
-    connect?: CodeWorkspaceVersionWhereUniqueInput
-    update?: XOR<XOR<CodeWorkspaceVersionUpdateToOneWithWhereWithoutJobsInput, CodeWorkspaceVersionUpdateWithoutJobsInput>, CodeWorkspaceVersionUncheckedUpdateWithoutJobsInput>
-  }
-
-  export type CodeWorkerUpdateOneWithoutJobsNestedInput = {
-    create?: XOR<CodeWorkerCreateWithoutJobsInput, CodeWorkerUncheckedCreateWithoutJobsInput>
-    connectOrCreate?: CodeWorkerCreateOrConnectWithoutJobsInput
-    upsert?: CodeWorkerUpsertWithoutJobsInput
-    disconnect?: CodeWorkerWhereInput | boolean
-    delete?: CodeWorkerWhereInput | boolean
-    connect?: CodeWorkerWhereUniqueInput
-    update?: XOR<XOR<CodeWorkerUpdateToOneWithWhereWithoutJobsInput, CodeWorkerUpdateWithoutJobsInput>, CodeWorkerUncheckedUpdateWithoutJobsInput>
-  }
-
-  export type CodeJobLogUpdateManyWithoutJobNestedInput = {
-    create?: XOR<CodeJobLogCreateWithoutJobInput, CodeJobLogUncheckedCreateWithoutJobInput> | CodeJobLogCreateWithoutJobInput[] | CodeJobLogUncheckedCreateWithoutJobInput[]
-    connectOrCreate?: CodeJobLogCreateOrConnectWithoutJobInput | CodeJobLogCreateOrConnectWithoutJobInput[]
-    upsert?: CodeJobLogUpsertWithWhereUniqueWithoutJobInput | CodeJobLogUpsertWithWhereUniqueWithoutJobInput[]
-    createMany?: CodeJobLogCreateManyJobInputEnvelope
-    set?: CodeJobLogWhereUniqueInput | CodeJobLogWhereUniqueInput[]
-    disconnect?: CodeJobLogWhereUniqueInput | CodeJobLogWhereUniqueInput[]
-    delete?: CodeJobLogWhereUniqueInput | CodeJobLogWhereUniqueInput[]
-    connect?: CodeJobLogWhereUniqueInput | CodeJobLogWhereUniqueInput[]
-    update?: CodeJobLogUpdateWithWhereUniqueWithoutJobInput | CodeJobLogUpdateWithWhereUniqueWithoutJobInput[]
-    updateMany?: CodeJobLogUpdateManyWithWhereWithoutJobInput | CodeJobLogUpdateManyWithWhereWithoutJobInput[]
-    deleteMany?: CodeJobLogScalarWhereInput | CodeJobLogScalarWhereInput[]
-  }
-
-  export type CodeJobLogUncheckedUpdateManyWithoutJobNestedInput = {
-    create?: XOR<CodeJobLogCreateWithoutJobInput, CodeJobLogUncheckedCreateWithoutJobInput> | CodeJobLogCreateWithoutJobInput[] | CodeJobLogUncheckedCreateWithoutJobInput[]
-    connectOrCreate?: CodeJobLogCreateOrConnectWithoutJobInput | CodeJobLogCreateOrConnectWithoutJobInput[]
-    upsert?: CodeJobLogUpsertWithWhereUniqueWithoutJobInput | CodeJobLogUpsertWithWhereUniqueWithoutJobInput[]
-    createMany?: CodeJobLogCreateManyJobInputEnvelope
-    set?: CodeJobLogWhereUniqueInput | CodeJobLogWhereUniqueInput[]
-    disconnect?: CodeJobLogWhereUniqueInput | CodeJobLogWhereUniqueInput[]
-    delete?: CodeJobLogWhereUniqueInput | CodeJobLogWhereUniqueInput[]
-    connect?: CodeJobLogWhereUniqueInput | CodeJobLogWhereUniqueInput[]
-    update?: CodeJobLogUpdateWithWhereUniqueWithoutJobInput | CodeJobLogUpdateWithWhereUniqueWithoutJobInput[]
-    updateMany?: CodeJobLogUpdateManyWithWhereWithoutJobInput | CodeJobLogUpdateManyWithWhereWithoutJobInput[]
-    deleteMany?: CodeJobLogScalarWhereInput | CodeJobLogScalarWhereInput[]
-  }
-
-  export type CodeJobCreateNestedOneWithoutLogsInput = {
-    create?: XOR<CodeJobCreateWithoutLogsInput, CodeJobUncheckedCreateWithoutLogsInput>
-    connectOrCreate?: CodeJobCreateOrConnectWithoutLogsInput
-    connect?: CodeJobWhereUniqueInput
-  }
-
-  export type CodeWorkerCreateNestedOneWithoutLogsInput = {
-    create?: XOR<CodeWorkerCreateWithoutLogsInput, CodeWorkerUncheckedCreateWithoutLogsInput>
-    connectOrCreate?: CodeWorkerCreateOrConnectWithoutLogsInput
-    connect?: CodeWorkerWhereUniqueInput
-  }
-
-  export type CodeJobUpdateOneRequiredWithoutLogsNestedInput = {
-    create?: XOR<CodeJobCreateWithoutLogsInput, CodeJobUncheckedCreateWithoutLogsInput>
-    connectOrCreate?: CodeJobCreateOrConnectWithoutLogsInput
-    upsert?: CodeJobUpsertWithoutLogsInput
-    connect?: CodeJobWhereUniqueInput
-    update?: XOR<XOR<CodeJobUpdateToOneWithWhereWithoutLogsInput, CodeJobUpdateWithoutLogsInput>, CodeJobUncheckedUpdateWithoutLogsInput>
-  }
-
-  export type CodeWorkerUpdateOneWithoutLogsNestedInput = {
-    create?: XOR<CodeWorkerCreateWithoutLogsInput, CodeWorkerUncheckedCreateWithoutLogsInput>
-    connectOrCreate?: CodeWorkerCreateOrConnectWithoutLogsInput
-    upsert?: CodeWorkerUpsertWithoutLogsInput
-    disconnect?: CodeWorkerWhereInput | boolean
-    delete?: CodeWorkerWhereInput | boolean
-    connect?: CodeWorkerWhereUniqueInput
-    update?: XOR<XOR<CodeWorkerUpdateToOneWithWhereWithoutLogsInput, CodeWorkerUpdateWithoutLogsInput>, CodeWorkerUncheckedUpdateWithoutLogsInput>
   }
 
   export type AiDbChatConversationCreateNestedManyWithoutSchemaInput = {
@@ -36977,936 +27884,6 @@ export namespace Prisma {
     submissions?: FormSubmissionUncheckedUpdateManyWithoutRoleNestedInput
   }
 
-  export type CodeWorkspaceVersionCreateWithoutWorkspaceInput = {
-    id?: string
-    version: number
-    snapshot: string
-    snapshotHash: string
-    message?: string
-    isAutosave?: boolean
-    clientRequestId?: string | null
-    ip?: string | null
-    userAgent?: string | null
-    referer?: string | null
-    meta?: string
-    sizeBytes?: number
-    createdAt?: Date | string
-    createdByUserId: string
-    jobs?: CodeJobCreateNestedManyWithoutWorkspaceVersionInput
-  }
-
-  export type CodeWorkspaceVersionUncheckedCreateWithoutWorkspaceInput = {
-    id?: string
-    version: number
-    snapshot: string
-    snapshotHash: string
-    message?: string
-    isAutosave?: boolean
-    clientRequestId?: string | null
-    ip?: string | null
-    userAgent?: string | null
-    referer?: string | null
-    meta?: string
-    sizeBytes?: number
-    createdAt?: Date | string
-    createdByUserId: string
-    jobs?: CodeJobUncheckedCreateNestedManyWithoutWorkspaceVersionInput
-  }
-
-  export type CodeWorkspaceVersionCreateOrConnectWithoutWorkspaceInput = {
-    where: CodeWorkspaceVersionWhereUniqueInput
-    create: XOR<CodeWorkspaceVersionCreateWithoutWorkspaceInput, CodeWorkspaceVersionUncheckedCreateWithoutWorkspaceInput>
-  }
-
-  export type CodeWorkspaceVersionCreateManyWorkspaceInputEnvelope = {
-    data: CodeWorkspaceVersionCreateManyWorkspaceInput | CodeWorkspaceVersionCreateManyWorkspaceInput[]
-  }
-
-  export type CodeWorkspaceVersionUpsertWithWhereUniqueWithoutWorkspaceInput = {
-    where: CodeWorkspaceVersionWhereUniqueInput
-    update: XOR<CodeWorkspaceVersionUpdateWithoutWorkspaceInput, CodeWorkspaceVersionUncheckedUpdateWithoutWorkspaceInput>
-    create: XOR<CodeWorkspaceVersionCreateWithoutWorkspaceInput, CodeWorkspaceVersionUncheckedCreateWithoutWorkspaceInput>
-  }
-
-  export type CodeWorkspaceVersionUpdateWithWhereUniqueWithoutWorkspaceInput = {
-    where: CodeWorkspaceVersionWhereUniqueInput
-    data: XOR<CodeWorkspaceVersionUpdateWithoutWorkspaceInput, CodeWorkspaceVersionUncheckedUpdateWithoutWorkspaceInput>
-  }
-
-  export type CodeWorkspaceVersionUpdateManyWithWhereWithoutWorkspaceInput = {
-    where: CodeWorkspaceVersionScalarWhereInput
-    data: XOR<CodeWorkspaceVersionUpdateManyMutationInput, CodeWorkspaceVersionUncheckedUpdateManyWithoutWorkspaceInput>
-  }
-
-  export type CodeWorkspaceVersionScalarWhereInput = {
-    AND?: CodeWorkspaceVersionScalarWhereInput | CodeWorkspaceVersionScalarWhereInput[]
-    OR?: CodeWorkspaceVersionScalarWhereInput[]
-    NOT?: CodeWorkspaceVersionScalarWhereInput | CodeWorkspaceVersionScalarWhereInput[]
-    id?: StringFilter<"CodeWorkspaceVersion"> | string
-    workspaceId?: StringFilter<"CodeWorkspaceVersion"> | string
-    version?: IntFilter<"CodeWorkspaceVersion"> | number
-    snapshot?: StringFilter<"CodeWorkspaceVersion"> | string
-    snapshotHash?: StringFilter<"CodeWorkspaceVersion"> | string
-    message?: StringFilter<"CodeWorkspaceVersion"> | string
-    isAutosave?: BoolFilter<"CodeWorkspaceVersion"> | boolean
-    clientRequestId?: StringNullableFilter<"CodeWorkspaceVersion"> | string | null
-    ip?: StringNullableFilter<"CodeWorkspaceVersion"> | string | null
-    userAgent?: StringNullableFilter<"CodeWorkspaceVersion"> | string | null
-    referer?: StringNullableFilter<"CodeWorkspaceVersion"> | string | null
-    meta?: StringFilter<"CodeWorkspaceVersion"> | string
-    sizeBytes?: IntFilter<"CodeWorkspaceVersion"> | number
-    createdAt?: DateTimeFilter<"CodeWorkspaceVersion"> | Date | string
-    createdByUserId?: StringFilter<"CodeWorkspaceVersion"> | string
-  }
-
-  export type CodeWorkspaceCreateWithoutVersionsInput = {
-    id?: string
-    slug: string
-    name: string
-    description?: string
-    language?: string
-    currentVersion?: number
-    active?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    createdByUserId: string
-    updatedByUserId: string
-  }
-
-  export type CodeWorkspaceUncheckedCreateWithoutVersionsInput = {
-    id?: string
-    slug: string
-    name: string
-    description?: string
-    language?: string
-    currentVersion?: number
-    active?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    createdByUserId: string
-    updatedByUserId: string
-  }
-
-  export type CodeWorkspaceCreateOrConnectWithoutVersionsInput = {
-    where: CodeWorkspaceWhereUniqueInput
-    create: XOR<CodeWorkspaceCreateWithoutVersionsInput, CodeWorkspaceUncheckedCreateWithoutVersionsInput>
-  }
-
-  export type CodeJobCreateWithoutWorkspaceVersionInput = {
-    id?: string
-    workspaceSlug: string
-    version: number
-    entryPath: string
-    functionName: string
-    args?: string
-    data?: string
-    checkpoint?: string
-    result?: string | null
-    error?: string | null
-    status?: string
-    priority?: number
-    queue?: string
-    runtime?: string
-    orchestrator?: string
-    timeoutMs?: number
-    maxAttempts?: number
-    attempt?: number
-    progress?: number
-    requestedAction?: string | null
-    leaseToken?: string | null
-    lockedAt?: Date | string | null
-    leaseExpiresAt?: Date | string | null
-    nextRunAt?: Date | string
-    startedAt?: Date | string | null
-    completedAt?: Date | string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    createdByUserId?: string
-    temporalWorkflowId?: string | null
-    temporalRunId?: string | null
-    metadata?: string
-    worker?: CodeWorkerCreateNestedOneWithoutJobsInput
-    logs?: CodeJobLogCreateNestedManyWithoutJobInput
-  }
-
-  export type CodeJobUncheckedCreateWithoutWorkspaceVersionInput = {
-    id?: string
-    workspaceSlug: string
-    version: number
-    entryPath: string
-    functionName: string
-    args?: string
-    data?: string
-    checkpoint?: string
-    result?: string | null
-    error?: string | null
-    status?: string
-    priority?: number
-    queue?: string
-    runtime?: string
-    orchestrator?: string
-    timeoutMs?: number
-    maxAttempts?: number
-    attempt?: number
-    progress?: number
-    requestedAction?: string | null
-    leaseToken?: string | null
-    lockedAt?: Date | string | null
-    leaseExpiresAt?: Date | string | null
-    nextRunAt?: Date | string
-    startedAt?: Date | string | null
-    completedAt?: Date | string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    createdByUserId?: string
-    workerId?: string | null
-    temporalWorkflowId?: string | null
-    temporalRunId?: string | null
-    metadata?: string
-    logs?: CodeJobLogUncheckedCreateNestedManyWithoutJobInput
-  }
-
-  export type CodeJobCreateOrConnectWithoutWorkspaceVersionInput = {
-    where: CodeJobWhereUniqueInput
-    create: XOR<CodeJobCreateWithoutWorkspaceVersionInput, CodeJobUncheckedCreateWithoutWorkspaceVersionInput>
-  }
-
-  export type CodeJobCreateManyWorkspaceVersionInputEnvelope = {
-    data: CodeJobCreateManyWorkspaceVersionInput | CodeJobCreateManyWorkspaceVersionInput[]
-  }
-
-  export type CodeWorkspaceUpsertWithoutVersionsInput = {
-    update: XOR<CodeWorkspaceUpdateWithoutVersionsInput, CodeWorkspaceUncheckedUpdateWithoutVersionsInput>
-    create: XOR<CodeWorkspaceCreateWithoutVersionsInput, CodeWorkspaceUncheckedCreateWithoutVersionsInput>
-    where?: CodeWorkspaceWhereInput
-  }
-
-  export type CodeWorkspaceUpdateToOneWithWhereWithoutVersionsInput = {
-    where?: CodeWorkspaceWhereInput
-    data: XOR<CodeWorkspaceUpdateWithoutVersionsInput, CodeWorkspaceUncheckedUpdateWithoutVersionsInput>
-  }
-
-  export type CodeWorkspaceUpdateWithoutVersionsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    slug?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    language?: StringFieldUpdateOperationsInput | string
-    currentVersion?: IntFieldUpdateOperationsInput | number
-    active?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    createdByUserId?: StringFieldUpdateOperationsInput | string
-    updatedByUserId?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type CodeWorkspaceUncheckedUpdateWithoutVersionsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    slug?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    language?: StringFieldUpdateOperationsInput | string
-    currentVersion?: IntFieldUpdateOperationsInput | number
-    active?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    createdByUserId?: StringFieldUpdateOperationsInput | string
-    updatedByUserId?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type CodeJobUpsertWithWhereUniqueWithoutWorkspaceVersionInput = {
-    where: CodeJobWhereUniqueInput
-    update: XOR<CodeJobUpdateWithoutWorkspaceVersionInput, CodeJobUncheckedUpdateWithoutWorkspaceVersionInput>
-    create: XOR<CodeJobCreateWithoutWorkspaceVersionInput, CodeJobUncheckedCreateWithoutWorkspaceVersionInput>
-  }
-
-  export type CodeJobUpdateWithWhereUniqueWithoutWorkspaceVersionInput = {
-    where: CodeJobWhereUniqueInput
-    data: XOR<CodeJobUpdateWithoutWorkspaceVersionInput, CodeJobUncheckedUpdateWithoutWorkspaceVersionInput>
-  }
-
-  export type CodeJobUpdateManyWithWhereWithoutWorkspaceVersionInput = {
-    where: CodeJobScalarWhereInput
-    data: XOR<CodeJobUpdateManyMutationInput, CodeJobUncheckedUpdateManyWithoutWorkspaceVersionInput>
-  }
-
-  export type CodeJobScalarWhereInput = {
-    AND?: CodeJobScalarWhereInput | CodeJobScalarWhereInput[]
-    OR?: CodeJobScalarWhereInput[]
-    NOT?: CodeJobScalarWhereInput | CodeJobScalarWhereInput[]
-    id?: StringFilter<"CodeJob"> | string
-    workspaceVersionId?: StringFilter<"CodeJob"> | string
-    workspaceSlug?: StringFilter<"CodeJob"> | string
-    version?: IntFilter<"CodeJob"> | number
-    entryPath?: StringFilter<"CodeJob"> | string
-    functionName?: StringFilter<"CodeJob"> | string
-    args?: StringFilter<"CodeJob"> | string
-    data?: StringFilter<"CodeJob"> | string
-    checkpoint?: StringFilter<"CodeJob"> | string
-    result?: StringNullableFilter<"CodeJob"> | string | null
-    error?: StringNullableFilter<"CodeJob"> | string | null
-    status?: StringFilter<"CodeJob"> | string
-    priority?: IntFilter<"CodeJob"> | number
-    queue?: StringFilter<"CodeJob"> | string
-    runtime?: StringFilter<"CodeJob"> | string
-    orchestrator?: StringFilter<"CodeJob"> | string
-    timeoutMs?: IntFilter<"CodeJob"> | number
-    maxAttempts?: IntFilter<"CodeJob"> | number
-    attempt?: IntFilter<"CodeJob"> | number
-    progress?: IntFilter<"CodeJob"> | number
-    requestedAction?: StringNullableFilter<"CodeJob"> | string | null
-    leaseToken?: StringNullableFilter<"CodeJob"> | string | null
-    lockedAt?: DateTimeNullableFilter<"CodeJob"> | Date | string | null
-    leaseExpiresAt?: DateTimeNullableFilter<"CodeJob"> | Date | string | null
-    nextRunAt?: DateTimeFilter<"CodeJob"> | Date | string
-    startedAt?: DateTimeNullableFilter<"CodeJob"> | Date | string | null
-    completedAt?: DateTimeNullableFilter<"CodeJob"> | Date | string | null
-    createdAt?: DateTimeFilter<"CodeJob"> | Date | string
-    updatedAt?: DateTimeFilter<"CodeJob"> | Date | string
-    createdByUserId?: StringFilter<"CodeJob"> | string
-    workerId?: StringNullableFilter<"CodeJob"> | string | null
-    temporalWorkflowId?: StringNullableFilter<"CodeJob"> | string | null
-    temporalRunId?: StringNullableFilter<"CodeJob"> | string | null
-    metadata?: StringFilter<"CodeJob"> | string
-  }
-
-  export type CodeJobCreateWithoutWorkerInput = {
-    id?: string
-    workspaceSlug: string
-    version: number
-    entryPath: string
-    functionName: string
-    args?: string
-    data?: string
-    checkpoint?: string
-    result?: string | null
-    error?: string | null
-    status?: string
-    priority?: number
-    queue?: string
-    runtime?: string
-    orchestrator?: string
-    timeoutMs?: number
-    maxAttempts?: number
-    attempt?: number
-    progress?: number
-    requestedAction?: string | null
-    leaseToken?: string | null
-    lockedAt?: Date | string | null
-    leaseExpiresAt?: Date | string | null
-    nextRunAt?: Date | string
-    startedAt?: Date | string | null
-    completedAt?: Date | string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    createdByUserId?: string
-    temporalWorkflowId?: string | null
-    temporalRunId?: string | null
-    metadata?: string
-    workspaceVersion: CodeWorkspaceVersionCreateNestedOneWithoutJobsInput
-    logs?: CodeJobLogCreateNestedManyWithoutJobInput
-  }
-
-  export type CodeJobUncheckedCreateWithoutWorkerInput = {
-    id?: string
-    workspaceVersionId: string
-    workspaceSlug: string
-    version: number
-    entryPath: string
-    functionName: string
-    args?: string
-    data?: string
-    checkpoint?: string
-    result?: string | null
-    error?: string | null
-    status?: string
-    priority?: number
-    queue?: string
-    runtime?: string
-    orchestrator?: string
-    timeoutMs?: number
-    maxAttempts?: number
-    attempt?: number
-    progress?: number
-    requestedAction?: string | null
-    leaseToken?: string | null
-    lockedAt?: Date | string | null
-    leaseExpiresAt?: Date | string | null
-    nextRunAt?: Date | string
-    startedAt?: Date | string | null
-    completedAt?: Date | string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    createdByUserId?: string
-    temporalWorkflowId?: string | null
-    temporalRunId?: string | null
-    metadata?: string
-    logs?: CodeJobLogUncheckedCreateNestedManyWithoutJobInput
-  }
-
-  export type CodeJobCreateOrConnectWithoutWorkerInput = {
-    where: CodeJobWhereUniqueInput
-    create: XOR<CodeJobCreateWithoutWorkerInput, CodeJobUncheckedCreateWithoutWorkerInput>
-  }
-
-  export type CodeJobCreateManyWorkerInputEnvelope = {
-    data: CodeJobCreateManyWorkerInput | CodeJobCreateManyWorkerInput[]
-  }
-
-  export type CodeJobLogCreateWithoutWorkerInput = {
-    level?: string
-    message: string
-    sequence?: number
-    meta?: string
-    createdAt?: Date | string
-    job: CodeJobCreateNestedOneWithoutLogsInput
-  }
-
-  export type CodeJobLogUncheckedCreateWithoutWorkerInput = {
-    id?: number
-    jobId: string
-    level?: string
-    message: string
-    sequence?: number
-    meta?: string
-    createdAt?: Date | string
-  }
-
-  export type CodeJobLogCreateOrConnectWithoutWorkerInput = {
-    where: CodeJobLogWhereUniqueInput
-    create: XOR<CodeJobLogCreateWithoutWorkerInput, CodeJobLogUncheckedCreateWithoutWorkerInput>
-  }
-
-  export type CodeJobLogCreateManyWorkerInputEnvelope = {
-    data: CodeJobLogCreateManyWorkerInput | CodeJobLogCreateManyWorkerInput[]
-  }
-
-  export type CodeJobUpsertWithWhereUniqueWithoutWorkerInput = {
-    where: CodeJobWhereUniqueInput
-    update: XOR<CodeJobUpdateWithoutWorkerInput, CodeJobUncheckedUpdateWithoutWorkerInput>
-    create: XOR<CodeJobCreateWithoutWorkerInput, CodeJobUncheckedCreateWithoutWorkerInput>
-  }
-
-  export type CodeJobUpdateWithWhereUniqueWithoutWorkerInput = {
-    where: CodeJobWhereUniqueInput
-    data: XOR<CodeJobUpdateWithoutWorkerInput, CodeJobUncheckedUpdateWithoutWorkerInput>
-  }
-
-  export type CodeJobUpdateManyWithWhereWithoutWorkerInput = {
-    where: CodeJobScalarWhereInput
-    data: XOR<CodeJobUpdateManyMutationInput, CodeJobUncheckedUpdateManyWithoutWorkerInput>
-  }
-
-  export type CodeJobLogUpsertWithWhereUniqueWithoutWorkerInput = {
-    where: CodeJobLogWhereUniqueInput
-    update: XOR<CodeJobLogUpdateWithoutWorkerInput, CodeJobLogUncheckedUpdateWithoutWorkerInput>
-    create: XOR<CodeJobLogCreateWithoutWorkerInput, CodeJobLogUncheckedCreateWithoutWorkerInput>
-  }
-
-  export type CodeJobLogUpdateWithWhereUniqueWithoutWorkerInput = {
-    where: CodeJobLogWhereUniqueInput
-    data: XOR<CodeJobLogUpdateWithoutWorkerInput, CodeJobLogUncheckedUpdateWithoutWorkerInput>
-  }
-
-  export type CodeJobLogUpdateManyWithWhereWithoutWorkerInput = {
-    where: CodeJobLogScalarWhereInput
-    data: XOR<CodeJobLogUpdateManyMutationInput, CodeJobLogUncheckedUpdateManyWithoutWorkerInput>
-  }
-
-  export type CodeJobLogScalarWhereInput = {
-    AND?: CodeJobLogScalarWhereInput | CodeJobLogScalarWhereInput[]
-    OR?: CodeJobLogScalarWhereInput[]
-    NOT?: CodeJobLogScalarWhereInput | CodeJobLogScalarWhereInput[]
-    id?: IntFilter<"CodeJobLog"> | number
-    jobId?: StringFilter<"CodeJobLog"> | string
-    workerId?: StringNullableFilter<"CodeJobLog"> | string | null
-    level?: StringFilter<"CodeJobLog"> | string
-    message?: StringFilter<"CodeJobLog"> | string
-    sequence?: IntFilter<"CodeJobLog"> | number
-    meta?: StringFilter<"CodeJobLog"> | string
-    createdAt?: DateTimeFilter<"CodeJobLog"> | Date | string
-  }
-
-  export type CodeWorkspaceVersionCreateWithoutJobsInput = {
-    id?: string
-    version: number
-    snapshot: string
-    snapshotHash: string
-    message?: string
-    isAutosave?: boolean
-    clientRequestId?: string | null
-    ip?: string | null
-    userAgent?: string | null
-    referer?: string | null
-    meta?: string
-    sizeBytes?: number
-    createdAt?: Date | string
-    createdByUserId: string
-    workspace: CodeWorkspaceCreateNestedOneWithoutVersionsInput
-  }
-
-  export type CodeWorkspaceVersionUncheckedCreateWithoutJobsInput = {
-    id?: string
-    workspaceId: string
-    version: number
-    snapshot: string
-    snapshotHash: string
-    message?: string
-    isAutosave?: boolean
-    clientRequestId?: string | null
-    ip?: string | null
-    userAgent?: string | null
-    referer?: string | null
-    meta?: string
-    sizeBytes?: number
-    createdAt?: Date | string
-    createdByUserId: string
-  }
-
-  export type CodeWorkspaceVersionCreateOrConnectWithoutJobsInput = {
-    where: CodeWorkspaceVersionWhereUniqueInput
-    create: XOR<CodeWorkspaceVersionCreateWithoutJobsInput, CodeWorkspaceVersionUncheckedCreateWithoutJobsInput>
-  }
-
-  export type CodeWorkerCreateWithoutJobsInput = {
-    id?: string
-    name: string
-    kind?: string
-    queue?: string
-    status?: string
-    desiredStatus?: string
-    concurrency?: number
-    currentJobId?: string | null
-    heartbeatAt?: Date | string | null
-    startedAt?: Date | string | null
-    stoppedAt?: Date | string | null
-    pid?: number | null
-    metadata?: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    logs?: CodeJobLogCreateNestedManyWithoutWorkerInput
-  }
-
-  export type CodeWorkerUncheckedCreateWithoutJobsInput = {
-    id?: string
-    name: string
-    kind?: string
-    queue?: string
-    status?: string
-    desiredStatus?: string
-    concurrency?: number
-    currentJobId?: string | null
-    heartbeatAt?: Date | string | null
-    startedAt?: Date | string | null
-    stoppedAt?: Date | string | null
-    pid?: number | null
-    metadata?: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    logs?: CodeJobLogUncheckedCreateNestedManyWithoutWorkerInput
-  }
-
-  export type CodeWorkerCreateOrConnectWithoutJobsInput = {
-    where: CodeWorkerWhereUniqueInput
-    create: XOR<CodeWorkerCreateWithoutJobsInput, CodeWorkerUncheckedCreateWithoutJobsInput>
-  }
-
-  export type CodeJobLogCreateWithoutJobInput = {
-    level?: string
-    message: string
-    sequence?: number
-    meta?: string
-    createdAt?: Date | string
-    worker?: CodeWorkerCreateNestedOneWithoutLogsInput
-  }
-
-  export type CodeJobLogUncheckedCreateWithoutJobInput = {
-    id?: number
-    workerId?: string | null
-    level?: string
-    message: string
-    sequence?: number
-    meta?: string
-    createdAt?: Date | string
-  }
-
-  export type CodeJobLogCreateOrConnectWithoutJobInput = {
-    where: CodeJobLogWhereUniqueInput
-    create: XOR<CodeJobLogCreateWithoutJobInput, CodeJobLogUncheckedCreateWithoutJobInput>
-  }
-
-  export type CodeJobLogCreateManyJobInputEnvelope = {
-    data: CodeJobLogCreateManyJobInput | CodeJobLogCreateManyJobInput[]
-  }
-
-  export type CodeWorkspaceVersionUpsertWithoutJobsInput = {
-    update: XOR<CodeWorkspaceVersionUpdateWithoutJobsInput, CodeWorkspaceVersionUncheckedUpdateWithoutJobsInput>
-    create: XOR<CodeWorkspaceVersionCreateWithoutJobsInput, CodeWorkspaceVersionUncheckedCreateWithoutJobsInput>
-    where?: CodeWorkspaceVersionWhereInput
-  }
-
-  export type CodeWorkspaceVersionUpdateToOneWithWhereWithoutJobsInput = {
-    where?: CodeWorkspaceVersionWhereInput
-    data: XOR<CodeWorkspaceVersionUpdateWithoutJobsInput, CodeWorkspaceVersionUncheckedUpdateWithoutJobsInput>
-  }
-
-  export type CodeWorkspaceVersionUpdateWithoutJobsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    version?: IntFieldUpdateOperationsInput | number
-    snapshot?: StringFieldUpdateOperationsInput | string
-    snapshotHash?: StringFieldUpdateOperationsInput | string
-    message?: StringFieldUpdateOperationsInput | string
-    isAutosave?: BoolFieldUpdateOperationsInput | boolean
-    clientRequestId?: NullableStringFieldUpdateOperationsInput | string | null
-    ip?: NullableStringFieldUpdateOperationsInput | string | null
-    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
-    referer?: NullableStringFieldUpdateOperationsInput | string | null
-    meta?: StringFieldUpdateOperationsInput | string
-    sizeBytes?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    createdByUserId?: StringFieldUpdateOperationsInput | string
-    workspace?: CodeWorkspaceUpdateOneRequiredWithoutVersionsNestedInput
-  }
-
-  export type CodeWorkspaceVersionUncheckedUpdateWithoutJobsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    workspaceId?: StringFieldUpdateOperationsInput | string
-    version?: IntFieldUpdateOperationsInput | number
-    snapshot?: StringFieldUpdateOperationsInput | string
-    snapshotHash?: StringFieldUpdateOperationsInput | string
-    message?: StringFieldUpdateOperationsInput | string
-    isAutosave?: BoolFieldUpdateOperationsInput | boolean
-    clientRequestId?: NullableStringFieldUpdateOperationsInput | string | null
-    ip?: NullableStringFieldUpdateOperationsInput | string | null
-    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
-    referer?: NullableStringFieldUpdateOperationsInput | string | null
-    meta?: StringFieldUpdateOperationsInput | string
-    sizeBytes?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    createdByUserId?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type CodeWorkerUpsertWithoutJobsInput = {
-    update: XOR<CodeWorkerUpdateWithoutJobsInput, CodeWorkerUncheckedUpdateWithoutJobsInput>
-    create: XOR<CodeWorkerCreateWithoutJobsInput, CodeWorkerUncheckedCreateWithoutJobsInput>
-    where?: CodeWorkerWhereInput
-  }
-
-  export type CodeWorkerUpdateToOneWithWhereWithoutJobsInput = {
-    where?: CodeWorkerWhereInput
-    data: XOR<CodeWorkerUpdateWithoutJobsInput, CodeWorkerUncheckedUpdateWithoutJobsInput>
-  }
-
-  export type CodeWorkerUpdateWithoutJobsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    kind?: StringFieldUpdateOperationsInput | string
-    queue?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
-    desiredStatus?: StringFieldUpdateOperationsInput | string
-    concurrency?: IntFieldUpdateOperationsInput | number
-    currentJobId?: NullableStringFieldUpdateOperationsInput | string | null
-    heartbeatAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    stoppedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    pid?: NullableIntFieldUpdateOperationsInput | number | null
-    metadata?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    logs?: CodeJobLogUpdateManyWithoutWorkerNestedInput
-  }
-
-  export type CodeWorkerUncheckedUpdateWithoutJobsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    kind?: StringFieldUpdateOperationsInput | string
-    queue?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
-    desiredStatus?: StringFieldUpdateOperationsInput | string
-    concurrency?: IntFieldUpdateOperationsInput | number
-    currentJobId?: NullableStringFieldUpdateOperationsInput | string | null
-    heartbeatAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    stoppedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    pid?: NullableIntFieldUpdateOperationsInput | number | null
-    metadata?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    logs?: CodeJobLogUncheckedUpdateManyWithoutWorkerNestedInput
-  }
-
-  export type CodeJobLogUpsertWithWhereUniqueWithoutJobInput = {
-    where: CodeJobLogWhereUniqueInput
-    update: XOR<CodeJobLogUpdateWithoutJobInput, CodeJobLogUncheckedUpdateWithoutJobInput>
-    create: XOR<CodeJobLogCreateWithoutJobInput, CodeJobLogUncheckedCreateWithoutJobInput>
-  }
-
-  export type CodeJobLogUpdateWithWhereUniqueWithoutJobInput = {
-    where: CodeJobLogWhereUniqueInput
-    data: XOR<CodeJobLogUpdateWithoutJobInput, CodeJobLogUncheckedUpdateWithoutJobInput>
-  }
-
-  export type CodeJobLogUpdateManyWithWhereWithoutJobInput = {
-    where: CodeJobLogScalarWhereInput
-    data: XOR<CodeJobLogUpdateManyMutationInput, CodeJobLogUncheckedUpdateManyWithoutJobInput>
-  }
-
-  export type CodeJobCreateWithoutLogsInput = {
-    id?: string
-    workspaceSlug: string
-    version: number
-    entryPath: string
-    functionName: string
-    args?: string
-    data?: string
-    checkpoint?: string
-    result?: string | null
-    error?: string | null
-    status?: string
-    priority?: number
-    queue?: string
-    runtime?: string
-    orchestrator?: string
-    timeoutMs?: number
-    maxAttempts?: number
-    attempt?: number
-    progress?: number
-    requestedAction?: string | null
-    leaseToken?: string | null
-    lockedAt?: Date | string | null
-    leaseExpiresAt?: Date | string | null
-    nextRunAt?: Date | string
-    startedAt?: Date | string | null
-    completedAt?: Date | string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    createdByUserId?: string
-    temporalWorkflowId?: string | null
-    temporalRunId?: string | null
-    metadata?: string
-    workspaceVersion: CodeWorkspaceVersionCreateNestedOneWithoutJobsInput
-    worker?: CodeWorkerCreateNestedOneWithoutJobsInput
-  }
-
-  export type CodeJobUncheckedCreateWithoutLogsInput = {
-    id?: string
-    workspaceVersionId: string
-    workspaceSlug: string
-    version: number
-    entryPath: string
-    functionName: string
-    args?: string
-    data?: string
-    checkpoint?: string
-    result?: string | null
-    error?: string | null
-    status?: string
-    priority?: number
-    queue?: string
-    runtime?: string
-    orchestrator?: string
-    timeoutMs?: number
-    maxAttempts?: number
-    attempt?: number
-    progress?: number
-    requestedAction?: string | null
-    leaseToken?: string | null
-    lockedAt?: Date | string | null
-    leaseExpiresAt?: Date | string | null
-    nextRunAt?: Date | string
-    startedAt?: Date | string | null
-    completedAt?: Date | string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    createdByUserId?: string
-    workerId?: string | null
-    temporalWorkflowId?: string | null
-    temporalRunId?: string | null
-    metadata?: string
-  }
-
-  export type CodeJobCreateOrConnectWithoutLogsInput = {
-    where: CodeJobWhereUniqueInput
-    create: XOR<CodeJobCreateWithoutLogsInput, CodeJobUncheckedCreateWithoutLogsInput>
-  }
-
-  export type CodeWorkerCreateWithoutLogsInput = {
-    id?: string
-    name: string
-    kind?: string
-    queue?: string
-    status?: string
-    desiredStatus?: string
-    concurrency?: number
-    currentJobId?: string | null
-    heartbeatAt?: Date | string | null
-    startedAt?: Date | string | null
-    stoppedAt?: Date | string | null
-    pid?: number | null
-    metadata?: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    jobs?: CodeJobCreateNestedManyWithoutWorkerInput
-  }
-
-  export type CodeWorkerUncheckedCreateWithoutLogsInput = {
-    id?: string
-    name: string
-    kind?: string
-    queue?: string
-    status?: string
-    desiredStatus?: string
-    concurrency?: number
-    currentJobId?: string | null
-    heartbeatAt?: Date | string | null
-    startedAt?: Date | string | null
-    stoppedAt?: Date | string | null
-    pid?: number | null
-    metadata?: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    jobs?: CodeJobUncheckedCreateNestedManyWithoutWorkerInput
-  }
-
-  export type CodeWorkerCreateOrConnectWithoutLogsInput = {
-    where: CodeWorkerWhereUniqueInput
-    create: XOR<CodeWorkerCreateWithoutLogsInput, CodeWorkerUncheckedCreateWithoutLogsInput>
-  }
-
-  export type CodeJobUpsertWithoutLogsInput = {
-    update: XOR<CodeJobUpdateWithoutLogsInput, CodeJobUncheckedUpdateWithoutLogsInput>
-    create: XOR<CodeJobCreateWithoutLogsInput, CodeJobUncheckedCreateWithoutLogsInput>
-    where?: CodeJobWhereInput
-  }
-
-  export type CodeJobUpdateToOneWithWhereWithoutLogsInput = {
-    where?: CodeJobWhereInput
-    data: XOR<CodeJobUpdateWithoutLogsInput, CodeJobUncheckedUpdateWithoutLogsInput>
-  }
-
-  export type CodeJobUpdateWithoutLogsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    workspaceSlug?: StringFieldUpdateOperationsInput | string
-    version?: IntFieldUpdateOperationsInput | number
-    entryPath?: StringFieldUpdateOperationsInput | string
-    functionName?: StringFieldUpdateOperationsInput | string
-    args?: StringFieldUpdateOperationsInput | string
-    data?: StringFieldUpdateOperationsInput | string
-    checkpoint?: StringFieldUpdateOperationsInput | string
-    result?: NullableStringFieldUpdateOperationsInput | string | null
-    error?: NullableStringFieldUpdateOperationsInput | string | null
-    status?: StringFieldUpdateOperationsInput | string
-    priority?: IntFieldUpdateOperationsInput | number
-    queue?: StringFieldUpdateOperationsInput | string
-    runtime?: StringFieldUpdateOperationsInput | string
-    orchestrator?: StringFieldUpdateOperationsInput | string
-    timeoutMs?: IntFieldUpdateOperationsInput | number
-    maxAttempts?: IntFieldUpdateOperationsInput | number
-    attempt?: IntFieldUpdateOperationsInput | number
-    progress?: IntFieldUpdateOperationsInput | number
-    requestedAction?: NullableStringFieldUpdateOperationsInput | string | null
-    leaseToken?: NullableStringFieldUpdateOperationsInput | string | null
-    lockedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    leaseExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    nextRunAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    createdByUserId?: StringFieldUpdateOperationsInput | string
-    temporalWorkflowId?: NullableStringFieldUpdateOperationsInput | string | null
-    temporalRunId?: NullableStringFieldUpdateOperationsInput | string | null
-    metadata?: StringFieldUpdateOperationsInput | string
-    workspaceVersion?: CodeWorkspaceVersionUpdateOneRequiredWithoutJobsNestedInput
-    worker?: CodeWorkerUpdateOneWithoutJobsNestedInput
-  }
-
-  export type CodeJobUncheckedUpdateWithoutLogsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    workspaceVersionId?: StringFieldUpdateOperationsInput | string
-    workspaceSlug?: StringFieldUpdateOperationsInput | string
-    version?: IntFieldUpdateOperationsInput | number
-    entryPath?: StringFieldUpdateOperationsInput | string
-    functionName?: StringFieldUpdateOperationsInput | string
-    args?: StringFieldUpdateOperationsInput | string
-    data?: StringFieldUpdateOperationsInput | string
-    checkpoint?: StringFieldUpdateOperationsInput | string
-    result?: NullableStringFieldUpdateOperationsInput | string | null
-    error?: NullableStringFieldUpdateOperationsInput | string | null
-    status?: StringFieldUpdateOperationsInput | string
-    priority?: IntFieldUpdateOperationsInput | number
-    queue?: StringFieldUpdateOperationsInput | string
-    runtime?: StringFieldUpdateOperationsInput | string
-    orchestrator?: StringFieldUpdateOperationsInput | string
-    timeoutMs?: IntFieldUpdateOperationsInput | number
-    maxAttempts?: IntFieldUpdateOperationsInput | number
-    attempt?: IntFieldUpdateOperationsInput | number
-    progress?: IntFieldUpdateOperationsInput | number
-    requestedAction?: NullableStringFieldUpdateOperationsInput | string | null
-    leaseToken?: NullableStringFieldUpdateOperationsInput | string | null
-    lockedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    leaseExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    nextRunAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    createdByUserId?: StringFieldUpdateOperationsInput | string
-    workerId?: NullableStringFieldUpdateOperationsInput | string | null
-    temporalWorkflowId?: NullableStringFieldUpdateOperationsInput | string | null
-    temporalRunId?: NullableStringFieldUpdateOperationsInput | string | null
-    metadata?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type CodeWorkerUpsertWithoutLogsInput = {
-    update: XOR<CodeWorkerUpdateWithoutLogsInput, CodeWorkerUncheckedUpdateWithoutLogsInput>
-    create: XOR<CodeWorkerCreateWithoutLogsInput, CodeWorkerUncheckedCreateWithoutLogsInput>
-    where?: CodeWorkerWhereInput
-  }
-
-  export type CodeWorkerUpdateToOneWithWhereWithoutLogsInput = {
-    where?: CodeWorkerWhereInput
-    data: XOR<CodeWorkerUpdateWithoutLogsInput, CodeWorkerUncheckedUpdateWithoutLogsInput>
-  }
-
-  export type CodeWorkerUpdateWithoutLogsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    kind?: StringFieldUpdateOperationsInput | string
-    queue?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
-    desiredStatus?: StringFieldUpdateOperationsInput | string
-    concurrency?: IntFieldUpdateOperationsInput | number
-    currentJobId?: NullableStringFieldUpdateOperationsInput | string | null
-    heartbeatAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    stoppedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    pid?: NullableIntFieldUpdateOperationsInput | number | null
-    metadata?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    jobs?: CodeJobUpdateManyWithoutWorkerNestedInput
-  }
-
-  export type CodeWorkerUncheckedUpdateWithoutLogsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    kind?: StringFieldUpdateOperationsInput | string
-    queue?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
-    desiredStatus?: StringFieldUpdateOperationsInput | string
-    concurrency?: IntFieldUpdateOperationsInput | number
-    currentJobId?: NullableStringFieldUpdateOperationsInput | string | null
-    heartbeatAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    stoppedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    pid?: NullableIntFieldUpdateOperationsInput | number | null
-    metadata?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    jobs?: CodeJobUncheckedUpdateManyWithoutWorkerNestedInput
-  }
-
   export type AiDbChatConversationCreateWithoutSchemaInput = {
     id?: string
     title?: string
@@ -39223,446 +29200,6 @@ export namespace Prisma {
     content?: StringFieldUpdateOperationsInput | string
     computedContent?: StringFieldUpdateOperationsInput | string
     submittedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type CodeWorkspaceVersionCreateManyWorkspaceInput = {
-    id?: string
-    version: number
-    snapshot: string
-    snapshotHash: string
-    message?: string
-    isAutosave?: boolean
-    clientRequestId?: string | null
-    ip?: string | null
-    userAgent?: string | null
-    referer?: string | null
-    meta?: string
-    sizeBytes?: number
-    createdAt?: Date | string
-    createdByUserId: string
-  }
-
-  export type CodeWorkspaceVersionUpdateWithoutWorkspaceInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    version?: IntFieldUpdateOperationsInput | number
-    snapshot?: StringFieldUpdateOperationsInput | string
-    snapshotHash?: StringFieldUpdateOperationsInput | string
-    message?: StringFieldUpdateOperationsInput | string
-    isAutosave?: BoolFieldUpdateOperationsInput | boolean
-    clientRequestId?: NullableStringFieldUpdateOperationsInput | string | null
-    ip?: NullableStringFieldUpdateOperationsInput | string | null
-    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
-    referer?: NullableStringFieldUpdateOperationsInput | string | null
-    meta?: StringFieldUpdateOperationsInput | string
-    sizeBytes?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    createdByUserId?: StringFieldUpdateOperationsInput | string
-    jobs?: CodeJobUpdateManyWithoutWorkspaceVersionNestedInput
-  }
-
-  export type CodeWorkspaceVersionUncheckedUpdateWithoutWorkspaceInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    version?: IntFieldUpdateOperationsInput | number
-    snapshot?: StringFieldUpdateOperationsInput | string
-    snapshotHash?: StringFieldUpdateOperationsInput | string
-    message?: StringFieldUpdateOperationsInput | string
-    isAutosave?: BoolFieldUpdateOperationsInput | boolean
-    clientRequestId?: NullableStringFieldUpdateOperationsInput | string | null
-    ip?: NullableStringFieldUpdateOperationsInput | string | null
-    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
-    referer?: NullableStringFieldUpdateOperationsInput | string | null
-    meta?: StringFieldUpdateOperationsInput | string
-    sizeBytes?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    createdByUserId?: StringFieldUpdateOperationsInput | string
-    jobs?: CodeJobUncheckedUpdateManyWithoutWorkspaceVersionNestedInput
-  }
-
-  export type CodeWorkspaceVersionUncheckedUpdateManyWithoutWorkspaceInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    version?: IntFieldUpdateOperationsInput | number
-    snapshot?: StringFieldUpdateOperationsInput | string
-    snapshotHash?: StringFieldUpdateOperationsInput | string
-    message?: StringFieldUpdateOperationsInput | string
-    isAutosave?: BoolFieldUpdateOperationsInput | boolean
-    clientRequestId?: NullableStringFieldUpdateOperationsInput | string | null
-    ip?: NullableStringFieldUpdateOperationsInput | string | null
-    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
-    referer?: NullableStringFieldUpdateOperationsInput | string | null
-    meta?: StringFieldUpdateOperationsInput | string
-    sizeBytes?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    createdByUserId?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type CodeJobCreateManyWorkspaceVersionInput = {
-    id?: string
-    workspaceSlug: string
-    version: number
-    entryPath: string
-    functionName: string
-    args?: string
-    data?: string
-    checkpoint?: string
-    result?: string | null
-    error?: string | null
-    status?: string
-    priority?: number
-    queue?: string
-    runtime?: string
-    orchestrator?: string
-    timeoutMs?: number
-    maxAttempts?: number
-    attempt?: number
-    progress?: number
-    requestedAction?: string | null
-    leaseToken?: string | null
-    lockedAt?: Date | string | null
-    leaseExpiresAt?: Date | string | null
-    nextRunAt?: Date | string
-    startedAt?: Date | string | null
-    completedAt?: Date | string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    createdByUserId?: string
-    workerId?: string | null
-    temporalWorkflowId?: string | null
-    temporalRunId?: string | null
-    metadata?: string
-  }
-
-  export type CodeJobUpdateWithoutWorkspaceVersionInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    workspaceSlug?: StringFieldUpdateOperationsInput | string
-    version?: IntFieldUpdateOperationsInput | number
-    entryPath?: StringFieldUpdateOperationsInput | string
-    functionName?: StringFieldUpdateOperationsInput | string
-    args?: StringFieldUpdateOperationsInput | string
-    data?: StringFieldUpdateOperationsInput | string
-    checkpoint?: StringFieldUpdateOperationsInput | string
-    result?: NullableStringFieldUpdateOperationsInput | string | null
-    error?: NullableStringFieldUpdateOperationsInput | string | null
-    status?: StringFieldUpdateOperationsInput | string
-    priority?: IntFieldUpdateOperationsInput | number
-    queue?: StringFieldUpdateOperationsInput | string
-    runtime?: StringFieldUpdateOperationsInput | string
-    orchestrator?: StringFieldUpdateOperationsInput | string
-    timeoutMs?: IntFieldUpdateOperationsInput | number
-    maxAttempts?: IntFieldUpdateOperationsInput | number
-    attempt?: IntFieldUpdateOperationsInput | number
-    progress?: IntFieldUpdateOperationsInput | number
-    requestedAction?: NullableStringFieldUpdateOperationsInput | string | null
-    leaseToken?: NullableStringFieldUpdateOperationsInput | string | null
-    lockedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    leaseExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    nextRunAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    createdByUserId?: StringFieldUpdateOperationsInput | string
-    temporalWorkflowId?: NullableStringFieldUpdateOperationsInput | string | null
-    temporalRunId?: NullableStringFieldUpdateOperationsInput | string | null
-    metadata?: StringFieldUpdateOperationsInput | string
-    worker?: CodeWorkerUpdateOneWithoutJobsNestedInput
-    logs?: CodeJobLogUpdateManyWithoutJobNestedInput
-  }
-
-  export type CodeJobUncheckedUpdateWithoutWorkspaceVersionInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    workspaceSlug?: StringFieldUpdateOperationsInput | string
-    version?: IntFieldUpdateOperationsInput | number
-    entryPath?: StringFieldUpdateOperationsInput | string
-    functionName?: StringFieldUpdateOperationsInput | string
-    args?: StringFieldUpdateOperationsInput | string
-    data?: StringFieldUpdateOperationsInput | string
-    checkpoint?: StringFieldUpdateOperationsInput | string
-    result?: NullableStringFieldUpdateOperationsInput | string | null
-    error?: NullableStringFieldUpdateOperationsInput | string | null
-    status?: StringFieldUpdateOperationsInput | string
-    priority?: IntFieldUpdateOperationsInput | number
-    queue?: StringFieldUpdateOperationsInput | string
-    runtime?: StringFieldUpdateOperationsInput | string
-    orchestrator?: StringFieldUpdateOperationsInput | string
-    timeoutMs?: IntFieldUpdateOperationsInput | number
-    maxAttempts?: IntFieldUpdateOperationsInput | number
-    attempt?: IntFieldUpdateOperationsInput | number
-    progress?: IntFieldUpdateOperationsInput | number
-    requestedAction?: NullableStringFieldUpdateOperationsInput | string | null
-    leaseToken?: NullableStringFieldUpdateOperationsInput | string | null
-    lockedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    leaseExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    nextRunAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    createdByUserId?: StringFieldUpdateOperationsInput | string
-    workerId?: NullableStringFieldUpdateOperationsInput | string | null
-    temporalWorkflowId?: NullableStringFieldUpdateOperationsInput | string | null
-    temporalRunId?: NullableStringFieldUpdateOperationsInput | string | null
-    metadata?: StringFieldUpdateOperationsInput | string
-    logs?: CodeJobLogUncheckedUpdateManyWithoutJobNestedInput
-  }
-
-  export type CodeJobUncheckedUpdateManyWithoutWorkspaceVersionInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    workspaceSlug?: StringFieldUpdateOperationsInput | string
-    version?: IntFieldUpdateOperationsInput | number
-    entryPath?: StringFieldUpdateOperationsInput | string
-    functionName?: StringFieldUpdateOperationsInput | string
-    args?: StringFieldUpdateOperationsInput | string
-    data?: StringFieldUpdateOperationsInput | string
-    checkpoint?: StringFieldUpdateOperationsInput | string
-    result?: NullableStringFieldUpdateOperationsInput | string | null
-    error?: NullableStringFieldUpdateOperationsInput | string | null
-    status?: StringFieldUpdateOperationsInput | string
-    priority?: IntFieldUpdateOperationsInput | number
-    queue?: StringFieldUpdateOperationsInput | string
-    runtime?: StringFieldUpdateOperationsInput | string
-    orchestrator?: StringFieldUpdateOperationsInput | string
-    timeoutMs?: IntFieldUpdateOperationsInput | number
-    maxAttempts?: IntFieldUpdateOperationsInput | number
-    attempt?: IntFieldUpdateOperationsInput | number
-    progress?: IntFieldUpdateOperationsInput | number
-    requestedAction?: NullableStringFieldUpdateOperationsInput | string | null
-    leaseToken?: NullableStringFieldUpdateOperationsInput | string | null
-    lockedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    leaseExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    nextRunAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    createdByUserId?: StringFieldUpdateOperationsInput | string
-    workerId?: NullableStringFieldUpdateOperationsInput | string | null
-    temporalWorkflowId?: NullableStringFieldUpdateOperationsInput | string | null
-    temporalRunId?: NullableStringFieldUpdateOperationsInput | string | null
-    metadata?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type CodeJobCreateManyWorkerInput = {
-    id?: string
-    workspaceVersionId: string
-    workspaceSlug: string
-    version: number
-    entryPath: string
-    functionName: string
-    args?: string
-    data?: string
-    checkpoint?: string
-    result?: string | null
-    error?: string | null
-    status?: string
-    priority?: number
-    queue?: string
-    runtime?: string
-    orchestrator?: string
-    timeoutMs?: number
-    maxAttempts?: number
-    attempt?: number
-    progress?: number
-    requestedAction?: string | null
-    leaseToken?: string | null
-    lockedAt?: Date | string | null
-    leaseExpiresAt?: Date | string | null
-    nextRunAt?: Date | string
-    startedAt?: Date | string | null
-    completedAt?: Date | string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    createdByUserId?: string
-    temporalWorkflowId?: string | null
-    temporalRunId?: string | null
-    metadata?: string
-  }
-
-  export type CodeJobLogCreateManyWorkerInput = {
-    id?: number
-    jobId: string
-    level?: string
-    message: string
-    sequence?: number
-    meta?: string
-    createdAt?: Date | string
-  }
-
-  export type CodeJobUpdateWithoutWorkerInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    workspaceSlug?: StringFieldUpdateOperationsInput | string
-    version?: IntFieldUpdateOperationsInput | number
-    entryPath?: StringFieldUpdateOperationsInput | string
-    functionName?: StringFieldUpdateOperationsInput | string
-    args?: StringFieldUpdateOperationsInput | string
-    data?: StringFieldUpdateOperationsInput | string
-    checkpoint?: StringFieldUpdateOperationsInput | string
-    result?: NullableStringFieldUpdateOperationsInput | string | null
-    error?: NullableStringFieldUpdateOperationsInput | string | null
-    status?: StringFieldUpdateOperationsInput | string
-    priority?: IntFieldUpdateOperationsInput | number
-    queue?: StringFieldUpdateOperationsInput | string
-    runtime?: StringFieldUpdateOperationsInput | string
-    orchestrator?: StringFieldUpdateOperationsInput | string
-    timeoutMs?: IntFieldUpdateOperationsInput | number
-    maxAttempts?: IntFieldUpdateOperationsInput | number
-    attempt?: IntFieldUpdateOperationsInput | number
-    progress?: IntFieldUpdateOperationsInput | number
-    requestedAction?: NullableStringFieldUpdateOperationsInput | string | null
-    leaseToken?: NullableStringFieldUpdateOperationsInput | string | null
-    lockedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    leaseExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    nextRunAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    createdByUserId?: StringFieldUpdateOperationsInput | string
-    temporalWorkflowId?: NullableStringFieldUpdateOperationsInput | string | null
-    temporalRunId?: NullableStringFieldUpdateOperationsInput | string | null
-    metadata?: StringFieldUpdateOperationsInput | string
-    workspaceVersion?: CodeWorkspaceVersionUpdateOneRequiredWithoutJobsNestedInput
-    logs?: CodeJobLogUpdateManyWithoutJobNestedInput
-  }
-
-  export type CodeJobUncheckedUpdateWithoutWorkerInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    workspaceVersionId?: StringFieldUpdateOperationsInput | string
-    workspaceSlug?: StringFieldUpdateOperationsInput | string
-    version?: IntFieldUpdateOperationsInput | number
-    entryPath?: StringFieldUpdateOperationsInput | string
-    functionName?: StringFieldUpdateOperationsInput | string
-    args?: StringFieldUpdateOperationsInput | string
-    data?: StringFieldUpdateOperationsInput | string
-    checkpoint?: StringFieldUpdateOperationsInput | string
-    result?: NullableStringFieldUpdateOperationsInput | string | null
-    error?: NullableStringFieldUpdateOperationsInput | string | null
-    status?: StringFieldUpdateOperationsInput | string
-    priority?: IntFieldUpdateOperationsInput | number
-    queue?: StringFieldUpdateOperationsInput | string
-    runtime?: StringFieldUpdateOperationsInput | string
-    orchestrator?: StringFieldUpdateOperationsInput | string
-    timeoutMs?: IntFieldUpdateOperationsInput | number
-    maxAttempts?: IntFieldUpdateOperationsInput | number
-    attempt?: IntFieldUpdateOperationsInput | number
-    progress?: IntFieldUpdateOperationsInput | number
-    requestedAction?: NullableStringFieldUpdateOperationsInput | string | null
-    leaseToken?: NullableStringFieldUpdateOperationsInput | string | null
-    lockedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    leaseExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    nextRunAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    createdByUserId?: StringFieldUpdateOperationsInput | string
-    temporalWorkflowId?: NullableStringFieldUpdateOperationsInput | string | null
-    temporalRunId?: NullableStringFieldUpdateOperationsInput | string | null
-    metadata?: StringFieldUpdateOperationsInput | string
-    logs?: CodeJobLogUncheckedUpdateManyWithoutJobNestedInput
-  }
-
-  export type CodeJobUncheckedUpdateManyWithoutWorkerInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    workspaceVersionId?: StringFieldUpdateOperationsInput | string
-    workspaceSlug?: StringFieldUpdateOperationsInput | string
-    version?: IntFieldUpdateOperationsInput | number
-    entryPath?: StringFieldUpdateOperationsInput | string
-    functionName?: StringFieldUpdateOperationsInput | string
-    args?: StringFieldUpdateOperationsInput | string
-    data?: StringFieldUpdateOperationsInput | string
-    checkpoint?: StringFieldUpdateOperationsInput | string
-    result?: NullableStringFieldUpdateOperationsInput | string | null
-    error?: NullableStringFieldUpdateOperationsInput | string | null
-    status?: StringFieldUpdateOperationsInput | string
-    priority?: IntFieldUpdateOperationsInput | number
-    queue?: StringFieldUpdateOperationsInput | string
-    runtime?: StringFieldUpdateOperationsInput | string
-    orchestrator?: StringFieldUpdateOperationsInput | string
-    timeoutMs?: IntFieldUpdateOperationsInput | number
-    maxAttempts?: IntFieldUpdateOperationsInput | number
-    attempt?: IntFieldUpdateOperationsInput | number
-    progress?: IntFieldUpdateOperationsInput | number
-    requestedAction?: NullableStringFieldUpdateOperationsInput | string | null
-    leaseToken?: NullableStringFieldUpdateOperationsInput | string | null
-    lockedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    leaseExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    nextRunAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    createdByUserId?: StringFieldUpdateOperationsInput | string
-    temporalWorkflowId?: NullableStringFieldUpdateOperationsInput | string | null
-    temporalRunId?: NullableStringFieldUpdateOperationsInput | string | null
-    metadata?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type CodeJobLogUpdateWithoutWorkerInput = {
-    level?: StringFieldUpdateOperationsInput | string
-    message?: StringFieldUpdateOperationsInput | string
-    sequence?: IntFieldUpdateOperationsInput | number
-    meta?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    job?: CodeJobUpdateOneRequiredWithoutLogsNestedInput
-  }
-
-  export type CodeJobLogUncheckedUpdateWithoutWorkerInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    jobId?: StringFieldUpdateOperationsInput | string
-    level?: StringFieldUpdateOperationsInput | string
-    message?: StringFieldUpdateOperationsInput | string
-    sequence?: IntFieldUpdateOperationsInput | number
-    meta?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type CodeJobLogUncheckedUpdateManyWithoutWorkerInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    jobId?: StringFieldUpdateOperationsInput | string
-    level?: StringFieldUpdateOperationsInput | string
-    message?: StringFieldUpdateOperationsInput | string
-    sequence?: IntFieldUpdateOperationsInput | number
-    meta?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type CodeJobLogCreateManyJobInput = {
-    id?: number
-    workerId?: string | null
-    level?: string
-    message: string
-    sequence?: number
-    meta?: string
-    createdAt?: Date | string
-  }
-
-  export type CodeJobLogUpdateWithoutJobInput = {
-    level?: StringFieldUpdateOperationsInput | string
-    message?: StringFieldUpdateOperationsInput | string
-    sequence?: IntFieldUpdateOperationsInput | number
-    meta?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    worker?: CodeWorkerUpdateOneWithoutLogsNestedInput
-  }
-
-  export type CodeJobLogUncheckedUpdateWithoutJobInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    workerId?: NullableStringFieldUpdateOperationsInput | string | null
-    level?: StringFieldUpdateOperationsInput | string
-    message?: StringFieldUpdateOperationsInput | string
-    sequence?: IntFieldUpdateOperationsInput | number
-    meta?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type CodeJobLogUncheckedUpdateManyWithoutJobInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    workerId?: NullableStringFieldUpdateOperationsInput | string | null
-    level?: StringFieldUpdateOperationsInput | string
-    message?: StringFieldUpdateOperationsInput | string
-    sequence?: IntFieldUpdateOperationsInput | number
-    meta?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type AiDbChatConversationCreateManySchemaInput = {

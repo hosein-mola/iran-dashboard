@@ -14,10 +14,7 @@ declare global {
 }
 
 const cachedPrisma = globalThis.prisma;
-const prisma =
-  cachedPrisma && 'codeJob' in cachedPrisma
-    ? cachedPrisma
-    : prismaClientSingleton();
+const prisma = cachedPrisma ?? prismaClientSingleton();
 
 export default prisma;
 

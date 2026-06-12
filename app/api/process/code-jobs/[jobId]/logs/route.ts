@@ -1,19 +1,14 @@
-import { NextResponse } from 'next/server'
-
-import prisma from '@/lib/prisma'
+import { proxyDenoWorkerRequest } from '@/lib/deno-worker-api'
 
 export const runtime = 'nodejs'
 
 export async function GET(
-  _req: Request,
+  req: Request,
   { params }: { params: Promise<{ jobId: string }> }
 ) {
   const { jobId } = await params
-  const logs = await prisma.codeJobLog.findMany({
-    where: { jobId },
-    orderBy: [{ sequence: 'asc' }, { createdAt: 'asc' }],
-    take: 500,
-  })
-
-  return NextResponse.json({ logs })
+  return proxyDenoWorkerRequest(
+    req,
+    `/api/process/code-jobs/${encodeURIComponent(jobId)}/logs`
+  )
 }
