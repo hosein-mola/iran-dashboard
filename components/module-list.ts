@@ -8,6 +8,7 @@ import {
   CodeSquareIcon,
   FolderDot,
   FormInputIcon,
+  Palette,
   ShieldCheckIcon,
   User2,
 } from 'lucide-react'
@@ -67,5 +68,11 @@ export const moduleList: ModuleCard[] = [
     description: 'آپلود و سازماندهی اسناد پروژه.',
     href: '/files',
     icon: FolderDot,
+  },
+  {
+    label: 'تم‌ها',
+    description: 'انتخاب پایه‌های رنگی حرفه‌ای برای محیط مدیریتی.',
+    href: '/themes',
+    icon: Palette,
   },
 ]

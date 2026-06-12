@@ -41,7 +41,10 @@ import { CodeEditorJobPanel } from '@/components/code-jobs/CodeEditorJobPanel'
 import { CodeSnippet } from '@/components/code-snippet'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { useTheme } from '@/components/providers/ThemeProvider'
+import {
+  type ThemeMode,
+  useTheme,
+} from '@/components/providers/ThemeProvider'
 import {
   Select,
   SelectContent,
@@ -363,7 +366,7 @@ declare module '*.mdx' {
 }
 
 function getMonacoThemeName(
-  theme: 'light' | 'dark' | 'system' | 'wood',
+  theme: ThemeMode,
   resolvedTheme: 'light' | 'dark'
 ): EditorThemeName {
   if (theme === 'wood') return 'iran-dashboard-editor-wood'

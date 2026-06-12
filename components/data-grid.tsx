@@ -4,7 +4,6 @@ import { AgGridReact } from 'ag-grid-react'
 import { AgChartsEnterpriseModule } from 'ag-charts-enterprise'
 import { AG_GRID_LOCALE_IR } from '@ag-grid-community/locale'
 import { ColGroupDef, themeQuartz } from 'ag-grid-community'
-import { colorSchemeDarkBlue } from 'ag-grid-community'
 
 import {
   ClientSideRowModelModule,
@@ -53,15 +52,15 @@ const lightTheme = themeQuartz.withParams({
   rowBorder: 'oklch(0.86 0.018 245)',
 })
 
-const darkTheme = themeQuartz.withPart(colorSchemeDarkBlue).withParams({
-  backgroundColor: 'oklch(0.135 0.013 245)',
-  foregroundColor: 'oklch(0.94 0.006 245)',
-  headerBackgroundColor: 'oklch(0.19 0.018 245)',
-  oddRowBackgroundColor: 'oklch(0.165 0.015 245)',
-  rowHoverColor: 'oklch(0.24 0.055 245)',
-  accentColor: 'oklch(0.6 0.17 245)',
-  borderColor: 'oklch(0.305 0.025 245)',
-  rowBorder: 'oklch(0.305 0.025 245)',
+const darkTheme = themeQuartz.withParams({
+  backgroundColor: 'oklch(0.255 0.006 255)',
+  foregroundColor: 'oklch(0.94 0.004 255)',
+  headerBackgroundColor: 'oklch(0.305 0.006 255)',
+  oddRowBackgroundColor: 'oklch(0.285 0.006 255)',
+  rowHoverColor: 'oklch(0.36 0.018 245)',
+  accentColor: 'oklch(0.64 0.11 215)',
+  borderColor: 'oklch(0.405 0.006 255)',
+  rowBorder: 'oklch(0.405 0.006 255)',
 })
 
 const woodTheme = themeQuartz.withParams({

@@ -100,12 +100,12 @@ function NavItemComponent({
       >
         <CollapsibleTrigger asChild>
           <Button
-            variant={isActive ? 'default' : 'ghost'}
+            variant="ghost"
             className={cn(
               'flex h-10 w-full cursor-pointer flex-row items-center justify-between rounded-xl transition-colors',
               isActive
-                ? 'bg-accent text-accent-foreground shadow-sm'
-                : 'text-foreground hover:bg-accent hover:text-accent-foreground'
+                ? 'bg-sidebar-active text-sidebar-active-foreground shadow-sm'
+                : 'text-sidebar-foreground hover:!bg-sidebar-accent hover:!text-sidebar-accent-foreground'
             )}
           >
             <div className="flex flex-row items-center justify-center">
@@ -154,12 +154,12 @@ function NavItemComponent({
                               redirect(subItem.url)
                             }
                           }}
-                          variant={subIsActive ? 'default' : 'ghost'}
+                          variant="ghost"
                           className={cn(
                             'flex h-10 w-full cursor-pointer justify-start rounded-xl text-sm transition-colors',
                             subIsActive
-                              ? 'bg-accent text-accent-foreground shadow-sm'
-                              : 'text-foreground hover:bg-accent hover:text-accent-foreground'
+                              ? 'bg-sidebar-active text-sidebar-active-foreground shadow-sm'
+                              : 'text-sidebar-foreground hover:!bg-sidebar-accent hover:!text-sidebar-accent-foreground'
                           )}
                         >
                           {subItem.title}

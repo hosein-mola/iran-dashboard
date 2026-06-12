@@ -9,6 +9,7 @@ import {
   FolderDot,
   FormInputIcon,
   Layers3,
+  Palette,
   Server,
   ShieldCheckIcon,
   User2,
@@ -211,6 +212,24 @@ export const moduleMenuConfig: ModuleMenuConfig[] = [
         name: 'پروفایل‌ها',
         url: '/dashboard/persons',
         icon: User2,
+      },
+    ],
+  },
+  {
+    base: '/themes',
+    label: 'تم‌ها',
+    navMain: [
+      {
+        title: 'پایه‌های تم',
+        url: '/themes',
+        icon: Palette,
+      },
+    ],
+    projects: [
+      {
+        name: 'درگاه ماژول‌ها',
+        url: '/modules',
+        icon: Layers3,
       },
     ],
   },

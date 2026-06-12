@@ -44,11 +44,11 @@ export function NavProjects({
                   className={cn(
                     'flex h-10 items-center gap-2 rounded-xl px-3 py-2 text-sm font-medium transition-colors',
                     isActive
-                      ? 'bg-accent text-accent-foreground'
-                      : 'text-foreground hover:bg-accent hover:text-accent-foreground'
+                      ? 'bg-sidebar-active text-sidebar-active-foreground'
+                      : 'text-sidebar-foreground hover:!bg-sidebar-accent hover:!text-sidebar-accent-foreground'
                   )}
                 >
-                  <Icon className="size-4 text-muted-foreground" />
+                  <Icon className="size-4 text-current opacity-75" />
                   <span>{label}</span>
                 </Link>
               </SidebarMenuButton>

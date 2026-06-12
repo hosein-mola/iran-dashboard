@@ -25,8 +25,8 @@ export function ModulesNav() {
                   className={cn(
                     'flex items-center gap-2 rounded-xl px-3 py-2 text-sm font-medium transition-colors',
                     isActive
-                      ? 'bg-accent text-accent-foreground'
-                      : 'text-foreground hover:bg-muted/70'
+                      ? 'bg-sidebar-active text-sidebar-active-foreground'
+                      : 'text-sidebar-foreground hover:!bg-sidebar-accent hover:!text-sidebar-accent-foreground'
                   )}
                 >
                   <span>{mod.label}</span>
