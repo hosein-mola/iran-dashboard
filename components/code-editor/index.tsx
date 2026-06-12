@@ -37,6 +37,7 @@ import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { CodeEditorJobPanel } from '@/components/code-jobs/CodeEditorJobPanel'
+import { CodeSnippet } from '@/components/code-snippet'
 import { Input } from '@/components/ui/input'
 import { useTheme } from '@/components/providers/ThemeProvider'
 import {
@@ -2138,6 +2139,7 @@ export default function CodeEditor({
     {
       label: 'Fetch',
       description: 'Browser or Node 18+',
+      language: 'javascript' as const,
       code: [
         `const payload = ${runPayloadExample.replace(/\n/g, '\n')}`,
         ``,
@@ -2153,6 +2155,7 @@ export default function CodeEditor({
     {
       label: 'Axios',
       description: 'Web or Node client',
+      language: 'javascript' as const,
       code: [
         `import axios from 'axios'`,
         ``,
@@ -2164,11 +2167,13 @@ export default function CodeEditor({
     {
       label: 'curl',
       description: 'Terminal and CI scripts',
+      language: 'bash' as const,
       code: runCurlExample,
     },
     {
       label: 'Postman',
       description: 'Import as raw curl',
+      language: 'bash' as const,
       code: [
         `curl --location '${runnerRunUrl}' \\`,
         `  --header 'Content-Type: application/json' \\`,
@@ -2178,6 +2183,7 @@ export default function CodeEditor({
     {
       label: '.NET',
       description: 'HttpClient',
+      language: 'csharp' as const,
       code: [
         `using System.Net.Http.Json;`,
         ``,
@@ -2203,6 +2209,7 @@ export default function CodeEditor({
     {
       label: 'Python',
       description: 'requests',
+      language: 'python' as const,
       code: [
         `import requests`,
         ``,
@@ -2692,12 +2699,11 @@ export default function CodeEditor({
                   </CardHeader>
                   <CardContent className="p-4 pt-0">
                     <div className="grid gap-3 lg:grid-cols-[minmax(0,1fr)_320px]">
-                      <pre
-                        dir="ltr"
-                        className="bg-muted/50 text-muted-foreground overflow-x-auto rounded-md border p-3 text-left font-mono text-[11px] leading-5"
-                      >
-                        {runPayloadExample}
-                      </pre>
+                      <CodeSnippet
+                        code={runPayloadExample}
+                        language="json"
+                        className="bg-muted/50 text-muted-foreground"
+                      />
                       <div className="grid content-start gap-2 text-xs">
                         <div className="rounded-md border bg-muted/30 p-3">
                           <p className="font-medium">Required</p>
@@ -2727,12 +2733,12 @@ export default function CodeEditor({
                         Stored-code alternative after the runner already has the
                         version:
                       </p>
-                      <pre
-                        dir="ltr"
-                        className="mt-2 overflow-x-auto text-left font-mono text-[11px] leading-5"
-                      >
-                        {codeRefPayloadExample}
-                      </pre>
+                      <CodeSnippet
+                        code={codeRefPayloadExample}
+                        language="json"
+                        className="mt-2 bg-transparent border-0 p-0"
+                        showLineNumbers={false}
+                      />
                     </div>
                   </CardContent>
                 </Card>
@@ -2764,12 +2770,11 @@ export default function CodeEditor({
                             POST
                           </Badge>
                         </div>
-                        <pre
-                          dir="ltr"
-                          className="max-h-80 overflow-auto p-3 text-left font-mono text-[11px] leading-5"
-                        >
-                          {example.code}
-                        </pre>
+                        <CodeSnippet
+                          code={example.code}
+                          language={example.language}
+                          className="max-h-80 rounded-none border-0 bg-transparent"
+                        />
                       </div>
                     ))}
                   </CardContent>

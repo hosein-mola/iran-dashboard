@@ -26,6 +26,7 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 import { Progress } from '@/components/ui/progress'
+import { CodeSnippet } from '@/components/code-snippet'
 import {
   CodeJobCreateCard,
   type CodeJobWorkspaceOption,
@@ -204,12 +205,7 @@ function JsonBlock({
           {empty}
         </p>
       ) : (
-        <pre
-          dir="ltr"
-          className="max-h-72 overflow-auto p-3 text-left font-mono text-[11px] leading-5 whitespace-pre-wrap"
-        >
-          {text}
-        </pre>
+        <CodeSnippet code={text} language="json" className="max-h-72" />
       )}
     </div>
   )
