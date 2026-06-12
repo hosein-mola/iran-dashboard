@@ -1,5 +1,9 @@
 'use client'
 
+import { Copy, Check } from 'lucide-react'
+import { useEffect, useState } from 'react'
+
+import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 
 type Language =
@@ -406,38 +410,81 @@ export function CodeSnippet({
   className?: string
   showLineNumbers?: boolean
 }) {
+  const [copied, setCopied] = useState(false)
   const lines = code.replace(/\r\n/g, '\n').split('\n')
+
+  useEffect(() => {
+    if (!copied) return
+
+    const timer = window.setTimeout(() => {
+      setCopied(false)
+    }, 1500)
+
+    return () => window.clearTimeout(timer)
+  }, [copied])
+
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(code)
+      setCopied(true)
+    } catch {
+      setCopied(false)
+    }
+  }
 
   return (
     <div
       dir="ltr"
       className={cn(
-        'bg-muted/40 text-foreground overflow-x-auto rounded-md border p-3 font-mono text-[11px] leading-5',
+        'bg-muted/40 text-foreground overflow-auto rounded-md border',
         className
       )}
+      style={{
+        fontFamily:
+          'JetBrains Mono, ui-monospace, SFMono-Regular, Menlo, monospace',
+      }}
     >
-      {lines.map((line, lineIndex) => {
-        const tokens = tokenizeLine(line, language)
-        return (
-          <div
-            key={`${lineIndex}-${line}`}
-            className="grid grid-cols-[auto_minmax(0,1fr)] gap-3"
-          >
-            {showLineNumbers ? (
-              <span className="text-muted-foreground select-none text-right tabular-nums">
-                {lineIndex + 1}
-              </span>
-            ) : null}
-            <span className="whitespace-pre">
-              {tokens.map((token, tokenIndex) => (
-                <span key={`${tokenIndex}-${token.text}`} className={kindClass(token.kind)}>
-                  {token.text}
+      <div className="sticky top-0 z-10 flex items-center justify-end border-b bg-inherit px-2 py-1">
+        <Button
+          type="button"
+          size="sm"
+          variant="ghost"
+          className="h-7 gap-1.5 px-2 text-xs"
+          onClick={() => void handleCopy()}
+          aria-label="Copy code"
+          title="Copy code"
+        >
+          {copied ? <Check className="size-3.5" /> : <Copy className="size-3.5" />}
+          {copied ? 'Copied' : 'Copy'}
+        </Button>
+      </div>
+      <div className="overflow-x-auto px-3 py-3 text-[13px] leading-6">
+        {lines.map((line, lineIndex) => {
+          const tokens = tokenizeLine(line, language)
+          return (
+            <div
+              key={`${lineIndex}-${line}`}
+              className="grid grid-cols-[auto_minmax(0,1fr)] gap-3"
+            >
+              {showLineNumbers ? (
+                <span className="text-muted-foreground select-none text-right text-[12px] tabular-nums">
+                  {lineIndex + 1}
                 </span>
-              ))}
-            </span>
-          </div>
-        )
-      })}
+              ) : null}
+              <span className="whitespace-pre">
+                {tokens.map((token, tokenIndex) => (
+                  <span
+                    key={`${tokenIndex}-${token.text}`}
+                    className={kindClass(token.kind)}
+                  >
+                    {token.text}
+                  </span>
+                ))}
+              </span>
+            </div>
+          )
+        })}
+      </div>
     </div>
   )
 }
