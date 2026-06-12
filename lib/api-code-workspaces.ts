@@ -1,6 +1,7 @@
 import type {
   SaveBundleResponse,
   SaveVersionResponse,
+  BuildWorkspaceBundleResponse,
   WorkspaceLoadResponse,
   WorkspaceProject,
   WorkspaceSnapshotV1,
@@ -114,6 +115,45 @@ export async function saveWorkspaceBundle(opts: {
   }
 
   return (await res.json()) as SaveBundleResponse
+}
+
+export async function buildWorkspaceBundle(opts: {
+  slug: string
+  version: number
+  entryPath: string
+  files: Record<string, string>
+}) {
+  const res = await fetch(
+    `/api/process/code-workspaces/${encodeURIComponent(opts.slug)}/versions/${encodeURIComponent(String(opts.version))}/build`,
+    {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        entryPath: opts.entryPath,
+        files: opts.files,
+      }),
+    }
+  )
+
+  const data = (await res.json().catch(() => null)) as
+    | BuildWorkspaceBundleResponse
+    | { error?: unknown }
+    | null
+
+  if (!res.ok) {
+    if (data && 'ok' in data && data.ok === false) {
+      return data
+    }
+
+    const errorMessage =
+      data && 'error' in data && data.error
+        ? String(data.error)
+        : `Bundle build failed (HTTP ${res.status})`
+    const message = errorMessage
+    throw new Error(message)
+  }
+
+  return data as BuildWorkspaceBundleResponse
 }
 
 export async function fetchWorkspaceVersions(

@@ -14,8 +14,7 @@
     "pm2": "pm2 start pm2.json",
     "patch:linux": "cp -rf ./package/* ./node_modules/",
     "patch:windows": "xcopy /s /e /y /i .\\package\\* .\\node_modules\\",
-    "apply-patches": "node -e \"process.platform === 'win32' ? require('child_process').execSync('npm run patch:windows') : require('child_process').execSync('npm run patch:linux')\"",
-    "postinstall": "bun scripts/copy-wasm.cjs"
+    "apply-patches": "node -e \"process.platform === 'win32' ? require('child_process').execSync('npm run patch:windows') : require('child_process').execSync('npm run patch:linux')\""
   },
   "dependencies": {
     "@ag-grid-community/locale": "~33.2.1",
@@ -59,7 +58,6 @@
     "cookie": "^1.0.2",
     "date-fns": "^3.3.1",
     "embla-carousel-react": "^8.0.0-rc22",
-    "esbuild-wasm": "^0.25.10",
     "framer-motion": "^12.6.2",
     "holy-loader": "^2.3.13",
     "imask": "^7.6.1",

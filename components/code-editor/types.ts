@@ -70,6 +70,26 @@ export type SaveBundleResponse = {
   savedAt: string
 }
 
+export type BuildWorkspaceBundleResponse =
+  | {
+      ok: true
+      success: true
+      version: number
+      entryPath: string
+      hash: string
+      sizeBytes: number
+      savedAt: string
+      output: string
+      warnings: string[]
+    }
+  | {
+      ok: false
+      success: false
+      entryPath: string
+      error: string
+      warnings: string[]
+    }
+
 export type BuildWorkerRequest = {
   requestId: string
   entryPath: string

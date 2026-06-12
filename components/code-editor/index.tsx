@@ -50,12 +50,12 @@ import {
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { cn } from '@/lib/utils'
 import {
+  buildWorkspaceBundle,
   createCodeWorkspace,
   fetchWorkspace,
   fetchWorkspaceVersionSnapshot,
   fetchWorkspaceVersions,
   listCodeWorkspaces,
-  saveWorkspaceBundle,
   saveWorkspaceVersion,
 } from '@/lib/api-code-workspaces'
 import {
@@ -73,8 +73,6 @@ import {
 } from './snapshot'
 import type {
   BuildLogEntry,
-  BuildWorkerRequest,
-  BuildWorkerResponse,
   WorkspaceProject,
   WorkspaceSnapshotV1,
   WorkspaceVersionSummary,
@@ -97,12 +95,6 @@ type MutableTreeNode = {
   fullPath: string
   type: 'file' | 'folder'
   children: Map<string, MutableTreeNode>
-}
-
-type BuildWorkerPending = {
-  resolve: (value: BuildWorkerResponse) => void
-  reject: (reason?: unknown) => void
-  timeoutId: ReturnType<typeof setTimeout>
 }
 
 type FileContextMenuState = {
@@ -675,8 +667,6 @@ export default function CodeEditor({
   )
   const completionDisposablesRef = useRef<monacoEditor.IDisposable[]>([])
   const savedContentsRef = useRef<Record<string, string>>({})
-  const workerRef = useRef<Worker | null>(null)
-  const pendingBuildsRef = useRef<Map<string, BuildWorkerPending>>(new Map())
   const viewStateByPathRef = useRef<
     Map<string, monacoEditor.editor.ICodeEditorViewState | null>
   >(new Map())
@@ -735,61 +725,6 @@ export default function CodeEditor({
     completionDisposablesRef.current = []
     viewStateByPathRef.current.clear()
   }, [])
-
-  const ensureBuildWorker = useCallback(() => {
-    if (workerRef.current) return workerRef.current
-
-    const worker = new Worker(
-      new URL('../../workers/esbuild.worker.ts', import.meta.url),
-      {
-        type: 'module',
-        name: 'workspace-esbuild',
-      }
-    )
-
-    worker.onmessage = (event: MessageEvent<BuildWorkerResponse>) => {
-      const payload = event.data
-      const pending = pendingBuildsRef.current.get(payload.requestId)
-      if (!pending) return
-
-      clearTimeout(pending.timeoutId)
-      pendingBuildsRef.current.delete(payload.requestId)
-      pending.resolve(payload)
-    }
-
-    worker.onerror = (event) => {
-      for (const [requestId, pending] of pendingBuildsRef.current.entries()) {
-        clearTimeout(pending.timeoutId)
-        pendingBuildsRef.current.delete(requestId)
-        pending.reject(new Error(event.message || 'Build worker error'))
-      }
-    }
-
-    workerRef.current = worker
-    return worker
-  }, [])
-
-  const runBuild = useCallback(
-    async (request: BuildWorkerRequest): Promise<BuildWorkerResponse> => {
-      const worker = ensureBuildWorker()
-
-      return await new Promise<BuildWorkerResponse>((resolve, reject) => {
-        const timeoutId = setTimeout(() => {
-          pendingBuildsRef.current.delete(request.requestId)
-          reject(new Error('Build timeout'))
-        }, 15_000)
-
-        pendingBuildsRef.current.set(request.requestId, {
-          resolve,
-          reject,
-          timeoutId,
-        })
-
-        worker.postMessage(request)
-      })
-    },
-    [ensureBuildWorker]
-  )
 
   const updateDirtyForPath = useCallback((path: string) => {
     const model = modelsRef.current.get(path)
@@ -1655,8 +1590,9 @@ export default function CodeEditor({
       if (buildTarget) {
         addLog('info', `Bundling ${buildTarget}...`)
 
-        const buildResponse = await runBuild({
-          requestId: crypto.randomUUID(),
+        const buildResponse = await buildWorkspaceBundle({
+          slug,
+          version: saved.version,
           entryPath: buildTarget,
           files: snapshotToFileMap(snapshotForSave),
         })
@@ -1665,13 +1601,6 @@ export default function CodeEditor({
           for (const warning of buildResponse.warnings) {
             addLog('info', warning)
           }
-
-          await saveWorkspaceBundle({
-            slug,
-            version: saved.version,
-            entryPath: buildResponse.entryPath,
-            code: buildResponse.output,
-          })
 
           addLog(
             'success',
@@ -1703,7 +1632,7 @@ export default function CodeEditor({
     } finally {
       setIsSaving(false)
     }
-  }, [addLog, hydrateSnapshotFromModels, runBuild])
+  }, [addLog, hydrateSnapshotFromModels])
 
   const handleCheckoutVersion = useCallback(
     async (version: number) => {
@@ -1856,7 +1785,6 @@ export default function CodeEditor({
 
   useEffect(() => {
     configureMonacoWorkers()
-    const pendingBuildsMap = pendingBuildsRef.current
 
     let cancelled = false
     void loader.init().then((monaco) => {
@@ -1937,18 +1865,6 @@ export default function CodeEditor({
 
     return () => {
       cancelled = true
-
-      if (workerRef.current) {
-        workerRef.current.terminate()
-        workerRef.current = null
-      }
-
-      const pendingBuilds = Array.from(pendingBuildsMap.values())
-      for (const pending of pendingBuilds) {
-        clearTimeout(pending.timeoutId)
-        pending.reject(new Error('Build cancelled'))
-      }
-      pendingBuildsMap.clear()
 
       disposeModels()
       editorRef.current?.dispose()
@@ -2033,7 +1949,7 @@ export default function CodeEditor({
   const runnerOrigin = 'http://localhost:3001'
   const endpointBasePath = `/api/process/code-workspaces/${endpointProjectSlug}`
   const endpointRunPath = `${endpointBasePath}/versions/${activeVersionForExamples}/run`
-  const endpointBundlePath = `${endpointBasePath}/versions/${activeVersionForExamples}/bundle`
+  const endpointBuildPath = `${endpointBasePath}/versions/${activeVersionForExamples}/build`
   const endpointVersionPath = `${endpointBasePath}/versions/${activeVersionForExamples}`
   const endpointVersionsPath = `${endpointBasePath}/versions?limit=50`
   const endpointEntryPath = normalizeWorkspacePath(
@@ -2104,8 +2020,9 @@ export default function CodeEditor({
     },
     {
       method: 'POST',
-      path: endpointBundlePath,
-      description: 'Store the compiled ESM bundle for an entry file.',
+      path: endpointBuildPath,
+      description:
+        'Build the workspace remotely and store the compiled ESM bundle.',
     },
     {
       method: 'POST',
