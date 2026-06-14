@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { Activity, Code2, Server, Terminal } from 'lucide-react'
+import { Activity, Code2, GitBranch, Server, Terminal } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
 import {
@@ -25,6 +25,13 @@ const processTools = [
     icon: Server,
     action: 'مشاهده Workerها',
   },
+  {
+    title: 'Workflow',
+    description: 'تعریف نسخه‌دار فرایند، گردش فرم، تایید موازی و وضعیت اجرای Temporal.',
+    href: '/process/workflow',
+    icon: GitBranch,
+    action: 'باز کردن Workflow',
+  },
 ]
 
 export default function ProcessPage() {
@@ -48,7 +55,7 @@ export default function ProcessPage() {
           </p>
         </header>
 
-        <section className="grid gap-4 md:grid-cols-2">
+        <section className="grid gap-4 md:grid-cols-3">
           {processTools.map((tool) => (
             <Card
               key={tool.href}
