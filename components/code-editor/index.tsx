@@ -41,10 +41,7 @@ import { CodeEditorJobPanel } from '@/components/code-jobs/CodeEditorJobPanel'
 import { CodeSnippet } from '@/components/code-snippet'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import {
-  type ThemeMode,
-  useTheme,
-} from '@/components/providers/ThemeProvider'
+import { useTheme } from '@/components/providers/ThemeProvider'
 import {
   Select,
   SelectContent,
@@ -117,13 +114,10 @@ type ImportContext = {
 }
 
 type ActivityPanel = 'explorer' | 'versions' | 'jobs' | 'console' | 'endpoints'
-type EditorThemeName =
-  | 'iran-dashboard-editor-light'
-  | 'iran-dashboard-editor-dark'
-  | 'iran-dashboard-editor-wood'
 
 const MAX_LOG_LINES = 80
 const DEFAULT_WORKSPACE_SLUG = 'process'
+const EDITOR_THEME_NAME = 'iran-dashboard-editor'
 
 const KNOWN_IMPORT_EXTENSIONS = [
   '.ts',
@@ -137,6 +131,524 @@ const KNOWN_IMPORT_EXTENSIONS = [
 const IMPORT_DIAGNOSTIC_CODES_TO_IGNORE = [2307, 7016]
 
 let monacoWorkersConfigured = false
+
+type RgbaColor = {
+  r: number
+  g: number
+  b: number
+  a: number
+}
+
+type EditorPalette = {
+  background: RgbaColor
+  foreground: RgbaColor
+  muted: RgbaColor
+  mutedForeground: RgbaColor
+  primary: RgbaColor
+  accent: RgbaColor
+  border: RgbaColor
+  card: RgbaColor
+  popover: RgbaColor
+  chart2: RgbaColor
+  chart3: RgbaColor
+  chart4: RgbaColor
+  chart5: RgbaColor
+}
+
+const LIGHT_EDITOR_FALLBACKS = {
+  background: '#ffffff',
+  foreground: '#18181b',
+  muted: '#f4f4f5',
+  mutedForeground: '#71717a',
+  primary: '#2563eb',
+  accent: '#e0f2fe',
+  border: '#e4e4e7',
+  card: '#ffffff',
+  popover: '#ffffff',
+  chart2: '#047857',
+  chart3: '#7c3aed',
+  chart4: '#a16207',
+  chart5: '#0891b2',
+}
+
+const DARK_EDITOR_FALLBACKS = {
+  background: '#111827',
+  foreground: '#dbe4f0',
+  muted: '#172033',
+  mutedForeground: '#7f8ea8',
+  primary: '#7cc2ff',
+  accent: '#23456e',
+  border: '#2a3950',
+  card: '#172033',
+  popover: '#172033',
+  chart2: '#8fd3ff',
+  chart3: '#a0c8ff',
+  chart4: '#a5d8ff',
+  chart5: '#c4b5fd',
+}
+
+function clamp(value: number, min: number, max: number) {
+  return Math.min(max, Math.max(min, value))
+}
+
+function parseAlpha(value: string | undefined) {
+  if (!value) return 1
+  const trimmed = value.trim()
+  if (trimmed.endsWith('%')) {
+    return clamp(Number.parseFloat(trimmed) / 100, 0, 1)
+  }
+
+  return clamp(Number.parseFloat(trimmed), 0, 1)
+}
+
+function parseHue(value: string) {
+  const trimmed = value.trim()
+  if (trimmed.endsWith('turn')) {
+    return Number.parseFloat(trimmed) * 360
+  }
+  if (trimmed.endsWith('rad')) {
+    return (Number.parseFloat(trimmed) * 180) / Math.PI
+  }
+
+  return Number.parseFloat(trimmed)
+}
+
+function splitColorArguments(content: string) {
+  const [valuePart, alphaPart] = content.split('/').map((part) => part.trim())
+  const components = valuePart.includes(',')
+    ? valuePart.split(',').map((part) => part.trim())
+    : valuePart.split(/\s+/).map((part) => part.trim())
+
+  return [
+    ...components.filter(Boolean),
+    ...(alphaPart ? [alphaPart] : []),
+  ]
+}
+
+function parseHexColor(value: string): RgbaColor | null {
+  const match = value.match(/^#([0-9a-f]{3,8})$/i)
+  if (!match) return null
+
+  const hex = match[1]
+  if (hex.length === 3 || hex.length === 4) {
+    const [r, g, b, a] = hex
+      .split('')
+      .map((char) => Number.parseInt(char + char, 16))
+    return {
+      r,
+      g,
+      b,
+      a: hex.length === 4 ? a / 255 : 1,
+    }
+  }
+
+  if (hex.length === 6 || hex.length === 8) {
+    return {
+      r: Number.parseInt(hex.slice(0, 2), 16),
+      g: Number.parseInt(hex.slice(2, 4), 16),
+      b: Number.parseInt(hex.slice(4, 6), 16),
+      a:
+        hex.length === 8 ? Number.parseInt(hex.slice(6, 8), 16) / 255 : 1,
+    }
+  }
+
+  return null
+}
+
+function parseRgbChannel(value: string) {
+  const trimmed = value.trim()
+  if (trimmed.endsWith('%')) {
+    return clamp((Number.parseFloat(trimmed) / 100) * 255, 0, 255)
+  }
+
+  return clamp(Number.parseFloat(trimmed), 0, 255)
+}
+
+function parseRgbColor(content: string): RgbaColor | null {
+  const parts = splitColorArguments(content)
+  if (parts.length < 3) return null
+
+  return {
+    r: parseRgbChannel(parts[0]),
+    g: parseRgbChannel(parts[1]),
+    b: parseRgbChannel(parts[2]),
+    a: parseAlpha(parts[3]),
+  }
+}
+
+function parsePercentage(value: string) {
+  const trimmed = value.trim()
+  if (!trimmed.endsWith('%')) return Number.parseFloat(trimmed)
+
+  return Number.parseFloat(trimmed) / 100
+}
+
+function parseHslColor(content: string): RgbaColor | null {
+  const parts = splitColorArguments(content)
+  if (parts.length < 3) return null
+
+  const hue = (((parseHue(parts[0]) % 360) + 360) % 360) / 360
+  const saturation = clamp(parsePercentage(parts[1]), 0, 1)
+  const lightness = clamp(parsePercentage(parts[2]), 0, 1)
+  const alpha = parseAlpha(parts[3])
+
+  if (saturation === 0) {
+    const channel = lightness * 255
+    return { r: channel, g: channel, b: channel, a: alpha }
+  }
+
+  const q =
+    lightness < 0.5
+      ? lightness * (1 + saturation)
+      : lightness + saturation - lightness * saturation
+  const p = 2 * lightness - q
+  const hueToRgb = (t: number) => {
+    let normalized = t
+    if (normalized < 0) normalized += 1
+    if (normalized > 1) normalized -= 1
+    if (normalized < 1 / 6) return p + (q - p) * 6 * normalized
+    if (normalized < 1 / 2) return q
+    if (normalized < 2 / 3) return p + (q - p) * (2 / 3 - normalized) * 6
+    return p
+  }
+
+  return {
+    r: hueToRgb(hue + 1 / 3) * 255,
+    g: hueToRgb(hue) * 255,
+    b: hueToRgb(hue - 1 / 3) * 255,
+    a: alpha,
+  }
+}
+
+function linearSrgbToRgbChannel(value: number) {
+  const clamped = clamp(value, 0, 1)
+  const encoded =
+    clamped <= 0.0031308
+      ? clamped * 12.92
+      : 1.055 * Math.pow(clamped, 1 / 2.4) - 0.055
+
+  return encoded * 255
+}
+
+function parseOklchColor(content: string): RgbaColor | null {
+  const parts = splitColorArguments(content)
+  if (parts.length < 3) return null
+
+  const l = clamp(parsePercentage(parts[0]), 0, 1)
+  const c = Number.parseFloat(parts[1])
+  const hueRadians = (parseHue(parts[2]) * Math.PI) / 180
+  const alpha = parseAlpha(parts[3])
+  const a = c * Math.cos(hueRadians)
+  const b = c * Math.sin(hueRadians)
+
+  const lPrime = l + 0.3963377774 * a + 0.2158037573 * b
+  const mPrime = l - 0.1055613458 * a - 0.0638541728 * b
+  const sPrime = l - 0.0894841775 * a - 1.291485548 * b
+
+  const lCubed = lPrime ** 3
+  const mCubed = mPrime ** 3
+  const sCubed = sPrime ** 3
+
+  return {
+    r: linearSrgbToRgbChannel(
+      4.0767416621 * lCubed -
+        3.3077115913 * mCubed +
+        0.2309699292 * sCubed
+    ),
+    g: linearSrgbToRgbChannel(
+      -1.2684380046 * lCubed +
+        2.6097574011 * mCubed -
+        0.3413193965 * sCubed
+    ),
+    b: linearSrgbToRgbChannel(
+      -0.0041960863 * lCubed -
+        0.7034186147 * mCubed +
+        1.707614701 * sCubed
+    ),
+    a: alpha,
+  }
+}
+
+function parseCssColor(value: string): RgbaColor | null {
+  const trimmed = value.trim()
+  if (!trimmed) return null
+
+  const hex = parseHexColor(trimmed)
+  if (hex) return hex
+
+  const functionMatch = trimmed.match(/^([a-z]+)\((.*)\)$/i)
+  if (!functionMatch) return null
+
+  const functionName = functionMatch[1].toLowerCase()
+  const content = functionMatch[2]
+  if (functionName === 'rgb' || functionName === 'rgba') {
+    return parseRgbColor(content)
+  }
+  if (functionName === 'hsl' || functionName === 'hsla') {
+    return parseHslColor(content)
+  }
+  if (functionName === 'oklch') {
+    return parseOklchColor(content)
+  }
+
+  return null
+}
+
+function resolveCssColor(value: string): RgbaColor | null {
+  const parsed = parseCssColor(value)
+  if (parsed) return parsed
+  if (typeof document === 'undefined') return null
+
+  const probe = document.createElement('span')
+  probe.style.color = value
+  if (!probe.style.color) return null
+
+  probe.style.display = 'none'
+  const parent = document.body ?? document.documentElement
+  parent.appendChild(probe)
+  const computed = window.getComputedStyle(probe).color
+  probe.remove()
+
+  return parseCssColor(computed)
+}
+
+function readThemeColor(
+  styles: CSSStyleDeclaration,
+  token: string,
+  fallback: string
+) {
+  const rawValue = styles.getPropertyValue(`--${token}`).trim()
+  return (
+    resolveCssColor(rawValue) ??
+    resolveCssColor(`var(--${token})`) ??
+    resolveCssColor(fallback) ?? { r: 0, g: 0, b: 0, a: 1 }
+  )
+}
+
+function readEditorPalette(resolvedTheme: 'light' | 'dark'): EditorPalette {
+  const styles = window.getComputedStyle(document.documentElement)
+  const fallbacks =
+    resolvedTheme === 'dark' ? DARK_EDITOR_FALLBACKS : LIGHT_EDITOR_FALLBACKS
+
+  return {
+    background: readThemeColor(styles, 'background', fallbacks.background),
+    foreground: readThemeColor(styles, 'foreground', fallbacks.foreground),
+    muted: readThemeColor(styles, 'muted', fallbacks.muted),
+    mutedForeground: readThemeColor(
+      styles,
+      'muted-foreground',
+      fallbacks.mutedForeground
+    ),
+    primary: readThemeColor(styles, 'primary', fallbacks.primary),
+    accent: readThemeColor(styles, 'accent', fallbacks.accent),
+    border: readThemeColor(styles, 'border', fallbacks.border),
+    card: readThemeColor(styles, 'card', fallbacks.card),
+    popover: readThemeColor(styles, 'popover', fallbacks.popover),
+    chart2: readThemeColor(styles, 'chart-2', fallbacks.chart2),
+    chart3: readThemeColor(styles, 'chart-3', fallbacks.chart3),
+    chart4: readThemeColor(styles, 'chart-4', fallbacks.chart4),
+    chart5: readThemeColor(styles, 'chart-5', fallbacks.chart5),
+  }
+}
+
+function mixColors(from: RgbaColor, to: RgbaColor, amount: number): RgbaColor {
+  const ratio = clamp(amount, 0, 1)
+  return {
+    r: from.r + (to.r - from.r) * ratio,
+    g: from.g + (to.g - from.g) * ratio,
+    b: from.b + (to.b - from.b) * ratio,
+    a: from.a + (to.a - from.a) * ratio,
+  }
+}
+
+function withAlpha(color: RgbaColor, alpha: number): RgbaColor {
+  return { ...color, a: clamp(alpha, 0, 1) }
+}
+
+function relativeLuminance(color: RgbaColor) {
+  const channel = (value: number) => {
+    const normalized = value / 255
+    return normalized <= 0.03928
+      ? normalized / 12.92
+      : ((normalized + 0.055) / 1.055) ** 2.4
+  }
+
+  return (
+    0.2126 * channel(color.r) +
+    0.7152 * channel(color.g) +
+    0.0722 * channel(color.b)
+  )
+}
+
+function contrastRatio(a: RgbaColor, b: RgbaColor) {
+  const lighter = Math.max(relativeLuminance(a), relativeLuminance(b))
+  const darker = Math.min(relativeLuminance(a), relativeLuminance(b))
+  return (lighter + 0.05) / (darker + 0.05)
+}
+
+function ensureContrast(
+  color: RgbaColor,
+  background: RgbaColor,
+  fallback: RgbaColor,
+  minimumRatio = 4
+) {
+  if (contrastRatio(color, background) >= minimumRatio) return color
+
+  for (let amount = 0.2; amount <= 1; amount += 0.2) {
+    const mixed = mixColors(color, fallback, amount)
+    if (contrastRatio(mixed, background) >= minimumRatio) return mixed
+  }
+
+  return fallback
+}
+
+function toHexChannel(value: number) {
+  return clamp(Math.round(value), 0, 255).toString(16).padStart(2, '0')
+}
+
+function colorToHex(color: RgbaColor, includeAlpha = false) {
+  const hex = `#${toHexChannel(color.r)}${toHexChannel(color.g)}${toHexChannel(
+    color.b
+  )}`
+  if (!includeAlpha && color.a >= 1) return hex
+
+  return `${hex}${toHexChannel(color.a * 255)}`
+}
+
+function colorToRuleHex(color: RgbaColor) {
+  return colorToHex({ ...color, a: 1 }).slice(1)
+}
+
+function buildMonacoThemeData(
+  palette: EditorPalette,
+  resolvedTheme: 'light' | 'dark'
+): monacoEditor.editor.IStandaloneThemeData {
+  const isDark = resolvedTheme === 'dark'
+  const foreground = ensureContrast(
+    palette.foreground,
+    palette.background,
+    isDark
+      ? resolveCssColor(DARK_EDITOR_FALLBACKS.foreground)!
+      : resolveCssColor(LIGHT_EDITOR_FALLBACKS.foreground)!
+  )
+  const mutedForeground = ensureContrast(
+    palette.mutedForeground,
+    palette.background,
+    foreground,
+    3
+  )
+  const primary = ensureContrast(
+    palette.primary,
+    palette.background,
+    foreground,
+    4
+  )
+  const lineHighlight = mixColors(
+    palette.background,
+    foreground,
+    isDark ? 0.08 : 0.04
+  )
+  const widgetSelected = mixColors(
+    palette.accent,
+    primary,
+    isDark ? 0.28 : 0.16
+  )
+  const border = mixColors(palette.border, foreground, isDark ? 0.12 : 0.04)
+
+  return {
+    base: isDark ? 'vs-dark' : 'vs',
+    inherit: true,
+    rules: [
+      {
+        token: '',
+        foreground: colorToRuleHex(foreground),
+        background: colorToRuleHex(palette.background),
+      },
+      { token: 'comment', foreground: colorToRuleHex(mutedForeground) },
+      { token: 'keyword', foreground: colorToRuleHex(primary) },
+      {
+        token: 'string',
+        foreground: colorToRuleHex(
+          ensureContrast(palette.chart2, palette.background, foreground, 4)
+        ),
+      },
+      {
+        token: 'number',
+        foreground: colorToRuleHex(
+          ensureContrast(palette.chart4, palette.background, foreground, 4)
+        ),
+      },
+      {
+        token: 'type.identifier',
+        foreground: colorToRuleHex(
+          ensureContrast(palette.chart3, palette.background, foreground, 4)
+        ),
+      },
+      {
+        token: 'identifier',
+        foreground: colorToRuleHex(foreground),
+      },
+      {
+        token: 'delimiter',
+        foreground: colorToRuleHex(
+          ensureContrast(palette.chart5, palette.background, foreground, 3)
+        ),
+      },
+    ],
+    colors: {
+      'editor.background': colorToHex(palette.background),
+      'editor.foreground': colorToHex(foreground),
+      'editorGutter.background': colorToHex(palette.background),
+      'editorLineNumber.foreground': colorToHex(mutedForeground),
+      'editorLineNumber.activeForeground': colorToHex(foreground),
+      'editorCursor.foreground': colorToHex(primary),
+      'editor.selectionBackground': colorToHex(
+        withAlpha(primary, isDark ? 0.36 : 0.24),
+        true
+      ),
+      'editor.inactiveSelectionBackground': colorToHex(
+        withAlpha(primary, isDark ? 0.18 : 0.12),
+        true
+      ),
+      'editor.lineHighlightBackground': colorToHex(lineHighlight),
+      'editorIndentGuide.background1': colorToHex(border),
+      'editorIndentGuide.activeBackground1': colorToHex(mutedForeground),
+      'editorWidget.background': colorToHex(palette.popover),
+      'editorWidget.border': colorToHex(border),
+      'editorSuggestWidget.background': colorToHex(palette.popover),
+      'editorSuggestWidget.border': colorToHex(border),
+      'editorSuggestWidget.foreground': colorToHex(foreground),
+      'editorSuggestWidget.selectedBackground': colorToHex(widgetSelected),
+      'editorHoverWidget.background': colorToHex(palette.popover),
+      'editorHoverWidget.border': colorToHex(border),
+      'editorBracketMatch.background': colorToHex(
+        withAlpha(primary, isDark ? 0.28 : 0.18),
+        true
+      ),
+      'editorBracketMatch.border': colorToHex(primary),
+      'editor.findMatchBackground': colorToHex(
+        withAlpha(primary, isDark ? 0.42 : 0.3),
+        true
+      ),
+      'editor.findMatchHighlightBackground': colorToHex(
+        withAlpha(primary, isDark ? 0.24 : 0.16),
+        true
+      ),
+      'minimap.background': colorToHex(palette.background),
+    },
+  }
+}
+
+function defineCurrentMonacoTheme(
+  monaco: MonacoApi,
+  resolvedTheme: 'light' | 'dark'
+) {
+  monaco.editor.defineTheme(
+    EDITOR_THEME_NAME,
+    buildMonacoThemeData(readEditorPalette(resolvedTheme), resolvedTheme)
+  )
+  monaco.editor.setTheme(EDITOR_THEME_NAME)
+}
 
 function configureMonacoWorkers() {
   if (monacoWorkersConfigured || typeof window === 'undefined') return
@@ -259,120 +771,6 @@ declare module '*.mdx' {
     nonCodeModuleDecl,
     'file:///__types__/vfs-modules-js.d.ts'
   )
-
-  m.editor.defineTheme('iran-dashboard-editor-dark', {
-    base: 'vs-dark',
-    inherit: true,
-    rules: [
-      { token: '', foreground: 'dbe4f0', background: '111827' },
-      { token: 'comment', foreground: '7f8ea8' },
-      { token: 'keyword', foreground: '7cc2ff' },
-      { token: 'string', foreground: '8fd3ff' },
-      { token: 'number', foreground: 'a5d8ff' },
-      { token: 'type.identifier', foreground: 'a0c8ff' },
-      { token: 'identifier', foreground: 'd9ecff' },
-    ],
-    colors: {
-      'editor.background': '#111827',
-      'editor.foreground': '#dbe4f0',
-      'editorLineNumber.foreground': '#5f7592',
-      'editorLineNumber.activeForeground': '#c8daef',
-      'editorCursor.foreground': '#7cc2ff',
-      'editor.selectionBackground': '#1e3a5f',
-      'editor.inactiveSelectionBackground': '#162235',
-      'editor.lineHighlightBackground': '#172033',
-      'editorIndentGuide.background1': '#24324a',
-      'editorIndentGuide.activeBackground1': '#5a7aa5',
-      'editorWidget.background': '#172033',
-      'editorSuggestWidget.background': '#172033',
-      'editorSuggestWidget.border': '#2a3950',
-      'editorSuggestWidget.foreground': '#dbe4f0',
-      'editorSuggestWidget.selectedBackground': '#23456e',
-      'editorHoverWidget.background': '#172033',
-      'editorHoverWidget.border': '#2a3950',
-      'editorGutter.background': '#111827',
-      'editorBracketMatch.background': '#23456e',
-      'editorBracketMatch.border': '#7cc2ff',
-      'editor.findMatchBackground': '#2a5f99',
-      'editor.findMatchHighlightBackground': '#23456e',
-    },
-  })
-
-  m.editor.defineTheme('iran-dashboard-editor-light', {
-    base: 'vs',
-    inherit: true,
-    rules: [
-      { token: '', foreground: '18181b', background: 'ffffff' },
-      { token: 'comment', foreground: '71717a' },
-      { token: 'keyword', foreground: '2563eb' },
-      { token: 'string', foreground: '047857' },
-      { token: 'number', foreground: 'a16207' },
-      { token: 'type.identifier', foreground: '7c3aed' },
-      { token: 'identifier', foreground: '0f172a' },
-    ],
-    colors: {
-      'editor.background': '#ffffff',
-      'editor.foreground': '#18181b',
-      'editorLineNumber.foreground': '#a1a1aa',
-      'editorLineNumber.activeForeground': '#3f3f46',
-      'editorCursor.foreground': '#2563eb',
-      'editor.selectionBackground': '#bfdbfe',
-      'editor.inactiveSelectionBackground': '#e4e4e7',
-      'editor.lineHighlightBackground': '#f4f4f5',
-      'editorIndentGuide.background1': '#e4e4e7',
-      'editorIndentGuide.activeBackground1': '#a1a1aa',
-      'editorWidget.background': '#ffffff',
-      'editorSuggestWidget.background': '#ffffff',
-      'editorSuggestWidget.border': '#e4e4e7',
-      'editorSuggestWidget.foreground': '#18181b',
-      'editorSuggestWidget.selectedBackground': '#e0f2fe',
-      'editorHoverWidget.background': '#ffffff',
-      'editorHoverWidget.border': '#e4e4e7',
-    },
-  })
-
-  m.editor.defineTheme('iran-dashboard-editor-wood', {
-    base: 'vs',
-    inherit: true,
-    rules: [
-      { token: '', foreground: '33251a', background: 'fbf3e5' },
-      { token: 'comment', foreground: '7c6a58' },
-      { token: 'keyword', foreground: '8a4f25' },
-      { token: 'string', foreground: '496c39' },
-      { token: 'number', foreground: '9a5b1f' },
-      { token: 'type.identifier', foreground: '76512c' },
-      { token: 'identifier', foreground: '33251a' },
-    ],
-    colors: {
-      'editor.background': '#fbf3e5',
-      'editor.foreground': '#33251a',
-      'editorLineNumber.foreground': '#9d8a73',
-      'editorLineNumber.activeForeground': '#5f452f',
-      'editorCursor.foreground': '#8a4f25',
-      'editor.selectionBackground': '#ead2af',
-      'editor.inactiveSelectionBackground': '#f0dfc4',
-      'editor.lineHighlightBackground': '#f5ead8',
-      'editorIndentGuide.background1': '#e2cda9',
-      'editorIndentGuide.activeBackground1': '#b8966b',
-      'editorWidget.background': '#fff8ee',
-      'editorSuggestWidget.background': '#fff8ee',
-      'editorSuggestWidget.border': '#e2cda9',
-      'editorSuggestWidget.foreground': '#33251a',
-      'editorSuggestWidget.selectedBackground': '#f0dfc4',
-      'editorHoverWidget.background': '#fff8ee',
-      'editorHoverWidget.border': '#e2cda9',
-    },
-  })
-}
-
-function getMonacoThemeName(
-  theme: ThemeMode,
-  resolvedTheme: 'light' | 'dark'
-): EditorThemeName {
-  if (theme === 'wood') return 'iran-dashboard-editor-wood'
-  return resolvedTheme === 'dark'
-    ? 'iran-dashboard-editor-dark'
-    : 'iran-dashboard-editor-light'
 }
 
 function asSlug(input: string) {
@@ -630,10 +1028,6 @@ export default function CodeEditor({
   workspaceSlug?: string
 }) {
   const { theme, resolvedTheme } = useTheme()
-  const monacoThemeName = useMemo(
-    () => getMonacoThemeName(theme, resolvedTheme),
-    [resolvedTheme, theme]
-  )
   const [projects, setProjects] = useState<WorkspaceProject[]>([])
   const [selectedProjectSlug, setSelectedProjectSlug] = useState(workspaceSlug)
   const [snapshot, setSnapshot] = useState<WorkspaceSnapshotV1>(() =>
@@ -669,6 +1063,7 @@ export default function CodeEditor({
   const fileContextMenuRef = useRef<HTMLDivElement | null>(null)
   const editorRef = useRef<MonacoEditorInstance | null>(null)
   const monacoRef = useRef<MonacoApi | null>(null)
+  const resolvedThemeRef = useRef(resolvedTheme)
   const modelsRef = useRef<Map<string, monacoEditor.editor.ITextModel>>(
     new Map()
   )
@@ -693,6 +1088,21 @@ export default function CodeEditor({
   )
   const isExplorerOpen = activeActivityPanel === 'explorer'
   const isEndpointsOpen = activeActivityPanel === 'endpoints'
+
+  useEffect(() => {
+    resolvedThemeRef.current = resolvedTheme
+  }, [resolvedTheme])
+
+  useEffect(() => {
+    const monaco = monacoRef.current
+    if (!monaco) return
+
+    const frameId = window.requestAnimationFrame(() => {
+      defineCurrentMonacoTheme(monaco, resolvedTheme)
+    })
+
+    return () => window.cancelAnimationFrame(frameId)
+  }, [resolvedTheme, theme])
 
   const addLog = useCallback(
     (level: BuildLogEntry['level'], message: string) => {
@@ -816,8 +1226,10 @@ export default function CodeEditor({
     if (!Number.isFinite(rect.width) || !Number.isFinite(rect.height)) return
     if (rect.width < 2 || rect.height < 2) return
 
+    defineCurrentMonacoTheme(monaco, resolvedThemeRef.current)
+
     editorRef.current = monaco.editor.create(container, {
-      theme: monacoThemeName,
+      theme: EDITOR_THEME_NAME,
       automaticLayout: true,
       minimap: { enabled: true },
       fontSize: 20,
@@ -849,11 +1261,7 @@ export default function CodeEditor({
         }
       }
     }
-  }, [ensureModel, isExplorerOpen, monacoThemeName])
-
-  useEffect(() => {
-    monacoRef.current?.editor.setTheme(monacoThemeName)
-  }, [monacoThemeName])
+  }, [ensureModel, isExplorerOpen])
 
   useEffect(() => {
     if (!isExplorerOpen || !editorRef.current) return

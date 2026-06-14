@@ -507,9 +507,8 @@ function isAggregateSqlQuery(query: string) {
   const normalized = stripSqlStringsAndComments(query).toLowerCase()
 
   return (
-    /\b(count|sum|avg|min|max|stdev|stdevp|var|varp)\s*\(/.test(
-      normalized
-    ) || /\b(group\s+by|having)\b/.test(normalized)
+    /\b(count|sum|avg|min|max|stdev|stdevp|var|varp)\s*\(/.test(normalized) ||
+    /\b(group\s+by|having)\b/.test(normalized)
   )
 }
 
@@ -827,11 +826,13 @@ async function executeSqlServerQuery(query: string, rowLimit: number) {
   const pool = await getSharedSqlServerPool(connectionString)
 
   try {
-    const result = await pool.request().query(
-      shouldApplyRowLimit
-        ? `SET ROWCOUNT ${limit}\n${query}\nSET ROWCOUNT 0`
-        : query
-    )
+    const result = await pool
+      .request()
+      .query(
+        shouldApplyRowLimit
+          ? `SET ROWCOUNT ${limit}\n${query}\nSET ROWCOUNT 0`
+          : query
+      )
 
     const rows = result.recordset ?? []
     return shouldApplyRowLimit ? rows.slice(0, limit) : rows
@@ -865,13 +866,13 @@ function buildSystemPrompt(schemaJson: string, rowLimit: number) {
     '- Prefer simple WHERE filters. Avoid joins unless the schema and question require them.',
     '- Persian field words are intent labels, not search values. Remove labels such as نام, نام خانوادگی, فامیل, نام کوچک, کد ملی, شماره پرسنلی from text literals.',
     '- For personnel schemas, map intent when those columns exist: نام/full name -> vcFarsiFullName, نام کوچک/first name -> vcFarsiFName, نام خانوادگی/فامیل/last name -> vcFarsiLName, کد ملی/national code -> vcNationalCode.',
-    '- Example: "نام خانوادگی حسین" means search vcFarsiLName for only N\'%حسین%\', not N\'%نام خانوادگی حسین%\'.',
+    "- Example: \"نام خانوادگی حسین\" means search vcFarsiLName for only N'%حسین%', not N'%نام خانوادگی حسین%'.",
     '- For IDs, codes, dates, and numbers use exact comparisons.',
-    '- Database text may store Arabic ي/ك while users type Persian ی/ک. For Persian/Arabic text LIKE, normalize both sides: REPLACE(REPLACE(column, N\'ي\', N\'ی\'), N\'ك\', N\'ک\') LIKE REPLACE(REPLACE(N\'%term%\', N\'ي\', N\'ی\'), N\'ك\', N\'ک\').',
-    '- Correct last-name example: REPLACE(REPLACE(vcFarsiLName, N\'ي\', N\'ی\'), N\'ك\', N\'ک\') LIKE REPLACE(REPLACE(N\'%حسین%\', N\'ي\', N\'ی\'), N\'ك\', N\'ک\').',
+    "- Database text may store Arabic ي/ك while users type Persian ی/ک. For Persian/Arabic text LIKE, normalize both sides: REPLACE(REPLACE(column, N'ي', N'ی'), N'ك', N'ک') LIKE REPLACE(REPLACE(N'%term%', N'ي', N'ی'), N'ك', N'ک').",
+    "- Correct last-name example: REPLACE(REPLACE(vcFarsiLName, N'ي', N'ی'), N'ك', N'ک') LIKE REPLACE(REPLACE(N'%حسین%', N'ي', N'ی'), N'ك', N'ک').",
     '- Escape single quotes in SQL strings by doubling them. Close every string literal.',
     '- Forbidden in sql: semicolons, comments, markdown, ellipses, ??, placeholders, JSON fragments, Persian explanation, and mutation commands.',
-    '',
+    '- Never invent column names. Use only exact c values from cols.',
     'SCHEMA JSON:',
     schemaJson,
   ].join('\n')
@@ -904,7 +905,9 @@ export async function answerDatabaseQuestion(input: {
 
   for (let attempt = 0; attempt < 2; attempt += 1) {
     if (attempt > 0) {
-      await input.callbacks?.onStatus?.('کوئری اول معتبر نبود؛ در حال اصلاح SQL...')
+      await input.callbacks?.onStatus?.(
+        'کوئری اول معتبر نبود؛ در حال اصلاح SQL...'
+      )
     }
 
     const sqlDraft = await callAiChat(
