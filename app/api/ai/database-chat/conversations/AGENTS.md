@@ -1,5 +1,9 @@
 # `conversations/` Guidelines
 
+## Runtime Prerequisite
+
+- `nvm` is installed. Before running `node`, `npm`, or `npx`, use `nvm list`, activate the installed project-specific Node version with `nvm use <version>`, then verify with `node --version`.
+
 Scope: listing and creating AI database chat conversations.
 
 - List conversations newest-first and include enough schema metadata for the sidebar without requiring extra UI fetches.

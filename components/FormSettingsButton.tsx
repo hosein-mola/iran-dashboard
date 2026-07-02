@@ -24,6 +24,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+import { Switch } from '@/components/ui/switch'
 import { toast } from '@/components/ui/use-toast'
 
 type SetupOptions = {
@@ -56,6 +57,9 @@ export default function FormSettingsButton({
   const [assignedUserId, setAssignedUserId] = useState(
     form.assignedUserId || form.userId || ''
   )
+  const [gridShowRowGroupPanel, setGridShowRowGroupPanel] = useState(
+    form.scheduleConfig?.gridShowRowGroupPanel !== false
+  )
 
   const saveSettings = () => {
     startTransition(async () => {
@@ -66,6 +70,7 @@ export default function FormSettingsButton({
           submoduleId: submoduleId ? Number(submoduleId) : null,
           roleId: roleId ? Number(roleId) : null,
           assignedUserId: assignedUserId || null,
+          gridShowRowGroupPanel,
         })
 
         onSaved?.(updatedForm)
@@ -172,6 +177,22 @@ export default function FormSettingsButton({
                 ))}
               </SelectContent>
             </Select>
+          </div>
+
+          <div className="border-border/60 bg-background/40 flex items-center justify-between gap-4 rounded-lg border p-3">
+            <div className="space-y-1">
+              <Label>نمایش پنل گروه‌بندی بالای جدول</Label>
+              <p className="text-muted-foreground text-xs leading-5">
+                اگر غیرفعال باشد، نوار کشیدن ستون برای گروه‌بندی در بالای AG
+                Grid نمایش داده نمی‌شود.
+              </p>
+            </div>
+            <div dir="ltr">
+              <Switch
+                checked={gridShowRowGroupPanel}
+                onCheckedChange={setGridShowRowGroupPanel}
+              />
+            </div>
           </div>
         </div>
 

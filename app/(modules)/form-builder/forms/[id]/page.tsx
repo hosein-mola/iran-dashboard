@@ -86,7 +86,13 @@ export default async function FormDetailPage(props: {
             هر ردیف با نسخه فرم زمان ثبت ذخیره شده است.
           </p>
         </div>
-        <FormSubmissionsGrid rows={form.submissionRows} />
+        <FormSubmissionsGrid
+          rows={form.submissionRows}
+          components={form.components}
+          showRowGroupPanel={
+            form.scheduleConfig?.gridShowRowGroupPanel !== false
+          }
+        />
       </section>
     </section>
   )

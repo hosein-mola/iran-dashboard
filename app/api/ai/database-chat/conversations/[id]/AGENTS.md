@@ -1,5 +1,9 @@
 # `conversations/[id]/` Guidelines
 
+## Runtime Prerequisite
+
+- `nvm` is installed. Before running `node`, `npm`, or `npx`, use `nvm list`, activate the installed project-specific Node version with `nvm use <version>`, then verify with `node --version`.
+
 Scope: loading a single AI database chat conversation.
 
 - Always load messages in ascending `createdAt` order for stable chat rendering.

@@ -44,8 +44,8 @@ export function NavProjects({
                   className={cn(
                     'flex h-10 items-center gap-2 rounded-xl px-3 py-2 text-sm font-medium transition-colors',
                     isActive
-                      ? 'bg-sidebar-active text-sidebar-active-foreground'
-                      : 'text-sidebar-foreground hover:!bg-sidebar-accent hover:!text-sidebar-accent-foreground'
+                      ? 'bg-sidebar-active text-sidebar-active-foreground hover:!bg-sidebar-active hover:!text-sidebar-active-foreground'
+                      : 'text-sidebar-foreground hover:!bg-sidebar-active hover:!text-sidebar-active-foreground hover:shadow-sm'
                   )}
                 >
                   <Icon className="size-4 text-current opacity-75" />

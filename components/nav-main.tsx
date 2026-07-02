@@ -104,8 +104,8 @@ function NavItemComponent({
             className={cn(
               'flex h-10 w-full cursor-pointer flex-row items-center justify-between rounded-xl transition-colors',
               isActive
-                ? 'bg-sidebar-active text-sidebar-active-foreground shadow-sm'
-                : 'text-sidebar-foreground hover:!bg-sidebar-accent hover:!text-sidebar-accent-foreground'
+                ? 'bg-sidebar-active text-sidebar-active-foreground shadow-sm hover:!bg-sidebar-active hover:!text-sidebar-active-foreground'
+                : 'text-sidebar-foreground hover:!bg-sidebar-active hover:!text-sidebar-active-foreground hover:shadow-sm'
             )}
           >
             <div className="flex flex-row items-center justify-center">
@@ -158,8 +158,8 @@ function NavItemComponent({
                           className={cn(
                             'flex h-10 w-full cursor-pointer justify-start rounded-xl text-sm transition-colors',
                             subIsActive
-                              ? 'bg-sidebar-active text-sidebar-active-foreground shadow-sm'
-                              : 'text-sidebar-foreground hover:!bg-sidebar-accent hover:!text-sidebar-accent-foreground'
+                              ? 'bg-sidebar-active text-sidebar-active-foreground shadow-sm hover:!bg-sidebar-active hover:!text-sidebar-active-foreground'
+                              : 'text-sidebar-foreground hover:!bg-sidebar-active hover:!text-sidebar-active-foreground hover:shadow-sm'
                           )}
                         >
                           {subItem.title}

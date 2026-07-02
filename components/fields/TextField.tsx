@@ -81,6 +81,21 @@ const extraAttributes = {
   normalizeZeros: true,
   lazy: false,
   disabled: false,
+  gridDataType: 'auto',
+  gridFilter: 'auto',
+  gridPinned: 'none',
+  gridWidth: '',
+  gridMinWidth: '',
+  gridHide: false,
+  gridSortable: true,
+  gridResizable: true,
+  gridFloatingFilter: true,
+  gridRowGroup: false,
+  gridGroupByDefault: false,
+  gridPivot: false,
+  gridEnableValue: false,
+  gridAggFunc: 'none',
+  gridDecimalScale: '',
 }
 
 const propertyHints = {
@@ -219,6 +234,21 @@ const propertiesSchema = z.object({
   mask: z.string(),
   lazy: z.boolean(),
   disabled: z.boolean(),
+  gridDataType: z.string(),
+  gridFilter: z.string(),
+  gridPinned: z.string(),
+  gridWidth: z.string(),
+  gridMinWidth: z.string(),
+  gridHide: z.boolean(),
+  gridSortable: z.boolean(),
+  gridResizable: z.boolean(),
+  gridFloatingFilter: z.boolean(),
+  gridRowGroup: z.boolean(),
+  gridGroupByDefault: z.boolean(),
+  gridPivot: z.boolean(),
+  gridEnableValue: z.boolean(),
+  gridAggFunc: z.string(),
+  gridDecimalScale: z.string(),
 })
 
 export const TextFieldFormElement: FormElement = {
@@ -299,8 +329,8 @@ function PropertySection({
   children: React.ReactNode
 }) {
   return (
-    <section className="border-border/60 bg-card/60 space-y-4 rounded-lg border p-3">
-      <div className="space-y-1">
+    <section className="border-border/60 bg-card/60 space-y-5 rounded-lg border p-4">
+      <div className="border-border/50 space-y-1 border-b pb-3">
         <h3 className="text-sm font-semibold">{title}</h3>
         {description && (
           <p className="text-muted-foreground text-xs leading-5">
@@ -308,18 +338,44 @@ function PropertySection({
           </p>
         )}
       </div>
-      <div className="space-y-4">{children}</div>
+      <div className="space-y-5">{children}</div>
     </section>
   )
 }
 
+function PropertySubsection({
+  title,
+  description,
+  children,
+}: {
+  title: string
+  description?: string
+  children: React.ReactNode
+}) {
+  return (
+    <div className="border-border/50 bg-background/35 space-y-4 rounded-lg border p-4">
+      <div className="space-y-1.5">
+        <h4 className="text-muted-foreground text-xs font-semibold tracking-normal">
+          {title}
+        </h4>
+        {description && (
+          <p className="text-muted-foreground/80 text-xs leading-5">
+            {description}
+          </p>
+        )}
+      </div>
+      <div className="space-y-4">{children}</div>
+    </div>
+  )
+}
+
 function PropertyFieldShell({ children }: { children: React.ReactNode }) {
-  return <FormItem className="space-y-2">{children}</FormItem>
+  return <FormItem className="min-w-0 space-y-2.5">{children}</FormItem>
 }
 
 function PropertySwitchShell({ children }: { children: React.ReactNode }) {
   return (
-    <FormItem className="border-border/60 bg-background/40 flex items-start justify-between gap-4 rounded-lg border p-3">
+    <FormItem className="border-border/55 bg-card/55 flex min-w-0 items-start justify-between gap-5 rounded-lg border p-4">
       {children}
     </FormItem>
   )
@@ -616,7 +672,7 @@ function PropertiesComponent({
 
   useEffect(() => {
     if (element) {
-      form.reset(element.extraAttributes)
+      form.reset({ ...extraAttributes, ...element.extraAttributes })
     }
   }, [element, form])
 
@@ -1272,6 +1328,330 @@ function PropertiesComponent({
             />
           </PropertySection>
         )}
+
+        <PropertySection
+          title="نمایش در جدول داده"
+          description="این تنظیمات روی ستون همین فیلد در داشبورد سابمیشن‌ها اعمال می‌شود و کاربر همچنان می‌تواند هنگام مشاهده جدول آن را تغییر دهد."
+        >
+          <PropertySubsection
+            title="نوع داده و فیلتر"
+            description="نحوه تفسیر مقدار و فیلتر پیش‌فرض ستون را مشخص کنید."
+          >
+            <div className="grid gap-4">
+              <FormField
+                control={form.control}
+                name={'gridDataType'}
+                render={({ field }) => (
+                  <PropertyFieldShell>
+                    <FormLabel>نوع داده ستون</FormLabel>
+                    <FormControl>
+                      <Select
+                        value={field.value}
+                        onValueChange={field.onChange}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="نوع داده" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="auto">خودکار</SelectItem>
+                          <SelectItem value="text">متن</SelectItem>
+                          <SelectItem value="number">عدد</SelectItem>
+                          <SelectItem value="date">تاریخ</SelectItem>
+                          <SelectItem value="boolean">درست / نادرست</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </FormControl>
+                    <FormMessage />
+                  </PropertyFieldShell>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name={'gridFilter'}
+                render={({ field }) => (
+                  <PropertyFieldShell>
+                    <FormLabel>فیلتر پیش‌فرض</FormLabel>
+                    <FormControl>
+                      <Select
+                        value={field.value}
+                        onValueChange={field.onChange}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="فیلتر" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="auto">خودکار</SelectItem>
+                          <SelectItem value="text">متنی</SelectItem>
+                          <SelectItem value="number">عددی</SelectItem>
+                          <SelectItem value="date">تاریخ</SelectItem>
+                          <SelectItem value="set">لیست مقدارها</SelectItem>
+                          <SelectItem value="multi">چند فیلتره</SelectItem>
+                          <SelectItem value="none">بدون فیلتر</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </FormControl>
+                    <FormMessage />
+                  </PropertyFieldShell>
+                )}
+              />
+            </div>
+          </PropertySubsection>
+
+          <PropertySubsection
+            title="چیدمان ستون"
+            description="عرض، پین و نمایش اولیه ستون در جدول را تنظیم کنید."
+          >
+            <div className="grid gap-4">
+              <FormField
+                control={form.control}
+                name={'gridPinned'}
+                render={({ field }) => (
+                  <PropertyFieldShell>
+                    <FormLabel>پین ستون</FormLabel>
+                    <FormControl>
+                      <Select
+                        value={field.value}
+                        onValueChange={field.onChange}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="پین" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="none">بدون پین</SelectItem>
+                          <SelectItem value="right">راست</SelectItem>
+                          <SelectItem value="left">چپ</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </FormControl>
+                    <FormMessage />
+                  </PropertyFieldShell>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name={'gridHide'}
+                render={({ field }) => (
+                  <PropertySwitchShell>
+                    <div className="min-w-0 flex-1 space-y-1">
+                      <FormLabel>ستون در ابتدا مخفی باشد</FormLabel>
+                    </div>
+                    <SwitchControl
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                    />
+                    <FormMessage />
+                  </PropertySwitchShell>
+                )}
+              />
+            </div>
+            <div className="grid gap-4">
+              <FormField
+                control={form.control}
+                name={'gridWidth'}
+                render={({ field }) => (
+                  <PropertyFieldShell>
+                    <FormLabel>عرض</FormLabel>
+                    <FormControl>
+                      <Input
+                        dir="ltr"
+                        value={field.value}
+                        onChange={field.onChange}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </PropertyFieldShell>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name={'gridMinWidth'}
+                render={({ field }) => (
+                  <PropertyFieldShell>
+                    <FormLabel>حداقل عرض</FormLabel>
+                    <FormControl>
+                      <Input
+                        dir="ltr"
+                        value={field.value}
+                        onChange={field.onChange}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </PropertyFieldShell>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name={'gridDecimalScale'}
+                render={({ field }) => (
+                  <PropertyFieldShell>
+                    <FormLabel>اعشار</FormLabel>
+                    <FormControl>
+                      <Input
+                        dir="ltr"
+                        value={field.value}
+                        onChange={field.onChange}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </PropertyFieldShell>
+                )}
+              />
+            </div>
+          </PropertySubsection>
+
+          <PropertySubsection title="رفتارهای مشاهده">
+            <div className="grid gap-4">
+              <FormField
+                control={form.control}
+                name={'gridSortable'}
+                render={({ field }) => (
+                  <PropertySwitchShell>
+                    <div className="min-w-0 flex-1 space-y-1">
+                      <FormLabel>مرتب‌سازی فعال باشد</FormLabel>
+                    </div>
+                    <SwitchControl
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                    />
+                    <FormMessage />
+                  </PropertySwitchShell>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name={'gridResizable'}
+                render={({ field }) => (
+                  <PropertySwitchShell>
+                    <div className="min-w-0 flex-1 space-y-1">
+                      <FormLabel>تغییر عرض ستون فعال باشد</FormLabel>
+                    </div>
+                    <SwitchControl
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                    />
+                    <FormMessage />
+                  </PropertySwitchShell>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name={'gridFloatingFilter'}
+                render={({ field }) => (
+                  <PropertySwitchShell>
+                    <div className="min-w-0 flex-1 space-y-1">
+                      <FormLabel>فیلتر سریع زیر هدر نمایش داده شود</FormLabel>
+                    </div>
+                    <SwitchControl
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                    />
+                    <FormMessage />
+                  </PropertySwitchShell>
+                )}
+              />
+            </div>
+          </PropertySubsection>
+
+          <PropertySubsection
+            title="گروه‌بندی و تحلیل"
+            description="این گزینه‌ها ستون را برای گروه‌بندی، Pivot و تجمیع در AG Grid آماده می‌کنند."
+          >
+            <div className="grid gap-4">
+              <FormField
+                control={form.control}
+                name={'gridRowGroup'}
+                render={({ field }) => (
+                  <PropertySwitchShell>
+                    <div className="min-w-0 flex-1 space-y-1">
+                      <FormLabel>اجازه گروه‌بندی با این ستون</FormLabel>
+                    </div>
+                    <SwitchControl
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                    />
+                    <FormMessage />
+                  </PropertySwitchShell>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name={'gridGroupByDefault'}
+                render={({ field }) => (
+                  <PropertySwitchShell>
+                    <div className="min-w-0 flex-1 space-y-1">
+                      <FormLabel>در نمایش داده، این ستون گروه‌بندی شود</FormLabel>
+                    </div>
+                    <SwitchControl
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                    />
+                    <FormMessage />
+                  </PropertySwitchShell>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name={'gridPivot'}
+                render={({ field }) => (
+                  <PropertySwitchShell>
+                    <div className="min-w-0 flex-1 space-y-1">
+                      <FormLabel>Pivot با این ستون مجاز باشد</FormLabel>
+                    </div>
+                    <SwitchControl
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                    />
+                    <FormMessage />
+                  </PropertySwitchShell>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name={'gridEnableValue'}
+                render={({ field }) => (
+                  <PropertySwitchShell>
+                    <div className="min-w-0 flex-1 space-y-1">
+                      <FormLabel>استفاده به عنوان مقدار آماری مجاز باشد</FormLabel>
+                    </div>
+                    <SwitchControl
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                    />
+                    <FormMessage />
+                  </PropertySwitchShell>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name={'gridAggFunc'}
+                render={({ field }) => (
+                  <PropertyFieldShell>
+                    <FormLabel>تجمیع مقدار</FormLabel>
+                    <FormControl>
+                      <Select
+                        value={field.value}
+                        onValueChange={field.onChange}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="تجمیع" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="none">بدون تجمیع</SelectItem>
+                          <SelectItem value="sum">جمع</SelectItem>
+                          <SelectItem value="avg">میانگین</SelectItem>
+                          <SelectItem value="min">کمینه</SelectItem>
+                          <SelectItem value="max">بیشینه</SelectItem>
+                          <SelectItem value="count">شمارش</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </FormControl>
+                    <FormMessage />
+                  </PropertyFieldShell>
+                )}
+              />
+            </div>
+          </PropertySubsection>
+        </PropertySection>
       </form>
     </Form>
   )

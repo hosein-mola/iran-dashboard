@@ -1,5 +1,9 @@
 # `app/api/ai/` Guidelines (AI Route Handlers)
 
+## Runtime Prerequisite
+
+- `nvm` is installed. Before running `node`, `npm`, or `npx`, use `nvm list`, activate the installed project-specific Node version with `nvm use <version>`, then verify with `node --version`.
+
 Scope: API route handlers under `/api/ai`.
 
 - Keep handlers server-only and route-local; shared provider, database, and SQL logic belongs in `lib/ai-*`.

@@ -1,5 +1,9 @@
 # `lib/` Guidelines
 
+## Runtime Prerequisite
+
+- `nvm` is installed. Before running `node`, `npm`, or `npx`, use `nvm list`, activate the installed project-specific Node version with `nvm use <version>`, then verify with `node --version`.
+
 - Keep utilities focused and dependency-light; avoid circular imports.
 - Split server-only helpers from client-safe helpers.
 - Use shared `cn()` for class composition instead of duplicating merge helpers.

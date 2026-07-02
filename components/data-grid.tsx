@@ -13,6 +13,7 @@ import {
   CellStyleModule,
   ValidationModule,
   NumberFilterModule,
+  DateFilterModule,
   TooltipModule,
   PaginationModule,
   RowSelectionModule,
@@ -36,43 +37,34 @@ import {
   RowNumbersModule,
   RangeSelectionModule,
   RowGroupingPanelModule,
+  RowGroupingModule,
+  SetFilterModule,
   FindModule,
   MultiFilterModule,
   StatusBarModule,
 } from 'ag-grid-enterprise'
+import { useTheme } from './providers/ThemeProvider'
+import { Switch } from '@/components/ui/switch'
 
-const lightTheme = themeQuartz.withParams({
-  backgroundColor: 'oklch(1 0 0)',
-  foregroundColor: 'oklch(0.2 0.018 245)',
-  headerBackgroundColor: 'oklch(0.94 0.012 245)',
-  oddRowBackgroundColor: 'oklch(0.975 0.006 245)',
-  rowHoverColor: 'oklch(0.91 0.034 245)',
-  accentColor: 'oklch(0.48 0.18 245)',
-  borderColor: 'oklch(0.86 0.018 245)',
-  rowBorder: 'oklch(0.86 0.018 245)',
-})
-
-const darkTheme = themeQuartz.withParams({
-  backgroundColor: 'oklch(0.255 0.006 255)',
-  foregroundColor: 'oklch(0.94 0.004 255)',
-  headerBackgroundColor: 'oklch(0.305 0.006 255)',
-  oddRowBackgroundColor: 'oklch(0.285 0.006 255)',
-  rowHoverColor: 'oklch(0.36 0.018 245)',
-  accentColor: 'oklch(0.64 0.11 215)',
-  borderColor: 'oklch(0.405 0.006 255)',
-  rowBorder: 'oklch(0.405 0.006 255)',
-})
-
-const woodTheme = themeQuartz.withParams({
-  backgroundColor: '#1d1711',
-  foregroundColor: '#f5ecdf',
-  headerBackgroundColor: '#30261c',
-  oddRowBackgroundColor: '#241b14',
-  headerCellHoverBackgroundColor: '#3b2e22',
-  rowHoverColor: '#4a3828',
-  accentColor: '#c6a36e',
-  borderColor: '#4a382a',
-  rowBorder: '#4a382a',
+const appTheme = themeQuartz.withParams({
+  backgroundColor: 'var(--card)',
+  foregroundColor: 'var(--card-foreground)',
+  headerBackgroundColor: 'var(--muted)',
+  headerTextColor: 'var(--foreground)',
+  oddRowBackgroundColor: 'color-mix(in oklch, var(--muted) 38%, var(--card))',
+  rowHoverColor: 'var(--accent)',
+  selectedRowBackgroundColor:
+    'color-mix(in oklch, var(--primary) 18%, transparent)',
+  accentColor: 'var(--primary)',
+  borderColor: 'var(--border)',
+  rowBorder: 'var(--border)',
+  chromeBackgroundColor: 'var(--popover)',
+  menuBackgroundColor: 'var(--popover)',
+  menuTextColor: 'var(--popover-foreground)',
+  inputBackgroundColor: 'var(--background)',
+  inputBorder: '1px solid var(--input)',
+  inputTextColor: 'var(--foreground)',
+  rangeSelectionBorderColor: 'var(--primary)',
 })
 
 const localeText = AG_GRID_LOCALE_IR
@@ -95,6 +87,7 @@ type DataGridProps<TData extends Record<string, any> = DamRow> = {
   loading?: boolean
   pinnedBottomRowData?: Partial<TData>[]
   height?: string
+  rowGroupPanelShow?: 'always' | 'onlyWhenGrouping' | 'never'
   onCellValueChanged?: (event: any) => void
 }
 
@@ -115,8 +108,10 @@ ModuleRegistry.registerModules([
   ContextMenuModule,
   CellStyleModule,
   TextFilterModule,
+  SetFilterModule,
   RichSelectModule,
   NumberFilterModule,
+  DateFilterModule,
   LocaleModule,
   IntegratedChartsModule.with(AgChartsEnterpriseModule),
   PivotModule,
@@ -127,10 +122,9 @@ ModuleRegistry.registerModules([
   CsvExportModule,
   ExcelExportModule,
   RowGroupingPanelModule,
+  RowGroupingModule,
   ValidationModule,
 ])
-import { useTheme } from './providers/ThemeProvider'
-import { Switch } from '@/components/ui/switch'
 
 const ButtonRenderer = (params) => {
   if (params.node.parent?.id !== 'ROOT_NODE_ID') return null
@@ -147,6 +141,7 @@ function DataGrid<TData extends Record<string, any> = DamRow>({
   loading,
   pinnedBottomRowData,
   height = '100%',
+  rowGroupPanelShow = 'always',
   onCellValueChanged,
 }: DataGridProps<TData>) {
   const containerStyle = useMemo(() => ({ width: '100%', height }), [height])
@@ -290,9 +285,64 @@ function DataGrid<TData extends Record<string, any> = DamRow>({
       : rowData !== undefined
         ? []
         : defaultPinnedBottomRowData
+  const defaultColDef = useMemo<ColDef<TData>>(
+    () => ({
+      sortable: true,
+      filter: true,
+      floatingFilter: true,
+      resizable: true,
+      editable: false,
+      enableRowGroup: false,
+      enablePivot: false,
+      enableValue: false,
+      minWidth: 120,
+    }),
+    []
+  )
+  const sideBar = useMemo<any>(
+    () => ({
+      toolPanels: [
+        {
+          id: 'columns',
+          labelDefault: 'Columns',
+          labelKey: 'columns',
+          iconKey: 'columns',
+          toolPanel: 'agColumnsToolPanel',
+          toolPanelParams: {
+            suppressRowGroups: false,
+            suppressValues: false,
+            suppressPivots: false,
+            suppressPivotMode: false,
+            suppressColumnFilter: false,
+            suppressColumnSelectAll: false,
+            suppressColumnExpandAll: false,
+          },
+        },
+        {
+          id: 'filters',
+          labelDefault: 'Filters',
+          labelKey: 'filters',
+          iconKey: 'filter',
+          toolPanel: 'agFiltersToolPanel',
+        },
+      ],
+      position: 'left',
+    }),
+    []
+  )
+  const statusBar = useMemo<any>(
+    () => ({
+      statusPanels: [
+        { statusPanel: 'agTotalAndFilteredRowCountComponent' },
+        { statusPanel: 'agSelectedRowCountComponent' },
+        { statusPanel: 'agAggregationComponent' },
+      ],
+    }),
+    []
+  )
 
   return (
-    <div style={containerStyle}>
+    <div className="dashboard-ag-grid" style={containerStyle}>
       <div
         dir="ltr"
         style={{
@@ -303,6 +353,7 @@ function DataGrid<TData extends Record<string, any> = DamRow>({
       >
         <div dir="ltr" style={gridStyle}>
           <AgGridReact<TData>
+            key={themeState.theme}
             rowNumbers={{
               headerComponent: () => <h1>ردیف</h1>,
               width: 100,
@@ -319,6 +370,12 @@ function DataGrid<TData extends Record<string, any> = DamRow>({
             localeText={localeText}
             rowData={activeRowData}
             enableRtl={true}
+            defaultColDef={defaultColDef}
+            autoGroupColumnDef={{
+              minWidth: 220,
+              pinned: 'right',
+              headerName: 'گروه',
+            }}
             singleClickEdit={true}
             loading={
               loading ?? (rowData !== undefined ? false : internalLoading)
@@ -339,33 +396,32 @@ function DataGrid<TData extends Record<string, any> = DamRow>({
             }}
             rowSelection={{
               mode: 'singleRow',
-              checkboxes: true,
-              checkboxLocation: 'selectionColumn',
+              checkboxes: false,
               hideDisabledCheckboxes: false,
               copySelectedRows: true,
             }}
-            rowGroupPanelShow={'never'}
+            rowGroupPanelShow={rowGroupPanelShow}
             cellSelection={true}
             ensureDomOrder={true}
             animateRows={true}
             enableCellTextSelection={false}
             onSelectionChanged={(row) => console.log(row)}
             columnDefs={activeColumnDefs}
-            sideBar={'columns'}
+            sideBar={sideBar}
+            statusBar={statusBar}
             alwaysAggregateAtRootLevel={false}
-            pivotPanelShow={'never'}
+            groupTotalRow="bottom"
+            grandTotalRow="bottom"
+            pivotPanelShow={'always'}
             pinnedBottomRowData={activePinnedBottomRowData as TData[]}
             pivotMode={false}
-            theme={
-              themeState.theme === 'dark'
-                ? darkTheme
-                : themeState.theme === 'wood'
-                  ? woodTheme
-                  : lightTheme
-            }
+            processUnpinnedColumns={() => []}
+            theme={appTheme}
             enableCharts={true}
             pagination={true}
             paginationPageSize={20}
+            paginationPageSizeSelector={[20, 50, 100, 200]}
+            suppressAggFuncInHeader={false}
           />
         </div>
       </div>

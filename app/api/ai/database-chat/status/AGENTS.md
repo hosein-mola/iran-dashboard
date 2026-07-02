@@ -1,5 +1,9 @@
 # `status/` Guidelines
 
+## Runtime Prerequisite
+
+- `nvm` is installed. Before running `node`, `npm`, or `npx`, use `nvm list`, activate the installed project-specific Node version with `nvm use <version>`, then verify with `node --version`.
+
 Scope: AI database connection health checks.
 
 - Keep this route dynamic and side-effect-light; it should only check connectivity.

@@ -33,6 +33,7 @@ export type FormSettingsInput = {
   submoduleId?: number | null
   roleId?: number | null
   assignedUserId?: string | null
+  gridShowRowGroupPanel?: boolean
 }
 
 export type FormInitialDataSourceInput = {
@@ -848,11 +849,16 @@ async function ensureVersionForForm(formId: number) {
 function serializeForm(form: any) {
   const eventConfig = parseJson<FormEventRuleInput[]>(form.eventConfig, [])
   const context = parseFormRuntimeContext(form.context)
+  const scheduleConfig = parseJson<Record<string, unknown>>(
+    form.scheduleConfig,
+    {}
+  )
 
   return {
     ...form,
     page: parseJson<PageType[]>(form.page, defaultPages()),
     components: parseJson<FormElementInstance[]>(form.components, []),
+    scheduleConfig,
     context,
     initialDataSource: normalizeInitialDataSource(context.initialDataSource),
     eventConfig,
@@ -1973,10 +1979,23 @@ export async function UpdateFormSettings(
   formId: number,
   input: FormSettingsInput
 ) {
-  const updated = await prisma.$transaction(async (tx) => {
+  await prisma.$transaction(async (tx) => {
+    const existingForm = await tx.form.findUnique({
+      where: { id: Number(formId) },
+      select: { scheduleConfig: true },
+    })
+    const scheduleConfig = {
+      ...parseJson<Record<string, unknown>>(
+        existingForm?.scheduleConfig,
+        {}
+      ),
+      gridShowRowGroupPanel: input.gridShowRowGroupPanel !== false,
+    }
+
     const { form } = await updateFormAndVersion(tx, Number(formId), {
       scheduleType: input.scheduleType,
       scheduleInterval: Number(input.scheduleInterval || 1),
+      scheduleConfig: stringifyJson(scheduleConfig),
       assignedUserId: input.assignedUserId || DEFAULT_USER_ID,
       userId: input.assignedUserId || DEFAULT_USER_ID,
       roleId: input.roleId ?? null,
@@ -2004,7 +2023,7 @@ export async function UpdateFormSettings(
   revalidatePath(`/form-builder/builder/${formId}`)
   revalidatePath('/dashboard/submodule')
 
-  return updated
+  return GetFormById(Number(formId))
 }
 
 export async function PublishForm(formId: number) {

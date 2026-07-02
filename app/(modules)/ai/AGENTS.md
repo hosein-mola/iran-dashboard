@@ -1,5 +1,9 @@
 # `app/(modules)/ai/` Guidelines (AI Database Chat UI)
 
+## Runtime Prerequisite
+
+- `nvm` is installed. Before running `node`, `npm`, or `npx`, use `nvm list`, activate the installed project-specific Node version with `nvm use <version>`, then verify with `node --version`.
+
 Scope: the AI module screen and route-local client components.
 
 - Keep `page.tsx` as the server data-loading boundary; put browser state, effects, streaming reads, and form state in client components.

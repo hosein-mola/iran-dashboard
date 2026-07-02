@@ -6,6 +6,7 @@ import {
   ChartBarBig,
   ClipboardList,
   CodeSquareIcon,
+  Database,
   FolderDot,
   FormInputIcon,
   Layers3,
@@ -133,6 +134,11 @@ export const moduleMenuConfig: ModuleMenuConfig[] = [
         title: 'Worker Pool',
         url: '/process/workers',
         icon: Server,
+      },
+      {
+        title: 'داده و اتصال‌ها',
+        url: '/process/data',
+        icon: Database,
       },
     ],
     projects: [

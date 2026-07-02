@@ -1,5 +1,9 @@
 # `app/api/ai/database-chat/` Guidelines
 
+## Runtime Prerequisite
+
+- `nvm` is installed. Before running `node`, `npm`, or `npx`, use `nvm list`, activate the installed project-specific Node version with `nvm use <version>`, then verify with `node --version`.
+
 Scope: database chat conversations, schemas, status checks, and message streaming.
 
 - Use Prisma models `AiDatabaseSchema`, `AiDbChatConversation`, and `AiDbChatMessage` as the persistence contract.

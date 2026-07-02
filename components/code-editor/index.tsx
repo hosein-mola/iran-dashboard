@@ -3,6 +3,7 @@
 import { loader } from '@monaco-editor/react'
 import {
   Activity,
+  AlignLeft,
   ChevronDown,
   ChevronRight,
   File as FileIcon,
@@ -42,6 +43,7 @@ import { CodeSnippet } from '@/components/code-snippet'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { useTheme } from '@/components/providers/ThemeProvider'
+import { SwaggerUiIframe } from '@/components/swagger-ui-iframe'
 import {
   Select,
   SelectContent,
@@ -113,7 +115,13 @@ type ImportContext = {
   startColumn: number
 }
 
-type ActivityPanel = 'explorer' | 'versions' | 'jobs' | 'console' | 'endpoints'
+type ActivityPanel =
+  | 'explorer'
+  | 'versions'
+  | 'jobs'
+  | 'console'
+  | 'endpoints'
+  | 'swagger'
 
 const MAX_LOG_LINES = 80
 const DEFAULT_WORKSPACE_SLUG = 'process'
@@ -754,6 +762,12 @@ function configureTypeScriptLanguageService(m: MonacoApi) {
   m.languages.typescript.javascriptDefaults.setEagerModelSync(true)
 
   const nonCodeModuleDecl = `
+type ProcessApi = {
+  [key: string]: any
+}
+
+declare const api: ProcessApi
+
 declare module '*.md' {
   const content: string
   export default content
@@ -1088,6 +1102,7 @@ export default function CodeEditor({
   )
   const isExplorerOpen = activeActivityPanel === 'explorer'
   const isEndpointsOpen = activeActivityPanel === 'endpoints'
+  const isSwaggerOpen = activeActivityPanel === 'swagger'
 
   useEffect(() => {
     resolvedThemeRef.current = resolvedTheme
@@ -1787,7 +1802,7 @@ export default function CodeEditor({
       return {
         ...nextSnapshot,
         entryPath: normalizeWorkspacePath(
-          entryPathInput || nextSnapshot.entryPath
+          entryPathInput.trim() || nextSnapshot.entryPath || '/api/index.ts'
         ),
       }
     },
@@ -1978,9 +1993,40 @@ export default function CodeEditor({
       return
     }
 
-    const snapshotForSave = hydrateSnapshotFromModels(snapshotRef.current)
+    const hydratedSnapshot = hydrateSnapshotFromModels(snapshotRef.current)
+    const normalizedEntryPath = normalizeWorkspacePath(
+      hydratedSnapshot.entryPath || '/api/index.ts'
+    )
+    const hasEntryTs = hydratedSnapshot.files.some(
+      (file) =>
+        file.path === normalizedEntryPath && isTypeScriptPath(file.path)
+    )
+    const normalizedActivePath = activePathRef.current
+      ? normalizeWorkspacePath(activePathRef.current)
+      : null
+    const hasActiveTs =
+      normalizedActivePath !== null &&
+      hydratedSnapshot.files.some(
+        (file) =>
+          file.path === normalizedActivePath && isTypeScriptPath(file.path)
+      )
+    const fallbackTsPath = hydratedSnapshot.files.find((file) =>
+      isTypeScriptPath(file.path)
+    )?.path
+
+    const buildTarget = hasEntryTs
+      ? normalizedEntryPath
+      : hasActiveTs
+        ? normalizedActivePath
+        : (fallbackTsPath ?? null)
+    const snapshotForSave: WorkspaceSnapshotV1 =
+      buildTarget && buildTarget !== hydratedSnapshot.entryPath
+        ? { ...hydratedSnapshot, entryPath: buildTarget }
+        : hydratedSnapshot
+
     snapshotRef.current = snapshotForSave
     setSnapshot(snapshotForSave)
+    setEntryPathInput(snapshotForSave.entryPath)
 
     setIsSaving(true)
     try {
@@ -1994,31 +2040,6 @@ export default function CodeEditor({
         clientRequestId: isPublish ? crypto.randomUUID() : undefined,
       })
 
-      const normalizedEntryPath = normalizeWorkspacePath(
-        snapshotForSave.entryPath
-      )
-      const hasEntryTs = snapshotForSave.files.some(
-        (file) =>
-          file.path === normalizedEntryPath && isTypeScriptPath(file.path)
-      )
-      const normalizedActivePath = activePathRef.current
-        ? normalizeWorkspacePath(activePathRef.current)
-        : null
-      const hasActiveTs =
-        normalizedActivePath !== null &&
-        snapshotForSave.files.some(
-          (file) =>
-            file.path === normalizedActivePath && isTypeScriptPath(file.path)
-        )
-      const fallbackTsPath = snapshotForSave.files.find((file) =>
-        isTypeScriptPath(file.path)
-      )?.path
-
-      const buildTarget = hasEntryTs
-        ? normalizedEntryPath
-        : hasActiveTs
-          ? normalizedActivePath
-          : (fallbackTsPath ?? null)
       if (buildTarget) {
         addLog('info', `Bundling ${buildTarget}...`)
 
@@ -2093,6 +2114,30 @@ export default function CodeEditor({
   const handleSave = useCallback(async () => {
     await persistCurrentSnapshot('draft')
   }, [persistCurrentSnapshot])
+
+  const handleFormatCode = useCallback(async () => {
+    const editor = editorRef.current
+    const path = activePathRef.current
+    if (!editor || !path) {
+      addLog('error', 'No active file to format')
+      return
+    }
+
+    const action = editor.getAction('editor.action.formatDocument')
+    if (!action) {
+      addLog('error', 'Formatter is not available for this file')
+      return
+    }
+
+    try {
+      await action.run()
+      editor.focus()
+      updateDirtyForPath(path)
+      addLog('success', `Formatted ${path}`)
+    } catch (error) {
+      addLog('error', error instanceof Error ? error.message : 'Format failed')
+    }
+  }, [addLog, updateDirtyForPath])
 
   const handlePublish = useCallback(async () => {
     await persistCurrentSnapshot('publish')
@@ -2595,7 +2640,9 @@ export default function CodeEditor({
     activePath && tabs.includes(activePath) ? activePath : null
   const activePathLabel = isEndpointsOpen
     ? 'API Endpoints'
-    : (activeTabPath ?? 'No file selected')
+    : isSwaggerOpen
+      ? 'Deno Worker Swagger'
+      : (activeTabPath ?? 'No file selected')
 
   const logLevelClass = useCallback((level: BuildLogEntry['level']) => {
     if (level === 'error') return 'text-destructive'
@@ -2749,8 +2796,16 @@ export default function CodeEditor({
             <Input
               value={entryPathInput}
               onChange={(event) =>
-                setEntryPathInput(normalizeWorkspacePath(event.target.value))
+                setEntryPathInput(event.target.value)
               }
+              onBlur={(event) => {
+                const normalizedEntry = normalizeWorkspacePath(
+                  event.target.value.trim() ||
+                    snapshotRef.current.entryPath ||
+                    '/api/index.ts'
+                )
+                setEntryPathInput(normalizedEntry)
+              }}
               className="h-8 w-56 text-xs"
             />
 
@@ -2763,6 +2818,19 @@ export default function CodeEditor({
             >
               <History className="me-1 h-3.5 w-3.5" />
               v{selectedVersion ?? selectedProject?.currentVersion ?? 1}
+            </Button>
+
+            <Button
+              type="button"
+              size="sm"
+              variant="secondary"
+              className="h-8 px-3 text-xs"
+              onClick={() => void handleFormatCode()}
+              disabled={!activePath || isLoading || isBootstrapping}
+              title="Format active file"
+            >
+              <AlignLeft className="me-1 h-3.5 w-3.5" />
+              Format Code
             </Button>
 
             <Button
@@ -2828,6 +2896,13 @@ export default function CodeEditor({
               title="API Endpoints"
             >
               <FileJson className="h-4 w-4" />
+            </TabsTrigger>
+            <TabsTrigger
+              value="swagger"
+              className="data-[state=active]:bg-primary/15 data-[state=active]:text-primary h-9 w-9 flex-none p-0"
+              title="Deno Worker Swagger"
+            >
+              <FileCode2 className="h-4 w-4" />
             </TabsTrigger>
           </TabsList>
 
@@ -3438,6 +3513,34 @@ export default function CodeEditor({
                   </CardContent>
                 </Card>
               </div>
+            </section>
+          </div>
+
+          <div
+            className={cn(
+              'm-0 min-h-0 flex-1 overflow-hidden',
+              activeActivityPanel !== 'swagger' && 'hidden'
+            )}
+          >
+            <section className="bg-background flex h-full min-h-0 flex-col overflow-hidden">
+              <div className="flex h-10 items-center justify-between border-b px-3">
+                <div>
+                  <p className="text-sm font-semibold">Deno Worker Swagger</p>
+                  <p className="text-muted-foreground text-xs">
+                    Live OpenAPI documentation loaded through the dashboard
+                    proxy.
+                  </p>
+                </div>
+                <Badge variant="outline" className="rounded-full">
+                  /openapi.json
+                </Badge>
+              </div>
+              <SwaggerUiIframe
+                title="Deno Worker Swagger UI"
+                openApiUrl="/api/process/deno-worker/openapi.json"
+                proxyBasePath="/api/process/deno-worker"
+                className="min-h-0 flex-1 border-0"
+              />
             </section>
           </div>
         </Tabs>

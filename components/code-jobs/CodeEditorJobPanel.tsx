@@ -166,6 +166,25 @@ function elapsedMs(job: JobRow | null) {
   return Math.max(0, end - start)
 }
 
+function pickRunnableVersion(workspace: CodeJobWorkspaceOption) {
+  const currentVersion = workspace.versions.find(
+    (item) =>
+      item.version === workspace.currentVersion && item.bundleEntries.length > 0
+  )
+  if (currentVersion) return currentVersion
+
+  const latestBundledVersion = workspace.versions.find(
+    (item) => item.bundleEntries.length > 0
+  )
+  if (latestBundledVersion) return latestBundledVersion
+
+  return (
+    workspace.versions.find(
+      (item) => item.version === workspace.currentVersion
+    ) ?? workspace.versions[0]
+  )
+}
+
 function StatusBadge({ status }: { status: string }) {
   return (
     <Badge
@@ -314,10 +333,7 @@ export function CodeEditorJobPanel({
 
   const applyWorkspaceDefaults = useCallback(
     (workspace: CodeJobWorkspaceOption) => {
-      const latestVersion =
-        workspace.versions.find(
-          (item) => item.version === workspace.currentVersion
-        ) ?? workspace.versions[0]
+      const latestVersion = pickRunnableVersion(workspace)
       setWorkspaceSlug(workspace.slug)
       setVersion(latestVersion ? String(latestVersion.version) : '')
       setEntryPath(latestVersion?.bundleEntries[0] ?? '')
@@ -342,11 +358,39 @@ export function CodeEditorJobPanel({
               (item) => item.slug === preferredWorkspaceSlug
             ) ?? next.workspaces[0]
           if (preferred) applyWorkspaceDefaults(preferred)
-        } else if (!version) {
+        } else {
           const workspace = next.workspaces.find(
             (item) => item.slug === workspaceSlug
           )
-          if (workspace) applyWorkspaceDefaults(workspace)
+          if (!workspace) return
+
+          const versionItem = workspace.versions.find(
+            (item) => String(item.version) === version
+          )
+          const selectedEntryIsAvailable =
+            Boolean(entryPath) &&
+            Boolean(versionItem?.bundleEntries.includes(entryPath))
+
+          if (!version || !versionItem) {
+            applyWorkspaceDefaults(workspace)
+            return
+          }
+
+          if (versionItem.bundleEntries.length === 0) {
+            const runnableVersion = pickRunnableVersion(workspace)
+            if (
+              runnableVersion &&
+              runnableVersion.version !== versionItem.version
+            ) {
+              setVersion(String(runnableVersion.version))
+              setEntryPath(runnableVersion.bundleEntries[0] ?? '')
+            }
+            return
+          }
+
+          if (!selectedEntryIsAvailable) {
+            setEntryPath(versionItem.bundleEntries[0] ?? '')
+          }
         }
 
         if (!selectedJobId && next.jobs[0]) {
@@ -362,6 +406,7 @@ export function CodeEditorJobPanel({
     },
     [
       applyWorkspaceDefaults,
+      entryPath,
       preferredWorkspaceSlug,
       selectedJobId,
       version,

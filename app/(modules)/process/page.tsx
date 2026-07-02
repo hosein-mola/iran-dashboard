@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { Activity, Code2, GitBranch, Server, Terminal } from 'lucide-react'
+import { Activity, Code2, Database, GitBranch, Server, Terminal } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
 import {
@@ -24,6 +24,13 @@ const processTools = [
     href: '/process/workers',
     icon: Server,
     action: 'مشاهده Workerها',
+  },
+  {
+    title: 'داده و اتصال‌ها',
+    description: 'ثبت Connection String، تست اتصال و تعریف کد امن برای استفاده در Deno Worker.',
+    href: '/process/data',
+    icon: Database,
+    action: 'مدیریت داده',
   },
   {
     title: 'Workflow',
@@ -55,25 +62,27 @@ export default function ProcessPage() {
           </p>
         </header>
 
-        <section className="grid gap-4 md:grid-cols-3">
+        <section className="grid grid-cols-[repeat(auto-fit,minmax(18rem,1fr))] gap-4">
           {processTools.map((tool) => (
             <Card
               key={tool.href}
-              className="border-border/60 bg-card/90 rounded-lg border shadow-sm backdrop-blur"
+              className="border-border/60 bg-card/90 min-h-56 min-w-72 rounded-lg border shadow-sm backdrop-blur"
             >
               <CardHeader className="space-y-3">
                 <div className="bg-primary/10 text-primary flex size-11 items-center justify-center rounded-lg">
                   <tool.icon className="size-5" />
                 </div>
                 <div className="space-y-1">
-                  <CardTitle className="text-lg font-semibold">
+                  <CardTitle className="whitespace-nowrap text-lg font-semibold">
                     {tool.title}
                   </CardTitle>
-                  <CardDescription>{tool.description}</CardDescription>
+                  <CardDescription className="min-h-10">
+                    {tool.description}
+                  </CardDescription>
                 </div>
               </CardHeader>
               <CardContent>
-                <Button asChild className="w-full">
+                <Button asChild className="w-full whitespace-nowrap">
                   <Link href={tool.href}>{tool.action}</Link>
                 </Button>
               </CardContent>

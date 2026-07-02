@@ -1,5 +1,9 @@
 # `schemas/` Guidelines
 
+## Runtime Prerequisite
+
+- `nvm` is installed. Before running `node`, `npm`, or `npx`, use `nvm list`, activate the installed project-specific Node version with `nvm use <version>`, then verify with `node --version`.
+
 Scope: listing and creating database schemas for AI chat.
 
 - Validate schema payloads with Zod and parse `schemaJson` before storing it.

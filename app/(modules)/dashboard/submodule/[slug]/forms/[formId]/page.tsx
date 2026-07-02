@@ -19,11 +19,11 @@ export default async function SubmoduleFormSubmissionsPage(props: {
   }
 
   return (
-    <section className="space-y-6 p-4">
-      <header className="rounded-lg border bg-card p-4">
+    <section className="flex h-[calc(100dvh-2rem)] min-h-0 flex-col gap-6 p-4">
+      <header className="bg-card shrink-0 rounded-lg border p-4">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-muted-foreground text-sm">
               {form.submodule?.name} / داشبورد سابمیشن
             </p>
             <h1 className="text-3xl font-bold">{form.name}</h1>
@@ -44,7 +44,11 @@ export default async function SubmoduleFormSubmissionsPage(props: {
         </div>
       </header>
 
-      <FormSubmissionsGrid rows={form.submissionRows} />
+      <FormSubmissionsGrid
+        rows={form.submissionRows}
+        components={form.components}
+        showRowGroupPanel={form.scheduleConfig?.gridShowRowGroupPanel !== false}
+      />
     </section>
   )
 }

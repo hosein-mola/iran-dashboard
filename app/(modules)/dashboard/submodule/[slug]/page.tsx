@@ -14,6 +14,7 @@ import {
 import { Separator } from '@/components/ui/separator'
 import { Chart1 } from '@/components/Chart1'
 import { Chart2 } from '@/components/Chart2'
+import SubmitFormDialogButton from '@/components/SubmitFormDialogButton'
 
 export default async function SubmoduleDashboardPage(props: {
   params: Promise<{ slug: string }>
@@ -116,6 +117,10 @@ export default async function SubmoduleDashboardPage(props: {
                   </div>
                 </div>
                 <div className="flex gap-2">
+                  <SubmitFormDialogButton
+                    formId={form.id}
+                    formName={form.name}
+                  />
                   <Button asChild size="sm">
                     <Link
                       href={`/dashboard/submodule/${submodule.slug}/forms/${form.id}`}

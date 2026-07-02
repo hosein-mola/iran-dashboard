@@ -1,5 +1,9 @@
 # Repository Guidelines (Next.js 16)
 
+## Runtime Prerequisite
+
+- `nvm` is installed. Before running `node`, `npm`, or `npx`, use `nvm list`, activate the installed project-specific Node version with `nvm use <version>`, then verify with `node --version`.
+
 Default rules for the repo. Nested `AGENTS.md` files override these in their folders.
 
 ## Fast Commands

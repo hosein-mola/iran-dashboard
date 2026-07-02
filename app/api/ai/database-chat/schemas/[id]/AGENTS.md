@@ -1,5 +1,9 @@
 # `schemas/[id]/` Guidelines
 
+## Runtime Prerequisite
+
+- `nvm` is installed. Before running `node`, `npm`, or `npx`, use `nvm list`, activate the installed project-specific Node version with `nvm use <version>`, then verify with `node --version`.
+
 Scope: updating a stored AI database schema.
 
 - Use partial updates only for provided fields; preserve existing values when a field is omitted.

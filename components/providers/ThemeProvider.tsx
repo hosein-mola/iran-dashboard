@@ -1,11 +1,10 @@
 "use client"
 
 import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from "react"
-import {
-  professionalThemeBases,
-  professionalThemeModeIds,
-  type ProfessionalThemeId,
-  type ProfessionalThemeModeId,
+import type {
+  ProfessionalThemeBase,
+  ProfessionalThemeId,
+  ProfessionalThemeModeId,
 } from "@/components/theme-bases"
 
 const baseThemeModes = [
@@ -15,15 +14,73 @@ const baseThemeModes = [
   "wood",
 ] as const
 
-export const themeModes = [...baseThemeModes, ...professionalThemeModeIds]
+export const themeModes = baseThemeModes
 
 type BaseThemeMode = (typeof baseThemeModes)[number]
 export type ThemeMode = BaseThemeMode | ProfessionalThemeModeId
 type ResolvedTheme = "light" | "dark"
 
 const customThemeClasses = ["wood"] as const
-const professionalThemesById = new Map(professionalThemeBases.map((theme) => [theme.id, theme]))
-const professionalThemeTokenNames = Object.keys(professionalThemeBases[0]?.styles.light ?? {})
+const professionalThemeTokenNames = [
+  "background",
+  "foreground",
+  "card",
+  "card-foreground",
+  "popover",
+  "popover-foreground",
+  "primary",
+  "primary-foreground",
+  "secondary",
+  "secondary-foreground",
+  "muted",
+  "muted-foreground",
+  "accent",
+  "accent-foreground",
+  "destructive",
+  "destructive-foreground",
+  "border",
+  "input",
+  "ring",
+  "chart-1",
+  "chart-2",
+  "chart-3",
+  "chart-4",
+  "chart-5",
+  "chart-6",
+  "chart-7",
+  "map-region",
+  "map-region-hover",
+  "map-region-selected",
+  "map-region-disabled",
+  "map-region-stroke",
+  "map-region-stroke-hover",
+  "map-region-focus-ring",
+  "map-label",
+  "map-label-hover",
+  "map-label-selected",
+  "sidebar",
+  "sidebar-foreground",
+  "sidebar-primary",
+  "sidebar-primary-foreground",
+  "sidebar-accent",
+  "sidebar-accent-foreground",
+  "sidebar-border",
+  "sidebar-ring",
+  "radius",
+  "font-sans",
+  "font-serif",
+  "font-mono",
+  "letter-spacing",
+  "spacing",
+  "shadow-color",
+  "shadow-opacity",
+  "shadow-blur",
+  "shadow-spread",
+  "shadow-offset-x",
+  "shadow-offset-y",
+  "sidebar-active",
+  "sidebar-active-foreground",
+]
 const professionalThemeTokenAliases: Record<string, string> = {
   "font-sans": "theme-font-sans",
   "font-serif": "theme-font-serif",
@@ -32,6 +89,9 @@ const professionalThemeTokenAliases: Record<string, string> = {
 }
 
 const darkResolvedThemes: ThemeMode[] = ["dark"]
+const darkSelectedSidebarThemes: ThemeMode[] = ["wood"]
+let professionalThemesPromise: Promise<readonly ProfessionalThemeBase[]> | null = null
+let applyThemeRequestId = 0
 
 type ThemeContextValue = {
   theme: ThemeMode
@@ -56,6 +116,13 @@ const getProfessionalThemeMode = (mode: ThemeMode) => {
   return { id: mode as ProfessionalThemeId, variant: "light" as const }
 }
 
+const loadProfessionalThemes = async () => {
+  professionalThemesPromise ??= import("@/components/theme-bases").then(
+    (module) => module.professionalThemeBases
+  )
+  return professionalThemesPromise
+}
+
 const applyThemeToken = (root: HTMLElement, token: string, value: string) => {
   root.style.setProperty(`--${professionalThemeTokenAliases[token] ?? token}`, value)
   if (token !== "spacing") return
@@ -67,7 +134,20 @@ const applyThemeToken = (root: HTMLElement, token: string, value: string) => {
   root.style.setProperty("--theme-text-xl", `calc(${value} * 5)`)
 }
 
-const applyThemeClass = (mode: ThemeMode, system: ResolvedTheme) => {
+const applySidebarInteractiveContrast = (root: HTMLElement, resolved: ResolvedTheme) => {
+  const background =
+    resolved === "dark"
+      ? "color-mix(in oklch, var(--sidebar-foreground) 10%, var(--sidebar))"
+      : "color-mix(in oklch, var(--sidebar-foreground) 6%, var(--sidebar))"
+
+  root.style.setProperty("--sidebar-active", background)
+  root.style.setProperty("--sidebar-active-foreground", "var(--sidebar-primary)")
+  root.style.setProperty("--sidebar-accent", background)
+  root.style.setProperty("--sidebar-accent-foreground", "var(--sidebar-primary)")
+}
+
+const applyThemeClass = async (mode: ThemeMode, system: ResolvedTheme) => {
+  const requestId = ++applyThemeRequestId
   const root = document.documentElement
   if (!root) return
   const professionalThemeMode = getProfessionalThemeMode(mode)
@@ -88,8 +168,9 @@ const applyThemeClass = (mode: ThemeMode, system: ResolvedTheme) => {
     root.classList.add(mode)
   }
   const professionalTheme = professionalThemeMode
-    ? professionalThemesById.get(professionalThemeMode.id)
+    ? (await loadProfessionalThemes()).find((theme) => theme.id === professionalThemeMode.id)
     : null
+  if (requestId !== applyThemeRequestId) return
   if (professionalTheme) {
     const tokens = professionalTheme.styles[professionalThemeMode?.variant ?? resolved]
     Object.entries(tokens).forEach(([token, value]) => {
@@ -97,6 +178,7 @@ const applyThemeClass = (mode: ThemeMode, system: ResolvedTheme) => {
     })
     root.style.setProperty("--sidebar-background", "var(--sidebar)")
   }
+  applySidebarInteractiveContrast(root, darkSelectedSidebarThemes.includes(mode) ? "dark" : resolved)
   if (mode === "system" && system === "dark") root.classList.add("dark")
   root.dataset.theme = mode === "system" ? system : mode
   root.style.colorScheme = resolved
@@ -111,9 +193,12 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     const stored = typeof window !== "undefined" ? (localStorage.getItem(STORAGE_KEY) as ThemeMode | null) : null
     const system = getSystemTheme()
     setSystemTheme(system)
-    const initial = stored && themeModes.includes(stored) ? stored : "light"
+    const initial =
+      stored && (themeModes.includes(stored as BaseThemeMode) || stored.startsWith("tweakcn-"))
+        ? stored
+        : "light"
     setThemeState(initial as ThemeMode)
-    applyThemeClass(initial as ThemeMode, system)
+    void applyThemeClass(initial as ThemeMode, system)
     setHydrated(true)
   }, [])
 
@@ -122,7 +207,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     const handler = (event: MediaQueryListEvent) => {
       const nextSystem = event.matches ? "dark" : "light"
       setSystemTheme(nextSystem)
-      if (hydrated && theme === "system") applyThemeClass("system", nextSystem)
+      if (hydrated && theme === "system") void applyThemeClass("system", nextSystem)
     }
     media.addEventListener("change", handler)
     return () => media.removeEventListener("change", handler)
@@ -130,7 +215,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     if (!hydrated) return
-    applyThemeClass(theme, systemTheme)
+    void applyThemeClass(theme, systemTheme)
     if (typeof window !== "undefined") {
       localStorage.setItem(STORAGE_KEY, theme)
     }

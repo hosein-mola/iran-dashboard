@@ -1,5 +1,9 @@
 # `messages/` Guidelines
 
+## Runtime Prerequisite
+
+- `nvm` is installed. Before running `node`, `npm`, or `npx`, use `nvm list`, activate the installed project-specific Node version with `nvm use <version>`, then verify with `node --version`.
+
 Scope: sending a user message and streaming the assistant response.
 
 - Keep the response as newline-delimited JSON with `application/x-ndjson; charset=utf-8`.
