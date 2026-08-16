@@ -5,6 +5,7 @@ import prisma from '@/lib/prisma'
 import {
   DATABASE_CHAT_HISTORY_LIMIT,
   answerDatabaseQuestion,
+  type DatabaseQueryData,
 } from '@/lib/ai-database-chat'
 import {
   AI_MODEL_OPTION_IDS,
@@ -27,6 +28,7 @@ type SerializedChatMessage = {
   model?: string | null
   modelLabel?: string | null
   reasoning?: string | null
+  data?: DatabaseQueryData | null
   createdAt: string
 }
 
@@ -40,6 +42,7 @@ type ChatStreamEvent =
       model: string
       modelLabel: string
     }
+  | { type: 'assistantData'; data: DatabaseQueryData }
   | { type: 'assistantReasoningDelta'; content: string }
   | { type: 'assistantDelta'; content: string }
   | { type: 'done' }
@@ -49,28 +52,48 @@ type RouteContext = {
   params: Promise<{ id: string }>
 }
 
-function serializeChatMessage(message: {
-  id: string
-  role: string
-  content: string
-  sql?: string | null
-  rowCount?: number | null
-  createdAt: Date
-}, metadata?: {
-  model?: string | null
-  modelLabel?: string | null
-  reasoning?: string | null
-}): SerializedChatMessage {
+function serializeChatMessage(
+  message: {
+    id: string
+    role: string
+    content: string
+    sql?: string | null
+    rowCount?: number | null
+    resultJson?: string | null
+    model?: string | null
+    modelLabel?: string | null
+    createdAt: Date
+  },
+  metadata?: {
+    model?: string | null
+    modelLabel?: string | null
+    reasoning?: string | null
+  }
+): SerializedChatMessage {
   return {
     id: message.id,
     role: message.role,
     content: message.content,
     sql: message.sql,
     rowCount: message.rowCount,
-    model: metadata?.model,
-    modelLabel: metadata?.modelLabel,
+    model: metadata?.model ?? message.model,
+    modelLabel: metadata?.modelLabel ?? message.modelLabel,
     reasoning: metadata?.reasoning,
+    data: parseResultJson(message.resultJson),
     createdAt: message.createdAt.toISOString(),
+  }
+}
+
+function parseResultJson(resultJson?: string | null): DatabaseQueryData | null {
+  if (!resultJson) return null
+
+  try {
+    const parsed = JSON.parse(resultJson) as DatabaseQueryData
+    return Array.isArray(parsed.columns) && Array.isArray(parsed.rows)
+      ? parsed
+      : null
+  } catch {
+    return null
   }
 }
 
@@ -159,129 +182,136 @@ export async function POST(req: Request, context: RouteContext) {
 
     const encoder = new TextEncoder()
 
-    return new Response(new ReadableStream<Uint8Array>({
-      async start(controller) {
-        const send = (event: ChatStreamEvent) => {
-          controller.enqueue(encoder.encode(`${JSON.stringify(event)}\n`))
-        }
+    return new Response(
+      new ReadableStream<Uint8Array>({
+        async start(controller) {
+          const send = (event: ChatStreamEvent) => {
+            controller.enqueue(encoder.encode(`${JSON.stringify(event)}\n`))
+          }
 
-        try {
-          if (deleteFromEditMessageIds.length) {
-            send({
-              type: 'status',
-              message: 'در حال حذف پیام‌های بعد از نقطه ویرایش...',
-            })
-            await prisma.aiDbChatMessage.deleteMany({
-              where: {
+          try {
+            if (deleteFromEditMessageIds.length) {
+              send({
+                type: 'status',
+                message: 'در حال حذف پیام‌های بعد از نقطه ویرایش...',
+              })
+              await prisma.aiDbChatMessage.deleteMany({
+                where: {
+                  conversationId: conversation.id,
+                  id: { in: deleteFromEditMessageIds },
+                },
+              })
+            }
+
+            send({ type: 'status', message: 'در حال ثبت پیام شما...' })
+
+            const userMessage = await prisma.aiDbChatMessage.create({
+              data: {
                 conversationId: conversation.id,
-                id: { in: deleteFromEditMessageIds },
+                role: 'user',
+                content: parsed.data.content,
               },
             })
-          }
 
-          send({ type: 'status', message: 'در حال ثبت پیام شما...' })
+            if (
+              conversation.title === 'گفتگوی جدید' ||
+              remainingMessageCount === 0
+            ) {
+              await prisma.aiDbChatConversation.update({
+                where: { id: conversation.id },
+                data: { title: parsed.data.content.slice(0, 64) },
+              })
+            }
 
-          const userMessage = await prisma.aiDbChatMessage.create({
-            data: {
-              conversationId: conversation.id,
-              role: 'user',
-              content: parsed.data.content,
-            },
-          })
-
-          if (
-            conversation.title === 'گفتگوی جدید' ||
-            remainingMessageCount === 0
-          ) {
-            await prisma.aiDbChatConversation.update({
-              where: { id: conversation.id },
-              data: { title: parsed.data.content.slice(0, 64) },
+            send({
+              type: 'message',
+              message: serializeChatMessage(userMessage),
             })
+
+            const historyMessages = parsed.data.includePreviousMessages
+              ? branchHistoryMessages
+              : []
+
+            const result = await answerDatabaseQuestion({
+              modelOptionId: normalizeAiModelOptionId(
+                parsed.data.modelOptionId
+              ),
+              schemaJson: conversation.schema.schemaJson,
+              rowLimit: conversation.schema.rowLimit,
+              history: historyMessages
+                .filter(
+                  (message) =>
+                    message.role === 'user' || message.role === 'assistant'
+                )
+                .map((message) => ({
+                  role: message.role as 'user' | 'assistant',
+                  content: message.content,
+                  sql: message.sql,
+                  rowCount: message.rowCount,
+                })),
+              question: parsed.data.content,
+              streamAnswer: true,
+              callbacks: {
+                onStatus: (message) => send({ type: 'status', message }),
+                onAnswerMeta: (meta) =>
+                  send({
+                    type: 'assistantMeta',
+                    sql: meta.sql,
+                    rowCount: meta.rowCount,
+                    model: meta.model,
+                    modelLabel: meta.modelLabel,
+                  }),
+                onAnswerData: (data) => send({ type: 'assistantData', data }),
+                onReasoningDelta: (content) =>
+                  send({ type: 'assistantReasoningDelta', content }),
+                onAnswerDelta: (content) =>
+                  send({ type: 'assistantDelta', content }),
+              },
+            })
+
+            send({ type: 'status', message: 'در حال ذخیره پاسخ نهایی...' })
+
+            const assistantMessage = await prisma.aiDbChatMessage.create({
+              data: {
+                conversationId: conversation.id,
+                role: 'assistant',
+                content: result.answer,
+                sql: result.sql,
+                rowCount: result.rowCount,
+                resultJson: JSON.stringify(result.data),
+                model: result.model,
+                modelLabel: result.modelLabel,
+              },
+            })
+
+            send({
+              type: 'message',
+              message: serializeChatMessage(assistantMessage, {
+                model: result.model,
+                modelLabel: result.modelLabel,
+                reasoning: result.reasoning,
+              }),
+            })
+            send({ type: 'done' })
+          } catch (error) {
+            send({
+              type: 'error',
+              message: error instanceof Error ? error.message : 'خطای ناشناخته',
+            })
+          } finally {
+            controller.close()
           }
-
-          send({
-            type: 'message',
-            message: serializeChatMessage(userMessage),
-          })
-
-          const historyMessages = parsed.data.includePreviousMessages
-            ? branchHistoryMessages
-            : []
-
-          const result = await answerDatabaseQuestion({
-            modelOptionId: normalizeAiModelOptionId(
-              parsed.data.modelOptionId
-            ),
-            schemaJson: conversation.schema.schemaJson,
-            rowLimit: conversation.schema.rowLimit,
-            history: historyMessages
-              .filter(
-                (message) =>
-                  message.role === 'user' || message.role === 'assistant'
-              )
-              .map((message) => ({
-                role: message.role as 'user' | 'assistant',
-                content: message.content,
-                sql: message.sql,
-                rowCount: message.rowCount,
-              })),
-            question: parsed.data.content,
-            streamAnswer: true,
-            callbacks: {
-              onStatus: (message) => send({ type: 'status', message }),
-              onAnswerMeta: (meta) =>
-                send({
-                  type: 'assistantMeta',
-                  sql: meta.sql,
-                  rowCount: meta.rowCount,
-                  model: meta.model,
-                  modelLabel: meta.modelLabel,
-                }),
-              onReasoningDelta: (content) =>
-                send({ type: 'assistantReasoningDelta', content }),
-              onAnswerDelta: (content) =>
-                send({ type: 'assistantDelta', content }),
-            },
-          })
-
-          send({ type: 'status', message: 'در حال ذخیره پاسخ نهایی...' })
-
-          const assistantMessage = await prisma.aiDbChatMessage.create({
-            data: {
-              conversationId: conversation.id,
-              role: 'assistant',
-              content: result.answer,
-              sql: result.sql,
-              rowCount: result.rowCount,
-            },
-          })
-
-          send({
-            type: 'message',
-            message: serializeChatMessage(assistantMessage, {
-              model: result.model,
-              modelLabel: result.modelLabel,
-              reasoning: result.reasoning,
-            }),
-          })
-          send({ type: 'done' })
-        } catch (error) {
-          send({
-            type: 'error',
-            message: error instanceof Error ? error.message : 'خطای ناشناخته',
-          })
-        } finally {
-          controller.close()
-        }
-      },
-    }), {
-      headers: {
-        'Content-Type': 'application/x-ndjson; charset=utf-8',
-        'Cache-Control': 'no-cache, no-transform',
-        Connection: 'keep-alive',
-        'X-Accel-Buffering': 'no',
-      },
-    })
+        },
+      }),
+      {
+        headers: {
+          'Content-Type': 'application/x-ndjson; charset=utf-8',
+          'Cache-Control': 'no-cache, no-transform',
+          Connection: 'keep-alive',
+          'X-Accel-Buffering': 'no',
+        },
+      }
+    )
   } catch (error) {
     const message = error instanceof Error ? error.message : 'خطای ناشناخته'
     return NextResponse.json(

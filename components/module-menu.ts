@@ -52,6 +52,11 @@ export const moduleMenuConfig: ModuleMenuConfig[] = [
         icon: ShieldCheckIcon,
       },
       {
+        title: 'داده‌های مخازن',
+        url: '/dashboard/resources/data',
+        icon: Database,
+      },
+      {
         title: 'زیرماژول',
         url: '/dashboard/submodule',
         icon: ClipboardList,

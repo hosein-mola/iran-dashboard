@@ -6,6 +6,10 @@ import { VariantProps, cva } from 'class-variance-authority'
 import { PanelLeftIcon } from 'lucide-react'
 
 import { useIsMobile } from '@/hooks/use-mobile'
+import {
+  SIDEBAR_COOKIE_MAX_AGE,
+  SIDEBAR_COOKIE_NAME,
+} from '@/lib/sidebar-state'
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -25,8 +29,6 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip'
 
-const SIDEBAR_COOKIE_NAME = 'sidebar_state'
-const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7
 const SIDEBAR_WIDTH = '16rem'
 const SIDEBAR_WIDTH_MOBILE = '18rem'
 const SIDEBAR_WIDTH_ICON = '3rem'
@@ -478,7 +480,8 @@ const sidebarMenuButtonVariants = cva(
   {
     variants: {
       variant: {
-        default: 'text-sidebar-foreground hover:!bg-sidebar-accent hover:!text-sidebar-accent-foreground',
+        default:
+          'text-sidebar-foreground hover:!bg-sidebar-accent hover:!text-sidebar-accent-foreground',
         outline:
           'bg-sidebar text-sidebar-foreground shadow-[0_0_0_1px_var(--sidebar-border)] hover:!bg-sidebar-accent hover:!text-sidebar-accent-foreground hover:shadow-[0_0_0_1px_var(--sidebar-accent)]',
       },

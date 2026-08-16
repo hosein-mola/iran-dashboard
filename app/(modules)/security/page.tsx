@@ -15,7 +15,6 @@ import {
   Eye,
   FileCheck2,
   Fingerprint,
-  GitBranch,
   KeyRound,
   Layers3,
   ListChecks,
@@ -947,13 +946,6 @@ export default function SecurityPage() {
                       <Switch defaultChecked={index !== 2} />
                     </div>
                   ))}
-                  <Separator />
-                  <Button asChild variant="outline" className="w-full">
-                    <Link href="/process/workflow">
-                      اتصال به Workflow
-                      <GitBranch className="size-4" />
-                    </Link>
-                  </Button>
                 </CardContent>
               </Card>
             </section>

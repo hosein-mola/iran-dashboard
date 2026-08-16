@@ -1,6 +1,6 @@
 # Iran Dashboard
 
-Next.js dashboard application for the local workflow stack.
+Next.js dashboard application for the local process and worker stack.
 
 ## Prerequisites
 

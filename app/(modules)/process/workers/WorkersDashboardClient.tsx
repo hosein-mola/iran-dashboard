@@ -45,12 +45,6 @@ type DashboardData = {
   counts: Record<string, number>
   runtime: {
     deno: { available: boolean; version: string }
-    temporal: {
-      available: boolean
-      version: string
-      sdkAvailable: boolean
-      mode: string
-    }
   }
   pool: {
     localActiveWorkers: number
@@ -165,40 +159,6 @@ function StatusBadge({ status }: { status: string }) {
       {asStatusLabel(status)}
     </Badge>
   )
-}
-
-function TemporalRuntimeBadge({
-  runtime,
-}: {
-  runtime?: DashboardData['runtime']['temporal']
-}) {
-  if (!runtime) {
-    return (
-      <Badge
-        variant="outline"
-        className="border-muted-foreground/30 bg-muted text-muted-foreground rounded-full px-2.5"
-      >
-        در حال بررسی
-      </Badge>
-    )
-  }
-
-  if (runtime.sdkAvailable) {
-    return <StatusBadge status="idle" />
-  }
-
-  if (runtime.available) {
-    return (
-      <Badge
-        variant="outline"
-        className="rounded-full border-sky-500/30 bg-sky-500/10 px-2.5 text-sky-700 dark:text-sky-300"
-      >
-        CLI آماده
-      </Badge>
-    )
-  }
-
-  return <StatusBadge status="failed" />
 }
 
 function parseJsonField(value: string, fallback: unknown) {
@@ -444,10 +404,6 @@ export default function WorkersDashboardClient() {
                 <Badge variant="outline" className="rounded-full">
                   Deno: {data?.runtime.deno.available ? 'آماده' : 'ناموجود'}
                 </Badge>
-                <Badge variant="outline" className="rounded-full">
-                  Temporal:{' '}
-                  {data?.runtime.temporal.available ? 'CLI' : 'ناموجود'}
-                </Badge>
                 <Button
                   type="button"
                   size="sm"
@@ -644,11 +600,10 @@ export default function WorkersDashboardClient() {
               <CardHeader>
                 <CardTitle className="text-lg font-semibold">Runtime</CardTitle>
                 <CardDescription>
-                  Orchestrator:{' '}
-                  {data?.runtime.temporal.mode ?? 'database-durable'}
+                  Orchestrator: Deno worker
                 </CardDescription>
               </CardHeader>
-              <CardContent className="grid gap-3 md:grid-cols-2">
+              <CardContent>
                 <div className="border-border/60 rounded-lg border p-3">
                   <div className="mb-2 flex items-center justify-between gap-2">
                     <span className="text-sm font-semibold">Deno</span>
@@ -661,24 +616,6 @@ export default function WorkersDashboardClient() {
                     className="text-muted-foreground line-clamp-3 text-xs"
                   >
                     {data?.runtime.deno.version ?? '-'}
-                  </p>
-                </div>
-                <div className="border-border/60 rounded-lg border p-3">
-                  <div className="mb-2 flex items-center justify-between gap-2">
-                    <span className="text-sm font-semibold">Temporal</span>
-                    <TemporalRuntimeBadge runtime={data?.runtime.temporal} />
-                  </div>
-                  {data?.runtime.temporal.available &&
-                  !data.runtime.temporal.sdkAvailable ? (
-                    <p className="text-muted-foreground mb-2 text-xs">
-                      SDK نصب نیست؛ اجرا فعلا با صف پایدار دیتابیس انجام می‌شود.
-                    </p>
-                  ) : null}
-                  <p
-                    dir="ltr"
-                    className="text-muted-foreground line-clamp-3 text-xs"
-                  >
-                    {data?.runtime.temporal.version ?? '-'}
                   </p>
                 </div>
               </CardContent>

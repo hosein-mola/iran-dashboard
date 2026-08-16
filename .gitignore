@@ -24,7 +24,6 @@
 /dist
 
 # local tool binaries
-/bin/temporal
 
 # misc
 .DS_Store
@@ -57,3 +56,5 @@ next-env.d.ts
 /prisma/*.sqlite-journal
 /prisma/*.sqlite3
 /prisma/*.sqlite3-journal
+/data/reservoir-data.db
+/data/reservoir-data.db-journal

@@ -1,18 +1,30 @@
+import { cookies } from 'next/headers'
+
 import prisma from '@/lib/prisma'
 import {
   getDefaultDatabaseSchemaJson,
   normalizeRowLimit,
 } from '@/lib/ai-database-chat'
 import {
+  AI_MODEL_SELECTION_COOKIE,
   DEFAULT_AI_MODEL_OPTION_ID,
   getAiModelSelectOptions,
+  normalizeAiModelOptionId,
 } from '@/lib/ai-model-options'
+import { ensureReservoirAiSchema } from '@/lib/reservoir-data'
 
 import { AiDatabaseChatClient } from './AiDatabaseChatClient'
 
 export const dynamic = 'force-dynamic'
 
 export default async function AIPage() {
+  await ensureReservoirAiSchema()
+
+  const cookieStore = await cookies()
+  const selectedModelOptionId = normalizeAiModelOptionId(
+    cookieStore.get(AI_MODEL_SELECTION_COOKIE)?.value
+  )
+
   const [schemas, conversations] = await Promise.all([
     prisma.aiDatabaseSchema.findMany({
       where: { active: true },
@@ -52,7 +64,7 @@ export default async function AIPage() {
         updatedAt: schema.updatedAt.toISOString(),
       }))}
       defaultSchemaJson={getDefaultDatabaseSchemaJson()}
-      defaultModelOptionId={DEFAULT_AI_MODEL_OPTION_ID}
+      defaultModelOptionId={selectedModelOptionId ?? DEFAULT_AI_MODEL_OPTION_ID}
       initialConversations={conversations.map((conversation) => ({
         id: conversation.id,
         title: conversation.title,

@@ -3,9 +3,11 @@
 import {
   type CSSProperties,
   type FormEvent,
+  type KeyboardEvent as ReactKeyboardEvent,
   type SVGProps,
   useEffect,
   useMemo,
+  useRef,
   useState,
 } from 'react'
 import {
@@ -20,6 +22,7 @@ import {
 } from 'lucide-react'
 
 import { Badge } from '@/components/ui/badge'
+import { AiResultGrid } from '@/components/ai-result-grid'
 import { Button } from '@/components/ui/button'
 import {
   Card,
@@ -42,7 +45,12 @@ import { ScrollArea } from '@/components/ui/scroll-area'
 import { Switch } from '@/components/ui/switch'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Textarea } from '@/components/ui/textarea'
+import {
+  AI_MODEL_SELECTION_COOKIE,
+  AI_MODEL_SELECTION_COOKIE_MAX_AGE,
+} from '@/lib/ai-model-options'
 import { cn } from '@/lib/utils'
+import type { DatabaseQueryData } from '@/lib/ai-database-chat'
 
 type DbSchema = {
   id: string
@@ -74,6 +82,7 @@ type ChatMessage = {
   model?: string | null
   modelLabel?: string | null
   reasoning?: string | null
+  data?: DatabaseQueryData | null
   createdAt: string
 }
 
@@ -87,6 +96,7 @@ type ChatStreamEvent =
       model?: string | null
       modelLabel?: string | null
     }
+  | { type: 'assistantData'; data: DatabaseQueryData }
   | { type: 'assistantReasoningDelta'; content: string }
   | { type: 'assistantDelta'; content: string }
   | { type: 'done' }
@@ -126,6 +136,19 @@ type AiModelOption = {
   description: string
 }
 
+type SchemaFieldSuggestion = {
+  column: string
+  label: string
+  description?: string
+}
+
+type FieldAutocompleteMatch = {
+  start: number
+  end: number
+  query: string
+  suggestions: SchemaFieldSuggestion[]
+}
+
 const DEFAULT_ROW_LIMIT = '50'
 const MAX_ROW_LIMIT = 50
 const CHAT_BACKGROUND_PATTERN =
@@ -134,6 +157,135 @@ const CHAT_BACKGROUND_PATTERN_DARK = CHAT_BACKGROUND_PATTERN.replace(
   '%23806f57',
   '%23c7b99e'
 ).replace("stroke-opacity='.18'", "stroke-opacity='.16'")
+
+function normalizeAutocompleteText(value: string) {
+  return value
+    .replace(/[\u064b-\u065f\u0670]/g, '')
+    .replace(/ي/g, 'ی')
+    .replace(/ك/g, 'ک')
+    .trim()
+    .toLocaleLowerCase('fa-IR')
+}
+
+function getSchemaFieldSuggestions(schemaJson: string) {
+  const suggestions = new Map<string, SchemaFieldSuggestion>()
+
+  try {
+    const visit = (value: unknown) => {
+      if (Array.isArray(value)) {
+        value.forEach(visit)
+        return
+      }
+      if (!value || typeof value !== 'object') return
+
+      const item = value as Record<string, unknown>
+      const column = [item.name, item.column, item.c].find(
+        (candidate): candidate is string =>
+          typeof candidate === 'string' && Boolean(candidate.trim())
+      )
+      const label = [item.label, item.fa, item.title, item.displayName].find(
+        (candidate): candidate is string =>
+          typeof candidate === 'string' && /[\u0600-\u06ff]/.test(candidate)
+      )
+      const description = [item.description, item.desc].find(
+        (candidate): candidate is string =>
+          typeof candidate === 'string' && Boolean(candidate.trim())
+      )
+
+      if (column && label) {
+        suggestions.set(`${column}\u0000${label}`, {
+          column: column.trim(),
+          label: label.trim(),
+          description: description?.trim(),
+        })
+      }
+
+      Object.values(item).forEach(visit)
+    }
+
+    visit(JSON.parse(schemaJson))
+  } catch {
+    return []
+  }
+
+  return [...suggestions.values()]
+}
+
+function getFieldAutocompleteMatch(
+  value: string,
+  cursorPosition: number,
+  fields: SchemaFieldSuggestion[]
+): FieldAutocompleteMatch | null {
+  const beforeCursor = value.slice(0, cursorPosition)
+  const boundaryIndex = Math.max(
+    beforeCursor.lastIndexOf('\n'),
+    beforeCursor.lastIndexOf('،'),
+    beforeCursor.lastIndexOf(','),
+    beforeCursor.lastIndexOf(':'),
+    beforeCursor.lastIndexOf('؛'),
+    beforeCursor.lastIndexOf('?'),
+    beforeCursor.lastIndexOf('؟'),
+    beforeCursor.lastIndexOf('!')
+  )
+  const segmentStart = boundaryIndex + 1
+  const segment = beforeCursor.slice(segmentStart)
+  const candidateStarts = [0]
+
+  for (const match of segment.matchAll(/\s+/g)) {
+    candidateStarts.push((match.index ?? 0) + match[0].length)
+  }
+
+  for (const relativeStart of candidateStarts) {
+    const rawQuery = segment.slice(relativeStart)
+    const leadingWhitespace = rawQuery.length - rawQuery.trimStart().length
+    const query = rawQuery.trim()
+    const normalizedQuery = normalizeAutocompleteText(query)
+    if (normalizedQuery.length < 2) continue
+
+    const matchingFields = fields
+      .flatMap((field) => {
+        const normalizedLabel = normalizeAutocompleteText(field.label)
+        const normalizedColumn = field.column.toLocaleLowerCase('en-US')
+        const labelPosition = normalizedLabel.indexOf(normalizedQuery)
+        const columnPosition = normalizedColumn.indexOf(normalizedQuery)
+
+        if (normalizedLabel === normalizedQuery) return []
+        if (labelPosition < 0 && columnPosition < 0) return []
+
+        return [
+          {
+            field,
+            rank:
+              labelPosition === 0
+                ? 0
+                : labelPosition > 0
+                  ? 1
+                  : columnPosition === 0
+                    ? 2
+                    : 3,
+          },
+        ]
+      })
+      .sort(
+        (left, right) =>
+          left.rank - right.rank ||
+          left.field.label.localeCompare(right.field.label, 'fa')
+      )
+      .slice(0, 7)
+      .map(({ field }) => field)
+
+    if (matchingFields.length) {
+      return {
+        start: segmentStart + relativeStart + leadingWhitespace,
+        end: cursorPosition,
+        query,
+        suggestions: matchingFields,
+      }
+    }
+  }
+
+  return null
+}
 
 function NoConversationSelectedIcon(props: SVGProps<SVGSVGElement>) {
   return (
@@ -220,6 +372,7 @@ function upsertStreamMessage(
     model: message.model ?? existing?.model,
     modelLabel: message.modelLabel ?? existing?.modelLabel,
     reasoning: message.reasoning ?? existing?.reasoning,
+    data: message.data ?? existing?.data,
   }
   return next
 }
@@ -266,6 +419,11 @@ export function AiDatabaseChatClient({
     initialSchemas[0] ? schemaToForm(initialSchemas[0]) : emptySchemaForm
   )
   const [message, setMessage] = useState('')
+  const messageInputRef = useRef<HTMLTextAreaElement>(null)
+  const [messageCursorPosition, setMessageCursorPosition] = useState(0)
+  const [activeFieldSuggestionIndex, setActiveFieldSuggestionIndex] =
+    useState(0)
+  const [isFieldAutocompleteOpen, setIsFieldAutocompleteOpen] = useState(true)
   const [selectedModelId, setSelectedModelId] = useState(
     normalizedDefaultModelId
   )
@@ -283,6 +441,36 @@ export function AiDatabaseChatClient({
     () => schemas.find((schema) => schema.id === selectedSchemaId),
     [schemas, selectedSchemaId]
   )
+  const autocompleteSchema = useMemo(
+    () =>
+      schemas.find(
+        (schema) =>
+          schema.id === (activeConversation?.schemaId ?? selectedSchemaId)
+      ),
+    [activeConversation?.schemaId, schemas, selectedSchemaId]
+  )
+  const schemaFieldSuggestions = useMemo(
+    () => getSchemaFieldSuggestions(autocompleteSchema?.schemaJson ?? ''),
+    [autocompleteSchema?.schemaJson]
+  )
+  const fieldAutocomplete = useMemo(
+    () =>
+      isFieldAutocompleteOpen && activeConversation && !isSending
+        ? getFieldAutocompleteMatch(
+            message,
+            messageCursorPosition,
+            schemaFieldSuggestions
+          )
+        : null,
+    [
+      activeConversation,
+      isFieldAutocompleteOpen,
+      isSending,
+      message,
+      messageCursorPosition,
+      schemaFieldSuggestions,
+    ]
+  )
 
   const usedMessages = activeConversation?.messageCount ?? 0
   const messageQuota =
@@ -291,6 +479,13 @@ export function AiDatabaseChatClient({
     () => modelOptions.find((option) => option.id === selectedModelId),
     [modelOptions, selectedModelId]
   )
+
+  function selectModel(modelId: string) {
+    if (!modelOptions.some((option) => option.id === modelId)) return
+
+    setSelectedModelId(modelId)
+    document.cookie = `${AI_MODEL_SELECTION_COOKIE}=${encodeURIComponent(modelId)}; path=/; max-age=${AI_MODEL_SELECTION_COOKIE_MAX_AGE}; samesite=lax`
+  }
 
   useEffect(() => {
     let isMounted = true
@@ -390,7 +585,6 @@ export function AiDatabaseChatClient({
 
     try {
       setStatus('در حال ساخت گفتگوی جدید...')
-      setSelectedModelId(normalizedDefaultModelId)
       const payload = await fetch('/api/ai/database-chat/conversations', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -449,11 +643,83 @@ export function AiDatabaseChatClient({
     }
   }
 
+  function insertFieldSuggestion(suggestion: SchemaFieldSuggestion) {
+    if (!fieldAutocomplete) return
+
+    const suffix = message.slice(fieldAutocomplete.end)
+    const trailingSpace = suffix.length === 0 ? ' ' : ''
+    const insertedValue = `${suggestion.label}${trailingSpace}`
+    const nextMessage = `${message.slice(0, fieldAutocomplete.start)}${insertedValue}${suffix}`
+    const nextCursorPosition = fieldAutocomplete.start + insertedValue.length
+
+    setMessage(nextMessage)
+    setMessageCursorPosition(nextCursorPosition)
+    setIsFieldAutocompleteOpen(false)
+
+    window.requestAnimationFrame(() => {
+      messageInputRef.current?.focus()
+      messageInputRef.current?.setSelectionRange(
+        nextCursorPosition,
+        nextCursorPosition
+      )
+    })
+  }
+
+  function handleMessageKeyDown(
+    event: ReactKeyboardEvent<HTMLTextAreaElement>
+  ) {
+    if (event.nativeEvent.isComposing) return
+
+    const suggestions = fieldAutocomplete?.suggestions ?? []
+
+    if (suggestions.length && event.key === 'ArrowDown') {
+      event.preventDefault()
+      setActiveFieldSuggestionIndex(
+        (current) => (current + 1) % suggestions.length
+      )
+      return
+    }
+
+    if (suggestions.length && event.key === 'ArrowUp') {
+      event.preventDefault()
+      setActiveFieldSuggestionIndex(
+        (current) => (current - 1 + suggestions.length) % suggestions.length
+      )
+      return
+    }
+
+    if (
+      suggestions.length &&
+      ((event.key === 'Enter' && !event.shiftKey) || event.key === 'Tab')
+    ) {
+      event.preventDefault()
+      insertFieldSuggestion(
+        suggestions[
+          Math.min(activeFieldSuggestionIndex, suggestions.length - 1)
+        ]
+      )
+      return
+    }
+
+    if (suggestions.length && event.key === 'Escape') {
+      event.preventDefault()
+      setIsFieldAutocompleteOpen(false)
+      return
+    }
+
+    if (event.key === 'Enter' && !event.shiftKey) {
+      event.preventDefault()
+      event.currentTarget.form?.requestSubmit()
+    }
+  }
+
   function startEditingMessage(messageToEdit: ChatMessage) {
     if (messageToEdit.role !== 'user' || isSending) return
 
     setEditingMessageId(messageToEdit.id)
     setMessage(messageToEdit.content)
+    setMessageCursorPosition(messageToEdit.content.length)
+    setIsFieldAutocompleteOpen(true)
     setStatus(
       'ویرایش فعال است؛ با ارسال، این پیام و پاسخ‌های بعد از آن دوباره ساخته می‌شوند.'
     )
@@ -462,6 +728,8 @@ export function AiDatabaseChatClient({
   function cancelEditingMessage() {
     setEditingMessageId(null)
     setMessage('')
+    setMessageCursorPosition(0)
+    setIsFieldAutocompleteOpen(false)
     setStatus('')
   }
 
@@ -496,6 +764,8 @@ export function AiDatabaseChatClient({
     setStatus('')
     setInlineStatus('در حال ارسال پیام...')
     setMessage('')
+    setMessageCursorPosition(0)
+    setIsFieldAutocompleteOpen(false)
     setEditingMessageId(null)
 
     try {
@@ -595,6 +865,22 @@ export function AiDatabaseChatClient({
                           model: streamEvent.model ?? item.model,
                           modelLabel: streamEvent.modelLabel ?? item.modelLabel,
                         }
+                      : item
+                  ),
+                }
+              : current
+          )
+          return
+        }
+
+        if (streamEvent.type === 'assistantData') {
+          setActiveConversation((current) =>
+            current
+              ? {
+                  ...current,
+                  messages: current.messages.map((item) =>
+                    item.id === pendingAssistantId
+                      ? { ...item, data: streamEvent.data }
                       : item
                   ),
                 }
@@ -756,10 +1042,7 @@ export function AiDatabaseChatClient({
                 <Bot className="size-4" />
                 گفتگو
               </TabsTrigger>
-              <TabsTrigger
-                value="settings"
-                className="h-full gap-2 px-3 py-1"
-              >
+              <TabsTrigger value="settings" className="h-full gap-2 px-3 py-1">
                 <Settings className="size-4" />
                 تنظیمات اسکیما
               </TabsTrigger>
@@ -801,7 +1084,7 @@ export function AiDatabaseChatClient({
                   </Label>
                   <Select
                     value={selectedModelId}
-                    onValueChange={setSelectedModelId}
+                    onValueChange={selectModel}
                     disabled={!modelOptions.length || isSending}
                   >
                     <SelectTrigger className="mt-2 w-full">
@@ -898,7 +1181,7 @@ export function AiDatabaseChatClient({
                   className="flex min-h-0 w-full min-w-0 flex-1 flex-col gap-4 overflow-hidden p-4"
                 >
                   <ScrollArea
-                    className="border-border/60 bg-background/80 dark:bg-background/60 min-h-0 min-w-0 flex-1 overflow-hidden rounded-lg border [background-image:var(--chat-bg-pattern)] [background-size:112px_112px] [background-repeat:repeat] dark:[background-image:var(--chat-bg-pattern-dark)] [&_[data-slot=scroll-area-viewport]>div]:!h-full [&_[data-slot=scroll-area-viewport]]:overflow-x-hidden"
+                    className="border-border/60 bg-background/80 dark:bg-background/60 min-h-0 min-w-0 flex-1 overflow-hidden rounded-lg border [background-image:var(--chat-bg-pattern)] [background-size:112px_112px] [background-repeat:repeat] dark:[background-image:var(--chat-bg-pattern-dark)] [&_[data-slot=scroll-area-viewport]]:overflow-x-hidden [&_[data-slot=scroll-area-viewport]>div]:!h-full"
                     style={
                       {
                         '--chat-bg-pattern': CHAT_BACKGROUND_PATTERN,
@@ -944,9 +1227,12 @@ export function AiDatabaseChatClient({
                           >
                             <div
                               className={cn(
-                                'w-fit max-w-[min(34rem,78%)] min-w-0 overflow-hidden rounded-2xl border px-3 py-2 text-sm leading-6 [overflow-wrap:anywhere] break-words shadow-sm sm:max-w-[min(34rem,70%)]',
+                                'min-w-0 overflow-hidden rounded-2xl border px-3 py-2 text-sm leading-6 [overflow-wrap:anywhere] break-words shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:shadow-[0_2px_10px_rgba(0,0,0,0.22)]',
+                                item.role === 'assistant' && item.data
+                                  ? 'w-[64rem] max-w-[92%]'
+                                  : 'w-[34rem] max-w-[92%]',
                                 item.role === 'user'
-                                  ? 'border-primary/25 bg-primary/15 rounded-br-sm dark:bg-primary/20'
+                                  ? 'border-primary/25 bg-primary/15 dark:bg-primary/20 rounded-br-sm'
                                   : 'border-border/70 bg-card/95 rounded-bl-sm'
                               )}
                               dir={item.role === 'assistant' ? 'rtl' : 'rtl'}
@@ -1010,12 +1296,18 @@ export function AiDatabaseChatClient({
                                   </p>
                                 </div>
                               ) : null}
+                              {item.role === 'assistant' && item.data ? (
+                                <AiResultGrid data={item.data} />
+                              ) : null}
                               {item.content ? (
                                 <p
                                   className={cn(
                                     'max-w-full [overflow-wrap:anywhere] break-words whitespace-pre-wrap',
                                     item.role === 'assistant'
-                                      ? 'text-right'
+                                      ? cn(
+                                          'text-right',
+                                          item.data ? 'mt-3' : null
+                                        )
                                       : 'text-right'
                                   )}
                                   dir={
@@ -1071,17 +1363,96 @@ export function AiDatabaseChatClient({
                   ) : null}
 
                   <form dir="rtl" onSubmit={sendMessage} className="flex gap-2">
-                    <Textarea
-                      value={message}
-                      onChange={(event) => setMessage(event.target.value)}
-                      placeholder={
-                        editingMessageId
-                          ? 'متن ویرایش‌شده را بنویسید...'
-                          : 'سوال خود را درباره داده‌ها بنویسید...'
-                      }
-                      className="min-h-12 flex-1 resize-none"
-                      disabled={!activeConversation || isSending}
-                    />
+                    <div className="relative min-w-0 flex-1">
+                      {fieldAutocomplete?.suggestions.length ? (
+                        <div
+                          role="listbox"
+                          aria-label="پیشنهاد فیلدهای پایگاه داده"
+                          className="border-border bg-popover absolute right-0 bottom-full z-50 mb-2 max-h-64 w-full max-w-xl overflow-y-auto rounded-lg border p-1.5 text-right shadow-lg"
+                        >
+                          <div className="text-muted-foreground px-2 py-1 text-[11px]">
+                            فیلدهای پیشنهادی — با ↑↓ انتخاب و با Enter یا Tab
+                            درج کنید
+                          </div>
+                          {fieldAutocomplete.suggestions.map(
+                            (suggestion, index) => (
+                              <button
+                                key={`${suggestion.column}-${suggestion.label}`}
+                                type="button"
+                                role="option"
+                                aria-selected={
+                                  index === activeFieldSuggestionIndex
+                                }
+                                className={cn(
+                                  'flex w-full items-center justify-between gap-3 rounded-md px-2.5 py-2 text-right text-sm transition-colors',
+                                  index === activeFieldSuggestionIndex
+                                    ? 'bg-accent text-accent-foreground'
+                                    : 'hover:bg-accent/60'
+                                )}
+                                title={suggestion.description}
+                                onMouseEnter={() =>
+                                  setActiveFieldSuggestionIndex(index)
+                                }
+                                onMouseDown={(event) => {
+                                  event.preventDefault()
+                                  insertFieldSuggestion(suggestion)
+                                }}
+                              >
+                                <span className="font-medium">
+                                  {suggestion.label}
+                                </span>
+                                <code
+                                  dir="ltr"
+                                  className="text-muted-foreground bg-muted rounded px-1.5 py-0.5 text-[11px]"
+                                >
+                                  {suggestion.column}
+                                </code>
+                              </button>
+                            )
+                          )}
+                        </div>
+                      ) : null}
+                      <Textarea
+                        ref={messageInputRef}
+                        value={message}
+                        onChange={(event) => {
+                          setMessage(event.target.value)
+                          setMessageCursorPosition(
+                            event.target.selectionStart ??
+                              event.target.value.length
+                          )
+                          setActiveFieldSuggestionIndex(0)
+                          setIsFieldAutocompleteOpen(true)
+                        }}
+                        onSelect={(event) =>
+                          setMessageCursorPosition(
+                            event.currentTarget.selectionStart ?? message.length
+                          )
+                        }
+                        onClick={(event) => {
+                          setMessageCursorPosition(
+                            event.currentTarget.selectionStart ?? message.length
+                          )
+                          setIsFieldAutocompleteOpen(true)
+                        }}
+                        onFocus={() => setIsFieldAutocompleteOpen(true)}
+                        onBlur={() =>
+                          window.setTimeout(
+                            () => setIsFieldAutocompleteOpen(false),
+                            100
+                          )
+                        }
+                        onKeyDown={handleMessageKeyDown}
+                        placeholder={
+                          editingMessageId
+                            ? 'متن ویرایش‌شده را بنویسید...'
+                            : 'سوال خود را درباره داده‌ها بنویسید...'
+                        }
+                        className="min-h-12 w-full resize-none"
+                        autoComplete="off"
+                        disabled={!activeConversation || isSending}
+                      />
+                    </div>
                     <Button
                       type="submit"
                       className="h-auto min-w-24 gap-2"

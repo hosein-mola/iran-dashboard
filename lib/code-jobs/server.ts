@@ -89,12 +89,6 @@ export async function controlCodeJob(jobId: string, action: string) {
 export async function getCodeJobRuntimeInfo() {
   return {
     deno: { available: true, version: 'managed by deno-worker service' },
-    temporal: {
-      available: false,
-      version: 'not used',
-      sdkAvailable: false,
-      mode: 'deno-worker',
-    },
   }
 }
 

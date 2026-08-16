@@ -1,4 +1,4 @@
-function getDenoWorkerBaseUrl() {
+export function getDenoWorkerBaseUrl() {
   const raw =
     process.env.DENO_WORKER_API_BASE_URL?.trim() ||
     process.env.CODE_RUNNER_API_BASE_URL?.trim()
@@ -10,6 +10,53 @@ function getDenoWorkerBaseUrl() {
   }
 
   return raw.replace(/\/+$/, '')
+}
+
+export type DenoWorkerAiMessage = {
+  role: 'system' | 'developer' | 'user' | 'assistant'
+  content: string
+}
+
+export type DenoWorkerAiResponse = {
+  id: string
+  provider: 'parspack'
+  model: string
+  outputText: string
+  reasoningText: string
+}
+
+export async function requestDenoWorkerAiResponse(input: {
+  model: string
+  messages: DenoWorkerAiMessage[]
+  reasoningEffort?: 'low' | 'medium' | 'high'
+}) {
+  const response = await fetch(`${getDenoWorkerBaseUrl()}/ai/responses`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(input),
+    cache: 'no-store',
+  })
+
+  const payload = (await response.json().catch(() => null)) as
+    | DenoWorkerAiResponse
+    | { error?: { message?: string }; message?: string }
+    | null
+
+  if (!response.ok) {
+    const message =
+      payload && 'error' in payload
+        ? payload.error?.message
+        : payload && 'message' in payload
+          ? payload.message
+          : undefined
+    throw new Error(message || 'درخواست هوش مصنوعی پارس‌پک ناموفق بود.')
+  }
+
+  if (!payload || !('outputText' in payload)) {
+    throw new Error('پاسخ هوش مصنوعی پارس‌پک نامعتبر است.')
+  }
+
+  return payload
 }
 
 export async function proxyDenoWorkerRequest(

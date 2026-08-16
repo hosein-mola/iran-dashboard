@@ -50,8 +50,6 @@ CREATE TABLE "CodeJob" (
     "updatedAt" DATETIME NOT NULL,
     "createdByUserId" TEXT NOT NULL DEFAULT 'local-dev',
     "workerId" TEXT,
-    "temporalWorkflowId" TEXT,
-    "temporalRunId" TEXT,
     "metadata" TEXT NOT NULL DEFAULT '{}',
     CONSTRAINT "CodeJob_workspaceVersionId_fkey" FOREIGN KEY ("workspaceVersionId") REFERENCES "CodeWorkspaceVersion" ("id") ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT "CodeJob_workerId_fkey" FOREIGN KEY ("workerId") REFERENCES "CodeWorker" ("id") ON DELETE SET NULL ON UPDATE CASCADE

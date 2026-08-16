@@ -88,6 +88,10 @@ type DataGridProps<TData extends Record<string, any> = DamRow> = {
   pinnedBottomRowData?: Partial<TData>[]
   height?: string
   rowGroupPanelShow?: 'always' | 'onlyWhenGrouping' | 'never'
+  compact?: boolean
+  enableCharts?: boolean
+  paginationPageSize?: number
+  paginationPageSizeSelector?: number[] | false
   onCellValueChanged?: (event: any) => void
 }
 
@@ -142,6 +146,10 @@ function DataGrid<TData extends Record<string, any> = DamRow>({
   pinnedBottomRowData,
   height = '100%',
   rowGroupPanelShow = 'always',
+  compact = false,
+  enableCharts = !compact,
+  paginationPageSize,
+  paginationPageSizeSelector,
   onCellValueChanged,
 }: DataGridProps<TData>) {
   const containerStyle = useMemo(() => ({ width: '100%', height }), [height])
@@ -289,7 +297,7 @@ function DataGrid<TData extends Record<string, any> = DamRow>({
     () => ({
       sortable: true,
       filter: true,
-      floatingFilter: true,
+      floatingFilter: !compact,
       resizable: true,
       editable: false,
       enableRowGroup: false,
@@ -297,7 +305,7 @@ function DataGrid<TData extends Record<string, any> = DamRow>({
       enableValue: false,
       minWidth: 120,
     }),
-    []
+    [compact]
   )
   const sideBar = useMemo<any>(
     () => ({
@@ -354,19 +362,23 @@ function DataGrid<TData extends Record<string, any> = DamRow>({
         <div dir="ltr" style={gridStyle}>
           <AgGridReact<TData>
             key={themeState.theme}
-            rowNumbers={{
-              headerComponent: () => <h1>ردیف</h1>,
-              width: 100,
-              resizable: true,
-              suppressCellSelectionIntegration: true,
-              valueFormatter: (params) => {
-                if ((params.node as any)?.sticky) {
-                  return ''
-                } else {
-                  return params.value
-                }
-              },
-            }}
+            rowNumbers={
+              compact
+                ? false
+                : {
+                    headerComponent: () => <h1>ردیف</h1>,
+                    width: 100,
+                    resizable: true,
+                    suppressCellSelectionIntegration: true,
+                    valueFormatter: (params) => {
+                      if ((params.node as any)?.sticky) {
+                        return ''
+                      } else {
+                        return params.value
+                      }
+                    },
+                  }
+            }
             localeText={localeText}
             rowData={activeRowData}
             enableRtl={true}
@@ -400,27 +412,30 @@ function DataGrid<TData extends Record<string, any> = DamRow>({
               hideDisabledCheckboxes: false,
               copySelectedRows: true,
             }}
-            rowGroupPanelShow={rowGroupPanelShow}
+            rowGroupPanelShow={compact ? 'never' : rowGroupPanelShow}
             cellSelection={true}
             ensureDomOrder={true}
             animateRows={true}
             enableCellTextSelection={false}
-            onSelectionChanged={(row) => console.log(row)}
+            onSelectionChanged={compact ? undefined : (row) => console.log(row)}
             columnDefs={activeColumnDefs}
-            sideBar={sideBar}
-            statusBar={statusBar}
+            sideBar={compact ? false : sideBar}
+            statusBar={compact ? undefined : statusBar}
             alwaysAggregateAtRootLevel={false}
-            groupTotalRow="bottom"
-            grandTotalRow="bottom"
-            pivotPanelShow={'always'}
+            groupTotalRow={compact ? undefined : 'bottom'}
+            grandTotalRow={compact ? undefined : 'bottom'}
+            pivotPanelShow={compact ? 'never' : 'always'}
             pinnedBottomRowData={activePinnedBottomRowData as TData[]}
             pivotMode={false}
             processUnpinnedColumns={() => []}
             theme={appTheme}
-            enableCharts={true}
+            enableCharts={enableCharts}
             pagination={true}
-            paginationPageSize={20}
-            paginationPageSizeSelector={[20, 50, 100, 200]}
+            paginationPageSize={paginationPageSize ?? (compact ? 8 : 20)}
+            paginationPageSizeSelector={
+              paginationPageSizeSelector ??
+              (compact ? false : [20, 50, 100, 200])
+            }
             suppressAggFuncInHeader={false}
           />
         </div>

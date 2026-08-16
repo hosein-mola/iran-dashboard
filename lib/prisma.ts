@@ -1,8 +1,14 @@
 // Approach 1: Explicit Type Declaration (Recommended)
-import { PrismaClient } from '@/prisma/client';
+import path from 'node:path';
+
+import { PrismaClient } from '@/prisma/client/client';
 
 const prismaClientSingleton = () => {
-  return new PrismaClient();
+  const datasourceUrl =
+    process.env.DATABASE_URL ??
+    `file:${path.join(process.cwd(), 'prisma', 'dev.db')}`;
+
+  return new PrismaClient({ datasourceUrl });
 };
 
 type PrismaClientSingleton = ReturnType<typeof prismaClientSingleton>;

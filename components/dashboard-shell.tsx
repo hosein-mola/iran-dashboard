@@ -5,14 +5,22 @@ import { Fragment, ReactNode } from 'react'
 import Breadcrumbs from '@/components/breadcrumbs'
 import { AppSidebar } from '@/components/app-sidebar'
 import HeaderDropdown from '@/components/header-dropdown'
-import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar'
+import {
+  SidebarInset,
+  SidebarProvider,
+  SidebarTrigger,
+} from '@/components/ui/sidebar'
 import HolyLoader from 'holy-loader'
 
 interface DashboardShellProps {
   children: ReactNode
+  defaultSidebarOpen?: boolean
 }
 
-export function DashboardShell({ children }: DashboardShellProps) {
+export function DashboardShell({
+  children,
+  defaultSidebarOpen = true,
+}: DashboardShellProps) {
   return (
     <Fragment>
       <HolyLoader
@@ -25,7 +33,7 @@ export function DashboardShell({ children }: DashboardShellProps) {
         zIndex={999999999}
         dir="rtl"
       />
-      <SidebarProvider>
+      <SidebarProvider defaultOpen={defaultSidebarOpen}>
         <AppSidebar side="right" variant="inset" />
         <SidebarInset className="flex flex-1 flex-col">
           <header className="border-border bg-background sticky top-0 z-[10] hidden h-16 shrink-0 items-center justify-between border-b px-4 md:flex">

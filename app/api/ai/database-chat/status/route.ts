@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 
 import { checkSqlServerConnection } from '@/lib/ai-database-chat'
 import prisma from '@/lib/prisma'
+import { getReservoirDataHealth } from '@/lib/reservoir-data'
 
 export const dynamic = 'force-dynamic'
 
@@ -29,14 +30,16 @@ async function checkSqliteConnection() {
 }
 
 export async function GET() {
-  const [sqlite, sqlServer] = await Promise.all([
+  const [sqlite, sqlServer, reservoir] = await Promise.all([
     checkSqliteConnection(),
     checkSqlServerConnection(),
+    getReservoirDataHealth(),
   ])
 
   return NextResponse.json({
     sqlite,
     sqlServer,
+    reservoir,
     checkedAt: new Date().toISOString(),
   })
 }

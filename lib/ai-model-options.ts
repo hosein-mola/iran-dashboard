@@ -1,11 +1,10 @@
 export const AI_MODEL_OPTION_IDS = [
-  'openai:gpt-4',
-  'openai:gpt-5',
-  'arvan:gpt-oss-20b',
+  'parspack:gpt-oss-20b',
+  'parspack:gpt-4o',
 ] as const
 
 export type AiModelOptionId = (typeof AI_MODEL_OPTION_IDS)[number]
-export type AiModelProvider = 'openai' | 'arvan'
+export type AiModelProvider = 'parspack'
 
 export type AiModelOption = {
   id: AiModelOptionId
@@ -15,29 +14,26 @@ export type AiModelOption = {
   description: string
 }
 
-export const DEFAULT_AI_MODEL_OPTION_ID: AiModelOptionId = 'arvan:gpt-oss-20b'
+export const DEFAULT_AI_MODEL_OPTION_ID: AiModelOptionId =
+  'parspack:gpt-oss-20b'
+
+export const AI_MODEL_SELECTION_COOKIE = 'iran-dashboard-ai-model'
+export const AI_MODEL_SELECTION_COOKIE_MAX_AGE = 60 * 60 * 24 * 365
 
 export const AI_MODEL_OPTIONS: readonly AiModelOption[] = [
   {
-    id: 'openai:gpt-4',
-    provider: 'openai',
-    model: 'gpt-4o-mini',
-    label: 'OpenAI GPT-4',
-    description: 'مدل GPT-4 از OpenAI',
+    id: 'parspack:gpt-oss-20b',
+    provider: 'parspack',
+    model: 'openai/gpt-oss-20b',
+    label: 'ParsPack OSS 20B',
+    description: 'مدل OpenAI OSS 20B از سرویس هوش مصنوعی پارس‌پک',
   },
   {
-    id: 'openai:gpt-5',
-    provider: 'openai',
-    model: 'gpt-5.4-mini',
-    label: 'OpenAI GPT-5',
-    description: 'مدل GPT-5 از OpenAI',
-  },
-  {
-    id: 'arvan:gpt-oss-20b',
-    provider: 'arvan',
-    model: 'gpt-oss-20b',
-    label: 'Arvan OSS 20B',
-    description: 'مدل OSS 20B از Arvan',
+    id: 'parspack:gpt-4o',
+    provider: 'parspack',
+    model: 'openai/gpt-4o-2024-11-20',
+    label: 'ChatGPT GPT-4o',
+    description: 'مدل ChatGPT GPT-4o از سرویس هوش مصنوعی پارس‌پک',
   },
 ]
 

@@ -16,6 +16,10 @@ const breadcrumbMatchers: Array<{
   { test: (path) => path === '/dashboard/persons', label: 'افراد' },
   { test: (path) => path === '/dashboard/resources', label: 'منابع' },
   {
+    test: (path) => path === '/dashboard/resources/data',
+    label: 'داده‌های مخازن',
+  },
+  {
     test: (path) => path === '/dashboard/submodule',
     label: 'فرم های زیرسیستم',
   },

@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { Activity, Code2, Database, GitBranch, Server, Terminal } from 'lucide-react'
+import { Activity, Code2, Database, Server, Terminal } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
 import {
@@ -31,13 +31,6 @@ const processTools = [
     href: '/process/data',
     icon: Database,
     action: 'مدیریت داده',
-  },
-  {
-    title: 'Workflow',
-    description: 'تعریف نسخه‌دار فرایند، گردش فرم، تایید موازی و وضعیت اجرای Temporal.',
-    href: '/process/workflow',
-    icon: GitBranch,
-    action: 'باز کردن Workflow',
   },
 ]
 
